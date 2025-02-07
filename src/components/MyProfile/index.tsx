@@ -84,10 +84,17 @@ const MyProfile = () => {
             verify: true,
             customers: {
               total: summary?.totalNetwork || 0,
-              f1: summary?.totalNetwork || 0,
-              f2: summary?.totalNetwork || 0,
-              f3: summary?.totalNetwork || 0,
-              o: 0,
+              // total: summary
+              //   ? Number(summary.f1) +
+              //       Number(summary.f2) +
+              //       Number(summary.f3) +
+              //       Number(summary.totalNetwork) || 0
+              //   : 0,
+              f1: summary?.f1 || 0,
+              f2: summary?.f2 || 0,
+              f3: summary?.f3 || 0,
+              // o: summary?.totalNetwork || 0,
+              o: summary?.totalNetwork || 0,
             },
           }}
         />

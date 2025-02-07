@@ -12,8 +12,11 @@ export const userRequest = {
 
 export const referralRequest = {
   getSummary() {
-    return privateRequest(request.get, API_PATH.USER_ME);
+    return privateRequest(request.get, API_PATH.REFERRAL_SUMMARY);
   },
+  getProfile() {
+    return privateRequest(request.get, API_PATH.REFERRAL_PROFILE);
+  }
 };
 
 export interface TUser {

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Text from '../UI/Text';
 import { Button } from '@nextui-org/react';
 import { toast } from '../UI/Toast/toast';
+import { referralRequest } from './service';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -10,8 +11,6 @@ const calculatePercentage = (value: number, total: number): number => {
   }
   return (value / total) * 100;
 };
-
-const refLink = 'https://what.exchange/sign-up?upline=supertree';
 
 const Overview = ({
   data,
@@ -30,6 +29,30 @@ const Overview = ({
     };
   };
 }) => {
+  const [origin, setOrigin] = useState('');
+  const [refCode, setRefCode] = useState('');
+
+  const getProfile = async () => {
+    try {
+      const res = await referralRequest.getProfile();
+      setRefCode(res.data.code);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
+  const refLink = `${origin}/?refCode=${refCode}`;
+
   const onCopy = () => {
     window.navigator.clipboard.writeText(refLink);
     toast.success('Copied!');
@@ -69,10 +92,10 @@ const Overview = ({
           <div
             className="flex flex-col gap-[8px]"
             style={{
-              width: `${calculatePercentage(
-                data.customers.f1,
-                data.customers.total
-              ) || 25}%`,
+              width: `${
+                calculatePercentage(data.customers.f1, data.customers.total) ||
+                25
+              }%`,
             }}
           >
             <div className="h-[12px] w-full bg-[#02A6C2] rounded-l-full" />
@@ -81,10 +104,10 @@ const Overview = ({
           <div
             className="flex flex-col gap-[8px]"
             style={{
-              width: `${calculatePercentage(
-                data.customers.f2,
-                data.customers.total
-              ) || 25}%`,
+              width: `${
+                calculatePercentage(data.customers.f2, data.customers.total) ||
+                25
+              }%`,
             }}
           >
             <div className="h-[12px] w-full bg-[#35B6CC]" />
@@ -93,10 +116,10 @@ const Overview = ({
           <div
             className="flex flex-col gap-[8px]"
             style={{
-              width: `${calculatePercentage(
-                data.customers.f3,
-                data.customers.total
-              ) || 25}%`,
+              width: `${
+                calculatePercentage(data.customers.f3, data.customers.total) ||
+                25
+              }%`,
             }}
           >
             <div className="h-[12px] w-full bg-[#79BEB6]" />
@@ -105,10 +128,10 @@ const Overview = ({
           <div
             className="flex flex-col gap-[8px]"
             style={{
-              width: `${calculatePercentage(
-                data.customers.o,
-                data.customers.total
-              ) || 25}%`,
+              width: `${
+                calculatePercentage(data.customers.o, data.customers.total) ||
+                25
+              }%`,
             }}
           >
             <div className="h-[12px] w-full bg-[#B4D4D9] rounded-r-full" />

@@ -1,15 +1,17 @@
 import InputText from '@/components/UI/InputText';
-import { Button, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
 import Image from 'next/image';
 import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
-import {
-  getAccessToken,
-  setAuthCookies,
-} from '@/store/auth';
+import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
@@ -22,8 +24,6 @@ const MainHeader = () => {
   const token = getAccessToken();
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile, setProfile } = useProfileInitial();
-
-
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -47,13 +47,15 @@ const MainHeader = () => {
   const handleSignMessage = async (messageNonce: string) => {
     try {
       const sig = await signMessageAsync({ message: messageNonce });
-      runLoginWeb3({ address: address as string, signature: sig });
+      runLoginWeb3({
+        address: address as string,
+        signature: sig,
+        refCode: (router.query.refCode as string) || '',
+      });
     } catch (err) {
       console.error(err);
     }
   };
-
-
 
   useEffect(() => {
     if (isConnected && address && !token) {
@@ -63,9 +65,8 @@ const MainHeader = () => {
       setAuthCookies({
         token: '',
       });
-      setProfile(initialProfile)
+      setProfile(initialProfile);
     }
-
   }, [token, isConnected, address]);
 
   const handleKeyUp = (event: any) => {
@@ -128,8 +129,6 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-
-
 
             {/* <div className="w-full">
               <ConnectButton />
