@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
@@ -17,6 +17,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
+import DrawerMenu from '../Menubar/DrawerMenu';
 const MainHeader = () => {
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
@@ -24,6 +25,7 @@ const MainHeader = () => {
   const token = getAccessToken();
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile, setProfile } = useProfileInitial();
+  const refDrawerMenu: any = useRef(null);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -79,7 +81,7 @@ const MainHeader = () => {
   };
 
   return (
-    <div className="w-full sticky z-[1000] top-0 backdrop-blur-sm border-b border-black-10 py-5 px-10">
+    <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
         <Image
           onClick={() => router.push(ROUTE_PATH.HOME)}
@@ -90,7 +92,16 @@ const MainHeader = () => {
           src={'/logo.png'}
         />
 
-        <div className="flex items-center gap-4">
+        <Image
+          onClick={() => refDrawerMenu.current.onOpen()}
+          src={'/images/img-menu.png'}
+          width={40}
+          height={40}
+          alt=""
+          className="w-10 h-10 block md:hidden"
+        />
+
+        <div className="md:flex hidden items-center gap-4">
           <Menubar />
 
           <div className="flex items-center gap-4">
@@ -136,6 +147,7 @@ const MainHeader = () => {
           </div>
         </div>
       </div>
+      <DrawerMenu ref={refDrawerMenu} />
     </div>
   );
 };

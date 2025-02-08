@@ -8,46 +8,86 @@ import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import CommentReviews from './CommentReviews';
 import Image from 'next/image';
-const DATA_REVIEWS = [
-  {
-    id: 1,
-    rate: 5,
-    total: '1.078',
-    value: 80,
-  },
-  {
-    id: 2,
-    rate: 4,
-    total: '200',
-    value: 40,
-  },
-  {
-    id: 3,
-    rate: 3,
-    total: '60',
-    value: 20,
-  },
-  {
-    id: 4,
-    rate: 2,
-    total: '30',
-    value: 10,
-  },
-  {
-    id: 5,
-    rate: 1,
-    total: '5',
-    value: 4,
-  },
-];
-const Reviews = () => {
+import {
+  useGetListReview,
+  useGetListReviewSummary,
+  useLikeReview,
+} from '@/components/Course/ListCourse/service';
+import NoData from '@/components/ListCourse/NoData';
+import { useEffect } from 'react';
+
+const Reviews = ({ courseId }: { courseId: string }) => {
+  const { dataListReviewSummary, run: runGetListReviewSummary } =
+    useGetListReviewSummary();
+  const { dataListReview, run: runGetListReview, mutate } = useGetListReview();
+  const { run: runLikeReview } = useLikeReview({
+    onSuccess(res) {
+      const newData = dataListReview.data.map((item: any) =>
+        item.id === res?.data?.courseReviewId
+          ? { ...item, reactions: [...item.reactions, res?.data] }
+          : item
+      );
+      mutate({
+        ...dataListReview,
+        data: newData,
+      });
+    },
+  });
+
+  const DATA_REVIEWS = [
+    {
+      id: 1,
+      rate: 5,
+      value: dataListReviewSummary?.data?.lv5,
+    },
+    {
+      id: 2,
+      rate: 4,
+      value: dataListReviewSummary?.data?.lv4,
+    },
+    {
+      id: 3,
+      rate: 3,
+      value: dataListReviewSummary?.data?.lv3,
+    },
+    {
+      id: 4,
+      rate: 2,
+      value: dataListReviewSummary?.data?.lv2,
+    },
+    {
+      id: 5,
+      rate: 1,
+      value: dataListReviewSummary?.data?.lv1,
+    },
+  ];
+
+  useEffect(() => {
+    if (courseId) {
+      runGetListReview(courseId);
+      runGetListReviewSummary(courseId);
+    }
+  }, [courseId]);
+  const handleLikeReview = (id: string) => {
+    const body = {
+      commentId: '',
+      reviewId: id,
+      name: 'like',
+      code: '1',
+      keyword: '',
+    };
+    runLikeReview(body);
+  };
+
   return (
     <div className="pt-[63px] flex flex-col gap-8 px-[80px]">
       <Text type="font-20-600">Student feedback</Text>
       <div className="flex gap-3 items-start">
         <div className="w-[100px]">
-          <Text type="font-20-600">4.6</Text>
-          <Rater total={5} rating={4} />
+          <Text type="font-20-600">
+            {dataListReviewSummary?.data?.avgRate || 0}
+          </Text>
+          <Rater total={5} rating={dataListReviewSummary?.data?.avgRate} />
         </div>
         <div className="flex flex-col gap-2 w-full">
           {DATA_REVIEWS?.map((item) => {
@@ -59,12 +99,13 @@ const Reviews = () => {
                     indicator: 'bg-main',
                     track: 'max-h-[8px]',
                   }}
+                  maxValue={dataListReviewSummary?.data?.total}
                   value={item?.value}
                 />
                 <Rater total={5} rating={item?.rate} />
                 <div className="flex justify-end items-end w-[50px]">
                   <Text type="font-16-500" className="text-white">
-                    {item?.total}
+                    {item?.value}
                   </Text>
                 </div>
               </div>
@@ -83,16 +124,45 @@ const Reviews = () => {
         />
         <SelectCustom
           isLesson
-          options={[]}
+          options={[
+            {
+              key: 5,
+              label: '5 star',
+            },
+            {
+              key: 4,
+              label: '4 star',
+            },
+            {
+              key: 3,
+              label: '3 star',
+            },
+            {
+              key: 2,
+              label: '2 star',
+            },
+            {
+              key: 1,
+              label: '1 star',
+            },
+          ]}
           className="max-w-[117px]"
           placeholder="All Ratings"
         />
       </div>
       <div className="flex flex-col gap-6">
-        {Array.from({ length: 3 }).map((_, key) => {
-          return <CommentReviews key={key} />;
+        {dataListReview?.data.map((item: any, index: number) => {
+          return (
+            <Comment
+              handleLikeReview={handleLikeReview}
+              item={item}
+              key={index}
+            />
+          );
         })}
-        <Button
+        {dataListReview?.data?.length === 0 && <NoData />}
+
+        {/* <Button
           variant="light"
           radius="full"
           size="sm"
@@ -109,7 +179,7 @@ const Reviews = () => {
               alt=""
             />
           </div>
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ const CardCourse = ({
   return (
     <div
       onClick={handleClickCardCourse}
-      className="rounded transition-all relative cursor-pointer duration-300 hover:opacity-80"
+      className="rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
@@ -114,13 +114,12 @@ const CardCourse = ({
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {/* $89.45 */}
-                {item?.price ? `$${item?.price}` : 'Free'}
+                {item?.originPrice ? `$${item?.originPrice}` : 'Free'}
               </Text>
             </div>
             {item?.price && (
               <Text type="font-14-400" className="text-black-6 line-through">
-                $ {item.price * 1.5}
+                ${item.price}
               </Text>
             )}
           </div>

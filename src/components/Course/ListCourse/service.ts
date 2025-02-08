@@ -196,6 +196,7 @@ export const useGetListReview = (options?: IOptions) => {
       return serviceGetListReview(id);
     },
     {
+      manual: true,
       ...options,
     }
   );
@@ -203,6 +204,37 @@ export const useGetListReview = (options?: IOptions) => {
   return {
     mutate,
     dataListReview: data,
+    run,
+    loading,
+  };
+};
+
+const serviceListReviewSummary = async (id: string) => {
+  // const params = {
+  //   order: 'createdAt desc',
+  //   page: 1,
+  //   pageSize: 30,
+  // };
+  return await privateRequest(
+    request.get,
+    `${API_PATH.LIST_REVIEW_SUMMARY(id)}`
+  );
+};
+
+export const useGetListReviewSummary = (options?: IOptions) => {
+  const { data, loading, run, mutate } = useRequest(
+    async (id: string) => {
+      return serviceListReviewSummary(id);
+    },
+    {
+      manual: true,
+      ...options,
+    }
+  );
+
+  return {
+    mutate,
+    dataListReviewSummary: data,
     run,
     loading,
   };

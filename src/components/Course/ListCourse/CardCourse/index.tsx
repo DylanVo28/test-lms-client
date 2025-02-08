@@ -23,7 +23,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         height={200}
         alt=""
         className="w-full h-[200px] rounded rounded-b-none"
-        layout='contain'
+        layout="contain"
         onError={(e: any) => {
           e.target.srcset = '/images/img-default.png';
         }}
@@ -61,12 +61,12 @@ const CardCourse = ({ item }: { item?: any }) => {
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.price ? `$${item?.price}` : 'Free'}
+                {item?.originPrice ? `$${item?.originPrice}` : 'Free'}
               </Text>
             </div>
             {item?.price && (
               <Text type="font-14-400" className="text-black-6 line-through">
-                $ {item.price * 1.5}
+                $ {item.price}
               </Text>
             )}
           </div>

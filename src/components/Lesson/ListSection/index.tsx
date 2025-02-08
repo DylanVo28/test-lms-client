@@ -11,13 +11,17 @@ const ListSection = ({
   handleClickChildLesson,
   onChangeCheckBox,
   loading,
-  activeIdChildSection,
-}: {
-  handleClickChildLesson: (id: string, type: TYPE_COURSE, status: UserCourseProgressStatus) => void;
+}: // activeIdChildSection,
+{
+  handleClickChildLesson: (
+    id: string,
+    type: TYPE_COURSE,
+    status: UserCourseProgressStatus
+  ) => void;
   onChangeCheckBox: (values: any) => void;
   sections: any;
   loading: boolean;
-  activeIdChildSection: any
+  // activeIdChildSection: any
 }) => {
   return (
     <div className="flex flex-col gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
@@ -25,12 +29,8 @@ const ListSection = ({
 
       <div className="mx-[-8px]">
         {sections?.map((item: any, index: number) => {
-
           const countChildrendSection =
             item?.quizzes?.length + item?.lessons?.length;
-
-
-
 
           const newLessons = item?.lessons?.map(
             (lesson: any, indexLesson: number) => {
@@ -52,13 +52,20 @@ const ListSection = ({
             }
           );
           const listChildSection = newLessons?.concat(newQuizzes);
+          console.log(listChildSection, 'listChildSection');
+
           const completedCount = listChildSection?.filter(
-            (item: any) => item.progress && item.progress.status === UserCourseProgressStatus.COMPLETED
+            (item: any) =>
+              item.progress &&
+              item.progress.status === UserCourseProgressStatus.COMPLETED
           ).length;
 
           const totalDuration = newLessons
-            .filter((item: any) => item.contentType === "VIDEO")
-            .reduce((sum: any, item: any) => sum + (item.info.duration || 0), 0);
+            .filter((item: any) => item.contentType === 'VIDEO')
+            .reduce(
+              (sum: any, item: any) => sum + (item.info.duration || 0),
+              0
+            );
 
           const minutes = Math.floor(totalDuration / 60);
           const seconds = Math.floor(totalDuration % 60);
@@ -89,7 +96,7 @@ const ListSection = ({
               {listChildSection?.length > 0 ? (
                 <ChildSection
                   onChangeCheckBox={onChangeCheckBox}
-                  activeIdChildSection={activeIdChildSection}
+                  // activeIdChildSection={activeIdChildSection}
                   handleClickChildLesson={handleClickChildLesson}
                   items={listChildSection}
                 />

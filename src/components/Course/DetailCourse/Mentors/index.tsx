@@ -17,7 +17,7 @@ const Mentors = () => {
       <Text className="text-white" type="font-20-600">
         Mentors (KOLs)
       </Text>
-      <div className="flex items-center gap-5">
+      <div className="flex flex-col md:flex-row md:items-center gap-5">
         <Image
           alt=""
           width={240}
@@ -34,7 +34,7 @@ const Mentors = () => {
               <Text className="text-black-7" type="font-14-400">
                 Professional Web Developer
               </Text>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Text type="font-14-400" className="text-white">
                   4.1
                 </Text>

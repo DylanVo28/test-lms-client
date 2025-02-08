@@ -100,7 +100,7 @@ const DATA_LANGUAGE = [
 const initialItemsLanguage = 5;
 
 const FilterCourse = (props: any) => {
-  const { params, setParams } = props;
+  const { params, setParams, isMobile, onCloseModalFilter } = props;
   const [expanded, setExpanded] = useState(false);
   const contentRef: any = useRef(null);
   const [contentHeight, setContentHeight] = useState(0);
@@ -134,6 +134,7 @@ const FilterCourse = (props: any) => {
   return (
     <div className="flex flex-col gap-5 mx-[-8px]">
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
             Rating
@@ -157,7 +158,8 @@ const FilterCourse = (props: any) => {
                 }}
                 value={item?.id}
                 onChange={(e: any) => {
-                  console.log('target', e.target);
+                  onCloseModalFilter && onCloseModalFilter();
+
                   setParams({
                     ...params,
                     ratings: e.target.value,
@@ -179,6 +181,7 @@ const FilterCourse = (props: any) => {
         </RadioGroup>
       </AccordionCustom>
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
@@ -201,9 +204,9 @@ const FilterCourse = (props: any) => {
                     }}
                     value={item?.value}
                     onChange={(e: any) => {
-                      console.log('TTTTTT', e.target.value);
-
                       {
+                        onCloseModalFilter && onCloseModalFilter();
+
                         const idx = params.langs.findIndex(
                           (p: any) => p === e.target.value
                         );
@@ -296,6 +299,7 @@ const FilterCourse = (props: any) => {
         </div>
       </AccordionCustom>
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
@@ -317,7 +321,8 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
-                    console.log('TTTTTT', e.target.value);
+                    onCloseModalFilter && onCloseModalFilter();
+
                     {
                       const idx = params.features.findIndex(
                         (p: any) => p === e.target.value
@@ -349,6 +354,7 @@ const FilterCourse = (props: any) => {
         </div>
       </AccordionCustom>
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
             Topic
@@ -367,6 +373,8 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
+                    onCloseModalFilter && onCloseModalFilter();
+
                     const idx = params.topics.findIndex(
                       (p: any) => p === e.target.value
                     );
@@ -396,6 +404,7 @@ const FilterCourse = (props: any) => {
         </div>
       </AccordionCustom>
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
             Level
@@ -414,6 +423,8 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
+                    onCloseModalFilter && onCloseModalFilter();
+
                     const idx = params.levels.findIndex(
                       (p: any) => p === e.target.value
                     );
@@ -443,6 +454,7 @@ const FilterCourse = (props: any) => {
         </div>
       </AccordionCustom>
       <AccordionCustom
+        isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
             Price
@@ -464,6 +476,8 @@ const FilterCourse = (props: any) => {
                     const idx = params.prices.findIndex(
                       (p: any) => p === e.target.value
                     );
+                    onCloseModalFilter && onCloseModalFilter();
+
                     if (idx >= 0) {
                       const newPrices = params.prices.filter(
                         (p: any) => p !== e.target.value
@@ -489,6 +503,25 @@ const FilterCourse = (props: any) => {
           </CheckboxGroup>
         </div>
       </AccordionCustom>
+
+      {isMobile && (
+        <div className="flex items-center px-2 gap-3">
+          <button
+            className="bg-main rounded min-h-[44px] w-full"
+            onClick={() => {
+              onCloseModalFilter && onCloseModalFilter();
+              setParams({
+                page: 1,
+                pageSize: 3,
+              });
+            }}
+          >
+            <Text type="font-14-500" className="text-ưhite">
+              Clear filter
+            </Text>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

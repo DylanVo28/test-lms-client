@@ -31,7 +31,7 @@ const Certifications = () => {
         <Text type="font-18-600" className="text-white">
           Certification Preparation
         </Text>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-5 md:gap-0 md:flex-row justify-between md:items-center">
           <div className="flex items-center gap-[2px]">
             <Text type="font-16-400" className="text-white">
               You are preparing for{' '}
@@ -42,7 +42,7 @@ const Certifications = () => {
             <Info className="text-white" size={18} />
           </div>
 
-          <Button className="bg-transparent border-1 border-main rounded py-[10px] px-6 min-h-[44px]">
+          <Button className="bg-transparent w-max border-1 border-main rounded py-[10px] px-6 min-h-[44px]">
             <Text type="font-16-600" className="text-main">
               Explore certification preparation
             </Text>
@@ -50,7 +50,7 @@ const Certifications = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {DATA_CERTIFICATION?.map((item) => {
           return (
             <div

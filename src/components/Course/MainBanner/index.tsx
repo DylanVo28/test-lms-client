@@ -1,6 +1,8 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
+import clsx from 'clsx';
 import Image from 'next/image';
+import { isMobile } from 'react-device-detect';
 
 const DATA_SKILL = [
   'Design',
@@ -14,8 +16,15 @@ const DATA_SKILL = [
 
 const MainBanner = () => {
   return (
-    <div className="w-full py-[40px] px-8 min-h-[410px] bg-[url('/images/bg-banner.png')] bg-center bg-no-repeat bg-[length:100%_100%]">
-      <div className="flex flex-col gap-[50px] w-6/12">
+    <div
+      className={clsx(
+        "w-full py-[20px] md:py-[40px] md:px-8 min-h-[400px] md:min-h-[410px] bg-[url('/images/bg-banner.png')] bg-center bg-no-repeat bg-[length:100%_100%]",
+        {
+          ["bg-[url('/images/bg-banner-mobile.png')]"]: isMobile,
+        }
+      )}
+    >
+      <div className="flex flex-col gap-10 md:gap-[50px] w-full md:w-6/12">
         <div className="flex items-center gap-1">
           <Button isIconOnly variant="light" size="md">
             <Image src={'/icons/ic-home.svg'} width={24} height={24} alt="" />
@@ -44,7 +53,7 @@ const MainBanner = () => {
             <Text type="font-16-400" className="text-white">
               Topics related to Web Development
             </Text>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {DATA_SKILL?.map((item) => {
                 return (
                   <div className="rounded-full bg-white/10 border-1 border-white/10 py-1 px-3 flex justify-center items-center">
@@ -57,6 +66,14 @@ const MainBanner = () => {
             </div>
           </div>
         </div>
+
+        <Image
+          src={'/images/bg-banner-mobile1.png'}
+          alt=""
+          width={343}
+          height={230}
+          className="w-full h-auto block mb-[-40px] md:hidden"
+        />
       </div>
     </div>
   );
