@@ -219,3 +219,40 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.custom-color-picker {
+  .react-colorful {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+  .react-colorful__saturation {
+    border-radius: 0 !important;
+  }
+  .react-colorful__saturation-pointer {
+    width: 20px;
+    height: 20px;
+    border: 5px solid white;
+  }
+
+  .react-colorful__hue {
+    border-radius: 20px !important;
+    height: 20px !important;
+    .react-colorful__hue-pointer {
+      width: 20px;
+      height: 20px;
+      border: 5px solid white;
+    }
+  }
+
+  .react-colorful__alpha {
+    border-radius: 20px !important;
+    height: 20px !important;
+    .react-colorful__alpha-pointer {
+      width: 20px;
+      height: 20px;
+      border: 5px solid white;
+    }
+  }
+}

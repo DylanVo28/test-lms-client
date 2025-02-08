@@ -17,6 +17,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
+import CustomLogoAndTheme from './CustomLogoAndTheme';
 const MainHeader = () => {
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
@@ -79,7 +80,7 @@ const MainHeader = () => {
   };
 
   return (
-    <div className="w-full sticky z-[1000] top-0 backdrop-blur-sm border-b border-black-10 py-5 px-10">
+    <div className="w-full sticky z-40 top-0 backdrop-blur-sm border-b border-black-10 py-5 px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
         <Image
           onClick={() => router.push(ROUTE_PATH.HOME)}
@@ -129,6 +130,8 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
+
+            <CustomLogoAndTheme />
 
             {/* <div className="w-full">
               <ConnectButton />
