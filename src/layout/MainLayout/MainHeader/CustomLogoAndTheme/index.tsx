@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Drawer,
   DrawerContent,
   DrawerHeader,
@@ -81,41 +82,80 @@ const CustomLogoAndTheme = () => {
                     Color theme
                   </Text>
 
-                  <div className="flex gap-[16px]">
-                    <div>
-                      <div className="custom-color-picker">
-                        <RgbaColorPicker onChange={onChange} color={color} />
-                      </div>{' '}
-                      <div className="flex gap-4 mt-4">
-                        <SelectCustom
-                          className="w-full text-[12px]"
-                          value={'light'}
-                          options={[{ key: 'light', label: 'Light' }]}
-                        />
-                        <InputText
-                          className="w-full text-[12px]"
-                          value={'100'}
-                          type="number"
-                        />
-                        <InputText
-                          className="w-full"
-                          value={'100'}
-                          type="number"
-                        />
+                  <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
+                    <div className="text-base mb-[8px] font-semibold">
+                      Background
+                    </div>
+                    <div className="flex gap-[16px]">
+                      <div className="w-[80%]">
+                        <div className="custom-color-picker">
+                          <RgbaColorPicker onChange={onChange} color={color} />
+                        </div>{' '}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-[16px] h-fit">
+                        {presetColors.map((color) => (
+                          <div
+                            key={color}
+                            className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                            style={{ background: color }}
+                          />
+                        ))}
                       </div>
                     </div>
-
-                    <div className="flex flex-wrap gap-[16px] w-full h-fit">
-                      {presetColors.map((color) => (
-                        <div
-                          key={color}
-                          className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                          style={{ background: color }}
-                        ></div>
-                      ))}
+                    <div className="flex gap-2 mt-4 items-center">
+                      <SelectCustom
+                        className="w-full text-[12px] h-full bg-transparent"
+                        value={'hex'}
+                        options={[{ key: 'hex', label: 'Hex' }]}
+                      />
+                      <InputText
+                        className="w-full text-[12px]"
+                        value={'ffffff7f'}
+                      />
+                      <InputText
+                        className="w-full text-[12px]"
+                        value={'100%'}
+                      />
                     </div>
                   </div>
                 </div>
+
+                <div className="p-[20px] bg-[#242A30]">
+                  <div className="flex justify-between">
+                    <Text className="text-[18px] font-semibold mb-[16px]">
+                      Language
+                    </Text>
+
+                    {/* <ArrowUpIcon /> */}
+                  </div>
+
+                  <div className="mb-[16px]">
+                    <InputText
+                      className="w-full text-[12px] bg-[#0a0f157f]"
+                      placeholder="Search..."
+                    />
+                  </div>
+
+                  <Checkbox
+                    classNames={{
+                      wrapper: 'me-3 after:!bg-main before:!border-black-7',
+                      base: '',
+                    }}
+                    defaultSelected
+                    color="primary"
+                  >
+                    English
+                  </Checkbox>
+                </div>
+
+                <Button
+                  //   isLoading={loading}
+                  type="submit"
+                  className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+                >
+                  Save
+                </Button>
               </div>
             </>
           )}
