@@ -109,7 +109,7 @@ export default function Information({
   return (
     <div className="bg-gray-900 text-white rounded-lg w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="box-border">
-        <div className="flex gap-6">
+        <div className="flex md:flex-row flex-col gap-6">
           <div className="flex flex-col gap-6 w-full">
             {inputFields
               .filter((field) => field.atRow === 1)
