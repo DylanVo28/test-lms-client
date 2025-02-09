@@ -7,16 +7,11 @@ import Description from './Description';
 import RateStar from '@/components/UI/RateStar';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
-import { useGetDetailCourse } from '@/components/CreateCourse/service';
 import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
 
-const Overview = ({ dataListSection }: any) => {
-  const router = useRouter();
-
-  console.log(dataListSection, 'dataListSection');
-
+const Overview = ({ dataListSection, dataDetail }: any) => {
   const formattedTime: string = useMemo(() => {
     const totalDuration = dataListSection?.reduce(
       (total: any, section: any) => {
@@ -40,14 +35,6 @@ const Overview = ({ dataListSection }: any) => {
 
     return formattedTime;
   }, [dataListSection]);
-
-  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({});
-
-  useEffect(() => {
-    if (router?.query?.id) {
-      getDetailCourse(router.query.id as string);
-    }
-  }, [router?.query?.id]);
 
   console.log(dataDetail, 'dataDetail');
 

@@ -8,11 +8,12 @@ import { useRouter } from 'next/router';
 import { useEditCourse, useGetDetailCourse } from '../service';
 import { toast } from '@/components/UI/Toast/toast';
 import LoadingScreen from '@/components/UI/LoadingScreen';
+import { useProfile } from '@/store/profile/useProfile';
 
 const PlanYourCourse = () => {
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
-
+  const { profile } = useProfile();
   const {
     run: getDetailCourse,
     loading,
@@ -78,10 +79,9 @@ const PlanYourCourse = () => {
 
   useEffect(() => {
     if (router.query.id) {
-      getDetailCourse(router.query.id as string);
+      getDetailCourse(router.query.id as string, profile?.id);
     }
-  }, [router.query.id]);
-
+  }, [router.query.id, profile?.id]);
   const requestEditCourse = useEditCourse({
     onSuccess: (res: any) => {
       getDetailCourse(router.query.id as string);

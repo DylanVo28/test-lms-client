@@ -12,6 +12,8 @@ export const API_PATH = {
 
   SUB_CATEGORIES: `/api/subcategories`,
 
+  LIST_CERTIFICATES: '/api/certificates/my-list',
+
   CREATE_COURSE: '/api/courses',
   REMOVE_LIKE_COMMENT: (id: string) => `/api/courses/comments/reactions/${id}`,
   LIKE_COMMENT: (id: string) => `/api/courses/comments/${id}/reaction`,

@@ -5,47 +5,28 @@ import IconArrowLeft from '@/components/UI/Icons/IconArrowLeft';
 import IconDots from '@/components/UI/Icons/IconDots';
 import ProgressCircle from '@/components/UI/ProgressCircle';
 import Text from '@/components/UI/Text';
+import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, CircularProgress } from '@nextui-org/react';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect } from 'react';
-import { useClaimCertificates } from './service';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [valueYourProgress] = useAtom(valueProgressAtom);
-
-  const receivedCertificate = router.query.receivedCertificate === 'true';
+  const { profile } = useProfile();
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},
   });
 
-  const { run: runClaimCertificates } = useClaimCertificates({
-    onSuccess(res) {
-      console.log(res, 'res');
-    },
-  });
-
   useEffect(() => {
     if (router.query.id) {
-      getDetailCourse(router.query.id as string);
+      getDetailCourse(router.query.id as string, profile?.id);
     }
-  }, [router.query.id]);
-
-  useEffect(() => {
-    const isEightyPercent =
-      (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
-
-    if (!receivedCertificate && isEightyPercent) {
-      const body = {
-        courseId: router.query.id as string,
-      };
-      runClaimCertificates(body);
-    }
-  }, [valueYourProgress?.value]);
+  }, [router.query.id, profile?.id]);
 
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">

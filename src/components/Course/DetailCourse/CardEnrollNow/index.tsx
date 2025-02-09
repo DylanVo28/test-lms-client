@@ -30,7 +30,6 @@ const CardEnrollNow = ({ course }: { course: any }) => {
       if (res?.data?.courseId) {
         router.push({
           pathname: ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId),
-          query: { receivedCertificate: course?.receivedCertificate },
         });
       }
     },
@@ -111,7 +110,6 @@ const CardEnrollNow = ({ course }: { course: any }) => {
               if (course?.isOwner || course?.authorId === profile?.id) {
                 router.push({
                   pathname: ROUTE_PATH.DETAIL_LESSON(course?.id),
-                  query: { receivedCertificate: course?.receivedCertificate },
                 });
               } else {
                 run(course.id);

@@ -90,3 +90,30 @@ export const useGetListWishList = (initialParams: any) => {
     noMore,
   };
 };
+
+const serviceGetMyCertificates = async () => {
+  // const params = {
+  //   order: 'createdAt desc',
+  //   page: 1,
+  //   pageSize: 30,
+  // };
+  return await privateRequest(request.get, `${API_PATH.LIST_CERTIFICATES}`);
+};
+
+export const useGetMyCertificates = (options?: IOptions) => {
+  const { data, loading, run, mutate } = useRequest(
+    async () => {
+      return serviceGetMyCertificates();
+    },
+    {
+      ...options,
+    }
+  );
+
+  return {
+    mutate,
+    dataListCertificates: data,
+    run,
+    loading,
+  };
+};

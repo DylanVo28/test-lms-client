@@ -12,8 +12,8 @@ import Reviews from './Reviews';
 import LearningTools from './LearningTools';
 import Search from './Search';
 import { useRouter } from 'next/router';
-import { useGetListSession } from '../CreateCourse/service';
-import { useEffect, useState } from 'react';
+import { useGetDetailCourse, useGetListSession } from '../CreateCourse/service';
+import { useEffect, useRef, useState } from 'react';
 import LoadingScreen from '../UI/LoadingScreen';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import {
@@ -31,6 +31,8 @@ import { useProfile } from '@/store/profile/useProfile';
 import { atom, useAtom } from 'jotai';
 import { activeItemSectionAtom } from './ListSection/ChildSection';
 import FormEndCourse from './FormEndCourse';
+import { useClaimCertificates } from '@/layout/LessonLayout/service';
+import ModalClaimCertifications from '@/layout/LessonLayout/ModalClaimCertifications';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
@@ -38,10 +40,11 @@ const Lesson = () => {
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const [endCourse, setEndCourse] = useState(false);
+  const refModalClaimCertifications: any = useRef<any>(null);
 
   const { profile } = useProfile();
   const [, setActiveItemSection] = useAtom(activeItemSectionAtom);
-  const [_, setValueYourProgress] = useAtom(valueProgressAtom);
+  const [valueYourProgress, setValueYourProgress] = useAtom(valueProgressAtom);
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
@@ -134,8 +137,7 @@ const Lesson = () => {
       handleScrollTop();
     },
   });
-
-  console.log(dataLesson, 'dataLesson');
+  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse();
 
   const itemsTab = [
     {
@@ -146,7 +148,12 @@ const Lesson = () => {
     {
       key: '2',
       label: 'Overview',
-      children: <Overview dataListSection={dataListSession?.data} />,
+      children: (
+        <Overview
+          dataDetail={dataDetail}
+          dataListSection={dataListSession?.data}
+        />
+      ),
     },
     // {
     //   key: '3',
@@ -174,6 +181,39 @@ const Lesson = () => {
     //   children: <LearningTools />,
     // },
   ];
+  useEffect(() => {
+    if (router.query.id) {
+      getDetailCourse(router.query.id as string, profile?.id);
+    }
+  }, [router.query.id, profile?.id]);
+
+  const { run: runClaimCertificates } = useClaimCertificates({
+    onSuccess(res) {
+      if (res?.data?.certificateId) {
+        getDetailCourse(router.query.id as string, profile?.id);
+        refModalClaimCertifications.current.onOpen(res?.data);
+      }
+    },
+    onError(e) {
+      toast.error(e.message);
+    },
+  });
+  console.log(dataDetail, 'dataDetail');
+
+  useEffect(() => {
+    const isEightyPercent =
+      (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
+    console.log(isEightyPercent, 'isEightyPercent');
+
+    if (!dataDetail?.data?.receivedCertificate && isEightyPercent) {
+      console.log('123');
+
+      const body = {
+        courseId: router.query.id as string,
+      };
+      runClaimCertificates(body);
+    }
+  }, [valueYourProgress?.value, dataDetail?.data?.receivedCertificate]);
 
   const onChangeCheckBox = (values: any) => {
     console.log('values', values);
@@ -483,6 +523,7 @@ const Lesson = () => {
           />
         </div>
       </div>
+      <ModalClaimCertifications ref={refModalClaimCertifications} />
     </div>
     // </LoadingScreen>
   );
