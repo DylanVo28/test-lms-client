@@ -134,7 +134,6 @@ const MainHeader = () => {
               />
             </Button>
 
-            <CustomLogoAndTheme />
             {/* <Button
               isIconOnly
               className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
@@ -143,6 +142,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
+            <CustomLogoAndTheme />
 
             {/* <div className="w-full">
               <ConnectButton />

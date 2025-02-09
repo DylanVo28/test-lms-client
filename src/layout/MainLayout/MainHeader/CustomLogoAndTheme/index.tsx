@@ -1,36 +1,39 @@
 import {
   Button,
-  Checkbox,
   Drawer,
   DrawerContent,
   DrawerHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import React, { useState } from 'react';
-import ThemeIcon from './ThemeIcon';
-import CloseIcon from './CloseIcon';
-import Text from '@/components/UI/Text';
-import { RgbaColorPicker, RgbaColor } from 'react-colorful';
-import SelectCustom from '@/components/UI/SelectCustom';
-import InputText from '@/components/UI/InputText';
-
-const presetColors = [
-  '#CD006C',
-  '#EC7F00',
-  '#74CA00',
-  '#21A988',
-  '#45B5EA',
-  '#8125A2',
-  '#F6F2F2',
-  '#05070A',
-];
+import React from 'react';
+import ThemeIcon from './Icons/ThemeIcon';
+import CloseIcon from './Icons/CloseIcon';
+import ColorTheme from './ColorTheme';
+import EditLogo from './EditLogo';
+import Languages from './Languages';
 
 const CustomLogoAndTheme = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [color, setColor] = useState<RgbaColor>({ r: 0, g: 0, b: 0, a: 0 });
-  const onChange = (color: RgbaColor) => {
+  const [color, setColor] = React.useState('');
+  const [langs, setLangs] = React.useState<string[]>([]);
+  const [logo, setLogo] = React.useState('');
+
+  const onChangeColor = (color: string) => {
     setColor(color);
   };
+
+  const onChangeLangs = (values: string[]) => {
+    setLangs(values);
+  };
+
+  const onChangeLogo = (logo: string) => {
+    setLogo(logo);
+  };
+
+  const onSave = () => {
+    console.log({ color, langs, logo });
+  };
+
   return (
     <>
       <Button
@@ -47,7 +50,7 @@ const CustomLogoAndTheme = () => {
         onOpenChange={onOpenChange}
         closeButton={<></>}
       >
-        <DrawerContent className="p-[24px] flex flex-col gap-[32px]">
+        <DrawerContent className="p-[24px] flex flex-col gap-[32px] bg-[#24292fe5] backdrop-blur-xl">
           {(onClose) => (
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
@@ -56,106 +59,21 @@ const CustomLogoAndTheme = () => {
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
               </DrawerHeader>
+
               <Divided />
-
               <div className="flex flex-col gap-[32px] p-0">
-                <div>
-                  <Text className="text-[18px] font-semibold mb-[16px]">
-                    Edit logo
-                  </Text>
-                  <p className="text-md text-[#ffffff7f] mb-[8px]">
-                    Minimum 200x200 pixels, Maximum 3000x3000 pixels
-                  </p>
-                  <div className="p-[20px] bg-[#242A30] rounded-[4px] border border-[#00000033]">
-                    <div className="w-full h-[153px] flex flex-col items-center justify-center gap-[16px] bg-[#181F25] rounded-[4px] ">
-                      <div className="text-[#ffffff7f] whitespace-nowrap">
-                        JPEG, PNG or JPG . Max 10mb.
-                      </div>
-                      <Button className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[#02A6C2]">
-                        Choose file
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <Text className="text-[18px] font-semibold mb-[16px]">
-                    Color theme
-                  </Text>
-
-                  <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
-                    <div className="text-base mb-[8px] font-semibold">
-                      Background
-                    </div>
-                    <div className="flex gap-[16px]">
-                      <div className="w-[80%]">
-                        <div className="custom-color-picker">
-                          <RgbaColorPicker onChange={onChange} color={color} />
-                        </div>{' '}
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-[16px] h-fit">
-                        {presetColors.map((color) => (
-                          <div
-                            key={color}
-                            className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                            style={{ background: color }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex gap-2 mt-4 items-center">
-                      <SelectCustom
-                        className="w-full text-[12px] h-full bg-transparent"
-                        value={'hex'}
-                        options={[{ key: 'hex', label: 'Hex' }]}
-                      />
-                      <InputText
-                        className="w-full text-[12px]"
-                        value={'ffffff7f'}
-                      />
-                      <InputText
-                        className="w-full text-[12px]"
-                        value={'100%'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-[20px] bg-[#242A30]">
-                  <div className="flex justify-between">
-                    <Text className="text-[18px] font-semibold mb-[16px]">
-                      Language
-                    </Text>
-
-                    {/* <ArrowUpIcon /> */}
-                  </div>
-
-                  <div className="mb-[16px]">
-                    <InputText
-                      className="w-full text-[12px] bg-[#0a0f157f]"
-                      placeholder="Search..."
-                    />
-                  </div>
-
-                  <Checkbox
-                    classNames={{
-                      wrapper: 'me-3 after:!bg-main before:!border-black-7',
-                      base: '',
-                    }}
-                    defaultSelected
-                    color="primary"
+                <EditLogo onChangeLogo={onChangeLogo} />
+                <ColorTheme onChangeColor={onChangeColor} />
+                <Languages onChangeLangs={onChangeLangs} />
+                <div className="flex justify-end">
+                  <Button
+                    onPress={onSave}
+                    type="submit"
+                    className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
                   >
-                    English
-                  </Checkbox>
+                    Save
+                  </Button>
                 </div>
-
-                <Button
-                  //   isLoading={loading}
-                  type="submit"
-                  className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
-                >
-                  Save
-                </Button>
               </div>
             </>
           )}
@@ -166,7 +84,7 @@ const CustomLogoAndTheme = () => {
 };
 
 const Divided = () => (
-  <div className="w-full mx-auto h-[1px] bg-[#2B3032] px-[16px]" />
+  <div className="w-full border border-[#2B3032]" />
 );
 
 export default CustomLogoAndTheme;
