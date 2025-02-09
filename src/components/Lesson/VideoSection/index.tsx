@@ -10,22 +10,36 @@ const VideoSection = ({
   info,
   loading,
   data,
+  currentId,
   handleNextChildSection,
   handleFindIdNextChildSection,
 }: {
-  handleNextChildSection: (type: string, idNext: string, idCurrent: string) => void;
+  handleNextChildSection: (
+    type: string,
+    idNext: string,
+    idCurrent: string
+  ) => void;
   handleFindIdNextChildSection: any;
   data: any;
   loading: boolean;
   info: any;
+  currentId: string;
 }) => {
   const videoRef: any = useRef(null);
   const playerRef: any = useRef(null);
+
+  console.log(currentId, 'currentId');
 
   // const [progressVideo, setProgressVideo] = useState(0);
   const [endVideo, setEndVideo] = useState(false);
 
   const dataItemNext = handleFindIdNextChildSection(data?.id);
+
+  console.log(dataItemNext, 'dataItemNext');
+
+  const handleCancelNextChilSection = () => {
+    setEndVideo(false);
+  };
 
   useEffect(() => {
     // Initialize player if it doesn't exist
@@ -135,6 +149,7 @@ const VideoSection = ({
     <div className="video-container relative">
       {endVideo && (
         <NextVideo
+          handleCancelNextChilSection={handleCancelNextChilSection}
           handleNextChildSection={(type, id) => {
             setEndVideo(false);
             resetVideo();

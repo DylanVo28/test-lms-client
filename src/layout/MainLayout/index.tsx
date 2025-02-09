@@ -3,9 +3,9 @@ import MainHeader from './MainHeader';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="w-screen bg-primary h-screen overflow-auto flex flex-col relative">
+    <div className="w-screen bg-primary h-screen overflow-x-hidden overflow-auto flex flex-col relative">
       <MainHeader />
-      <div className="w-full p-10">
+      <div className="w-full p-4 md:p-10">
         <div className="max-w-[1440px] mx-auto">{children}</div>
       </div>
     </div>

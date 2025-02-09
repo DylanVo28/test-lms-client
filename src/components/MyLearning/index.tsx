@@ -45,7 +45,7 @@ export default function MyLearning() {
   }, [router.query.type]);
 
   return (
-    <div className="flex flex-col gap-[50px]">
+    <div className="flex flex-col gap-[40px] md:gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
         <Text type="font-28-700">My Learning</Text>
       </div>

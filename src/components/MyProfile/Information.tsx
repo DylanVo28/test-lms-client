@@ -17,6 +17,8 @@ export default function Information({
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: any) => {
+    console.log('data', data);
+    
     try {
       setLoading(true);
       await userRequest.update({
@@ -168,6 +170,8 @@ const Field = ({
               <InputTextArena
                 placeholder={fieldItem.placeholder}
                 className={`bg-[#242A30] w-full h-full`}
+                value={field.value}
+                onChange={field.onChange}
               />
             );
           }

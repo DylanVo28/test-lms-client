@@ -7,11 +7,13 @@ export default function AccordionCustom({
   title,
   isSection = false,
   isCreateCourse,
+  isMobile,
 }: {
   title: string | ReactNode;
   children: ReactNode;
   isSection?: boolean;
   isCreateCourse?: boolean;
+  isMobile?: boolean;
 }) {
   return (
     <Accordion
@@ -27,6 +29,8 @@ export default function AccordionCustom({
         base: clsx('bg-white/5 rounded border-1 relative border-[#D9D9D91A]', {
           '!bg-transparent rounded-none': isSection,
           '!bg-transparent !border-white/15': isCreateCourse,
+
+          '!bg-[#161B21] !border-white/10': isMobile,
         }),
       }}
     >

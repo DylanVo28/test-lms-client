@@ -79,7 +79,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                 <InputText
                   endContent={
                     <Text type="font-16-400" className="text-white">
-                      USD
+                      Day
                     </Text>
                   }
                   type="number"

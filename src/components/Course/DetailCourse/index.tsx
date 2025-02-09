@@ -75,10 +75,10 @@ const DetailCourse = () => {
 
   return (
     <LoadingScreen isLoading={loading}>
-      <div id="top" className="flex flex-col gap-[52px] relative">
+      <div id="top" className="flex flex-col gap-[40px] md:gap-[52px] relative">
         <BreadCrumbs />
 
-        <div className="grid grid-cols-10 gap-[70px]">
+        <div className="md:grid md:grid-cols-10 gap-[70px]">
           <div className="col-span-7 flex flex-col gap-10">
             <div className="flex flex-col border-b-1 border-b-black-10 pb-10 gap-5">
               <Text type="font-32-700" className="text-white">
@@ -87,12 +87,15 @@ const DetailCourse = () => {
               <Text type="font-14-400" className="text-white">
                 Learn: {mapCategoryCourse()}
               </Text>
-              <div className="flex items-center gap-2">
-                <Text type="font-14-400" className="text-white">
-                  4.1
-                </Text>
-                <Rater total={5} rating={4} />
-                <div className="w-[1px] h-5 bg-[#BFBFBF]" />
+              <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
+                <div className="flex items-center gap-2">
+                  <Text type="font-14-400" className="text-white">
+                    4.1
+                  </Text>
+                  <Rater total={5} rating={4} />
+                </div>
+
+                <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
                 {lessonCount && (
                   <>
                     <div className="flex items-center gap-1">
@@ -101,7 +104,7 @@ const DetailCourse = () => {
                         {lessonCount || 0} Lessons
                       </Text>
                     </div>
-                    <div className="w-[1px] h-5 bg-[#BFBFBF]" />
+                    <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
                   </>
                 )}
                 {dataDetail?.data?.userCourses?.length > 0 && (
@@ -112,7 +115,7 @@ const DetailCourse = () => {
                         {dataDetail?.data?.userCourses.length} Students
                       </Text>
                     </div>
-                    <div className="w-[1px] h-5 bg-[#BFBFBF]" />
+                    <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
                   </>
                 )}
 
@@ -137,7 +140,11 @@ const DetailCourse = () => {
                 <Text type="font-16-500" className="text-black-7">
                   By
                 </Text>
-                <Text type="font-16-500" className="text-white">
+                <Text
+                  element="span"
+                  type="font-16-500"
+                  className="text-white truncate w-full"
+                >
                   {dataDetail?.data?.author?.walletAddress}
                 </Text>
               </div>
@@ -145,7 +152,7 @@ const DetailCourse = () => {
             <YouLearn data={dataDetail?.data} />
             <Requirements data={dataDetail?.data} />
             <About data={dataDetail?.data} />
-            <Mentors />
+            <Mentors mentor={dataDetail?.data?.author}/>
             <MoreCourse
               courseId={dataDetail?.data?.id}
               author={dataDetail?.data?.author}

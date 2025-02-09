@@ -4,6 +4,8 @@ import { ROUTE_PATH } from '@/utils/const';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { otimDevnet } from 'viem/chains';
+import DrawerMenu from './DrawerMenu';
+import { useRef } from 'react';
 
 const MENUS = [
   {
@@ -31,6 +33,7 @@ const Menubar = () => {
       router.push(menuItem?.href);
     }
   };
+
   return (
     <div className="flex items-center gap-8">
       {MENUS?.map((item) => {

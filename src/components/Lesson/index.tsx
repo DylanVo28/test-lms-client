@@ -29,16 +29,18 @@ import { UserCourseProgressStatus } from '@/utils/common';
 import { toast } from '../UI/Toast/toast';
 import { useProfile } from '@/store/profile/useProfile';
 import { atom, useAtom } from 'jotai';
+import { activeItemSectionAtom } from './ListSection/ChildSection';
 
-export const valueProgressAtom = atom<any>({})
+export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
   const router = useRouter();
   const [typeLoadCotent, setTypeLoadContent] = useState<string>('');
-  const [activeIdChildSection, setActiveIdChildSection] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const { profile } = useProfile();
+  const [, setActiveItemSection] = useAtom(activeItemSectionAtom);
+  const [_, setValueYourProgress] = useAtom(valueProgressAtom);
 
-  const [_, setValueYourProgress] = useAtom(valueProgressAtom)
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const {
     run: runGetListSession,
@@ -46,8 +48,6 @@ const Lesson = () => {
     loading: loadingListSession,
   } = useGetListSession({
     onSuccess: (res) => {
-      console.log(res, 'res');
-
       const firstSection = res?.data?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
@@ -65,35 +65,50 @@ const Lesson = () => {
       });
       const combinedArray = [...newLessons, ...newQuizzes];
 
-      const totalLessons = res?.data.reduce((acc: any, section: any) => acc + section.lessons.length, 0);
-      const totalQuizzes = res?.data.reduce((acc: any, section: any) => acc + section.quizzes.length, 0);
-      const completedLessons = res?.data.reduce((acc: any, section: any) =>
-        acc + section.lessons.filter((lesson: any) =>
-          lesson.progress && lesson.progress.status === 'COMPLETED'
-        ).length, 0);
+      const totalLessons = res?.data.reduce(
+        (acc: any, section: any) => acc + section.lessons.length,
+        0
+      );
+      const totalQuizzes = res?.data.reduce(
+        (acc: any, section: any) => acc + section.quizzes.length,
+        0
+      );
+      const completedLessons = res?.data.reduce(
+        (acc: any, section: any) =>
+          acc +
+          section.lessons.filter(
+            (lesson: any) =>
+              lesson.progress && lesson.progress.status === 'COMPLETED'
+          ).length,
+        0
+      );
 
-      const completedQuizzes = res?.data.reduce((acc: any, section: any) =>
-        acc + section.quizzes.filter((quiz: any) =>
-          quiz.progress && quiz.progress.status === 'COMPLETED'
-        ).length, 0);
-
+      const completedQuizzes = res?.data.reduce(
+        (acc: any, section: any) =>
+          acc +
+          section.quizzes.filter(
+            (quiz: any) => quiz.progress && quiz.progress.status === 'COMPLETED'
+          ).length,
+        0
+      );
 
       setValueYourProgress({
         total: totalLessons + totalQuizzes,
-        value: completedLessons + completedQuizzes
-      })
-
-      console.log({ totalLessons, totalQuizzes });
-
-      console.log(combinedArray, 'combinedArray');
+        value: completedLessons + completedQuizzes,
+      });
 
       const firstId = combinedArray?.[0]?.id;
-      if (combinedArray?.[0]?.type === TYPE_COURSE.LECTURE) {
-        runGetLessons(firstId);
-        setTypeLoadContent(TYPE_COURSE.LECTURE);
-      } else {
-        runGetQuizz(firstId);
-        setTypeLoadContent(TYPE_COURSE.QUIZ);
+      if (isFirstLoad) {
+        setActiveItemSection(firstId);
+        setIsFirstLoad(false);
+
+        if (combinedArray?.[0]?.type === TYPE_COURSE.LECTURE) {
+          runGetLessons(firstId);
+          setTypeLoadContent(TYPE_COURSE.LECTURE);
+        } else {
+          runGetQuizz(firstId);
+          setTypeLoadContent(TYPE_COURSE.QUIZ);
+        }
       }
     },
   });
@@ -116,6 +131,8 @@ const Lesson = () => {
       handleScrollTop();
     },
   });
+
+  console.log(dataLesson, 'dataLesson');
 
   const itemsTab = [
     {
@@ -146,7 +163,7 @@ const Lesson = () => {
     {
       key: '6',
       label: 'Reviews',
-      children: <Reviews />,
+      children: <Reviews courseId={router.query.id as string} />,
     },
     // {
     //   key: '7',
@@ -188,7 +205,6 @@ const Lesson = () => {
     onSuccess: (res: any) => {
       toast.success(res?.message);
       runGetListSession(router.query.id as string, profile?.id);
-
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -225,10 +241,14 @@ const Lesson = () => {
         const nextItem = allItems[currentIndex + 1];
         console.log(nextItem, 'nextItem');
 
-        handleClickChildLesson(nextItem?.id, nextItem?.type, nextItem?.progress?.status);
-
-        const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
-        router.push(newPath);
+        handleClickChildLesson(
+          nextItem?.id,
+          nextItem?.type,
+          nextItem?.progress?.status
+        );
+        setActiveItemSection(nextItem?.id);
+        // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
+        // router.push(newPath);
       }
     },
     onError: (error: any) => {
@@ -256,42 +276,47 @@ const Lesson = () => {
     }
   };
 
-  const handleClickChildLesson = (id: string, type: TYPE_COURSE, status?: UserCourseProgressStatus) => {
+  const handleClickChildLesson = (
+    id: string,
+    type: TYPE_COURSE,
+    status?: UserCourseProgressStatus
+  ) => {
     setTypeLoadContent(type);
     if (type === TYPE_COURSE.LECTURE && id) {
       runGetLessons(id);
     } else {
       if (status === UserCourseProgressStatus.COMPLETED) {
-        setStartTakingTest(true)
+        setStartTakingTest(true);
       } else {
         setStartTakingTest(false);
-
       }
       runGetQuizz(id);
     }
   };
 
-  useEffect(() => {
-    if (router.query.idChildSection) {
-      setActiveIdChildSection(router.query.idChildSection as string);
-    }
-  }, [router.query.idChildSection]);
+  // useEffect(() => {
+  //   if (router.query.idChildSection) {
+  //     // setActiveIdChildSection(router.query.idChildSection as string);
+  //     setActiveItemSection(router.query.idChildSection as string);
+  //   }
+  // }, [router.query.idChildSection]);
 
-  useEffect(() => {
-    if (dataListSession?.data?.length > 0) {
-      const firstSection = dataListSession?.data?.[0];
-      const combinedArray = [
-        ...(firstSection?.lessons || []),
-        ...(firstSection?.quizzes || []),
-      ];
+  // useEffect(() => {
+  //   if (dataListSession?.data?.length > 0) {
+  //     const firstSection = dataListSession?.data?.[0];
+  //     const combinedArray = [
+  //       ...(firstSection?.lessons || []),
+  //       ...(firstSection?.quizzes || []),
+  //     ];
 
-      const firstId = combinedArray?.[0]?.id;
+  //     const firstId = combinedArray?.[0]?.id;
 
-      if (firstId) {
-        setActiveIdChildSection(firstId);
-      }
-    }
-  }, [dataListSession?.data]);
+  //     if (firstId) {
+  //       // setActiveIdChildSection(firstId);
+  //       setActiveItemSection(firstId);
+  //     }
+  //   }
+  // }, []);
 
   const handleSkipQuizz = (id: string) => {
     const allItems = dataListSession?.data.reduce(
@@ -319,12 +344,15 @@ const Lesson = () => {
       const nextItem = allItems[currentIndex + 1];
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
-      const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
-      router.push(newPath);
+      // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
+      // router.push(newPath);
+      setActiveItemSection(nextItem?.id);
     }
   };
 
   const handleFindIdNextChildSection = (id: string) => {
+    console.log(id, 'id');
+
     const allItems = dataListSession?.data.reduce(
       (result: any, section: any) => {
         const newLessons = section?.lessons?.map((lesson: any) => {
@@ -358,9 +386,14 @@ const Lesson = () => {
     requestProgressStatusQuizz.run(body, id);
   };
 
-  const handleNextChildSection = (type: string, idNext: string, idCurrent: string) => {
-    const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
-    router.push(newPath);
+  const handleNextChildSection = (
+    type: string,
+    idNext: string,
+    idCurrent: string
+  ) => {
+    // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
+    // router.push(newPath);
+    setActiveItemSection(idNext);
     setTypeLoadContent(type);
 
     if (type === TYPE_COURSE.LECTURE && idNext) {
@@ -393,6 +426,7 @@ const Lesson = () => {
                 handleNextChildSection={handleNextChildSection}
                 handleFindIdNextChildSection={handleFindIdNextChildSection}
                 data={dataLesson?.data}
+                currentId={dataLesson?.data?.id}
                 loading={loadingLesson || loadingQuizz}
                 info={dataLesson?.data?.info}
               />
@@ -455,7 +489,7 @@ const Lesson = () => {
           </div>
           <ListSection
             onChangeCheckBox={onChangeCheckBox}
-            activeIdChildSection={activeIdChildSection}
+            // activeIdChildSection={activeIdChildSection}
             loading={loadingListSession}
             handleClickChildLesson={handleClickChildLesson}
             sections={dataListSession?.data}

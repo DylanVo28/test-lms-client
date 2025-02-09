@@ -7,10 +7,14 @@ import { ROUTE_PATH } from '@/utils/const';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import NoData from './NoData';
-import { useGetListCourse, useGetListMyCourse } from '../Course/ListCourse/service';
+import {
+  useGetListCourse,
+  useGetListMyCourse,
+} from '../Course/ListCourse/service';
 import { useDebounce } from 'ahooks';
 import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
 import { useProfile } from '@/store/profile/useProfile';
+import { isMobile } from 'react-device-detect';
 
 const SORT_BY = [
   { key: 'createdAt desc', label: 'Newest' },
@@ -58,14 +62,24 @@ const ListCourse = () => {
   return (
     <div className="flex flex-col gap-[50px]">
       <div className="flex flex-col gap-[30px]">
-        <div className="pl-5 border-l-4 border-l-main">
-          <Text type="font-28-700">Courses</Text>
-        </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-5">
+          <div className="pl-5 border-l-4 border-l-main">
+            <Text type="font-28-700">Courses</Text>
+          </div>
+          {isMobile && (
+            <CustomButtonNewCourse
+              handleClickButton={() => {
+                router.push(ROUTE_PATH.CREATE_COURSE);
+              }}
+            />
+          )}
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-5 w-full">
             <InputText
               startContent={<IconSearch />}
-              className="min-w-[302px]"
+              className="min-w-[240px] md:min-w-[302px]"
               isInputSubmit
               placeholder="Search"
               value={search}
@@ -74,7 +88,7 @@ const ListCourse = () => {
             <SelectCustom
               placeholder="Sort by type"
               isSelectSubmit
-              className="min-w-[120px] min-h-[44px]"
+              className="w-full md:min-w-[120px] min-h-[44px]"
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {
@@ -83,10 +97,13 @@ const ListCourse = () => {
               }}
             />
           </div>
-          <CustomButtonNewCourse handleClickButton={() => {
-            router.push(ROUTE_PATH.CREATE_COURSE)
-          }} />
-
+          <div className="hidden md:block">
+            <CustomButtonNewCourse
+              handleClickButton={() => {
+                router.push(ROUTE_PATH.CREATE_COURSE);
+              }}
+            />
+          </div>
         </div>
       </div>
       {dataCourses?.length > 0 &&
@@ -99,18 +116,16 @@ const ListCourse = () => {
               onClick={() =>
                 router.push(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)
               }
-              className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
+              className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex flex-col md:flex-row gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
             >
-
-
               <Image
                 alt=""
                 src={'/img-course.png'}
                 width={200}
                 height={202}
-                className="w-[200px] h-full"
+                className="w-[200px] h-full mx-auto md:mx-0"
               />
-              <div className="p-4 flex flex-col relative justify-between w-full">
+              <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
                 {idHovered === item?.id && (
                   <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50"></div>
                 )}
@@ -122,10 +137,12 @@ const ListCourse = () => {
                     </Text>
                   </div>
                 )}
-                <Text className="text-[20px] font-bold">{item?.title}</Text>
-                <div className="flex justify-end items-end">
-                  <div className="flex items-center w-8/12 gap-4">
-                    <Text className="text-[20px] font-bold w-[270px]">
+                <Text className="text-[16px] md:text-[20px] font-bold">
+                  {item?.title}
+                </Text>
+                <div className="flex md:justify-end md:items-end">
+                  <div className="flex items-center w-full md:w-8/12 gap-4">
+                    <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
                       Finish your courses
                     </Text>
                     <Progress

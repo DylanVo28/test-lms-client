@@ -58,16 +58,24 @@ const CardEnrollNow = ({ course }: { course: any }) => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
+              <Text type="font-20-400" className="text-orange">
+                {course?.originPrice ? `$ ${course?.originPrice}` : 'Free'}
+              </Text>
+              {course?.price && (
+                <Text type="font-14-400" className="text-black-6 line-through">
+                  $ {course?.price}
+                </Text>
+              )}
+              {/* <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
                 <Text type="font-16-600" className="text-orange">
                   {course?.price ? `$${course?.price}` : 'Free'}
                 </Text>
               </div>
               {course?.price && (
                 <Text type="font-14-400" className="text-black-6 line-through">
-                  $ ${course?.price * 1.5}
+                  ${course?.price * 1.5}
                 </Text>
-              )}
+              )} */}
             </div>
 
             {!course?.isOwner && (
