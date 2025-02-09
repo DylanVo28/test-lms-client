@@ -14,11 +14,11 @@ const IconList = ({ active }: { active: boolean }) => {
           width="4.66667"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <path
           d="M8.66667 15.667C9.76661 15.667 10.3166 15.667 10.6583 16.0087C11 16.3504 11 16.9004 11 18.0003C11 19.1003 11 19.6502 10.6583 19.992C10.3166 20.3337 9.76661 20.3337 8.66667 20.3337C7.56672 20.3337 7.01675 20.3337 6.67504 19.992C6.33333 19.6502 6.33333 19.1003 6.33333 18.0003C6.33333 16.9004 6.33333 16.3504 6.67504 16.0087C7.01675 15.667 7.56672 15.667 8.66667 15.667Z"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <g clip-path="url(#clip1_106_2906)">
@@ -28,11 +28,11 @@ const IconList = ({ active }: { active: boolean }) => {
           width="4.66667"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <path
           d="M8.66667 22.667C9.76661 22.667 10.3166 22.667 10.6583 23.0087C11 23.3504 11 23.9004 11 25.0003C11 26.1003 11 26.6502 10.6583 26.992C10.3166 27.3337 9.76661 27.3337 8.66667 27.3337C7.56672 27.3337 7.01675 27.3337 6.67504 26.992C6.33333 26.6502 6.33333 26.1003 6.33333 25.0003C6.33333 23.9004 6.33333 23.3504 6.67504 23.0087C7.01675 22.667 7.56672 22.667 8.66667 22.667Z"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <g clip-path="url(#clip2_106_2906)">
@@ -42,11 +42,11 @@ const IconList = ({ active }: { active: boolean }) => {
           width="4.66667"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <path
           d="M8.66667 8.66699C9.76661 8.66699 10.3166 8.66699 10.6583 9.0087C11 9.35041 11 9.90038 11 11.0003C11 12.1003 11 12.6502 10.6583 12.992C10.3166 13.3337 9.76661 13.3337 8.66667 13.3337C7.56672 13.3337 7.01675 13.3337 6.67504 12.992C6.33333 12.6502 6.33333 12.1003 6.33333 11.0003C6.33333 9.90038 6.33333 9.35041 6.67504 9.0087C7.01675 8.66699 7.56672 8.66699 8.66667 8.66699Z"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <g clip-path="url(#clip3_106_2906)">
@@ -56,7 +56,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <rect
           x="12.5555"
@@ -64,7 +64,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1.55556"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <g clip-path="url(#clip4_106_2906)">
@@ -74,7 +74,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <rect
           x="12.5555"
@@ -82,7 +82,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1.55556"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <g clip-path="url(#clip5_106_2906)">
@@ -92,7 +92,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
         <rect
           x="12.5555"
@@ -100,7 +100,7 @@ const IconList = ({ active }: { active: boolean }) => {
           width="17.1111"
           height="4.66667"
           rx="1.55556"
-          fill={active ? '#02A6C2' : '#8C8C8C'}
+          fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
       <defs>

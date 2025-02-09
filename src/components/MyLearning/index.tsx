@@ -52,11 +52,11 @@ export default function MyLearning() {
 
       {/* <div className="border-b-[1px] border-[#2B3032] relative flex pb-[20px]">
         <div className="w-[150px]">
-          <Text type="font-16-600" className="text-[#02A6C2] text-center">
+          <Text type="font-16-600" className="text-[var(--main-color)] text-center">
             Course Progress
           </Text>
         </div>
-        <div className="absolute bottom-0 h-[3px] w-[150px] bg-[#02A6C2]" />
+        <div className="absolute bottom-0 h-[3px] w-[150px] bg-[var(--main-color)]" />
       </div> */}
 
       <Tabs

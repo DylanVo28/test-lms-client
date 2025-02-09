@@ -18,6 +18,7 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import DrawerMenu from '../Menubar/DrawerMenu';
+import CustomLogoAndTheme from './CustomLogoAndTheme';
 const MainHeader = () => {
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
@@ -26,6 +27,7 @@ const MainHeader = () => {
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
+  const [urlLogo, setUrlLogo] = useState<string>('');
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -60,6 +62,12 @@ const MainHeader = () => {
   };
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUrlLogo(localStorage.getItem('logo') || '/logo.png');
+    }
+  }, []);
+
+  useEffect(() => {
     if (isConnected && address && !token) {
       runGetUserNonce(address);
     }
@@ -89,7 +97,7 @@ const MainHeader = () => {
           width={125}
           height={46}
           className="cursor-pointer"
-          src={'/logo.png'}
+          src={urlLogo}
         />
 
         <Image
@@ -140,6 +148,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
+            <CustomLogoAndTheme setUrlLogo={setUrlLogo} />
 
             {/* <div className="w-full">
               <ConnectButton />
