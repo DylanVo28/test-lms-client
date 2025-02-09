@@ -67,6 +67,8 @@ export const API_PATH = {
   USER_ME: '/api/users/me',
   USER_UPDATE: '/api/users',
 
+  USER_DETAIL: (id: string) => `/api/users/${id}`,
+
   REFERRAL_SUMMARY: '/api/referral/summary',
   REFERRAL_PROFILE: '/api/referral/profile',
 

@@ -1,3 +1,4 @@
+import { userRequest } from '@/components/MyProfile/service';
 import {
   IconDicord,
   IconReadmi,
@@ -9,10 +10,30 @@ import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 
 const Mentors = ({mentor} : any) => {
   console.log('mentor', mentor);
+
+  const [mentorProfile, setMentorProfile] = useState<any>();
+
+  const getDetail = async () => {
+      try {
+        const response = await userRequest.getUserDetail(mentor.id);
+        console.log('RRRRRRRRR', response);
+        
+        setMentorProfile(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  useEffect(() => {
+    if (mentor?.id) {
+      getDetail()
+    }
+  }, [mentor?.id])
   
   const generateMentors = () => {
     if (mentor?.firstName || mentor?.lastName) {
@@ -44,24 +65,24 @@ const Mentors = ({mentor} : any) => {
               </Text>
               <div className="flex items-center gap-2 flex-wrap">
                 <Text type="font-14-400" className="text-white">
-                  4.1
+                  {mentorProfile?.instructorInfo?.avgRate || 0}
                 </Text>
                 <Rater total={5} rating={4} />
                 <Text type="font-14-400" className="text-white">
-                  251,330 Reviews
+                  {mentorProfile?.instructorInfo?.countReviews || 0} Reviews
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
                   <Text type="font-14-400" className="text-white">
-                    229 Students
+                    {mentorProfile?.instructorInfo?.countStudents || 0} Students
                   </Text>
                 </div>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconVideo />
                   <Text type="font-14-400" className="text-white">
-                    35 Course
+                    {mentorProfile?.instructorInfo?.countCourses || 0} Courses
                   </Text>
                 </div>
               </div>

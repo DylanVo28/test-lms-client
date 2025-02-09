@@ -8,6 +8,10 @@ export const userRequest = {
   update(body: any) {
     return privateRequest(request.patch, API_PATH.USER_UPDATE, { data: body });
   },
+
+  getUserDetail(id: string) {
+    return privateRequest(request.get, `${API_PATH.USER_DETAIL(id)}`, { });
+  },
 };
 
 export const referralRequest = {

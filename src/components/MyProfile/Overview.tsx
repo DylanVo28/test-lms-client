@@ -25,7 +25,7 @@ const Overview = ({
       f1: number;
       f2: number;
       f3: number;
-      o: number;
+      // o: number;
     };
   };
 }) => {
@@ -129,13 +129,13 @@ const Overview = ({
             className="flex flex-col gap-[8px]"
             style={{
               width: `${
-                calculatePercentage(data.customers.o, data.customers.total) ||
+                calculatePercentage(data.customers.total - (data.customers.f1 + data.customers.f2 + data.customers.f3), data.customers.total) ||
                 25
               }%`,
             }}
           >
             <div className="h-[12px] w-full bg-[#B4D4D9] rounded-r-full" />
-            <div className="opacity-50">ø: {data.customers.o}</div>
+            <div className="opacity-50">ø: {data.customers.total - (data.customers.f1 + data.customers.f2 + data.customers.f3)}</div>
           </div>
         </div>
       </div>

@@ -121,7 +121,7 @@ const MainHeader = () => {
               placeholder="Search"
             />
             <div className="border-1 border-gray-20 h-8" />
-            <Button
+            {/* <Button
               isIconOnly
               className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
             >
@@ -131,7 +131,7 @@ const MainHeader = () => {
                 width={20}
                 alt=""
               />
-            </Button>
+            </Button> */}
             {/* <Button
               isIconOnly
               className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
