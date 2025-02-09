@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useUploadFile } from '@/components/CreateCourse/service';
+import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
-import { useUploadFile } from '../CreateCourse/service';
-import { toast } from '../UI/Toast/toast';
-import { userRequest, TUser } from './service';
+import React, { useState } from 'react';
 
 interface UploadedFile {
   url: string;
@@ -10,13 +10,17 @@ interface UploadedFile {
   originalName: string;
 }
 
-const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
+const EditLogo = ({
+  onChangeLogo,
+}: {
+  onChangeLogo: (value: string) => void;
+}) => {
   const [valueFile, setValueFile] = useState<UploadedFile>();
-  const [loading, setLoading] = useState(false);
   const { run, loading: loadingFile } = useUploadFile({
     onSuccess(response) {
       const data = response.data;
       setValueFile(data);
+      onChangeLogo(data.url as string);
       toast.success(`File uploaded successfully!`);
     },
     onError(error) {
@@ -63,62 +67,35 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
       };
     }
   };
-
-  const onSave = async () => {
-    if (!valueFile?.url) return;
-    try {
-      setLoading(true);
-      await userRequest.update({ ...user, avatar: valueFile.url });
-      reload();
-      toast.success('Avatar uploaded successful!');
-    } catch (error) {
-      toast.error('Avatar uploaded failed!');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="flex flex-col gap-[12px]">
-      <div className="text-[18px] font-bold">
-        <sup className="text-[#FF3132]">*</sup> Upload File
-      </div>
-
-      <div className="opacity-50">
+    <div>
+      <Text className="text-[18px] font-semibold mb-[16px]">Edit logo</Text>
+      <p className="text-md text-[#ffffff7f] mb-[8px]">
         Minimum 200x200 pixels, Maximum 3000x3000 pixels
-      </div>
-
-      <div className="p-[20px] h-[241px] bg-[#32383E] w-full rounded-[4px]">
-        <div className="relative w-full h-full bg-[#181F25] border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
+      </p>
+      <div className="p-[20px] bg-[#242A30] rounded-[4px] border border-[#00000033]">
+        <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-[#181F25] rounded-[4px] ">
           <div className="text-[#ffffff7f]">
             {valueFile?.filename || 'JPEG, PNG or JPG . Max 10mb.'}
           </div>
-          <Button
-            isLoading={loadingFile}
-            className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] border border-[var(--main-color)]"
-          >
-            Choose File
-          </Button>
-          {!loading && (
+          <div className="relative">
+            <Button
+              isLoading={loadingFile}
+              className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+            >
+              Choose file
+            </Button>
             <input
-              className="w-full h-full absolute top-0 opacity-0 cursor-pointer"
               type="file"
               onChange={onChangeFile}
+              className="absolute top-0 w-full h-full left-0 opacity-0 cursor-pointer"
+              accept="image/jpeg, image/png, image/jpg"
             />
-          )}
+          </div>
         </div>
       </div>
-
-      <Button
-        onClick={onSave}
-        isLoading={loading}
-        type="button"
-        className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
-      >
-        Save Profile
-      </Button>
     </div>
   );
 };
 
-export default Avatar;
+export default EditLogo;
