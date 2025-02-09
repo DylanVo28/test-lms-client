@@ -10,33 +10,36 @@ import { useEffect, useMemo } from 'react';
 import { useGetDetailCourse } from '@/components/CreateCourse/service';
 import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
+import ReactStars from 'react-stars';
 
 const Overview = ({ dataListSection }: any) => {
   const router = useRouter();
 
   console.log(dataListSection, 'dataListSection');
 
-
-
   const formattedTime: string = useMemo(() => {
-    const totalDuration = dataListSection?.reduce((total: any, section: any) => {
-      const videoLessons = section?.lessons?.filter((lesson: any) => lesson?.contentType === "VIDEO");
-      const durationSum = videoLessons?.reduce((sum: any, lesson: any) => sum + (lesson?.info?.duration || 0), 0);
-      return total + durationSum;
-    }, 0);
+    const totalDuration = dataListSection?.reduce(
+      (total: any, section: any) => {
+        const videoLessons = section?.lessons?.filter(
+          (lesson: any) => lesson?.contentType === 'VIDEO'
+        );
+        const durationSum = videoLessons?.reduce(
+          (sum: any, lesson: any) => sum + (lesson?.info?.duration || 0),
+          0
+        );
+        return total + durationSum;
+      },
+      0
+    );
 
     const minutes = Math.floor(totalDuration / 60);
     const seconds = Math.floor(totalDuration % 60);
-    const formattedTime = `${minutes
+    const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
+      .padStart(2, '0')}`;
 
     return formattedTime;
   }, [dataListSection]);
-
-
-
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({});
 
@@ -45,6 +48,8 @@ const Overview = ({ dataListSection }: any) => {
       getDetailCourse(router.query.id as string);
     }
   }, [router?.query?.id]);
+
+  console.log(dataDetail, 'dataDetail');
 
   return (
     <div className="flex flex-col gap-5 pl-[80px] pr-[32px]">
@@ -57,13 +62,19 @@ const Overview = ({ dataListSection }: any) => {
             <div className="flex flex-col gap-[6px]">
               <div className="flex items-center gap-1">
                 <Text className="text-white" type="font-14-700">
-                  4.1
+                  {dataDetail?.data?.rating}
                 </Text>
-                <RateStar rate={4} />
-                {/* <IconStar /> */}
+                <ReactStars
+                  count={5}
+                  color1="#D9D9D9"
+                  color2="#F2B021"
+                  value={dataDetail?.data?.rating}
+                  size={16}
+                  className="flex items-center gap-1 mb-1"
+                />
               </div>
               <Text className="text-black-7" type="font-12-400">
-                572 rating
+                {`${dataDetail?.data?.countReviews} rating`}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">

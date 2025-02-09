@@ -3,7 +3,7 @@ import IconSearch from '@/components/UI/Icons/IconSearch';
 import InputText from '@/components/UI/InputText';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
-import { Button, Progress } from '@nextui-org/react';
+import { Button, Progress, Spinner } from '@nextui-org/react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import CommentReviews from './CommentReviews';
@@ -14,12 +14,21 @@ import {
   useLikeReview,
 } from '@/components/Course/ListCourse/service';
 import NoData from '@/components/ListCourse/NoData';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Reviews = ({ courseId }: { courseId: string }) => {
+  const [valueSearch, setValueSearch] = useState('');
+  const [valueLevel, setValueLevel] = useState<any>();
+
   const { dataListReviewSummary, run: runGetListReviewSummary } =
     useGetListReviewSummary();
-  const { dataListReview, run: runGetListReview, mutate } = useGetListReview();
+  const {
+    dataListReview,
+    run: runGetListReview,
+    mutate,
+    onChange,
+    loading,
+  } = useGetListReview();
   const { run: runLikeReview } = useLikeReview({
     onSuccess(res) {
       const newData = dataListReview.data.map((item: any) =>
@@ -61,6 +70,14 @@ const Reviews = ({ courseId }: { courseId: string }) => {
       value: dataListReviewSummary?.data?.lv1,
     },
   ];
+
+  useEffect(() => {
+    const filter = {
+      search: valueSearch,
+      level: valueLevel,
+    };
+    onChange(courseId, filter);
+  }, [valueSearch, valueLevel]);
 
   useEffect(() => {
     if (courseId) {
@@ -120,10 +137,17 @@ const Reviews = ({ courseId }: { courseId: string }) => {
           className="max-w-[470px]"
           placeholder="Search"
           isLesson
+          onChange={(e: any) => {
+            setValueSearch(e.target.value);
+          }}
           startContent={<IconSearch />}
         />
         <SelectCustom
           isLesson
+          value={valueLevel}
+          onChange={(e: any) => {
+            setValueLevel(e.target.value);
+          }}
           options={[
             {
               key: 5,
@@ -151,16 +175,28 @@ const Reviews = ({ courseId }: { courseId: string }) => {
         />
       </div>
       <div className="flex flex-col gap-6">
-        {dataListReview?.data.map((item: any, index: number) => {
-          return (
-            <Comment
-              handleLikeReview={handleLikeReview}
-              item={item}
-              key={index}
-            />
-          );
-        })}
-        {dataListReview?.data?.length === 0 && <NoData />}
+        {!loading && (
+          <>
+            {dataListReview?.data?.length > 0 &&
+              dataListReview?.data.map((item: any, index: number) => {
+                return (
+                  <Comment
+                    handleLikeReview={handleLikeReview}
+                    item={item}
+                    key={index}
+                  />
+                );
+              })}
+
+            {dataListReview?.data?.length === 0 && <NoData />}
+          </>
+        )}
+
+        {loading && (
+          <div className="flex items-center mt-4 justify-center">
+            <Spinner color="success" />
+          </div>
+        )}
 
         {/* <Button
           variant="light"

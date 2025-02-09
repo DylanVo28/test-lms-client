@@ -13,34 +13,35 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 
-const Mentors = ({mentor} : any) => {
+const Mentors = ({ mentor }: any) => {
   console.log('mentor', mentor);
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
   const getDetail = async () => {
-      try {
-        const response = await userRequest.getUserDetail(mentor.id);
-        console.log('RRRRRRRRR', response);
-        
-        setMentorProfile(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    try {
+      const response = await userRequest.getUserDetail(mentor.id);
+      console.log('RRRRRRRRR', response);
+
+      setMentorProfile(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (mentor?.id) {
-      getDetail()
+      getDetail();
     }
-  }, [mentor?.id])
-  
+  }, [mentor?.id]);
+
   const generateMentors = () => {
     if (mentor?.firstName || mentor?.lastName) {
-      return `${mentor?.firstName} ${mentor?.lastName}`
+      return `${mentor?.firstName} ${mentor?.lastName}`;
     }
-    return mentor?.walletAddress
-  }
+    return mentor?.walletAddress;
+  };
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
@@ -93,9 +94,14 @@ const Mentors = ({mentor} : any) => {
               {mentor?.biography}
             </Text>
             <div className="flex items-center gap-2">
-              {mentor?.x && <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center" onClick={() => window.open(mentor?.x, '_blank')}>
-                <IconTwiter/>
-              </div>}
+              {mentor?.x && (
+                <div
+                  className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center"
+                  onClick={() => window.open(mentor?.x, '_blank')}
+                >
+                  <IconTwiter />
+                </div>
+              )}
               <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
                 <IconTelegram />
               </div>

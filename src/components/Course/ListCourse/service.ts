@@ -179,11 +179,20 @@ export const useGetListComment = (options?: IOptions) => {
   };
 };
 
-const serviceGetListReview = async (id: string) => {
+interface IFilter {
+  page?: number;
+  level?: number;
+  pageSize?: number;
+  search?: string;
+}
+
+const serviceGetListReview = async (id: string, filter?: IFilter) => {
   const params = {
     order: 'createdAt desc',
     page: 1,
     pageSize: 30,
+    search: filter?.search || '',
+    level: filter?.level,
   };
   return await privateRequest(request.get, `${API_PATH.LIST_REVIEW(id)}`, {
     params,
@@ -192,19 +201,25 @@ const serviceGetListReview = async (id: string) => {
 
 export const useGetListReview = (options?: IOptions) => {
   const { data, loading, run, mutate } = useRequest(
-    async (id: string) => {
-      return serviceGetListReview(id);
+    async (id: string, filter?: IFilter) => {
+      return serviceGetListReview(id, filter);
     },
+
     {
       manual: true,
       ...options,
     }
   );
 
+  const onChange = (id: string, filter?: IFilter) => {
+    run(id, filter);
+  };
+
   return {
     mutate,
     dataListReview: data,
     run,
+    onChange,
     loading,
   };
 };

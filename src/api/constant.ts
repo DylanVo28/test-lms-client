@@ -42,6 +42,8 @@ export const API_PATH = {
 
   FILTER_PRICE: '/api/filters/price',
 
+  CLAIM_CERTIFICATES: '/api/certificates/claim',
+
   FILTER_TOPIC: '/api/filters/topic',
 
   FILTER_LEVEL: '/api/filters/level',

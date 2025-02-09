@@ -28,6 +28,7 @@ interface InputTextProps extends InputProps {
   inputDefault?: boolean;
   isBlack?: boolean;
   classInputWrapper?: string;
+  minRows?: number;
 }
 
 const InputTextArena = (props: InputTextProps) => {
@@ -58,6 +59,7 @@ const InputTextArena = (props: InputTextProps) => {
     isFilter,
     name,
     isLesson,
+    minRows,
     isInput,
     ...rest
   } = props;
@@ -89,6 +91,7 @@ const InputTextArena = (props: InputTextProps) => {
         value={value}
         onChange={onChange}
         isDisabled={isDisabled}
+        minRows={minRows}
         radius={radius}
         className={clsx('rounded ', {
           [className]: !!className,

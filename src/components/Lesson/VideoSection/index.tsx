@@ -5,37 +5,51 @@ import 'video.js/dist/video-js.css';
 import 'videojs-hls-quality-selector';
 import 'videojs-contrib-quality-levels';
 import NextVideo from './NextVideo';
+import { Button, Tooltip } from '@nextui-org/react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { TYPE_COURSE } from '@/utils/const';
 
 const VideoSection = ({
   info,
   loading,
   data,
-  currentId,
   handleNextChildSection,
+  handlePrevChildSection,
   handleFindIdNextChildSection,
+  handleFindIdPrevChildSection,
+  handleNextLastSection,
+  allItems,
 }: {
+  allItems: any;
+  handleNextLastSection: VoidFunction;
   handleNextChildSection: (
     type: string,
     idNext: string,
-    idCurrent: string
+    idCurrent: string,
+    currentType: string
   ) => void;
+  handlePrevChildSection: (
+    type: string,
+    idNext: string,
+    idCurrent: string,
+    currentType: string
+  ) => void;
+
   handleFindIdNextChildSection: any;
+  handleFindIdPrevChildSection: any;
   data: any;
   loading: boolean;
   info: any;
-  currentId: string;
 }) => {
   const videoRef: any = useRef(null);
   const playerRef: any = useRef(null);
 
-  console.log(currentId, 'currentId');
+  const lastIndex = allItems.findIndex((item: any) => item?.id === data?.id);
 
-  // const [progressVideo, setProgressVideo] = useState(0);
   const [endVideo, setEndVideo] = useState(false);
 
   const dataItemNext = handleFindIdNextChildSection(data?.id);
-
-  console.log(dataItemNext, 'dataItemNext');
+  const dataItemPrev = handleFindIdPrevChildSection(data?.id);
 
   const handleCancelNextChilSection = () => {
     setEndVideo(false);
@@ -146,18 +160,66 @@ const VideoSection = ({
   };
 
   return (
-    <div className="video-container relative">
+    <div className="video-container relative group">
+      {dataItemPrev?.id && (
+        <Button
+          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          isIconOnly
+          onClick={() => {
+            resetVideo();
+            setEndVideo(false);
+            handlePrevChildSection(
+              dataItemPrev?.type,
+              dataItemPrev?.id,
+              data?.id,
+              TYPE_COURSE.LECTURE
+            );
+          }}
+          size="sm"
+          radius="sm"
+        >
+          <CaretLeft size={24} />
+        </Button>
+      )}
+
       {endVideo && (
         <NextVideo
           handleCancelNextChilSection={handleCancelNextChilSection}
           handleNextChildSection={(type, id) => {
-            setEndVideo(false);
-            resetVideo();
-            handleNextChildSection(type, id, data?.id);
+            if (lastIndex === allItems?.length - 1) {
+              handleNextLastSection();
+            } else {
+              setEndVideo(false);
+              resetVideo();
+              handleNextChildSection(type, id, data?.id, TYPE_COURSE.LECTURE);
+            }
           }}
           dataItemNext={dataItemNext}
         />
       )}
+      <Button
+        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        isIconOnly
+        size="sm"
+        onClick={() => {
+          if (lastIndex === allItems?.length - 1) {
+            handleNextLastSection();
+          } else {
+            resetVideo();
+            setEndVideo(false);
+            handleNextChildSection(
+              dataItemNext?.type,
+              dataItemNext?.id,
+              data?.id,
+              TYPE_COURSE.LECTURE
+            );
+          }
+        }}
+        radius="sm"
+      >
+        <CaretRight size={24} />
+      </Button>
+
       <LoadingContainer loading={loading} />
       <div ref={videoRef} />
     </div>

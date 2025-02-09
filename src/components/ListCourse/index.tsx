@@ -88,7 +88,7 @@ const ListCourse = () => {
             <SelectCustom
               placeholder="Sort by type"
               isSelectSubmit
-              className="w-full md:min-w-[120px] min-h-[44px]"
+              className="w-full md:min-w-[120px] md:max-w-[140px] min-h-[44px]"
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {

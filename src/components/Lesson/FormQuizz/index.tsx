@@ -3,6 +3,8 @@ import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import FormStartTakingTest from './FormStartTakingTest';
 import LoadingContainer from '@/components/UI/LoadingContainer';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { TYPE_COURSE } from '@/utils/const';
 
 const FormQuizz = ({
   startTakingTest,
@@ -11,6 +13,10 @@ const FormQuizz = ({
   handleClickContinueQuizz,
   handleSkipQuizz,
   loading,
+  handleFindIdNextChildSection,
+  handleFindIdPrevChildSection,
+  handleNextChildSection,
+  handlePrevChildSection,
 }: {
   startTakingTest: any;
   handleStartTakingTheTest: VoidFunction;
@@ -18,12 +24,48 @@ const FormQuizz = ({
   loading: boolean;
   dataQuizz: any;
   handleSkipQuizz: any;
+  handleNextChildSection: (
+    type: string,
+    idNext: string,
+    idCurrent: string,
+    typeCurrent: string
+  ) => void;
+  handlePrevChildSection: (
+    type: string,
+    idNext: string,
+    idCurrent: string,
+    typeCurrent: string
+  ) => void;
+
+  handleFindIdNextChildSection: any;
+  handleFindIdPrevChildSection: any;
 }) => {
   const sttQuizz = localStorage.getItem('titleQuizz');
-
+  const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
+  const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
+  console.log(dataQuizz, 'dataQuizz');
 
   return (
-    <div className="relative">
+    <div className="relative group">
+      {dataItemPrev?.id && (
+        <Button
+          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          isIconOnly
+          onClick={() => {
+            handlePrevChildSection(
+              dataItemPrev?.type,
+              dataItemPrev?.id,
+              dataQuizz?.id,
+              TYPE_COURSE.QUIZ
+            );
+          }}
+          size="sm"
+          radius="sm"
+        >
+          <CaretLeft size={24} />
+        </Button>
+      )}
+
       <LoadingContainer loading={loading} />
 
       {startTakingTest ? (
@@ -71,6 +113,23 @@ const FormQuizz = ({
           </div>
         </div>
       )}
+
+      <Button
+        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        isIconOnly
+        size="sm"
+        onClick={() => {
+          handleNextChildSection(
+            dataItemNext?.type,
+            dataItemNext?.id,
+            dataQuizz?.id,
+            TYPE_COURSE.QUIZ
+          );
+        }}
+        radius="sm"
+      >
+        <CaretRight size={24} />
+      </Button>
     </div>
   );
 };

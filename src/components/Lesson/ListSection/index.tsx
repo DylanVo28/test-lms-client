@@ -4,7 +4,11 @@ import { TYPE_COURSE } from '@/utils/const';
 import { useMemo } from 'react';
 import ChildSection from './ChildSection';
 import LoadingContainer from '@/components/UI/LoadingContainer';
-import { formatTimeDuration, UserCourseProgressStatus } from '@/utils/common';
+import {
+  formatTimeDuration,
+  generateRandomId,
+  UserCourseProgressStatus,
+} from '@/utils/common';
 
 const ListSection = ({
   sections,
@@ -23,8 +27,28 @@ const ListSection = ({
   loading: boolean;
   // activeIdChildSection: any
 }) => {
+  // const processSectionsData = useMemo(() => {
+  //   const newData = sections?.map((section: any, index: any) => {
+  //     // Check if current section is the last element
+  //     if (index === sections?.length - 1) {
+  //       return {
+  //         ...section,
+  //         endCourse: [
+  //           {
+  //             id: generateRandomId(),
+  //             type: TYPE_COURSE?.END_COURSE,
+  //           },
+  //         ],
+  //       };
+  //     }
+  //     return section;
+  //   });
+
+  //   return newData;
+  // }, [sections]);
+
   return (
-    <div className="flex flex-col gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
+    <div className="flex flex-col bg-[#0F141A] overflow-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
       <LoadingContainer loading={loading} />
 
       <div className="mx-[-8px]">
@@ -52,12 +76,11 @@ const ListSection = ({
             }
           );
           const listChildSection = newLessons?.concat(newQuizzes);
-          console.log(listChildSection, 'listChildSection');
 
           const completedCount = listChildSection?.filter(
             (item: any) =>
-              item.progress &&
-              item.progress.status === UserCourseProgressStatus.COMPLETED
+              item?.progress &&
+              item?.progress?.status === UserCourseProgressStatus.COMPLETED
           ).length;
 
           const totalDuration = newLessons

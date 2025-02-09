@@ -152,14 +152,14 @@ const DetailCourse = () => {
             <YouLearn data={dataDetail?.data} />
             <Requirements data={dataDetail?.data} />
             <About data={dataDetail?.data} />
-            <Mentors mentor={dataDetail?.data?.author}/>
+            <Mentors mentor={dataDetail?.data?.author} />
             <MoreCourse
               courseId={dataDetail?.data?.id}
               author={dataDetail?.data?.author}
             />
           </div>
           <div className="col-span-3">
-            <div className="sticky top-32 z-[100000]">
+            <div className="sticky top-28 z-[100000]">
               <CardEnrollNow course={dataDetail?.data} />
             </div>
           </div>

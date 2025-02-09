@@ -13,49 +13,12 @@ const PlanYourCourse = () => {
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
 
-  const [isSubmit, setIsSubmit] = useState(false);
-
   const {
     run: getDetailCourse,
     loading,
     data: dataDetail,
   } = useGetDetailCourse({
     onSuccess: (res) => {
-      const isEnoughtSetPrice =
-        res?.data?.price &&
-        res?.data?.originPrice &&
-        res?.data?.promotionPeriod;
-      const isEnoughIntendedLearners =
-        res?.data?.objectives?.length > 0 &&
-        res?.data?.intenedLeaners?.length > 0 &&
-        res?.data?.requirements?.length > 0;
-
-      const isEnoughCourseLangdingePage =
-        res?.data?.title &&
-        res?.data?.subtitle &&
-        res?.data?.lang &&
-        res?.data?.level &&
-        res?.data?.categoryId &&
-        res?.data?.subCategoryId &&
-        res?.data?.topics?.length > 0 &&
-        res?.data?.image &&
-        res?.data?.video &&
-        res?.data?.description;
-
-      const isEnoughCurruclum = res?.data?.sections?.some(
-        (item: any) =>
-          (item.lessons && item.lessons.length > 0) ||
-          (item.quizzes && item.quizzes.length > 0)
-      );
-      if (
-        isEnoughIntendedLearners &&
-        isEnoughCurruclum &&
-        isEnoughtSetPrice &&
-        isEnoughCourseLangdingePage &&
-        isSubmit
-      ) {
-        router.push(ROUTE_PATH.LIST_COURSE);
-      }
       reset({
         objectives: res?.data?.objectives?.map((item: any) => {
           return {
@@ -123,16 +86,64 @@ const PlanYourCourse = () => {
     onSuccess: (res: any) => {
       getDetailCourse(router.query.id as string);
       toast.success(res?.message);
-      setIsSubmit(true);
     },
     onError: (error: any) => {
       toast.error(error.message);
     },
   });
 
-  const onSubmit = (values: any) => {
-    console.log(values, 'values');
+  const requestEditPublishCourse = useEditCourse({
+    onSuccess: (res: any) => {
+      toast.success(res?.message);
+      router.push(ROUTE_PATH.LIST_COURSE);
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
 
+  const onPublish = (values: any) => {
+    const body: any = {
+      isPublish: true,
+      objectives: values?.objectives
+        ?.filter((v: any) => !!v?.name)
+        ?.map((item: any) => item?.name),
+      requirements: values?.requirements
+        ?.filter((v: any) => !!v?.name)
+        ?.map((item: any) => item?.name),
+      intenedLeaners: values?.intenedLeaners
+        ?.filter((v: any) => !!v?.name)
+        ?.map((item: any) => item?.name),
+      description: values?.description,
+      image: values?.image,
+      video: values?.video,
+      subtitle: values?.subtitle,
+      title: values?.title,
+      subCategoryId: values?.subCategoryId,
+      categoryId: values?.categoryId,
+      topics: [values.topics],
+      lang: values.lang,
+      level: values.level,
+
+      price: values?.price,
+      originPrice: values?.originPrice,
+      promotionPeriod: values?.promotionPeriod,
+    };
+    if (!values.topics) {
+      delete body.topics;
+    }
+    const filteredBody = Object.fromEntries(
+      Object.entries(body).filter(([_, value]) => {
+        return (
+          value !== undefined &&
+          value !== null &&
+          (Array.isArray(value) ? value.length > 0 : value !== '')
+        );
+      })
+    );
+    requestEditPublishCourse.run(filteredBody, router.query.id as string);
+  };
+  const onSubmit = (values: any) => {
     const body: any = {
       objectives: values?.objectives
         ?.filter((v: any) => !!v?.name)
@@ -179,7 +190,9 @@ const PlanYourCourse = () => {
         <div className="bg-primary w-screen h-[100dvh] overflow-auto pb-10">
           <HeaderPlanYourCourse
             loading={requestEditCourse?.loading}
-            handleSubmitForm={handleSubmit(onSubmit)}
+            loadingPublish={requestEditPublishCourse?.loading}
+            handleSaveForm={handleSubmit(onSubmit)}
+            handlePublishForm={handleSubmit(onPublish)}
           />
           <div className="w-11/12 mx-auto pt-10">
             <div className="grid grid-cols-10 gap-12">

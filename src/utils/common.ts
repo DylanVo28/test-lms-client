@@ -30,3 +30,24 @@ export const getAvatar = () => {
   const randomNumber = Math.floor(Math.random() * 1_000_000);
   return `https://api.dicebear.com/7.x/fun-emoji/svg?seed=${randomNumber}`;
 };
+
+export enum TypeReactions {
+  LIKE = 'LIKE',
+  DISLIKE = 'DISLIKE',
+}
+
+export const generateRandomId = () => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  const getRandomValue = () =>
+    Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+
+  return `${getRandomValue()}${getRandomValue()}-${getRandomValue()}-4${getRandomValue().substr(
+    0,
+    3
+  )}-${getRandomValue()}-${getRandomValue()}${getRandomValue()}${getRandomValue()}`;
+};

@@ -28,6 +28,7 @@ interface InputTextProps extends InputProps {
   inputDefault?: boolean;
   classInputWrapper?: string;
   isBlack?: boolean;
+  error?: string;
 }
 
 const InputText = (props: InputTextProps) => {
@@ -58,6 +59,7 @@ const InputText = (props: InputTextProps) => {
     name,
     isBlack,
     isLesson,
+    error,
     isInput,
     ...rest
   } = props;
@@ -123,6 +125,7 @@ const InputText = (props: InputTextProps) => {
                 inputDefault,
               '!bg-[#0A0F1580]  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
+              '!border-danger-300 data-[hover=true]:!border-danger-300': error,
             }
           ),
         }}
@@ -130,6 +133,11 @@ const InputText = (props: InputTextProps) => {
         labelPlacement="outside"
         {...rest}
       />
+      {error && (
+        <Text type="font-14-400" className="text-danger-300">
+          {error}
+        </Text>
+      )}
     </div>
   );
 };
