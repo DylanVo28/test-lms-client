@@ -100,12 +100,19 @@ const MoreCourse = (props: any) => {
     runLikeReview(body);
   };
 
+  const generateMentors = () => {
+    if (author?.firstName || author?.lastName) {
+      return `${author?.firstName} ${author?.lastName}`
+    }
+    return author?.walletAddress
+  }
+
   if (!author) return null;
   return (
     <div className="flex flex-col gap-10 pb-10 border-b-1 border-b-black-10">
       <div className="flex flex-col gap-6">
         <Text className="text-white truncate w-full" type="font-20-600">
-          More Course By {author?.walletAddress}
+          More Course By {generateMentors()}
         </Text>
         <div className="md:grid md:grid-cols-3 flex items-center overflow-auto gap-6">
           {dataCourses?.length > 0 &&
@@ -117,7 +124,7 @@ const MoreCourse = (props: any) => {
       </div>
       <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
-          Comment
+          Comments
         </Text>
 
         {!token ? (
@@ -143,7 +150,7 @@ const MoreCourse = (props: any) => {
               );
             })}
 
-          {dataListReview?.data?.length === 0 && <NoData />}
+          {/* {dataListReview?.data?.length === 0 && <NoData />} */}
           {/* {dataListComment?.meta?.totalRecord > 4 && (
             <Button
               variant="light"

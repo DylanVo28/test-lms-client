@@ -59,11 +59,11 @@ const CardEnrollNow = ({ course }: { course: any }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Text type="font-20-400" className="text-orange">
-                {course?.originPrice ? course?.originPrice : 'Free'}
+                {course?.originPrice ? `$ ${course?.originPrice}` : 'Free'}
               </Text>
               {course?.price && (
                 <Text type="font-14-400" className="text-black-6 line-through">
-                  ${course?.price}
+                  $ {course?.price}
                 </Text>
               )}
               {/* <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">

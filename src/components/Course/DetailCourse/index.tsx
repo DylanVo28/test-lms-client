@@ -152,7 +152,7 @@ const DetailCourse = () => {
             <YouLearn data={dataDetail?.data} />
             <Requirements data={dataDetail?.data} />
             <About data={dataDetail?.data} />
-            <Mentors />
+            <Mentors mentor={dataDetail?.data?.author}/>
             <MoreCourse
               courseId={dataDetail?.data?.id}
               author={dataDetail?.data?.author}

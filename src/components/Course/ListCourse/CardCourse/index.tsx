@@ -12,6 +12,13 @@ const CardCourse = ({ item }: { item?: any }) => {
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);
   }, 0);
+
+  const generateMentors = () => {
+    if (item?.author?.firstName || item?.author?.lastName) {
+      return `${item?.author?.firstName} ${item?.author?.lastName}`
+    }
+    return item?.author?.walletAddress
+  }
   return (
     <div
       onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
@@ -53,7 +60,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           </div>
           {item?.author?.walletAddress && (
             <Text type="font-14-400" className="break-words">
-              By:  {item?.author?.walletAddress}
+              By:  {generateMentors()}
             </Text>
           )}
         </div>
@@ -61,7 +68,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.originPrice ? `$${item?.originPrice}` : 'Free'}
+                {item?.originPrice ? `$ ${item?.originPrice}` : 'Free'}
               </Text>
             </div>
             {item?.price && (
