@@ -4,8 +4,13 @@ import RateStar from '@/components/UI/RateStar';
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, Tooltip } from '@nextui-org/react';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import ReactStars from 'react-stars';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 const CardCourse = ({ item }: { item?: any }) => {
   const router = useRouter();
@@ -15,10 +20,10 @@ const CardCourse = ({ item }: { item?: any }) => {
 
   const generateMentors = () => {
     if (item?.author?.firstName || item?.author?.lastName) {
-      return `${item?.author?.firstName} ${item?.author?.lastName}`
+      return `${item?.author?.firstName} ${item?.author?.lastName}`;
     }
-    return item?.author?.walletAddress
-  }
+    return item?.author?.walletAddress;
+  };
   return (
     <div
       onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
@@ -46,7 +51,9 @@ const CardCourse = ({ item }: { item?: any }) => {
 
           <div className="flex items-center gap-1">
             <IconTime />
-            <Text type="font-12-500">16 hours</Text>
+            <Text type="font-12-500">
+              {dayjs(item?.createdAt).fromNow(true)}
+            </Text>
           </div>
         </div>
         <Text type="font-16-500" className="line-clamp-1 capitalize">
@@ -54,9 +61,16 @@ const CardCourse = ({ item }: { item?: any }) => {
         </Text>
         <div className="flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
           <div className="flex items-center gap-2">
-            <Text type="font-14-500">4.1</Text>
-            <RateStar rate={4} />
-            <Text type="font-14-500">(230)</Text>
+            <Text type="font-14-500">{item?.rating}</Text>
+            <ReactStars
+              count={5}
+              color1="#D9D9D9"
+              color2="#F2B021"
+              value={item?.rating}
+              size={16}
+              className="flex items-center gap-1 mb-1"
+            />
+            <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
           </div>
           {item?.author?.walletAddress && (
             <Text type="font-14-400" className="break-words">

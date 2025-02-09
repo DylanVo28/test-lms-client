@@ -16,6 +16,7 @@ export const ROUTE_PATH = {
 export enum TYPE_COURSE {
   LECTURE = 'LECTURE',
   QUIZ = 'QUIZ',
+  END_COURSE = 'END_COURSE',
 }
 
 export enum Language {

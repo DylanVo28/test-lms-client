@@ -1,6 +1,7 @@
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { deleteAuthCookies, setAuthCookies } from '@/store/auth';
+import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { Tooltip } from '@nextui-org/react';
 import Image from 'next/image';
@@ -20,16 +21,17 @@ const MENUS = [
     href: ROUTE_PATH.MY_LEARNING,
 
   },
-  {
-    id: 3,
-    label: 'English',
-    href: '',
+  // {
+  //   id: 3,
+  //   label: 'English',
+  //   href: '',
 
-  },
+  // },
 ];
 
 const ContentProfile = ({ disconnect }: { disconnect: any }) => {
   const { address } = useAccount();
+  const { profile } = useProfile();
   const router = useRouter()
   const handleRedirectPage = (link: string) => {
     router.push(link)
@@ -42,12 +44,22 @@ const ContentProfile = ({ disconnect }: { disconnect: any }) => {
     toast.success('Logout successfully');
 
   }
+
+  console.log('profile', profile);
+
+  const generateName = () => {
+    if (profile?.firstName || profile?.lastName) {
+      return `${profile?.firstName} ${profile?.lastName}`
+    }
+    return profile?.walletAddress
+  }
+  
   return (
     <div>
       <div className="p-4 border-b-1 border-solid border-[#F0F0F01A] flex gap-1 justify-between items-center">
         <div className="flex flex-col  gap-[2px]">
           <Text className="text-black-7 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap truncate w-full" type="font-14-400">
-            {address}
+            {generateName()}
           </Text>
 
         </div>

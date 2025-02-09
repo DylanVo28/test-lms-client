@@ -11,26 +11,41 @@ import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect } from 'react';
+import { useClaimCertificates } from './service';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const [valueYourProgress] = useAtom(valueProgressAtom)
+  const [valueYourProgress] = useAtom(valueProgressAtom);
 
-  const {
-    run: getDetailCourse,
-    data: dataDetail,
-  } = useGetDetailCourse({
-    onSuccess: () => {
+  const receivedCertificate = router.query.receivedCertificate === 'true';
+
+  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
+    onSuccess: () => {},
+  });
+
+  const { run: runClaimCertificates } = useClaimCertificates({
+    onSuccess(res) {
+      console.log(res, 'res');
     },
   });
 
   useEffect(() => {
     if (router.query.id) {
-      getDetailCourse(router.query.id as string)
+      getDetailCourse(router.query.id as string);
     }
+  }, [router.query.id]);
 
-  }, [router.query.id])
+  useEffect(() => {
+    const isEightyPercent =
+      (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
 
+    if (!receivedCertificate && isEightyPercent) {
+      const body = {
+        courseId: router.query.id as string,
+      };
+      runClaimCertificates(body);
+    }
+  }, [valueYourProgress?.value]);
 
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
@@ -38,7 +53,9 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-1">
             <Button
-              onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(router.query.id))}
+              onClick={() =>
+                router.push(ROUTE_PATH.DETAIL_COURSE(router.query.id))
+              }
               isIconOnly
               radius="full"
               size="md"
@@ -57,8 +74,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
         </div>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2 cursor-pointer">
-            <div className='flex items-center justify-center relative'>
-              <div className='absolute'>
+            <div className="flex items-center justify-center relative">
+              <div className="absolute">
                 <Image
                   src="/images/img-trophy-line.png"
                   width={16}
@@ -70,7 +87,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
               <CircularProgress
                 classNames={{
                   svg: 'w-[32px] h-[32px]',
-                  indicator: 'text-green'
+                  indicator: 'text-green',
                 }}
                 maxValue={valueYourProgress?.total}
                 value={valueYourProgress?.value}

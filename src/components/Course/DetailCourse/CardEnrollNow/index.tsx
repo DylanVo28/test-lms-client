@@ -28,7 +28,10 @@ const CardEnrollNow = ({ course }: { course: any }) => {
   const { run, loading } = useEnrollCourse({
     onSuccess: (res) => {
       if (res?.data?.courseId) {
-        router.push(ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId));
+        router.push({
+          pathname: ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId),
+          query: { receivedCertificate: course?.receivedCertificate },
+        });
       }
     },
   });
@@ -106,7 +109,10 @@ const CardEnrollNow = ({ course }: { course: any }) => {
             course={course}
             handleClickButton={() => {
               if (course?.isOwner || course?.authorId === profile?.id) {
-                router.push(ROUTE_PATH.DETAIL_LESSON(course?.id));
+                router.push({
+                  pathname: ROUTE_PATH.DETAIL_LESSON(course?.id),
+                  query: { receivedCertificate: course?.receivedCertificate },
+                });
               } else {
                 run(course.id);
               }

@@ -5,11 +5,15 @@ import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
 const HeaderPlanYourCourse = ({
-  handleSubmitForm,
+  handleSaveForm,
+  handlePublishForm,
   loading,
+  loadingPublish,
 }: {
-  handleSubmitForm: VoidFunction;
+  handleSaveForm: VoidFunction;
+  handlePublishForm: VoidFunction;
   loading?: boolean;
+  loadingPublish?: boolean;
 }) => {
   const router = useRouter();
 
@@ -36,12 +40,21 @@ const HeaderPlanYourCourse = ({
       </div>
       <div className="flex items-center gap-3">
         <Button
-          onClick={handleSubmitForm}
+          onClick={handleSaveForm}
           isLoading={loading}
+          className="bg-transparent border-1 border-main min-w-[96px] !min-h-[40px] rounded"
+        >
+          <Text type="font-16-600" className="text-main">
+            Save
+          </Text>
+        </Button>
+        <Button
+          onClick={handlePublishForm}
+          isLoading={loadingPublish}
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
           <Text type="font-16-600" className="text-white">
-            Save
+            Publish
           </Text>
         </Button>
         {/* <SelectCustom

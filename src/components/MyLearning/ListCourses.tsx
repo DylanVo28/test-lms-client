@@ -134,10 +134,11 @@ export default function ListCourses() {
               key={item.id}
               id={item?.course?.id}
               name={item?.course?.title}
+              countReviews={item?.countReviews}
+              course={item?.course}
               authorName={item?.course?.author?.walletAddress || ''}
               image={item?.course?.image}
               progress={item?.progress || 0}
-              rating={4}
             />
           ))}
       </div>
@@ -147,7 +148,7 @@ export default function ListCourses() {
         <Button
           variant="light"
           radius="full"
-          className="hover:!bg-main/15 w-max"
+          className="hover:!bg-main/15 w-max mx-auto"
           onClick={loadMore}
         >
           <div className="flex items-center gap-[2px]">

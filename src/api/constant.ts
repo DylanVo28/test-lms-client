@@ -42,6 +42,8 @@ export const API_PATH = {
 
   FILTER_PRICE: '/api/filters/price',
 
+  CLAIM_CERTIFICATES: '/api/certificates/claim',
+
   FILTER_TOPIC: '/api/filters/topic',
 
   FILTER_LEVEL: '/api/filters/level',
@@ -66,6 +68,8 @@ export const API_PATH = {
 
   USER_ME: '/api/users/me',
   USER_UPDATE: '/api/users',
+
+  USER_DETAIL: (id: string) => `/api/users/${id}`,
 
   REFERRAL_SUMMARY: '/api/referral/summary',
   REFERRAL_PROFILE: '/api/referral/profile',

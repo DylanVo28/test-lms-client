@@ -4,31 +4,36 @@ import RateStar from '../UI/RateStar';
 import Image from 'next/image';
 import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
+import ReactStars from 'react-stars';
 
 interface IProps {
   id: string;
   image: string;
   progress: number;
-  rating: number;
   name: string;
   authorName: string;
+  course: any;
+  countReviews: number;
 }
 
 export default function CourseCard({
   id,
   name,
   progress = 0,
-  rating = 4,
   authorName,
   image,
+  course,
+  countReviews,
 }: IProps) {
   const router = useRouter();
 
   console.log('progress', progress);
 
-
   return (
-    <div className="w-full bg-[#FFFFFF0D] rounded overflow-hidden cursor-pointer" onClick={() => router.push(ROUTE_PATH.DETAIL_LESSON(id))}>
+    <div
+      className="w-full bg-[#FFFFFF0D] rounded overflow-hidden cursor-pointer"
+      onClick={() => router.push(ROUTE_PATH.DETAIL_LESSON(id))}
+    >
       <div className="w-full">
         <Image
           src={image || '/images/img-default.png'}
@@ -36,7 +41,7 @@ export default function CourseCard({
           width={302}
           height={200}
           className="w-full h-[200px]"
-          layout='contain'
+          layout="contain"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
@@ -52,10 +57,21 @@ export default function CourseCard({
         </div>
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />
         <div className="flex items-center justify-between">
-          <Text type="font-14-500">{(progress * 100).toFixed(0)}% complete</Text>
+          <Text type="font-14-500">
+            {(progress * 100).toFixed(0)}% complete
+          </Text>
           <div className="flex items-center gap-2">
-            <RateStar rate={rating} />
-            <Text type="font-14-500">(230)</Text>
+            <ReactStars
+              count={5}
+              color1="#D9D9D9"
+              color2="#F2B021"
+              value={course?.rating}
+              size={16}
+              className="flex items-center gap-1 mb-1"
+            />
+            <Text type="font-14-500">
+              {countReviews ? `(${countReviews})` : `(0)`}
+            </Text>
           </div>
         </div>
       </div>

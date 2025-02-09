@@ -51,11 +51,13 @@ const MyProfile = () => {
   const getReferral = async () => {
     try {
       const res = await referralRequest.getSummary();
+      console.log('resassss', res);
+      
       const data = {
         totalNetwork: res.data.totalNetwork || 0,
-        f1: res.data.f1 || 0,
-        f2: res.data.f2 || 0,
-        f3: res.data.f3 || 0,
+        f1: res.data.totalF1 || 0,
+        f2: res.data.totalF2 || 0,
+        f3: res.data.totalF3 || 0,
       };
       setSummary(data);
     } catch (error) {
@@ -88,16 +90,10 @@ const MyProfile = () => {
             email: user?.email || '--',
             verify: true,
             customers: {
-              total: summary
-                ? Number(summary.f1) +
-                    Number(summary.f2) +
-                    Number(summary.f3) +
-                    Number(summary.totalNetwork) || 0
-                : 0,
-              f1: summary?.f1 || 0,
-              f2: summary?.f2 || 0,
-              f3: summary?.f3 || 0,
-              o: summary?.totalNetwork || 0,
+              f1: summary?.f1 ? Number(summary?.f1) :  0,
+              f2: summary?.f2 ? Number(summary?.f2) :  0,
+              f3: summary?.f3 ? Number(summary?.f3) :  0,
+              total: summary?.totalNetwork ? Number(summary?.totalNetwork) :  0,
             },
           }}
         />

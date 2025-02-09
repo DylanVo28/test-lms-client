@@ -102,10 +102,12 @@ const MoreCourse = (props: any) => {
 
   const generateMentors = () => {
     if (author?.firstName || author?.lastName) {
-      return `${author?.firstName} ${author?.lastName}`
+      return `${author?.firstName} ${author?.lastName}`;
     }
-    return author?.walletAddress
-  }
+    return author?.walletAddress;
+  };
+
+  console.log(dataCourses, 'dataCourses');
 
   if (!author) return null;
   return (
@@ -122,7 +124,7 @@ const MoreCourse = (props: any) => {
         </div>
         {dataCourses?.length == 0 && <NoData />}
       </div>
-      <div className="flex flex-col gap-10">
+      {/* <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
           Comments
         </Text>
@@ -142,36 +144,13 @@ const MoreCourse = (props: any) => {
               return (
                 <Comment
                   handleLikeReview={handleLikeReview}
-                  // handleUnLikeComment={handleUnLikeComment}
-                  // handleLikeComment={handleLikeComment}
                   item={item}
                   key={index}
                 />
               );
             })}
-
-          {/* {dataListReview?.data?.length === 0 && <NoData />} */}
-          {/* {dataListComment?.meta?.totalRecord > 4 && (
-            <Button
-              variant="light"
-              radius="full"
-              className="hover:bg-main/20 w-max"
-            >
-              <div className="flex items-center gap-[2px]">
-                <Text type="font-14-500" className="text-main">
-                  See More
-                </Text>
-                <Image
-                  src={'/icons/ic-arrow-drop-right-line.svg'}
-                  width={20}
-                  height={20}
-                  alt=""
-                />
-              </div>
-            </Button>
-          )} */}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -64,13 +64,6 @@ const PlanYourCourseLeft = ({
       (item.quizzes && item.quizzes.length > 0)
   );
 
-  // useEffect(() => {
-  //   if (isEnoughIntendedLearners && isEnoughCourseLangdingePage && isEnoughIntendedLearners) {
-  //     router.push(ROUTE_PATH.LIST_COURSE)
-  //   }
-
-  // }, [isEnoughIntendedLearners, isEnoughCourseLangdingePage, isEnoughIntendedLearners])
-
   return (
     <div className="flex flex-col gap-4">
       {DATA_CONTENT?.map((item) => {
