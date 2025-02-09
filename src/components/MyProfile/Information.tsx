@@ -6,6 +6,72 @@ import InputText from '../UI/InputText';
 import InputTextArena from '../UI/InputTextArena';
 import { toast } from '../UI/Toast/toast';
 
+const inputFields = [
+  {
+    name: 'firstName',
+    label: 'First Name',
+    placeholder: 'First Name',
+    type: 'text',
+    atRow: 1,
+  },
+  {
+    name: 'lastName',
+    label: 'Last Name',
+    placeholder: 'Type',
+    type: 'text',
+    atRow: 1,
+  },
+  {
+    name: 'headline',
+    label: 'Headline',
+    placeholder: 'Type',
+    type: 'textarea',
+    atRow: 1,
+  },
+  {
+    name: 'biography',
+    label: 'Biography',
+    placeholder: 'Type',
+    type: 'text',
+    atRow: 1,
+  },
+  {
+    name: 'websiteUrl',
+    label: 'Website',
+    placeholder: 'URL',
+    type: 'url',
+    atRow: 2,
+  },
+  {
+    name: 'x',
+    label: 'X',
+    placeholder: 'Username',
+    type: 'text',
+    atRow: 2,
+  },
+  {
+    name: 'facebook',
+    label: 'Facebook',
+    placeholder: 'Username',
+    type: 'text',
+    atRow: 2,
+  },
+  {
+    name: 'linkedin',
+    label: 'LinkedIn',
+    placeholder: 'Username',
+    type: 'text',
+    atRow: 2,
+  },
+  {
+    name: 'youtube',
+    label: 'YouTube',
+    placeholder: 'Username',
+    type: 'text',
+    atRow: 2,
+  },
+];
+
 export default function Information({
   reload,
   user,
@@ -13,12 +79,31 @@ export default function Information({
   reload: VoidFunction;
   user?: TUser;
 }) {
-  const { handleSubmit, setValue, control } = useForm();
+  const { handleSubmit, setValue, control, getValues } = useForm();
   const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState<any>({});
+
+  useEffect(() => {
+    if (!user) return;
+    const userData: any = {};
+    Object.entries(user).forEach(([key, value]) => {
+      if (inputFields.find((field) => field.name === key)) {
+        setValue(key as keyof typeof user, value);
+        userData[key] = value;
+      }
+    });
+    setInitialData(userData);
+  }, [user]);
 
   const onSubmit = async (data: any) => {
-    console.log('data', data);
-    
+    if (JSON.stringify(data) === JSON.stringify(initialData)) {
+      toast.error('No changes detected!');
+      return;
+    }
+
+    console.log('initialData', JSON.stringify(initialData));
+    console.log('data', JSON.stringify(data));
+
     try {
       setLoading(true);
       await userRequest.update({
@@ -33,81 +118,6 @@ export default function Information({
       setLoading(false);
     }
   };
-  const inputFields = [
-    {
-      name: 'firstName',
-      label: 'First Name',
-      placeholder: 'First Name',
-      type: 'text',
-      atRow: 1,
-    },
-    {
-      name: 'lastName',
-      label: 'Last Name',
-      placeholder: 'Type',
-      type: 'text',
-      atRow: 1,
-    },
-    {
-      name: 'headline',
-      label: 'Headline',
-      placeholder: 'Type',
-      type: 'textarea',
-      atRow: 1,
-    },
-    {
-      name: 'biography',
-      label: 'Biography',
-      placeholder: 'Type',
-      type: 'text',
-      atRow: 1,
-    },
-
-    {
-      name: 'websiteUrl',
-      label: 'Website',
-      placeholder: 'URL',
-      type: 'url',
-      atRow: 2,
-    },
-    {
-      name: 'x',
-      label: 'X',
-      placeholder: 'Username',
-      type: 'text',
-      atRow: 2,
-    },
-
-    {
-      name: 'facebook',
-      label: 'Facebook',
-      placeholder: 'Username',
-      type: 'text',
-      atRow: 2,
-    },
-    {
-      name: 'linkedin',
-      label: 'LinkedIn',
-      placeholder: 'Username',
-      type: 'text',
-      atRow: 2,
-    },
-    {
-      name: 'youtube',
-      label: 'YouTube',
-      placeholder: 'Username',
-      type: 'text',
-      atRow: 2,
-    },
-  ];
-
-  useEffect(() => {
-    if (!user) return;
-    Object.entries(user).forEach(([key, value]) => {
-      setValue(key as keyof typeof user, value);
-    });
-  }, [user]);
-
   return (
     <div className="bg-gray-900 text-white rounded-lg w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="box-border">
