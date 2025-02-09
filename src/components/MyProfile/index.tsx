@@ -108,7 +108,7 @@ const MyProfile = () => {
                 onClick={() => setTabSelected(item.key)}
                 className={`px-[8px] pb-[16px] text-base font-medium cursor-pointer ${
                   tabSelected === item.key
-                    ? 'border-b text-[#02A6C2] border-[#02A6C2]'
+                    ? 'border-b text-main border-main'
                     : ''
                 }`}
                 key={item.key}

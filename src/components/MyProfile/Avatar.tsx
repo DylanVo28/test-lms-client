@@ -95,7 +95,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
           </div>
           <Button
             isLoading={loadingFile}
-            className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] border border-[#02A6C2]"
+            className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] border border-[var(--main-color)]"
           >
             Choose File
           </Button>
@@ -113,7 +113,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         onClick={onSave}
         isLoading={loading}
         type="button"
-        className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+        className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
       >
         Save Profile
       </Button>

@@ -95,7 +95,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
       <ProgressBar
         height="2px"
-        color="#02A6C2"
+        color="var(--main-color)"
         options={{ showSpinner: false }}
         shallowRouting
       />
@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider
               theme={darkTheme({
-                accentColor: '#02A6C2',
+                accentColor: 'var(--main-color)"',
                 borderRadius: 'small',
               })}
             >

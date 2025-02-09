@@ -5,18 +5,22 @@ import {
   DrawerHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ThemeIcon from './Icons/ThemeIcon';
 import CloseIcon from './Icons/CloseIcon';
 import ColorTheme from './ColorTheme';
 import EditLogo from './EditLogo';
 import Languages from './Languages';
 
-const CustomLogoAndTheme = () => {
+const CustomLogoAndTheme = ({
+  setUrlLogo,
+}: {
+  setUrlLogo: (value: string) => void;
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [color, setColor] = React.useState('');
   const [langs, setLangs] = React.useState<string[]>([]);
-  const [logo, setLogo] = React.useState('');
+  const [logo, setLogo] = React.useState<string>('');
 
   const onChangeColor = (color: string) => {
     setColor(color);
@@ -31,21 +35,34 @@ const CustomLogoAndTheme = () => {
   };
 
   const onSave = () => {
-    console.log({ color, langs, logo });
+    document.documentElement.style.setProperty('--main-color', color);
+    localStorage.setItem('main-color', color);
+    localStorage.setItem('logo', logo);
+    setUrlLogo(logo);
   };
+
+  useEffect(() => {
+    const savedColor = localStorage.getItem('main-color');
+    const savedLogo = localStorage.getItem('logo');
+    if (savedLogo) setLogo(savedLogo);
+    if (savedColor) {
+      setColor(savedColor);
+      document.documentElement.style.setProperty('--main-color', savedColor);
+    }
+  }, []);
 
   return (
     <>
       <Button
         onPress={onOpen}
         isIconOnly
-        className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10 bg-[#02A6C2]"
+        className="bg-main border-1 border-gray-10 rounded-[4px] w-10 h-10"
       >
         <ThemeIcon />
       </Button>
 
       <Drawer
-        className="w-[499px]"
+        className="w-[499px] z-[9999]"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         closeButton={<></>}
@@ -69,7 +86,7 @@ const CustomLogoAndTheme = () => {
                   <Button
                     onPress={onSave}
                     type="submit"
-                    className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+                    className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
                   >
                     Save
                   </Button>
@@ -83,8 +100,6 @@ const CustomLogoAndTheme = () => {
   );
 };
 
-const Divided = () => (
-  <div className="w-full border border-[#2B3032]" />
-);
+const Divided = () => <div className="w-full border border-[#2B3032]" />;
 
 export default CustomLogoAndTheme;

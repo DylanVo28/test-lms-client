@@ -81,7 +81,7 @@ const EditLogo = ({
           <div className="relative">
             <Button
               isLoading={loadingFile}
-              className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[#02A6C2]"
+              className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
             >
               Choose file
             </Button>

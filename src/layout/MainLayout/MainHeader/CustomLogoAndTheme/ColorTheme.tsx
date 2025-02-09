@@ -1,7 +1,7 @@
 import InputText from '@/components/UI/InputText';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RgbaColor, RgbaColorPicker } from 'react-colorful';
 
 const presetColors = [
@@ -9,7 +9,7 @@ const presetColors = [
   '#EC7F00',
   '#74CA00',
   '#21A988',
-  '#45B5EA',
+  '#02A6C2',
   '#8125A2',
   '#F6F2F2',
   '#05070A',
@@ -147,7 +147,15 @@ const ColorTheme = ({
     setValueColor(color);
     setTypeColor('hex');
     setColor(hexToRgba(color, 1));
+    onChangeColor(convertColor(hexToRgba(color, 1), typeColor));
   };
+
+  useEffect(() => {
+    const savedColor = localStorage.getItem('main-color');
+    if (savedColor) {
+      setColor(hexToRgba(savedColor, 1));
+    }
+  }, []);
 
   return (
     <div>

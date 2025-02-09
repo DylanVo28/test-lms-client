@@ -132,7 +132,7 @@ export default function Information({
           <Button
             isLoading={loading}
             type="submit"
-            className="w-fit px-[24px] bg-[#02A6C2] text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+            className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
           >
             Save Profile
           </Button>

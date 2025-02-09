@@ -152,7 +152,7 @@ const Overview = ({
 
         <Button
           onClick={onCopy}
-          className="rounded-[4px] font-bold text-base text-[#02A6C2] bg-[#16343B] h-[44px]"
+          className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
         >
           Copy Address
         </Button>
