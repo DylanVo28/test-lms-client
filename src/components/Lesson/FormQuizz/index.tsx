@@ -14,16 +14,20 @@ const FormQuizz = ({
   handleSkipQuizz,
   loading,
   handleFindIdNextChildSection,
+  handleNextLastSection,
   handleFindIdPrevChildSection,
   handleNextChildSection,
+  allItems,
   handlePrevChildSection,
 }: {
   startTakingTest: any;
+  handleNextLastSection: VoidFunction;
   handleStartTakingTheTest: VoidFunction;
   handleClickContinueQuizz: (id: string) => void;
   loading: boolean;
   dataQuizz: any;
   handleSkipQuizz: any;
+  allItems: any;
   handleNextChildSection: (
     type: string,
     idNext: string,
@@ -44,6 +48,9 @@ const FormQuizz = ({
   const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
   const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
   console.log(dataQuizz, 'dataQuizz');
+  const lastIndex = allItems.findIndex(
+    (item: any) => item?.id === dataQuizz?.id
+  );
 
   return (
     <div className="relative group">
@@ -119,12 +126,16 @@ const FormQuizz = ({
         isIconOnly
         size="sm"
         onClick={() => {
-          handleNextChildSection(
-            dataItemNext?.type,
-            dataItemNext?.id,
-            dataQuizz?.id,
-            TYPE_COURSE.QUIZ
-          );
+          if (lastIndex === allItems?.length - 1) {
+            handleNextLastSection();
+          } else {
+            handleNextChildSection(
+              dataItemNext?.type,
+              dataItemNext?.id,
+              dataQuizz?.id,
+              TYPE_COURSE.QUIZ
+            );
+          }
         }}
         radius="sm"
       >

@@ -9,10 +9,14 @@ const Article = ({
   handleFindIdPrevChildSection,
   handleNextChildSection,
   handlePrevChildSection,
+  allItems,
+  handleNextLastSection,
   data,
 }: any) => {
   const dataItemNext = handleFindIdNextChildSection(data?.id);
   const dataItemPrev = handleFindIdPrevChildSection(data?.id);
+  const lastIndex = allItems.findIndex((item: any) => item?.id === data?.id);
+
   return (
     <div className="w-full min-h-[566px] relative pt-20 p-12 group">
       {dataItemPrev?.id && (
@@ -47,12 +51,16 @@ const Article = ({
         isIconOnly
         size="sm"
         onClick={() => {
-          handleNextChildSection(
-            dataItemNext?.type,
-            dataItemNext?.id,
-            data?.id,
-            TYPE_COURSE.LECTURE
-          );
+          if (lastIndex === allItems?.length - 1) {
+            handleNextLastSection();
+          } else {
+            handleNextChildSection(
+              dataItemNext?.type,
+              dataItemNext?.id,
+              data?.id,
+              TYPE_COURSE.LECTURE
+            );
+          }
         }}
         radius="sm"
       >

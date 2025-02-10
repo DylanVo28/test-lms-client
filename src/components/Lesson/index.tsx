@@ -428,7 +428,9 @@ const Lesson = () => {
   return (
     <div className="grid grid-cols-10 relative" id="topLesson">
       <div className="col-span-7 flex flex-col">
-        {endCourse && <FormEndCourse courseId={router.query.id as string} />}
+        {endCourse && !typeLoadContent && (
+          <FormEndCourse courseId={router.query.id as string} />
+        )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (
           <FormQuizz
             handleStartTakingTheTest={() => setStartTakingTest(true)}
@@ -437,6 +439,8 @@ const Lesson = () => {
             loading={loadingQuizz || requestProgressStatusQuizz?.loading}
             handleSkipQuizz={handleSkipQuizz}
             dataQuizz={dataQuizz?.data}
+            allItems={allItems}
+            handleNextLastSection={handleNextLastSection}
             handleNextChildSection={handleNextChildSection}
             handlePrevChildSection={handlePrevChildSection}
             handleFindIdNextChildSection={handleFindIdNextChildSection}
@@ -460,6 +464,8 @@ const Lesson = () => {
         {dataLesson?.data?.contentType === LessonContentType.ARTICLE &&
           typeLoadContent === TYPE_COURSE.LECTURE && (
             <Article
+              allItems={allItems}
+              handleNextLastSection={handleNextLastSection}
               loading={loadingLesson || loadingQuizz}
               content={dataLesson?.data}
               handleFindIdNextChildSection={handleFindIdNextChildSection}
