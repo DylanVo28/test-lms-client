@@ -12,9 +12,11 @@ import {
   useGetListReview,
   useGetListReviewSummary,
   useLikeReview,
+  useUnLikeComment,
 } from '@/components/Course/ListCourse/service';
 import NoData from '@/components/ListCourse/NoData';
 import { useEffect, useState } from 'react';
+import { TypeReactions } from '@/utils/common';
 
 const Reviews = ({ courseId }: { courseId: string }) => {
   const [valueSearch, setValueSearch] = useState('');
@@ -29,19 +31,6 @@ const Reviews = ({ courseId }: { courseId: string }) => {
     onChange,
     loading,
   } = useGetListReview();
-  const { run: runLikeReview } = useLikeReview({
-    onSuccess(res) {
-      const newData = dataListReview.data.map((item: any) =>
-        item.id === res?.data?.courseReviewId
-          ? { ...item, reactions: [...item.reactions, res?.data] }
-          : item
-      );
-      mutate({
-        ...dataListReview,
-        data: newData,
-      });
-    },
-  });
 
   const DATA_REVIEWS = [
     {
@@ -85,15 +74,121 @@ const Reviews = ({ courseId }: { courseId: string }) => {
       runGetListReviewSummary(courseId);
     }
   }, [courseId]);
+
+  const { run: runLikeReview } = useLikeReview({
+    onSuccess(res) {
+      const reviewIndex = dataListReview.data.findIndex(
+        (review: any) => review?.id === res?.data?.courseReviewId
+      );
+
+      if (reviewIndex !== -1) {
+        const reactionIndex = dataListReview.data[
+          reviewIndex
+        ].reactions.findIndex((reaction: any) => reaction.id === res?.data?.id);
+        if (reactionIndex !== -1) {
+          dataListReview.data[reviewIndex].reactions[reactionIndex] = res?.data;
+        } else {
+          dataListReview.data[reviewIndex].reactions.push(res?.data);
+        }
+      } else {
+        dataListReview.data.push(res?.data);
+      }
+    },
+  });
+
+  const { run: runDisLikeReview } = useLikeReview({
+    onSuccess(res) {
+      const reviewIndex = dataListReview.data.findIndex(
+        (review: any) => review?.id === res?.data?.courseReviewId
+      );
+
+      if (reviewIndex !== -1) {
+        const reactionIndex = dataListReview.data[
+          reviewIndex
+        ].reactions.findIndex((reaction: any) => reaction.id === res?.data?.id);
+
+        if (reactionIndex !== -1) {
+          dataListReview.data[reviewIndex].reactions[reactionIndex] = res?.data;
+        } else {
+          dataListReview.data[reviewIndex].reactions.push(res?.data);
+        }
+      } else {
+        dataListReview.data.push(res?.data);
+      }
+    },
+  });
+
+  const { run: runUnLikeReview } = useUnLikeComment({
+    onSuccess(res) {
+      const newData = dataListReview.data.map((item: any) => {
+        if (item.id === res?.data?.courseReviewId) {
+          const newReaction = item?.reactions?.filter(
+            (reaction: any) => reaction?.id !== res?.data?.id
+          );
+          return {
+            ...item,
+            reactions: newReaction,
+          };
+        } else {
+          return item;
+        }
+      });
+
+      mutate({
+        ...dataListReview,
+        data: newData,
+      });
+    },
+  });
+  const { run: runUnDisLikeReview } = useUnLikeComment({
+    onSuccess(res) {
+      const newData = dataListReview.data.map((item: any) => {
+        if (item.id === res?.data?.courseReviewId) {
+          const newReaction = item?.reactions?.filter(
+            (reaction: any) => reaction?.id !== res?.data?.id
+          );
+          return {
+            ...item,
+            reactions: newReaction,
+          };
+        } else {
+          return item;
+        }
+      });
+
+      mutate({
+        ...dataListReview,
+        data: newData,
+      });
+    },
+  });
+
   const handleLikeReview = (id: string) => {
     const body = {
       commentId: '',
       reviewId: id,
-      name: 'like',
+      name: TypeReactions.LIKE,
       code: '1',
       keyword: '',
     };
     runLikeReview(body);
+  };
+  const handleDisLikeReview = (id: string) => {
+    const body = {
+      commentId: '',
+      reviewId: id,
+      name: TypeReactions.DISLIKE,
+      code: '1',
+      keyword: '',
+    };
+    runDisLikeReview(body);
+  };
+
+  const handleUnLikeReview = (id: string) => {
+    runUnLikeReview(id);
+  };
+  const handleUnDisLikeReview = (id: string) => {
+    runUnDisLikeReview(id);
   };
 
   return (
@@ -181,6 +276,9 @@ const Reviews = ({ courseId }: { courseId: string }) => {
               dataListReview?.data.map((item: any, index: number) => {
                 return (
                   <Comment
+                    handleUnDisLikeReview={handleUnDisLikeReview}
+                    handleUnLikeReview={handleUnLikeReview}
+                    handleDisLikeReview={handleDisLikeReview}
                     handleLikeReview={handleLikeReview}
                     item={item}
                     key={index}

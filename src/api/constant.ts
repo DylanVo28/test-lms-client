@@ -25,7 +25,7 @@ export const API_PATH = {
   REVIEW_COURSE: (id: string) => `/api/courses/${id}/review`,
 
   LIST_COMMENT: (id: string) => `/api/courses/${id}/comments`,
-
+  UN_LIKE_COMMENT: (id: string) => `/api/courses/reactions/${id}`,
   LIST_REVIEW: (id: string) => `/api/courses/${id}/reviews`,
   LIST_REVIEW_SUMMARY: (id: string) => `/api/courses/${id}/reviews/summary`,
   LIST_COURSE: '/api/courses',

@@ -14,32 +14,38 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import IconLikeReview from '@/components/UI/Icons/IconLikeReview';
 import IconUnLikeReview from '@/components/UI/Icons/IconUnLikeReview';
 import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
+import { TypeReactions } from '@/utils/common';
+import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 
 dayjs.extend(relativeTime);
 
 const Comment = ({
   item,
   handleLikeReview,
+  handleUnLikeReview,
+  handleDisLikeReview,
+  handleUnDisLikeReview,
 }: // handleUnLikeComment,
 {
   item: any;
   handleLikeReview: (id: string) => void;
+  handleUnLikeReview: (id: string) => void;
+  handleDisLikeReview: (id: string) => void;
+  handleUnDisLikeReview: (id: string) => void;
   // handleUnLikeComment: (id: string) => void;
 }) => {
   const { address } = useAccount();
   const { profile } = useProfile();
 
-  const meLiked: string = useMemo(() => {
-    return item?.reactions?.some(
-      (reaction: any) => reaction?.userId === profile?.id
-    );
-  }, [item?.reactions]);
-
-  const idLikedMe: string = useMemo(() => {
-    return item?.reactions?.find(
-      (reaction: any) => reaction?.userId === profile?.id
-    )?.id;
-  }, [item?.reactions]);
+  const meLiked = item?.reactions?.some(
+    (reaction: any) => reaction?.userId === profile?.id
+  );
+  const meReaction = item?.reactions?.find(
+    (reaction: any) => reaction?.userId === profile?.id
+  );
+  const idLikedMe = item?.reactions?.find(
+    (reaction: any) => reaction?.userId === profile?.id
+  )?.id;
 
   return (
     <div className="flex flex-col gap-3">
@@ -75,28 +81,70 @@ const Comment = ({
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <Button
-            onClick={() => handleLikeReview(item?.id)}
+            onClick={() => {
+              if (
+                meLiked &&
+                (meReaction?.name === TypeReactions?.LIKE ||
+                  meReaction?.name === 'like')
+              ) {
+                handleUnLikeReview(idLikedMe);
+              } else {
+                handleLikeReview(item?.id);
+              }
+            }}
             size="md"
             radius="full"
             isIconOnly
             variant="light"
           >
-            {item?.reactions?.length > 0 ? (
+            {meLiked &&
+            (meReaction?.name === TypeReactions?.LIKE ||
+              meReaction?.name === 'like') ? (
               <IconLikedReview />
             ) : (
               <IconLikeReview />
             )}
           </Button>
           <Text type="font-14-500" className="text-black-7">
-            {item?.reactions?.length}
+            {
+              item?.reactions?.filter(
+                (item: any) =>
+                  item?.name === TypeReactions?.LIKE || item?.name === 'like'
+              )?.length
+            }
           </Text>
         </div>
         <div className="flex items-center gap-1">
-          <Button size="md" radius="full" isIconOnly variant="light">
-            <IconUnLikeReview />
+          <Button
+            onClick={() => {
+              if (meLiked && meReaction?.name === TypeReactions?.DISLIKE) {
+                handleUnDisLikeReview(idLikedMe);
+              } else {
+                handleDisLikeReview(item?.id);
+              }
+              // if (meLiked) {
+              //   handleUnLikeReview(idLikedMe);
+              // } else {
+              //   handleLikeReview(item?.id);
+              // }
+            }}
+            size="md"
+            radius="full"
+            isIconOnly
+            variant="light"
+          >
+            {meLiked && meReaction?.name === TypeReactions?.DISLIKE ? (
+              <IconUnLikedReview />
+            ) : (
+              <IconUnLikeReview />
+            )}
           </Button>
           <Text type="font-14-500" className="text-black-7">
-            0
+            {
+              item?.reactions?.filter(
+                (item: any) => item?.name === TypeReactions?.DISLIKE
+              )?.length
+            }
           </Text>
         </div>
 

@@ -12,11 +12,13 @@ import {
   useLikeComment,
   useLikeReview,
   useRemoveLikeComment,
+  useUnLikeComment,
 } from '../../ListCourse/service';
 import { useEffect } from 'react';
 import CardComment from './CardComment';
 import CustomButtonComment from '@/components/UI/CustomButtonComment';
 import NoData from '@/components/ListCourse/NoData';
+import { TypeReactions } from '@/utils/common';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
@@ -29,51 +31,93 @@ const MoreCourse = (props: any) => {
   });
   const { dataListReview, run: runGetListReview, mutate } = useGetListReview();
 
-  // const { run: runRemoveLikeComment } = useRemoveLikeComment({
-  //   onSuccess(res) {
-  //     console.log(res, 'res');
-
-  //     const newData = dataListComment.data.map((item: any) => {
-  //       if (item.id === res?.data?.courseCommentId) {
-  //         const newReaction = item?.reactions?.filter(
-  //           (reaction: any) => reaction?.id !== res?.data?.id
-  //         );
-  //         return {
-  //           ...item,
-  //           reactions: newReaction,
-  //         };
-  //       } else {
-  //         return item;
-  //       }
-  //     });
-
-  //     mutate({
-  //       ...dataListComment,
-  //       data: newData,
-  //     });
-  //   },
-  // });
   const { run: runLikeReview } = useLikeReview({
     onSuccess(res) {
-      console.log(res, 'res');
-      const newData = dataListReview.data.map((item: any) =>
-        item.id === res?.data?.courseReviewId
-          ? { ...item, reactions: [...item.reactions, res?.data] }
-          : item
+      const reviewIndex = dataListReview.data.findIndex(
+        (review: any) => review?.id === res?.data?.courseReviewId
       );
+
+      if (reviewIndex !== -1) {
+        const reactionIndex = dataListReview.data[
+          reviewIndex
+        ].reactions.findIndex((reaction: any) => reaction.id === res?.data?.id);
+        if (reactionIndex !== -1) {
+          dataListReview.data[reviewIndex].reactions[reactionIndex] = res?.data;
+        } else {
+          dataListReview.data[reviewIndex].reactions.push(res?.data);
+        }
+      } else {
+        dataListReview.data.push(res?.data);
+      }
+    },
+  });
+
+  const { run: runDisLikeReview } = useLikeReview({
+    onSuccess(res) {
+      const reviewIndex = dataListReview.data.findIndex(
+        (review: any) => review?.id === res?.data?.courseReviewId
+      );
+
+      if (reviewIndex !== -1) {
+        const reactionIndex = dataListReview.data[
+          reviewIndex
+        ].reactions.findIndex((reaction: any) => reaction.id === res?.data?.id);
+
+        if (reactionIndex !== -1) {
+          dataListReview.data[reviewIndex].reactions[reactionIndex] = res?.data;
+        } else {
+          dataListReview.data[reviewIndex].reactions.push(res?.data);
+        }
+      } else {
+        dataListReview.data.push(res?.data);
+      }
+    },
+  });
+
+  const { run: runUnLikeReview } = useUnLikeComment({
+    onSuccess(res) {
+      const newData = dataListReview.data.map((item: any) => {
+        if (item.id === res?.data?.courseReviewId) {
+          const newReaction = item?.reactions?.filter(
+            (reaction: any) => reaction?.id !== res?.data?.id
+          );
+          return {
+            ...item,
+            reactions: newReaction,
+          };
+        } else {
+          return item;
+        }
+      });
+
       mutate({
         ...dataListReview,
         data: newData,
       });
     },
   });
-  // const handleLikeComment = (id: string) => {
-  //   const body = {
-  //     name: 'like',
-  //     code: '1',
-  //   };
-  //   runLikeComment(body, id);
-  // };
+  const { run: runUnDisLikeReview } = useUnLikeComment({
+    onSuccess(res) {
+      const newData = dataListReview.data.map((item: any) => {
+        if (item.id === res?.data?.courseReviewId) {
+          const newReaction = item?.reactions?.filter(
+            (reaction: any) => reaction?.id !== res?.data?.id
+          );
+          return {
+            ...item,
+            reactions: newReaction,
+          };
+        } else {
+          return item;
+        }
+      });
+
+      mutate({
+        ...dataListReview,
+        data: newData,
+      });
+    },
+  });
   // const handleUnLikeComment = (id: string) => {
   //   runRemoveLikeComment(id);
   // };
@@ -93,11 +137,28 @@ const MoreCourse = (props: any) => {
     const body = {
       commentId: '',
       reviewId: id,
-      name: 'like',
+      name: TypeReactions.LIKE,
       code: '1',
       keyword: '',
     };
     runLikeReview(body);
+  };
+  const handleDisLikeReview = (id: string) => {
+    const body = {
+      commentId: '',
+      reviewId: id,
+      name: TypeReactions.DISLIKE,
+      code: '1',
+      keyword: '',
+    };
+    runDisLikeReview(body);
+  };
+
+  const handleUnLikeReview = (id: string) => {
+    runUnLikeReview(id);
+  };
+  const handleUnDisLikeReview = (id: string) => {
+    runUnDisLikeReview(id);
   };
 
   const generateMentors = () => {
@@ -143,6 +204,9 @@ const MoreCourse = (props: any) => {
             dataListReview?.data.map((item: any, index: number) => {
               return (
                 <Comment
+                  handleUnDisLikeReview={handleUnDisLikeReview}
+                  handleUnLikeReview={handleUnLikeReview}
+                  handleDisLikeReview={handleDisLikeReview}
                   handleLikeReview={handleLikeReview}
                   item={item}
                   key={index}

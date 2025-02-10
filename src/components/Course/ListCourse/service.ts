@@ -141,6 +141,14 @@ export const useLikeComment = (options?: IOptions) => {
   return useRequest(serviceLikeComment, { manual: true, ...options });
 };
 
+const serviceUnLikeComment = async (id: string) => {
+  return privateRequest(request.delete, API_PATH.UN_LIKE_COMMENT(id), {});
+};
+
+export const useUnLikeComment = (options?: IOptions) => {
+  return useRequest(serviceUnLikeComment, { manual: true, ...options });
+};
+
 const serviceLikeReview = async (body: any) => {
   return privateRequest(request.post, API_PATH.LIKE_REVIEW, {
     data: body,
