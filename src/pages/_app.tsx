@@ -24,7 +24,6 @@ import {
 import nextI18nConfig from '../../next-i18next.config';
 import { Toaster } from 'sonner';
 
-
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -43,7 +42,6 @@ const config = getDefaultConfig({
 });
 
 const queryClient = new QueryClient();
-
 
 export const SEO: DefaultSeoProps = {
   titleTemplate: 'LMS',
@@ -104,7 +102,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider
               theme={darkTheme({
-                accentColor: 'var(--main-color)"',
+                accentColor: '#02A6C2',
                 borderRadius: 'small',
               })}
             >
