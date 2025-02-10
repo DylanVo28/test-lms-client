@@ -124,19 +124,19 @@ const MoreCourse = (props: any) => {
         </div>
         {dataCourses?.length == 0 && <NoData />}
       </div>
-      {/* <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
           Comments
         </Text>
 
-        {!token ? (
+        {/* {!token ? (
           <CustomButtonComment />
         ) : (
           <CardComment
             reloadListReview={reloadListReview}
             courseId={courseId}
           />
-        )}
+        )} */}
 
         <div className="flex flex-col gap-6">
           {dataListReview?.data?.length > 0 &&
@@ -150,7 +150,7 @@ const MoreCourse = (props: any) => {
               );
             })}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

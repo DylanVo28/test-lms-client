@@ -68,7 +68,10 @@ const Mentors = ({ mentor }: any) => {
                 <Text type="font-14-400" className="text-white">
                   {mentorProfile?.instructorInfo?.avgRate || 0}
                 </Text>
-                <Rater total={5} rating={4} />
+                <Rater
+                  total={5}
+                  rating={mentorProfile?.instructorInfo?.avgRate || 0}
+                />
                 <Text type="font-14-400" className="text-white">
                   {mentorProfile?.instructorInfo?.countReviews || 0} Reviews
                 </Text>
