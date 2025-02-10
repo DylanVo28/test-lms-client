@@ -31,39 +31,18 @@ const DATA_CONTENT = [
 const PlanYourCourseLeft = ({
   activePlan,
   handleActivePlan,
-  dataDetail,
+  isEnoughtSetPrice,
+  isEnoughCourseLangdingePage,
+  isEnoughCurruclum,
+  isEnoughIntendedLearners,
 }: {
   handleActivePlan: (plan: number) => void;
   activePlan: number;
-  dataDetail: any;
+  isEnoughtSetPrice: any;
+  isEnoughCourseLangdingePage: any;
+  isEnoughCurruclum: any;
+  isEnoughIntendedLearners: any;
 }) => {
-  const isEnoughtSetPrice =
-    dataDetail?.data?.price &&
-    dataDetail?.data?.originPrice &&
-    dataDetail?.data?.promotionPeriod;
-  const isEnoughIntendedLearners =
-    dataDetail?.data?.objectives?.length > 0 &&
-    dataDetail?.data?.intenedLeaners?.length > 0 &&
-    dataDetail?.data?.requirements?.length > 0;
-
-  const isEnoughCourseLangdingePage =
-    dataDetail?.data?.title &&
-    dataDetail?.data?.subtitle &&
-    dataDetail?.data?.lang &&
-    dataDetail?.data?.level &&
-    dataDetail?.data?.categoryId &&
-    dataDetail?.data?.subCategoryId &&
-    dataDetail?.data?.topics?.length > 0 &&
-    dataDetail?.data?.image &&
-    dataDetail?.data?.video &&
-    dataDetail?.data?.description;
-
-  const isEnoughCurruclum = dataDetail?.data?.sections?.some(
-    (item: any) =>
-      (item.lessons && item.lessons.length > 0) ||
-      (item.quizzes && item.quizzes.length > 0)
-  );
-
   return (
     <div className="flex flex-col gap-4">
       {DATA_CONTENT?.map((item) => {

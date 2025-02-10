@@ -264,3 +264,17 @@ input[type='number'] {
     }
   }
 }
+.video-js {
+  height: 566px !important;
+}
+.video-js .vjs-tech {
+  height: 566px !important;
+}
+
+.vjs_video_3-dimensions.vjs-fluid:not(.vjs-audio-only-mode) {
+  padding-top: 0 !important;
+}
+
+.video-js.vjs-fluid:not(.vjs-audio-only-mode) {
+  padding-top: 0 !important;
+}

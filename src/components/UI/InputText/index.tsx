@@ -66,9 +66,14 @@ const InputText = (props: InputTextProps) => {
   return (
     <div className="flex flex-col gap-2 relative justify-center">
       {label && (
-        <Text type="font-16-600" className="text-white">
-          {label}
-        </Text>
+        <div className="flex items-center gap-1">
+          <Text type="font-14-400" className="text-white">
+            {label}
+          </Text>
+          {required && (
+            <Text className="font-16-400 text-danger"> &nbsp;*</Text>
+          )}
+        </div>
       )}
       <Input
         startContent={startContent}

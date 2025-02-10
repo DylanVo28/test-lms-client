@@ -219,6 +219,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
     setIndexAddQuestion(newData);
     setIdAddQuestionQuizz(id);
 
+    console.log(id, 'id23');
+
     const body = {
       question: values?.question,
       answers: values?.answers,

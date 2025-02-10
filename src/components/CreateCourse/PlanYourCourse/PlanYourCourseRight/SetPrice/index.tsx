@@ -12,10 +12,47 @@ const SetPrice = ({ control }: { control: Control }) => {
       </Text>
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-6 items-center gap-4">
-          <div className="w-[150px]">
+          <div className="w-[150px] flex items-center gap-1">
+            <Text type="font-16-600" className="text-white">
+              Origin Price
+            </Text>
+            <Text className="font-16-400 text-danger"> &nbsp;*</Text>
+          </div>
+          <div className="col-span-4">
+            <Controller
+              name="originPrice"
+              control={control}
+              rules={{
+                required: 'Origin Price is required',
+                min: { value: 0, message: 'Price must be at least 0' },
+              }}
+              render={({ field, fieldState }) => {
+                return (
+                  <InputText
+                    endContent={
+                      <Text type="font-16-400" className="text-white">
+                        USD
+                      </Text>
+                    }
+                    error={fieldState?.error?.message}
+                    type="number"
+                    onChange={field.onChange}
+                    value={field.value}
+                    className="min-w-[600px]"
+                    placeholder={'0'}
+                    inputDefault
+                  />
+                );
+              }}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-6 items-center gap-4">
+          <div className="flex items-center gap-1 w-[150px]">
             <Text type="font-16-600" className="text-white">
               Final Price
             </Text>
+            <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
           <div className="col-span-4">
             <Controller
@@ -44,41 +81,6 @@ const SetPrice = ({ control }: { control: Control }) => {
                   inputDefault
                 />
               )}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-6 items-center gap-4">
-          <div className="w-[150px]">
-            <Text type="font-16-600" className="text-white">
-              Origin Price
-            </Text>
-          </div>
-          <div className="col-span-4">
-            <Controller
-              name="originPrice"
-              control={control}
-              rules={{
-                required: 'Origin Price is required',
-                min: { value: 0, message: 'Price must be at least 0' },
-              }}
-              render={({ field, fieldState }) => {
-                return (
-                  <InputText
-                    endContent={
-                      <Text type="font-16-400" className="text-white">
-                        USD
-                      </Text>
-                    }
-                    error={fieldState?.error?.message}
-                    type="number"
-                    onChange={field.onChange}
-                    value={field.value}
-                    className="min-w-[600px]"
-                    placeholder={'0'}
-                    inputDefault
-                  />
-                );
-              }}
             />
           </div>
         </div>

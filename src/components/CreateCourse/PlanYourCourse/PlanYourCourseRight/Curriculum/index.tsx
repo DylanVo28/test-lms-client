@@ -13,20 +13,20 @@ import {
 import { useRouter } from 'next/router';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
+import FormAddSection from './CurriculumItem/FormAddSection';
 
 const CurriculumItem = dynamic(() => import('./CurriculumItem'), {
   ssr: false,
 });
 const Curriculum = () => {
-  const { control, reset } = useForm<any>({});
+  const { control, reset, handleSubmit } = useForm<any>({});
   const { profile } = useProfile();
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'sections',
   });
-  const [valueTitle, setValueTitle] = useState('');
-  const [valueLearningObjective, setValueLearningObjective] = useState('');
+  const [addSection, setAddSection] = useState(false);
 
   const router = useRouter();
 
@@ -56,15 +56,14 @@ const Curriculum = () => {
     }
   }, [router.query.id]);
 
-  const { run: runCreateSesson, loading } = useCreateSesson({
+  const { run: runCreateSesson, loading: loadingAddSection } = useCreateSesson({
     onSuccess(res) {
+      setAddSection(false);
       const newDataSesson = {
         ...res?.data,
         idSection: res?.data?.id,
       };
       const newData = [...dataListSession?.data, newDataSesson];
-      setValueTitle('');
-      setValueLearningObjective('');
       reset({
         sections: newData,
       });
@@ -74,10 +73,10 @@ const Curriculum = () => {
     onSuccess(res) {},
   });
 
-  const handleSaveSection = (index: number) => {
+  const handleSaveAddSection = (values: any, index: number) => {
     const body = {
-      title: valueTitle,
-      learningObjective: valueLearningObjective,
+      title: values?.title,
+      learningObjective: values?.learningObjective,
       courseId: router.query.id as string,
       ordinalNumber: index + 1,
     };
@@ -86,7 +85,10 @@ const Curriculum = () => {
 
   const handleRemoveSection = (index: number, id: string) => {
     remove(index);
-    runDeleteSesson(id);
+    if (id) {
+      runDeleteSesson(id);
+    }
+    setAddSection(false);
   };
   return (
     <LoadingScreen isLoading={loadingListSession}>
@@ -142,79 +144,99 @@ const Curriculum = () => {
                   <CurriculumItem item={field} />
                 </div>
               ) : (
-                <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
-                  <div className="flex items-start gap-2">
-                    <div className="min-w-[100px] pt-3">
-                      <Text type="font-16-700" className="text-white">
-                        New Section:
-                      </Text>
-                    </div>
-                    <div className="flex flex-col gap-4 w-full">
-                      <InputText
-                        maxLength={160}
-                        endContent
-                        onChange={(e: any) => setValueTitle(e.target.value)}
-                        value={valueTitle}
-                        className="w-full"
-                        placeholder="Type"
-                        inputDefault
-                      />
-                      <div className="flex flex-col gap-2">
-                        <Text type="font-16-700" className="text-white">
-                          What will students be able to do at the end of this
-                          section?
-                        </Text>
-                        <InputText
-                          maxLength={160}
-                          endContent
-                          onChange={(e: any) =>
-                            setValueLearningObjective(e.target.value)
-                          }
-                          value={valueLearningObjective}
-                          className="w-full"
-                          placeholder="Type"
-                          inputDefault
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex justify-end items-center">
-                    <div className="flex items-center gap-3">
-                      <Button
-                        onClick={() => remove(index)}
-                        className="bg-transparent border-1 rounded border-white"
-                      >
-                        <Text type="font-16-400" className="text-white">
-                          Cancel
-                        </Text>
-                      </Button>
-                      <Button
-                        onClick={() => handleSaveSection(index)}
-                        className="bg-main rounded"
-                        isLoading={loading}
-                      >
-                        <Text type="font-16-400" className="text-white">
-                          Save
-                        </Text>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <FormAddSection
+                  handleSaveAddSection={(values: any) =>
+                    handleSaveAddSection(values, index)
+                  }
+                  loading={loadingAddSection}
+                  control={control}
+                  handleSubmit={handleSubmit}
+                  handleCancelFormAddSection={() => {
+                    setAddSection(false);
+                    remove(index);
+                  }}
+                />
+                // <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
+                //   <div className="flex items-start gap-2">
+                //     <div className="min-w-[100px] pt-3">
+                //       <Text type="font-16-700" className="text-white">
+                //         New Section:
+                //       </Text>
+                //     </div>
+                //     <div className="flex flex-col gap-4 w-full">
+                //       <InputText
+                //         maxLength={160}
+                //         endContent
+                //         onChange={(e: any) => setValueTitle(e.target.value)}
+                //         value={valueTitle}
+                //         className="w-full"
+                //         placeholder="Type"
+                //         inputDefault
+                //       />
+                //       <div className="flex flex-col gap-2">
+                //         <Text type="font-16-700" className="text-white">
+                //           What will students be able to do at the end of this
+                //           section?
+                //         </Text>
+                //         <InputText
+                //           maxLength={160}
+                //           endContent
+                //           onChange={(e: any) =>
+                //             setValueLearningObjective(e.target.value)
+                //           }
+                //           value={valueLearningObjective}
+                //           className="w-full"
+                //           placeholder="Type"
+                //           inputDefault
+                //         />
+                //       </div>
+                //     </div>
+                //   </div>
+                //   <div className="flex justify-end items-center">
+                //     <div className="flex items-center gap-3">
+                //       <Button
+                //         onClick={() => {
+                //           setAddSection(false);
+                //           remove(index);
+                //         }}
+                //         className="bg-transparent border-1 rounded border-white"
+                //       >
+                //         <Text type="font-16-400" className="text-white">
+                //           Cancel
+                //         </Text>
+                //       </Button>
+                //       <Button
+                //         onClick={() => handleSaveSection(index)}
+                //         className="bg-main rounded"
+                //         isLoading={loading}
+                //       >
+                //         <Text type="font-16-400" className="text-white">
+                //           Save
+                //         </Text>
+                //       </Button>
+                //     </div>
+                //   </div>
+                // </div>
               )}
             </div>
           );
         })}
-        <Button
-          onClick={() => append({ title: '', introduction: '' })}
-          className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
-        >
-          <div className="flex items-center gap-1">
-            <IconPlusMain />
-            <Text type="font-16-400" className="text-main">
-              Section
-            </Text>
-          </div>
-        </Button>
+        {!addSection && (
+          <Button
+            onClick={() => {
+              setAddSection(true);
+              append({ title: '', introduction: '' });
+            }}
+            className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
+          >
+            <div className="flex items-center gap-1">
+              <IconPlusMain />
+              <Text type="font-16-400" className="text-main">
+                Section
+              </Text>
+            </div>
+          </Button>
+        )}
       </div>
     </LoadingScreen>
   );

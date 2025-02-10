@@ -142,10 +142,10 @@ const DetailCourse = () => {
               <div className="flex items-center gap-[6px]">
                 <Image
                   alt=""
-                  src={'/images/avatar.png'}
+                  src={dataDetail?.data?.author?.avatar}
                   width={24}
                   height={24}
-                  className="rounded-full"
+                  className="rounded-full w-6 h-6"
                 />
                 <Text type="font-16-500" className="text-black-7">
                   By

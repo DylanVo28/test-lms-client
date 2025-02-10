@@ -79,6 +79,7 @@ const VideoSection = ({
         fluid: true,
         autoplay: false,
         preload: 'auto',
+
         html5: {
           hls: {
             enableLowInitialPlaylist: true,
@@ -160,7 +161,7 @@ const VideoSection = ({
   };
 
   return (
-    <div className="video-container relative group">
+    <div className="video-container h-max max-h-[566px] relative group">
       {dataItemPrev?.id && (
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"

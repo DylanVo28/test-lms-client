@@ -184,6 +184,38 @@ const PlanYourCourse = () => {
     requestEditCourse.run(filteredBody, router.query.id as string);
   };
 
+  const isEnoughtSetPrice =
+    dataDetail?.data?.price && dataDetail?.data?.originPrice;
+  const isEnoughIntendedLearners =
+    dataDetail?.data?.objectives?.length > 0 &&
+    dataDetail?.data?.intenedLeaners?.length > 0 &&
+    dataDetail?.data?.requirements?.length > 0;
+
+  const isEnoughCourseLangdingePage =
+    dataDetail?.data?.title &&
+    dataDetail?.data?.categoryId &&
+    dataDetail?.data?.subCategoryId;
+
+  const isEnoughCurruclum = dataDetail?.data?.sections?.some(
+    (item: any) =>
+      (item.lessons && item.lessons.length > 0) ||
+      (item.quizzes && item.quizzes.length > 0)
+  );
+
+  useEffect(() => {
+    if (
+      isEnoughIntendedLearners ||
+      isEnoughCurruclum ||
+      isEnoughCourseLangdingePage
+    ) {
+      setActivePlan(activePlan + 1);
+    }
+  }, [
+    isEnoughIntendedLearners,
+    isEnoughCurruclum,
+    isEnoughCourseLangdingePage,
+  ]);
+
   return (
     <LoadingScreen isLoading={loading}>
       <form>
@@ -198,7 +230,10 @@ const PlanYourCourse = () => {
             <div className="grid grid-cols-10 gap-12">
               <div className="col-span-2">
                 <PlanYourCourseLeft
-                  dataDetail={dataDetail}
+                  isEnoughtSetPrice={isEnoughtSetPrice}
+                  isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}
+                  isEnoughCurruclum={isEnoughCurruclum}
+                  isEnoughIntendedLearners={isEnoughIntendedLearners}
                   activePlan={activePlan}
                   handleActivePlan={(plan) => setActivePlan(plan)}
                 />

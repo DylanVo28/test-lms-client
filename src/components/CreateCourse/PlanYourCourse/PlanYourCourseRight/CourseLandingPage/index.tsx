@@ -7,7 +7,12 @@ import { Control, Controller } from 'react-hook-form';
 import UploadImage from './UploadImage';
 import PromotionalVideo from './PromotionalVideo';
 import { DATA_LANGUAGE, DATA_LEVEL } from '@/utils/const';
-import { useGetCategories, useGetLanguages, useGetLevels, useGetTopics } from '@/services/filter.service';
+import {
+  useGetCategories,
+  useGetLanguages,
+  useGetLevels,
+  useGetTopics,
+} from '@/services/filter.service';
 import { useGetSubCategories } from '@/components/CreateCourse/service';
 import { useEffect } from 'react';
 
@@ -55,9 +60,14 @@ const CourseLandingPage = ({
         <Controller
           name="title"
           control={control}
-          render={({ field }) => (
+          rules={{
+            required: 'Field course title is required',
+          }}
+          render={({ field, fieldState }) => (
             <InputText
+              required
               value={field.value}
+              error={fieldState?.error?.message}
               onChange={field.onChange}
               maxLength={160}
               label="Course title"
@@ -126,12 +136,14 @@ const CourseLandingPage = ({
                 onChange={field.onChange}
                 value={field.value}
                 inputDefault
-                options={languages?.data?.map((item: any) => {
-                  return {
-                    key: item?.value,
-                    label: item?.label,
-                  };
-                }) || []}
+                options={
+                  languages?.data?.map((item: any) => {
+                    return {
+                      key: item?.value,
+                      label: item?.label,
+                    };
+                  }) || []
+                }
               />
             )}
           />
@@ -145,12 +157,14 @@ const CourseLandingPage = ({
                 onChange={field.onChange}
                 value={field.value}
                 inputDefault
-                options={levels?.data?.map((item: any) => {
-                  return {
-                    key: item?.value,
-                    label: item?.label,
-                  };
-                }) || []}
+                options={
+                  levels?.data?.map((item: any) => {
+                    return {
+                      key: item?.value,
+                      label: item?.label,
+                    };
+                  }) || []
+                }
               />
             )}
           />
@@ -238,7 +252,6 @@ const CourseLandingPage = ({
                   }
                 />
               </>
-
             )}
           />
         </div>

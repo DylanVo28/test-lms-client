@@ -199,21 +199,25 @@ const MoreCourse = (props: any) => {
           />
         )} */}
 
-        <div className="flex flex-col gap-6">
-          {dataListReview?.data?.length > 0 &&
-            dataListReview?.data.map((item: any, index: number) => {
-              return (
-                <Comment
-                  handleUnDisLikeReview={handleUnDisLikeReview}
-                  handleUnLikeReview={handleUnLikeReview}
-                  handleDisLikeReview={handleDisLikeReview}
-                  handleLikeReview={handleLikeReview}
-                  item={item}
-                  key={index}
-                />
-              );
-            })}
-        </div>
+        {dataListReview?.data?.length > 0 &&
+          dataListReview?.data.map((item: any, index: number) => {
+            return (
+              <Comment
+                handleUnDisLikeReview={handleUnDisLikeReview}
+                handleUnLikeReview={handleUnLikeReview}
+                handleDisLikeReview={handleDisLikeReview}
+                handleLikeReview={handleLikeReview}
+                item={item}
+                key={index}
+              />
+            );
+          })}
+
+        {dataListReview?.data?.length === 0 && (
+          <div className="pb-10">
+            <NoData text="No reviews yet" />
+          </div>
+        )}
       </div>
     </div>
   );
