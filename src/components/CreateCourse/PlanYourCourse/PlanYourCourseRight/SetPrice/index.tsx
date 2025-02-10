@@ -4,6 +4,7 @@ import { Control, Controller, useWatch } from 'react-hook-form';
 
 const SetPrice = ({ control }: { control: Control }) => {
   const originPrice = useWatch({ control, name: 'originPrice' });
+
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
@@ -59,7 +60,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                 required: 'Final Price is required',
                 min: { value: 0, message: 'Price must be at least 0' },
                 validate: (value) =>
-                  value <= originPrice ||
+                  Number(value) <= Number(originPrice) ||
                   'Final Price cannot be greater than Origin Price',
               }}
               render={({ field, fieldState }) => (
