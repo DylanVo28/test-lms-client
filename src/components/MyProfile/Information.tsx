@@ -108,9 +108,6 @@ export default function Information({
       return;
     }
 
-    console.log('initialData', JSON.stringify(initialData));
-    console.log('data', JSON.stringify(data));
-
     try {
       setLoading(true);
       await userRequest.update({
