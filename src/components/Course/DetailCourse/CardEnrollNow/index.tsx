@@ -21,12 +21,16 @@ const DATA_NOTE = [
 ];
 
 const CardEnrollNow = ({ course }: { course: any }) => {
+  console.log(course, 'course');
+
   const router = useRouter();
   const token = getAccessToken();
   const { profile } = useProfile();
 
   const { run, loading } = useEnrollCourse({
     onSuccess: (res) => {
+      console.log(res, 'res123');
+
       if (res?.data?.courseId) {
         router.push({
           pathname: ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId),

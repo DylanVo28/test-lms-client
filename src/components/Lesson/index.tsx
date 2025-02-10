@@ -40,6 +40,7 @@ const Lesson = () => {
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const [endCourse, setEndCourse] = useState(false);
+
   const refModalClaimCertifications: any = useRef<any>(null);
 
   const { profile } = useProfile();
@@ -104,7 +105,10 @@ const Lesson = () => {
       });
 
       const firstId = combinedArray?.[0]?.id;
+
       if (isFirstLoad) {
+        console.log(firstId, 'firstId');
+
         setActiveItemSection(firstId);
         setIsFirstLoad(false);
 
@@ -137,7 +141,7 @@ const Lesson = () => {
       handleScrollTop();
     },
   });
-  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse();
+  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({});
 
   const itemsTab = [
     {
@@ -198,16 +202,14 @@ const Lesson = () => {
       // toast.error(e.message);
     },
   });
-  console.log(dataDetail, 'dataDetail');
 
   useEffect(() => {
     const isEightyPercent =
       (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
     console.log(isEightyPercent, 'isEightyPercent');
+    console.log(dataDetail?.data?.receivedCertificate, 'receivedCertificate');
 
     if (!dataDetail?.data?.receivedCertificate && isEightyPercent) {
-      console.log('123');
-
       const body = {
         courseId: router.query.id as string,
       };

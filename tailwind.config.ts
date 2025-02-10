@@ -28,6 +28,10 @@ module.exports = {
         orange: '#F26F21',
         gray: '#1F242A',
         main: 'var(--main-color)',
+        'main-60': '#02A6C260',
+        'main-20': '#02A6C220',
+        'main-10': '#02A6C210',
+
         green: '#09A552',
         'green-1': '#1DB78D',
 

@@ -277,7 +277,7 @@ const FilterCourse = (props: any) => {
             size="sm"
             onClick={() => setExpanded(!expanded)}
             radius="full"
-            className={clsx('w-max hover:bg-main/20', {
+            className={clsx('w-max hover:bg-main-20', {
               ['mt-[-8px]']: !expanded,
             })}
           >

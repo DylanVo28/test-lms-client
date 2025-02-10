@@ -21,7 +21,7 @@ const Description = ({ description }: { description: string }) => {
           variant="light"
           radius="full"
           size="sm"
-          className="hover:bg-main/20 w-max"
+          className="hover:bg-main-20 w-max"
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
