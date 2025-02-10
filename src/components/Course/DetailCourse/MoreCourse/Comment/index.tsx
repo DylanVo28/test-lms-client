@@ -14,7 +14,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import IconLikeReview from '@/components/UI/Icons/IconLikeReview';
 import IconUnLikeReview from '@/components/UI/Icons/IconUnLikeReview';
 import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
-import { TypeReactions } from '@/utils/common';
+import { getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 
 dayjs.extend(relativeTime);
@@ -50,7 +50,13 @@ const Comment = ({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <Avatar src={item?.user?.avatar} className="w-[24px] h-[24px]" />
+        <Image
+          src={item?.user?.avatar || getAvatar()}
+          className="w-[24px] h-[24px] rounded-full"
+          width={24}
+          alt=""
+          height={24}
+        />
 
         <Text type="font-16-600" className="text-white">
           {item?.user?.firstName

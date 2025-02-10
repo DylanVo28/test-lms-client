@@ -10,6 +10,7 @@ import { useProfile } from '@/store/profile/useProfile';
 import { getAvatar } from '@/utils/common';
 import { Avatar, Button } from '@nextui-org/react';
 import { Star } from '@phosphor-icons/react';
+import Image from 'next/image';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
 
@@ -50,9 +51,12 @@ const CardComment = ({
   return (
     <div className="rounded p-4 bg-white/5 flex gap-6 items-start">
       <div>
-        <Avatar
+        <Image
           src={profile?.avatar || getAvatar()}
-          className="w-[50px] h-[50px]"
+          className="w-[50px] h-[50px] rounded-full"
+          width={50}
+          alt=""
+          height={50}
         />
       </div>
       <div className="flex flex-col gap-3 w-full">
