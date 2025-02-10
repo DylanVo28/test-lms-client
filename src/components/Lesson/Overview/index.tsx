@@ -58,6 +58,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                   value={dataDetail?.data?.rating}
                   size={16}
                   className="flex items-center gap-1 mb-1"
+                  edit={false}
                 />
               </div>
               <Text className="text-black-7" type="font-12-400">

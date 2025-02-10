@@ -22,6 +22,13 @@ const inputFields = [
     atRow: 1,
   },
   {
+    name: 'email',
+    label: 'Email',
+    placeholder: 'Type',
+    type: 'text',
+    atRow: 1,
+  },
+  {
     name: 'headline',
     label: 'Headline',
     placeholder: 'Type',

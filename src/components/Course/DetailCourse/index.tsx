@@ -73,6 +73,16 @@ const DetailCourse = () => {
     return cleanArr.join(' | ');
   };
 
+  const generateMentors = () => {
+    if (
+      dataDetail?.data?.author?.firstName ||
+      dataDetail?.data?.author?.lastName
+    ) {
+      return `${dataDetail?.data?.author?.firstName} ${dataDetail?.data?.author?.lastName}`;
+    }
+    return dataDetail?.data?.author?.walletAddress;
+  };
+
   return (
     <LoadingScreen isLoading={loading}>
       <div id="top" className="flex flex-col gap-[40px] md:gap-[52px] relative">
@@ -90,9 +100,9 @@ const DetailCourse = () => {
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
                   <Text type="font-14-400" className="text-white">
-                    4.1
+                    {dataDetail?.data?.rating}
                   </Text>
-                  <Rater total={5} rating={4} />
+                  <Rater total={5} rating={dataDetail?.data?.rating} />
                 </div>
 
                 <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -145,7 +155,7 @@ const DetailCourse = () => {
                   type="font-16-500"
                   className="text-white truncate w-full"
                 >
-                  {dataDetail?.data?.author?.walletAddress}
+                  {generateMentors()}
                 </Text>
               </div>
             </div>
