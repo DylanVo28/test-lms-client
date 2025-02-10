@@ -158,11 +158,17 @@ const ListCourse = () => {
                 </div>
 
                 <div className="flex items-center gap-[30px]">
-                  <Text type="font-16-700" className="text-white">
+                  <Text
+                    type={!item?.isPublish ? 'font-16-700' : 'font-16-400'}
+                    className="text-white"
+                  >
                     Draft
                   </Text>
 
-                  <Text type="font-16-400" className="text-white">
+                  <Text
+                    type={item?.isPublish ? 'font-16-700' : 'font-16-400'}
+                    className="text-white"
+                  >
                     Public
                   </Text>
                 </div>
