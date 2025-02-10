@@ -68,6 +68,7 @@ const CardCourse = ({ item }: { item?: any }) => {
               color2="#F2B021"
               value={item?.rating}
               size={16}
+              edit={false}
               className="flex items-center gap-1 mb-1"
             />
             <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
