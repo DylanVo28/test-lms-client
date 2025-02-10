@@ -26,7 +26,7 @@ const SORT_BY = [
 const ListCourse = () => {
   const router = useRouter();
 
-  const [sort, setSort] = useState();
+  const [sort, setSort] = useState('createdAt desc');
   const [search, setSearch] = useState('');
   const [debounceVal, setDebounceVal] = useState('');
 

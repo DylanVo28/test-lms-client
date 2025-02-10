@@ -195,7 +195,7 @@ const Lesson = () => {
       }
     },
     onError(e) {
-      toast.error(e.message);
+      // toast.error(e.message);
     },
   });
   console.log(dataDetail, 'dataDetail');
