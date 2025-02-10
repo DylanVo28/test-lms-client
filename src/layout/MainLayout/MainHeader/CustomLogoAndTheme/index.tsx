@@ -62,7 +62,7 @@ const CustomLogoAndTheme = ({
         onPress={onOpen}
         isIconOnly
         className={`${
-          isTheme ? 'bg-main' : 'bg-gray-100'
+          isTheme ? 'bg-main' : 'bg-gray'
         } border-1 border-gray-10 rounded-[4px] w-10 h-10`}
       >
         <ThemeIcon />
