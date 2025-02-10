@@ -9,11 +9,13 @@ export const useGetLessons = (options?: IOptions) => {
       return await serviceGetLessons(id);
     },
     {
+      manual: true,
       ...options,
     }
   );
 
   return {
+    manual: true,
     dataLesson: data,
     run,
     loading,
@@ -30,6 +32,7 @@ export const useGetQuizz = (options?: IOptions) => {
       return await serviceGetQuizz(id);
     },
     {
+      manual: true,
       ...options,
     }
   );

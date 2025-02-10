@@ -59,7 +59,7 @@ export default function ListCourses() {
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main/10 border-1 border-main rounded">
+            <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
               <IconFilter />
               <Text className="text-main" type="font-14-500">
                 All Filter
@@ -148,7 +148,7 @@ export default function ListCourses() {
         <Button
           variant="light"
           radius="full"
-          className="hover:!bg-main/15 w-max mx-auto"
+          className="hover:!bg-main-20 w-max mx-auto"
           onClick={loadMore}
         >
           <div className="flex items-center gap-[2px]">

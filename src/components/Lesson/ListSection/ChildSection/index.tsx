@@ -31,10 +31,14 @@ const ChildSection = ({
     activeItemSectionAtom
   );
 
+  console.log(activeItemSection, 'activeItemSection');
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col">
         {items?.map((item: any, index: number) => {
+          console.log(item, 'item');
+
           const minutes = Math.floor(item?.info?.duration / 60);
           const seconds = Math.floor(item?.info?.duration % 60);
           const formattedTime = `${minutes
@@ -57,9 +61,9 @@ const ChildSection = ({
                 );
               }}
               className={clsx(
-                'flex flex-col gap-3 px-4 py-3 cursor-pointer min-h-[50px] justify-center border-b-1 border-b-black-9 hover:bg-main/50 transition-all',
+                'flex flex-col gap-3 px-4 py-3 cursor-pointer min-h-[50px] justify-center border-b-1 border-b-black-9 hover:bg-main-60  transition-all',
                 {
-                  ['bg-main/50']: item?.id === activeItemSection,
+                  ['bg-main-60']: item?.id === activeItemSection,
                 }
               )}
             >

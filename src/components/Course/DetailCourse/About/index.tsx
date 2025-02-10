@@ -13,7 +13,7 @@ const About = ({ data }: { data: any }) => {
         dangerouslySetInnerHTML={{ __html: data?.description }}
         className="text-[14px] font-normal text-white"
       />
-      {/* <Button variant="light" radius="full" className="hover:bg-main/20 w-max">
+      {/* <Button variant="light" radius="full" className="hover:bg-main-20 w-max">
         <div className="flex items-center gap-[2px]">
           <Text type="font-14-500" className="text-main">
             See More

@@ -177,7 +177,7 @@ const ListCourse = () => {
                 ) : (
                   <Button
                     radius="full"
-                    className="w-max hover:bg-main/20"
+                    className="w-max hover:bg-main-20"
                     variant="light"
                     onClick={clearFilter}
                   >
@@ -236,7 +236,7 @@ const ListCourse = () => {
               <Button
                 variant="light"
                 radius="full"
-                className="hover:bg-main/20 w-max mx-auto"
+                className="hover:bg-main-20 w-max mx-auto"
                 onClick={loadMore}
               >
                 <div className="flex items-center gap-[2px]">

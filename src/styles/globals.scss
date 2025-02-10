@@ -1,7 +1,7 @@
 @import './text.scss';
 
 :root {
-  --main-color: #02A6C2;
+  --main-color: #02a6c2;
 }
 
 *,
@@ -91,7 +91,9 @@ body {
   &:hover {
     .ql-container.ql-snow,
     .ql-toolbar.ql-snow {
-      border-color: var(--main-color) !important; /* Change border color on hover */
+      border-color: var(
+        --main-color
+      ) !important; /* Change border color on hover */
     }
   }
   .ql-editor {
@@ -135,7 +137,9 @@ body {
   &:hover {
     .ql-container.ql-snow,
     .ql-toolbar.ql-snow {
-      border-color: var(--main-color) !important; /* Change border color on hover */
+      border-color: var(
+        --main-color
+      ) !important; /* Change border color on hover */
     }
   }
   .ql-editor {
