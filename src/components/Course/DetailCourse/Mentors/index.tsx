@@ -4,6 +4,10 @@ import {
   IconReadmi,
   IconTelegram,
   IconTwiter,
+  IconFb,
+  IconLinkedIn,
+  IconYoutube,
+  IconX,
 } from '@/components/UI/Icons/IconSocial';
 import IconStudent from '@/components/UI/Icons/IconStudent';
 import IconVideo from '@/components/UI/Icons/IconVideo';
@@ -97,15 +101,47 @@ const Mentors = ({ mentor }: any) => {
               {mentor?.biography}
             </Text>
             <div className="flex items-center gap-2">
-              {mentor?.x && (
+              {/* {mentor?.x && (
                 <div
                   className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center"
                   onClick={() => window.open(mentor?.x, '_blank')}
                 >
                   <IconTwiter />
                 </div>
+              )} */}
+              {mentor?.facebook && (
+                <div
+                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                  onClick={() => window.open(mentor?.facebook, '_blank')}
+                >
+                  <IconFb />
+                </div>
               )}
-              <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
+              {mentor?.youtube && (
+                <div
+                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                  onClick={() => window.open(mentor?.youtube, '_blank')}
+                >
+                  <IconYoutube />
+                </div>
+              )}
+              {mentor?.linkedin && (
+                <div
+                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                  onClick={() => window.open(mentor?.linkedin, '_blank')}
+                >
+                  <IconLinkedIn />
+                </div>
+              )}
+              {mentor?.x && (
+                <div
+                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                  onClick={() => window.open(mentor?.x, '_blank')}
+                >
+                  <IconX />
+                </div>
+              )}
+              {/* <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
                 <IconTelegram />
               </div>
               <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
@@ -113,7 +149,7 @@ const Mentors = ({ mentor }: any) => {
               </div>
               <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
                 <IconReadmi />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

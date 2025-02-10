@@ -63,7 +63,9 @@ const MainHeader = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setUrlLogo(localStorage.getItem('logo') || '/logo.png');
+      if (localStorage.getItem('logo')) {
+        setUrlLogo(localStorage.getItem('logo') as string);
+      }
     }
   }, []);
 
@@ -97,7 +99,7 @@ const MainHeader = () => {
           width={125}
           height={46}
           className="cursor-pointer"
-          src={urlLogo}
+          src={urlLogo || '/logo.png'}
         />
 
         <Image
