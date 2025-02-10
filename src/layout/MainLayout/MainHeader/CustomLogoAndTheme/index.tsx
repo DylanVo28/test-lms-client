@@ -18,6 +18,7 @@ const CustomLogoAndTheme = ({
   setUrlLogo: (value: string) => void;
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isTheme, setIsTheme] = React.useState(false);
   const [color, setColor] = React.useState('');
   const [langs, setLangs] = React.useState<string[]>([]);
   const [logo, setLogo] = React.useState<string>('');
@@ -36,14 +37,18 @@ const CustomLogoAndTheme = ({
 
   const onSave = () => {
     document.documentElement.style.setProperty('--main-color', color);
-    localStorage.setItem('main-color', color);
-    localStorage.setItem('logo', logo);
+    if (color) localStorage.setItem('main-color', color);
+    if (logo) localStorage.setItem('logo', logo);
     setUrlLogo(logo);
+    setIsTheme(true);
+    localStorage.setItem('isTheme', 'true');
   };
 
   useEffect(() => {
     const savedColor = localStorage.getItem('main-color');
     const savedLogo = localStorage.getItem('logo');
+    const savedIsTheme = localStorage.getItem('isTheme');
+    if (savedIsTheme && savedIsTheme === 'true') setIsTheme(true);
     if (savedLogo) setLogo(savedLogo);
     if (savedColor) {
       setColor(savedColor);
@@ -56,7 +61,9 @@ const CustomLogoAndTheme = ({
       <Button
         onPress={onOpen}
         isIconOnly
-        className="bg-main border-1 border-gray-10 rounded-[4px] w-10 h-10"
+        className={`${
+          isTheme ? 'bg-main' : 'bg-gray-100'
+        } border-1 border-gray-10 rounded-[4px] w-10 h-10`}
       >
         <ThemeIcon />
       </Button>
