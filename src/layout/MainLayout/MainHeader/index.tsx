@@ -1,10 +1,4 @@
 import InputText from '@/components/UI/InputText';
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@nextui-org/react';
 import Image from 'next/image';
 import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
