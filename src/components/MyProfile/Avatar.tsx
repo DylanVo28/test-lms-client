@@ -110,6 +110,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
       </div>
 
       <Button
+        isDisabled={!valueFile}
         onClick={onSave}
         isLoading={loading}
         type="button"
