@@ -145,7 +145,7 @@ export default function Information({
           </div>
         </div>
 
-        <div className="mt-[12px]">
+        <div className="mt-[32px]">
           <Button
             isLoading={loading}
             type="submit"
