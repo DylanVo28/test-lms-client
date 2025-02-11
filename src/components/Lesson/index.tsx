@@ -57,7 +57,10 @@ const Lesson = () => {
     loading: loadingListSession,
   } = useGetListSession({
     onSuccess: (res) => {
-      const firstSection = res?.data?.[0];
+      const sortData = res?.data?.sort(
+        (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
+      );
+      const firstSection = sortData?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
         return {
