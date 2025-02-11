@@ -56,6 +56,9 @@ const Comment = ({
           width={24}
           alt=""
           height={24}
+          onError={(e: any) => {
+            e.target.srcset = '/images/avatar-user.png';
+          }}
         />
 
         <Text type="font-16-600" className="text-white">
