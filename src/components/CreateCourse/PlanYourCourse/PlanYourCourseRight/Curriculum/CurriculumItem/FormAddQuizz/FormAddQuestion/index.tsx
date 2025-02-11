@@ -3,6 +3,7 @@ import InputTextArena from '@/components/UI/InputTextArena';
 import QuillEditor from '@/components/UI/QuillEditor';
 import RadioCustom from '@/components/UI/RadioCustom';
 import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
 import { Button, Radio } from '@nextui-org/react';
 import { Trash } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
@@ -62,7 +63,45 @@ const FormAddQuestion = ({
     name: 'answers',
   });
 
+  const validateAnswers = (answers: any) => {
+    const hasAnswer = answers.some((item: any) => item.answer.trim() !== '');
+
+    let errors = '';
+
+    if (!hasAnswer) errors = 'Please add your answer';
+
+    return errors;
+  };
+  const validateIsCorrect = (answers: any) => {
+    const hasCorrect = answers.some(
+      (item: any) => item.isCorrect && item.answer
+    );
+
+    let errors = '';
+    if (!hasCorrect) errors = 'Please choose the correct answer';
+
+    return errors;
+  };
+
   const onSubmit = (values: any) => {
+    const isVadidateAnswers = validateAnswers(values?.answers);
+    const isVadidateCorrect = validateIsCorrect(values?.answers);
+
+    if (!values?.question) {
+      toast.error('Please write down a question');
+      return;
+    }
+
+    if (isVadidateAnswers) {
+      toast.error(isVadidateAnswers);
+      return;
+    }
+
+    if (isVadidateCorrect) {
+      toast.error(isVadidateCorrect);
+      return;
+    }
+
     handleSaveAddQuestion(values);
   };
 

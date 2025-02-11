@@ -22,7 +22,6 @@ const FormAddQuizz = ({
       setIsAddFormQuestion(true);
     }
   }, [valueQuestion?.question]);
-  console.log(valueQuestion, 'valueQuestion');
 
   return (
     <>

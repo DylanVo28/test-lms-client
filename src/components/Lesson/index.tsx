@@ -33,6 +33,7 @@ import { activeItemSectionAtom } from './ListSection/ChildSection';
 import FormEndCourse from './FormEndCourse';
 import { useClaimCertificates } from '@/layout/LessonLayout/service';
 import ModalClaimCertifications from '@/layout/LessonLayout/ModalClaimCertifications';
+import NoDataContent from './NoDataContent';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
@@ -48,6 +49,7 @@ const Lesson = () => {
   const [valueYourProgress, setValueYourProgress] = useAtom(valueProgressAtom);
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [loadingNoData, setLoadingNoData] = useState(false);
 
   const {
     run: runGetListSession,
@@ -292,6 +294,12 @@ const Lesson = () => {
     status?: UserCourseProgressStatus
   ) => {
     setTypeLoadContent(type);
+    if (!type) {
+      setLoadingNoData(true);
+      setTimeout(() => {
+        setLoadingNoData(false);
+      }, 1000);
+    }
     if (type === TYPE_COURSE.LECTURE && id) {
       runGetLessons(id);
     } else {
@@ -428,6 +436,10 @@ const Lesson = () => {
   return (
     <div className="grid grid-cols-10 relative" id="topLesson">
       <div className="col-span-7 flex flex-col">
+        {!dataLesson?.data?.contentType &&
+          typeLoadContent !== TYPE_COURSE.QUIZ && (
+            <NoDataContent loading={loadingNoData || loadingListSession} />
+          )}
         {endCourse && !typeLoadContent && (
           <FormEndCourse courseId={router.query.id as string} />
         )}

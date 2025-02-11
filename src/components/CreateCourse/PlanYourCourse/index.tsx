@@ -14,12 +14,38 @@ const PlanYourCourse = () => {
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const {
     run: getDetailCourse,
     loading,
     data: dataDetail,
   } = useGetDetailCourse({
     onSuccess: (res) => {
+      const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
+      const isEnoughIntendedLearners =
+        res?.data?.objectives?.length > 0 &&
+        res?.data?.intenedLeaners?.length > 0 &&
+        res?.data?.requirements?.length > 0;
+
+      const isEnoughCourseLangdingePage =
+        res?.data?.title && res?.data?.categoryId && res?.data?.subCategoryId;
+
+      const isEnoughCurruclum = res?.data?.sections?.some(
+        (item: any) =>
+          (item.lessons && item.lessons.length > 0) ||
+          (item.quizzes && item.quizzes.length > 0)
+      );
+      if (
+        isEnoughIntendedLearners &&
+        isEnoughCurruclum &&
+        isEnoughtSetPrice &&
+        isEnoughCourseLangdingePage &&
+        isSubmit
+      ) {
+        router.push(ROUTE_PATH.LIST_COURSE);
+      }
+
       reset({
         objectives: res?.data?.objectives?.map((item: any) => {
           return {
@@ -86,6 +112,7 @@ const PlanYourCourse = () => {
     onSuccess: (res: any) => {
       getDetailCourse(router.query.id as string);
       toast.success(res?.message);
+      setIsSubmit(true);
     },
     onError: (error: any) => {
       toast.error(error.message);

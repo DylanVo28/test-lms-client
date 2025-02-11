@@ -95,9 +95,11 @@ const FormQuizz = ({
                 {`${dataQuizz?.questions?.length} question`}
               </Text>
             </div>
-            <Text className="text-white" type="font-16-400">
-              {dataQuizz?.description}
-            </Text>
+            <div
+              className="text-white"
+              dangerouslySetInnerHTML={{ __html: dataQuizz?.description }}
+            />
+
             <div className="flex items-center gap-3">
               <Button
                 onClick={handleStartTakingTheTest}
