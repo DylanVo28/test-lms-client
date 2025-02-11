@@ -41,7 +41,7 @@ const Mentors = ({ mentor }: any) => {
 
   const generateMentors = () => {
     if (mentor?.firstName || mentor?.lastName) {
-      return `${mentor?.firstName} ${mentor?.lastName}`;
+      return `${mentor?.firstName || ''} ${mentor?.lastName || ''}`;
     }
     return mentor?.walletAddress;
   };
@@ -51,12 +51,12 @@ const Mentors = ({ mentor }: any) => {
       <Text className="text-white" type="font-20-600">
         Mentors (KOLs)
       </Text>
-      <div className="flex flex-col md:flex-row md:items-center gap-5">
+      <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
           alt=""
           width={240}
           height={202}
-          className="rounded w-[260px] h-full"
+          className="rounded w-[240px] h-[252px] object-contain bg-[#212121]"
           src={mentor?.avatar || '/images/img-default.png'}
         />
         <div className="flex flex-col gap-5">

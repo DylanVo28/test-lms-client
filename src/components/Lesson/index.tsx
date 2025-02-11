@@ -13,7 +13,7 @@ import LearningTools from './LearningTools';
 import Search from './Search';
 import { useRouter } from 'next/router';
 import { useGetDetailCourse, useGetListSession } from '../CreateCourse/service';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import LoadingScreen from '../UI/LoadingScreen';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import {
@@ -50,6 +50,7 @@ const Lesson = () => {
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
+  console.log('valueYourProgress', valueYourProgress);
 
   const {
     run: runGetListSession,
@@ -206,6 +207,10 @@ const Lesson = () => {
     },
   });
 
+  const isLargestSeventyPercentProcess = useMemo(() => {
+    return (valueYourProgress.value / valueYourProgress.total) * 100 >= 70;
+  }, [valueYourProgress?.value]);
+  console.log('isLargestSeventyPercentProcess', isLargestSeventyPercentProcess);
   useEffect(() => {
     const isEightyPercent =
       (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
@@ -448,7 +453,7 @@ const Lesson = () => {
               loading={loadingNoData || loadingListSession}
             />
           )}
-        {endCourse && !typeLoadContent && (
+        {endCourse && !typeLoadContent && isLargestSeventyPercentProcess && (
           <FormEndCourse courseId={router.query.id as string} />
         )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (

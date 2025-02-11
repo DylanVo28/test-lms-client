@@ -40,7 +40,7 @@ const Article = ({
   return (
     <div
       ref={containerRef}
-      className="w-full min-h-[566px] max-h-[566px] scroll-custom overflow-auto relative pt-20 p-12 group"
+      className="w-full min-h-[566px] max-h-[566px] scroll-custom overflow-auto relative pt-20 p-12 group break-all"
     >
       {/* {dataItemPrev?.id && (
         <Button

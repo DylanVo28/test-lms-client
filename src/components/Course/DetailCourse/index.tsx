@@ -78,7 +78,9 @@ const DetailCourse = () => {
       dataDetail?.data?.author?.firstName ||
       dataDetail?.data?.author?.lastName
     ) {
-      return `${dataDetail?.data?.author?.firstName} ${dataDetail?.data?.author?.lastName}`;
+      return `${dataDetail?.data?.author?.firstName || ''} ${
+        dataDetail?.data?.author?.lastName || ''
+      }`;
     }
     return dataDetail?.data?.author?.walletAddress;
   };

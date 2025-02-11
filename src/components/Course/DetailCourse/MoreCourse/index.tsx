@@ -163,7 +163,7 @@ const MoreCourse = (props: any) => {
 
   const generateMentors = () => {
     if (author?.firstName || author?.lastName) {
-      return `${author?.firstName} ${author?.lastName}`;
+      return `${author?.firstName || ''} ${author?.lastName || ''}`;
     }
     return author?.walletAddress;
   };
