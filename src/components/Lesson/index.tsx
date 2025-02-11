@@ -57,7 +57,10 @@ const Lesson = () => {
     loading: loadingListSession,
   } = useGetListSession({
     onSuccess: (res) => {
-      const firstSection = res?.data?.[0];
+      const sortData = res?.data?.sort(
+        (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
+      );
+      const firstSection = sortData?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
         return {
@@ -206,8 +209,6 @@ const Lesson = () => {
   useEffect(() => {
     const isEightyPercent =
       (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;
-    console.log(isEightyPercent, 'isEightyPercent');
-    console.log(dataDetail?.data?.receivedCertificate, 'receivedCertificate');
 
     if (!dataDetail?.data?.receivedCertificate && isEightyPercent) {
       const body = {
@@ -218,7 +219,6 @@ const Lesson = () => {
   }, [valueYourProgress?.value, dataDetail?.data?.receivedCertificate]);
 
   const onChangeCheckBox = (values: any) => {
-    console.log('values', values);
     if (values?.progress?.status !== UserCourseProgressStatus?.COMPLETED) {
       if (values?.type === TYPE_COURSE.QUIZ) {
         const body = {
@@ -257,7 +257,7 @@ const Lesson = () => {
   });
   const requestProgressStatusQuizz = useProgressStatusQuizz({
     onSuccess: (res: any) => {
-      toast.success(res?.message);
+      // toast.success(res?.message);
 
       runGetListSession(router.query.id as string, profile?.id);
     },
