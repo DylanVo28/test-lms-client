@@ -4,7 +4,7 @@
 
 1. **Connect to VPS**
    - ssh
-2. **Go to LMS BE**
+2. **Go to LMS FE**
    - cd lms
    - cd lms-fe
 3. **Pull code**
