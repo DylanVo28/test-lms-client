@@ -546,7 +546,9 @@ const Lesson = () => {
             // activeIdChildSection={activeIdChildSection}
             loading={loadingListSession}
             handleClickChildLesson={handleClickChildLesson}
-            sections={dataListSession?.data}
+            sections={dataListSession?.data?.sort(
+              (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
+            )}
           />
         </div>
       </div>

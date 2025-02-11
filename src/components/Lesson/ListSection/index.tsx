@@ -76,6 +76,9 @@ const ListSection = ({
             }
           );
           const listChildSection = newLessons?.concat(newQuizzes);
+          const newDataChilSectionSort = listChildSection?.sort(
+            (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
+          );
 
           const completedCount = listChildSection?.filter(
             (item: any) =>
@@ -116,7 +119,7 @@ const ListSection = ({
                 </div>
               }
             >
-              {listChildSection?.length > 0 ? (
+              {newDataChilSectionSort?.length > 0 ? (
                 <ChildSection
                   onChangeCheckBox={onChangeCheckBox}
                   // activeIdChildSection={activeIdChildSection}
