@@ -45,6 +45,9 @@ const Certifications = () => {
                 width={120}
                 height={120}
                 className="w-[120px] h-[120px]"
+                onError={(e: any) => {
+                  e.target.srcset = '/images/img-certification.png';
+                }}
               />
 
               <div className="flex flex-col gap-3">

@@ -55,6 +55,9 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
                 height={120}
                 alt=""
                 className="w-[120px] h-[120px] rounded-lg"
+                onError={(e: any) => {
+                  e.target.srcset = '/images/img-certification.png';
+                }}
               />
               <div className="flex flex-col gap-3">
                 <Text type="font-18-600">
