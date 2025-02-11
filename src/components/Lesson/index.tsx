@@ -109,8 +109,6 @@ const Lesson = () => {
       const firstId = combinedArray?.[0]?.id;
 
       if (isFirstLoad) {
-        console.log(firstId, 'firstId');
-
         setActiveItemSection(firstId);
         setIsFirstLoad(false);
 
@@ -250,7 +248,7 @@ const Lesson = () => {
 
   const requestProgressStatusLesson = useProgressStatusLesson({
     onSuccess: (res: any) => {
-      toast.success(res?.message);
+      // toast.success(res?.message);
       runGetListSession(router.query.id as string, profile?.id);
     },
     onError: (error: any) => {
@@ -331,10 +329,10 @@ const Lesson = () => {
       },
       []
     );
-    const currentIndex = allItems.findIndex((item: any) => item.id === id);
+    const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
-    if (currentIndex !== -1 && currentIndex + 1 < allItems.length) {
-      const nextItem = allItems[currentIndex + 1];
+    if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
+      const nextItem = allItems?.[currentIndex + 1];
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
       // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
@@ -359,19 +357,19 @@ const Lesson = () => {
     return result.concat(newLessons, newQuizzes);
   }, []);
   const handleFindIdNextChildSection = (id: string) => {
-    const currentIndex = allItems.findIndex((item: any) => item.id === id);
+    const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
-    if (currentIndex !== -1 && currentIndex + 1 < allItems.length) {
-      const nextItem = allItems[currentIndex + 1];
+    if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
+      const nextItem = allItems?.[currentIndex + 1];
       return nextItem;
     }
   };
 
   const handleFindIdPrevChildSection = (id: string) => {
-    const currentIndex = allItems.findIndex((item: any) => item.id === id);
+    const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
-    if (currentIndex !== -1 && currentIndex - 1 < allItems.length) {
-      const nextItem = allItems[currentIndex - 1];
+    if (currentIndex !== -1 && currentIndex - 1 < allItems?.length) {
+      const nextItem = allItems?.[currentIndex - 1];
       return nextItem;
     }
   };
@@ -438,7 +436,16 @@ const Lesson = () => {
       <div className="col-span-7 flex flex-col">
         {!dataLesson?.data?.contentType &&
           typeLoadContent !== TYPE_COURSE.QUIZ && (
-            <NoDataContent loading={loadingNoData || loadingListSession} />
+            <NoDataContent
+              handleNextLastSection={handleNextLastSection}
+              handleNextChildSection={handleNextChildSection}
+              handlePrevChildSection={handlePrevChildSection}
+              handleFindIdNextChildSection={handleFindIdNextChildSection}
+              handleFindIdPrevChildSection={handleFindIdPrevChildSection}
+              data={dataLesson?.data}
+              allItems={allItems}
+              loading={loadingNoData || loadingListSession}
+            />
           )}
         {endCourse && !typeLoadContent && (
           <FormEndCourse courseId={router.query.id as string} />

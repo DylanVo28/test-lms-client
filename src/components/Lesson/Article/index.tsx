@@ -18,10 +18,10 @@ const Article = ({
   const lastIndex = allItems.findIndex((item: any) => item?.id === data?.id);
 
   return (
-    <div className="w-full min-h-[566px] relative pt-20 p-12 group">
+    <div className="w-full min-h-[566px] max-h-[566px] scroll-custom overflow-auto relative pt-20 p-12 group">
       {dataItemPrev?.id && (
         <Button
-          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute group-hover:opacity-100 opacity-0  left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           onClick={() => {
             handlePrevChildSection(
@@ -47,7 +47,7 @@ const Article = ({
         />
       </div>
       <Button
-        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        className="absolute right-0 group-hover:opacity-100 opacity-0  bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
         isIconOnly
         size="sm"
         onClick={() => {
