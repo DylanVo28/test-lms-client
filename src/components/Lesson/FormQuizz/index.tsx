@@ -77,7 +77,15 @@ const FormQuizz = ({
 
       {startTakingTest ? (
         <FormStartTakingTest
-          handleClickContinueQuizz={handleClickContinueQuizz}
+          handleClickContinueQuizz={(id) => {
+            handleNextChildSection(
+              dataItemNext?.type,
+              dataItemNext?.id,
+              dataQuizz?.id,
+              TYPE_COURSE.QUIZ
+            );
+            handleClickContinueQuizz(id);
+          }}
           dataQuizz={dataQuizz}
         />
       ) : (
