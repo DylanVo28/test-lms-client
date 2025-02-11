@@ -21,10 +21,10 @@ const tabs = [
     title: 'Avatar',
     key: TAB.AVATAR,
   },
-  {
-    title: 'Security',
-    key: TAB.SECURITY,
-  },
+  // {
+  //   title: 'Security',
+  //   key: TAB.SECURITY,
+  // },
 ];
 
 interface Summary {
@@ -52,7 +52,7 @@ const MyProfile = () => {
     try {
       const res = await referralRequest.getSummary();
       console.log('resassss', res);
-      
+
       const data = {
         totalNetwork: res.data.totalNetwork || 0,
         f1: res.data.totalF1 || 0,
@@ -90,10 +90,10 @@ const MyProfile = () => {
             email: user?.email || '--',
             verify: true,
             customers: {
-              f1: summary?.f1 ? Number(summary?.f1) :  0,
-              f2: summary?.f2 ? Number(summary?.f2) :  0,
-              f3: summary?.f3 ? Number(summary?.f3) :  0,
-              total: summary?.totalNetwork ? Number(summary?.totalNetwork) :  0,
+              f1: summary?.f1 ? Number(summary?.f1) : 0,
+              f2: summary?.f2 ? Number(summary?.f2) : 0,
+              f3: summary?.f3 ? Number(summary?.f3) : 0,
+              total: summary?.totalNetwork ? Number(summary?.totalNetwork) : 0,
             },
           }}
         />
