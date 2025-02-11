@@ -33,10 +33,10 @@ const HeaderPlanYourCourse = ({
             </Text>
           </div>
         </Button>
-        <div className="w-[1px] h-6 bg-[#595959]" />
+        {/* <div className="w-[1px] h-6 bg-[#595959]" />
         <Text type="font-16-500" className="text-white">
           0 min of video content uploaded
-        </Text>
+        </Text> */}
       </div>
       <div className="flex items-center gap-3">
         <Button
