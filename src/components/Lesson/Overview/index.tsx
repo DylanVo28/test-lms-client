@@ -47,7 +47,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
             <div className="flex flex-col gap-[6px]">
               <div className="flex items-center gap-1">
                 <Text className="text-white" type="font-14-700">
-                  {dataDetail?.data?.rating}
+                  {dataDetail?.data?.rating?.toFixed(1)}
                 </Text>
                 <ReactStars
                   count={5}

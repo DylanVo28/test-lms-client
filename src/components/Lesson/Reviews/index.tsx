@@ -195,7 +195,7 @@ const Reviews = ({
       <div className="flex gap-3 items-start">
         <div className="w-[100px]">
           <Text type="font-20-600">
-            {dataListReviewSummary?.data?.avgRate?.toFixed(2) || 0}
+            {dataListReviewSummary?.data?.avgRate?.toFixed(1) || 0}
           </Text>
           <Rater total={5} rating={dataListReviewSummary?.data?.avgRate} />
         </div>

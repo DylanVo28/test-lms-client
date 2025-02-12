@@ -93,7 +93,7 @@ function convertColor(color: Color, type: TypeColor) {
   };
   const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
   const rgb = `rgb(${r}, ${g}, ${b})`;
-  const rgba = `rgba(${r}, ${g}, ${b}, ${a.toFixed(2)})`;
+  const rgba = `rgba(${r}, ${g}, ${b}, ${a.toFixed(1)})`;
   switch (type) {
     case 'hex':
       return hex;

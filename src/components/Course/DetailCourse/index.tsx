@@ -102,7 +102,7 @@ const DetailCourse = () => {
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
                   <Text type="font-14-400" className="text-white">
-                    {dataDetail?.data?.rating?.toFixed(2)}
+                    {dataDetail?.data?.rating?.toFixed(1)}
                   </Text>
                   <Rater total={5} rating={dataDetail?.data?.rating} />
                 </div>
