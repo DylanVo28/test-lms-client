@@ -1,5 +1,6 @@
 import { useUploadFile } from '@/components/CreateCourse/service';
 import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -40,6 +41,17 @@ const PromotionalVideo = ({
 
   const handleFileChange = (event: any) => {
     const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const allowedTypes = ['mp4', 'mov', 'avi'];
+    const file = files[0];
+
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Can only upload video in .mp4, .mov, .avi');
+
+      return;
+    }
+
     runUploadFile(files?.[0]);
   };
   const handleClickUploadFile = () => {

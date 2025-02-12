@@ -13,7 +13,7 @@ const serviceGetCategories = async (params: any) => {
   });
 };
 
-export const useGetCategories = (params: any) => {
+export const useGetCategories = (params?: any) => {
   const { data, loading, run } = useRequest(async () => {
     return await serviceGetCategories(params);
   });

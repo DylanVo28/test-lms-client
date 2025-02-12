@@ -10,6 +10,7 @@ import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import NoData from '../ListCourse/NoData';
 import { useProfile } from '@/store/profile/useProfile';
+import Loading from '../UI/Loading';
 
 const SORT_BY = [
   { key: 'createdAt desc', label: 'Newest' },
@@ -25,12 +26,13 @@ export default function ListCourses() {
   const { data: prices } = useGetPrices();
   const { profile } = useProfile();
 
-  const { list, loadMore, noMore, reload } = useGetListUserCourse({
-    pageSize,
-    order: sort,
-    categories: category,
-    prices: price,
-  });
+  const { list, loadMore, noMore, reload, loading, loadingMore } =
+    useGetListUserCourse({
+      pageSize,
+      order: sort,
+      categories: category,
+      prices: price,
+    });
 
   const mapCategories = () => {
     return (categories?.data || [])?.map((item: any) => {
@@ -127,24 +129,29 @@ export default function ListCourses() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {list?.length > 0 &&
-          list.map((item) => (
-            <CourseCard
-              key={item.id}
-              id={item?.course?.id}
-              name={item?.course?.title}
-              countReviews={item?.countReviews}
-              course={item?.course}
-              authorName={item?.course?.author?.walletAddress || ''}
-              image={item?.course?.image}
-              progress={item?.progress || 0}
-            />
-          ))}
-      </div>
-      {list?.length === 0 && <NoData />}
+      {!loading && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {list?.length > 0 &&
+              list.map((item) => (
+                <CourseCard
+                  key={item.id}
+                  id={item?.course?.id}
+                  name={item?.course?.title}
+                  countReviews={item?.countReviews}
+                  course={item?.course}
+                  authorName={item?.course?.author?.walletAddress || ''}
+                  image={item?.course?.image}
+                  progress={item?.progress || 0}
+                />
+              ))}
+          </div>
+          {list?.length === 0 && <NoData />}
+        </>
+      )}
+      {loading && <Loading />}
 
-      {!noMore && list?.length > 0 && (
+      {!noMore && list?.length > 0 && !loading && (
         <Button
           variant="light"
           radius="full"

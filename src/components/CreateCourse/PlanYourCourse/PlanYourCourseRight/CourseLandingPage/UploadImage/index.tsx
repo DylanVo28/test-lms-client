@@ -1,6 +1,7 @@
 import { useUploadFile } from '@/components/CreateCourse/service';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -35,7 +36,18 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
 
   const handleFileChange = (event: any) => {
     const files = event.target.files;
-    runUploadFile(files?.[0]);
+    if (!files || files.length === 0) return;
+
+    const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+    const file = files[0];
+
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Can only upload files in .jpg, .jpeg, .gif or .png format');
+
+      return;
+    }
+
+    runUploadFile(file);
   };
   const handleClickUploadFile = () => {
     if (value) {

@@ -7,6 +7,7 @@ import { useGetPrices } from '@/services/filter.service';
 import { useEffect, useState } from 'react';
 import { useGetListWishList } from '../service';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
+import Loading from '@/components/UI/Loading';
 
 const SORT_BY = [
   { key: 'createdAt desc', label: 'Newest' },
@@ -20,7 +21,7 @@ const Wishlist = () => {
 
   const [price, setPrice] = useState();
 
-  const { list, reload } = useGetListWishList({
+  const { list, reload, loading, loadingMore } = useGetListWishList({
     pageSize: 50,
     order: sort,
     categories: category,
@@ -120,13 +121,18 @@ const Wishlist = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {list?.length > 0 &&
-          list.map((item, key) => (
-            <CardCourse isWishList item={item?.course} key={key} />
-          ))}
-      </div>
-      {list?.length === 0 && <NoData />}
+      {!loading && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {list?.length > 0 &&
+              list.map((item, key) => (
+                <CardCourse isWishList item={item?.course} key={key} />
+              ))}
+          </div>
+          {list?.length === 0 && <NoData />}
+        </>
+      )}
+      {(loading || loadingMore) && <Loading />}
     </div>
   );
 };

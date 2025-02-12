@@ -12,6 +12,7 @@ import NoData from '@/components/ListCourse/NoData';
 import InputText from '@/components/UI/InputText';
 import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
+import Loading from '@/components/UI/Loading';
 
 export const CATEGORIES = [
   { key: 'business', label: 'Business' },
@@ -35,7 +36,7 @@ const ListCourse = () => {
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
-  const { dataCourses, loadMore, noMore, reload } = useGetListCourse({
+  const { dataCourses, loadMore, noMore, reload, loading } = useGetListCourse({
     pageSize,
     order: sort,
     categories: category,
@@ -151,19 +152,33 @@ const ListCourse = () => {
       </div>
       <div className={clsx('grid grid-cols-1 gap-6', {})}>
         <div className={clsx('flex flex-col items-center gap-9', {})}>
-          <div
-            className={clsx('grid grid-cols-1 md:grid-cols-4 gap-6 w-full', {})}
-          >
-            {dataCourses?.length > 0 &&
-              dataCourses.map((item: any, key: number) => {
-                return <CardCourse item={item} key={key} />;
-              })}
-          </div>
-          {dataCourses?.length === 0 && (
-            <div className="flex justify-center items-center pt-4">
-              <NoData />
+          {!loading && (
+            <>
+              <div
+                className={clsx(
+                  'grid grid-cols-1 md:grid-cols-4 gap-6 w-full',
+                  {}
+                )}
+              >
+                {dataCourses?.length > 0 &&
+                  dataCourses.map((item: any, key: number) => {
+                    return <CardCourse item={item} key={key} />;
+                  })}
+              </div>
+              {dataCourses?.length === 0 && (
+                <div className="flex justify-center items-center">
+                  <NoData />
+                </div>
+              )}
+            </>
+          )}
+
+          {loading && (
+            <div className="mt-5">
+              <Loading />
             </div>
           )}
+
           {!noMore && (
             <Button
               variant="light"

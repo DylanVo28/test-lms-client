@@ -3,9 +3,11 @@ import { Button } from '@nextui-org/react';
 import { Info } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useGetMyCertificates } from '../service';
+import NoData from '@/components/ListCourse/NoData';
+import Loading from '@/components/UI/Loading';
 
 const Certifications = () => {
-  const { dataListCertificates } = useGetMyCertificates();
+  const { dataListCertificates, loading } = useGetMyCertificates();
 
   return (
     <div className="flex flex-col gap-6">
@@ -31,37 +33,42 @@ const Certifications = () => {
           </Button> */}
         </div>
       </div>
+      {!loading && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {dataListCertificates?.data?.map((item: any) => {
+              return (
+                <div
+                  key={item?.id}
+                  className="rounded border-1 border-white/10 bg-white/10 p-4 flex items-center gap-3"
+                >
+                  <Image
+                    src={item?.certificate?.image}
+                    alt=""
+                    width={120}
+                    height={120}
+                    className="w-[120px] h-[120px]"
+                    onError={(e: any) => {
+                      e.target.srcset = '/images/img-certification.png';
+                    }}
+                  />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {dataListCertificates?.data?.map((item: any) => {
-          return (
-            <div
-              key={item?.id}
-              className="rounded border-1 border-white/10 bg-white/10 p-4 flex items-center gap-3"
-            >
-              <Image
-                src={item?.certificate?.image}
-                alt=""
-                width={120}
-                height={120}
-                className="w-[120px] h-[120px]"
-                onError={(e: any) => {
-                  e.target.srcset = '/images/img-certification.png';
-                }}
-              />
-
-              <div className="flex flex-col gap-3">
-                <Text type="font-18-600" className="text-white">
-                  {item?.certificate?.name}
-                </Text>
-                <Text type="font-16-400" className="text-black-7">
-                  {item?.certificate?.description}
-                </Text>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+                  <div className="flex flex-col gap-3">
+                    <Text type="font-18-600" className="text-white">
+                      {item?.certificate?.name}
+                    </Text>
+                    <Text type="font-16-400" className="text-black-7">
+                      {item?.certificate?.description}
+                    </Text>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {dataListCertificates?.data?.length === 0 && <NoData />}
+        </>
+      )}
+      {loading && <Loading />}
     </div>
   );
 };

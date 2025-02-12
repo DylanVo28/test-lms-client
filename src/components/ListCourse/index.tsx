@@ -1,4 +1,4 @@
-import { Button, Progress } from '@nextui-org/react';
+import { Button, Progress, Spinner } from '@nextui-org/react';
 import InputText from '../UI/InputText';
 import SelectCustom from '../UI/SelectCustom';
 import Text from '../UI/Text';
@@ -16,6 +16,7 @@ import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
 import { useProfile } from '@/store/profile/useProfile';
 import { isMobile } from 'react-device-detect';
 import ModalConfirmDelete from '../Course/ModalConfirmDelete';
+import Loading from '../UI/Loading';
 
 const SORT_BY = [
   { key: 'createdAt desc', label: 'Newest' },
@@ -33,7 +34,7 @@ const ListCourse = () => {
 
   const debounceValue = useDebounce(search, { wait: 500 });
   const [idHovered, setIdHovered] = useState<string>('');
-  const { dataCourses, reload } = useGetListMyCourse({
+  const { dataCourses, reload, loading, loadingMore } = useGetListMyCourse({
     order: sort,
     search: debounceVal,
   });
@@ -118,89 +119,98 @@ const ListCourse = () => {
           </div>
         </div>
       </div>
-      {dataCourses?.length > 0 &&
-        dataCourses?.map((item: any) => {
-          return (
-            <div
-              key={item?.id}
-              onMouseEnter={() => handleMouseEnter(item?.id)}
-              onMouseLeave={handleMouseLeave}
-              className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex flex-col md:flex-row gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
-            >
-              <Image
-                alt=""
-                src={'/img-course.png'}
-                width={200}
-                height={202}
-                className="w-[200px] h-full mx-auto md:mx-0"
-              />
-              <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
-                {idHovered === item?.id && (
-                  <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50 h-full">
-                    <div className="flex flex-row items-center gap-4 justify-center h-full">
-                      <div
-                        className="flex gap-2 justify-center items-center z-[1000]"
-                        onClick={() =>
-                          router.push(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)
-                        }
-                      >
-                        <IconEdit />
-                        <Text className="text-[20px] font-bold text-white">
-                          Edit Course
-                        </Text>
+
+      {!loading && (
+        <>
+          {dataCourses?.length > 0 &&
+            dataCourses?.map((item: any) => {
+              return (
+                <div
+                  key={item?.id}
+                  onMouseEnter={() => handleMouseEnter(item?.id)}
+                  onMouseLeave={handleMouseLeave}
+                  className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex flex-col md:flex-row gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
+                >
+                  <Image
+                    alt=""
+                    src={'/img-course.png'}
+                    width={200}
+                    height={202}
+                    className="w-[200px] h-full mx-auto md:mx-0"
+                  />
+                  <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
+                    {idHovered === item?.id && (
+                      <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50 h-full">
+                        <div className="flex flex-row items-center gap-4 justify-center h-full">
+                          <div
+                            className="flex gap-2 justify-center items-center z-[1000]"
+                            onClick={() =>
+                              router.push(
+                                `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
+                              )
+                            }
+                          >
+                            <IconEdit />
+                            <Text className="text-[20px] font-bold text-white">
+                              Edit Course
+                            </Text>
+                          </div>
+                          <div
+                            className="flex gap-2 justify-center items-center z-[1000]"
+                            onClick={() => deleteCourse(item.id)}
+                          >
+                            <IconDelete />
+                            <Text className="text-[20px] font-bold text-white">
+                              Delete Course
+                            </Text>
+                          </div>
+                        </div>
                       </div>
-                      <div
-                        className="flex gap-2 justify-center items-center z-[1000]"
-                        onClick={() => deleteCourse(item.id)}
-                      >
-                        <IconDelete />
-                        <Text className="text-[20px] font-bold text-white">
-                          Delete Course
+                    )}
+                    <Text className="text-[16px] md:text-[20px] font-bold">
+                      {item?.title}
+                    </Text>
+                    <div className="flex md:justify-end md:items-end">
+                      <div className="flex items-center w-full md:w-8/12 gap-4">
+                        <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
+                          Finish your courses
                         </Text>
+                        <Progress
+                          maxValue={6}
+                          classNames={{
+                            indicator: 'bg-main',
+                            track: 'max-h-[8px]',
+                          }}
+                          className="w-full"
+                          value={2}
+                        />
                       </div>
                     </div>
-                  </div>
-                )}
-                <Text className="text-[16px] md:text-[20px] font-bold">
-                  {item?.title}
-                </Text>
-                <div className="flex md:justify-end md:items-end">
-                  <div className="flex items-center w-full md:w-8/12 gap-4">
-                    <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
-                      Finish your courses
-                    </Text>
-                    <Progress
-                      maxValue={6}
-                      classNames={{
-                        indicator: 'bg-main',
-                        track: 'max-h-[8px]',
-                      }}
-                      className="w-full"
-                      value={2}
-                    />
+
+                    <div className="flex items-center gap-[30px]">
+                      <Text
+                        type={!item?.isPublish ? 'font-16-700' : 'font-16-400'}
+                        className="text-white"
+                      >
+                        Draft
+                      </Text>
+
+                      <Text
+                        type={item?.isPublish ? 'font-16-700' : 'font-16-400'}
+                        className="text-white"
+                      >
+                        Public
+                      </Text>
+                    </div>
                   </div>
                 </div>
+              );
+            })}
 
-                <div className="flex items-center gap-[30px]">
-                  <Text
-                    type={!item?.isPublish ? 'font-16-700' : 'font-16-400'}
-                    className="text-white"
-                  >
-                    Draft
-                  </Text>
-
-                  <Text
-                    type={item?.isPublish ? 'font-16-700' : 'font-16-400'}
-                    className="text-white"
-                  >
-                    Public
-                  </Text>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      {dataCourses?.length === 0 && <NoData />}
+          {dataCourses?.length === 0 && <NoData />}
+        </>
+      )}
+      {(loading || loadingMore) && <Loading />}
       <ModalConfirmDelete ref={refModalConfirmDelete} reload={reload} />
     </div>
   );
