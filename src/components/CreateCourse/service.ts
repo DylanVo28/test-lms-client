@@ -103,6 +103,7 @@ const getListSession = async (id: string, userId: string): Promise<any> => {
   const params = {
     courseId: id,
     ownerId: userId,
+    order: 'createdAt asc',
   };
   return privateRequest(request.get, `${API_PATH.SECTIONS}`, { params });
 };
@@ -114,7 +115,7 @@ export const useGetListSession = (options?: IOptions) => {
 interface IBodyLesson {
   title: string;
   courseId: string;
-  ordinalNumber: number;
+  ordinalNumber?: number;
   learningObjective: string;
 }
 
@@ -164,7 +165,7 @@ export const useCreateLecture = (options?: IOptions) => {
 
 interface IBodyQuizz {
   title: string;
-  ordinalNumber: number;
+  ordinalNumber?: number;
   description: string;
   sectionId: string;
 }
@@ -212,7 +213,7 @@ interface answers {
 
 interface IBodyQuestionQuizz {
   question: string;
-  ordinalNumber: number;
+  ordinalNumber?: number;
   answers: answers[];
 }
 
@@ -225,7 +226,7 @@ interface answersEdit {
 
 interface IBodyEditQuestionQuizz {
   question: string;
-  ordinalNumber: number;
+  ordinalNumber?: number;
   answers: answersEdit[];
 }
 

@@ -53,7 +53,8 @@ const NoDataContent = ({
               dataItemNext?.type,
               dataItemNext?.id,
               data?.id,
-              TYPE_COURSE.LECTURE
+              TYPE_COURSE.LECTURE,
+              dataItemNext?.contentType
             );
           }
         }}

@@ -8,7 +8,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
 
-const FormEndCourse = ({ courseId }: { courseId: string }) => {
+const FormEndCourse = ({
+  courseId,
+  handleGetReviews,
+}: {
+  handleGetReviews: VoidFunction;
+  courseId: string;
+}) => {
   const [valueRating, setValueRating] = useState<any>();
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
@@ -20,6 +26,7 @@ const FormEndCourse = ({ courseId }: { courseId: string }) => {
       setValueComment('');
       setValueRating(0);
       setSubmitReviewSuccess(true);
+      handleGetReviews();
     },
     onError(err) {
       setValueComment('');

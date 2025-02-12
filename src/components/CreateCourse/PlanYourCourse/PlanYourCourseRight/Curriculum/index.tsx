@@ -30,6 +30,8 @@ const Curriculum = () => {
 
   const router = useRouter();
 
+  console.log(fields, 'fields');
+
   const {
     run: runGetListSession,
     data: dataListSession,
@@ -43,9 +45,7 @@ const Curriculum = () => {
         };
       });
       reset({
-        sections: newData.sort(
-          (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
-        ),
+        sections: newData,
       });
     },
   });
@@ -59,14 +59,7 @@ const Curriculum = () => {
   const { run: runCreateSesson, loading: loadingAddSection } = useCreateSesson({
     onSuccess(res) {
       setAddSection(false);
-      const newDataSesson = {
-        ...res?.data,
-        idSection: res?.data?.id,
-      };
-      const newData = [...dataListSession?.data, newDataSesson];
-      reset({
-        sections: newData,
-      });
+      runGetListSession(router.query.id as string, profile?.id);
     },
   });
   const { run: runDeleteSesson } = useDeleteSesson({

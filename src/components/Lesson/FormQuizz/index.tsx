@@ -32,7 +32,8 @@ const FormQuizz = ({
     type: string,
     idNext: string,
     idCurrent: string,
-    typeCurrent: string
+    typeCurrent: string,
+    contentType: string
   ) => void;
   handlePrevChildSection: (
     type: string,
@@ -82,7 +83,8 @@ const FormQuizz = ({
               dataItemNext?.type,
               dataItemNext?.id,
               dataQuizz?.id,
-              TYPE_COURSE.QUIZ
+              TYPE_COURSE.QUIZ,
+              dataItemNext?.contentType
             );
             handleClickContinueQuizz(id);
           }}
@@ -143,7 +145,8 @@ const FormQuizz = ({
               dataItemNext?.type,
               dataItemNext?.id,
               dataQuizz?.id,
-              TYPE_COURSE.QUIZ
+              TYPE_COURSE.QUIZ,
+              dataItemNext?.contentType
             );
           }
         }}

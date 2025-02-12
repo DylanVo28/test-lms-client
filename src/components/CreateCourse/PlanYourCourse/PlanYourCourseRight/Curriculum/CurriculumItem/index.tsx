@@ -64,11 +64,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
       );
       const itemsCurriculum = newLessons?.concat(newQuizzes);
 
-      setDataCurriculum(
-        itemsCurriculum?.sort(
-          (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
-        )
-      );
+      setDataCurriculum(itemsCurriculum);
     }
   }, [item?.id]);
 
@@ -92,9 +88,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
       });
       const dataConcat = dataQuizz.concat(formatSttData);
 
-      setDataCurriculum(
-        dataConcat?.sort((a: any, b: any) => a.ordinalNumber - b.ordinalNumber)
-      );
+      setDataCurriculum(dataConcat);
       setFormAdd('');
       setIsAddCurriculum(false);
     },
@@ -174,9 +168,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
       });
       const dataConcat = dataLesson.concat(formatSttData);
 
-      setDataCurriculum(
-        dataConcat?.sort((a: any, b: any) => a.ordinalNumber - b.ordinalNumber)
-      );
+      setDataCurriculum(dataConcat);
       setFormAdd('');
       setIsAddCurriculum(false);
     },
@@ -218,8 +210,6 @@ const CurriculumItem = ({ item }: { item: any }) => {
     const newData = indexAddQuestion?.filter((item: any) => item !== index);
     setIndexAddQuestion(newData);
     setIdAddQuestionQuizz(id);
-
-    console.log(id, 'id23');
 
     const body = {
       question: values?.question,

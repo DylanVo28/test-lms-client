@@ -34,6 +34,10 @@ import FormEndCourse from './FormEndCourse';
 import { useClaimCertificates } from '@/layout/LessonLayout/service';
 import NoDataContent from './NoDataContent';
 import ModalClaimCertifications from '../UI/ModalClaimCertifications';
+import {
+  useGetListReview,
+  useGetListReviewSummary,
+} from '../Course/ListCourse/service';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
@@ -50,7 +54,6 @@ const Lesson = () => {
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
-  console.log('valueYourProgress', valueYourProgress);
 
   const {
     run: runGetListSession,
@@ -58,10 +61,7 @@ const Lesson = () => {
     loading: loadingListSession,
   } = useGetListSession({
     onSuccess: (res) => {
-      const sortData = res?.data?.sort(
-        (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
-      );
-      const firstSection = sortData?.[0];
+      const firstSection = res?.data?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
         return {
@@ -147,6 +147,27 @@ const Lesson = () => {
   });
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({});
 
+  const { dataListReviewSummary, run: runGetListReviewSummary } =
+    useGetListReviewSummary();
+  const {
+    dataListReview,
+    run: runGetListReview,
+    mutate,
+    onChange,
+    loading,
+  } = useGetListReview();
+
+  const handleGetReviews = () => {
+    runGetListReview(router.query.id as string);
+    runGetListReviewSummary(router.query.id as string);
+  };
+
+  useEffect(() => {
+    if (router.query.id) {
+      handleGetReviews();
+    }
+  }, [router.query.id]);
+
   const itemsTab = [
     {
       key: '1',
@@ -181,7 +202,16 @@ const Lesson = () => {
     {
       key: '6',
       label: 'Reviews',
-      children: <Reviews courseId={router.query.id as string} />,
+      children: (
+        <Reviews
+          dataListReviewSummary={dataListReviewSummary}
+          loading={loading}
+          onChange={onChange}
+          mutate={mutate}
+          dataListReview={dataListReview}
+          courseId={router.query.id as string}
+        />
+      ),
     },
     // {
     //   key: '7',
@@ -315,25 +345,23 @@ const Lesson = () => {
     }
   };
   const handleSkipQuizz = (id: string) => {
-    const allItems = dataListSession?.data.reduce(
-      (result: any, section: any) => {
-        const newLessons = section?.lessons?.map((lesson: any) => {
-          return {
-            ...lesson,
-            type: TYPE_COURSE.LECTURE,
-          };
-        });
+    const newSession = dataListSession?.data;
+    const allItems = newSession.reduce((result: any, section: any) => {
+      const newLessons = section?.lessons?.map((lesson: any) => {
+        return {
+          ...lesson,
+          type: TYPE_COURSE.LECTURE,
+        };
+      });
 
-        const newQuizzes = section?.quizzes?.map((quizz: any) => {
-          return {
-            ...quizz,
-            type: TYPE_COURSE.QUIZ,
-          };
-        });
-        return result.concat(newLessons, newQuizzes);
-      },
-      []
-    );
+      const newQuizzes = section?.quizzes?.map((quizz: any) => {
+        return {
+          ...quizz,
+          type: TYPE_COURSE.QUIZ,
+        };
+      });
+      return result.concat(newLessons, newQuizzes);
+    }, []);
     const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
     if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
@@ -345,22 +373,28 @@ const Lesson = () => {
       setActiveItemSection(nextItem?.id);
     }
   };
-  const allItems = dataListSession?.data.reduce((result: any, section: any) => {
-    const newLessons = section?.lessons?.map((lesson: any) => {
-      return {
-        ...lesson,
-        type: TYPE_COURSE.LECTURE,
-      };
-    });
 
-    const newQuizzes = section?.quizzes?.map((quizz: any) => {
-      return {
-        ...quizz,
-        type: TYPE_COURSE.QUIZ,
-      };
-    });
-    return result.concat(newLessons, newQuizzes);
-  }, []);
+  const allItems = dataListSession?.data?.reduce(
+    (result: any, section: any) => {
+      const newLessons = section?.lessons?.map((lesson: any) => {
+        return {
+          ...lesson,
+          type: TYPE_COURSE.LECTURE,
+        };
+      });
+
+      const newQuizzes = section?.quizzes?.map((quizz: any) => {
+        return {
+          ...quizz,
+          type: TYPE_COURSE.QUIZ,
+        };
+      });
+
+      return result.concat(newLessons, newQuizzes);
+    },
+    []
+  );
+
   const handleFindIdNextChildSection = (id: string) => {
     const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
@@ -389,12 +423,14 @@ const Lesson = () => {
     type: string,
     idNext: string,
     idCurrent: string,
-    currentType: string
+    currentType: string,
+    contentType?: string
   ) => {
     // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
     // router.push(newPath);
     setActiveItemSection(idNext);
     setTypeLoadContent(type);
+
     if (currentType === TYPE_COURSE.LECTURE) {
       const body = {
         status: UserCourseProgressStatus.COMPLETED,
@@ -408,6 +444,12 @@ const Lesson = () => {
     }
 
     if (type === TYPE_COURSE.LECTURE && idNext) {
+      if (contentType === LessonContentType?.ARTICLE) {
+        const body = {
+          status: UserCourseProgressStatus.COMPLETED,
+        };
+        requestProgressStatusLesson.run(body, idNext);
+      }
       runGetLessons(idNext);
     } else {
       runGetQuizz(idNext);
@@ -454,7 +496,10 @@ const Lesson = () => {
             />
           )}
         {endCourse && !typeLoadContent && (
-          <FormEndCourse courseId={router.query.id as string} />
+          <FormEndCourse
+            handleGetReviews={handleGetReviews}
+            courseId={router.query.id as string}
+          />
         )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (
           <FormQuizz
@@ -552,9 +597,7 @@ const Lesson = () => {
             // activeIdChildSection={activeIdChildSection}
             loading={loadingListSession}
             handleClickChildLesson={handleClickChildLesson}
-            sections={dataListSession?.data?.sort(
-              (a: any, b: any) => a.ordinalNumber - b.ordinalNumber
-            )}
+            sections={dataListSession?.data}
           />
         </div>
       </div>

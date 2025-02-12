@@ -18,19 +18,24 @@ import NoData from '@/components/ListCourse/NoData';
 import { useEffect, useState } from 'react';
 import { TypeReactions } from '@/utils/common';
 
-const Reviews = ({ courseId }: { courseId: string }) => {
+const Reviews = ({
+  courseId,
+  dataListReviewSummary,
+  onChange,
+  dataListReview,
+  loading,
+  mutate,
+}: {
+  onChange: any;
+  dataListReviewSummary: any;
+  dataListReview: any;
+  mutate: any;
+  loading: boolean;
+
+  courseId: string;
+}) => {
   const [valueSearch, setValueSearch] = useState('');
   const [valueLevel, setValueLevel] = useState<any>();
-
-  const { dataListReviewSummary, run: runGetListReviewSummary } =
-    useGetListReviewSummary();
-  const {
-    dataListReview,
-    run: runGetListReview,
-    mutate,
-    onChange,
-    loading,
-  } = useGetListReview();
 
   const DATA_REVIEWS = [
     {
@@ -67,13 +72,6 @@ const Reviews = ({ courseId }: { courseId: string }) => {
     };
     onChange(courseId, filter);
   }, [valueSearch, valueLevel]);
-
-  useEffect(() => {
-    if (courseId) {
-      runGetListReview(courseId);
-      runGetListReviewSummary(courseId);
-    }
-  }, [courseId]);
 
   const { run: runLikeReview } = useLikeReview({
     onSuccess(res) {

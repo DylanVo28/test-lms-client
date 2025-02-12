@@ -12,11 +12,6 @@ import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
 
 const Overview = ({ dataListSection, dataDetail }: any) => {
-  console.log(dataListSection, 'dataListSection');
-
-  const newDataLesson = dataListSection?.filter((item: any) => item?.lessons);
-  console.log(newDataLesson, 'newDataLesson');
-
   const formattedTime: string = useMemo(() => {
     const totalDuration = dataListSection?.reduce(
       (total: any, section: any) => {
@@ -40,8 +35,6 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
 
     return formattedTime;
   }, [dataListSection]);
-
-  console.log(dataDetail, 'dataDetail');
 
   return (
     <div className="flex flex-col gap-5 pl-[80px] pr-[32px]">

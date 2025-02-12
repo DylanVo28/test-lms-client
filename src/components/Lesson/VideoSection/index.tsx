@@ -26,7 +26,8 @@ const VideoSection = ({
     type: string,
     idNext: string,
     idCurrent: string,
-    currentType: string
+    currentType: string,
+    contentType: string
   ) => void;
   handlePrevChildSection: (
     type: string,
@@ -192,7 +193,13 @@ const VideoSection = ({
             } else {
               setEndVideo(false);
               resetVideo();
-              handleNextChildSection(type, id, data?.id, TYPE_COURSE.LECTURE);
+              handleNextChildSection(
+                type,
+                id,
+                data?.id,
+                TYPE_COURSE.LECTURE,
+                dataItemNext?.contentType
+              );
             }
           }}
           dataItemNext={dataItemNext}
@@ -212,7 +219,8 @@ const VideoSection = ({
               dataItemNext?.type,
               dataItemNext?.id,
               data?.id,
-              TYPE_COURSE.LECTURE
+              TYPE_COURSE.LECTURE,
+              dataItemNext?.contentType
             );
           }
         }}
