@@ -25,8 +25,6 @@ const FormStartTakingTest = ({
 
   const [stepAnswerQuestion, setStepAnswerQuestion] = useState<string>('');
 
-  console.log(dataQuizz, 'dataQuizz');
-
   useEffect(() => {
     if (dataQuizz?.progress?.status === UserCourseProgressStatus.COMPLETED) {
       setStepAnswerQuestion(STEP_ANSWER_QUESTION.CONTINUE);
@@ -62,7 +60,7 @@ const FormStartTakingTest = ({
   const handleNextQuestion = () => {
     if (
       currentQuestion <= dataQuizz?.questions?.length &&
-      dataQuizz?.questions?.length > 2 &&
+      dataQuizz?.questions?.length > 1 &&
       answerCorrectly
     ) {
       setCurrentQuestion(currentQuestion + 1);

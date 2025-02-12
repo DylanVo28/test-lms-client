@@ -336,11 +336,7 @@ const Lesson = () => {
     if (type === TYPE_COURSE.LECTURE && id) {
       runGetLessons(id);
     } else {
-      if (status === UserCourseProgressStatus.COMPLETED) {
-        setStartTakingTest(true);
-      } else {
-        setStartTakingTest(false);
-      }
+      setStartTakingTest(false);
       runGetQuizz(id);
     }
   };

@@ -48,7 +48,6 @@ const FormQuizz = ({
   const sttQuizz = localStorage.getItem('titleQuizz');
   const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
   const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
-  console.log(dataQuizz, 'dataQuizz');
   const lastIndex = allItems.findIndex(
     (item: any) => item?.id === dataQuizz?.id
   );
@@ -79,14 +78,18 @@ const FormQuizz = ({
       {startTakingTest ? (
         <FormStartTakingTest
           handleClickContinueQuizz={(id) => {
-            handleNextChildSection(
-              dataItemNext?.type,
-              dataItemNext?.id,
-              dataQuizz?.id,
-              TYPE_COURSE.QUIZ,
-              dataItemNext?.contentType
-            );
-            handleClickContinueQuizz(id);
+            if (lastIndex === allItems?.length - 1) {
+              handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
+            } else {
+              handleNextChildSection(
+                dataItemNext?.type,
+                dataItemNext?.id,
+                dataQuizz?.id,
+                TYPE_COURSE.QUIZ,
+                dataItemNext?.contentType
+              );
+              handleClickContinueQuizz(id);
+            }
           }}
           dataQuizz={dataQuizz}
         />

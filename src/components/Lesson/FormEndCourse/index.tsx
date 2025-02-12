@@ -41,7 +41,7 @@ const FormEndCourse = ({
 
   const handleClickSave = () => {
     const body = {
-      rating: valueRating,
+      rating: valueRating ? valueRating : 0,
       review: valueComment,
     };
     runReviewCours(body, courseId);
