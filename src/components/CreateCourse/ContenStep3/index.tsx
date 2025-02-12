@@ -5,7 +5,7 @@ import { Control, Controller } from 'react-hook-form';
 import { useGetCategories } from '../service';
 
 const ContenStep3 = ({ control }: { control: Control }) => {
-  const { dataCategories } = useGetCategories();
+  const { dataCategories } = useGetCategories({ order: 'createdAt asc' });
 
   return (
     <div className="flex flex-col gap-10 items-center text-center">

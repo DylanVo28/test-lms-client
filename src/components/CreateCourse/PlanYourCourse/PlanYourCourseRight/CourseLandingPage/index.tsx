@@ -23,7 +23,7 @@ const CourseLandingPage = ({
   control: Control;
   watch: any;
 }) => {
-  const { data } = useGetCategories();
+  const { data } = useGetCategories({ order: 'createdAt asc' });
   const { data: levels } = useGetLevels();
 
   const { data: languages } = useGetLanguages();
