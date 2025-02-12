@@ -179,7 +179,7 @@ const ListCourse = () => {
             </div>
           )}
 
-          {!noMore && (
+          {!noMore && !loading && (
             <Button
               variant="light"
               radius="full"
