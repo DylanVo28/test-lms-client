@@ -210,7 +210,7 @@ const ListCourse = () => {
           {dataCourses?.length === 0 && <NoData />}
         </>
       )}
-      {(loading || loadingMore) && <Loading />}
+      {loading && <Loading />}
       <ModalConfirmDelete ref={refModalConfirmDelete} reload={reload} />
     </div>
   );

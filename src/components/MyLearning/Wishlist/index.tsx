@@ -132,7 +132,7 @@ const Wishlist = () => {
           {list?.length === 0 && <NoData />}
         </>
       )}
-      {(loading || loadingMore) && <Loading />}
+      {loading && <Loading />}
     </div>
   );
 };
