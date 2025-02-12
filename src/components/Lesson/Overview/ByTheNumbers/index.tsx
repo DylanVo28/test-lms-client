@@ -60,7 +60,7 @@ const ByTheNumbers = ({ course }: { course: any }) => {
           Lectures: {lessonCount || 0}
         </Text>
         <Text type="font-14-400" className="text-white">
-          {`Video: ${formatTimeDuration(formattedTime)} total hours`}
+          {`Video: ${formatTimeDuration(formattedTime)}`}
         </Text>
       </div>
     </div>
