@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
         <meta name="title" content="LMS" />
         <meta name="description" content="LMS" />
-        <link rel="shortcut icon" href="/static/logo-aeon.svg" />
+        <link rel="shortcut icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link

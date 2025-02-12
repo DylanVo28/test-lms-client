@@ -56,7 +56,7 @@ const CardCourse = ({ item }: { item?: any }) => {
             </Text>
           </div>
         </div>
-        <Text type="font-16-500" className="line-clamp-1 capitalize">
+        <Text type="font-16-500" className="line-clamp-2 capitalize">
           {item?.title}
         </Text>
         <div className="flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
