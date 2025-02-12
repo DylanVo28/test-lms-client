@@ -61,7 +61,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         </Text>
         <div className="flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
           <div className="flex items-center gap-2">
-            <Text type="font-14-500">{item?.rating}</Text>
+            <Text type="font-14-500">{item?.rating?.toFixed(2)}</Text>
             <ReactStars
               count={5}
               color1="#D9D9D9"
