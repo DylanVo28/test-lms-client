@@ -126,6 +126,15 @@ const serviceCreateSesson = async (body: IBodyLesson) => {
 export const useCreateSesson = (options?: IOptions) => {
   return useRequest(serviceCreateSesson, { manual: true, ...options });
 };
+const serviceEditSesson = async (body: IBodyLesson, id: string) => {
+  return privateRequest(request.patch, `${API_PATH.SECTIONS}/${id}`, {
+    data: body,
+  });
+};
+
+export const useEditSesson = (options?: IOptions) => {
+  return useRequest(serviceEditSesson, { manual: true, ...options });
+};
 
 const serviceDeleteSesson = async (id: string) => {
   return privateRequest(request.delete, `${API_PATH.SECTIONS}/${id}`);
@@ -144,6 +153,16 @@ interface IBodyLecture {
   contentType?: string;
   resources?: any;
 }
+
+const serviceEditQuizz = async (body: IBodyLecture, id: string) => {
+  return privateRequest(request.patch, `${API_PATH.QUIZZ}/${id}`, {
+    data: body,
+  });
+};
+
+export const useEditQuizz = (options?: IOptions) => {
+  return useRequest(serviceEditQuizz, { manual: true, ...options });
+};
 
 const serviceEditLecture = async (body: IBodyLecture, id: string) => {
   return privateRequest(request.patch, `${API_PATH.LECTURE}/${id}`, {
@@ -225,9 +244,9 @@ interface answersEdit {
 }
 
 interface IBodyEditQuestionQuizz {
-  question: string;
+  question?: string;
   ordinalNumber?: number;
-  answers: answersEdit[];
+  answers?: answersEdit[];
 }
 
 const servicCreateQuestionQuizz = async (

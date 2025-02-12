@@ -127,7 +127,7 @@ const MoreCourse = (props: any) => {
       reload();
       runGetListReview(courseId);
     }
-  }, [author, courseId]);
+  }, [author?.id, courseId]);
 
   const reloadListReview = () => {
     runGetListReview(courseId);
@@ -173,18 +173,20 @@ const MoreCourse = (props: any) => {
   if (!author) return null;
   return (
     <div className="flex flex-col gap-10 pb-10 border-b-1 border-b-black-10">
-      <div className="flex flex-col gap-6">
-        <Text className="text-white truncate w-full" type="font-20-600">
-          More Course By {generateMentors()}
-        </Text>
-        <div className="md:grid md:grid-cols-3 flex items-center overflow-auto gap-6">
-          {dataCourses?.length > 0 &&
-            dataCourses.map((item: any, key: number) => {
-              return <CardCourse noLike item={item} key={key} />;
-            })}
+      {dataCourses?.length > 0 && (
+        <div className="flex flex-col gap-6">
+          <Text className="text-white truncate w-full" type="font-20-600">
+            More Course By {generateMentors()}
+          </Text>
+          <div className="md:grid md:grid-cols-3 flex items-center overflow-auto gap-6">
+            {dataCourses?.length > 0 &&
+              dataCourses.map((item: any, key: number) => {
+                return <CardCourse noLike item={item} key={key} />;
+              })}
+          </div>
+          {dataCourses?.length == 0 && <NoData />}
         </div>
-        {dataCourses?.length == 0 && <NoData />}
-      </div>
+      )}
       <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
           Comments

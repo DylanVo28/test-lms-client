@@ -8,18 +8,25 @@ import dynamic from 'next/dynamic';
 import {
   useCreateSesson,
   useDeleteSesson,
+  useEditSesson,
   useGetListSession,
 } from '@/components/CreateCourse/service';
 import { useRouter } from 'next/router';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import FormAddSection from './CurriculumItem/FormAddSection';
+import { PencilSimpleLine } from '@phosphor-icons/react';
 
 const CurriculumItem = dynamic(() => import('./CurriculumItem'), {
   ssr: false,
 });
-const Curriculum = () => {
-  const { control, reset, handleSubmit } = useForm<any>({});
+const Curriculum = ({ setValue }: any) => {
+  const {
+    control,
+    reset,
+    handleSubmit,
+    setValue: setValueForm,
+  } = useForm<any>({});
   const { profile } = useProfile();
 
   const { fields, append, remove } = useFieldArray({
@@ -27,6 +34,7 @@ const Curriculum = () => {
     name: 'sections',
   });
   const [addSection, setAddSection] = useState(false);
+  const [valueLesson, setValueLesson] = useState<any>({});
 
   const router = useRouter();
 
@@ -44,6 +52,7 @@ const Curriculum = () => {
           idSection: item?.id,
         };
       });
+      setValue('sections', newData);
       reset({
         sections: newData,
       });
@@ -62,6 +71,13 @@ const Curriculum = () => {
       runGetListSession(router.query.id as string, profile?.id);
     },
   });
+  const { run: runEditSesson, loading: loadingEditSection } = useEditSesson({
+    onSuccess(res) {
+      setValueLesson({});
+      runGetListSession(router.query.id as string, profile?.id);
+    },
+  });
+
   const { run: runDeleteSesson } = useDeleteSesson({
     onSuccess(res) {},
   });
@@ -75,6 +91,14 @@ const Curriculum = () => {
     };
     runCreateSesson(body);
   };
+  const handleSaveEditSection = (values: any) => {
+    const body = {
+      title: values?.title,
+      learningObjective: values?.learningObjective,
+      courseId: router.query.id as string,
+    };
+    runEditSesson(body, valueLesson?.idSection);
+  };
 
   const handleRemoveSection = (index: number, id: string) => {
     remove(index);
@@ -82,6 +106,14 @@ const Curriculum = () => {
       runDeleteSesson(id);
     }
     setAddSection(false);
+  };
+  const handleEditLesson = (item: any, index: number) => {
+    const newData = {
+      ...item,
+      stt: index + 1,
+    };
+    setValueForm('title', item?.title);
+    setValueLesson(newData);
   };
   return (
     <LoadingScreen isLoading={loadingListSession}>
@@ -124,15 +156,46 @@ const Curriculum = () => {
 
               {field?.title ? (
                 <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
-                  <div className="flex items-center gap-2">
-                    <Text type="font-16-700">{`Part ${index + 1}:`}</Text>
-                    <div className="flex items-center gap-1">
-                      <IconFile />
-                      <Text type="font-16-400" className="text-black-7">
-                        {field.title}
-                      </Text>
+                  {valueLesson?.id === field?.id ? (
+                    <FormAddSection
+                      handleSaveAddSection={(values: any) => {
+                        if (valueLesson?.id) {
+                          handleSaveEditSection(values);
+                        } else {
+                          handleSaveAddSection(values, index);
+                        }
+                      }}
+                      loading={loadingEditSection}
+                      control={control}
+                      valueLesson={valueLesson}
+                      handleSubmit={handleSubmit}
+                      handleCancelFormAddSection={() => {
+                        setValueLesson({});
+                      }}
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Text type="font-16-700">{`Part ${index + 1}:`}</Text>
+                      <div className="flex items-center gap-1">
+                        <IconFile />
+                        <Text type="font-16-400" className="text-black-7">
+                          {field.title}
+                        </Text>
+                        <Button
+                          isIconOnly
+                          onClick={() => {
+                            handleEditLesson(field, index);
+                          }}
+                          size="sm"
+                          radius="full"
+                          variant="light"
+                          // className="groupLeson-hover:opacity-100 opacity-0 transition-all"
+                        >
+                          <PencilSimpleLine size={16} weight="light" />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <CurriculumItem item={field} />
                 </div>

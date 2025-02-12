@@ -34,6 +34,102 @@ const QuillEditor = ({
 
   useEffect(() => {
     if (editorRef.current) {
+      // Custom clipboard matcher để xử lý paste
+      const customClipboard = {
+        matchers: [
+          [
+            'span',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+          [
+            'p',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+          [
+            'strong',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+          [
+            'h1',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+          [
+            'h2',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+        ],
+      };
+
       const quill = new Quill(editorRef.current, {
         theme: 'snow',
         modules: {
@@ -50,9 +146,30 @@ const QuillEditor = ({
               image: () => handleImageUpload(quill),
             },
           },
+          clipboard: {
+            ...customClipboard,
+            matchVisual: false,
+          },
         },
         placeholder,
       });
+
+      quill.clipboard.addMatcher('span', ((node: Node, delta: any) => {
+        const ops = delta.ops.map((op: any) => {
+          if (op.insert && typeof op.insert === 'string') {
+            return {
+              insert: op.insert,
+              attributes: {
+                ...(op.attributes || {}),
+                color: 'white',
+              },
+            };
+          }
+          return op;
+        });
+        return { ops };
+      }) as any);
+
       setEditor(quill);
       quill.on('text-change', () => {
         const content = quill.root.innerHTML;
@@ -102,37 +219,6 @@ const QuillEditor = ({
 
         reader.readAsDataURL(file);
       }
-      // if (input.files && input.files[0]) {
-      //   const file = input.files[0];
-
-      //   try {
-      //     const formData = new FormData();
-      //     formData.append('file', file);
-
-      //     const response = await fetch(`${PREFIX_API}${API_PATH.UPLOAD_FILE}`, {
-      //       method: 'POST',
-      //       body: formData,
-      //       headers: {
-      //         Authorization: `Bearer ${accessToken}`,
-      //       },
-      //     });
-
-      //     const result = await response.json();
-
-      //     if (result?.data?.url) {
-      //       const imageUrl = result?.data?.url;
-
-      //       const range = quill.getSelection();
-
-      //       if (range) {
-      //         quill.insertEmbed(range.index, 'image', imageUrl);
-      //       }
-      //     } else {
-      //     }
-      //   } catch (error) {
-      //     console.error('error', error);
-      //   }
-      // }
     };
   };
 

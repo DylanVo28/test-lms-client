@@ -1,7 +1,7 @@
 import HeaderPlanYourCourse from './HeaderPlanYourCourse';
 import PlanYourCourseLeft from './PlanYourCourseLeft';
 import PlanYourCourseRight from './PlanYourCourseRight';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ROUTE_PATH, TYPE_COURSE } from '@/utils/const';
 import { useRouter } from 'next/router';
@@ -9,12 +9,20 @@ import { useEditCourse, useGetDetailCourse } from '../service';
 import { toast } from '@/components/UI/Toast/toast';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
+import ModalSubmitError from './ModalSubmitError';
+import { API_PATH } from '@/api/constant';
+import { getAccessToken } from '@/store/auth';
+import { PREFIX_API } from '@/api/request';
 
 const PlanYourCourse = () => {
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
+  const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
+
+  const refModalSubmitError: any = useRef(null);
+  const accessToken = getAccessToken();
 
   const {
     run: getDetailCourse,
@@ -75,24 +83,11 @@ const PlanYourCourse = () => {
         originPrice: res?.data?.originPrice,
         promotionPeriod: res?.data?.promotionPeriod,
         categoryId: res?.data?.categoryId,
-        sections: [
-          {
-            title: 'Section 1',
-            introduction: 'introduction',
-            curriculums: [
-              {
-                title: 'Lecture 1',
-                introduction: 'introduction',
-                type: TYPE_COURSE.LECTURE,
-              },
-            ],
-          },
-        ],
       });
     },
   });
 
-  const { control, handleSubmit, reset, watch } = useForm<any>({
+  const { control, handleSubmit, reset, watch, setValue } = useForm<any>({
     defaultValues: {
       objectives: [{ name: '' }, { name: '' }, { name: '' }, { name: '' }],
       requirements: [{ name: '' }],
@@ -128,8 +123,65 @@ const PlanYourCourse = () => {
       toast.error(error.message);
     },
   });
+  const fetchDetailSection = async () => {
+    setLoadingFetchDetail(true);
+    try {
+      const params = new URLSearchParams({
+        courseId: router.query.id as string,
+        userId: profile?.id,
+        order: 'createdAt asc',
+      }).toString();
 
-  const onPublish = (values: any) => {
+      const res = await fetch(`${PREFIX_API}${API_PATH.SECTIONS}?${params}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await res.json();
+      setLoadingFetchDetail(false);
+
+      return data;
+    } catch (error) {}
+  };
+
+  const onPublish = async (values: any) => {
+    const resData = await fetchDetailSection();
+
+    const allLessonsHaveContent = resData?.data?.every((section: any) =>
+      section.lessons.every((lesson: any) => lesson.content !== null)
+    );
+
+    const allQuizzesHaveQuestions = resData?.data.every((section: any) =>
+      section.quizzes.every(
+        (quizz: any) =>
+          Array.isArray(quizz.questions) && quizz.questions.length > 0
+      )
+    );
+
+    const isEnoughtSetPrice = values?.price && values?.originPrice;
+    const isEnoughIntendedLearners =
+      values?.objectives?.length > 0 &&
+      values?.intenedLeaners?.length > 0 &&
+      values?.requirements?.length > 0;
+    const isEnoughCourseLangdingePage = values?.title && values?.categoryId;
+    console.log({
+      isEnoughtSetPrice,
+      isEnoughIntendedLearners,
+      isEnoughCourseLangdingePage,
+    });
+
+    if (
+      !allLessonsHaveContent ||
+      !allQuizzesHaveQuestions ||
+      !isEnoughtSetPrice ||
+      !isEnoughIntendedLearners ||
+      !isEnoughCourseLangdingePage
+    ) {
+      refModalSubmitError.current.onOpen();
+      return;
+    }
     const body: any = {
       isPublish: true,
       objectives: values?.objectives
@@ -151,7 +203,6 @@ const PlanYourCourse = () => {
       topics: [values.topics],
       lang: values.lang,
       level: values.level,
-
       price: values?.price,
       originPrice: values?.originPrice,
       promotionPeriod: values?.promotionPeriod,
@@ -227,19 +278,19 @@ const PlanYourCourse = () => {
       (item.quizzes && item.quizzes.length > 0)
   );
 
-  useEffect(() => {
-    if (
-      isEnoughIntendedLearners ||
-      isEnoughCurruclum ||
-      isEnoughCourseLangdingePage
-    ) {
-      setActivePlan(activePlan + 1);
-    }
-  }, [
-    isEnoughIntendedLearners,
-    isEnoughCurruclum,
-    isEnoughCourseLangdingePage,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     isEnoughIntendedLearners ||
+  //     isEnoughCurruclum ||
+  //     isEnoughCourseLangdingePage
+  //   ) {
+  //     setActivePlan(activePlan + 1);
+  //   }
+  // }, [
+  //   isEnoughIntendedLearners,
+  //   isEnoughCurruclum,
+  //   isEnoughCourseLangdingePage,
+  // ]);
 
   return (
     <LoadingScreen isLoading={loading}>
@@ -247,7 +298,9 @@ const PlanYourCourse = () => {
         <div className="bg-primary w-screen h-[100dvh] overflow-auto pb-10">
           <HeaderPlanYourCourse
             loading={requestEditCourse?.loading}
-            loadingPublish={requestEditPublishCourse?.loading}
+            loadingPublish={
+              requestEditPublishCourse?.loading || loadingFetchDetail
+            }
             handleSaveForm={handleSubmit(onSubmit)}
             handlePublishForm={handleSubmit(onPublish)}
           />
@@ -267,6 +320,7 @@ const PlanYourCourse = () => {
                 <PlanYourCourseRight
                   handleSubmit={handleSubmit}
                   watch={watch}
+                  setValue={setValue}
                   idDetail={router.query.id as string}
                   control={control}
                   activePlan={activePlan}
@@ -276,6 +330,7 @@ const PlanYourCourse = () => {
           </div>
         </div>
       </form>
+      <ModalSubmitError ref={refModalSubmitError} />
     </LoadingScreen>
   );
 };

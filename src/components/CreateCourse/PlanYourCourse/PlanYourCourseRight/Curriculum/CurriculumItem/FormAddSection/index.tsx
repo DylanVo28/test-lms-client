@@ -1,6 +1,7 @@
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 const FormAddSection = ({
@@ -9,19 +10,21 @@ const FormAddSection = ({
   handleSubmit,
   handleSaveAddSection,
   loading,
+  valueLesson,
 }: {
   handleCancelFormAddSection: VoidFunction;
   control: Control;
   handleSubmit: any;
   handleSaveAddSection: any;
   loading: boolean;
+  valueLesson?: any;
 }) => {
   return (
     <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
       <div className="flex items-start gap-2">
         <div className="min-w-[100px] pt-3">
           <Text type="font-16-700" className="text-white">
-            New Section:
+            {valueLesson?.id ? `Part ${valueLesson?.stt}` : 'New Section:'}
           </Text>
         </div>
         <div className="flex flex-col gap-4 w-full">
@@ -58,6 +61,7 @@ const FormAddSection = ({
                 return (
                   <InputText
                     maxLength={160}
+                    defaultValue={valueLesson?.learningObjective}
                     endContent
                     onChange={field.onChange}
                     value={field.value}

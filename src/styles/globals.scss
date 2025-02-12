@@ -97,8 +97,20 @@ body {
     }
   }
   .ql-editor {
+    strong {
+      background: transparent !important;
+    }
+    span {
+      background: transparent !important;
+    }
     p {
       font-size: 16px;
+      span:not([style*='color']) {
+        color: white !important;
+      }
+      span[style*='color'] {
+        background: transparent !important;
+      }
     }
   }
   .ql-editor.ql-blank::before {

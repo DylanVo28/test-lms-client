@@ -12,6 +12,7 @@ interface InputTextProps extends InputProps {
   readOnly?: boolean;
   defaultValue?: any;
   isDisabled?: boolean;
+  autoFocus?: boolean;
   type?: any;
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'full' | undefined;
   size?: 'sm' | 'md' | 'lg' | undefined;
@@ -30,6 +31,8 @@ interface InputTextProps extends InputProps {
   isBlack?: boolean;
   error?: string;
   hiddenMessageError?: boolean;
+  inputShare?: boolean;
+  isReadOnly?: boolean;
 }
 
 const InputText = (props: InputTextProps) => {
@@ -45,6 +48,7 @@ const InputText = (props: InputTextProps) => {
     borderNone = false,
     readOnly,
     isDisabled,
+    autoFocus,
     required,
     defaultValue,
     onChange,
@@ -62,6 +66,8 @@ const InputText = (props: InputTextProps) => {
     isLesson,
     error,
     hiddenMessageError,
+    inputShare,
+    isReadOnly,
     isInput,
     ...rest
   } = props;
@@ -99,6 +105,7 @@ const InputText = (props: InputTextProps) => {
         maxLength={maxLength}
         autoComplete="off"
         value={value}
+        autoFocus={autoFocus}
         onChange={onChange}
         isDisabled={isDisabled}
         readOnly={readOnly}
@@ -107,6 +114,7 @@ const InputText = (props: InputTextProps) => {
         className={clsx('rounded ', {
           [className]: !!className,
         })}
+        isReadOnly={isReadOnly}
         label={''}
         classNames={{
           input: clsx(
@@ -114,6 +122,7 @@ const InputText = (props: InputTextProps) => {
             {
               'placeholder:text-white/20': isInputSubmit,
               'placeholder:!text-white/20': inputDefault,
+              'placeholder:!text-[#757575] text-[16px] font-normal': inputShare,
             }
           ),
 
@@ -132,6 +141,8 @@ const InputText = (props: InputTextProps) => {
                 inputDefault,
               '!bg-[#0A0F1580]  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
+              '!bg-[#F0F0F0] border-1 !border-white !py-[12px] !px-[16px] data-[hover=true]:!border-white group-data-[focus=true]:!border-white':
+                inputShare,
               '!border-danger-300 data-[hover=true]:!border-danger-300': error,
             }
           ),

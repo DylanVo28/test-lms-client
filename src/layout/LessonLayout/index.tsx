@@ -3,6 +3,7 @@ import { valueProgressAtom } from '@/components/Lesson';
 import IconArrowDown from '@/components/UI/Icons/IconArrowDown';
 import IconArrowLeft from '@/components/UI/Icons/IconArrowLeft';
 import IconDots from '@/components/UI/Icons/IconDots';
+import ModalShare from '@/components/UI/ModalShare';
 import ProgressCircle from '@/components/UI/ProgressCircle';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
@@ -11,12 +12,13 @@ import { Button, CircularProgress } from '@nextui-org/react';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [valueYourProgress] = useAtom(valueProgressAtom);
   const { profile } = useProfile();
+  const refModalShare: any = useRef(null);
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},
@@ -82,27 +84,47 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             <IconArrowDown />
           </div>
           <Button
-            className="rounded w-[82px] bg-transparent border-1 border-black-5"
+            onClick={() => refModalShare.current.onOpen()}
+            className="rounded w-[90px] border-white/10 border-1 bg-white/10"
             size="lg"
           >
             <div className="flex items-center gap-1">
               <Text type="font-16-500" className="text-white">
                 Share
               </Text>
-              <IconArrowDown />
+              <IconShare />
             </div>
           </Button>
-          <Button
+          {/* <Button
             isIconOnly
             className="rounded bg-transparent border-1 border-black-5"
             size="lg"
           >
             <IconDots />
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className="w-full">{children}</div>
+
+      <ModalShare ref={refModalShare} />
     </div>
   );
 };
 export default LessonLayout;
+
+const IconShare = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="21"
+      height="20"
+      viewBox="0 0 21 20"
+      fill="none"
+    >
+      <path
+        d="M11.3332 11.6667V15.8333L19.6665 9.16667L11.3332 2.5V6.66667C6.73067 6.66667 2.99984 10.3975 2.99984 15C2.99984 15.2275 3.00817 15.4525 3.0265 15.675C3.66284 14.4651 4.61777 13.4522 5.78807 12.7458C6.95836 12.0393 8.2995 11.6661 9.6665 11.6667H11.3332Z"
+        fill="white"
+      />
+    </svg>
+  );
+};

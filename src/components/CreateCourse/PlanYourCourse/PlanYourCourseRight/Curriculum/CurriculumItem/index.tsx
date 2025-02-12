@@ -1,6 +1,6 @@
 import AccordionCustom from '@/components/UI/AccordionCustom';
 import Text from '@/components/UI/Text';
-import { Button } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 import { IconClose, IconFile } from '..';
 import { Control, useFieldArray } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -19,17 +19,25 @@ import {
   useCreateQuizz,
   useEditLecture,
   useEditQuestionQuizz,
+  useEditQuizz,
 } from '@/components/CreateCourse/service';
-import { Question } from '@phosphor-icons/react';
+import { PencilSimpleLine, Question, Trash } from '@phosphor-icons/react';
 
 import Content from './Content';
 import ContentQuestions from './ContentQuestions';
+import InputText from '@/components/UI/InputText';
 
 const CurriculumItem = ({ item }: { item: any }) => {
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
   const [isAddCurriculum, setIsAddCurriculum] = useState<boolean>(false);
   const [formAdd, setFormAdd] = useState<string>('');
+  const [valueEditEditCotentLesson, setValueEditCotentLesson] = useState<any>(
+    {}
+  );
+
   const [typeAddContent, setTypeAddContent] = useState<string>('');
+  const [valueTitleLecture, setValueTitleLecture] = useState<string>('');
+
   const [typeAddQuizzQuestion, setAddQuizzQuestion] = useState<string>('');
 
   const [valueContent, setValueContent] = useState<string>('');
@@ -97,6 +105,20 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const { run: runEditLecture, loading: loadingEditLecture } = useEditLecture({
     onSuccess(res) {
       setTypeAddContent('');
+      setValueEditCotentLesson({});
+      setValueTitleLecture('');
+      const index = dataCurriculum.findIndex(
+        (item: any) => item.id === res?.data?.id
+      );
+      if (index !== -1) {
+        dataCurriculum[index] = { ...dataCurriculum[index], ...res?.data };
+      }
+    },
+  });
+  const { run: runEditQuizz, loading: loadingEditQuizz } = useEditQuizz({
+    onSuccess(res) {
+      setValueEditCotentLesson({});
+      setValueTitleLecture('');
       const index = dataCurriculum.findIndex(
         (item: any) => item.id === res?.data?.id
       );
@@ -302,6 +324,22 @@ const CurriculumItem = ({ item }: { item: any }) => {
     );
   };
 
+  const handleEditLecture = (item: any) => {
+    setValueEditCotentLesson(item);
+  };
+
+  const handleSaveEditContentLesson = () => {
+    const body = {
+      title: valueTitleLecture,
+    };
+
+    if (valueEditEditCotentLesson?.type === TYPE_COURSE.QUIZ) {
+      runEditQuizz(body, valueEditEditCotentLesson?.id);
+    } else {
+      runEditLecture(body, valueEditEditCotentLesson?.id);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 pl-[52px] relative">
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
@@ -311,7 +349,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
           <div className="w-full">
             <div
               className={clsx(
-                'rounded flex justify-between  items-center w-full py-2 px-3 bg-transparent border-1 border-white/15',
+                'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white/15',
                 {
                   ['rounded-b-none']: [
                     TYPE_COURSE.LECTURE,
@@ -320,28 +358,89 @@ const CurriculumItem = ({ item }: { item: any }) => {
                 }
               )}
             >
-              <div className="flex items-center gap-2">
-                <IconCheck />
-                <Text type="font-16-600" className="text-white">
-                  {item?.type === TYPE_COURSE.LECTURE
-                    ? `Lecture ${item?.sttLesson}:`
-                    : `Quizz ${item?.sttQuizz}:`}
-                </Text>
-                <div className="flex items-center gap-1">
-                  {item?.type === TYPE_COURSE.LECTURE ? (
-                    <IconFile />
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex items-center gap-2 w-full">
+                  <IconCheck />
+                  <div>
+                    <Text
+                      type="font-16-600"
+                      className={clsx('text-white w-max', {})}
+                    >
+                      {item?.type === TYPE_COURSE.LECTURE
+                        ? `Lecture ${item?.sttLesson}:`
+                        : `Quizz ${item?.sttQuizz}:`}
+                    </Text>
+                  </div>
+
+                  {valueEditEditCotentLesson?.id === item?.id ? (
+                    <div className="w-full">
+                      <InputText
+                        maxLength={160}
+                        endContent
+                        autoFocus
+                        defaultValue={valueEditEditCotentLesson?.title}
+                        // error={isError && !valueTitle ? 'Field title is require' : ''}
+                        classInputWrapper="!min-h-[30px] min-w-full"
+                        className="min-w-full"
+                        onChange={(e: any) =>
+                          setValueTitleLecture(e.target.value)
+                        }
+                        placeholder="Enter title"
+                        inputDefault
+                      />
+                    </div>
                   ) : (
-                    <Question color="#8C8C8C" weight="bold" size={20} />
+                    <div className="flex items-center gap-1">
+                      {item?.type === TYPE_COURSE.LECTURE ? (
+                        <IconFile />
+                      ) : (
+                        <Question color="#8C8C8C" weight="bold" size={20} />
+                      )}
+                      <Text type="font-16-500" className="text-black-7">
+                        {item.title}
+                      </Text>
+
+                      <Button
+                        isIconOnly
+                        onClick={() => {
+                          handleEditLecture(item);
+                        }}
+                        size="sm"
+                        radius="full"
+                        variant="light"
+                        className="group-hover:opacity-100 opacity-0 transition-all"
+                      >
+                        <PencilSimpleLine size={16} weight="light" />
+                      </Button>
+                    </div>
                   )}
-                  <Text type="font-16-500" className="text-black-7">
-                    {item.title}
-                  </Text>
                 </div>
+                {valueEditEditCotentLesson?.id === item?.id && (
+                  <div className="flex items-center justify-end mb-2 gap-3">
+                    <Button
+                      onClick={() => setValueEditCotentLesson({})}
+                      variant="light"
+                      className="rounded"
+                    >
+                      <Text type="font-16-400">Cancel</Text>
+                    </Button>
+                    <Button
+                      isLoading={loadingEditLecture || loadingEditQuizz}
+                      onClick={handleSaveEditContentLesson}
+                      className="rounded min-w-[100px] bg-main"
+                    >
+                      <Text type="font-16-400">Save</Text>
+                    </Button>
+                  </div>
+                )}
               </div>
+
               {indexContentAdd?.includes(indexCurriculum) ||
               indexAddQuestion?.includes(indexCurriculum) ? (
                 <div className="flex items-center gap-3">
-                  <Text type="font-14-500">Select content type</Text>
+                  <Text type="font-14-500" className="w-max">
+                    Select content type
+                  </Text>
                   <Button
                     onClick={() => {
                       const newData = indexContentAdd?.filter(
@@ -367,21 +466,25 @@ const CurriculumItem = ({ item }: { item: any }) => {
               ) : (
                 <>
                   {item?.content || item?.info?.duration ? null : (
-                    <Button
-                      onClick={() =>
-                        handleClickAddContent(item.type, indexCurriculum)
-                      }
-                      className="border-main border-1 bg-transparent rounded h-[30px]"
-                    >
-                      <div className="flex items-center gap-2">
-                        <IconPlusMain />
-                        <Text type="font-16-400" className="text-main">
-                          {item.type === TYPE_COURSE.LECTURE
-                            ? 'Content'
-                            : 'Question'}
-                        </Text>
-                      </div>
-                    </Button>
+                    <>
+                      {!valueEditEditCotentLesson?.id && (
+                        <Button
+                          onClick={() =>
+                            handleClickAddContent(item.type, indexCurriculum)
+                          }
+                          className="border-main border-1 bg-transparent rounded h-[30px]"
+                        >
+                          <div className="flex items-center gap-2">
+                            <IconPlusMain />
+                            <Text type="font-16-400" className="text-main">
+                              {item.type === TYPE_COURSE.LECTURE
+                                ? 'Content'
+                                : 'Question'}
+                            </Text>
+                          </div>
+                        </Button>
+                      )}
+                    </>
                   )}
                 </>
               )}
