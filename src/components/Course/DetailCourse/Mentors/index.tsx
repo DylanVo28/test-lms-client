@@ -70,7 +70,7 @@ const Mentors = ({ mentor }: any) => {
               </Text>
               <div className="flex items-center gap-2 flex-wrap">
                 <Text type="font-14-400" className="text-white">
-                  {mentorProfile?.instructorInfo?.avgRate?.toFixed(2) || 0}
+                  {mentorProfile?.instructorInfo?.avgRate?.toFixed(1) || 0}
                 </Text>
                 <Rater
                   total={5}
