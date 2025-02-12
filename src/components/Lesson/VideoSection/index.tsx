@@ -74,6 +74,14 @@ const VideoSection = ({
         videoRef.current.appendChild(videoElement);
       }
 
+      const handleFullscreenChange = () => {
+        if (playerRef.current.isFullscreen()) {
+          videoElement.className = 'fullscreen-mode';
+        } else {
+          videoElement.className = 'exit-fullscreen';
+        }
+      };
+
       const options = {
         controls: true,
         responsive: true,
@@ -102,6 +110,8 @@ const VideoSection = ({
             console.log('Player is ready');
           }
         );
+
+        playerRef.current.on('fullscreenchange', handleFullscreenChange);
 
         playerRef.current.on('error', function (error: any) {
           console.error('Video player error:', error);
