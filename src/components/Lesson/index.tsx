@@ -453,7 +453,7 @@ const Lesson = () => {
               loading={loadingNoData || loadingListSession}
             />
           )}
-        {endCourse && !typeLoadContent && isLargestSeventyPercentProcess && (
+        {endCourse && !typeLoadContent && (
           <FormEndCourse courseId={router.query.id as string} />
         )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (
