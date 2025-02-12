@@ -21,7 +21,7 @@ const FormQuizz = ({
   handlePrevChildSection,
 }: {
   startTakingTest: any;
-  handleNextLastSection: VoidFunction;
+  handleNextLastSection: (id: string, type: string) => void;
   handleStartTakingTheTest: VoidFunction;
   handleClickContinueQuizz: (id: string) => void;
   loading: boolean;
@@ -139,7 +139,7 @@ const FormQuizz = ({
         size="sm"
         onClick={() => {
           if (lastIndex === allItems?.length - 1) {
-            handleNextLastSection();
+            handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
           } else {
             handleNextChildSection(
               dataItemNext?.type,

@@ -47,7 +47,7 @@ const NoDataContent = ({
         size="sm"
         onClick={() => {
           if (lastIndex === allItems?.length - 1) {
-            handleNextLastSection();
+            handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
           } else {
             handleNextChildSection(
               dataItemNext?.type,

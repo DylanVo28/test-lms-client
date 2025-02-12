@@ -345,6 +345,11 @@ const Lesson = () => {
     }
   };
   const handleSkipQuizz = (id: string) => {
+    const body = {
+      status: UserCourseProgressStatus.COMPLETED,
+    };
+    requestProgressStatusQuizz.run(body, id);
+
     const newSession = dataListSession?.data;
     const allItems = newSession.reduce((result: any, section: any) => {
       const newLessons = section?.lessons?.map((lesson: any) => {
@@ -364,13 +369,20 @@ const Lesson = () => {
     }, []);
     const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
+    console.log(currentIndex, 'currentIndex');
+
     if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
       const nextItem = allItems?.[currentIndex + 1];
+      console.log(nextItem, 'nextItem');
+
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
       // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
       // router.push(newPath);
       setActiveItemSection(nextItem?.id);
+    } else {
+      setEndCourse(true);
+      setTypeLoadContent('');
     }
   };
 
@@ -473,7 +485,18 @@ const Lesson = () => {
     }
   };
 
-  const handleNextLastSection = () => {
+  const handleNextLastSection = (id: string, type: string) => {
+    if (type === TYPE_COURSE.LECTURE) {
+      const body = {
+        status: UserCourseProgressStatus.COMPLETED,
+      };
+      requestProgressStatusLesson.run(body, id);
+    } else {
+      const body = {
+        status: UserCourseProgressStatus.COMPLETED,
+      };
+      requestProgressStatusQuizz.run(body, id);
+    }
     setEndCourse(true);
     setTypeLoadContent('');
   };

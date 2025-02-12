@@ -21,7 +21,7 @@ const VideoSection = ({
   allItems,
 }: {
   allItems: any;
-  handleNextLastSection: VoidFunction;
+  handleNextLastSection: (id: string, type: string) => void;
   handleNextChildSection: (
     type: string,
     idNext: string,
@@ -199,7 +199,7 @@ const VideoSection = ({
           handleCancelNextChilSection={handleCancelNextChilSection}
           handleNextChildSection={(type, id) => {
             if (lastIndex === allItems?.length - 1) {
-              handleNextLastSection();
+              handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
             } else {
               setEndVideo(false);
               resetVideo();
@@ -221,7 +221,7 @@ const VideoSection = ({
         size="sm"
         onClick={() => {
           if (lastIndex === allItems?.length - 1) {
-            handleNextLastSection();
+            handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
           } else {
             resetVideo();
             setEndVideo(false);
