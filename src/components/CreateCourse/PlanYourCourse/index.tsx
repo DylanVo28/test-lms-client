@@ -29,7 +29,7 @@ const PlanYourCourse = () => {
         res?.data?.requirements?.length > 0;
 
       const isEnoughCourseLangdingePage =
-        res?.data?.title && res?.data?.categoryId && res?.data?.subCategoryId;
+        res?.data?.title && res?.data?.categoryId;
 
       const isEnoughCurruclum = res?.data?.sections?.some(
         (item: any) =>
@@ -219,9 +219,7 @@ const PlanYourCourse = () => {
     dataDetail?.data?.requirements?.length > 0;
 
   const isEnoughCourseLangdingePage =
-    dataDetail?.data?.title &&
-    dataDetail?.data?.categoryId &&
-    dataDetail?.data?.subCategoryId;
+    dataDetail?.data?.title && dataDetail?.data?.categoryId;
 
   const isEnoughCurruclum = dataDetail?.data?.sections?.some(
     (item: any) =>

@@ -4,6 +4,7 @@ import {
 } from '@/components/CreateCourse/service';
 import Text from '@/components/UI/Text';
 import { Button, Progress } from '@nextui-org/react';
+import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { set } from 'video.js/dist/types/tech/middleware';
 
@@ -18,6 +19,8 @@ const FormAddVideo = ({
   const [valueFile, setValueFile] = useState<any>({});
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
+
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (valueInfo?.duration) {
@@ -101,34 +104,47 @@ const FormAddVideo = ({
 
   return (
     <div className="flex py-3 px-4 flex-col gap-3 border-1 border-t-0 border-white/15">
-      <div className="flex items-center  gap-4">
-        {valueFile?.urlVideo ? (
-          <div className="relative w-full">
-            <Progress
-              radius="none"
-              classNames={{
-                indicator: 'bg-main',
-                track: 'min-h-[43px]',
-              }}
-              className="w-full"
-              value={valueProgress}
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Text type="font-16-500" className="text-white">
-                {valueProgress}%
+      <div className="flex items-start gap-4">
+        <div className="flex flex-col gap-2 w-full">
+          {valueFile?.urlVideo ? (
+            <div className="relative w-full">
+              <Progress
+                radius="none"
+                classNames={{
+                  indicator: 'bg-main',
+                  track: 'min-h-[43px]',
+                }}
+                className="w-full"
+                value={valueProgress}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Text type="font-16-500" className="text-white">
+                  {valueProgress}%
+                </Text>
+              </div>
+            </div>
+          ) : (
+            <div
+              onClick={handleClickUploadFile}
+              className={clsx(
+                'cursor-pointer w-full py-3 px-[10px] bgDefault rounded border-1 border-white/20',
+                {
+                  ['!border-danger-300']: !valueFile?.urlVideo && isError,
+                }
+              )}
+            >
+              <Text type="font-14-400" className="text-white/40">
+                No files selected
               </Text>
             </div>
-          </div>
-        ) : (
-          <div
-            onClick={handleClickUploadFile}
-            className="cursor-pointer w-full py-3 px-[10px] bgDefault rounded border-1 border-white/20"
-          >
-            <Text type="font-14-400" className="text-white/40">
-              No files selected
+          )}
+          {isError && !valueFile?.urlVideo && (
+            <Text type="font-14-400" className="text-danger-300">
+              Please upload the file
             </Text>
-          </div>
-        )}
+          )}
+        </div>
+
         <input
           type="file"
           key={inputKey}
@@ -159,7 +175,13 @@ const FormAddVideo = ({
 
       <div className="flex justify-end items-end">
         <Button
-          onClick={() => handleSaveVideo(valueFile)}
+          onClick={() => {
+            if (valueFile?.urlVideo) {
+              handleSaveVideo(valueFile);
+            } else {
+              setIsError(true);
+            }
+          }}
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">

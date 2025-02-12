@@ -15,6 +15,7 @@ const QuillEditor = ({
   value,
   inputQuizz,
   onChange,
+  error,
   autoFocus = false,
 }: {
   label?: string;
@@ -22,6 +23,7 @@ const QuillEditor = ({
   placeholder?: string;
   value?: string;
   inputQuizz?: boolean;
+  error?: string;
   onChange?: (value: string) => void;
   autoFocus?: boolean;
 }) => {
@@ -145,10 +147,16 @@ const QuillEditor = ({
         className={clsx('w-full', {
           ['custom-quill-editor']: inputDefault,
           ['custom-quill-editor-quizz']: inputQuizz,
+          ['quill-error']: error,
         })}
       >
         <div ref={editorRef}></div>
       </div>
+      {error && (
+        <Text type="font-14-400" className="text-danger-300">
+          {error}
+        </Text>
+      )}
     </div>
   );
 };

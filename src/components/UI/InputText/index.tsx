@@ -29,6 +29,7 @@ interface InputTextProps extends InputProps {
   classInputWrapper?: string;
   isBlack?: boolean;
   error?: string;
+  hiddenMessageError?: boolean;
 }
 
 const InputText = (props: InputTextProps) => {
@@ -60,6 +61,7 @@ const InputText = (props: InputTextProps) => {
     isBlack,
     isLesson,
     error,
+    hiddenMessageError,
     isInput,
     ...rest
   } = props;
@@ -138,7 +140,7 @@ const InputText = (props: InputTextProps) => {
         labelPlacement="outside"
         {...rest}
       />
-      {error && (
+      {error && !hiddenMessageError && (
         <Text type="font-14-400" className="text-danger-300">
           {error}
         </Text>

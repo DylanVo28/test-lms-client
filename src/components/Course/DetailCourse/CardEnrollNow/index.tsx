@@ -38,6 +38,12 @@ const CardEnrollNow = ({ course }: { course: any }) => {
       }
     },
   });
+  const discountCalculator = (originPrice: any, price: any) => {
+    const discountPercentage = ((originPrice - price) / originPrice) * 100;
+
+    return `${discountPercentage}%`;
+  };
+
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
@@ -83,8 +89,18 @@ const CardEnrollNow = ({ course }: { course: any }) => {
                 </Text>
               )} */}
             </div>
+            {course?.originPrice && course?.price && (
+              <div className="rounded-full border-1 border-[#F26F2133] py-1 px-3 bg-[#F26F2133] flex items-center gap-1">
+                <Text type="font-14-500" className="text-[#F26F21]">
+                  {discountCalculator(course?.originPrice, course?.price)}
+                </Text>
+                <Text type="font-14-500" className="text-[#F26F21]">
+                  OFF
+                </Text>
+              </div>
+            )}
 
-            {!course?.isOwner && (
+            {/* {!course?.isOwner && (
               <Button
                 variant="light"
                 radius="full"
@@ -105,7 +121,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
                   />
                 </div>
               </Button>
-            )}
+            )} */}
           </div>
           {profile?.id !== course?.author?.id && (
             <CustomButtonEnroll

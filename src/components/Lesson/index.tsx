@@ -32,8 +32,8 @@ import { atom, useAtom } from 'jotai';
 import { activeItemSectionAtom } from './ListSection/ChildSection';
 import FormEndCourse from './FormEndCourse';
 import { useClaimCertificates } from '@/layout/LessonLayout/service';
-import ModalClaimCertifications from '@/layout/LessonLayout/ModalClaimCertifications';
 import NoDataContent from './NoDataContent';
+import ModalClaimCertifications from '../UI/ModalClaimCertifications';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {

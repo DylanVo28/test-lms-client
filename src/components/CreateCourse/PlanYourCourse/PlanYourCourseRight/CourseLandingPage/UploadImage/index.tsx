@@ -54,6 +54,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
       <input
         key={inputKey}
         type="file"
+        accept=".jpg,.jpeg,.png,.gif"
         ref={fileInputRef}
         onChange={handleFileChange}
         style={{ display: 'none' }}

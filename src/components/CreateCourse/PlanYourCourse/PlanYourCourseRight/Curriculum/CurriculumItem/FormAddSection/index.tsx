@@ -75,7 +75,8 @@ const FormAddSection = ({
         <div className="flex items-center gap-3">
           <Button
             onClick={handleCancelFormAddSection}
-            className="bg-transparent border-1 rounded border-white"
+            variant="light"
+            className="rounded"
           >
             <Text type="font-16-400" className="text-white">
               Cancel

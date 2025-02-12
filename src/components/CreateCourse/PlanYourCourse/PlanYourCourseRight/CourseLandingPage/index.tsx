@@ -131,7 +131,7 @@ const CourseLandingPage = ({
             control={control}
             render={({ field }) => (
               <SelectCustom
-                placeholder="English (US)"
+                placeholder="Select language"
                 className="min-w-[120px]"
                 onChange={field.onChange}
                 value={field.value}

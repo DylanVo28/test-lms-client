@@ -13,10 +13,11 @@ const FormLecture = ({
   loading: boolean;
 }) => {
   const [valueTitle, setValueTitle] = useState('');
+  const [isError, setIsError] = useState(false);
   return (
     <div className="border-1 bg-transparent mx-[6px] border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
-      <div className="flex items-center w-full gap-2">
-        <div className="w-[120px]">
+      <div className="flex items-start w-full gap-2">
+        <div className="w-[120px] mt-1">
           <Text type="font-16-700" className="text-white">
             New lecture:
           </Text>
@@ -25,6 +26,7 @@ const FormLecture = ({
           <InputText
             maxLength={160}
             endContent
+            error={isError && !valueTitle ? 'Field title is require' : ''}
             classInputWrapper="!min-h-[34px]"
             onChange={(e: any) => setValueTitle(e.target.value)}
             className="min-w-full"
@@ -40,7 +42,13 @@ const FormLecture = ({
           </Button>
           <Button
             isLoading={loading}
-            onClick={() => handleAdd(valueTitle)}
+            onClick={() => {
+              if (valueTitle) {
+                handleAdd(valueTitle);
+              } else {
+                setIsError(true);
+              }
+            }}
             className="rounded bg-main"
           >
             <Text type="font-16-400">Add lecture</Text>
