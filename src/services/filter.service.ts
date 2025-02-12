@@ -3,17 +3,18 @@ import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { useRequest } from 'ahooks';
 
-const serviceGetCategories = async () => {
+const serviceGetCategories = async (params: any) => {
   return await privateRequest(request.get, API_PATH.CATEGORIES, {
     params: {
+      ...params,
       pageSize: 50,
     },
   });
 };
 
-export const useGetCategories = () => {
+export const useGetCategories = (params: any) => {
   const { data, loading, run } = useRequest(async () => {
-    return await serviceGetCategories();
+    return await serviceGetCategories(params);
   });
 
   return {

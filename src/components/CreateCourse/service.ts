@@ -4,15 +4,18 @@ import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useRequest } from 'ahooks';
 
-const serviceGetCategories = async () => {
+const serviceGetCategories = async (params: any) => {
   return await privateRequest(request.get, API_PATH.CATEGORIES, {
-    pageSize: 100,
+    params: {
+      ...params,
+      pageSize: 50,
+    },
   });
 };
 
-export const useGetCategories = () => {
+export const useGetCategories = (params: any) => {
   const { data, loading, run } = useRequest(async () => {
-    return await serviceGetCategories();
+    return await serviceGetCategories(params);
   });
 
   return {
@@ -80,6 +83,17 @@ const serviceEditCourse = (body: any, id: string) => {
 
 export const useEditCourse = (options: any) => {
   return useRequest(serviceEditCourse, {
+    manual: true,
+    ...options,
+  });
+};
+
+const serviceDeleteCourse = (id: string) => {
+  return privateRequest(request.delete, API_PATH.EDIT_COURSE(id));
+};
+
+export const useDeleteCourse = (options: any) => {
+  return useRequest(serviceDeleteCourse, {
     manual: true,
     ...options,
   });

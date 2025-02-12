@@ -5,7 +5,7 @@ import Text from '../UI/Text';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NoData from './NoData';
 import {
   useGetListCourse,
@@ -15,6 +15,7 @@ import { useDebounce } from 'ahooks';
 import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
 import { useProfile } from '@/store/profile/useProfile';
 import { isMobile } from 'react-device-detect';
+import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 
 const SORT_BY = [
   { key: 'createdAt desc', label: 'Newest' },
@@ -38,6 +39,8 @@ const ListCourse = () => {
   });
   const { profile } = useProfile();
 
+  const refModalConfirmDelete: any = useRef<any>(null);
+
   useEffect(() => {
     console.log('Debounced:', search);
     setDebounceVal(search);
@@ -58,6 +61,15 @@ const ListCourse = () => {
   useEffect(() => {
     reload();
   }, [sort, debounceVal, profile]);
+
+  const deleteCourse = (id: string) => {
+    console.log('idddd', id);
+    refModalConfirmDelete.current.onOpen(id);
+  };
+
+  const handleModalClose = () => {
+    reload();
+  };
 
   return (
     <div className="flex flex-col gap-[50px]">
@@ -113,9 +125,6 @@ const ListCourse = () => {
               key={item?.id}
               onMouseEnter={() => handleMouseEnter(item?.id)}
               onMouseLeave={handleMouseLeave}
-              onClick={() =>
-                router.push(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)
-              }
               className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex flex-col md:flex-row gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
             >
               <Image
@@ -127,14 +136,29 @@ const ListCourse = () => {
               />
               <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
                 {idHovered === item?.id && (
-                  <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50"></div>
-                )}
-                {idHovered === item?.id && (
-                  <div className="flex gap-2 absolute justify-center items-center left-1/2 top-[45%] z-[1000]">
-                    <IconEdit />
-                    <Text className="text-[20px] font-bold text-white">
-                      Edit Courses
-                    </Text>
+                  <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50 h-full">
+                    <div className="flex flex-row items-center gap-4 justify-center h-full">
+                      <div
+                        className="flex gap-2 justify-center items-center z-[1000]"
+                        onClick={() =>
+                          router.push(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)
+                        }
+                      >
+                        <IconEdit />
+                        <Text className="text-[20px] font-bold text-white">
+                          Edit Course
+                        </Text>
+                      </div>
+                      <div
+                        className="flex gap-2 justify-center items-center z-[1000]"
+                        onClick={() => deleteCourse(item.id)}
+                      >
+                        <IconDelete />
+                        <Text className="text-[20px] font-bold text-white">
+                          Delete Course
+                        </Text>
+                      </div>
+                    </div>
                   </div>
                 )}
                 <Text className="text-[16px] md:text-[20px] font-bold">
@@ -177,6 +201,7 @@ const ListCourse = () => {
           );
         })}
       {dataCourses?.length === 0 && <NoData />}
+      <ModalConfirmDelete ref={refModalConfirmDelete} reload={reload} />
     </div>
   );
 };
@@ -194,6 +219,29 @@ const IconEdit = () => {
         d="M6.414 16.0001L16.556 5.85808L15.142 4.44408L5 14.5861V16.0001H6.414ZM7.243 18.0001H3V13.7571L14.435 2.32208C14.6225 2.13461 14.8768 2.0293 15.142 2.0293C15.4072 2.0293 15.6615 2.13461 15.849 2.32208L18.678 5.15108C18.8655 5.33861 18.9708 5.59292 18.9708 5.85808C18.9708 6.12325 18.8655 6.37756 18.678 6.56508L7.243 18.0001ZM3 20.0001H21V22.0001H3V20.0001Z"
         fill="white"
       />
+    </svg>
+  );
+};
+const IconDelete = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_795_5780)">
+        <path
+          d="M4 8H20V21C20 21.2652 19.8946 21.5196 19.7071 21.7071C19.5196 21.8946 19.2652 22 19 22H5C4.73478 22 4.48043 21.8946 4.29289 21.7071C4.10536 21.5196 4 21.2652 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.73478 7.10536 2.48043 7.29289 2.29289C7.48043 2.10536 7.73478 2 8 2H16C16.2652 2 16.5196 2.10536 16.7071 2.29289C16.8946 2.48043 17 2.73478 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"
+          fill="white"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_795_5780">
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   );
 };
