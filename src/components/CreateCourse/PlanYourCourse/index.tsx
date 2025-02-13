@@ -117,10 +117,61 @@ const PlanYourCourse = () => {
     }
   }, [router.query.id, profile?.id]);
   const requestEditCourse = useEditCourse({
-    onSuccess: (res: any) => {
+    onSuccess: async (res: any) => {
+      if (activePlan < 4) {
+        const resData = await fetchDetailSection();
+
+        const allLessonsHaveContent = resData?.data?.every((section: any) =>
+          section.lessons.every((lesson: any) => lesson.content !== null)
+        );
+
+        const allQuizzesHaveQuestions = resData?.data.every((section: any) =>
+          section.quizzes.every(
+            (quizz: any) =>
+              Array.isArray(quizz.questions) && quizz.questions.length > 0
+          )
+        );
+
+        const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
+        const isEnoughIntendedLearners =
+          res?.data?.objectives?.length > 0 &&
+          res?.data?.intenedLeaners?.length > 0 &&
+          res?.data?.requirements?.length > 0;
+        const isEnoughCourseLangdingePage =
+          res?.data?.title &&
+          res?.data?.categoryId &&
+          res?.data?.level &&
+          res?.data?.lang;
+
+        if (
+          allLessonsHaveContent ||
+          allQuizzesHaveQuestions ||
+          isEnoughtSetPrice ||
+          isEnoughIntendedLearners ||
+          isEnoughCourseLangdingePage
+        ) {
+          setActivePlan(activePlan + 1);
+        }
+      }
+
       getDetailCourse(router.query.id as string);
       toast.success(res?.message);
       setIsSubmit(true);
+      // useEffect(() => {
+      //   if (
+      //     (isEnoughIntendedLearners ||
+      //       isEnoughCurruclum ||
+      //       isEnoughCourseLangdingePage) &&
+      //     !isFirstLoad
+      //   ) {
+      //     setActivePlan(activePlan + 1);
+      //   }
+      // }, [
+      //   isEnoughIntendedLearners,
+      //   isEnoughCurruclum,
+      //   isEnoughCourseLangdingePage,
+      //   isFirstLoad,
+      // ]);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -299,20 +350,6 @@ const PlanYourCourse = () => {
   );
 
   const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
-
-  // useEffect(() => {
-  //   if (
-  //     isEnoughIntendedLearners ||
-  //     isEnoughCurruclum ||
-  //     isEnoughCourseLangdingePage
-  //   ) {
-  //     setActivePlan(activePlan + 1);
-  //   }
-  // }, [
-  //   isEnoughIntendedLearners,
-  //   isEnoughCurruclum,
-  //   isEnoughCourseLangdingePage,
-  // ]);
 
   return (
     <LoadingScreen isLoading={loading}>
