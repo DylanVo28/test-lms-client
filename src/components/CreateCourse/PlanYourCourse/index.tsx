@@ -40,11 +40,23 @@ const PlanYourCourse = () => {
         res?.data?.title && res?.data?.categoryId;
       res?.data?.level && res?.data?.lang;
 
-      const isEnoughCurruclum = res?.data?.sections?.some(
-        (item: any) =>
-          (item.lessons && item.lessons.length > 0) ||
-          (item.quizzes && item.quizzes.length > 0)
+      const allLessonsHaveContent = res?.data?.sections?.every((section: any) =>
+        section.lessons.every((lesson: any) => lesson.content !== null)
       );
+
+      const allQuizzesHaveQuestions = res?.data?.sections.every(
+        (section: any) =>
+          section.quizzes.every(
+            (quizz: any) =>
+              Array.isArray(quizz.questions) && quizz.questions.length > 0
+          )
+      );
+
+      const isEnoughCurruclum =
+        allLessonsHaveContent || allQuizzesHaveQuestions;
+
+      console.log(isEnoughCurruclum, 'isEnoughCurruclum');
+
       if (
         isEnoughIntendedLearners &&
         isEnoughCurruclum &&
@@ -272,11 +284,21 @@ const PlanYourCourse = () => {
     dataDetail?.data?.level &&
     dataDetail?.data?.lang;
 
-  const isEnoughCurruclum = dataDetail?.data?.sections?.some(
-    (item: any) =>
-      (item.lessons && item.lessons.length > 0) ||
-      (item.quizzes && item.quizzes.length > 0)
+  const allLessonsHaveContent = dataDetail?.data?.sections?.every(
+    (section: any) =>
+      section.lessons.every((lesson: any) => lesson.content !== null)
   );
+
+  const allQuizzesHaveQuestions = dataDetail?.data?.sections.every(
+    (section: any) =>
+      section.quizzes?.length > 0 &&
+      section.quizzes.every(
+        (quizz: any) =>
+          Array.isArray(quizz.questions) && quizz.questions.length > 0
+      )
+  );
+
+  const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
 
   // useEffect(() => {
   //   if (
