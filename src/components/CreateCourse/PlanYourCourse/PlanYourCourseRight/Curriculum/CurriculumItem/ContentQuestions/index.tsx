@@ -1,12 +1,14 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
-import { PencilSimpleLine } from '@phosphor-icons/react';
+import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
 
 const ContentQuestions = ({
   questions,
   handleClickEditQuestion,
+  handleClickDeleteQuestion,
 }: {
   handleClickEditQuestion: (values: any) => void;
+  handleClickDeleteQuestion: (values: any) => void;
   questions: any;
 }) => {
   return (
@@ -27,15 +29,27 @@ const ContentQuestions = ({
                 1 answer test
               </Text>
             </div>
-            <Button
-              onClick={() => handleClickEditQuestion(item)}
-              isIconOnly
-              size="sm"
-              radius="full"
-              variant="light"
-            >
-              <PencilSimpleLine size={16} weight="light" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={() => handleClickEditQuestion(item)}
+                isIconOnly
+                size="sm"
+                radius="full"
+                variant="light"
+              >
+                <PencilSimpleLine size={16} weight="light" />
+              </Button>
+
+              <Button
+                onClick={() => handleClickDeleteQuestion(item)}
+                isIconOnly
+                size="sm"
+                radius="full"
+                variant="light"
+              >
+                <Trash size={16} weight="light" />
+              </Button>
+            </div>
           </div>
         );
       })}

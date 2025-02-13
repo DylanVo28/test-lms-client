@@ -174,6 +174,22 @@ export const useEditLecture = (options?: IOptions) => {
   return useRequest(serviceEditLecture, { manual: true, ...options });
 };
 
+const serviceDeleteLecture = async (id: string) => {
+  return privateRequest(request.delete, `${API_PATH.LECTURE}/${id}`, {});
+};
+
+export const useDeleteLecture = (options?: IOptions) => {
+  return useRequest(serviceDeleteLecture, { manual: true, ...options });
+};
+
+const serviceDeleteQuizz = async (id: string) => {
+  return privateRequest(request.delete, `${API_PATH.QUIZZ}/${id}`, {});
+};
+
+export const useDeleteQuizz = (options?: IOptions) => {
+  return useRequest(serviceDeleteQuizz, { manual: true, ...options });
+};
+
 const serviceCreateLecture = async (body: IBodyLecture) => {
   return privateRequest(request.post, API_PATH.LECTURE, { data: body });
 };
@@ -273,4 +289,16 @@ const servicEditQuestionQuizz = async (
 
 export const useEditQuestionQuizz = (options?: IOptions) => {
   return useRequest(servicEditQuestionQuizz, { manual: true, ...options });
+};
+
+const servicDeleteQuestionQuizz = async (id: string) => {
+  return privateRequest(
+    request.delete,
+    `${API_PATH.EDIT_QUESTION_QUIZZ(id)}`,
+    {}
+  );
+};
+
+export const useDeleteQuestionQuizz = (options?: IOptions) => {
+  return useRequest(servicDeleteQuestionQuizz, { manual: true, ...options });
 };

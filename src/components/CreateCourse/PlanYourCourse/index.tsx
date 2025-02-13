@@ -38,6 +38,7 @@ const PlanYourCourse = () => {
 
       const isEnoughCourseLangdingePage =
         res?.data?.title && res?.data?.categoryId;
+      res?.data?.level && res?.data?.lang;
 
       const isEnoughCurruclum = res?.data?.sections?.some(
         (item: any) =>
@@ -165,12 +166,8 @@ const PlanYourCourse = () => {
       values?.objectives?.length > 0 &&
       values?.intenedLeaners?.length > 0 &&
       values?.requirements?.length > 0;
-    const isEnoughCourseLangdingePage = values?.title && values?.categoryId;
-    console.log({
-      isEnoughtSetPrice,
-      isEnoughIntendedLearners,
-      isEnoughCourseLangdingePage,
-    });
+    const isEnoughCourseLangdingePage =
+      values?.title && values?.categoryId && values?.level && values?.lang;
 
     if (
       !allLessonsHaveContent ||
@@ -270,7 +267,10 @@ const PlanYourCourse = () => {
     dataDetail?.data?.requirements?.length > 0;
 
   const isEnoughCourseLangdingePage =
-    dataDetail?.data?.title && dataDetail?.data?.categoryId;
+    dataDetail?.data?.title &&
+    dataDetail?.data?.categoryId &&
+    dataDetail?.data?.level &&
+    dataDetail?.data?.lang;
 
   const isEnoughCurruclum = dataDetail?.data?.sections?.some(
     (item: any) =>

@@ -3,7 +3,7 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { Control, useFieldArray, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   useCreateSesson,
@@ -15,7 +15,8 @@ import { useRouter } from 'next/router';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import FormAddSection from './CurriculumItem/FormAddSection';
-import { PencilSimpleLine } from '@phosphor-icons/react';
+import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
+import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
 
 const CurriculumItem = dynamic(() => import('./CurriculumItem'), {
   ssr: false,
@@ -28,6 +29,8 @@ const Curriculum = ({ setValue }: any) => {
     setValue: setValueForm,
   } = useForm<any>({});
   const { profile } = useProfile();
+
+  const refModalConfirmDeleteSection: any = useRef(null);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -101,6 +104,10 @@ const Curriculum = ({ setValue }: any) => {
   };
 
   const handleRemoveSection = (index: number, id: string) => {
+    refModalConfirmDeleteSection.current.onOpen(index, id);
+  };
+
+  const handleSubmitDelete = (index: number, id: string) => {
     remove(index);
     if (id) {
       runDeleteSesson(id);
@@ -189,10 +196,22 @@ const Curriculum = ({ setValue }: any) => {
                           size="sm"
                           radius="full"
                           variant="light"
-                          // className="groupLeson-hover:opacity-100 opacity-0 transition-all"
                         >
                           <PencilSimpleLine size={16} weight="light" />
                         </Button>
+                        {index !== 0 && (
+                          <Button
+                            isIconOnly
+                            onClick={() => {
+                              handleRemoveSection(index, field?.idSection);
+                            }}
+                            size="sm"
+                            radius="full"
+                            variant="light"
+                          >
+                            <Trash size={16} weight="light" />
+                          </Button>
+                        )}
                       </div>
                     </div>
                   )}
@@ -212,67 +231,6 @@ const Curriculum = ({ setValue }: any) => {
                     remove(index);
                   }}
                 />
-                // <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
-                //   <div className="flex items-start gap-2">
-                //     <div className="min-w-[100px] pt-3">
-                //       <Text type="font-16-700" className="text-white">
-                //         New Section:
-                //       </Text>
-                //     </div>
-                //     <div className="flex flex-col gap-4 w-full">
-                //       <InputText
-                //         maxLength={160}
-                //         endContent
-                //         onChange={(e: any) => setValueTitle(e.target.value)}
-                //         value={valueTitle}
-                //         className="w-full"
-                //         placeholder="Type"
-                //         inputDefault
-                //       />
-                //       <div className="flex flex-col gap-2">
-                //         <Text type="font-16-700" className="text-white">
-                //           What will students be able to do at the end of this
-                //           section?
-                //         </Text>
-                //         <InputText
-                //           maxLength={160}
-                //           endContent
-                //           onChange={(e: any) =>
-                //             setValueLearningObjective(e.target.value)
-                //           }
-                //           value={valueLearningObjective}
-                //           className="w-full"
-                //           placeholder="Type"
-                //           inputDefault
-                //         />
-                //       </div>
-                //     </div>
-                //   </div>
-                //   <div className="flex justify-end items-center">
-                //     <div className="flex items-center gap-3">
-                //       <Button
-                //         onClick={() => {
-                //           setAddSection(false);
-                //           remove(index);
-                //         }}
-                //         className="bg-transparent border-1 rounded border-white"
-                //       >
-                //         <Text type="font-16-400" className="text-white">
-                //           Cancel
-                //         </Text>
-                //       </Button>
-                //       <Button
-                //         onClick={() => handleSaveSection(index)}
-                //         className="bg-main rounded"
-                //         isLoading={loading}
-                //       >
-                //         <Text type="font-16-400" className="text-white">
-                //           Save
-                //         </Text>
-                //       </Button>
-                //     </div>
-                //   </div>
-                // </div>
               )}
             </div>
           );
@@ -294,6 +252,10 @@ const Curriculum = ({ setValue }: any) => {
           </Button>
         )}
       </div>
+      <ModalConfirmDeleteSection
+        handleSubmitDelete={handleSubmitDelete}
+        ref={refModalConfirmDeleteSection}
+      />
     </LoadingScreen>
   );
 };

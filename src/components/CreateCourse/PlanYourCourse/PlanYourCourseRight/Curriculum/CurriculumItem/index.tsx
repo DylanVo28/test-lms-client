@@ -3,7 +3,7 @@ import Text from '@/components/UI/Text';
 import { Button, Input } from '@nextui-org/react';
 import { IconClose, IconFile } from '..';
 import { Control, useFieldArray } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import FormLecture from './FormLecture';
 import FormQuiz from './FormQuiz';
@@ -17,6 +17,9 @@ import {
   useCreateLecture,
   useCreateQuestionQuizz,
   useCreateQuizz,
+  useDeleteLecture,
+  useDeleteQuestionQuizz,
+  useDeleteQuizz,
   useEditLecture,
   useEditQuestionQuizz,
   useEditQuizz,
@@ -26,6 +29,8 @@ import { PencilSimpleLine, Question, Trash } from '@phosphor-icons/react';
 import Content from './Content';
 import ContentQuestions from './ContentQuestions';
 import InputText from '@/components/UI/InputText';
+import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
+import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
 
 const CurriculumItem = ({ item }: { item: any }) => {
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
@@ -34,6 +39,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const [valueEditEditCotentLesson, setValueEditCotentLesson] = useState<any>(
     {}
   );
+  const refModalConfirmDeleteSection: any = useRef(null);
+  const refModalConfirmDeleteQuestion: any = useRef(null);
 
   const [typeAddContent, setTypeAddContent] = useState<string>('');
   const [valueTitleLecture, setValueTitleLecture] = useState<string>('');
@@ -100,6 +107,14 @@ const CurriculumItem = ({ item }: { item: any }) => {
       setFormAdd('');
       setIsAddCurriculum(false);
     },
+  });
+
+  const { run: runDeleteLecture, loading: loadingDeleteLecture } =
+    useDeleteLecture({
+      onSuccess(res) {},
+    });
+  const { run: runDeleteQuizz, loading: loadingDeleteQuizz } = useDeleteQuizz({
+    onSuccess(res) {},
   });
 
   const { run: runEditLecture, loading: loadingEditLecture } = useEditLecture({
@@ -169,6 +184,11 @@ const CurriculumItem = ({ item }: { item: any }) => {
           }
         }
       },
+    });
+
+  const { run: runDeleteQuestionQuizz, loading: loadingDeleteQuestionQuizz } =
+    useDeleteQuestionQuizz({
+      onSuccess(res) {},
     });
 
   const { run: runCreateQuizz, loading: loadingQuizz } = useCreateQuizz({
@@ -310,6 +330,25 @@ const CurriculumItem = ({ item }: { item: any }) => {
     );
   };
 
+  const handleSubmitDeleteQuestion = (values: any) => {
+    const newData = [...dataCurriculum];
+
+    const index = newData?.findIndex((item) => item?.id === values?.quizId);
+
+    const questionIndex = newData[index]?.questions?.findIndex(
+      (q: any) => q?.id === values?.id
+    );
+
+    newData[index]?.questions?.splice(questionIndex, 1);
+
+    setDataCurriculum(newData);
+
+    runDeleteQuestionQuizz(values?.id);
+  };
+
+  const handleClickDeleteQuestion = (values: any) => {
+    refModalConfirmDeleteQuestion.current.onOpen(values);
+  };
   const handleClickEditQuestion = (
     values: any,
     type: TYPE_COURSE,
@@ -326,6 +365,26 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
   const handleEditLecture = (item: any) => {
     setValueEditCotentLesson(item);
+  };
+  const handleRemoveLecture = (index: number, id: string, type: string) => {
+    // setValueEditCotentLesson(item);
+    refModalConfirmDeleteSection.current.onOpen(index, id, type);
+  };
+
+  const handleSubmitDeleteLecture = (
+    index: number,
+    id: string,
+    type?: string
+  ) => {
+    if (type === TYPE_COURSE.LECTURE) {
+      runDeleteLecture(id);
+      const newData = dataCurriculum?.filter((item: any) => item?.id !== id);
+      setDataCurriculum(newData);
+    } else {
+      runDeleteQuizz(id);
+      const newData = dataCurriculum?.filter((item: any) => item?.id !== id);
+      setDataCurriculum(newData);
+    }
   };
 
   const handleSaveEditContentLesson = () => {
@@ -411,6 +470,22 @@ const CurriculumItem = ({ item }: { item: any }) => {
                         className="group-hover:opacity-100 opacity-0 transition-all"
                       >
                         <PencilSimpleLine size={16} weight="light" />
+                      </Button>
+                      <Button
+                        isIconOnly
+                        onClick={() => {
+                          handleRemoveLecture(
+                            indexCurriculum,
+                            item?.id,
+                            item?.type
+                          );
+                        }}
+                        size="sm"
+                        radius="full"
+                        variant="light"
+                        className="group-hover:opacity-100 opacity-0 transition-all"
+                      >
+                        <Trash size={16} weight="light" />
                       </Button>
                     </div>
                   )}
@@ -507,6 +582,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
             {item?.questions?.length > 0 &&
               !indexAddQuestion?.includes(indexCurriculum) && (
                 <ContentQuestions
+                  handleClickDeleteQuestion={handleClickDeleteQuestion}
                   handleClickEditQuestion={(values) => {
                     handleClickEditQuestion(
                       values,
@@ -602,6 +678,16 @@ const CurriculumItem = ({ item }: { item: any }) => {
           </div>
         </Button>
       )}
+      <ModalConfirmDeleteSection
+        handleSubmitDelete={handleSubmitDeleteLecture}
+        ref={refModalConfirmDeleteSection}
+        loading={loadingDeleteLecture || loadingDeleteQuizz}
+      />
+      <ModalConfirmDeleteQuestion
+        loading={loadingDeleteQuestionQuizz}
+        handleSubmitDelete={handleSubmitDeleteQuestion}
+        ref={refModalConfirmDeleteQuestion}
+      />
     </div>
   );
 };
