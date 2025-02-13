@@ -10,7 +10,7 @@ import { toast } from '@/components/UI/Toast/toast';
 
 interface IModalModalConfirmDeleteSection {
   handleSubmitDelete: (index: number, id: string, type?: string) => void;
-  loading: boolean;
+  loading?: boolean;
 }
 
 const ModalConfirmDeleteSection = (
