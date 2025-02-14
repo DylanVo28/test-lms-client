@@ -12,6 +12,7 @@ import {
 import IconStudent from '@/components/UI/Icons/IconStudent';
 import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
+import { useProfile } from '@/store/profile/useProfile';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -19,6 +20,8 @@ import Rater from 'react-rater';
 
 const Mentors = ({ mentor }: any) => {
   console.log('mentor', mentor);
+  const { profile } = useProfile();
+  console.log('profile', profile);
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
@@ -46,6 +49,12 @@ const Mentors = ({ mentor }: any) => {
     return mentor?.walletAddress;
   };
 
+  const isNotMentor = mentor?.id !== profile?.id;
+
+  const followMentor = () => {
+    console.log('metorrrrr', mentor);
+  };
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
@@ -59,7 +68,7 @@ const Mentors = ({ mentor }: any) => {
           className="rounded w-[240px] h-[252px] object-contain bg-[#212121]"
           src={mentor?.avatar || '/images/img-default.png'}
         />
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-16-600">
               {generateMentors()}
@@ -95,13 +104,14 @@ const Mentors = ({ mentor }: any) => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col  gap-4">
-            <Text className="text-white" type="font-14-400">
-              {mentor?.biography}
-            </Text>
-            <div className="flex items-center gap-2">
-              {/* {mentor?.x && (
+            <div className="flex flex-col gap-4">
+              {mentor?.biography && (
+                <Text className="text-white" type="font-14-400">
+                  {mentor?.biography}
+                </Text>
+              )}
+              <div className="flex items-center gap-2">
+                {/* {mentor?.x && (
                 <div
                   className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center"
                   onClick={() => window.open(mentor?.x, '_blank')}
@@ -109,39 +119,39 @@ const Mentors = ({ mentor }: any) => {
                   <IconTwiter />
                 </div>
               )} */}
-              {mentor?.facebook && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.facebook, '_blank')}
-                >
-                  <IconFb />
-                </div>
-              )}
-              {mentor?.youtube && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.youtube, '_blank')}
-                >
-                  <IconYoutube />
-                </div>
-              )}
-              {mentor?.linkedin && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.linkedin, '_blank')}
-                >
-                  <IconLinkedIn />
-                </div>
-              )}
-              {mentor?.x && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.x, '_blank')}
-                >
-                  <IconX />
-                </div>
-              )}
-              {/* <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
+                {mentor?.facebook && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.facebook, '_blank')}
+                  >
+                    <IconFb />
+                  </div>
+                )}
+                {mentor?.youtube && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.youtube, '_blank')}
+                  >
+                    <IconYoutube />
+                  </div>
+                )}
+                {mentor?.linkedin && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.linkedin, '_blank')}
+                  >
+                    <IconLinkedIn />
+                  </div>
+                )}
+                {mentor?.x && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.x, '_blank')}
+                  >
+                    <IconX />
+                  </div>
+                )}
+                {/* <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
                 <IconTelegram />
               </div>
               <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
@@ -150,8 +160,18 @@ const Mentors = ({ mentor }: any) => {
               <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
                 <IconReadmi />
               </div> */}
+              </div>
             </div>
           </div>
+
+          {isNotMentor && (
+            <Button
+              className="border border-[#02A6C280] font-semibold text-base w-max text-[#02A6C280] outline-none bg-transparent"
+              onClick={followMentor}
+            >
+              Follow
+            </Button>
+          )}
         </div>
       </div>
     </div>
