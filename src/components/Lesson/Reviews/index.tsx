@@ -190,7 +190,7 @@ const Reviews = ({
   };
 
   return (
-    <div className="pt-[63px] flex flex-col gap-8 px-[80px]">
+    <div className="md:pt-[63px] py-[40px] md:py-0 flex flex-col gap-8 md:px-[80px]">
       <Text type="font-20-600">Student feedbacks</Text>
       <div className="flex gap-3 items-start">
         <div className="w-[100px]">

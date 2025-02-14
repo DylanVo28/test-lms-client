@@ -125,7 +125,7 @@ const CourseLandingPage = ({
           Basic info
         </Text>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Controller
             name="lang"
             control={control}
@@ -169,7 +169,7 @@ const CourseLandingPage = ({
             )}
           />
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Controller
             name="categoryId"
             control={control}
@@ -219,7 +219,7 @@ const CourseLandingPage = ({
           areas that you've covered during your course.
         </Text>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
         <div className="col-span-1">
           <Controller
             name="topics"

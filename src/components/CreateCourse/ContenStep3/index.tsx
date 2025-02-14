@@ -17,27 +17,29 @@ const ContenStep3 = ({ control }: { control: Control }) => {
           If you're not sure about the right category, you can change it later.
         </Text>
       </div>
-      <Controller
-        name="categoryId"
-        control={control}
-        render={({ field }) => (
-          <SelectCustom
-            placeholder="Choose a category"
-            className="min-w-[620px]"
-            isSelectSubmit
-            onChange={field.onChange}
-            value={field.value}
-            options={
-              dataCategories?.data?.map((item: any) => {
-                return {
-                  key: item?.id,
-                  label: item?.name,
-                };
-              }) || []
-            }
-          />
-        )}
-      />
+      <div className="w-full">
+        <Controller
+          name="categoryId"
+          control={control}
+          render={({ field }) => (
+            <SelectCustom
+              placeholder="Choose a category"
+              className="md:min-w-[620px]"
+              isSelectSubmit
+              onChange={field.onChange}
+              value={field.value}
+              options={
+                dataCategories?.data?.map((item: any) => {
+                  return {
+                    key: item?.id,
+                    label: item?.name,
+                  };
+                }) || []
+              }
+            />
+          )}
+        />
+      </div>
     </div>
   );
 };

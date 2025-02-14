@@ -31,7 +31,7 @@ const ContentQuestions = ({
             </div>
             <div className="flex items-center gap-2">
               <Button
-                onClick={() => handleClickEditQuestion(item)}
+                onPress={() => handleClickEditQuestion(item)}
                 isIconOnly
                 size="sm"
                 radius="full"
@@ -41,7 +41,7 @@ const ContentQuestions = ({
               </Button>
 
               <Button
-                onClick={() => handleClickDeleteQuestion(item)}
+                onPress={() => handleClickDeleteQuestion(item)}
                 isIconOnly
                 size="sm"
                 radius="full"

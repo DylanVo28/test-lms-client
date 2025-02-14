@@ -14,20 +14,22 @@ const ContenStep2 = ({ control }: { control: Control }) => {
           later.
         </Text>
       </div>
-      <Controller
-        name="title"
-        control={control}
-        render={({ field }) => (
-          <InputText
-            maxLength={60}
-            className="min-w-[620px]"
-            placeholder="Type"
-            value={field.value}
-            onChange={field.onChange}
-            isInputSubmit
-          />
-        )}
-      />
+      <div className="w-full">
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }) => (
+            <InputText
+              maxLength={60}
+              className="md:min-w-[620px] w-full"
+              placeholder="Type"
+              value={field.value}
+              onChange={field.onChange}
+              isInputSubmit
+            />
+          )}
+        />
+      </div>
     </div>
   );
 };

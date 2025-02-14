@@ -78,7 +78,7 @@ const FormStartTakingTest = ({
   };
 
   return (
-    <div className="w-full flex flex-col min-h-[566px] relative">
+    <div className="w-full flex flex-col min-h-[400px] md:min-h-[566px] relative">
       <LoadingContainer loading={loading} />
       {stepAnswerQuestion === STEP_ANSWER_QUESTION.CONTINUE ? (
         <IsResult
@@ -87,7 +87,7 @@ const FormStartTakingTest = ({
           title={dataQuizz?.title}
         />
       ) : (
-        <div className="w-6/12 pt-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
+        <div className="md:w-6/12 pt-10 py-10 md:py-0 flex-1 mx-auto flex items-start text-start flex-col gap-4">
           {answerCorrectly === true && (
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
               <CheckCircle className="text-green" size={30} weight="fill" />
@@ -150,7 +150,7 @@ const FormStartTakingTest = ({
 
         {dataQuizz?.progress?.status === UserCourseProgressStatus.COMPLETED && (
           <Button
-            onClick={() => handleClickContinueQuizz(dataQuizz?.id)}
+            onPress={() => handleClickContinueQuizz(dataQuizz?.id)}
             className="bg-main w-max  rounded min-w-[120px]"
           >
             <div className="flex items-center gap-2">
@@ -163,7 +163,7 @@ const FormStartTakingTest = ({
         )}
         {stepAnswerQuestion === STEP_ANSWER_QUESTION.SEE_RESULTS && (
           <Button
-            onClick={handleSeeResult}
+            onPress={handleSeeResult}
             className="bg-main w-max  rounded min-w-[150px]"
           >
             <div className="flex items-center gap-2">
@@ -177,7 +177,7 @@ const FormStartTakingTest = ({
         {stepAnswerQuestion === STEP_ANSWER_QUESTION.CONTINUE &&
           answerCorrectly && (
             <Button
-              onClick={() => {
+              onPress={() => {
                 setStepAnswerQuestion('');
                 setCurrentQuestion(1);
                 setAnswerCorrectly('');
@@ -199,7 +199,7 @@ const FormStartTakingTest = ({
             currentQuestion < dataQuizz?.questions?.length ? (
               <Button
                 className="bg-main w-max  rounded min-w-[80px]"
-                onClick={handleNextQuestion}
+                onPress={handleNextQuestion}
               >
                 <div className="flex items-center gap-2">
                   <Text className="text-white" type="font-16-400">
@@ -211,7 +211,7 @@ const FormStartTakingTest = ({
             ) : (
               <Button
                 isDisabled={!valueQuestion}
-                onClick={() => handleCheckAnswer()}
+                onPress={() => handleCheckAnswer()}
                 className="bg-main w-max  rounded min-w-[150px]"
               >
                 <Text className="text-white" type="font-16-400">

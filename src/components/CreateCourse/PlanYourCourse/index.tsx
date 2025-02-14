@@ -13,6 +13,7 @@ import ModalSubmitError from './ModalSubmitError';
 import { API_PATH } from '@/api/constant';
 import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
+import Text from '@/components/UI/Text';
 
 const PlanYourCourse = () => {
   const [activePlan, setActivePlan] = useState(1);
@@ -369,18 +370,21 @@ const PlanYourCourse = () => {
             handlePublishForm={handleSubmit(onPublish)}
           />
           <div className="w-11/12 mx-auto pt-10">
-            <div className="grid grid-cols-10 gap-12">
-              <div className="col-span-2">
-                <PlanYourCourseLeft
-                  isEnoughtSetPrice={isEnoughtSetPrice}
-                  isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}
-                  isEnoughCurruclum={isEnoughCurruclum}
-                  isEnoughIntendedLearners={isEnoughIntendedLearners}
-                  activePlan={activePlan}
-                  handleActivePlan={(plan) => setActivePlan(plan)}
-                />
+            <div className="grid grid-cols-10 gap-10 md:gap-12">
+              <div className="col-span-10 md:col-span-2">
+                <div className="flex flex-col gap-4">
+                  <Text type="font-18-600">Plan your course</Text>
+                  <PlanYourCourseLeft
+                    isEnoughtSetPrice={isEnoughtSetPrice}
+                    isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}
+                    isEnoughCurruclum={isEnoughCurruclum}
+                    isEnoughIntendedLearners={isEnoughIntendedLearners}
+                    activePlan={activePlan}
+                    handleActivePlan={(plan) => setActivePlan(plan)}
+                  />
+                </div>
               </div>
-              <div className="col-span-8">
+              <div className="col-span-10 md:col-span-8">
                 <PlanYourCourseRight
                   handleSubmit={handleSubmit}
                   watch={watch}

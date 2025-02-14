@@ -15,7 +15,7 @@ const FormLecture = ({
   const [valueTitle, setValueTitle] = useState('');
   const [isError, setIsError] = useState(false);
   return (
-    <div className="border-1 bg-transparent mx-[6px] border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
+    <div className="border-1 bg-transparent border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
       <div className="flex items-start w-full gap-2">
         <div className="w-[120px] mt-1">
           <Text type="font-16-700" className="text-white">
@@ -37,12 +37,12 @@ const FormLecture = ({
       </div>
       <div className="flex justify-end items-end">
         <div className="flex items-center gap-3">
-          <Button onClick={handleCancel} variant="light" className="rounded">
+          <Button onPress={handleCancel} variant="light" className="rounded">
             <Text type="font-16-400">Cancel</Text>
           </Button>
           <Button
             isLoading={loading}
-            onClick={() => {
+            onPress={() => {
               if (valueTitle) {
                 handleAdd(valueTitle);
               } else {

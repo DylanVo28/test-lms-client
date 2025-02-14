@@ -155,7 +155,7 @@ const FormAddVideo = ({
         />
         <Button
           isLoading={loading}
-          onClick={handleClickUploadFile}
+          onPress={handleClickUploadFile}
           className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
         >
           <Text type="font-14-400" className="text-main">
@@ -175,7 +175,7 @@ const FormAddVideo = ({
 
       <div className="flex justify-end items-end">
         <Button
-          onClick={() => {
+          onPress={() => {
             if (valueFile?.urlVideo) {
               handleSaveVideo(valueFile);
             } else {

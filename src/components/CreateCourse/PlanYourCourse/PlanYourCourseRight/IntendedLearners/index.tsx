@@ -63,27 +63,30 @@ const IntendedLearners = ({
         {fields?.map((field, index) => {
           return (
             <div key={field?.id} className="flex items-center gap-3">
-              <Controller
-                name={`objectives.${index}.name`}
-                control={control}
-                render={({ field }) => {
-                  console.log(field, 'field');
+              <div className="w-full">
+                <Controller
+                  name={`objectives.${index}.name`}
+                  control={control}
+                  render={({ field }) => {
+                    console.log(field, 'field');
 
-                  return (
-                    <InputText
-                      {...field}
-                      maxLength={160}
-                      endContent
-                      className="min-w-[500px]"
-                      placeholder="Type"
-                      inputDefault
-                    />
-                  );
-                }}
-              />
+                    return (
+                      <InputText
+                        {...field}
+                        maxLength={160}
+                        endContent
+                        className="md:min-w-[500px]"
+                        placeholder="Type"
+                        inputDefault
+                      />
+                    );
+                  }}
+                />
+              </div>
+
               {index > 3 && (
                 <Button
-                  onClick={() => remove(index)}
+                  onPress={() => remove(index)}
                   variant="light"
                   isIconOnly
                   radius="full"
@@ -96,7 +99,7 @@ const IntendedLearners = ({
         })}
 
         <Button
-          onClick={() => append({ name: '' })}
+          onPress={() => append({ name: '' })}
           size="sm"
           variant="light"
           className="w-max"
@@ -119,23 +122,25 @@ const IntendedLearners = ({
         {fieldsRequirements?.map((field, index) => {
           return (
             <div key={field?.id} className="flex items-center gap-3">
-              <Controller
-                name={`requirements.${index}.name`}
-                control={control}
-                render={({ field }) => (
-                  <InputText
-                    {...field}
-                    maxLength={160}
-                    endContent
-                    className="min-w-[500px]"
-                    placeholder="Type"
-                    inputDefault
-                  />
-                )}
-              />
+              <div className="w-full">
+                <Controller
+                  name={`requirements.${index}.name`}
+                  control={control}
+                  render={({ field }) => (
+                    <InputText
+                      {...field}
+                      maxLength={160}
+                      endContent
+                      className="md:min-w-[500px]"
+                      placeholder="Type"
+                      inputDefault
+                    />
+                  )}
+                />
+              </div>
               {index > 0 && (
                 <Button
-                  onClick={() => removeRequirements(index)}
+                  onPress={() => removeRequirements(index)}
                   variant="light"
                   isIconOnly
                   radius="full"
@@ -148,7 +153,7 @@ const IntendedLearners = ({
         })}
 
         <Button
-          onClick={() => appendRequirements({ name: '' })}
+          onPress={() => appendRequirements({ name: '' })}
           size="sm"
           variant="light"
           className="w-max"
@@ -171,23 +176,25 @@ const IntendedLearners = ({
         {fieldsIntenedLeaners?.map((field, index) => {
           return (
             <div key={field?.id} className="flex items-center gap-3">
-              <Controller
-                name={`intenedLeaners.${index}.name`}
-                control={control}
-                render={({ field }) => (
-                  <InputText
-                    {...field}
-                    maxLength={160}
-                    endContent
-                    className="min-w-[500px]"
-                    placeholder="Type"
-                    inputDefault
-                  />
-                )}
-              />
+              <div className="w-full">
+                <Controller
+                  name={`intenedLeaners.${index}.name`}
+                  control={control}
+                  render={({ field }) => (
+                    <InputText
+                      {...field}
+                      maxLength={160}
+                      endContent
+                      className="md:min-w-[500px]"
+                      placeholder="Type"
+                      inputDefault
+                    />
+                  )}
+                />
+              </div>
               {index > 0 && (
                 <Button
-                  onClick={() => removeIntenedLeaners(index)}
+                  onPress={() => removeIntenedLeaners(index)}
                   variant="light"
                   isIconOnly
                   radius="full"
@@ -200,7 +207,7 @@ const IntendedLearners = ({
         })}
 
         <Button
-          onClick={() => appendIntenedLeaners({ name: '' })}
+          onPress={() => appendIntenedLeaners({ name: '' })}
           size="sm"
           variant="light"
           className="w-max"

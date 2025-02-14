@@ -29,7 +29,7 @@ const FormAddArticle = ({
       <div className="justify-end flex w-full items-end">
         <Button
           isLoading={loading}
-          onClick={() => {
+          onPress={() => {
             if (valueDocument) {
               handleSaveArticle(valueDocument);
             } else {

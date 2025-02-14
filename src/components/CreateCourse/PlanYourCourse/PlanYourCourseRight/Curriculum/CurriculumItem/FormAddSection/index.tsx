@@ -20,7 +20,7 @@ const FormAddSection = ({
   valueLesson?: any;
 }) => {
   return (
-    <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
+    <div className="border-1 min-w-[600px]  bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
       <div className="flex items-start gap-2">
         <div className="min-w-[100px] pt-3">
           <Text type="font-16-700" className="text-white">
@@ -78,7 +78,7 @@ const FormAddSection = ({
       <div className="flex justify-end items-center">
         <div className="flex items-center gap-3">
           <Button
-            onClick={handleCancelFormAddSection}
+            onPress={handleCancelFormAddSection}
             variant="light"
             className="rounded"
           >
@@ -87,7 +87,7 @@ const FormAddSection = ({
             </Text>
           </Button>
           <Button
-            onClick={handleSubmit(handleSaveAddSection)}
+            onPress={handleSubmit(handleSaveAddSection)}
             className="bg-main rounded"
             isLoading={loading}
           >

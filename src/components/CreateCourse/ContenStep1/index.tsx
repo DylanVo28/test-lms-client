@@ -24,7 +24,7 @@ const DATA_CONTENT = [
 const ContenStep1 = ({ control }: { control: Control }) => {
   return (
     <div className="flex items-center flex-col gap-10">
-      <Text className="text-white" type="font-32-700">
+      <Text className="text-white text-center" type="font-32-700">
         First, let's find out what type of course you're making.
       </Text>
       <Controller

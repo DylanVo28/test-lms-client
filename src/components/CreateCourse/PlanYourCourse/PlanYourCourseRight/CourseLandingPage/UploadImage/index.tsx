@@ -5,6 +5,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   const fileInputRef: any = useRef(null);
@@ -71,11 +72,11 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <div className="flex items-start gap-8">
-        <div className="relative min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-start gap-8">
+        <div className="relative md:min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
           <Image
             src={'/img-default.png'}
-            className="w-[480px] h-[270px]"
+            className="w-full md:w-[480px] h-[270px]"
             alt=""
             width={480}
             height={270}
@@ -86,7 +87,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
             Upload your course image here. It must meet our course image quality
             standards to be accepted. Important guidelines: 750x422 pixels;

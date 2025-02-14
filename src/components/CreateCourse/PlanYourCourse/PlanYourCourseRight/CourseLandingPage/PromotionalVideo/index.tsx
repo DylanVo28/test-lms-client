@@ -76,11 +76,11 @@ const PromotionalVideo = ({
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <div className="flex items-start gap-8">
-        <div className="relative min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-start gap-8">
+        <div className="relative md:min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
           <Image
             src={'/img-default.png'}
-            className="w-[480px] h-[270px]"
+            className="w-full md:w-[480px] h-[270px]"
             alt=""
             width={480}
             height={270}
@@ -91,7 +91,7 @@ const PromotionalVideo = ({
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
             Your promo video is a quick and compelling way for students to
             preview what they’ll learn in your course. Students considering your

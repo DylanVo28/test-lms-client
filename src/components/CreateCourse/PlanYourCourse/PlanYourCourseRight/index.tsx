@@ -24,7 +24,7 @@ const PlanYourCourseRight = ({
   setValue: any;
 }) => {
   return (
-    <div className="bg-[#181F25] py-6 px-8 flex flex-col rounded shadow-lg w-full min-h-[600px] gap-8">
+    <div className="bg-[#181F25] p-4 md:py-6 md:px-8 flex flex-col rounded shadow-lg w-full gap-8">
       {activePlan === 1 && (
         <IntendedLearners
           handleSubmit={handleSubmit}

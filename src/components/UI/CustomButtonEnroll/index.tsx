@@ -33,7 +33,7 @@ const CustomButtonEnroll = ({
           >
             {!connected ? (
               <Button
-                onClick={openConnectModal}
+                onPress={openConnectModal}
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
@@ -43,7 +43,7 @@ const CustomButtonEnroll = ({
             ) : (
               <Button
                 isLoading={loading}
-                onClick={handleClickButton}
+                onPress={handleClickButton}
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">

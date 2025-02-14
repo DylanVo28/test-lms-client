@@ -18,7 +18,7 @@ const FormQuiz = ({
   const [errorForm, setErrorForm] = useState(false);
 
   return (
-    <div className="border-1 bg-transparent mx-[6px] border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
+    <div className="border-1 bg-transparent border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
       <div className="flex items-start gap-2">
         <div className="w-[100px]">
           <Text type="font-16-700" className="text-white">
@@ -46,11 +46,11 @@ const FormQuiz = ({
       </div>
       <div className="flex justify-end items-end">
         <div className="flex items-center gap-3">
-          <Button onClick={handleCancel} variant="light" className="rounded">
+          <Button onPress={handleCancel} variant="light" className="rounded">
             <Text type="font-16-400">Cancel</Text>
           </Button>
           <Button
-            onClick={() => {
+            onPress={() => {
               if (valueTitle) {
                 handleAdd({ title: valueTitle, description: valueDescription });
               } else {

@@ -20,7 +20,7 @@ const NoDataContent = ({
   const lastIndex = allItems?.findIndex((item: any) => item?.id === data?.id);
 
   return (
-    <div className="w-full relative min-h-[566px] flex justify-center pt-20 p-12 group">
+    <div className="w-full relative min-h-[400px] md:min-h-[566px] flex justify-center pt-20 p-4 md:p-12 group">
       <LoadingContainer loading={loading} />
       {dataItemPrev?.id && (
         <Button

@@ -47,16 +47,16 @@ const FormEndCourse = ({
     runReviewCours(body, courseId);
   };
   return (
-    <div className="w-full min-h-[566px] relative flex  justify-center pt-20 p-12 group">
+    <div className="w-full md:min-h-[566px] min-h-[400px] relative flex  justify-center md:pt-20 p-4 md:p-12 group">
       {submitReviewSuccess ? (
-        <div className="flex flex-col pt-20 items-center gap-6 w-5/12">
+        <div className="flex flex-col pt-20 items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
             🙌 Congratulations on completing the course!
           </Text>
 
           <Button
             radius="full"
-            onClick={() => router.push(ROUTE_PATH.HOME)}
+            onPress={() => router.push(ROUTE_PATH.HOME)}
             className=" bg-transparent border-1 border-main min-w-[162px] w-max min-h-[50px] rounded"
           >
             <Text type="font-16-500" className="text-main">
@@ -65,7 +65,7 @@ const FormEndCourse = ({
           </Button>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 w-5/12">
+        <div className="flex flex-col items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
             🙌 Congratulations on completing the course!
             <br /> Would you like to leave a review?
@@ -96,7 +96,7 @@ const FormEndCourse = ({
               <Button
                 radius="full"
                 isLoading={loadingComment}
-                onClick={handleClickSave}
+                onPress={handleClickSave}
                 className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
               >
                 <Text type="font-16-500" className="text-white">

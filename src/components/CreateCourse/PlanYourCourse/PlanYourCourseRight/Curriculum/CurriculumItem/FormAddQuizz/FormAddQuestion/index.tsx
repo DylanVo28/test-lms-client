@@ -179,7 +179,7 @@ const FormAddQuestion = ({
                   {index !== 0 && (
                     <div className="flex items-end justify-end">
                       <Button
-                        onClick={() => remove(index)}
+                        onPress={() => remove(index)}
                         isIconOnly
                         radius="full"
                         variant="light"
@@ -194,15 +194,14 @@ const FormAddQuestion = ({
           })}
         </div>
         <div className="flex items-end justify-end">
-          <Button
-            isLoading={loading}
+          <button
             onClick={handleSubmit(onSubmit)}
-            className="bg-main rounded min-w-[100px]"
+            className="bg-main rounded min-h-[34px] min-w-[100px]"
           >
             <Text type="font-14-400" className="text-white">
               Save
             </Text>
-          </Button>
+          </button>
         </div>
       </div>
     </form>

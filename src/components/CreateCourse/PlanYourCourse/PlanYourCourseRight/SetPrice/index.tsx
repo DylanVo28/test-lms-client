@@ -11,7 +11,7 @@ const SetPrice = ({ control }: { control: Control }) => {
         Set Price
       </Text>
       <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-6 items-center gap-4">
+        <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="w-[150px] flex items-center gap-1">
             <Text type="font-16-600" className="text-white">
               Origin Price
@@ -38,7 +38,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                     type="number"
                     onChange={field.onChange}
                     value={field.value}
-                    className="min-w-[600px]"
+                    className="md:min-w-[600px]"
                     placeholder={'0'}
                     inputDefault
                   />
@@ -47,7 +47,7 @@ const SetPrice = ({ control }: { control: Control }) => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-6 items-center gap-4">
+        <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="flex items-center gap-1 w-[150px]">
             <Text type="font-16-600" className="text-white">
               Final Price
@@ -76,7 +76,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                   type="number"
                   onChange={field.onChange}
                   value={field.value}
-                  className="min-w-[600px]"
+                  className="md:min-w-[600px]"
                   placeholder={'0'}
                   inputDefault
                 />
@@ -84,7 +84,7 @@ const SetPrice = ({ control }: { control: Control }) => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-6 items-center gap-4">
+        <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="w-[150px]">
             <Text type="font-16-600" className="text-white">
               Promotion period
@@ -104,7 +104,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                   type="number"
                   onChange={field.onChange}
                   value={field.value}
-                  className="min-w-[600px]"
+                  className="md:min-w-[600px]"
                   placeholder={'0'}
                   inputDefault
                 />

@@ -148,10 +148,10 @@ const Curriculum = ({ setValue }: any) => {
         </Text>
         {fields?.map((field: any, index: number) => {
           return (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 overflow-auto">
               {index !== 0 && (
                 <Button
-                  onClick={() => handleRemoveSection(index, field.idSection)}
+                  onPress={() => handleRemoveSection(index, field.idSection)}
                   isIconOnly
                   variant="light"
                   radius="full"
@@ -162,7 +162,7 @@ const Curriculum = ({ setValue }: any) => {
               )}
 
               {field?.title ? (
-                <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
+                <div className="border-1 overflow-auto bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
                   {valueLesson?.id === field?.id ? (
                     <FormAddSection
                       handleSaveAddSection={(values: any) => {
@@ -190,7 +190,7 @@ const Curriculum = ({ setValue }: any) => {
                         </Text>
                         <Button
                           isIconOnly
-                          onClick={() => {
+                          onPress={() => {
                             handleEditLesson(field, index);
                           }}
                           size="sm"
@@ -202,7 +202,7 @@ const Curriculum = ({ setValue }: any) => {
                         {index !== 0 && (
                           <Button
                             isIconOnly
-                            onClick={() => {
+                            onPress={() => {
                               handleRemoveSection(index, field?.idSection);
                             }}
                             size="sm"
@@ -237,7 +237,7 @@ const Curriculum = ({ setValue }: any) => {
         })}
         {!addSection && (
           <Button
-            onClick={() => {
+            onPress={() => {
               setAddSection(true);
               append({ title: '', introduction: '' });
             }}

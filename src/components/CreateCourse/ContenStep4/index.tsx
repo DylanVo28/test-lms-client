@@ -41,40 +41,42 @@ const ContenStep4 = ({
           you don't have much time.
         </Text>
       </div>
-      <Controller
-        name="timeSpent"
-        control={control}
-        render={({ field }) => {
-          return (
-            <RadioGroup
-              onValueChange={(value) => {
-                field.onChange(value);
-              }}
-              value={field.value}
-            >
-              {DATA_CONTENT?.map((item) => {
-                return (
-                  <CustomRadio
-                    key={item.id}
-                    value={item.id}
-                    onChange={(e: any) => {
-                      console.log('eeeeee', e.target.value);
-                      setValue(e.target.value);
-                    }}
-                  >
-                    <Text
-                      type="font-16-400"
-                      className="text-white max-w-[760px]"
+      <div className="w-full">
+        <Controller
+          name="timeSpent"
+          control={control}
+          render={({ field }) => {
+            return (
+              <RadioGroup
+                onValueChange={(value) => {
+                  field.onChange(value);
+                }}
+                value={field.value}
+              >
+                {DATA_CONTENT?.map((item) => {
+                  return (
+                    <CustomRadio
+                      key={item.id}
+                      value={item.id}
+                      onChange={(e: any) => {
+                        console.log('eeeeee', e.target.value);
+                        setValue(e.target.value);
+                      }}
                     >
-                      {item?.content}
-                    </Text>
-                  </CustomRadio>
-                );
-              })}
-            </RadioGroup>
-          );
-        }}
-      />
+                      <Text
+                        type="font-16-400"
+                        className="text-white max-w-[760px]"
+                      >
+                        {item?.content}
+                      </Text>
+                    </CustomRadio>
+                  );
+                })}
+              </RadioGroup>
+            );
+          }}
+        />
+      </div>
     </div>
   );
 };
@@ -89,8 +91,9 @@ export const CustomRadio = (props: any) => {
       size="md"
       value={value}
       classNames={{
+        label: 'w-full',
         base: clsx(
-          'inline-flex min-w-[916px] m-0 bg-white/5 hover:bg-white/10 text-start items-centers',
+          'inline-flex md:min-w-[916px] max-w-full w-full m-0 bg-white/5 hover:bg-white/10 text-start items-centers',
           'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
           'data-[selected=true]:border-primary'
         ),

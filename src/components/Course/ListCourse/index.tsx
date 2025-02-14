@@ -184,7 +184,7 @@ const ListCourse = () => {
               variant="light"
               radius="full"
               className="hover:!bg-main-20"
-              onClick={loadMore}
+              onPress={loadMore}
             >
               <div className="flex items-center gap-[2px]">
                 <Text type="font-14-500" className="text-main">

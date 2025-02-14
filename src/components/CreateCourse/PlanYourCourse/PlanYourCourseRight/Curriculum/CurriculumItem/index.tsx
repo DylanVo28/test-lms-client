@@ -400,7 +400,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pl-[52px] relative">
+    <div className="flex flex-col min-w-[600px] gap-4 pl-[20px] md:pl-[52px] relative w-full">
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
         console.log(item, 'item');
 
@@ -461,19 +461,19 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
                       <Button
                         isIconOnly
-                        onClick={() => {
+                        onPress={() => {
                           handleEditLecture(item);
                         }}
                         size="sm"
                         radius="full"
                         variant="light"
-                        className="group-hover:opacity-100 opacity-0 transition-all"
+                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
                         <PencilSimpleLine size={16} weight="light" />
                       </Button>
                       <Button
                         isIconOnly
-                        onClick={() => {
+                        onPress={() => {
                           handleRemoveLecture(
                             indexCurriculum,
                             item?.id,
@@ -483,7 +483,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                         size="sm"
                         radius="full"
                         variant="light"
-                        className="group-hover:opacity-100 opacity-0 transition-all"
+                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
                         <Trash size={16} weight="light" />
                       </Button>
@@ -493,7 +493,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                 {valueEditEditCotentLesson?.id === item?.id && (
                   <div className="flex items-center justify-end mb-2 gap-3">
                     <Button
-                      onClick={() => setValueEditCotentLesson({})}
+                      onPress={() => setValueEditCotentLesson({})}
                       variant="light"
                       className="rounded"
                     >
@@ -501,7 +501,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     </Button>
                     <Button
                       isLoading={loadingEditLecture || loadingEditQuizz}
-                      onClick={handleSaveEditContentLesson}
+                      onPress={handleSaveEditContentLesson}
                       className="rounded min-w-[100px] bg-main"
                     >
                       <Text type="font-16-400">Save</Text>
@@ -517,7 +517,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     Select content type
                   </Text>
                   <Button
-                    onClick={() => {
+                    onPress={() => {
                       const newData = indexContentAdd?.filter(
                         (item: any) => item !== indexCurriculum
                       );
@@ -544,7 +544,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     <>
                       {!valueEditEditCotentLesson?.id && (
                         <Button
-                          onClick={() =>
+                          onPress={() =>
                             handleClickAddContent(item.type, indexCurriculum)
                           }
                           className="border-main border-1 bg-transparent rounded h-[30px]"
@@ -634,9 +634,9 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
       {isAddCurriculum ? (
         <div className="flex items-start gap-1">
-          <div className="absolute left-4">
+          <div className="absolute left-[-4px] top-[-4px] md:top-0 md:left-4">
             <Button
-              onClick={() => {
+              onPress={() => {
                 setIsAddCurriculum(false);
                 setFormAdd('');
               }}
@@ -669,7 +669,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
         </div>
       ) : (
         <Button
-          onClick={handleAddCurriculumItem}
+          onPress={handleAddCurriculumItem}
           className="py-2 px-3 bg-transparent w-max border-1 border-white rounded"
         >
           <div className="flex items-center gap-1">

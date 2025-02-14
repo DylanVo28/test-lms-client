@@ -26,7 +26,7 @@ const Footer = ({
         <div className="flex justify-center items-center w-full">
           <Button
             isDisabled={!typeWatch}
-            onClick={() => handleClickNextStep(currentStep)}
+            onPress={() => handleClickNextStep(currentStep)}
             className="bg-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
@@ -38,7 +38,7 @@ const Footer = ({
       {currentStep !== 1 && (
         <>
           <Button
-            onClick={() => handlePreviousStep(currentStep)}
+            onPress={() => handlePreviousStep(currentStep)}
             className="bg-transparent border-1 border-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
@@ -54,7 +54,7 @@ const Footer = ({
                 : !timeSpentWatch
             }
             isLoading={loading}
-            onClick={() => handleClickNextStep(currentStep)}
+            onPress={() => handleClickNextStep(currentStep)}
             className="bg-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">

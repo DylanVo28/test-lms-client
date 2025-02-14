@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
+import { isMobile } from 'react-device-detect';
 
 const HeaderPlanYourCourse = ({
   handleSaveForm,
@@ -24,7 +25,7 @@ const HeaderPlanYourCourse = ({
           onClick={() => router.push(ROUTE_PATH.LIST_COURSE)}
           variant="light"
           radius="sm"
-          size="md"
+          size={isMobile ? 'sm' : 'md'}
         >
           <div className="flex items-center gap-1">
             <IconBlack />
@@ -40,7 +41,7 @@ const HeaderPlanYourCourse = ({
       </div>
       <div className="flex items-center gap-3">
         <Button
-          onClick={handleSaveForm}
+          onPress={handleSaveForm}
           isLoading={loading}
           className="bg-transparent border-1 border-main min-w-[96px] !min-h-[40px] rounded"
         >
@@ -49,7 +50,7 @@ const HeaderPlanYourCourse = ({
           </Text>
         </Button>
         <Button
-          onClick={handlePublishForm}
+          onPress={handlePublishForm}
           isLoading={loadingPublish}
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
