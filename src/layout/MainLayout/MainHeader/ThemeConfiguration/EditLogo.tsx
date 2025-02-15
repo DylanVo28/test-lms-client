@@ -12,8 +12,10 @@ interface UploadedFile {
 
 const EditLogo = ({
   onChangeLogo,
+  logo,
 }: {
   onChangeLogo: (value: string) => void;
+  logo: string;
 }) => {
   const [valueFile, setValueFile] = useState<UploadedFile>();
   const { run, loading: loadingFile } = useUploadFile({

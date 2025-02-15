@@ -12,7 +12,7 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import DrawerMenu from '../Menubar/DrawerMenu';
-import CustomLogoAndTheme from './CustomLogoAndTheme';
+import ThemeConfiguration from './ThemeConfiguration';
 const MainHeader = () => {
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
@@ -144,7 +144,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            {/* <CustomLogoAndTheme setUrlLogo={setUrlLogo} /> */}
+            <ThemeConfiguration setUrlLogo={setUrlLogo} />
 
             {/* <div className="w-full">
               <ConnectButton />

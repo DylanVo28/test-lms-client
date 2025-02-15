@@ -1,20 +1,15 @@
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Checkbox, CheckboxGroup } from '@nextui-org/react';
-import React, { useState } from 'react';
-
-const languages = [
-  { value: 'en', label: 'English' },
-  { value: 'gr', label: 'Greece' },
-  { value: 'sa', label: 'Saudi Arabia' },
-  { value: 'ax', label: 'Åland Islands' },
-  { value: 'bh', label: 'Bahrain' },
-];
+import React, { useEffect, useState } from 'react';
+import languages from './data/languages.json';
 
 const Languages = ({
   onChangeLangs,
+  dataLangs,
 }: {
   onChangeLangs: (value: string[]) => void;
+  dataLangs: string[];
 }) => {
   const [langsSelected, setLangsSelected] = useState<string[]>([]);
   const [langues, setLangues] = useState(languages);
@@ -22,7 +17,7 @@ const Languages = ({
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
     const filteredLangs = languages.filter((lang) =>
-      lang.label.toLowerCase().includes(value)
+      lang.name.toLowerCase().includes(value)
     );
     setLangues(filteredLangs);
   };
@@ -31,6 +26,10 @@ const Languages = ({
     onChangeLangs(values);
     setLangsSelected(values);
   };
+
+  useEffect(() => {
+    setLangsSelected(dataLangs);
+  }, []);
 
   return (
     <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
@@ -53,19 +52,19 @@ const Languages = ({
         />
       </div>
 
-      <div className="flex flex-col gap-[16px] h-[140px] overflow-y-auto">
+      <div className="flex flex-col gap-[16px] h-[140px] overflow-y-auto overflow-x-hidden">
         <CheckboxGroup value={langsSelected} onChange={onChange}>
           {langues.map((language) => (
             <Checkbox
-              key={language.value}
-              value={language.value}
+              key={language.code}
+              value={language.code}
               classNames={{
                 wrapper: 'me-3 after:!bg-main before:!border-black-7',
                 base: '',
               }}
               color="primary"
             >
-              {language.label}
+              {language.name}
             </Checkbox>
           ))}
         </CheckboxGroup>

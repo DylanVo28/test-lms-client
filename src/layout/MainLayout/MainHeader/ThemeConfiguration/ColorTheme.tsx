@@ -106,8 +106,10 @@ function convertColor(color: Color, type: TypeColor) {
 
 const ColorTheme = ({
   onChangeColor,
+  dataColor,
 }: {
   onChangeColor: (value: string) => void;
+  dataColor: string;
 }) => {
   const [typeColor, setTypeColor] = useState<TypeColor>('hex');
   const [color, setColor] = useState<RgbaColor>({ r: 0, g: 0, b: 0, a: 0 });
@@ -151,9 +153,9 @@ const ColorTheme = ({
   };
 
   useEffect(() => {
-    const savedColor = localStorage.getItem('main-color');
-    if (savedColor) {
-      setColor(hexToRgba(savedColor, 1));
+    if (dataColor) {
+      setColor(hexToRgba(dataColor, 1));
+      onSelectColor(dataColor);
     }
   }, []);
 

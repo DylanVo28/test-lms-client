@@ -8,7 +8,6 @@ import { PREFIX_API, privateRequest } from '@/api/request';
 
 export const useProfileInitial = () => {
   const [profile, setProfile] = useAtom(profileAtom);
-
   const run = () => {
     const init = async () => {
       const res = await privateRequest(
