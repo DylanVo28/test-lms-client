@@ -25,7 +25,7 @@ export default function LanguageModal() {
     setLangSelected(e.target.value);
   };
   const onSave = () => {
-    setProfile({ ...profile, langSelected });
+    if (langSelected) setProfile({ ...profile, langSelected });
   };
   return (
     <>
