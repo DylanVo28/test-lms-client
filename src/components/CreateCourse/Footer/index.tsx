@@ -1,5 +1,6 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
+import { useTranslation } from 'next-i18next';
 
 const Footer = ({
   currentStep,
@@ -15,6 +16,7 @@ const Footer = ({
 
   currentStep: number;
 }) => {
+  const { t } = useTranslation('common');
   const typeWatch = watch('type');
   const titleWatch = watch('title');
   const categoryWatch = watch('categoryId');
@@ -30,7 +32,7 @@ const Footer = ({
             className="bg-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
-              Continue
+              {t('Continue')}
             </Text>
           </Button>
         </div>
@@ -42,7 +44,7 @@ const Footer = ({
             className="bg-transparent border-1 border-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
-              Previous
+              {t('Previous')}
             </Text>
           </Button>
           <Button
@@ -58,7 +60,7 @@ const Footer = ({
             className="bg-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
-              Continue
+              {t('Continue')}
             </Text>
           </Button>
         </>

@@ -1,11 +1,13 @@
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 const BreadCrumbs = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
   return (
     <div className="flex items-center gap-1">
       <Button
@@ -27,7 +29,7 @@ const BreadCrumbs = () => {
         onClick={() => router.push(ROUTE_PATH.COURSE)}
         className="text-white hover:opacity-80 cursor-pointer"
       >
-        Course
+        {t(`Course`)}
       </Text>
 
       <Image
@@ -37,7 +39,7 @@ const BreadCrumbs = () => {
         alt=""
       />
       <Text type="font-14-500" className="text-main">
-        Course details
+        {t('Course details')}
       </Text>
     </div>
   );

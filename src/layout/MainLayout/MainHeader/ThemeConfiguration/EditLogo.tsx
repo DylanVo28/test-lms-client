@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import React, { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 interface UploadedFile {
   url: string;
@@ -17,16 +18,17 @@ const EditLogo = ({
   onChangeLogo: (value: string) => void;
   logo: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueFile, setValueFile] = useState<UploadedFile>();
   const { run, loading: loadingFile } = useUploadFile({
     onSuccess(response) {
       const data = response.data;
       setValueFile(data);
       onChangeLogo(data.url as string);
-      toast.success(`File uploaded successfully!`);
+      toast.success(t('File uploaded successfully!'));
     },
     onError(error) {
-      toast.error('File uploaded failed!');
+      toast.error(t('File uploaded failed!'));
     },
   });
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +43,14 @@ const EditLogo = ({
       const maxHeight = 3000;
 
       if (!allowedTypes.includes(file.type)) {
-        toast.error('Invalid file type. Only JPEG, PNG, or JPG are allowed.');
+        toast.error(
+          t('Invalid file type. Only JPEG, PNG, or JPG are allowed.')
+        );
         return;
       }
 
       if (file.size > maxSize) {
-        toast.error('File size exceeds 10 MB limit.');
+        toast.error(t('File size exceeds 10 MB limit.'));
         return;
       }
 
@@ -60,7 +64,9 @@ const EditLogo = ({
           img.height > maxHeight
         ) {
           toast.error(
-            `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
+            t(
+              `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
+            )
           );
           return;
         }
@@ -71,21 +77,23 @@ const EditLogo = ({
   };
   return (
     <div>
-      <Text className="text-[18px] font-semibold mb-[16px]">Edit logo</Text>
+      <Text className="text-[18px] font-semibold mb-[16px]">
+        {t('Edit logo')}
+      </Text>
       <p className="text-md text-[#ffffff7f] mb-[8px]">
-        Minimum 200x200 pixels, Maximum 3000x3000 pixels
+        {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
       </p>
       <div className="p-[20px] bg-[#242A30] rounded-[4px] border border-[#00000033]">
         <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-[#181F25] rounded-[4px] ">
           <div className="text-[#ffffff7f]">
-            {valueFile?.filename || 'JPEG, PNG or JPG . Max 10mb.'}
+            {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
           </div>
           <div className="relative">
             <Button
               isLoading={loadingFile}
               className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
             >
-              Choose file
+              {t('Choose file')}
             </Button>
             <input
               type="file"

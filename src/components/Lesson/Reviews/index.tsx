@@ -17,6 +17,7 @@ import {
 import NoData from '@/components/ListCourse/NoData';
 import { useEffect, useState } from 'react';
 import { TypeReactions } from '@/utils/common';
+import { useTranslation } from 'next-i18next';
 
 const Reviews = ({
   courseId,
@@ -34,6 +35,7 @@ const Reviews = ({
 
   courseId: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueSearch, setValueSearch] = useState('');
   const [valueLevel, setValueLevel] = useState<any>();
 
@@ -191,7 +193,7 @@ const Reviews = ({
 
   return (
     <div className="md:pt-[63px] py-[40px] md:py-0 flex flex-col gap-8 md:px-[80px]">
-      <Text type="font-20-600">Student feedbacks</Text>
+      <Text type="font-20-600">{t('Student feedbacks')}</Text>
       <div className="flex gap-3 items-start">
         <div className="w-[100px]">
           <Text type="font-20-600">
@@ -223,12 +225,12 @@ const Reviews = ({
           })}
         </div>
       </div>
-      <Text type="font-20-600">Reviews</Text>
+      <Text type="font-20-600">{t('Reviews')}</Text>
 
       <div className="flex items-center gap-4">
         <InputText
           className="max-w-[470px]"
-          placeholder="Search"
+          placeholder={t('Search')}
           isLesson
           onChange={(e: any) => {
             setValueSearch(e.target.value);
@@ -244,27 +246,27 @@ const Reviews = ({
           options={[
             {
               key: 5,
-              label: '5 star',
+              label: t('5 star'),
             },
             {
               key: 4,
-              label: '4 star',
+              label: t('4 star'),
             },
             {
               key: 3,
-              label: '3 star',
+              label: t('3 star'),
             },
             {
               key: 2,
-              label: '2 star',
+              label: t('2 star'),
             },
             {
               key: 1,
-              label: '1 star',
+              label: t('1 star'),
             },
           ]}
           className="max-w-[117px]"
-          placeholder="All Ratings"
+          placeholder={t('All Ratings')}
         />
       </div>
       <div className="flex flex-col gap-6">
@@ -302,7 +304,7 @@ const Reviews = ({
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
-              See More
+              {t('See More')}
             </Text>
             <Image
               src={'/icons/ic-arrow-drop-right-line.svg'}

@@ -2,6 +2,7 @@ import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const FormLecture = ({
   handleCancel,
@@ -12,6 +13,7 @@ const FormLecture = ({
   handleCancel: VoidFunction;
   loading: boolean;
 }) => {
+  const { t } = useTranslation('common');
   const [valueTitle, setValueTitle] = useState('');
   const [isError, setIsError] = useState(false);
   return (
@@ -19,18 +21,18 @@ const FormLecture = ({
       <div className="flex items-start w-full gap-2">
         <div className="w-[120px] mt-1">
           <Text type="font-16-700" className="text-white">
-            New lecture:
+            {t('New lecture:')}
           </Text>
         </div>
         <div className="w-full">
           <InputText
             maxLength={160}
             endContent
-            error={isError && !valueTitle ? 'Field title is require' : ''}
+            error={isError && !valueTitle ? t('Field title is required') : ''}
             classInputWrapper="!min-h-[34px]"
             onChange={(e: any) => setValueTitle(e.target.value)}
             className="min-w-full"
-            placeholder="Enter title"
+            placeholder={t('Enter title')}
             inputDefault
           />
         </div>
@@ -38,7 +40,7 @@ const FormLecture = ({
       <div className="flex justify-end items-end">
         <div className="flex items-center gap-3">
           <Button onPress={handleCancel} variant="light" className="rounded">
-            <Text type="font-16-400">Cancel</Text>
+            <Text type="font-16-400">{t('Cancel')}</Text>
           </Button>
           <Button
             isLoading={loading}
@@ -51,7 +53,7 @@ const FormLecture = ({
             }}
             className="rounded bg-main"
           >
-            <Text type="font-16-400">Add lecture</Text>
+            <Text type="font-16-400">{t('Add lecture')}</Text>
           </Button>
         </div>
       </div>

@@ -13,12 +13,14 @@ import IconStudent from '@/components/UI/Icons/IconStudent';
 import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 
 const Mentors = ({ mentor }: any) => {
   console.log('mentor', mentor);
+  const { t } = useTranslation('common');
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
@@ -49,7 +51,7 @@ const Mentors = ({ mentor }: any) => {
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
-        Mentors (KOLs)
+        {t('Mentors (KOLs)')}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
@@ -77,20 +79,23 @@ const Mentors = ({ mentor }: any) => {
                   rating={mentorProfile?.instructorInfo?.avgRate || 0}
                 />
                 <Text type="font-14-400" className="text-white">
-                  {mentorProfile?.instructorInfo?.countReviews || 0} Reviews
+                  {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
+                  {t('Reviews')}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
                   <Text type="font-14-400" className="text-white">
-                    {mentorProfile?.instructorInfo?.countStudents || 0} Students
+                    {mentorProfile?.instructorInfo?.countStudents || 0}{' '}
+                    {t('Students')}
                   </Text>
                 </div>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconVideo />
                   <Text type="font-14-400" className="text-white">
-                    {mentorProfile?.instructorInfo?.countCourses || 0} Courses
+                    {mentorProfile?.instructorInfo?.countCourses || 0}{' '}
+                    {t('Courses')}
                   </Text>
                 </div>
               </div>
@@ -101,14 +106,6 @@ const Mentors = ({ mentor }: any) => {
               {mentor?.biography}
             </Text>
             <div className="flex items-center gap-2">
-              {/* {mentor?.x && (
-                <div
-                  className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center"
-                  onClick={() => window.open(mentor?.x, '_blank')}
-                >
-                  <IconTwiter />
-                </div>
-              )} */}
               {mentor?.facebook && (
                 <div
                   className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
@@ -141,15 +138,6 @@ const Mentors = ({ mentor }: any) => {
                   <IconX />
                 </div>
               )}
-              {/* <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
-                <IconTelegram />
-              </div>
-              <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
-                <IconDicord />
-              </div>
-              <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
-                <IconReadmi />
-              </div> */}
             </div>
           </div>
         </div>

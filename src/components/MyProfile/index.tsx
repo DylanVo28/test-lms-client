@@ -5,6 +5,7 @@ import Information from './Information';
 import Avatar from './Avatar';
 import Security from './Security';
 import { userRequest, TUser, referralRequest } from './service';
+import { useTranslation } from 'next-i18next';
 
 enum TAB {
   INFORMATION = 'information',
@@ -35,6 +36,7 @@ interface Summary {
 }
 
 const MyProfile = () => {
+  const { t } = useTranslation('common');
   const [tabSelected, setTabSelected] = useState<TAB>(TAB.INFORMATION);
   const [user, setUser] = useState<TUser>();
   const [summary, setSummary] = useState<Summary>();
@@ -77,7 +79,7 @@ const MyProfile = () => {
   return (
     <div className="flex flex-col gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
-        <Text type="font-28-700">My Profile</Text>
+        <Text type="font-28-700">{t('My Profile')}</Text>
       </div>
 
       <div className="flex flex-col md:flex-row gap-[24px] box-border">
@@ -112,7 +114,7 @@ const MyProfile = () => {
                 <span
                   className={`${tabSelected === item.key ? '' : 'opacity-50'}`}
                 >
-                  {item.title}
+                  {t(item.title)}
                 </span>
               </div>
             ))}

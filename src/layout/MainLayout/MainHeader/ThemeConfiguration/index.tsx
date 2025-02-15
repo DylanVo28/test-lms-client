@@ -14,12 +14,14 @@ import Languages from './Languages';
 import { useCreateTheme, useGetDetailTheme, useUpdateTheme } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import { useTranslation } from 'next-i18next';
 
 const ThemeConfiguration = ({
   setUrlLogo,
 }: {
   setUrlLogo: (value: string) => void;
 }) => {
+  const { t } = useTranslation('common');
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isTheme, setIsTheme] = React.useState(false);
   const [color, setColor] = useState<string>('');
@@ -29,20 +31,20 @@ const ThemeConfiguration = ({
 
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
-      toast.success('Saved Theme Configuration');
+      toast.success(t('Saved Theme Configuration'));
       getDetailTheme();
     },
     onError() {
-      toast.success('Failed Theme Configuration');
+      toast.success(t('Failed Theme Configuration'));
     },
   });
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
     onSuccess() {
-      toast.success('Saved Theme Configuration');
+      toast.success(t('Saved Theme Configuration'));
       getDetailTheme();
     },
     onError() {
-      toast.success('Failed Theme Configuration');
+      toast.success(t('Failed Theme Configuration'));
     },
   });
   const { run: getDetailTheme, data: dataThemeConfig } = useGetDetailTheme();
@@ -116,7 +118,7 @@ const ThemeConfiguration = ({
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
                 <span className="text-[28px] font-bold leading-[150%]">
-                  Theme Configuration
+                  {t('Theme Configuration')}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
               </DrawerHeader>
@@ -133,7 +135,7 @@ const ThemeConfiguration = ({
                     type="submit"
                     className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
                   >
-                    Save
+                    {t('Save')}
                   </Button>
                 </div>
               </div>

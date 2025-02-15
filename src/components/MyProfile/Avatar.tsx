@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react';
 import { useUploadFile } from '../CreateCourse/service';
 import { toast } from '../UI/Toast/toast';
 import { userRequest, TUser } from './service';
+import { useTranslation } from 'next-i18next';
 
 interface UploadedFile {
   url: string;
@@ -11,16 +12,17 @@ interface UploadedFile {
 }
 
 const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
+  const { t } = useTranslation('common');
   const [valueFile, setValueFile] = useState<UploadedFile>();
   const [loading, setLoading] = useState(false);
   const { run, loading: loadingFile } = useUploadFile({
     onSuccess(response) {
       const data = response.data;
       setValueFile(data);
-      toast.success(`File uploaded successfully!`);
+      toast.success(t('File uploaded successfully!'));
     },
     onError(error) {
-      toast.error('File uploaded failed!');
+      toast.error(t('File uploaded failed!'));
     },
   });
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,12 +37,14 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
       const maxHeight = 3000;
 
       if (!allowedTypes.includes(file.type)) {
-        toast.error('Invalid file type. Only JPEG, PNG, or JPG are allowed.');
+        toast.error(
+          t('Invalid file type. Only JPEG, PNG, or JPG are allowed.')
+        );
         return;
       }
 
       if (file.size > maxSize) {
-        toast.error('File size exceeds 10 MB limit.');
+        toast.error(t('File size exceeds 10 MB limit.'));
         return;
       }
 
@@ -54,7 +58,9 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
           img.height > maxHeight
         ) {
           toast.error(
-            `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
+            t(
+              `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
+            )
           );
           return;
         }
@@ -70,9 +76,9 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
       setLoading(true);
       await userRequest.update({ ...user, avatar: valueFile.url });
       reload();
-      toast.success('Avatar uploaded successful!');
+      toast.success(t('Avatar uploaded successfully!'));
     } catch (error) {
-      toast.error('Avatar uploaded failed!');
+      toast.error(t('Avatar uploaded failed!'));
     } finally {
       setLoading(false);
     }
@@ -81,23 +87,23 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
   return (
     <div className="flex flex-col gap-[12px]">
       <div className="text-[18px] font-bold">
-        <sup className="text-[#FF3132]">*</sup> Upload File
+        <sup className="text-[#FF3132]">*</sup> {t('Upload File')}
       </div>
 
       <div className="opacity-50">
-        Minimum 200x200 pixels, Maximum 3000x3000 pixels
+        {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
       </div>
 
       <div className="p-[20px] h-[241px] bg-[#32383E] w-full rounded-[4px]">
         <div className="relative w-full h-full bg-[#181F25] border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
           <div className="text-[#ffffff7f]">
-            {valueFile?.filename || 'JPEG, PNG or JPG . Max 10mb.'}
+            {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
           </div>
           <Button
             isLoading={loadingFile}
             className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] border border-[var(--main-color)]"
           >
-            Choose File
+            {t('Choose File')}
           </Button>
           {!loading && (
             <input
@@ -116,7 +122,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         type="button"
         className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
       >
-        Save Profile
+        {t('Save Profile')}
       </Button>
     </div>
   );

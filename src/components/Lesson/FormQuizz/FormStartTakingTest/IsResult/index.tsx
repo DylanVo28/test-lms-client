@@ -1,6 +1,7 @@
 import Text from '@/components/UI/Text';
 import { Tooltip } from '@nextui-org/react';
 import { Check, Info, Star } from '@phosphor-icons/react';
+import { useTranslation } from 'next-i18next';
 
 const IsResult = ({
   title,
@@ -11,6 +12,7 @@ const IsResult = ({
   title: string;
   totalQuizz: number;
 }) => {
+  const { t } = useTranslation('common');
   console.log(questions, 'questions');
 
   return (
@@ -26,10 +28,13 @@ const IsResult = ({
           </div>
 
           <Text className="text-white" type="font-24-700">
-            Great! You're ready to move on to the next lecture.
+            {t("Great! You're ready to move on to the next lecture.")}
           </Text>
           <Text className="text-white" type="font-16-400">
-            {`You answered ${totalQuizz}/${totalQuizz} question correctly.`}
+            {t(
+              'You answered {{totalQuizz}}/{{totalQuizz}} question correctly.',
+              { totalQuizz }
+            )}
           </Text>
         </div>
       </div>
@@ -38,7 +43,7 @@ const IsResult = ({
           <div className="flex items-center gap-3 mb-4">
             <Check size={24} weight="light" className="text-green" />
             <Text className="text-white" type="font-24-700">
-              Things you need to know
+              {t('Things you need to know')}
             </Text>
             <Info size={20} weight="fill" />
           </div>

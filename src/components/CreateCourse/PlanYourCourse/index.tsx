@@ -14,8 +14,10 @@ import { API_PATH } from '@/api/constant';
 import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 
 const PlanYourCourse = () => {
+  const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
@@ -373,7 +375,7 @@ const PlanYourCourse = () => {
             <div className="grid grid-cols-10 gap-10 md:gap-12">
               <div className="col-span-10 md:col-span-2">
                 <div className="flex flex-col gap-4">
-                  <Text type="font-18-600">Plan your course</Text>
+                  <Text type="font-18-600">{t('Plan your course')}</Text>
                   <PlanYourCourseLeft
                     isEnoughtSetPrice={isEnoughtSetPrice}
                     isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}

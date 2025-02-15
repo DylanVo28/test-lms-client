@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 interface IProps {
   id: string;
@@ -26,6 +27,7 @@ export default function CourseCard({
   countReviews,
 }: IProps) {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   console.log('progress', progress);
 
@@ -58,7 +60,9 @@ export default function CourseCard({
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />
         <div className="flex items-center justify-between">
           <Text type="font-14-500">
-            {(progress * 100).toFixed(0)}% complete
+            {t('{{progress}}% complete', {
+              progress: (progress * 100).toFixed(0),
+            })}
           </Text>
           <div className="flex items-center gap-2">
             <ReactStars

@@ -6,18 +6,16 @@ import { File, MonitorPlay } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 export const activeItemSectionAtom = atom<string>('');
 
 const ChildSection = ({
   items,
   handleClickChildLesson,
-  // activeIdChildSection,
   onChangeCheckBox,
 }: {
   items: any;
-  // activeIdChildSection: string;
   handleClickChildLesson: (
     id: string,
     type: TYPE_COURSE,
@@ -25,6 +23,7 @@ const ChildSection = ({
   ) => void;
   onChangeCheckBox: (values: any) => void;
 }) => {
+  const { t } = useTranslation('common');
   const router = useRouter();
 
   const [activeItemSection, setActiveItemSection] = useAtom(
@@ -51,8 +50,6 @@ const ChildSection = ({
                 if (item?.type === TYPE_COURSE.QUIZ) {
                   localStorage.setItem('titleQuizz', `Quizz ${item?.sttQuizz}`);
                 }
-                // const newPath = `/lesson/${router.query.id}?idChildSection=${item?.id}`;
-                // router.push(newPath);
                 setActiveItemSection(item?.id);
                 handleClickChildLesson(
                   item?.id,
@@ -81,13 +78,16 @@ const ChildSection = ({
                 />
                 {item?.type === TYPE_COURSE.QUIZ ? (
                   <Text type="font-16-600" className="text-white mt-[-4px]">
-                    {`Quizz ${item?.sttQuizz}. ${item?.title}`}
+                    {t('Quizz {{sttQuizz}}. {{title}}', {
+                      sttQuizz: item?.sttQuizz,
+                      title: item?.title,
+                    })}
                   </Text>
                 ) : (
                   <>
                     {item?.type === TYPE_COURSE?.END_COURSE ? (
                       <Text type="font-16-600" className="text-white mt-[-4px]">
-                        End of course
+                        {t('End of course')}
                       </Text>
                     ) : (
                       <Text type="font-16-600" className="text-white mt-[-4px]">
@@ -110,7 +110,7 @@ const ChildSection = ({
                     <>
                       <File size={20} className="text-black-5" />
                       <Text type="font-14-400" className="text-black-5">
-                        {`0 min`}
+                        {t('0 min')}
                       </Text>
                     </>
                   )}

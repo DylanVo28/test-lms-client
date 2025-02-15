@@ -38,9 +38,11 @@ import {
   useGetListReview,
   useGetListReviewSummary,
 } from '../Course/ListCourse/service';
+import { useTranslation } from 'next-i18next';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
@@ -176,7 +178,7 @@ const Lesson = () => {
     },
     {
       key: '2',
-      label: 'Overview',
+      label: t('Overview'),
       children: (
         <Overview
           dataDetail={dataDetail}
@@ -201,7 +203,7 @@ const Lesson = () => {
     // },
     {
       key: '6',
-      label: 'Reviews',
+      label: t('Reviews'),
       children: (
         <Reviews
           dataListReviewSummary={dataListReviewSummary}
@@ -600,7 +602,7 @@ const Lesson = () => {
               {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
               <div className="flex flex-col gap-[2px]">
                 <Text type="text-18-600" className="text-white">
-                  Course content
+                  {t('Course content')}
                 </Text>
                 {/* <Text type="font-14-400" className="text-white">
                   Set certificate expiration date

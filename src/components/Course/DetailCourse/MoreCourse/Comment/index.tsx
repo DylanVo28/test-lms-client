@@ -36,7 +36,7 @@ const Comment = ({
 }) => {
   const { address } = useAccount();
   const { profile } = useProfile();
-
+  
   const meLiked = item?.reactions?.some(
     (reaction: any) => reaction?.userId === profile?.id
   );

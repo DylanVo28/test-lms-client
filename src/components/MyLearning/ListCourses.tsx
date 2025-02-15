@@ -11,13 +11,14 @@ import Image from 'next/image';
 import NoData from '../ListCourse/NoData';
 import { useProfile } from '@/store/profile/useProfile';
 import Loading from '../UI/Loading';
-
-const SORT_BY = [
-  { key: 'createdAt desc', label: 'Newest' },
-  { key: 'createdAt asc', label: 'Oldest' },
-];
+import { useTranslation } from 'next-i18next';
 
 export default function ListCourses() {
+  const { t } = useTranslation('common');
+  const SORT_BY = [
+    { key: 'createdAt desc', label: t('Newest') },
+    { key: 'createdAt asc', label: t('Oldest') },
+  ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
   const [category, setCategory] = useState();
@@ -64,46 +65,38 @@ export default function ListCourses() {
             <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
               <IconFilter />
               <Text className="text-main" type="font-14-500">
-                All Filter
+                {t('All Filter')}
               </Text>
             </div>
             <SelectCustom
-              placeholder="Categories"
+              placeholder={t('Categories')}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setCategory(value.target.value);
               }}
             />
-            {/* <SelectCustom
-            placeholder="Instructor"
-            className="min-w-[150px]"
-            options={INSTRUCTORS}
-          /> */}
             <SelectCustom
-              placeholder="Price"
+              placeholder={t('Price')}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setPrice(value.target.value);
               }}
             />
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              Sort by
+              {t('Sort by')}
             </Text>
             <SelectCustom
-              placeholder="Default"
+              placeholder={t('Default')}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setSort(value.target.value);
               }}
             />
@@ -114,15 +107,14 @@ export default function ListCourses() {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            Sort by
+            {t('Sort by')}
           </Text>
           <SelectCustom
-            placeholder="Default"
+            placeholder={t('Default')}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}
             onChange={(value: any) => {
-              console.log('valueeee', value.target.value);
               setSort(value.target.value);
             }}
           />
@@ -160,7 +152,7 @@ export default function ListCourses() {
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
-              See More
+              {t('See More')}
             </Text>
             <Image
               src={'/icons/ic-arrow-drop-right-line.svg'}

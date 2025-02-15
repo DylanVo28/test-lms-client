@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
-import { use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
@@ -13,7 +13,10 @@ import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import DrawerMenu from '../Menubar/DrawerMenu';
 import ThemeConfiguration from './ThemeConfiguration';
+import { useTranslation } from 'next-i18next';
+
 const MainHeader = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
   const { isConnected, address } = useAccount();
@@ -29,7 +32,7 @@ const MainHeader = () => {
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
-      toast.success('Login successfully');
+      toast.success(t('Login successfully'));
       requestGetProfile();
       setAuthCookies({
         token: res?.data?.accessToken,
@@ -122,7 +125,7 @@ const MainHeader = () => {
               }
               className="min-w-[470px]"
               radius="sm"
-              placeholder="Search"
+              placeholder={t('Search')}
             />
             <div className="border-1 border-gray-20 h-8" />
             {/* <Button

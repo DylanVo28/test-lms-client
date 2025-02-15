@@ -4,6 +4,7 @@ import Text from '../UI/Text';
 import { Button } from '@nextui-org/react';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
+import { useTranslation } from 'next-i18next';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -29,6 +30,7 @@ const Overview = ({
     };
   };
 }) => {
+  const { t } = useTranslation('common');
   const [origin, setOrigin] = useState('');
   const [refCode, setRefCode] = useState('');
 
@@ -55,7 +57,7 @@ const Overview = ({
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(refLink);
-    toast.success('Copied!');
+    toast.success(t('Copied!'));
   };
 
   return (
@@ -76,7 +78,7 @@ const Overview = ({
       <Divided />
 
       <div className="flex justify-between items-center py-[8px]">
-        <Text type="font-16-700">Verified Account</Text>
+        <Text type="font-16-700">{t('Verified Account')}</Text>
         <Image src={'/icons/ic-kyc.svg'} alt="kyc" width={24} height={24} />
       </div>
 
@@ -84,7 +86,7 @@ const Overview = ({
 
       <div className="flex flex-col gap-[8px] py-[8px]">
         <div className="flex justify-between items-center">
-          <Text type="font-16-600">Customers</Text>
+          <Text type="font-16-600">{t('Customers')}</Text>
           <div className="px-[8px] py-[2px] bg-[#2F353B] w-fit rounded-full text-[12px] leading-normal font-semibold">
             {data.customers.total}
           </div>
@@ -152,7 +154,9 @@ const Overview = ({
 
       <div className="flex flex-col gap-[16px] py-[8px]">
         <div className="text-[16px] font-semibold flex gap-[4px]">
-          <span className="text-[16px] whitespace-nowrap">Referral link: </span>
+          <span className="text-[16px] whitespace-nowrap">
+            {t('Referral link')}:{' '}
+          </span>
           <span className="text-[16px] opacity-50 text-ellipsis overflow-hidden whitespace-nowrap">
             {refLink}
           </span>
@@ -162,7 +166,7 @@ const Overview = ({
           onClick={onCopy}
           className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
         >
-          Copy Address
+          {t('Copy Address')}
         </Button>
       </div>
     </div>

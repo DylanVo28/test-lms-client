@@ -1,8 +1,10 @@
 import Text from '@/components/UI/Text';
 import { formatTimeDuration } from '@/utils/common';
 import { useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const ByTheNumbers = ({ course }: { course: any }) => {
+  const { t } = useTranslation('common');
   console.log(course, 'course');
 
   const lessonCount = course?.sections?.reduce(
@@ -39,28 +41,28 @@ const ByTheNumbers = ({ course }: { course: any }) => {
   return (
     <div className="py-6 grid grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
       <Text type="font-18-600" className="text-white">
-        By the numbers
+        {t('By the numbers')}
       </Text>
       <div className="flex flex-col gap-1">
         <Text type="font-14-400" className="text-white">
-          Skill level: {course?.level}
+          {t('Skill level')}: {course?.level}
         </Text>
         <Text type="font-14-400" className="text-white">
-          Students: {course?.userCourses?.length || course?.countStudents}
+          {t('Students')}: {course?.userCourses?.length || course?.countStudents}
         </Text>
         <Text type="font-14-400" className="text-white">
-          Languages: {course?.lang}
+          {t('Languages')}: {course?.lang}
         </Text>
         <Text type="font-14-400" className="text-white">
-          Captions: Yes
+          {t('Captions')}: {t('Yes')}
         </Text>
       </div>
       <div className="flex flex-col gap-1">
         <Text type="font-14-400" className="text-white">
-          Lectures: {lessonCount || 0}
+          {t('Lectures')}: {lessonCount || 0}
         </Text>
         <Text type="font-14-400" className="text-white">
-          {`Video: ${formatTimeDuration(formattedTime)}`}
+          {`${t('Video')}: ${formatTimeDuration(formattedTime)}`}
         </Text>
       </div>
     </div>

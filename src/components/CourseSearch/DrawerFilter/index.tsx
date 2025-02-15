@@ -8,10 +8,12 @@ import {
 import Image from 'next/image';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import FilterCourse from '../ListCourse/FilterCourse';
+import { useTranslation } from 'next-i18next';
 
 const DrawerFilter = (props: any, ref: any) => {
   const { setParams, params } = props;
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation('common');
 
   const onVisible = () => {
     setVisible(!visible);
@@ -39,7 +41,7 @@ const DrawerFilter = (props: any, ref: any) => {
             <div className="flex flex-col">
               <div className="flex p-4 items-center justify-between border-b-1 border-white/10">
                 <Text type="font-20-600" className="text-white">
-                  Filter
+                  {t('Filter')}
                 </Text>
                 <Image
                   onClick={onVisible}

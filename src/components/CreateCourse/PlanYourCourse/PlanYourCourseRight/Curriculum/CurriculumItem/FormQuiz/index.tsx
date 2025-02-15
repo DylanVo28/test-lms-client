@@ -3,6 +3,7 @@ import QuillEditor from '@/components/UI/QuillEditor';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const FormQuiz = ({
   handleCancel,
@@ -13,6 +14,7 @@ const FormQuiz = ({
   handleCancel: VoidFunction;
   loading: boolean;
 }) => {
+  const { t } = useTranslation('common');
   const [valueTitle, setValueTitle] = useState('');
   const [valueDescription, setValueDescription] = useState('');
   const [errorForm, setErrorForm] = useState(false);
@@ -22,7 +24,7 @@ const FormQuiz = ({
       <div className="flex items-start gap-2">
         <div className="w-[100px]">
           <Text type="font-16-700" className="text-white">
-            New quizz:
+            {t('New quizz:')}
           </Text>
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -30,16 +32,16 @@ const FormQuiz = ({
             maxLength={160}
             endContent
             required
-            error={errorForm && !valueTitle ? 'Field title is require' : ''}
+            error={errorForm && !valueTitle ? t('Field title is required') : ''}
             classInputWrapper="!min-h-[34px]"
             onChange={(e: any) => setValueTitle(e.target.value)}
             className="w-full"
-            placeholder="Enter title"
+            placeholder={t('Enter title')}
             inputDefault
           />
           <QuillEditor
             onChange={(value: any) => setValueDescription(value)}
-            placeholder="Description..."
+            placeholder={t('Description...')}
             inputDefault
           />
         </div>
@@ -47,7 +49,7 @@ const FormQuiz = ({
       <div className="flex justify-end items-end">
         <div className="flex items-center gap-3">
           <Button onPress={handleCancel} variant="light" className="rounded">
-            <Text type="font-16-400">Cancel</Text>
+            <Text type="font-16-400">{t('Cancel')}</Text>
           </Button>
           <Button
             onPress={() => {
@@ -60,7 +62,7 @@ const FormQuiz = ({
             isLoading={loading}
             className="rounded bg-main"
           >
-            <Text type="font-16-400">Add quizz</Text>
+            <Text type="font-16-400">{t('Add quizz')}</Text>
           </Button>
         </div>
       </div>

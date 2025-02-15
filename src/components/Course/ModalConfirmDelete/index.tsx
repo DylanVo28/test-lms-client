@@ -7,21 +7,22 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 interface IModalSupport {
   reload: any;
 }
 
 const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [courseId, setCourseId] = useState<any>();
 
   const { run: runDeleteCourse, loading } = useDeleteCourse({
     onSuccess(res: any) {
-      // router.push(`/create-course/${res?.data?.id}`);
       props.reload();
       setVisible(false);
-      toast.success('Delete course successfully');
+      toast.success(t('Delete course successfully'));
     },
   });
 
@@ -59,18 +60,18 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
               height={120}
               className="w-[120px] h-full mx-auto md:mx-0"
             />
-            <div className="font-bold text-[20px]">Delete Course</div>
+            <div className="font-bold text-[20px]">{t('Delete Course')}</div>
             <div className="font-normal text-base text-[#BFBFBF] text-center">
-              Course information cannot be restored after cancellation and
-              students cannot continue taking this course, are you sure you want
-              to cancel the course?
+              {t(
+                'Course information cannot be restored after cancellation and students cannot continue taking this course, are you sure you want to cancel the course?'
+              )}
             </div>
             <Button
               onClick={submitDeleteCourse}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-white" type="font-16-600">
-                Submit
+                {t('Submit')}
               </Text>
             </Button>
             <Button
@@ -78,7 +79,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
               className="bg-[#383d41] w-full min-h-[40px] rounded"
             >
               <Text className="text-white" type="font-16-600">
-                Cancel
+                {t('Cancel')}
               </Text>
             </Button>
           </div>

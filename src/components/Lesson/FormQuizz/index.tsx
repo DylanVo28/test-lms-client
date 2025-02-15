@@ -6,6 +6,7 @@ import LoadingContainer from '@/components/UI/LoadingContainer';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 const FormQuizz = ({
   startTakingTest,
@@ -46,6 +47,7 @@ const FormQuizz = ({
   handleFindIdNextChildSection: any;
   handleFindIdPrevChildSection: any;
 }) => {
+  const { t } = useTranslation('common');
   const sttQuizz = localStorage.getItem('titleQuizz');
   const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
   const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
@@ -106,7 +108,7 @@ const FormQuizz = ({
               </Text>
               <div className="w-[1px] h-4 bg-black-6" />
               <Text className="text-black-6" type="font-18-600">
-                {`${dataQuizz?.questions?.length} question`}
+                {`${dataQuizz?.questions?.length} ${t('question')}`}
               </Text>
             </div>
             <div
@@ -120,7 +122,7 @@ const FormQuizz = ({
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Start taking the test
+                  {t('Start taking the test')}
                 </Text>
               </Button>
               <Button
@@ -129,7 +131,7 @@ const FormQuizz = ({
                 className="w-max min-h-[45px] rounded min-w-[150px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Skip the quizz
+                  {t('Skip the quizz')}
                 </Text>
               </Button>
             </div>

@@ -2,11 +2,14 @@ import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'next-i18next';
+
 const Note = dynamic(() => import('./Note'), {
   ssr: false,
 });
 
 const Notes = () => {
+  const { t } = useTranslation('common');
   const [openNote, setOpenNote] = useState(false);
   return (
     <div className="pt-8 flex flex-col gap-8 pl-[140px] pr-[32px]">
@@ -18,7 +21,7 @@ const Notes = () => {
           className="cursor-pointer hover:opacity-80 transition-all p-3 border-1 border-white rounded flex justify-between items-center"
         >
           <Text type="font-16-400" className="text-black/7">
-            Create a new note at 0.01
+            {t('Create a new note at 0.01')}
           </Text>
           <IconAdd />
         </div>
@@ -26,13 +29,13 @@ const Notes = () => {
 
       <div className="flex items-center gap-3">
         <SelectCustom
-          placeholder="All lectures"
+          placeholder={t('All lectures')}
           className="max-w-[125px]"
           isLesson
           options={[]}
         />
         <SelectCustom
-          placeholder="Sort by most recent"
+          placeholder={t('Sort by most recent')}
           className="max-w-[186px]"
           isLesson
           options={[]}

@@ -10,6 +10,7 @@ import { useEnrollCourse } from './service';
 import { getAccessToken } from '@/store/auth';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';
 import { useProfile } from '@/store/profile/useProfile';
+import { useTranslation } from 'next-i18next';
 
 const DATA_NOTE = [
   '12 hours of on-demand video',
@@ -22,7 +23,7 @@ const DATA_NOTE = [
 
 const CardEnrollNow = ({ course }: { course: any }) => {
   console.log(course, 'course');
-
+  const { t } = useTranslation('common');
   const router = useRouter();
   const token = getAccessToken();
   const { profile } = useProfile();
@@ -71,7 +72,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Text type="font-20-400" className="text-orange">
-                {course?.originPrice ? `$ ${course?.originPrice}` : 'Free'}
+                {course?.originPrice ? `$ ${course?.originPrice}` : t('Free')}
               </Text>
               {course?.price && (
                 <Text type="font-14-400" className="text-black-6 line-through">
@@ -95,7 +96,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
                   {discountCalculator(course?.originPrice, course?.price)}
                 </Text>
                 <Text type="font-14-500" className="text-[#F26F21]">
-                  OFF
+                  {t('OFF')}
                 </Text>
               </div>
             )}
@@ -137,13 +138,13 @@ const CardEnrollNow = ({ course }: { course: any }) => {
               }}
               loading={loading}
               token={token}
-              label="Enroll Now"
+              label={t('Enroll Now')}
             />
           )}
 
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-18-600">
-              This course includes
+              {t("This course includes")}
             </Text>
             <div className="flex flex-col gap-1">
               {DATA_NOTE?.map((item) => {
@@ -151,7 +152,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
                   <div className="flex items-center gap-1">
                     <div className="w-1 h-1 bg-black-6 rounded-full" />
                     <Text className="text-black-6" type="font-16-400">
-                      {item}
+                      {t(item)}
                     </Text>
                   </div>
                 );

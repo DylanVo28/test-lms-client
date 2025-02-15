@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const DATA_CONTENT = [
   {
@@ -32,6 +33,7 @@ const DATA_CONTENT = [
 ];
 
 const QA = () => {
+  const { t } = useTranslation('common');
   const [currentKey, setCurrentKey] = useState('1');
   const onSelectionChange = (value: any) => {
     setCurrentKey(value.currentKey);
@@ -40,12 +42,12 @@ const QA = () => {
     <div className="pt-8 flex flex-col gap-6 pl-[80px] pr-[64px]">
       <div className="flex flex-col gap-2">
         <Text type="font-18-600" className="text-white">
-          Frequently Asked Questions
+          {t('Frequently Asked Questions')}
         </Text>
         <Text type="font-16-400" className="text-black-7">
-          If you’ve sent us an existing PR or article then if your content is
-          urgent we can start publishing your content across a number of
-          languages in a matter of hours.
+          {t(
+            'If you’ve sent us an existing PR or article then if your content is urgent we can start publishing your content across a number of languages in a matter of hours.'
+          )}
         </Text>
       </div>
       <div className="mx-[-8px] ">
@@ -75,12 +77,12 @@ const QA = () => {
                       ['!text-main']: item?.id === Number(currentKey),
                     })}
                   >
-                    {item?.label}
+                    {t(item?.label)}
                   </Text>
                 }
               >
                 <Text type="font-16-400" className="text-black-2">
-                  {item?.contet}
+                  {t(item?.contet)}
                 </Text>
               </AccordionItem>
             );

@@ -9,8 +9,10 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useCreateCourse } from './service';
 import { toast } from '../UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 const CreateCourse = () => {
+  const { t } = useTranslation('common');
   const [step, setStep] = useState(1);
   const router = useRouter();
 

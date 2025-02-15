@@ -2,6 +2,7 @@ import QuillEditor from '@/components/UI/QuillEditor';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const FormAddArticle = ({
   handleSaveArticle,
@@ -12,6 +13,7 @@ const FormAddArticle = ({
   loading: boolean;
   valueContent?: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueDocument, setValueDocument] = useState(valueContent || '');
   const [isError, setIsError] = useState(false);
   return (
@@ -19,11 +21,11 @@ const FormAddArticle = ({
       <QuillEditor
         value={valueDocument}
         autoFocus
-        error={isError && !valueDocument ? 'Field document is require' : ''}
+        error={isError && !valueDocument ? t('Field document is required') : ''}
         onChange={(value) => {
           setValueDocument(value);
         }}
-        label="Document"
+        label={t('Document')}
         inputDefault
       />
       <div className="justify-end flex w-full items-end">
@@ -39,7 +41,7 @@ const FormAddArticle = ({
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">
-            Save
+            {t('Save')}
           </Text>
         </Button>
       </div>

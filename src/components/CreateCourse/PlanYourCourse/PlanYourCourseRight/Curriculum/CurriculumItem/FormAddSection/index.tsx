@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { useEffect } from 'react';
 import { Control, Controller } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 
 const FormAddSection = ({
   handleCancelFormAddSection,
@@ -19,12 +20,16 @@ const FormAddSection = ({
   loading: boolean;
   valueLesson?: any;
 }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="border-1 min-w-[600px]  bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-4">
       <div className="flex items-start gap-2">
         <div className="min-w-[100px] pt-3">
           <Text type="font-16-700" className="text-white">
-            {valueLesson?.id ? `Part ${valueLesson?.stt}` : 'New Section:'}
+            {valueLesson?.id
+              ? `${t('Part')} ${valueLesson?.stt}`
+              : t('New Section:')}
           </Text>
         </div>
         <div className="flex flex-col gap-4 w-full">
@@ -32,7 +37,7 @@ const FormAddSection = ({
             name="title"
             control={control}
             rules={{
-              required: 'Title is required',
+              required: t('Title is required'),
             }}
             render={({ field, fieldState }) => {
               return (
@@ -43,7 +48,7 @@ const FormAddSection = ({
                   onChange={field.onChange}
                   value={field.value}
                   className="w-full"
-                  placeholder="Type"
+                  placeholder={t('Type')}
                   inputDefault
                 />
               );
@@ -52,7 +57,9 @@ const FormAddSection = ({
 
           <div className="flex flex-col gap-2">
             <Text type="font-16-700" className="text-white">
-              What will students be able to do at the end of this section?
+              {t(
+                'What will students be able to do at the end of this section?'
+              )}
             </Text>
             <Controller
               name="learningObjective"
@@ -66,7 +73,7 @@ const FormAddSection = ({
                     onChange={field.onChange}
                     value={field.value}
                     className="w-full"
-                    placeholder="Type"
+                    placeholder={t('Type')}
                     inputDefault
                   />
                 );
@@ -83,7 +90,7 @@ const FormAddSection = ({
             className="rounded"
           >
             <Text type="font-16-400" className="text-white">
-              Cancel
+              {t('Cancel')}
             </Text>
           </Button>
           <Button
@@ -92,7 +99,7 @@ const FormAddSection = ({
             isLoading={loading}
           >
             <Text type="font-16-400" className="text-white">
-              Save
+              {t('Save')}
             </Text>
           </Button>
         </div>

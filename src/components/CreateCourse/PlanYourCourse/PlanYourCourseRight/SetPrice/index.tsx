@@ -1,20 +1,22 @@
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Control, Controller, useWatch } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 
 const SetPrice = ({ control }: { control: Control }) => {
+  const { t } = useTranslation('common');
   const originPrice = useWatch({ control, name: 'originPrice' });
 
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
-        Set Price
+        {t('Set Price')}
       </Text>
       <div className="flex flex-col gap-6">
         <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="w-[150px] flex items-center gap-1">
             <Text type="font-16-600" className="text-white">
-              Origin Price
+              {t('Origin Price')}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -23,8 +25,8 @@ const SetPrice = ({ control }: { control: Control }) => {
               name="originPrice"
               control={control}
               rules={{
-                required: 'Origin Price is required',
-                min: { value: 0, message: 'Price must be at least 0' },
+                required: t('Origin Price is required'),
+                min: { value: 0, message: t('Price must be at least 0') },
               }}
               render={({ field, fieldState }) => {
                 return (
@@ -39,7 +41,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                     onChange={field.onChange}
                     value={field.value}
                     className="md:min-w-[600px]"
-                    placeholder={'0'}
+                    placeholder={t('0')}
                     inputDefault
                   />
                 );
@@ -50,7 +52,7 @@ const SetPrice = ({ control }: { control: Control }) => {
         <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="flex items-center gap-1 w-[150px]">
             <Text type="font-16-600" className="text-white">
-              Final Price
+              {t('Final Price')}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -59,11 +61,11 @@ const SetPrice = ({ control }: { control: Control }) => {
               name="price"
               control={control}
               rules={{
-                required: 'Final Price is required',
-                min: { value: 0, message: 'Price must be at least 0' },
+                required: t('Final Price is required'),
+                min: { value: 0, message: t('Price must be at least 0') },
                 validate: (value) =>
                   Number(value) <= Number(originPrice) ||
-                  'Final Price cannot be greater than Origin Price',
+                  t('Final Price cannot be greater than Origin Price'),
               }}
               render={({ field, fieldState }) => (
                 <InputText
@@ -77,7 +79,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                   onChange={field.onChange}
                   value={field.value}
                   className="md:min-w-[600px]"
-                  placeholder={'0'}
+                  placeholder={t('0')}
                   inputDefault
                 />
               )}
@@ -87,7 +89,7 @@ const SetPrice = ({ control }: { control: Control }) => {
         <div className="grid md:grid-cols-6 items-center gap-4">
           <div className="w-[150px]">
             <Text type="font-16-600" className="text-white">
-              Promotion period
+              {t('Promotion period')}
             </Text>
           </div>
           <div className="col-span-4">
@@ -98,14 +100,14 @@ const SetPrice = ({ control }: { control: Control }) => {
                 <InputText
                   endContent={
                     <Text type="font-16-400" className="text-white">
-                      Day
+                      {t('Day')}
                     </Text>
                   }
                   type="number"
                   onChange={field.onChange}
                   value={field.value}
                   className="md:min-w-[600px]"
-                  placeholder={'0'}
+                  placeholder={t('0')}
                   inputDefault
                 />
               )}

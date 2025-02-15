@@ -4,6 +4,7 @@ import { Check } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const DATA_CONTENT = [
   {
@@ -43,11 +44,14 @@ const PlanYourCourseLeft = ({
   isEnoughCurruclum: any;
   isEnoughIntendedLearners: any;
 }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex flex-col gap-4">
       {DATA_CONTENT?.map((item) => {
         return (
           <div
+            key={item.id}
             onClick={() => handleActivePlan(item?.id)}
             className={clsx(
               'flex items-center cursor-pointer border-l-4 transition-all  border-l-transparent gap-3 p-2',
@@ -74,7 +78,7 @@ const PlanYourCourseLeft = ({
             </div>
 
             <Text type="font-16-500" className="text-white">
-              {item?.content}
+              {t(item?.content)}
             </Text>
           </div>
         );

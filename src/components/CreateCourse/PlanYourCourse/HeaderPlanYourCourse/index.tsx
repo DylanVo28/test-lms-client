@@ -4,6 +4,7 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 const HeaderPlanYourCourse = ({
   handleSaveForm,
@@ -17,6 +18,7 @@ const HeaderPlanYourCourse = ({
   loadingPublish?: boolean;
 }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   return (
     <div className="w-full p-4 sticky top-0 bg-primary z-[1000] shadow-2xl flex justify-between items-center border-b border-b-black-10">
@@ -30,7 +32,7 @@ const HeaderPlanYourCourse = ({
           <div className="flex items-center gap-1">
             <IconBlack />
             <Text type="font-16-500" className="text-white">
-              Back to courses
+              {t('Back to courses')}
             </Text>
           </div>
         </Button>
@@ -46,7 +48,7 @@ const HeaderPlanYourCourse = ({
           className="bg-transparent border-1 border-main min-w-[96px] !min-h-[40px] rounded"
         >
           <Text type="font-16-600" className="text-main">
-            Save
+            {t('Save')}
           </Text>
         </Button>
         <Button
@@ -55,7 +57,7 @@ const HeaderPlanYourCourse = ({
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
           <Text type="font-16-600" className="text-white">
-            Publish
+            {t('Publish')}
           </Text>
         </Button>
         {/* <SelectCustom

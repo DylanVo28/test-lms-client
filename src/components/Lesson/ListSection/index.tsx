@@ -9,6 +9,7 @@ import {
   generateRandomId,
   UserCourseProgressStatus,
 } from '@/utils/common';
+import { useTranslation } from 'next-i18next';
 
 const ListSection = ({
   sections,
@@ -27,25 +28,7 @@ const ListSection = ({
   loading: boolean;
   // activeIdChildSection: any
 }) => {
-  // const processSectionsData = useMemo(() => {
-  //   const newData = sections?.map((section: any, index: any) => {
-  //     // Check if current section is the last element
-  //     if (index === sections?.length - 1) {
-  //       return {
-  //         ...section,
-  //         endCourse: [
-  //           {
-  //             id: generateRandomId(),
-  //             type: TYPE_COURSE?.END_COURSE,
-  //           },
-  //         ],
-  //       };
-  //     }
-  //     return section;
-  //   });
-
-  //   return newData;
-  // }, [sections]);
+  const { t } = useTranslation('common');
 
   return (
     <div className="flex flex-col bg-[#0F141A] overflow-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
@@ -103,7 +86,10 @@ const ListSection = ({
               title={
                 <div className="flex flex-col gap-2">
                   <Text type="font-16-600" className="text-white">
-                    {`Section ${index + 1}: ${item?.title}`}
+                    {t('Section {{index}}: {{title}}', {
+                      index: index + 1,
+                      title: item?.title,
+                    })}
                   </Text>
                   <div className="flex items-center gap-3">
                     <Text type="font-14-400" className="opacity-50">

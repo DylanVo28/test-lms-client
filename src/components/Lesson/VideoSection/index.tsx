@@ -10,6 +10,7 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
 
 const VideoSection = ({
   info,
@@ -44,6 +45,7 @@ const VideoSection = ({
   loading: boolean;
   info: any;
 }) => {
+  const { t } = useTranslation('common');
   const videoRef: any = useRef(null);
   const playerRef: any = useRef(null);
 

@@ -3,19 +3,19 @@ import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import { otimDevnet } from 'viem/chains';
 import DrawerMenu from './DrawerMenu';
 import { useRef } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const MENUS = [
   {
     key: 1,
-    label: 'My learning',
+    label: 'My Learning',
     href: ROUTE_PATH.MY_LEARNING,
   },
   {
     key: 2,
-    label: 'Wish list',
+    label: 'Wish List',
     href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
   },
   {
@@ -26,6 +26,7 @@ const MENUS = [
 ];
 
 const Menubar = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
@@ -52,7 +53,7 @@ const Menubar = () => {
             )}
             type="font-16-600"
           >
-            {item?.label}
+            {t(item?.label)}
           </Text>
         );
       })}

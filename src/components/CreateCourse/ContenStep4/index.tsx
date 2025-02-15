@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { Control, Controller } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 
 const DATA_CONTENT = [
   {
@@ -30,15 +31,18 @@ const ContenStep4 = ({
   control: Control;
   setValue: any;
 }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
         <Text type="font-32-700" className="text-white">
-          How much time can you spend creating your course per week?
+          {t('How much time can you spend creating your course per week?')}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          There's no wrong answer. We can help you achieve your goals even if
-          you don't have much time.
+          {t(
+            "There's no wrong answer. We can help you achieve your goals even if you don't have much time."
+          )}
         </Text>
       </div>
       <div className="w-full">
@@ -67,7 +71,7 @@ const ContenStep4 = ({
                         type="font-16-400"
                         className="text-white max-w-[760px]"
                       >
-                        {item?.content}
+                        {t(item?.content)}
                       </Text>
                     </CustomRadio>
                   );

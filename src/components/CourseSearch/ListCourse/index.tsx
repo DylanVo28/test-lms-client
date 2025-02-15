@@ -20,17 +20,12 @@ import { useProfile } from '@/store/profile/useProfile';
 import { isMobile } from 'react-device-detect';
 import DrawerFilter from '../DrawerFilter';
 import LoadingScreen from '@/components/UI/LoadingScreen';
+import { useTranslation } from 'next-i18next';
 
 enum TAB_VIEW {
   GRID = 'grid',
   LIST = 'list',
 }
-const SORT_BY = [
-  { key: 'createdAt desc', label: 'Newest' },
-  { key: 'createdAt asc', label: 'Oldest' },
-  // { key: 'a-z', label: 'A-Z' },
-  // { key: 'z-a', label: 'Z-A' },
-];
 const initParams = {
   ratings: '',
   langs: [],
@@ -41,10 +36,16 @@ const initParams = {
 };
 const ListCourse = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [tab, setTab] = useState(TAB_VIEW?.GRID);
   const [pageSize, setPageSize] = useState(3);
   const [sort, setSort] = useState<any>();
   const searchParams = useSearchParams();
+
+  const SORT_BY = [
+    { key: 'createdAt desc', label: t('Newest') },
+    { key: 'createdAt asc', label: t('Oldest') },
+  ];
 
   const refDrawerFilter: any = useRef(null);
 
@@ -114,10 +115,9 @@ const ListCourse = () => {
   return (
     <LoadingScreen isLoading={loading || loadingMore}>
       <div className="flex flex-col gap-8 mb-4 md:mb-0 pt-[36px] md:px-10">
-        <Text
-          type="font-32-700"
-          className="text-white"
-        >{`9,955 results for “${router.query.keySearch}”`}</Text>
+        <Text type="font-32-700" className="text-white">{`9,955 ${t(
+          'results for'
+        )} “${router.query.keySearch}”`}</Text>
         <div className={clsx('grid grid-cols-8 gap-6', {})}>
           <div className="col-span-2  flex-col hidden md:flex gap-5">
             <div className="flex items-center gap-4">
@@ -125,12 +125,12 @@ const ListCourse = () => {
                 <div className="flex items-center gap-1">
                   <IconShowFilter />
                   <Text type="font-14-500" className="text-black-6">
-                    Filters
+                    {t('Filters')}
                   </Text>
                 </div>
               </Button>
               <SelectCustom
-                placeholder="Sort by type"
+                placeholder={t('Sort by type')}
                 className="w-full"
                 options={SORT_BY}
                 value={sort}
@@ -159,12 +159,12 @@ const ListCourse = () => {
                       <div className="flex items-center gap-1">
                         <IconShowFilter />
                         <Text type="font-14-500" className="text-black-6">
-                          Show Filters
+                          {t('Show Filters')}
                         </Text>
                       </div>
                     </button>
                     <SelectCustom
-                      placeholder="Sort by type"
+                      placeholder={t('Sort by type')}
                       className="w-full"
                       options={SORT_BY}
                       value={sort}
@@ -184,7 +184,7 @@ const ListCourse = () => {
                     <div className="flex items-center gap-2">
                       <IconDeleteMain />
                       <Text type="font-16-700" className="text-main">
-                        Clear filter
+                        {t('Clear filter')}
                       </Text>
                     </div>
                   </Button>
@@ -193,7 +193,7 @@ const ListCourse = () => {
                 <div className="flex items-center gap-4">
                   {dataCourses?.length > 0 && (
                     <Text type="font-20-600" className="text-white">
-                      {dataCourses?.length} results
+                      {dataCourses?.length} {t('results')}
                     </Text>
                   )}
                   {/* <Tabs
@@ -241,7 +241,7 @@ const ListCourse = () => {
               >
                 <div className="flex items-center gap-[2px]">
                   <Text type="font-14-500" className="text-main">
-                    See More
+                    {t('See More')}
                   </Text>
                   <Image
                     src={'/icons/ic-arrow-drop-right-line.svg'}

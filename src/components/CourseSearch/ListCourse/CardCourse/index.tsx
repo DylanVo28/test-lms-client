@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 dayjs.extend(relativeTime);
 
@@ -28,6 +29,7 @@ const CardCourse = ({
   noLike?: boolean;
 }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const handleClickCardCourse = () => {
     router.push(ROUTE_PATH.DETAIL_COURSE(item.id));
@@ -49,7 +51,7 @@ const CardCourse = ({
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
-          Best seller
+          {t('Best seller')}
         </Text>
       </div>
       {!noLike && (
@@ -89,7 +91,9 @@ const CardCourse = ({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />
-            <Text type="font-12-500">{lessonCount} Lessons</Text>
+            <Text type="font-12-500">
+              {lessonCount} {t('Lessons')}
+            </Text>
           </div>
 
           <div className="w-[1px] h-3 bg-white" />
@@ -120,7 +124,7 @@ const CardCourse = ({
           {item?.author?.walletAddress && (
             <div className="flex gap-0.5 break-words">
               <Text type="font-14-400" className="text-main break-words">
-                By:
+                {t('By')}:
               </Text>
               <Text
                 type="font-14-400"
@@ -135,7 +139,7 @@ const CardCourse = ({
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.originPrice ? `$ ${item?.originPrice}` : 'Free'}
+                {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>
             </div>
             {item?.price && (
@@ -147,7 +151,7 @@ const CardCourse = ({
           <Button variant="light" radius="full" onClick={handleClickCardCourse}>
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-white">
-                Enroll Course
+                {t('Enroll Course')}
               </Text>
               <Image
                 src={'/icons/ic-arrow-right-up-line.svg'}

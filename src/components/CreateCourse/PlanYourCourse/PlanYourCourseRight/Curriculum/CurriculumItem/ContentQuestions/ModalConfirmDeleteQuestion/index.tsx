@@ -7,6 +7,7 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 interface IModalModalConfirmDeleteQuestion {
   handleSubmitDelete: (values: any) => void;
@@ -18,6 +19,7 @@ const ModalConfirmDeleteQuestion = (
   ref?: any
 ) => {
   const { handleSubmitDelete, loading } = props;
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [dataDelete, setDataDelete] = useState<any>({});
 
@@ -52,11 +54,14 @@ const ModalConfirmDeleteQuestion = (
                 height={120}
                 className="w-[120px] h-full mx-auto md:mx-0"
               />
-              <div className="font-bold text-[20px]">Please confirm</div>
-              <div className="font-normal text-base text-[#BFBFBF] text-center">
-                You are about to delete a question. Are you sure you want to
-                continue?
-              </div>
+              <Text type="font-20-700" className="text-white">
+                {t('Please confirm')}
+              </Text>
+              <Text type="font-16-400" className="text-black-6 text-center">
+                {t(
+                  'You are about to delete a question. Are you sure you want to continue?'
+                )}
+              </Text>
             </div>
             <div className="flex items-end gap-3 justify-end mt-4">
               <Button
@@ -68,7 +73,7 @@ const ModalConfirmDeleteQuestion = (
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  Ok
+                  {t('Ok')}
                 </Text>
               </Button>
               <Button
@@ -76,7 +81,7 @@ const ModalConfirmDeleteQuestion = (
                 className="bg-[#383d41] w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  Cancel
+                  {t('Cancel')}
                 </Text>
               </Button>
             </div>

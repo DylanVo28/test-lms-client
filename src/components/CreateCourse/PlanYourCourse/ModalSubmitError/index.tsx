@@ -7,10 +7,12 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 interface IModalSubmitError {}
 
 const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
 
   useImperativeHandle(ref, () => {
@@ -43,17 +45,17 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               className="w-[120px] h-full mx-auto md:mx-0"
             />
             <Text type="font-20-700" className="text-white">
-              Publish course
+              {t('Publish course')}
             </Text>
             <Text type="font-16-400" className="text-black-6">
-              Please enter for required fields
+              {t('Please enter the required fields')}
             </Text>
             <Button
               onClick={onVisible}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-white" type="font-16-600">
-                Ok
+                {t('Ok')}
               </Text>
             </Button>
           </div>

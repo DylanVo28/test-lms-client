@@ -1,4 +1,4 @@
-import RadioCustom from '@/components/UI/RadioCustom';
+// import RadioCustom from '@/components/UI/RadioCustom';
 import Text from '@/components/UI/Text';
 import {
   Modal,
@@ -16,8 +16,10 @@ import {
 import languages from '../ThemeConfiguration/data/languages.json';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 export default function LanguageModal() {
+  const { t, i18n } = useTranslation('common');
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { profile, setProfile } = useProfileInitial();
   const [langSelected, setLangSelected] = useState('');
@@ -25,7 +27,13 @@ export default function LanguageModal() {
     setLangSelected(e.target.value);
   };
   const onSave = () => {
-    if (langSelected) setProfile({ ...profile, langSelected });
+    if (langSelected) {
+      setProfile({ ...profile, langSelected });
+      i18n.changeLanguage(langSelected);
+    }
+  };
+  const findLang = (code: string) => {
+    return languages.find((lang) => lang.code === code)?.name;
   };
   return (
     <>
@@ -34,7 +42,7 @@ export default function LanguageModal() {
         className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green/10"
       >
         <Text type="font-14-500" className="text-white">
-          {languages.find((lang) => lang.code === profile.langSelected)?.name}
+          {findLang(profile.langSelected || i18n.language)}
         </Text>
 
         <Image
@@ -49,7 +57,7 @@ export default function LanguageModal() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Select Language
+                {t('Select Language')}
               </ModalHeader>
               <ModalBody>
                 <RadioGroup
@@ -57,7 +65,7 @@ export default function LanguageModal() {
                   onChange={onChangeRadioGroup}
                   value={langSelected || profile.langSelected}
                 >
-                  {profile.langs.map((code) => {
+                  {profile?.langs?.map((code) => {
                     return (
                       <Radio key={code} value={code}>
                         {languages.find((lang) => lang.code === code)?.name}
@@ -73,7 +81,7 @@ export default function LanguageModal() {
                   variant="light"
                   onPress={onClose}
                 >
-                  Close
+                  {t('Close')}
                 </Button>
                 <Button
                   className="bg-main rounded-md"
@@ -83,7 +91,7 @@ export default function LanguageModal() {
                     onClose();
                   }}
                 >
-                  Save
+                  {t('Save')}
                 </Button>
               </ModalFooter>
             </>
