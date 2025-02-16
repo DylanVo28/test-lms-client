@@ -12,23 +12,56 @@ import {
 import IconStudent from '@/components/UI/Icons/IconStudent';
 import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
+import { useProfile } from '@/store/profile/useProfile';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
+import { useFollowMentor, useUnFollowMentor } from './service';
+import { toast } from '@/components/UI/Toast/toast';
+import { getAccessToken } from '@/store/auth';
 
 const Mentors = ({ mentor }: any) => {
+  const { profile } = useProfile();
   console.log('mentor', mentor);
   const { t } = useTranslation('common');
+  const accessToken = getAccessToken();
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
-  const getDetail = async () => {
-    try {
-      const response = await userRequest.getUserDetail(mentor.id);
-      console.log('RRRRRRRRR', response);
+  const requestFollowMentor = useFollowMentor({
+    onSuccess: async (res: any) => {
+      const newData = {
+        ...mentorProfile,
+        isFollowing: true,
+      };
+      setMentorProfile(newData);
+    },
+    onError: (error: any) => {},
+  });
 
+  const requestUnFollowMentor = useUnFollowMentor({
+    onSuccess: async (res: any) => {},
+    onError: (error: any) => {
+      toast.error(error.message);
+
+      // const newData = {
+      //   ...mentorProfile,
+      //   isFollowing: true,
+      // };
+      // console.log(newData, 'newData');
+
+      // setMentorProfile(newData);
+    },
+  });
+
+  const getDetail = async () => {
+    const params = {
+      userId: accessToken ? profile?.id : '',
+    };
+    try {
+      const response = await userRequest.getUserDetail(mentor.id, params);
       setMentorProfile(response.data);
     } catch (error) {
       console.log(error);
@@ -48,6 +81,12 @@ const Mentors = ({ mentor }: any) => {
     return mentor?.walletAddress;
   };
 
+  const isNotMentor = mentor?.id !== profile?.id;
+
+  const followMentor = () => {
+    requestFollowMentor.run(mentorProfile?.id);
+  };
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
@@ -61,7 +100,7 @@ const Mentors = ({ mentor }: any) => {
           className="rounded w-[240px] h-[252px] object-contain bg-[#212121]"
           src={mentor?.avatar || '/images/img-default.png'}
         />
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-16-600">
               {generateMentors()}
@@ -100,46 +139,75 @@ const Mentors = ({ mentor }: any) => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col  gap-4">
-            <Text className="text-white" type="font-14-400">
-              {mentor?.biography}
-            </Text>
-            <div className="flex items-center gap-2">
-              {mentor?.facebook && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.facebook, '_blank')}
-                >
-                  <IconFb />
-                </div>
+            <div className="flex flex-col gap-4">
+              {mentor?.biography && (
+                <Text className="text-white" type="font-14-400">
+                  {mentor?.biography}
+                </Text>
               )}
-              {mentor?.youtube && (
+              <div className="flex items-center gap-2">
+                {/* {mentor?.x && (
                 <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.youtube, '_blank')}
-                >
-                  <IconYoutube />
-                </div>
-              )}
-              {mentor?.linkedin && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                  onClick={() => window.open(mentor?.linkedin, '_blank')}
-                >
-                  <IconLinkedIn />
-                </div>
-              )}
-              {mentor?.x && (
-                <div
-                  className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                  className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center"
                   onClick={() => window.open(mentor?.x, '_blank')}
                 >
-                  <IconX />
+                  <IconTwiter />
                 </div>
-              )}
+              )} */}
+                {mentor?.facebook && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.facebook, '_blank')}
+                  >
+                    <IconFb />
+                  </div>
+                )}
+                {mentor?.youtube && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.youtube, '_blank')}
+                  >
+                    <IconYoutube />
+                  </div>
+                )}
+                {mentor?.linkedin && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.linkedin, '_blank')}
+                  >
+                    <IconLinkedIn />
+                  </div>
+                )}
+                {mentor?.x && (
+                  <div
+                    className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
+                    onClick={() => window.open(mentor?.x, '_blank')}
+                  >
+                    <IconX />
+                  </div>
+                )}
+                {/* <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
+                <IconTelegram />
+              </div>
+              <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
+                <IconDicord />
+              </div>
+              <div className="w-7 h-7 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-white rounded-full flex justify-center items-center">
+                <IconReadmi />
+              </div> */}
+              </div>
             </div>
           </div>
+
+          {isNotMentor && (
+            <Button
+              isLoading={requestFollowMentor?.loading}
+              className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
+              onClick={followMentor}
+            >
+              {!mentorProfile?.isFollowing ? t('Follow') : t('Followed')}
+            </Button>
+          )}
         </div>
       </div>
     </div>

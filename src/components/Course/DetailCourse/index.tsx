@@ -25,7 +25,6 @@ const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
   const { t } = useTranslation('common');
-  console.log('profile', profile);
 
   const {
     run: getDetailCourse,

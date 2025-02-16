@@ -74,6 +74,12 @@ const MainHeader = () => {
   }, []);
 
   useEffect(() => {
+    if (router.pathname !== ROUTE_PATH.COURSE_SEARCH) {
+      setValueSearch('');
+    }
+  }, [router.pathname]);
+
+  useEffect(() => {
     if (isConnected && address && !token) {
       runGetUserNonce(address);
     }
@@ -122,6 +128,7 @@ const MainHeader = () => {
             <InputText
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}
+              value={valueSearch}
               startContent={
                 <Image
                   width={20}
