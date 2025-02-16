@@ -98,7 +98,7 @@ const ThemeConfiguration = ({
       <Button
         onPress={onOpen}
         isIconOnly
-        className={`bg-gray border-1 border-gray-10 rounded-[4px] w-10 h-10`}
+        className={`bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10`}
       >
         <ThemeIcon />
       </Button>
