@@ -1,5 +1,7 @@
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
+import { getAccessToken } from '@/store/auth';
+import { useProfile } from '@/store/profile/useProfile';
 
 export const userRequest = {
   getMe(params?: any) {
@@ -9,8 +11,15 @@ export const userRequest = {
     return privateRequest(request.patch, API_PATH.USER_UPDATE, { data: body });
   },
 
-  getUserDetail(id: string) {
-    return privateRequest(request.get, `${API_PATH.USER_DETAIL(id)}`, { });
+  getUserDetail(id: string, params: any) {
+    // const { profile } = useProfile();
+    // const accessToken = getAccessToken();
+    // const params = {
+    //   userId: accessToken ? profile?.id : '',
+    // };
+    return privateRequest(request.get, `${API_PATH.USER_DETAIL(id)}`, {
+      params,
+    });
   },
 };
 
@@ -20,7 +29,7 @@ export const referralRequest = {
   },
   getProfile() {
     return privateRequest(request.get, API_PATH.REFERRAL_PROFILE);
-  }
+  },
 };
 
 export interface TUser {

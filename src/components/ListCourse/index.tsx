@@ -17,16 +17,16 @@ import { useProfile } from '@/store/profile/useProfile';
 import { isMobile } from 'react-device-detect';
 import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 import Loading from '../UI/Loading';
-
-const SORT_BY = [
-  { key: 'createdAt desc', label: 'Newest' },
-  { key: 'createdAt asc', label: 'Oldest' },
-  // { key: 'a-z', label: 'A-Z' },
-  // { key: 'z-a', label: 'Z-A' },
-];
+import { useTranslation } from 'next-i18next';
 
 const ListCourse = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
+
+  const SORT_BY = [
+    { key: 'createdAt desc', label: t('Newest') },
+    { key: 'createdAt asc', label: t('Oldest') },
+  ];
 
   const [sort, setSort] = useState('createdAt desc');
   const [search, setSearch] = useState('');
@@ -77,7 +77,7 @@ const ListCourse = () => {
       <div className="flex flex-col gap-[30px]">
         <div className="flex items-center justify-between">
           <div className="pl-5 border-l-4 border-l-main">
-            <Text type="font-28-700">Courses</Text>
+            <Text type="font-28-700">{t('Courses')}</Text>
           </div>
           {isMobile && (
             <CustomButtonNewCourse
@@ -94,12 +94,12 @@ const ListCourse = () => {
               startContent={<IconSearch />}
               className="min-w-[240px] md:min-w-[302px]"
               isInputSubmit
-              placeholder="Search"
+              placeholder={t('Search')}
               value={search}
               onChange={handleChange}
             />
             <SelectCustom
-              placeholder="Sort by type"
+              placeholder={t('Sort by type')}
               isSelectSubmit
               className="w-full md:min-w-[120px] md:max-w-[140px] min-h-[44px]"
               options={SORT_BY}
@@ -152,7 +152,7 @@ const ListCourse = () => {
                           >
                             <IconEdit />
                             <Text className="text-[20px] font-bold text-white">
-                              Edit Course
+                              {t('Edit Course')}
                             </Text>
                           </div>
                           <div
@@ -161,7 +161,7 @@ const ListCourse = () => {
                           >
                             <IconDelete />
                             <Text className="text-[20px] font-bold text-white">
-                              Delete Course
+                              {t('Delete Course')}
                             </Text>
                           </div>
                         </div>
@@ -173,7 +173,7 @@ const ListCourse = () => {
                     <div className="flex md:justify-end md:items-end">
                       <div className="flex items-center w-full md:w-8/12 gap-4">
                         <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
-                          Finish your courses
+                          {t('Finish your courses')}
                         </Text>
                         <Progress
                           maxValue={6}
@@ -192,14 +192,14 @@ const ListCourse = () => {
                         type={!item?.isPublish ? 'font-16-700' : 'font-16-400'}
                         className="text-white"
                       >
-                        Draft
+                        {t('Draft')}
                       </Text>
 
                       <Text
                         type={item?.isPublish ? 'font-16-700' : 'font-16-400'}
                         className="text-white"
                       >
-                        Public
+                        {t('Public')}
                       </Text>
                     </div>
                   </div>

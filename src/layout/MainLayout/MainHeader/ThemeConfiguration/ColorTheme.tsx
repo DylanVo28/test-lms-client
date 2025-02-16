@@ -3,6 +3,7 @@ import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import React, { useEffect, useState } from 'react';
 import { RgbaColor, RgbaColorPicker } from 'react-colorful';
+import { useTranslation } from 'next-i18next';
 
 const presetColors = [
   '#CD006C',
@@ -106,11 +107,14 @@ function convertColor(color: Color, type: TypeColor) {
 
 const ColorTheme = ({
   onChangeColor,
+  dataColor,
 }: {
   onChangeColor: (value: string) => void;
+  dataColor: string;
 }) => {
+  const { t } = useTranslation('common');
   const [typeColor, setTypeColor] = useState<TypeColor>('hex');
-  const [color, setColor] = useState<RgbaColor>({ r: 0, g: 0, b: 0, a: 0 });
+  const [color, setColor] = useState<RgbaColor>(hexToRgba(dataColor, 1));
   const [valueColor, setValueColor] = useState<string>(
     convertColor({ r: 0, g: 0, b: 0, a: 0 }, typeColor)
   );
@@ -150,18 +154,15 @@ const ColorTheme = ({
     onChangeColor(convertColor(hexToRgba(color, 1), typeColor));
   };
 
-  useEffect(() => {
-    const savedColor = localStorage.getItem('main-color');
-    if (savedColor) {
-      setColor(hexToRgba(savedColor, 1));
-    }
-  }, []);
-
   return (
     <div>
-      <Text className="text-[18px] font-semibold mb-[16px]">Color theme</Text>
+      <Text className="text-[18px] font-semibold mb-[16px]">
+        {t('Color theme')}
+      </Text>
       <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
-        <div className="text-base mb-[8px] font-semibold">Background</div>
+        <div className="text-base mb-[8px] font-semibold">
+          {t('Background')}
+        </div>
         <div className="flex gap-[16px]">
           <div className="w-[80%]">
             <div className="custom-color-picker">

@@ -14,6 +14,7 @@ import Image from 'next/image';
 import CardMentor from '../CardMentor';
 import { useDebounce } from 'ahooks';
 import { useGetListFollowers } from '../service';
+import { useTranslation } from 'next-i18next';
 const RATINGS = [
   { key: '5', label: '5 Star' },
   { key: '4', label: '4 Star' },
@@ -24,6 +25,7 @@ const RATINGS = [
 const FollowMentors = () => {
   const [level, setLevel] = useState();
   const [valueSearch, setValueSearch] = useState('');
+  const { t } = useTranslation('common');
 
   const [debounceVal, setDebounceVal] = useState('');
   const debounceValue = useDebounce(valueSearch, { wait: 500 });
@@ -71,7 +73,7 @@ const FollowMentors = () => {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              Sort by
+              {t('Sort by')}
             </Text>
             <SelectCustom
               placeholder="Ratings"
@@ -89,7 +91,7 @@ const FollowMentors = () => {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            Sort by
+            {t('Sort by')}
           </Text>
           <SelectCustom
             placeholder="Default"
@@ -102,14 +104,18 @@ const FollowMentors = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <CardMentor />
-        <CardMentor />
-        <CardMentor />
-        <CardMentor />
-        <CardMentor />
-        <CardMentor />
-      </div>
+      {!loading && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {list?.map((item) => {
+              return <CardMentor mentor={item?.followedUser} key={item?.id} />;
+            })}
+            {list?.length === 0 && <NoData />}
+          </div>
+        </>
+      )}
+      {loading && <Loading />}
+
       {/* {!loading && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

@@ -10,8 +10,10 @@ import { useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 const Overview = ({ dataListSection, dataDetail }: any) => {
+  const { t } = useTranslation('common');
   const formattedTime: string = useMemo(() => {
     const totalDuration = dataListSection?.reduce(
       (total: any, section: any) => {
@@ -37,7 +39,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
   }, [dataListSection]);
 
   return (
-    <div className="flex flex-col gap-5 pl-[80px] pr-[32px]">
+    <div className="flex flex-col gap-5 md:pl-[80px] md:pr-[32px]">
       <Text className="text-white" type="font-24-700">
         {dataDetail?.data?.subtitle}
       </Text>
@@ -60,7 +62,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 />
               </div>
               <Text className="text-black-7" type="font-12-400">
-                {`${dataDetail?.data?.countReviews} rating`}
+                {`${dataDetail?.data?.countReviews} ${t('rating')}`}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
@@ -69,7 +71,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                   dataDetail?.data?.countStudents}
               </Text>
               <Text className="text-black-7" type="font-12-400">
-                Students
+                {t('Students')}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
@@ -77,7 +79,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 {formatTimeDuration(formattedTime)}
               </Text>
               <Text className="text-black-7" type="font-12-400">
-                Total
+                {t('Total')}
               </Text>
             </div>
           </div>
@@ -85,7 +87,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
             <div className="flex items-center gap-2">
               <IconUpload />
               <Text className="text-black-5" type="font-14-400">
-                Last Updated{' '}
+                {t('Last Updated')}{' '}
                 {dayjs(dataDetail?.data?.updatedAt).format('MMMM YYYY')}
               </Text>
             </div>
@@ -93,13 +95,13 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
               <div className="flex items-center gap-2">
                 <IconGlobal />
                 <Text className="text-black-5" type="font-14-400">
-                  English
+                  {t('English')}
                 </Text>
               </div>
               <div className="flex items-center gap-2">
                 <IconCoppyRight />
                 <Text className="text-black-5" type="font-14-400">
-                  English (auto)
+                  {t('English (auto)')}
                 </Text>
               </div>
             </div>

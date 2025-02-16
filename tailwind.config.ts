@@ -22,11 +22,15 @@ module.exports = {
         'black-3': '#F5F5F5',
         'black-9': '#454545',
         'black-2': '#FCFCFC',
+        'black-4': '#24292F',
+
         'black-8': '#595959',
         'black-7': '#8C8C8C',
         'black-6': '#BFBFBF',
         orange: '#F26F21',
         gray: '#1F242A',
+        'secondary-500': '#A4A4A4',
+
         main: 'var(--main-color)',
         'main-60': '#02A6C260',
         'main-20': '#02A6C220',
@@ -38,6 +42,9 @@ module.exports = {
         'gray-10': '#F0F0F01A',
         'gray-20': '#F0F0F033',
         error: '#DF2638',
+
+        'error-1': '#FF4A4A',
+
         'noti-red': '#E55151',
       },
     },

@@ -38,9 +38,11 @@ import {
   useGetListReview,
   useGetListReviewSummary,
 } from '../Course/ListCourse/service';
+import { useTranslation } from 'next-i18next';
 
 export const valueProgressAtom = atom<any>({});
 const Lesson = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
@@ -176,7 +178,7 @@ const Lesson = () => {
     },
     {
       key: '2',
-      label: 'Overview',
+      label: t('Overview'),
       children: (
         <Overview
           dataDetail={dataDetail}
@@ -201,7 +203,7 @@ const Lesson = () => {
     // },
     {
       key: '6',
-      label: 'Reviews',
+      label: t('Reviews'),
       children: (
         <Reviews
           dataListReviewSummary={dataListReviewSummary}
@@ -498,8 +500,8 @@ const Lesson = () => {
   };
 
   return (
-    <div className="grid grid-cols-10 relative" id="topLesson">
-      <div className="col-span-7 flex flex-col">
+    <div className="grid md:grid-cols-10 relative" id="topLesson">
+      <div className="md:col-span-7 px-4 md:px-0 flex flex-col">
         {!dataLesson?.data?.contentType &&
           typeLoadContent !== TYPE_COURSE.QUIZ &&
           !endCourse && (
@@ -593,14 +595,14 @@ const Lesson = () => {
           </Tabs>
         </div>
       </div>
-      <div className="col-span-3">
+      <div className="md:col-span-3 px-4 md:px-0">
         <div className="w-full sticky top-0 right-0 z-[10] h-full bg-[#0F141A]">
           <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-[#D9D9D91A] border-l-[#D9D9D91A] sticky top-0 z-[1000] bg-gray">
             <div className="flex items-center gap-2">
               {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
               <div className="flex flex-col gap-[2px]">
                 <Text type="text-18-600" className="text-white">
-                  Course content
+                  {t('Course content')}
                 </Text>
                 {/* <Text type="font-14-400" className="text-white">
                   Set certificate expiration date

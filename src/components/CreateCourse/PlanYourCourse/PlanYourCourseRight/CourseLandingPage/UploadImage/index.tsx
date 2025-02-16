@@ -5,8 +5,11 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
+  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
@@ -42,7 +45,9 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
     const file = files[0];
 
     if (!allowedTypes.includes(file.type)) {
-      toast.error('Can only upload files in .jpg, .jpeg, .gif or .png format');
+      toast.error(
+        t('Can only upload files in .jpg, .jpeg, .gif or .png format')
+      );
 
       return;
     }
@@ -61,7 +66,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-white">
-        Course image
+        {t('Course image')}
       </Text>
       <input
         key={inputKey}
@@ -71,11 +76,11 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <div className="flex items-start gap-8">
-        <div className="relative min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-start gap-8">
+        <div className="relative md:min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
           <Image
-            src={'/img-default.png'}
-            className="w-[480px] h-[270px]"
+            src={value || '/img-default.png'}
+            className="w-full md:w-[480px] h-[270px]"
             alt=""
             width={480}
             height={270}
@@ -86,11 +91,11 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
-            Upload your course image here. It must meet our course image quality
-            standards to be accepted. Important guidelines: 750x422 pixels;
-            .jpg, .jpeg,. gif, or .png. no text on the image.
+            {t(
+              'Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.'
+            )}
           </Text>
           <div className="flex items-center gap-2">
             {value ? (
@@ -113,7 +118,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             ) : (
               <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bgDefault border-black-10">
                 <Text type="font-16-400" className="text-black-8">
-                  No file selected
+                  {t('No file selected')}
                 </Text>
               </div>
             )}
@@ -123,7 +128,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
               className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
             >
               <Text type="font-16-700" className="text-main">
-                {value ? 'Change' : 'Upload File'}
+                {value ? t('Change') : t('Upload File')}
               </Text>
             </Button>
           </div>

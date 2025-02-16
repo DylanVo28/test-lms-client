@@ -1,6 +1,7 @@
 import { Button } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
+import { useTranslation } from 'next-i18next';
 
 const CustomButtonEnroll = ({
   course,
@@ -15,6 +16,7 @@ const CustomButtonEnroll = ({
   token: any;
   label: string;
 }) => {
+  const { t } = useTranslation('common');
   return (
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {
@@ -33,7 +35,7 @@ const CustomButtonEnroll = ({
           >
             {!connected ? (
               <Button
-                onClick={openConnectModal}
+                onPress={openConnectModal}
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
@@ -43,11 +45,11 @@ const CustomButtonEnroll = ({
             ) : (
               <Button
                 isLoading={loading}
-                onClick={handleClickButton}
+                onPress={handleClickButton}
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  {course?.isOwner ? 'Go to course' : 'Enroll Now'}
+                  {course?.isOwner ? t('Go to course') : t('Enroll Now')}
                 </Text>
               </Button>
             )}

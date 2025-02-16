@@ -8,6 +8,9 @@ import NextVideo from './NextVideo';
 import { Button, Tooltip } from '@nextui-org/react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
+import { isMobile } from 'react-device-detect';
+import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
 
 const VideoSection = ({
   info,
@@ -42,6 +45,7 @@ const VideoSection = ({
   loading: boolean;
   info: any;
 }) => {
+  const { t } = useTranslation('common');
   const videoRef: any = useRef(null);
   const playerRef: any = useRef(null);
 
@@ -172,7 +176,11 @@ const VideoSection = ({
   };
 
   return (
-    <div className="video-container h-max max-h-[566px] relative group">
+    <div
+      className={clsx('video-container h-max max-h-[566px] relative group', {
+        ['max-h-[400px]']: isMobile,
+      })}
+    >
       {dataItemPrev?.id && (
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"

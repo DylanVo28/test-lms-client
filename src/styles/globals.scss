@@ -318,9 +318,16 @@ input[type='number'] {
 }
 .video-js {
   height: 566px !important;
+
+  @media only screen and (max-width: 768px) {
+    height: 400px !important;
+  }
 }
 .video-js .vjs-tech {
   height: 566px !important;
+  @media only screen and (max-width: 768px) {
+    height: 400px !important;
+  }
 }
 
 .vjs_video_3-dimensions.vjs-fluid:not(.vjs-audio-only-mode) {

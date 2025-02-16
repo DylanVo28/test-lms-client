@@ -7,6 +7,7 @@ import { Button, Progress } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { set } from 'video.js/dist/types/tech/middleware';
+import { useTranslation } from 'next-i18next';
 
 const FormAddVideo = ({
   handleSaveVideo,
@@ -15,6 +16,7 @@ const FormAddVideo = ({
   handleSaveVideo: (urlVideo: string) => void;
   valueInfo: any;
 }) => {
+  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueFile, setValueFile] = useState<any>({});
   const [valueProgress, setValueProgress] = useState(0);
@@ -134,13 +136,13 @@ const FormAddVideo = ({
               )}
             >
               <Text type="font-14-400" className="text-white/40">
-                No files selected
+                {t('No files selected')}
               </Text>
             </div>
           )}
           {isError && !valueFile?.urlVideo && (
             <Text type="font-14-400" className="text-danger-300">
-              Please upload the file
+              {t('Please upload the file')}
             </Text>
           )}
         </div>
@@ -155,11 +157,11 @@ const FormAddVideo = ({
         />
         <Button
           isLoading={loading}
-          onClick={handleClickUploadFile}
+          onPress={handleClickUploadFile}
           className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
         >
           <Text type="font-14-400" className="text-main">
-            {valueFile?.urlVideo ? 'Change video' : 'Select video'}
+            {valueFile?.urlVideo ? t('Change video') : t('Select video')}
           </Text>
         </Button>
       </div>
@@ -170,12 +172,12 @@ const FormAddVideo = ({
         </Text>
       )}
       <Text type="font-12-500" className="text-yellow-500 italic">
-        Note: All files must be at least 720p and less than 4 GB.
+        {t('Note: All files must be at least 720p and less than 4 GB.')}
       </Text>
 
       <div className="flex justify-end items-end">
         <Button
-          onClick={() => {
+          onPress={() => {
             if (valueFile?.urlVideo) {
               handleSaveVideo(valueFile);
             } else {
@@ -185,7 +187,7 @@ const FormAddVideo = ({
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">
-            Save
+            {t('Save')}
           </Text>
         </Button>
       </div>

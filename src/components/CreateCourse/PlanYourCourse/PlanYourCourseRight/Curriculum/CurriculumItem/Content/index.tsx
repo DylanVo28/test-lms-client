@@ -4,6 +4,7 @@ import { Button } from '@nextui-org/react';
 import { File } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const Content = ({
   handleClickEditContent,
@@ -14,6 +15,7 @@ const Content = ({
   type: LessonContentType;
   info: any;
 }) => {
+  const { t } = useTranslation('common');
   console.log(info, 'info');
 
   const formattedTime: string = useMemo(() => {
@@ -64,7 +66,9 @@ const Content = ({
           >
             <IconEdit />
             <Text type="font-14-400" className="text-[#0059FF]">
-              {type === LessonContentType.VIDEO ? 'Edit video' : 'Edit content'}
+              {type === LessonContentType.VIDEO
+                ? t('Edit video')
+                : t('Edit content')}
             </Text>
           </div>
 

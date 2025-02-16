@@ -17,11 +17,13 @@ import { useProfile } from '@/store/profile/useProfile';
 import FormAddSection from './CurriculumItem/FormAddSection';
 import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
 import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
+import { useTranslation } from 'next-i18next';
 
 const CurriculumItem = dynamic(() => import('./CurriculumItem'), {
   ssr: false,
 });
 const Curriculum = ({ setValue }: any) => {
+  const { t } = useTranslation('common');
   const {
     control,
     reset,
@@ -127,7 +129,7 @@ const Curriculum = ({ setValue }: any) => {
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-center">
           <Text type="font-28-700" className="text-white">
-            Curriculum item
+            {t('Curriculum item')}
           </Text>
           {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
             <Text type="font-16-700" className="text-white">
@@ -136,22 +138,21 @@ const Curriculum = ({ setValue }: any) => {
           </Button> */}
         </div>
         <Text type="font-16-400" className="text-black-6">
-          Start putting together your course by creating sections, lectures and
-          practice (quizzes, coding exercises and assignments).
+          {t(
+            'Start putting together your course by creating sections, lectures and practice (quizzes, coding exercises and assignments).'
+          )}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          Start putting together your course by creating sections, lectures and
-          practice activities (quizzes, coding exercises and assignments). Use
-          your course outline to structure your content and label your sections
-          and lectures clearly. If you’re intending to offer your course for
-          free, the total length of video content must be less than 2 hours.
+          {t(
+            'Start putting together your course by creating sections, lectures and practice activities (quizzes, coding exercises and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.'
+          )}
         </Text>
         {fields?.map((field: any, index: number) => {
           return (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 overflow-auto">
               {index !== 0 && (
                 <Button
-                  onClick={() => handleRemoveSection(index, field.idSection)}
+                  onPress={() => handleRemoveSection(index, field.idSection)}
                   isIconOnly
                   variant="light"
                   radius="full"
@@ -162,7 +163,7 @@ const Curriculum = ({ setValue }: any) => {
               )}
 
               {field?.title ? (
-                <div className="border-1 bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
+                <div className="border-1 overflow-auto bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
                   {valueLesson?.id === field?.id ? (
                     <FormAddSection
                       handleSaveAddSection={(values: any) => {
@@ -182,7 +183,9 @@ const Curriculum = ({ setValue }: any) => {
                     />
                   ) : (
                     <div className="flex items-center gap-2">
-                      <Text type="font-16-700">{`Part ${index + 1}:`}</Text>
+                      <Text type="font-16-700">{`${t('Part')} ${
+                        index + 1
+                      }:`}</Text>
                       <div className="flex items-center gap-1">
                         <IconFile />
                         <Text type="font-16-400" className="text-black-7">
@@ -190,7 +193,7 @@ const Curriculum = ({ setValue }: any) => {
                         </Text>
                         <Button
                           isIconOnly
-                          onClick={() => {
+                          onPress={() => {
                             handleEditLesson(field, index);
                           }}
                           size="sm"
@@ -202,7 +205,7 @@ const Curriculum = ({ setValue }: any) => {
                         {index !== 0 && (
                           <Button
                             isIconOnly
-                            onClick={() => {
+                            onPress={() => {
                               handleRemoveSection(index, field?.idSection);
                             }}
                             size="sm"
@@ -237,7 +240,7 @@ const Curriculum = ({ setValue }: any) => {
         })}
         {!addSection && (
           <Button
-            onClick={() => {
+            onPress={() => {
               setAddSection(true);
               append({ title: '', introduction: '' });
             }}
@@ -246,7 +249,7 @@ const Curriculum = ({ setValue }: any) => {
             <div className="flex items-center gap-1">
               <IconPlusMain />
               <Text type="font-16-400" className="text-main">
-                Section
+                {t('Section')}
               </Text>
             </div>
           </Button>

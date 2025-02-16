@@ -19,10 +19,12 @@ import CardComment from './CardComment';
 import CustomButtonComment from '@/components/UI/CustomButtonComment';
 import NoData from '@/components/ListCourse/NoData';
 import { TypeReactions } from '@/utils/common';
+import { useTranslation } from 'next-i18next';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
   const token = getAccessToken();
+  const { t } = useTranslation('common');
 
   const { dataCourses, loadMore, noMore, reload } = useGetListCourse({
     pageSize: 3,
@@ -176,7 +178,7 @@ const MoreCourse = (props: any) => {
       {dataCourses?.length > 0 && (
         <div className="flex flex-col gap-6">
           <Text className="text-white truncate w-full" type="font-20-600">
-            More Course By {generateMentors()}
+            {t('More Course By')} {generateMentors()}
           </Text>
           <div className="md:grid md:grid-cols-3 flex items-center overflow-auto gap-6">
             {dataCourses?.length > 0 &&
@@ -189,7 +191,7 @@ const MoreCourse = (props: any) => {
       )}
       <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
-          Comments
+          {t('Comments')}
         </Text>
 
         {/* {!token ? (
@@ -217,7 +219,7 @@ const MoreCourse = (props: any) => {
 
         {dataListReview?.data?.length === 0 && (
           <div className="pb-10">
-            <NoData text="No reviews yet" />
+            <NoData text={t('No reviews yet')} />
           </div>
         )}
       </div>

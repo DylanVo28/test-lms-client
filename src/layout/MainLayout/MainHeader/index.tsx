@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
-import { use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
@@ -12,8 +12,18 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import DrawerMenu from '../Menubar/DrawerMenu';
-import CustomLogoAndTheme from './CustomLogoAndTheme';
+import ThemeConfiguration from './ThemeConfiguration';
+import { useTranslation } from 'next-i18next';
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
+import Notification from '@/components/Notification';
+
 const MainHeader = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
   const { isConnected, address } = useAccount();
@@ -29,7 +39,7 @@ const MainHeader = () => {
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
-      toast.success('Login successfully');
+      toast.success(t('Login successfully'));
       requestGetProfile();
       setAuthCookies({
         token: res?.data?.accessToken,
@@ -62,6 +72,12 @@ const MainHeader = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (router.pathname !== ROUTE_PATH.COURSE_SEARCH) {
+      setValueSearch('');
+    }
+  }, [router.pathname]);
 
   useEffect(() => {
     if (isConnected && address && !token) {
@@ -112,6 +128,7 @@ const MainHeader = () => {
             <InputText
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}
+              value={valueSearch}
               startContent={
                 <Image
                   width={20}
@@ -122,20 +139,35 @@ const MainHeader = () => {
               }
               className="min-w-[470px]"
               radius="sm"
-              placeholder="Search"
+              placeholder={t('Search')}
             />
             <div className="border-1 border-gray-20 h-8" />
-            {/* <Button
-              isIconOnly
-              className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
+
+            <Popover
+              classNames={{
+                content:
+                  'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
+              }}
+              color="default"
+              placement="bottom-end"
             >
-              <Image
-                src={'/icons/ic-notification.svg'}
-                height={20}
-                width={20}
-                alt=""
-              />
-            </Button> */}
+              <PopoverTrigger>
+                <Button
+                  isIconOnly
+                  className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
+                >
+                  <Image
+                    src={'/icons/ic-notification.svg'}
+                    height={20}
+                    width={20}
+                    alt=""
+                  />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Notification />
+              </PopoverContent>
+            </Popover>
             {/* <Button
               isIconOnly
               className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
@@ -144,7 +176,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            {/* <CustomLogoAndTheme setUrlLogo={setUrlLogo} /> */}
+            <ThemeConfiguration setUrlLogo={setUrlLogo} />
 
             {/* <div className="w-full">
               <ConnectButton />

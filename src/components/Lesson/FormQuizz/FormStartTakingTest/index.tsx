@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import IsResult from './IsResult';
 import { UserCourseProgressStatus } from '@/utils/common';
+import { useTranslation } from 'next-i18next';
 
 const enum STEP_ANSWER_QUESTION {
   SEE_RESULTS = 'SEE_RESULTS',
@@ -19,6 +20,7 @@ const FormStartTakingTest = ({
   handleClickContinueQuizz: (id: string) => void;
   dataQuizz: any;
 }) => {
+  const { t } = useTranslation('common');
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerCorrectly, setAnswerCorrectly] = useState<any>('');
   const [loading, setLoading] = useState(false);
@@ -78,7 +80,7 @@ const FormStartTakingTest = ({
   };
 
   return (
-    <div className="w-full flex flex-col min-h-[566px] relative">
+    <div className="w-full flex flex-col min-h-[400px] md:min-h-[566px] relative">
       <LoadingContainer loading={loading} />
       {stepAnswerQuestion === STEP_ANSWER_QUESTION.CONTINUE ? (
         <IsResult
@@ -87,12 +89,12 @@ const FormStartTakingTest = ({
           title={dataQuizz?.title}
         />
       ) : (
-        <div className="w-6/12 pt-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
+        <div className="md:w-6/12 pt-10 py-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
           {answerCorrectly === true && (
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
               <CheckCircle className="text-green" size={30} weight="fill" />
               <Text className="text-green" type="font-16-400">
-                You did great
+                {t('You did great')}
               </Text>
             </div>
           )}
@@ -100,15 +102,14 @@ const FormStartTakingTest = ({
             <div className="p-4 w-full bg-transparent flex items-center gap-3   rounded-2xl border-1 border-red-500">
               <XCircle size={30} weight="fill" className="text-red-500" />
               <Text className="text-red-500" type="font-16-400">
-                The answer is not correct. Please try again.
+                {t('The answer is not correct. Please try again.')}
               </Text>
             </div>
           )}
 
-          <Text
-            type="font-32-700"
-            className="text-white"
-          >{`Question ${currentQuestion}`}</Text>
+          <Text type="font-32-700" className="text-white">{`${t(
+            'Question'
+          )} ${currentQuestion}`}</Text>
 
           <div
             className="text-2xl text-white pb-4"
@@ -150,12 +151,12 @@ const FormStartTakingTest = ({
 
         {dataQuizz?.progress?.status === UserCourseProgressStatus.COMPLETED && (
           <Button
-            onClick={() => handleClickContinueQuizz(dataQuizz?.id)}
+            onPress={() => handleClickContinueQuizz(dataQuizz?.id)}
             className="bg-main w-max  rounded min-w-[120px]"
           >
             <div className="flex items-center gap-2">
               <Text className="text-white" type="font-16-400">
-                Continue
+                {t('Continue')}
               </Text>
               <CaretRight size={16} weight="light" />
             </div>
@@ -163,12 +164,12 @@ const FormStartTakingTest = ({
         )}
         {stepAnswerQuestion === STEP_ANSWER_QUESTION.SEE_RESULTS && (
           <Button
-            onClick={handleSeeResult}
+            onPress={handleSeeResult}
             className="bg-main w-max  rounded min-w-[150px]"
           >
             <div className="flex items-center gap-2">
               <Text className="text-white" type="font-16-400">
-                See results
+                {t('See results')}
               </Text>
               <CaretRight size={16} weight="light" />
             </div>
@@ -177,7 +178,7 @@ const FormStartTakingTest = ({
         {stepAnswerQuestion === STEP_ANSWER_QUESTION.CONTINUE &&
           answerCorrectly && (
             <Button
-              onClick={() => {
+              onPress={() => {
                 setStepAnswerQuestion('');
                 setCurrentQuestion(1);
                 setAnswerCorrectly('');
@@ -187,7 +188,7 @@ const FormStartTakingTest = ({
             >
               <div className="flex items-center gap-2">
                 <Text className="text-white" type="font-16-400">
-                  Continue
+                  {t('Continue')}
                 </Text>
                 <CaretRight size={16} weight="light" />
               </div>
@@ -199,11 +200,11 @@ const FormStartTakingTest = ({
             currentQuestion < dataQuizz?.questions?.length ? (
               <Button
                 className="bg-main w-max  rounded min-w-[80px]"
-                onClick={handleNextQuestion}
+                onPress={handleNextQuestion}
               >
                 <div className="flex items-center gap-2">
                   <Text className="text-white" type="font-16-400">
-                    Next
+                    {t('Next')}
                   </Text>
                   <CaretRight size={16} weight="light" />
                 </div>
@@ -211,11 +212,11 @@ const FormStartTakingTest = ({
             ) : (
               <Button
                 isDisabled={!valueQuestion}
-                onClick={() => handleCheckAnswer()}
+                onPress={() => handleCheckAnswer()}
                 className="bg-main w-max  rounded min-w-[150px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Check the answer
+                  {t('Check the answer')}
                 </Text>
               </Button>
             )}

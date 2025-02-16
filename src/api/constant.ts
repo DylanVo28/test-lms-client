@@ -82,4 +82,8 @@ export const API_PATH = {
 
   FOLLOW_MENTOR: (id: string) => `/api/users/${id}/follow`,
   UN_FOLLOW_MENTOR: (id: string) => `/api/users/${id}/unfollow`,
+  THEMES: '/api/themes',
+  THEME_DETAIL: '/api/themes/detail',
+
+  FCM_TOKEN: '/fcm',
 };

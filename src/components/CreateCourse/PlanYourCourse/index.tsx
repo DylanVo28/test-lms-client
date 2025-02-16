@@ -13,8 +13,11 @@ import ModalSubmitError from './ModalSubmitError';
 import { API_PATH } from '@/api/constant';
 import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
+import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 
 const PlanYourCourse = () => {
+  const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
@@ -40,22 +43,25 @@ const PlanYourCourse = () => {
         res?.data?.title && res?.data?.categoryId;
       res?.data?.level && res?.data?.lang;
 
-      const allLessonsHaveContent = res?.data?.sections?.every((section: any) =>
-        section.lessons.every((lesson: any) => lesson.content !== null)
-      );
+      const allLessonsHaveContent =
+        res?.data?.sections?.length > 0 &&
+        res?.data?.sections?.every((section: any) =>
+          section.lessons.every((lesson: any) => lesson.content !== null)
+        );
 
-      const allQuizzesHaveQuestions = res?.data?.sections.every(
-        (section: any) =>
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-      );
+      const allQuizzesHaveQuestions =
+        res?.data?.sections?.length > 0 &&
+        res?.data?.sections.every(
+          (section: any) =>
+            section.quizzes?.length > 0 &&
+            section.quizzes.every(
+              (quizz: any) =>
+                Array.isArray(quizz.questions) && quizz.questions.length > 0
+            )
+        );
 
       const isEnoughCurruclum =
         allLessonsHaveContent || allQuizzesHaveQuestions;
-
-      console.log(isEnoughCurruclum, 'isEnoughCurruclum');
 
       if (
         isEnoughIntendedLearners &&
@@ -118,40 +124,39 @@ const PlanYourCourse = () => {
   }, [router.query.id, profile?.id]);
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
-      if (activePlan < 4) {
-        const resData = await fetchDetailSection();
+      const resData = await fetchDetailSection();
 
-        const allLessonsHaveContent = resData?.data?.every((section: any) =>
-          section.lessons.every((lesson: any) => lesson.content !== null)
-        );
+      const allLessonsHaveContent = resData?.data?.every((section: any) =>
+        section.lessons.every((lesson: any) => lesson.content !== null)
+      );
 
-        const allQuizzesHaveQuestions = resData?.data.every((section: any) =>
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-        );
+      const allQuizzesHaveQuestions = resData?.data.every((section: any) =>
+        section.quizzes.every(
+          (quizz: any) =>
+            Array.isArray(quizz.questions) && quizz.questions.length > 0
+        )
+      );
 
-        const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
-        const isEnoughIntendedLearners =
-          res?.data?.objectives?.length > 0 &&
-          res?.data?.intenedLeaners?.length > 0 &&
-          res?.data?.requirements?.length > 0;
-        const isEnoughCourseLangdingePage =
-          res?.data?.title &&
-          res?.data?.categoryId &&
-          res?.data?.level &&
-          res?.data?.lang;
-
-        if (
-          allLessonsHaveContent ||
-          allQuizzesHaveQuestions ||
-          isEnoughtSetPrice ||
-          isEnoughIntendedLearners ||
-          isEnoughCourseLangdingePage
-        ) {
-          setActivePlan(activePlan + 1);
-        }
+      const isEnoughIntendedLearners =
+        res?.data?.objectives?.length > 0 &&
+        res?.data?.intenedLeaners?.length > 0 &&
+        res?.data?.requirements?.length > 0;
+      const isEnoughCourseLangdingePage =
+        res?.data?.title &&
+        res?.data?.categoryId &&
+        res?.data?.level &&
+        res?.data?.lang;
+      if (isEnoughIntendedLearners && activePlan === 1) {
+        setActivePlan(activePlan + 1);
+      }
+      if (
+        (allLessonsHaveContent || allQuizzesHaveQuestions) &&
+        activePlan === 4
+      ) {
+        setActivePlan(activePlan + 1);
+      }
+      if (isEnoughCourseLangdingePage && activePlan === 3) {
+        setActivePlan(activePlan + 1);
       }
 
       getDetailCourse(router.query.id as string);
@@ -335,19 +340,22 @@ const PlanYourCourse = () => {
     dataDetail?.data?.level &&
     dataDetail?.data?.lang;
 
-  const allLessonsHaveContent = dataDetail?.data?.sections?.every(
-    (section: any) =>
+  const allLessonsHaveContent =
+    dataDetail?.data?.sections?.length > 0 &&
+    dataDetail?.data?.sections?.every((section: any) =>
       section.lessons.every((lesson: any) => lesson.content !== null)
-  );
+    );
 
-  const allQuizzesHaveQuestions = dataDetail?.data?.sections.every(
-    (section: any) =>
-      section.quizzes?.length > 0 &&
-      section.quizzes.every(
-        (quizz: any) =>
-          Array.isArray(quizz.questions) && quizz.questions.length > 0
-      )
-  );
+  const allQuizzesHaveQuestions =
+    dataDetail?.data?.sections?.length > 0 &&
+    dataDetail?.data?.sections.every(
+      (section: any) =>
+        section.quizzes?.length > 0 &&
+        section.quizzes.every(
+          (quizz: any) =>
+            Array.isArray(quizz.questions) && quizz.questions.length > 0
+        )
+    );
 
   const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
 
@@ -364,18 +372,21 @@ const PlanYourCourse = () => {
             handlePublishForm={handleSubmit(onPublish)}
           />
           <div className="w-11/12 mx-auto pt-10">
-            <div className="grid grid-cols-10 gap-12">
-              <div className="col-span-2">
-                <PlanYourCourseLeft
-                  isEnoughtSetPrice={isEnoughtSetPrice}
-                  isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}
-                  isEnoughCurruclum={isEnoughCurruclum}
-                  isEnoughIntendedLearners={isEnoughIntendedLearners}
-                  activePlan={activePlan}
-                  handleActivePlan={(plan) => setActivePlan(plan)}
-                />
+            <div className="grid grid-cols-10 gap-10 md:gap-12">
+              <div className="col-span-10 md:col-span-2">
+                <div className="flex flex-col gap-4">
+                  <Text type="font-18-600">{t('Plan your course')}</Text>
+                  <PlanYourCourseLeft
+                    isEnoughtSetPrice={isEnoughtSetPrice}
+                    isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}
+                    isEnoughCurruclum={isEnoughCurruclum}
+                    isEnoughIntendedLearners={isEnoughIntendedLearners}
+                    activePlan={activePlan}
+                    handleActivePlan={(plan) => setActivePlan(plan)}
+                  />
+                </div>
               </div>
-              <div className="col-span-8">
+              <div className="col-span-10 md:col-span-8">
                 <PlanYourCourseRight
                   handleSubmit={handleSubmit}
                   watch={watch}

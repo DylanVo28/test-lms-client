@@ -14,27 +14,54 @@ import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
 import { Button } from '@nextui-org/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
-import { useFollowMentor } from './service';
+import { useFollowMentor, useUnFollowMentor } from './service';
 import { toast } from '@/components/UI/Toast/toast';
+import { getAccessToken } from '@/store/auth';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
+  console.log('mentor', mentor);
+  const { t } = useTranslation('common');
+  const accessToken = getAccessToken();
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
   const requestFollowMentor = useFollowMentor({
+    onSuccess: async (res: any) => {
+      const newData = {
+        ...mentorProfile,
+        isFollowing: true,
+      };
+      setMentorProfile(newData);
+    },
+    onError: (error: any) => {},
+  });
+
+  const requestUnFollowMentor = useUnFollowMentor({
     onSuccess: async (res: any) => {},
     onError: (error: any) => {
       toast.error(error.message);
+
+      // const newData = {
+      //   ...mentorProfile,
+      //   isFollowing: true,
+      // };
+      // console.log(newData, 'newData');
+
+      // setMentorProfile(newData);
     },
   });
 
   const getDetail = async () => {
+    const params = {
+      userId: accessToken ? profile?.id : '',
+    };
     try {
-      const response = await userRequest.getUserDetail(mentor.id);
+      const response = await userRequest.getUserDetail(mentor.id, params);
       setMentorProfile(response.data);
     } catch (error) {
       console.log(error);
@@ -57,13 +84,13 @@ const Mentors = ({ mentor }: any) => {
   const isNotMentor = mentor?.id !== profile?.id;
 
   const followMentor = () => {
-    requestFollowMentor.run(profile?.id);
+    requestFollowMentor.run(mentorProfile?.id);
   };
 
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
-        Mentors (KOLs)
+        {t('Mentors (KOLs)')}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
@@ -91,20 +118,23 @@ const Mentors = ({ mentor }: any) => {
                   rating={mentorProfile?.instructorInfo?.avgRate || 0}
                 />
                 <Text type="font-14-400" className="text-white">
-                  {mentorProfile?.instructorInfo?.countReviews || 0} Reviews
+                  {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
+                  {t('Reviews')}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
                   <Text type="font-14-400" className="text-white">
-                    {mentorProfile?.instructorInfo?.countStudents || 0} Students
+                    {mentorProfile?.instructorInfo?.countStudents || 0}{' '}
+                    {t('Students')}
                   </Text>
                 </div>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconVideo />
                   <Text type="font-14-400" className="text-white">
-                    {mentorProfile?.instructorInfo?.countCourses || 0} Courses
+                    {mentorProfile?.instructorInfo?.countCourses || 0}{' '}
+                    {t('Courses')}
                   </Text>
                 </div>
               </div>
@@ -171,10 +201,11 @@ const Mentors = ({ mentor }: any) => {
 
           {isNotMentor && (
             <Button
+              isLoading={requestFollowMentor?.loading}
               className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
               onClick={followMentor}
             >
-              Follow
+              {!mentorProfile?.isFollowing ? t('Follow') : t('Followed')}
             </Button>
           )}
         </div>

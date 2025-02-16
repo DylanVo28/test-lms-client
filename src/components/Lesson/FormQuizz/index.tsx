@@ -5,6 +5,8 @@ import FormStartTakingTest from './FormStartTakingTest';
 import LoadingContainer from '@/components/UI/LoadingContainer';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 const FormQuizz = ({
   startTakingTest,
@@ -45,6 +47,7 @@ const FormQuizz = ({
   handleFindIdNextChildSection: any;
   handleFindIdPrevChildSection: any;
 }) => {
+  const { t } = useTranslation('common');
   const sttQuizz = localStorage.getItem('titleQuizz');
   const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
   const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
@@ -54,7 +57,7 @@ const FormQuizz = ({
 
   return (
     <div className="relative group">
-      {dataItemPrev?.id && (
+      {dataItemPrev?.id && !isMobile && (
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
@@ -94,8 +97,8 @@ const FormQuizz = ({
           dataQuizz={dataQuizz}
         />
       ) : (
-        <div className="w-full min-h-[566px] pt-20 p-12">
-          <div className="w-8/12 mx-auto flex items-start text-start flex-col gap-6">
+        <div className="w-full min-h-[400px] md:min-h-[566px] pt-20 md:p-12">
+          <div className="md:w-8/12 mx-auto flex items-start text-start flex-col gap-6">
             <Text className="text-white" type="font-32-700">
               {dataQuizz?.title}
             </Text>
@@ -105,7 +108,7 @@ const FormQuizz = ({
               </Text>
               <div className="w-[1px] h-4 bg-black-6" />
               <Text className="text-black-6" type="font-18-600">
-                {`${dataQuizz?.questions?.length} question`}
+                {`${dataQuizz?.questions?.length} ${t('question')}`}
               </Text>
             </div>
             <div
@@ -115,48 +118,49 @@ const FormQuizz = ({
 
             <div className="flex items-center gap-3">
               <Button
-                onClick={handleStartTakingTheTest}
+                onPress={handleStartTakingTheTest}
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Start taking the test
+                  {t('Start taking the test')}
                 </Text>
               </Button>
               <Button
-                onClick={() => handleSkipQuizz(dataQuizz?.id)}
+                onPress={() => handleSkipQuizz(dataQuizz?.id)}
                 variant="light"
                 className="w-max min-h-[45px] rounded min-w-[150px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Skip the quizz
+                  {t('Skip the quizz')}
                 </Text>
               </Button>
             </div>
           </div>
         </div>
       )}
-
-      <Button
-        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
-        isIconOnly
-        size="sm"
-        onClick={() => {
-          if (lastIndex === allItems?.length - 1) {
-            handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
-          } else {
-            handleNextChildSection(
-              dataItemNext?.type,
-              dataItemNext?.id,
-              dataQuizz?.id,
-              TYPE_COURSE.QUIZ,
-              dataItemNext?.contentType
-            );
-          }
-        }}
-        radius="sm"
-      >
-        <CaretRight size={24} />
-      </Button>
+      {!isMobile && (
+        <Button
+          className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          isIconOnly
+          size="sm"
+          onClick={() => {
+            if (lastIndex === allItems?.length - 1) {
+              handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
+            } else {
+              handleNextChildSection(
+                dataItemNext?.type,
+                dataItemNext?.id,
+                dataQuizz?.id,
+                TYPE_COURSE.QUIZ,
+                dataItemNext?.contentType
+              );
+            }
+          }}
+          radius="sm"
+        >
+          <CaretRight size={24} />
+        </Button>
+      )}
     </div>
   );
 };

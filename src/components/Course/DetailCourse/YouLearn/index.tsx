@@ -1,4 +1,5 @@
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 
 const DATA_LEARN = [
   {
@@ -17,7 +18,6 @@ const DATA_LEARN = [
     id: 4,
     text: 'Dozens of Code Examples to Download and Study',
   },
-
   {
     id: 5,
     text: 'Over 25 Engaging Lab Exercises',
@@ -45,10 +45,12 @@ const DATA_LEARN = [
 ];
 
 const YouLearn = ({ data }: { data: any }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
-        What you'll learn
+        {t("What you'll learn")}
       </Text>
       <div className="grid grid-cols-2 gap-4">
         {data?.intenedLeaners?.map((item: any) => {

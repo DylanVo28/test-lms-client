@@ -8,12 +8,14 @@ import { useEffect, useState } from 'react';
 import { useGetListWishList } from '../service';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
+import { useTranslation } from 'next-i18next';
 
-const SORT_BY = [
-  { key: 'createdAt desc', label: 'Newest' },
-  { key: 'createdAt asc', label: 'Oldest' },
-];
 const Wishlist = () => {
+  const { t } = useTranslation('common');
+  const SORT_BY = [
+    { key: 'createdAt desc', label: t('Newest') },
+    { key: 'createdAt asc', label: t('Oldest') },
+  ];
   const { dataCategories: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
   const [category, setCategory] = useState();
@@ -27,6 +29,7 @@ const Wishlist = () => {
     categories: category,
     prices: price,
   });
+
   const mapCategories = () => {
     return (categories?.data || [])?.map((item: any) => {
       return {
@@ -44,11 +47,11 @@ const Wishlist = () => {
       };
     });
   };
-  console.log(list, 'list');
 
   useEffect(() => {
     reload();
   }, [sort, category, price]);
+
   return (
     <div className="flex flex-col gap-[26px]">
       <div className="flex flex-col gap-5">
@@ -57,46 +60,38 @@ const Wishlist = () => {
             <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
               <IconFilter />
               <Text className="text-main" type="font-14-500">
-                All Filter
+                {t('All Filter')}
               </Text>
             </div>
             <SelectCustom
-              placeholder="Categories"
+              placeholder={t('Categories')}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setCategory(value.target.value);
               }}
             />
-            {/* <SelectCustom
-            placeholder="Instructor"
-            className="min-w-[150px]"
-            options={INSTRUCTORS}
-          /> */}
             <SelectCustom
-              placeholder="Price"
+              placeholder={t('Price')}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setPrice(value.target.value);
               }}
             />
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              Sort by
+              {t('Sort by')}
             </Text>
             <SelectCustom
-              placeholder="Default"
+              placeholder={t('Default')}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setSort(value.target.value);
               }}
             />
@@ -107,15 +102,14 @@ const Wishlist = () => {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            Sort by
+            {t('Sort by')}
           </Text>
           <SelectCustom
-            placeholder="Default"
+            placeholder={t('Default')}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}
             onChange={(value: any) => {
-              console.log('valueeee', value.target.value);
               setSort(value.target.value);
             }}
           />

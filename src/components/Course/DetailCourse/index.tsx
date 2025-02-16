@@ -19,11 +19,12 @@ import dayjs from 'dayjs';
 import { clean } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
+import { useTranslation } from 'next-i18next';
 
 const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
-  console.log('profile', profile);
+  const { t } = useTranslation('common');
 
   const {
     run: getDetailCourse,
@@ -97,7 +98,7 @@ const DetailCourse = () => {
                 {dataDetail?.data?.title}
               </Text>
               <Text type="font-14-400" className="text-white">
-                Learn: {mapCategoryCourse()}
+                {t('Learn')}: {mapCategoryCourse()}
               </Text>
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
@@ -113,7 +114,7 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconBookMark />
                       <Text type="font-14-400" className="text-white">
-                        {lessonCount || 0} Lessons
+                        {lessonCount || 0} {t('Lessons')}
                       </Text>
                     </div>
                     <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -124,7 +125,7 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconStudent />
                       <Text type="font-14-400" className="text-white">
-                        {dataDetail?.data?.userCourses.length} Students
+                        {dataDetail?.data?.userCourses.length} {t('Students')}
                       </Text>
                     </div>
                     <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -134,9 +135,9 @@ const DetailCourse = () => {
                 <div className="flex items-center gap-1">
                   <IconTimeNew />
                   <Text type="font-14-400" className="text-white">
-                    {`Last updated ${dayjs(dataDetail?.data?.updatedAt).format(
-                      'MM/YYYY'
-                    )}`}
+                    {`${t('Last updated')} ${dayjs(
+                      dataDetail?.data?.updatedAt
+                    ).format('MM/YYYY')}`}
                   </Text>
                 </div>
               </div>
@@ -150,7 +151,7 @@ const DetailCourse = () => {
                   className="rounded-full w-6 h-6"
                 />
                 <Text type="font-16-500" className="text-black-7">
-                  By
+                  {t('By')}
                 </Text>
                 <Text
                   element="span"

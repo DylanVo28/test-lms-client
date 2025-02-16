@@ -1,11 +1,13 @@
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 
 export const NoData = ({ text }: { text?: string }) => {
+  const { t } = useTranslation('common');
   return (
     <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
       <IconNodata />
       <Text type="font-12-400" className="text-neutral">
-        {text || 'No data'}
+        {text || t('No data')}
       </Text>
     </div>
   );

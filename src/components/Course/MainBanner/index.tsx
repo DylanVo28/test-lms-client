@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 const DATA_SKILL = [
   'Design',
@@ -15,6 +16,8 @@ const DATA_SKILL = [
 ];
 
 const MainBanner = () => {
+  const { t } = useTranslation('common');
+
   return (
     <div
       className={clsx(
@@ -36,27 +39,31 @@ const MainBanner = () => {
             alt=""
           />
           <Text type="font-14-500" className="text-white">
-            Course
+            {t('Course')}
           </Text>
         </div>
         <div className="flex flex-col gap-[40px]">
           <div className="flex flex-col gap-2">
             <Text type="font-32-700" className="text-white">
-              Web Development Courses
+              {t('Web Development Courses')}
             </Text>
             <Text type="font-16-400" className="text-white">
-              With one of our online web development courses, you can explore
-              different areas of this in-demand field.
+              {t(
+                'With one of our online web development courses, you can explore different areas of this in-demand field.'
+              )}
             </Text>
           </div>
           <div className="flex flex-col gap-3">
             <Text type="font-16-400" className="text-white">
-              Topics related to Web Development
+              {t('Topics related to Web Development')}
             </Text>
             <div className="flex flex-wrap items-center gap-3">
               {DATA_SKILL?.map((item) => {
                 return (
-                  <div className="rounded-full bg-white/10 border-1 border-white/10 py-1 px-3 flex justify-center items-center">
+                  <div
+                    key={item}
+                    className="rounded-full bg-white/10 border-1 border-white/10 py-1 px-3 flex justify-center items-center"
+                  >
                     <Text type="font-14-400" className="text-black-7">
                       {item}
                     </Text>

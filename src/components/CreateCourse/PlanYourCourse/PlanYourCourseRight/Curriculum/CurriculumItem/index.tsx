@@ -31,8 +31,10 @@ import ContentQuestions from './ContentQuestions';
 import InputText from '@/components/UI/InputText';
 import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
+import { useTranslation } from 'next-i18next';
 
 const CurriculumItem = ({ item }: { item: any }) => {
+  const { t } = useTranslation('common');
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
   const [isAddCurriculum, setIsAddCurriculum] = useState<boolean>(false);
   const [formAdd, setFormAdd] = useState<string>('');
@@ -400,12 +402,12 @@ const CurriculumItem = ({ item }: { item: any }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pl-[52px] relative">
+    <div className="flex flex-col min-w-[600px] gap-4 pl-[20px] md:pl-[52px] relative w-full">
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
         console.log(item, 'item');
 
         return (
-          <div className="w-full">
+          <div className="w-full" key={item?.id}>
             <div
               className={clsx(
                 'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white/15',
@@ -426,8 +428,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       className={clsx('text-white w-max', {})}
                     >
                       {item?.type === TYPE_COURSE.LECTURE
-                        ? `Lecture ${item?.sttLesson}:`
-                        : `Quizz ${item?.sttQuizz}:`}
+                        ? `${t('Lecture')} ${item?.sttLesson}:`
+                        : `${t('Quiz')} ${item?.sttQuizz}:`}
                     </Text>
                   </div>
 
@@ -438,13 +440,12 @@ const CurriculumItem = ({ item }: { item: any }) => {
                         endContent
                         autoFocus
                         defaultValue={valueEditEditCotentLesson?.title}
-                        // error={isError && !valueTitle ? 'Field title is require' : ''}
                         classInputWrapper="!min-h-[30px] min-w-full"
                         className="min-w-full"
                         onChange={(e: any) =>
                           setValueTitleLecture(e.target.value)
                         }
-                        placeholder="Enter title"
+                        placeholder={t('Enter title')}
                         inputDefault
                       />
                     </div>
@@ -461,19 +462,19 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
                       <Button
                         isIconOnly
-                        onClick={() => {
+                        onPress={() => {
                           handleEditLecture(item);
                         }}
                         size="sm"
                         radius="full"
                         variant="light"
-                        className="group-hover:opacity-100 opacity-0 transition-all"
+                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
                         <PencilSimpleLine size={16} weight="light" />
                       </Button>
                       <Button
                         isIconOnly
-                        onClick={() => {
+                        onPress={() => {
                           handleRemoveLecture(
                             indexCurriculum,
                             item?.id,
@@ -483,7 +484,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                         size="sm"
                         radius="full"
                         variant="light"
-                        className="group-hover:opacity-100 opacity-0 transition-all"
+                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
                         <Trash size={16} weight="light" />
                       </Button>
@@ -493,18 +494,18 @@ const CurriculumItem = ({ item }: { item: any }) => {
                 {valueEditEditCotentLesson?.id === item?.id && (
                   <div className="flex items-center justify-end mb-2 gap-3">
                     <Button
-                      onClick={() => setValueEditCotentLesson({})}
+                      onPress={() => setValueEditCotentLesson({})}
                       variant="light"
                       className="rounded"
                     >
-                      <Text type="font-16-400">Cancel</Text>
+                      <Text type="font-16-400">{t('Cancel')}</Text>
                     </Button>
                     <Button
                       isLoading={loadingEditLecture || loadingEditQuizz}
-                      onClick={handleSaveEditContentLesson}
+                      onPress={handleSaveEditContentLesson}
                       className="rounded min-w-[100px] bg-main"
                     >
-                      <Text type="font-16-400">Save</Text>
+                      <Text type="font-16-400">{t('Save')}</Text>
                     </Button>
                   </div>
                 )}
@@ -514,10 +515,10 @@ const CurriculumItem = ({ item }: { item: any }) => {
               indexAddQuestion?.includes(indexCurriculum) ? (
                 <div className="flex items-center gap-3">
                   <Text type="font-14-500" className="w-max">
-                    Select content type
+                    {t('Select content type')}
                   </Text>
                   <Button
-                    onClick={() => {
+                    onPress={() => {
                       const newData = indexContentAdd?.filter(
                         (item: any) => item !== indexCurriculum
                       );
@@ -544,7 +545,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     <>
                       {!valueEditEditCotentLesson?.id && (
                         <Button
-                          onClick={() =>
+                          onPress={() =>
                             handleClickAddContent(item.type, indexCurriculum)
                           }
                           className="border-main border-1 bg-transparent rounded h-[30px]"
@@ -553,8 +554,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
                             <IconPlusMain />
                             <Text type="font-16-400" className="text-main">
                               {item.type === TYPE_COURSE.LECTURE
-                                ? 'Content'
-                                : 'Question'}
+                                ? t('Content')
+                                : t('Question')}
                             </Text>
                           </div>
                         </Button>
@@ -634,9 +635,9 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
       {isAddCurriculum ? (
         <div className="flex items-start gap-1">
-          <div className="absolute left-4">
+          <div className="absolute left-[-4px] top-[-4px] md:top-0 md:left-4">
             <Button
-              onClick={() => {
+              onPress={() => {
                 setIsAddCurriculum(false);
                 setFormAdd('');
               }}
@@ -669,12 +670,12 @@ const CurriculumItem = ({ item }: { item: any }) => {
         </div>
       ) : (
         <Button
-          onClick={handleAddCurriculumItem}
+          onPress={handleAddCurriculumItem}
           className="py-2 px-3 bg-transparent w-max border-1 border-white rounded"
         >
           <div className="flex items-center gap-1">
             <IconPlus />
-            <Text>Curriculum item</Text>
+            <Text>{t('Curriculum item')}</Text>
           </div>
         </Button>
       )}

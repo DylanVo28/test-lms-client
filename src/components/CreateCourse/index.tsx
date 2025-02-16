@@ -9,8 +9,10 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useCreateCourse } from './service';
 import { toast } from '../UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 const CreateCourse = () => {
+  const { t } = useTranslation('common');
   const [step, setStep] = useState(1);
   const router = useRouter();
 
@@ -56,7 +58,7 @@ const CreateCourse = () => {
     <form>
       <div className="bg-primary w-screen h-[100dvh] overflow-auto">
         <HeaderCourse currentStep={step} />
-        <div className="flex justify-center min-h-[calc(100dvh-82px-96px)] pt-[92px]">
+        <div className="flex justify-center min-h-[calc(100dvh-82px-96px)] px-4 md:px-0 pt-[92px]">
           {step === 1 && <ContenStep1 control={control} />}
           {step === 2 && <ContenStep2 control={control} />}
           {step === 3 && <ContenStep3 control={control} />}

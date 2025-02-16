@@ -4,6 +4,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const PromotionalVideo = ({
   value,
@@ -12,6 +13,7 @@ const PromotionalVideo = ({
   value: any;
   onChange: any;
 }) => {
+  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
@@ -47,7 +49,7 @@ const PromotionalVideo = ({
     const file = files[0];
 
     if (!allowedTypes.includes(file.type)) {
-      toast.error('Can only upload video in .mp4, .mov, .avi');
+      toast.error(t('Can only upload video in .mp4, .mov, .avi'));
 
       return;
     }
@@ -66,7 +68,7 @@ const PromotionalVideo = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-white">
-        Promotional video
+        {t('Promotional video')}
       </Text>
       <input
         key={inputKey}
@@ -76,11 +78,11 @@ const PromotionalVideo = ({
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <div className="flex items-start gap-8">
-        <div className="relative min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-start gap-8">
+        <div className="relative md:min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
           <Image
             src={'/img-default.png'}
-            className="w-[480px] h-[270px]"
+            className="w-full md:w-[480px] h-[270px]"
             alt=""
             width={480}
             height={270}
@@ -91,12 +93,11 @@ const PromotionalVideo = ({
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
-            Your promo video is a quick and compelling way for students to
-            preview what they’ll learn in your course. Students considering your
-            course are more likely to enroll if your promo video is
-            well-made. Learn how to make your promo video awesome!
+            {t(
+              'Your promo video is a quick and compelling way for students to preview what they’ll learn in your course. Students considering your course are more likely to enroll if your promo video is well-made. Learn how to make your promo video awesome!'
+            )}
           </Text>
           <div className="flex items-center gap-2">
             {value ? (
@@ -119,7 +120,7 @@ const PromotionalVideo = ({
             ) : (
               <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bgDefault border-black-10">
                 <Text type="font-16-400" className="text-black-8">
-                  No file selected
+                  {t('No file selected')}
                 </Text>
               </div>
             )}
@@ -128,7 +129,7 @@ const PromotionalVideo = ({
               className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
             >
               <Text type="font-16-700" className="text-main">
-                {value ? 'Change' : 'Upload File'}
+                {value ? t('Change') : t('Upload File')}
               </Text>
             </Button>
           </div>

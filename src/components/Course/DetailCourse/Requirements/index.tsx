@@ -1,4 +1,5 @@
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 
 const DATA_REQUIREMENTS = [
   `There are no skill prerequisites for this course although it's helpful if you are familiar with operating your internet.`,
@@ -7,10 +8,12 @@ const DATA_REQUIREMENTS = [
 ];
 
 const Requirements = ({ data }: { data: any }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
-        Requirements
+        {t('Requirements')}
       </Text>
       <div className="flex flex-col gap-1">
         {data?.requirements?.map((item: any) => {

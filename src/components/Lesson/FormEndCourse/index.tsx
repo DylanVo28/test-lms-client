@@ -7,6 +7,7 @@ import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 const FormEndCourse = ({
   courseId,
@@ -15,6 +16,7 @@ const FormEndCourse = ({
   handleGetReviews: VoidFunction;
   courseId: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueRating, setValueRating] = useState<any>();
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
@@ -47,32 +49,32 @@ const FormEndCourse = ({
     runReviewCours(body, courseId);
   };
   return (
-    <div className="w-full min-h-[566px] relative flex  justify-center pt-20 p-12 group">
+    <div className="w-full md:min-h-[566px] min-h-[400px] relative flex  justify-center md:pt-20 p-4 md:p-12 group">
       {submitReviewSuccess ? (
-        <div className="flex flex-col pt-20 items-center gap-6 w-5/12">
+        <div className="flex flex-col pt-20 items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
-            🙌 Congratulations on completing the course!
+            🙌 {t('Congratulations on completing the course!')}
           </Text>
 
           <Button
             radius="full"
-            onClick={() => router.push(ROUTE_PATH.HOME)}
+            onPress={() => router.push(ROUTE_PATH.HOME)}
             className=" bg-transparent border-1 border-main min-w-[162px] w-max min-h-[50px] rounded"
           >
             <Text type="font-16-500" className="text-main">
-              Find more courses
+              {t('Find more courses')}
             </Text>
           </Button>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 w-5/12">
+        <div className="flex flex-col items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
-            🙌 Congratulations on completing the course!
-            <br /> Would you like to leave a review?
+            🙌 {t('Congratulations on completing the course!')}
+            <br /> {t('Would you like to leave a review?')}
           </Text>
           <div className="flex flex-col gap-2 w-full">
             <Text type="font-16-400" className="text-center">
-              Select rating
+              {t('Select rating')}
             </Text>
 
             <ReactStars
@@ -87,7 +89,9 @@ const FormEndCourse = ({
             <InputTextArena
               className="w-full mt-4"
               minRows={6}
-              placeholder="Tell us about your own personal experience taking this course. Was it right for you?"
+              placeholder={t(
+                'Tell us about your own personal experience taking this course. Was it right for you?'
+              )}
               value={valueComment}
               onChange={(e: any) => setValueComment(e.target.value)}
               isBlack
@@ -96,11 +100,11 @@ const FormEndCourse = ({
               <Button
                 radius="full"
                 isLoading={loadingComment}
-                onClick={handleClickSave}
+                onPress={handleClickSave}
                 className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
               >
                 <Text type="font-16-500" className="text-white">
-                  Save and continue
+                  {t('Save and continue')}
                 </Text>
               </Button>
             </div>
