@@ -4,11 +4,11 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
   useDisclosure,
   Image,
   RadioGroup,
   Radio,
+  Button,
 } from '@nextui-org/react';
 
 import languages from '../ThemeConfiguration/data/languages.json';
@@ -16,6 +16,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import IconClose from '@/components/UI/Icons/IconClose';
 
 export default function LanguageModal() {
   const { t, i18n } = useTranslation('common');
@@ -66,7 +67,7 @@ export default function LanguageModal() {
         />
       </div>
       <CustomModal isOpen={isOpen} onClose={onClose}>
-        <ModalHeader className="flex flex-col gap-1">
+        <ModalHeader className="flex justify-between items-center gap-1">
           {t('Select Language')}
         </ModalHeader>
         <ModalBody>
@@ -84,7 +85,16 @@ export default function LanguageModal() {
             })}
           </RadioGroup>
         </ModalBody>
-        <ModalFooter></ModalFooter>
+        <ModalFooter>
+          <Button
+            onPress={onClose}
+            className="min-h-[40px] rounded mt-2"
+          >
+            <Text className="text-white" type="font-16-600">
+              {t('Close')}
+            </Text>
+          </Button>
+        </ModalFooter>
       </CustomModal>
     </>
   );
