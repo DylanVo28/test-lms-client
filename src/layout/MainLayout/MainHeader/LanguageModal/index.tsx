@@ -83,7 +83,13 @@ export default function LanguageModal() {
           >
             {showLangs.map((lang) => {
               return (
-                <Radio key={lang.code} value={lang.code}>
+                <Radio
+                  classNames={{
+                    wrapper: 'after:!bg-main before:!border-black-7',
+                  }}
+                  key={lang.code}
+                  value={lang.code}
+                >
                   {lang.name}
                 </Radio>
               );

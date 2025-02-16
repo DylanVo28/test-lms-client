@@ -58,7 +58,7 @@ const SelectCustom = (props: SelectCustomProps) => {
       classNames={{
         value: '!text-[14px] text-black-6 font-medium capitalize',
         trigger: clsx(
-          'bg-white/10 rounded min-h-[36px] border-1 border-[#F0F0F01A] group-data-[focus=true]:!border-main',
+          'bg-white-10 rounded min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main',
           {
             '!bg-transparent border-white min-h-[40px] hover:!border-main transition-all':
               isLesson,

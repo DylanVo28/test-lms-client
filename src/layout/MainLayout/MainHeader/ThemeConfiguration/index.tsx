@@ -84,10 +84,11 @@ const ThemeConfiguration = ({
     }
     if (dataThemeConfig.color) {
       setColor(dataThemeConfig.color);
-      document.documentElement.style.setProperty(
-        '--main-color',
-        dataThemeConfig.color
-      );
+      // document.documentElement.style.setProperty(
+      //   '--bg-main-color',
+      //   dataThemeConfig.color
+      // );
+      document.body.setAttribute('data-theme', dataThemeConfig.color);
     }
   }, [dataThemeConfig]);
 

@@ -49,7 +49,9 @@ export default function MyLearning() {
   return (
     <div className="flex flex-col gap-[40px] md:gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
-        <Text type="font-28-700">{t('My Learning')}</Text>
+        <Text type="font-28-700" className="text-white">
+          {t('My Learning')}
+        </Text>
       </div>
 
       <Tabs
@@ -58,11 +60,11 @@ export default function MyLearning() {
         onSelectionChange={handleChangeTab}
         classNames={{
           tabList:
-            'gap-8 w-full relative rounded-none p-0 border-b border-[#2B3032]',
+            'gap-8 w-full relative rounded-none p-0 border-b border-black-10',
           cursor: 'w-full bg-main',
           tab: 'max-w-fit px-0 h-12',
           tabContent:
-            'text-[16px] font-semibold text-white/80 group-data-[selected=true]:text-main',
+            'text-[16px] !text-gray-30 font-semibold text-white/80 group-data-[selected=true]:!text-main',
         }}
         color="primary"
         variant="underlined"

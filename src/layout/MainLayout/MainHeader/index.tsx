@@ -21,6 +21,7 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import Notification from '@/components/Notification';
+import IconSearch from '@/components/UI/Icons/IconSearch';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -122,14 +123,7 @@ const MainHeader = () => {
             <InputText
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}
-              startContent={
-                <Image
-                  width={20}
-                  height={20}
-                  alt=""
-                  src={'/images/img-search.png'}
-                />
-              }
+              startContent={<IconSearch />}
               className="min-w-[470px]"
               radius="sm"
               placeholder={t('Search')}
