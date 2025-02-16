@@ -14,6 +14,13 @@ import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import DrawerMenu from '../Menubar/DrawerMenu';
 import ThemeConfiguration from './ThemeConfiguration';
 import { useTranslation } from 'next-i18next';
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
+import Notification from '@/components/Notification';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -128,17 +135,32 @@ const MainHeader = () => {
               placeholder={t('Search')}
             />
             <div className="border-1 border-gray-20 h-8" />
-            {/* <Button
-              isIconOnly
-              className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
+
+            <Popover
+              classNames={{
+                content:
+                  'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
+              }}
+              color="default"
+              placement="bottom-end"
             >
-              <Image
-                src={'/icons/ic-notification.svg'}
-                height={20}
-                width={20}
-                alt=""
-              />
-            </Button> */}
+              <PopoverTrigger>
+                <Button
+                  isIconOnly
+                  className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
+                >
+                  <Image
+                    src={'/icons/ic-notification.svg'}
+                    height={20}
+                    width={20}
+                    alt=""
+                  />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Notification />
+              </PopoverContent>
+            </Popover>
             {/* <Button
               isIconOnly
               className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"

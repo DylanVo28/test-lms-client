@@ -79,5 +79,7 @@ export const API_PATH = {
   WISH_LISH: '/api/courses/wishlist',
 
   THEMES: '/api/themes',
-  THEME_DETAIL: '/api/themes/detail'
+  THEME_DETAIL: '/api/themes/detail',
+
+  FCM_TOKEN: '/fcm',
 };

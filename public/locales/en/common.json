@@ -1,5 +1,10 @@
 {
+  "View All": "View All",
+  "Instructor": "Instructor",
+  "Student": "Student",
+
   "About This Course": "About This Course",
+  "Notification": "Notification",
   "Course": "Course",
   "12 hours of on-demand video": "12 hours of on-demand video",
   "Exercises": "Exercises",
@@ -74,7 +79,6 @@
   "Logout": "Logout",
   "Select Language": "Select Language",
   "Close": "Close",
-  "Save": "Save",
   "Theme Configuration": "Theme Configuration",
   "Color theme": "Color theme",
   "Background": "Background",

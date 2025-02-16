@@ -13,7 +13,7 @@ const Languages = ({
   dataLangs: string[];
 }) => {
   const { t } = useTranslation('common');
-  const [langsSelected, setLangsSelected] = useState<string[]>([]);
+  // const [langsSelected, setLangsSelected] = useState<string[]>([]);
   const [langues, setLangues] = useState(languages);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,14 +24,16 @@ const Languages = ({
     setLangues(filteredLangs);
   };
 
+  console.log(dataLangs, 'dataLangs');
+
   const onChange = (values: string[]) => {
     onChangeLangs(values);
-    setLangsSelected(values);
+    // setLangsSelected(values);
   };
 
-  useEffect(() => {
-    setLangsSelected(dataLangs);
-  }, []);
+  // useEffect(() => {
+  //   setLangsSelected(dataLangs);
+  // }, []);
 
   return (
     <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
@@ -39,7 +41,7 @@ const Languages = ({
         <Text className="text-[18px] font-semibold mb-[16px]">
           {t('Language')}{' '}
           <span className="bg-[#E55151] rounded-full py-[2px] px-[6px] leading-[16px] text-[12px]">
-            {langsSelected.length}
+            {dataLangs.length}
           </span>
         </Text>
 
@@ -55,7 +57,7 @@ const Languages = ({
       </div>
 
       <div className="flex flex-col gap-[16px] h-[140px] overflow-y-auto overflow-x-hidden">
-        <CheckboxGroup value={langsSelected} onChange={onChange}>
+        <CheckboxGroup value={dataLangs} onChange={onChange}>
           {langues.map((language) => (
             <Checkbox
               key={language.code}
