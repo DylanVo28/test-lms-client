@@ -11,10 +11,10 @@ import CloseIcon from './Icons/CloseIcon';
 import ColorTheme from './ColorTheme';
 import EditLogo from './EditLogo';
 import Languages from './Languages';
-import { useCreateTheme, useGetDetailTheme, useUpdateTheme } from './service';
+import { useCreateTheme, useUpdateTheme } from './service';
 import { toast } from '@/components/UI/Toast/toast';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTranslation } from 'next-i18next';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 const ThemeConfiguration = ({
   setUrlLogo,
@@ -23,16 +23,16 @@ const ThemeConfiguration = ({
 }) => {
   const { t } = useTranslation('common');
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isTheme, setIsTheme] = React.useState(false);
   const [color, setColor] = useState<string>('');
-  const [langs, setLangs] = useState<string[]>([]);
+  const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
-  const { profile, setProfile } = useProfileInitial();
+  const { theme: dataThemeConfig, requestGetTheme } = useThemeInitial();
+  const { i18n } = useTranslation();
 
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
-      getDetailTheme();
+      requestGetTheme();
     },
     onError() {
       toast.success(t('Failed Theme Configuration'));
@@ -41,13 +41,12 @@ const ThemeConfiguration = ({
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
-      getDetailTheme();
+      requestGetTheme();
     },
     onError() {
       toast.success(t('Failed Theme Configuration'));
     },
   });
-  const { run: getDetailTheme, data: dataThemeConfig } = useGetDetailTheme();
 
   const onChangeColor = (color: string) => {
     setColor(color);
@@ -71,38 +70,35 @@ const ThemeConfiguration = ({
   };
 
   useEffect(() => {
-    getDetailTheme();
-  }, []);
-
-  useEffect(() => {
-    if (dataThemeConfig) {
-      setIsTheme(true);
-      if (dataThemeConfig.color) {
-        setUrlLogo(dataThemeConfig.logo);
-        setLogo(dataThemeConfig.logo);
-        setLangs(dataThemeConfig.langs);
-        setProfile({
-          ...profile,
-          langs: dataThemeConfig.langs,
-          langSelected: dataThemeConfig?.langs?.[0] || '',
-        });
-        setColor(dataThemeConfig.color);
-        document.documentElement.style.setProperty(
-          '--main-color',
-          dataThemeConfig.color
-        );
-      }
+    if (dataThemeConfig.logo) {
+      setLogo(dataThemeConfig.logo);
+      setUrlLogo(dataThemeConfig.logo);
+    }
+    if (dataThemeConfig.langs && dataThemeConfig.langs.length > 0) {
+      setLangs(dataThemeConfig.langs);
+      i18n.changeLanguage(dataThemeConfig.langs[0]);
+    } else {
+      i18n.changeLanguage('en');
+    }
+    if (dataThemeConfig.color) {
+      setColor(dataThemeConfig.color);
+      document.documentElement.style.setProperty(
+        '--main-color',
+        dataThemeConfig.color
+      );
     }
   }, [dataThemeConfig]);
+
+  useEffect(() => {
+    requestGetTheme();
+  }, []);
 
   return (
     <>
       <Button
         onPress={onOpen}
         isIconOnly
-        className={`${
-          isTheme ? 'bg-main' : 'bg-gray'
-        } border-1 border-gray-10 rounded-[4px] w-10 h-10`}
+        className={`bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10`}
       >
         <ThemeIcon />
       </Button>

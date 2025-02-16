@@ -1,7 +1,7 @@
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Checkbox, CheckboxGroup } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import languages from './data/languages.json';
 import { useTranslation } from 'next-i18next';
 
@@ -13,7 +13,6 @@ const Languages = ({
   dataLangs: string[];
 }) => {
   const { t } = useTranslation('common');
-  // const [langsSelected, setLangsSelected] = useState<string[]>([]);
   const [langues, setLangues] = useState(languages);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,16 +23,9 @@ const Languages = ({
     setLangues(filteredLangs);
   };
 
-  console.log(dataLangs, 'dataLangs');
-
   const onChange = (values: string[]) => {
     onChangeLangs(values);
-    // setLangsSelected(values);
   };
-
-  // useEffect(() => {
-  //   setLangsSelected(dataLangs);
-  // }, []);
 
   return (
     <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
