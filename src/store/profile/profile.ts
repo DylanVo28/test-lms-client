@@ -9,8 +9,6 @@ export interface InitProfile {
   lastName?: string;
   role?: string;
   walletAddress?: string;
-  langs: string[];
-  langSelected: string;
 }
 
 export const initialProfile: InitProfile = {
@@ -22,8 +20,6 @@ export const initialProfile: InitProfile = {
   lastName: '',
   role: '',
   walletAddress: '',
-  langs: [],
-  langSelected: '',
 };
 
 export const profileAtom = atom({

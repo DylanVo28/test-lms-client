@@ -114,7 +114,7 @@ const ColorTheme = ({
 }) => {
   const { t } = useTranslation('common');
   const [typeColor, setTypeColor] = useState<TypeColor>('hex');
-  const [color, setColor] = useState<RgbaColor>({ r: 0, g: 0, b: 0, a: 0 });
+  const [color, setColor] = useState<RgbaColor>(hexToRgba(dataColor, 1));
   const [valueColor, setValueColor] = useState<string>(
     convertColor({ r: 0, g: 0, b: 0, a: 0 }, typeColor)
   );
@@ -153,13 +153,6 @@ const ColorTheme = ({
     setColor(hexToRgba(color, 1));
     onChangeColor(convertColor(hexToRgba(color, 1), typeColor));
   };
-
-  useEffect(() => {
-    if (dataColor) {
-      setColor(hexToRgba(dataColor, 1));
-      onSelectColor(dataColor);
-    }
-  }, []);
 
   return (
     <div>

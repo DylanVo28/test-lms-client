@@ -1,8 +1,6 @@
 // import RadioCustom from '@/components/UI/RadioCustom';
 import Text from '@/components/UI/Text';
 import {
-  Modal,
-  ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
@@ -14,27 +12,48 @@ import {
 } from '@nextui-org/react';
 
 import languages from '../ThemeConfiguration/data/languages.json';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import CustomModal from '@/components/UI/CustomModal';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 export default function LanguageModal() {
   const { t, i18n } = useTranslation('common');
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { profile, setProfile } = useProfileInitial();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [langSelected, setLangSelected] = useState('');
+  const { theme: dataThemeConfig } = useThemeInitial();
+
   const onChangeRadioGroup = (e: any) => {
     setLangSelected(e.target.value);
   };
+
   const onSave = () => {
     if (langSelected) {
-      setProfile({ ...profile, langSelected });
       i18n.changeLanguage(langSelected);
     }
   };
+
   const findLang = (code: string) => {
-    return languages.find((lang) => lang.code === code)?.name;
+    return languages.find((lang) => lang.code === code)?.name || '';
   };
+  const showLangs = useMemo<{ code: string; name: string }[]>(() => {
+    if (dataThemeConfig.langs.length > 0) {
+      return dataThemeConfig.langs.map((code) => {
+        if (!findLang(code)) {
+          return {
+            code,
+            name: code,
+          };
+        }
+        return {
+          code,
+          name: findLang(code),
+        };
+      });
+    }
+    return [languages[0]];
+  }, [dataThemeConfig]);
+
   return (
     <>
       <div
@@ -42,7 +61,7 @@ export default function LanguageModal() {
         className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green/10"
       >
         <Text type="font-14-500" className="text-white">
-          {findLang(profile.langSelected || i18n.language)}
+          {findLang(i18n.language)}
         </Text>
 
         <Image
@@ -52,52 +71,46 @@ export default function LanguageModal() {
           alt=""
         />
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                {t('Select Language')}
-              </ModalHeader>
-              <ModalBody>
-                <RadioGroup
-                  color="default"
-                  onChange={onChangeRadioGroup}
-                  value={langSelected || profile.langSelected}
-                >
-                  {profile?.langs?.map((code) => {
-                    return (
-                      <Radio key={code} value={code}>
-                        {languages.find((lang) => lang.code === code)?.name}
-                      </Radio>
-                    );
-                  })}
-                </RadioGroup>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  className="rounded-md"
-                  color="danger"
-                  variant="light"
-                  onPress={onClose}
-                >
-                  {t('Close')}
-                </Button>
-                <Button
-                  className="bg-main rounded-md"
-                  color="primary"
-                  onPress={() => {
-                    onSave();
-                    onClose();
-                  }}
-                >
-                  {t('Save')}
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <CustomModal isOpen={isOpen} onClose={onClose}>
+        <ModalHeader className="flex flex-col gap-1">
+          {t('Select Language')}
+        </ModalHeader>
+        <ModalBody>
+          <RadioGroup
+            color="default"
+            onChange={onChangeRadioGroup}
+            value={langSelected || i18n.language}
+          >
+            {showLangs.map((lang) => {
+              return (
+                <Radio key={lang.code} value={lang.code}>
+                  {lang.name}
+                </Radio>
+              );
+            })}
+          </RadioGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            className="rounded-md"
+            color="danger"
+            variant="light"
+            onPress={onOpenChange}
+          >
+            {t('Close')}
+          </Button>
+          <Button
+            className="bg-main rounded-md"
+            color="primary"
+            onPress={() => {
+              onSave();
+              onOpenChange();
+            }}
+          >
+            {t('Save')}
+          </Button>
+        </ModalFooter>
+      </CustomModal>
     </>
   );
 }
