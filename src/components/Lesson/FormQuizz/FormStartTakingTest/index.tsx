@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import IsResult from './IsResult';
 import { UserCourseProgressStatus } from '@/utils/common';
 import { useTranslation } from 'next-i18next';
-import { CustomRadio } from '@/components/CreateCourse/ContenStep4';
 
 const enum STEP_ANSWER_QUESTION {
   SEE_RESULTS = 'SEE_RESULTS',
@@ -90,7 +89,7 @@ const FormStartTakingTest = ({
           title={dataQuizz?.title}
         />
       ) : (
-        <div className="md:w-6/12 pt-10 py-10 md:py-0 flex-1 mx-auto flex items-start text-start flex-col gap-4">
+        <div className="md:w-6/12 pt-10 py-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
           {answerCorrectly === true && (
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
               <CheckCircle className="text-green" size={30} weight="fill" />
@@ -228,3 +227,27 @@ const FormStartTakingTest = ({
   );
 };
 export default FormStartTakingTest;
+
+export const CustomRadio = (props: any) => {
+  const { children, value, ...otherProps } = props;
+
+  return (
+    <Radio
+      {...otherProps}
+      size="md"
+      value={value}
+      classNames={{
+        base: clsx(
+          'inline-flex min-w-full m-0 bg-white/5 hover:bg-white/10 text-start items-centers',
+          'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
+          'data-[selected=true]:border-primary'
+        ),
+        control: 'bg-white',
+        wrapper:
+          '!border-1 !border-black-7 group-data-[selected=true]:!bg-main group-data-[selected=true]:!border-main',
+      }}
+    >
+      {children}
+    </Radio>
+  );
+};

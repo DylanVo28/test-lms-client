@@ -565,6 +565,70 @@ const CurriculumItem = ({ item }: { item: any }) => {
                 </>
               )}
             </div>
+            {(item?.content || item?.info?.duration) &&
+              !indexContentAdd?.includes(indexCurriculum) && (
+                <Content
+                  info={item?.info}
+                  type={item?.contentType}
+                  handleClickEditContent={() =>
+                    handleClickEditContent(
+                      item.content,
+                      item?.contentType,
+                      indexCurriculum,
+                      item?.info
+                    )
+                  }
+                />
+              )}
+            {item?.questions?.length > 0 &&
+              !indexAddQuestion?.includes(indexCurriculum) && (
+                <ContentQuestions
+                  handleClickDeleteQuestion={handleClickDeleteQuestion}
+                  handleClickEditQuestion={(values) => {
+                    handleClickEditQuestion(
+                      values,
+                      item?.type,
+                      indexCurriculum
+                    );
+                  }}
+                  questions={item?.questions}
+                />
+              )}
+            {typeAddContent && indexContentAdd?.includes(indexCurriculum) && (
+              <>
+                <FormAddContent
+                  typeAddContent={typeAddContent}
+                  valueContent={valueContent}
+                  valueInfo={valueInfo}
+                  handleSaveVideo={(values) =>
+                    handleSaveVideo(values, item?.id, indexCurriculum)
+                  }
+                  handleSaveArticle={(value) =>
+                    handleSaveArticle(value, item?.id, indexCurriculum)
+                  }
+                  loading={loadingEditLecture}
+                />
+              </>
+            )}
+
+            {typeAddQuizzQuestion === TYPE_COURSE.QUIZ &&
+              indexAddQuestion.includes(indexCurriculum) && (
+                <FormAddQuizz
+                  valueQuestion={valueQuestion}
+                  loading={
+                    loadingCreateQuestionQuizz || loadingEditQuestionQuizz
+                  }
+                  handleSaveAddQuestion={(values, idEdit) =>
+                    handleSaveAddQuestion(
+                      values,
+                      item?.id,
+                      indexCurriculum,
+                      item?.quizzes,
+                      idEdit
+                    )
+                  }
+                />
+              )}
           </div>
         );
       })}
