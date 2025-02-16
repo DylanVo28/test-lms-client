@@ -27,7 +27,13 @@ const MENUS = [
   },
 ];
 
-const ContentProfile = ({ disconnect }: { disconnect: any }) => {
+const ContentProfile = ({
+  disconnect,
+  onClosePopover,
+}: {
+  disconnect: any;
+  onClosePopover: VoidFunction;
+}) => {
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const router = useRouter();
@@ -69,7 +75,7 @@ const ContentProfile = ({ disconnect }: { disconnect: any }) => {
       <div className="border-b-1 border-solid border-b-[#F0F0F01A]">
         {MENUS?.map((item) => {
           if (item.id === 3) {
-            return <LanguageModal />;
+            return <LanguageModal onClosePopover={onClosePopover} />;
           }
           return (
             <div

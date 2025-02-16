@@ -16,16 +16,21 @@ import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import IconClose from '@/components/UI/Icons/IconClose';
 
-export default function LanguageModal() {
+interface IProps {
+  onClosePopover: VoidFunction;
+}
+
+export default function LanguageModal({ onClosePopover }: IProps) {
   const { t, i18n } = useTranslation('common');
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const onChangeRadioGroup = (e: any) => {
     const value = e.target.value;
     i18n.changeLanguage(value);
+    onClose();
+    onClosePopover();
   };
 
   const findLang = (code: string) => {
@@ -86,10 +91,7 @@ export default function LanguageModal() {
           </RadioGroup>
         </ModalBody>
         <ModalFooter>
-          <Button
-            onPress={onClose}
-            className="min-h-[40px] rounded mt-2"
-          >
+          <Button onPress={onClose} className="min-h-[40px] rounded mt-2">
             <Text className="text-white" type="font-16-600">
               {t('Close')}
             </Text>
