@@ -22,7 +22,7 @@ const ThemeConfiguration = ({
   setUrlLogo: (value: string) => void;
 }) => {
   const { t } = useTranslation('common');
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [color, setColor] = useState<string>('');
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
@@ -33,6 +33,7 @@ const ThemeConfiguration = ({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
       requestGetTheme();
+      onClose();
     },
     onError() {
       toast.success(t('Failed Theme Configuration'));
@@ -41,6 +42,7 @@ const ThemeConfiguration = ({
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
+      onClose();
       requestGetTheme();
     },
     onError() {
