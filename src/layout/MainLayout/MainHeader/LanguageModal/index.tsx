@@ -12,7 +12,7 @@ import {
 } from '@nextui-org/react';
 
 import languages from '../ThemeConfiguration/data/languages.json';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
@@ -20,17 +20,11 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 export default function LanguageModal() {
   const { t, i18n } = useTranslation('common');
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const [langSelected, setLangSelected] = useState('');
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const onChangeRadioGroup = (e: any) => {
-    setLangSelected(e.target.value);
-  };
-
-  const onSave = () => {
-    if (langSelected) {
-      i18n.changeLanguage(langSelected);
-    }
+    const value = e.target.value;
+    i18n.changeLanguage(value);
   };
 
   const findLang = (code: string) => {
@@ -79,7 +73,7 @@ export default function LanguageModal() {
           <RadioGroup
             color="default"
             onChange={onChangeRadioGroup}
-            value={langSelected || i18n.language}
+            value={i18n.language}
           >
             {showLangs.map((lang) => {
               return (
@@ -90,26 +84,7 @@ export default function LanguageModal() {
             })}
           </RadioGroup>
         </ModalBody>
-        <ModalFooter>
-          <Button
-            className="rounded-md"
-            color="danger"
-            variant="light"
-            onPress={onOpenChange}
-          >
-            {t('Close')}
-          </Button>
-          <Button
-            className="bg-main rounded-md"
-            color="primary"
-            onPress={() => {
-              onSave();
-              onOpenChange();
-            }}
-          >
-            {t('Save')}
-          </Button>
-        </ModalFooter>
+        <ModalFooter></ModalFooter>
       </CustomModal>
     </>
   );

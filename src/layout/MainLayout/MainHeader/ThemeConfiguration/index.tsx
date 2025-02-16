@@ -16,6 +16,8 @@ import { toast } from '@/components/UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
+const DEFAULT_SELECT_LANG = 'en';
+
 const ThemeConfiguration = ({
   setUrlLogo,
 }: {
@@ -80,7 +82,7 @@ const ThemeConfiguration = ({
       setLangs(dataThemeConfig.langs);
       i18n.changeLanguage(dataThemeConfig.langs[0]);
     } else {
-      i18n.changeLanguage('en');
+      i18n.changeLanguage(DEFAULT_SELECT_LANG);
     }
     if (dataThemeConfig.color) {
       setColor(dataThemeConfig.color);
