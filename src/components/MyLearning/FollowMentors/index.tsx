@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import CardMentor from '../CardMentor';
 import { useDebounce } from 'ahooks';
+import { useGetListFollowers } from '../service';
 const RATINGS = [
   { key: '5', label: '5 Star' },
   { key: '4', label: '4 Star' },
@@ -21,27 +22,21 @@ const RATINGS = [
   { key: '1', label: '1 Star' },
 ];
 const FollowMentors = () => {
-  const { dataCategories: categories } = useGetCategories();
-  const { data: prices } = useGetPrices();
-  const [category, setCategory] = useState();
   const [level, setLevel] = useState();
   const [valueSearch, setValueSearch] = useState('');
-  const router = useRouter();
-  const [price, setPrice] = useState();
+
   const [debounceVal, setDebounceVal] = useState('');
   const debounceValue = useDebounce(valueSearch, { wait: 500 });
 
-  //   const { list, reload, loading, loadingMore } = useGetListFollowMentors({
-  //     pageSize: 50,
-  //     order: 'createdAt desc',
-  //     level,
-  //     keyword: debounceVal,
-  //   });
-  //   console.log(list, 'list');
+  const { list, reload, loading } = useGetListFollowers({
+    pageSize: 50,
+    search: valueSearch,
+    level: level,
+  });
 
-  //   useEffect(() => {
-  //     reload();
-  //   }, [sort, debounceVal, level]);
+  useEffect(() => {
+    reload();
+  }, [debounceVal, level]);
 
   useEffect(() => {
     console.log('Debounced:', valueSearch);
@@ -52,11 +47,13 @@ const FollowMentors = () => {
     setValueSearch(e.target.value);
   };
 
+  console.log(list, 'list');
+
   return (
     <div className="flex flex-col gap-[26px]">
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
+          <div className="w-full">
             <InputText
               onChange={handleChangeSearch}
               startContent={
@@ -67,7 +64,7 @@ const FollowMentors = () => {
                   src={'/images/img-search.png'}
                 />
               }
-              className="min-w-[470px]"
+              className="md:min-w-[470px] md:max-w-[470px]"
               radius="sm"
               placeholder="Search"
             />
@@ -82,7 +79,6 @@ const FollowMentors = () => {
               options={RATINGS}
               value={level}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setLevel(value.target.value);
               }}
             />
@@ -101,7 +97,6 @@ const FollowMentors = () => {
             options={RATINGS}
             value={level}
             onChange={(value: any) => {
-              console.log('valueeee', value.target.value);
               setLevel(value.target.value);
             }}
           />

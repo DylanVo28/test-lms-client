@@ -17,19 +17,24 @@ import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
+import { useFollowMentor } from './service';
+import { toast } from '@/components/UI/Toast/toast';
 
 const Mentors = ({ mentor }: any) => {
-  console.log('mentor', mentor);
   const { profile } = useProfile();
-  console.log('profile', profile);
 
   const [mentorProfile, setMentorProfile] = useState<any>();
+
+  const requestFollowMentor = useFollowMentor({
+    onSuccess: async (res: any) => {},
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
 
   const getDetail = async () => {
     try {
       const response = await userRequest.getUserDetail(mentor.id);
-      console.log('RRRRRRRRR', response);
-
       setMentorProfile(response.data);
     } catch (error) {
       console.log(error);
@@ -52,7 +57,7 @@ const Mentors = ({ mentor }: any) => {
   const isNotMentor = mentor?.id !== profile?.id;
 
   const followMentor = () => {
-    console.log('metorrrrr', mentor);
+    requestFollowMentor.run(profile?.id);
   };
 
   return (
@@ -166,7 +171,7 @@ const Mentors = ({ mentor }: any) => {
 
           {isNotMentor && (
             <Button
-              className="border border-[#02A6C280] font-semibold text-base w-max text-[#02A6C280] outline-none bg-transparent"
+              className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
               onClick={followMentor}
             >
               Follow
