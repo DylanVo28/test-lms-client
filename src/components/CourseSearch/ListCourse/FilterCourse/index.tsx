@@ -30,6 +30,7 @@ import {
 } from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
+import { useTranslation } from 'next-i18next';
 
 const DATA_RATE = [
   {
@@ -111,6 +112,7 @@ const FilterCourse = (props: any) => {
   const { data: levelsData } = useGetLevels();
   const { data: prices } = useGetPrices();
   const [ratings, setRatings] = useState([]);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     if (ratingsData?.data) {
@@ -137,7 +139,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            Rating
+            {t('Rating')}
           </Text>
         }
       >
@@ -185,14 +187,14 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
-              Language
+              {t('Language')}
             </Text>
             {/* <TagCount count={2} /> */}
           </div>
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder="Search..." />
+          <InputText isFilter placeholder={t('Search...')} />
           <div className="flex flex-col gap-2">
             <CheckboxGroup size="lg" radius="sm" value={params.langs}>
               {languagesData?.data?.map((item: any) => {
@@ -303,14 +305,14 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
-              Hands-on Practice
+              {t('Hands-on Practice')}
             </Text>
             {/* <TagCount count={1} /> */}
           </div>
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder="Search..." />
+          <InputText isFilter placeholder={t('Search...')} />
           <CheckboxGroup size="lg" radius="sm" value={params.features}>
             {featuresData?.data?.map((item: any) => {
               return (
@@ -357,12 +359,12 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            Topic
+            {t('Topic')}
           </Text>
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder="Search..." />
+          <InputText isFilter placeholder={t('Search...')} />
           <CheckboxGroup size="lg" radius="sm" value={params.topics}>
             {topicsData?.data?.map((item: any) => {
               return (
@@ -407,12 +409,12 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            Level
+            {t('Level')}
           </Text>
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder="Search..." />
+          <InputText isFilter placeholder={t('Search...')} />
           <CheckboxGroup size="lg" radius="sm" value={params.levels}>
             {levelsData?.data?.map((item: any) => {
               return (
@@ -457,12 +459,12 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            Price
+            {t('Price')}
           </Text>
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder="Search..." />
+          <InputText isFilter placeholder={t('Search...')} />
           <CheckboxGroup size="lg" radius="sm" value={params.prices}>
             {prices?.data?.map((item: any) => {
               return (
@@ -516,8 +518,8 @@ const FilterCourse = (props: any) => {
               });
             }}
           >
-            <Text type="font-14-500" className="text-ưhite">
-              Clear filter
+            <Text type="font-14-500" className="text-white">
+              {t('Clear filter')}
             </Text>
           </button>
         </div>

@@ -18,7 +18,7 @@ DetailLessonPage.getLayout = function getLayout(page: ReactElement) {
 export async function getServerSideProps({ locale }: any) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'home'])),
+      ...(await serverSideTranslations(locale, ['common'])),
     }, // will be passed to the page component as props
   };
 }

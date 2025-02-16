@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import InputText from '../UI/InputText';
 import InputTextArena from '../UI/InputTextArena';
 import { toast } from '../UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 const inputFields = [
   {
@@ -86,6 +87,7 @@ export default function Information({
   reload: VoidFunction;
   user?: TUser;
 }) {
+  const { t } = useTranslation('common');
   const { handleSubmit, setValue, control, getValues } = useForm();
   const [loading, setLoading] = useState(false);
   const [initialData, setInitialData] = useState<any>({});
@@ -104,7 +106,7 @@ export default function Information({
 
   const onSubmit = async (data: any) => {
     if (JSON.stringify(data) === JSON.stringify(initialData)) {
-      toast.error('No changes detected!');
+      toast.error(t('No changes detected!'));
       return;
     }
 
@@ -114,10 +116,10 @@ export default function Information({
         ...data,
       });
       reload();
-      toast.success('Update Successful!');
+      toast.success(t('Update Successful!'));
     } catch (error) {
       console.log(error);
-      toast.error('Update failed!');
+      toast.error(t('Update failed!'));
     } finally {
       setLoading(false);
     }
@@ -148,7 +150,7 @@ export default function Information({
             type="submit"
             className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
           >
-            Save Profile
+            {t('Save Profile')}
           </Button>
         </div>
       </form>
@@ -169,10 +171,11 @@ const Field = ({
   };
   control: any;
 }) => {
+  const { t } = useTranslation('common');
   return (
     <div className="w-full">
       <label className="block text-base font-semibold mb-1">
-        {fieldItem.label}
+        {t(fieldItem.label)}
       </label>
 
       <Controller
@@ -182,7 +185,7 @@ const Field = ({
           if (fieldItem.type === 'textarea') {
             return (
               <InputTextArena
-                placeholder={fieldItem.placeholder}
+                placeholder={t(fieldItem.placeholder)}
                 className={`bg-[#242A30] w-full h-full`}
                 value={field.value}
                 onChange={field.onChange}
@@ -193,7 +196,7 @@ const Field = ({
             <InputText
               name={field.name}
               className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
-              placeholder="Type"
+              placeholder={t(fieldItem.placeholder)}
               value={field.value}
               onChange={field.onChange}
             />

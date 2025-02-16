@@ -77,4 +77,7 @@ export const API_PATH = {
   REFERRAL_PROFILE: '/api/referral/profile',
 
   WISH_LISH: '/api/courses/wishlist',
+
+  THEMES: '/api/themes',
+  THEME_DETAIL: '/api/themes/detail'
 };

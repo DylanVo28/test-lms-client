@@ -31,8 +31,10 @@ import ContentQuestions from './ContentQuestions';
 import InputText from '@/components/UI/InputText';
 import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
+import { useTranslation } from 'next-i18next';
 
 const CurriculumItem = ({ item }: { item: any }) => {
+  const { t } = useTranslation('common');
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
   const [isAddCurriculum, setIsAddCurriculum] = useState<boolean>(false);
   const [formAdd, setFormAdd] = useState<string>('');
@@ -405,7 +407,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
         console.log(item, 'item');
 
         return (
-          <div className="w-full">
+          <div className="w-full" key={item?.id}>
             <div
               className={clsx(
                 'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white/15',
@@ -426,8 +428,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       className={clsx('text-white w-max', {})}
                     >
                       {item?.type === TYPE_COURSE.LECTURE
-                        ? `Lecture ${item?.sttLesson}:`
-                        : `Quizz ${item?.sttQuizz}:`}
+                        ? `${t('Lecture')} ${item?.sttLesson}:`
+                        : `${t('Quiz')} ${item?.sttQuizz}:`}
                     </Text>
                   </div>
 
@@ -438,13 +440,12 @@ const CurriculumItem = ({ item }: { item: any }) => {
                         endContent
                         autoFocus
                         defaultValue={valueEditEditCotentLesson?.title}
-                        // error={isError && !valueTitle ? 'Field title is require' : ''}
                         classInputWrapper="!min-h-[30px] min-w-full"
                         className="min-w-full"
                         onChange={(e: any) =>
                           setValueTitleLecture(e.target.value)
                         }
-                        placeholder="Enter title"
+                        placeholder={t('Enter title')}
                         inputDefault
                       />
                     </div>
@@ -497,14 +498,14 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       variant="light"
                       className="rounded"
                     >
-                      <Text type="font-16-400">Cancel</Text>
+                      <Text type="font-16-400">{t('Cancel')}</Text>
                     </Button>
                     <Button
                       isLoading={loadingEditLecture || loadingEditQuizz}
                       onPress={handleSaveEditContentLesson}
                       className="rounded min-w-[100px] bg-main"
                     >
-                      <Text type="font-16-400">Save</Text>
+                      <Text type="font-16-400">{t('Save')}</Text>
                     </Button>
                   </div>
                 )}
@@ -514,7 +515,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
               indexAddQuestion?.includes(indexCurriculum) ? (
                 <div className="flex items-center gap-3">
                   <Text type="font-14-500" className="w-max">
-                    Select content type
+                    {t('Select content type')}
                   </Text>
                   <Button
                     onPress={() => {
@@ -553,8 +554,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
                             <IconPlusMain />
                             <Text type="font-16-400" className="text-main">
                               {item.type === TYPE_COURSE.LECTURE
-                                ? 'Content'
-                                : 'Question'}
+                                ? t('Content')
+                                : t('Question')}
                             </Text>
                           </div>
                         </Button>
@@ -564,70 +565,6 @@ const CurriculumItem = ({ item }: { item: any }) => {
                 </>
               )}
             </div>
-            {(item?.content || item?.info?.duration) &&
-              !indexContentAdd?.includes(indexCurriculum) && (
-                <Content
-                  info={item?.info}
-                  type={item?.contentType}
-                  handleClickEditContent={() =>
-                    handleClickEditContent(
-                      item.content,
-                      item?.contentType,
-                      indexCurriculum,
-                      item?.info
-                    )
-                  }
-                />
-              )}
-            {item?.questions?.length > 0 &&
-              !indexAddQuestion?.includes(indexCurriculum) && (
-                <ContentQuestions
-                  handleClickDeleteQuestion={handleClickDeleteQuestion}
-                  handleClickEditQuestion={(values) => {
-                    handleClickEditQuestion(
-                      values,
-                      item?.type,
-                      indexCurriculum
-                    );
-                  }}
-                  questions={item?.questions}
-                />
-              )}
-            {typeAddContent && indexContentAdd?.includes(indexCurriculum) && (
-              <>
-                <FormAddContent
-                  typeAddContent={typeAddContent}
-                  valueContent={valueContent}
-                  valueInfo={valueInfo}
-                  handleSaveVideo={(values) =>
-                    handleSaveVideo(values, item?.id, indexCurriculum)
-                  }
-                  handleSaveArticle={(value) =>
-                    handleSaveArticle(value, item?.id, indexCurriculum)
-                  }
-                  loading={loadingEditLecture}
-                />
-              </>
-            )}
-
-            {typeAddQuizzQuestion === TYPE_COURSE.QUIZ &&
-              indexAddQuestion.includes(indexCurriculum) && (
-                <FormAddQuizz
-                  valueQuestion={valueQuestion}
-                  loading={
-                    loadingCreateQuestionQuizz || loadingEditQuestionQuizz
-                  }
-                  handleSaveAddQuestion={(values, idEdit) =>
-                    handleSaveAddQuestion(
-                      values,
-                      item?.id,
-                      indexCurriculum,
-                      item?.quizzes,
-                      idEdit
-                    )
-                  }
-                />
-              )}
           </div>
         );
       })}
@@ -674,7 +611,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
         >
           <div className="flex items-center gap-1">
             <IconPlus />
-            <Text>Curriculum item</Text>
+            <Text>{t('Curriculum item')}</Text>
           </div>
         </Button>
       )}

@@ -4,8 +4,11 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import Rater from 'react-rater';
+import { useTranslation } from 'next-i18next';
 
 const CommentReviews = () => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
@@ -27,13 +30,14 @@ const CommentReviews = () => {
         </Text>
         <Rater total={5} rating={4} />
         <Text type="font-14-500" className="text-black-7">
-          36m ago
+          {t('36m ago')}
         </Text>
       </div>
 
       <Text type="font-16-400" className="text-black-3 w-9/12">
-        We're not allowed to buy from only relatives. Let's buy this coin. We'll
-        reach 3M. Go ahead, friends. @InfernoDAO_ $INF
+        {t(
+          "We're not allowed to buy from only relatives. Let's buy this coin. We'll reach 3M. Go ahead, friends. @InfernoDAO_ $INF"
+        )}
       </Text>
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-1 cursor-pointer">

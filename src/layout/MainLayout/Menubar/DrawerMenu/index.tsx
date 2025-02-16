@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const MENUS = [
   {
@@ -24,7 +25,9 @@ const MENUS = [
     href: ROUTE_PATH.LIST_COURSE,
   },
 ];
+
 const DrawerMenu = (props: any, ref: any) => {
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
 
   const router = useRouter();
@@ -62,7 +65,7 @@ const DrawerMenu = (props: any, ref: any) => {
             <div className="flex flex-col">
               <div className="py-4 px-4 flex items-center border-b-1 border-white/10 justify-between">
                 <Text type="font-20-600" className="text-white">
-                  Menu
+                  {t('Menu')}
                 </Text>
                 <Image
                   onClick={onVisible}
@@ -91,7 +94,7 @@ const DrawerMenu = (props: any, ref: any) => {
                       )}
                       type="font-16-600"
                     >
-                      {item?.label}
+                      {t(item?.label)}
                     </Text>
                   );
                 })}

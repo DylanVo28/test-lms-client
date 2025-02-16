@@ -5,6 +5,7 @@ import { Tab, Tabs } from '@nextui-org/react';
 import Wishlist from './Wishlist';
 import { useRouter } from 'next/router';
 import Certifications from './Certifications';
+import { useTranslation } from 'next-i18next';
 
 export const enum TabMyLearning {
   COURSE_PROGRESS = 'COURSE_PROGRESS',
@@ -14,21 +15,22 @@ export const enum TabMyLearning {
 
 export default function MyLearning() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [activeTab, setActiveTab] = useState(TabMyLearning.COURSE_PROGRESS);
   const itemsTab = [
     {
       key: TabMyLearning.COURSE_PROGRESS,
-      label: 'Course Progress',
+      label: t('Course Progress'),
       children: <ListCourses />,
     },
     {
       key: TabMyLearning.CERTIFICATIONS,
-      label: 'Certifications',
+      label: t('Certifications'),
       children: <Certifications />,
     },
     {
       key: TabMyLearning.WISHLIST,
-      label: 'Wishlist',
+      label: t('Wishlist'),
       children: <Wishlist />,
     },
   ];
@@ -47,17 +49,8 @@ export default function MyLearning() {
   return (
     <div className="flex flex-col gap-[40px] md:gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
-        <Text type="font-28-700">My Learning</Text>
+        <Text type="font-28-700">{t('My Learning')}</Text>
       </div>
-
-      {/* <div className="border-b-[1px] border-[#2B3032] relative flex pb-[20px]">
-        <div className="w-[150px]">
-          <Text type="font-16-600" className="text-[var(--main-color)] text-center">
-            Course Progress
-          </Text>
-        </div>
-        <div className="absolute bottom-0 h-[3px] w-[150px] bg-[var(--main-color)]" />
-      </div> */}
 
       <Tabs
         aria-label="Options"

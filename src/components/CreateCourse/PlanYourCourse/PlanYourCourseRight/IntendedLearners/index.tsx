@@ -5,6 +5,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import { Trash } from '@phosphor-icons/react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 
 const IntendedLearners = ({
   control,
@@ -13,6 +14,7 @@ const IntendedLearners = ({
   idDetail: string;
   handleSubmit: any;
 }) => {
+  const { t } = useTranslation('common');
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'objectives',
@@ -39,25 +41,26 @@ const IntendedLearners = ({
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
-        Intended learners
+        {t('Intended learners')}
       </Text>
       <Text type="font-16-400" className="text-black-6">
-        The following descriptions will be publicly visible on your Course
-        Landing Page and will have a direct impact on your course performance.
-        These descriptions will help learners decide if your course is right for
-        them.
+        {t(
+          'The following descriptions will be publicly visible on your Course Landing Page and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.'
+        )}
       </Text>
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-white">
-            What will students learn in your course?
+            {t('What will students learn in your course?')}
           </Text>
           <Text type="font-16-400" className="text-black-6">
-            You must enter at least 4
+            {t('You must enter at least 4')}
             <Text className="underline mx-1" element="span">
-              learning objectives or outcomes
+              {t('learning objectives or outcomes')}
             </Text>
-            that learners can expect to achieve after completing your course.
+            {t(
+              'that learners can expect to achieve after completing your course.'
+            )}
           </Text>
         </div>
         {fields?.map((field, index) => {
@@ -76,7 +79,7 @@ const IntendedLearners = ({
                         maxLength={160}
                         endContent
                         className="md:min-w-[500px]"
-                        placeholder="Type"
+                        placeholder={t('Type')}
                         inputDefault
                       />
                     );
@@ -105,18 +108,20 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            + Add more to your answer
+            {t('+ Add more to your answer')}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-white">
-          What are the requirements or prerequisites for taking your course?
+          {t(
+            'What are the requirements or prerequisites for taking your course?'
+          )}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          {`List the required skills, experience, tools or equipment learners
-          should have prior to taking your course.If there are no requirements,
-          use this space as an opportunity to lower the barrier for beginners.`}
+          {t(
+            'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
+          )}
         </Text>
 
         {fieldsRequirements?.map((field, index) => {
@@ -132,7 +137,7 @@ const IntendedLearners = ({
                       maxLength={160}
                       endContent
                       className="md:min-w-[500px]"
-                      placeholder="Type"
+                      placeholder={t('Type')}
                       inputDefault
                     />
                   )}
@@ -159,18 +164,18 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            + Add more to your answer
+            {t('+ Add more to your answer')}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-white">
-          Who is this course for?
+          {t('Who is this course for?')}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          List the required skills, experience, tools or equipment learners
-          should have prior to taking your course.If there are no requirements,
-          use this space as an opportunity to lower the barrier for beginners.
+          {t(
+            'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
+          )}
         </Text>
 
         {fieldsIntenedLeaners?.map((field, index) => {
@@ -186,7 +191,7 @@ const IntendedLearners = ({
                       maxLength={160}
                       endContent
                       className="md:min-w-[500px]"
-                      placeholder="Type"
+                      placeholder={t('Type')}
                       inputDefault
                     />
                   )}
@@ -213,7 +218,7 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            + Add more to your answer
+            {t('+ Add more to your answer')}
           </Text>
         </Button>
       </div>

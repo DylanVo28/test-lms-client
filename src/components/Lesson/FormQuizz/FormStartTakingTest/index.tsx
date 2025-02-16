@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import IsResult from './IsResult';
 import { UserCourseProgressStatus } from '@/utils/common';
+import { useTranslation } from 'next-i18next';
 
 const enum STEP_ANSWER_QUESTION {
   SEE_RESULTS = 'SEE_RESULTS',
@@ -19,6 +20,7 @@ const FormStartTakingTest = ({
   handleClickContinueQuizz: (id: string) => void;
   dataQuizz: any;
 }) => {
+  const { t } = useTranslation('common');
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerCorrectly, setAnswerCorrectly] = useState<any>('');
   const [loading, setLoading] = useState(false);
@@ -92,7 +94,7 @@ const FormStartTakingTest = ({
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
               <CheckCircle className="text-green" size={30} weight="fill" />
               <Text className="text-green" type="font-16-400">
-                You did great
+                {t('You did great')}
               </Text>
             </div>
           )}
@@ -100,15 +102,14 @@ const FormStartTakingTest = ({
             <div className="p-4 w-full bg-transparent flex items-center gap-3   rounded-2xl border-1 border-red-500">
               <XCircle size={30} weight="fill" className="text-red-500" />
               <Text className="text-red-500" type="font-16-400">
-                The answer is not correct. Please try again.
+                {t('The answer is not correct. Please try again.')}
               </Text>
             </div>
           )}
 
-          <Text
-            type="font-32-700"
-            className="text-white"
-          >{`Question ${currentQuestion}`}</Text>
+          <Text type="font-32-700" className="text-white">{`${t(
+            'Question'
+          )} ${currentQuestion}`}</Text>
 
           <div
             className="text-2xl text-white pb-4"
@@ -155,7 +156,7 @@ const FormStartTakingTest = ({
           >
             <div className="flex items-center gap-2">
               <Text className="text-white" type="font-16-400">
-                Continue
+                {t('Continue')}
               </Text>
               <CaretRight size={16} weight="light" />
             </div>
@@ -168,7 +169,7 @@ const FormStartTakingTest = ({
           >
             <div className="flex items-center gap-2">
               <Text className="text-white" type="font-16-400">
-                See results
+                {t('See results')}
               </Text>
               <CaretRight size={16} weight="light" />
             </div>
@@ -187,7 +188,7 @@ const FormStartTakingTest = ({
             >
               <div className="flex items-center gap-2">
                 <Text className="text-white" type="font-16-400">
-                  Continue
+                  {t('Continue')}
                 </Text>
                 <CaretRight size={16} weight="light" />
               </div>
@@ -203,7 +204,7 @@ const FormStartTakingTest = ({
               >
                 <div className="flex items-center gap-2">
                   <Text className="text-white" type="font-16-400">
-                    Next
+                    {t('Next')}
                   </Text>
                   <CaretRight size={16} weight="light" />
                 </div>
@@ -215,7 +216,7 @@ const FormStartTakingTest = ({
                 className="bg-main w-max  rounded min-w-[150px]"
               >
                 <Text className="text-white" type="font-16-400">
-                  Check the answer
+                  {t('Check the answer')}
                 </Text>
               </Button>
             )}

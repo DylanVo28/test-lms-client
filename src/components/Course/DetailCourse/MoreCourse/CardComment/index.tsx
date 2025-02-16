@@ -13,6 +13,7 @@ import { Star } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 const CardComment = ({
   courseId,
@@ -21,6 +22,7 @@ const CardComment = ({
   reloadListReview: VoidFunction;
   courseId: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueComment, setValueComment] = useState('');
   const { profile } = useProfile();
   const [valueRating, setValueRating] = useState<any>();
@@ -28,7 +30,7 @@ const CardComment = ({
     onSuccess() {
       setValueComment('');
       setValueRating(0);
-      toast.success('Review successfully');
+      toast.success(t('Review successfully'));
       reloadListReview();
     },
     onError(err) {
@@ -62,15 +64,15 @@ const CardComment = ({
       <div className="flex flex-col gap-3 w-full">
         <InputTextArena
           className="min-w-full"
-          label="Comment"
-          placeholder="Write a comment..."
+          label={t('Comment')}
+          placeholder={t('Write a comment...')}
           value={valueComment}
           onChange={(e: any) => setValueComment(e.target.value)}
           isBlack
         />
         <div>
           <Text type="font-16-600" className="text-white">
-            Review
+            {t('Review')}
           </Text>
           <ReactStars
             count={5}
@@ -89,7 +91,7 @@ const CardComment = ({
           className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
         >
           <Text type="font-16-500" className="text-white">
-            Comment
+            {t('Comment')}
           </Text>
         </Button>
       </div>

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 
 const DATA_CONTENT = [
   {
@@ -22,10 +23,12 @@ const DATA_CONTENT = [
 ];
 
 const ContenStep1 = ({ control }: { control: Control }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="flex items-center flex-col gap-10">
       <Text className="text-white text-center" type="font-32-700">
-        First, let's find out what type of course you're making.
+        {t("First, let's find out what type of course you're making.")}
       </Text>
       <Controller
         name="type"
@@ -50,10 +53,10 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                 >
                   <Image alt="" width={48} height={48} src={item?.img} />
                   <Text type="font-20-700" className="text-white">
-                    {item?.label}
+                    {t(item?.label)}
                   </Text>
                   <Text type="font-16-400" className="text-black-6">
-                    {item?.description}
+                    {t(item?.description)}
                   </Text>
                 </div>
               );

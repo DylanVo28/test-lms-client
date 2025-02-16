@@ -13,6 +13,7 @@ import InputText from '@/components/UI/InputText';
 import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import Loading from '@/components/UI/Loading';
+import { useTranslation } from 'next-i18next';
 
 export const CATEGORIES = [
   { key: 'business', label: 'Business' },
@@ -21,15 +22,12 @@ export const CATEGORIES = [
   { key: 'personal', label: 'Personal Development' },
 ];
 
-const SORT_BY = [
-  // { key: 'most_relevant', label: 'Most Relevant' },
-  // { key: 'most_reviewer', label: 'Most Reviewer' },
-  // { key: 'highest_rated', label: 'Highest Rated' },
-  { key: 'createdAt desc', label: 'Newest' },
-  { key: 'createdAt asc', label: 'Oldest' },
-];
-
 const ListCourse = () => {
+  const { t } = useTranslation('common');
+  const SORT_BY = [
+    { key: 'createdAt desc', label: t('Newest') },
+    { key: 'createdAt asc', label: t('Oldest') },
+  ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
   const [category, setCategory] = useState();
@@ -79,7 +77,6 @@ const ListCourse = () => {
   useEffect(() => {
     reload();
   }, [sort, category, price]);
-  // console.log('dataCourses', dataCourses, noMore);
 
   return (
     <div className="flex flex-col gap-[26px] md:pt-0 pt-10 md:px-10">
@@ -88,31 +85,24 @@ const ListCourse = () => {
           <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
             <IconFilter />
             <Text className="text-main" type="font-14-500">
-              All Filter
+              {t('All Filter')}
             </Text>
           </div>
           <SelectCustom
-            placeholder="Categories"
+            placeholder={t('Categories')}
             className="min-w-[120px]"
             options={mapCategories()}
             value={category}
             onChange={(value: any) => {
-              console.log('valueeee', value.target.value);
               setCategory(value.target.value);
             }}
           />
-          {/* <SelectCustom
-            placeholder="Instructor"
-            className="min-w-[150px]"
-            options={INSTRUCTORS}
-          /> */}
           <SelectCustom
-            placeholder="Price"
+            placeholder={t('Price')}
             className="min-w-[80px]"
             options={mapPrices()}
             value={price}
             onChange={(value: any) => {
-              console.log('valueeee', value.target.value);
               setPrice(value.target.value);
             }}
           />
@@ -122,10 +112,10 @@ const ListCourse = () => {
             type="font-14-500"
             className="text-black-7 w-[70px] md:w-[100px]"
           >
-            Sort by
+            {t('Sort by')}
           </Text>
           <SelectCustom
-            placeholder="Default"
+            placeholder={t('Default')}
             className="min-w-[40px] max-w-[100px]"
             options={SORT_BY}
             value={sort}
@@ -146,7 +136,7 @@ const ListCourse = () => {
             }
             className="block md:hidden"
             radius="sm"
-            placeholder="Search"
+            placeholder={t('Search')}
           />
         </div>
       </div>
@@ -188,7 +178,7 @@ const ListCourse = () => {
             >
               <div className="flex items-center gap-[2px]">
                 <Text type="font-14-500" className="text-main">
-                  See More
+                  {t('See More')}
                 </Text>
                 <Image
                   src={'/icons/ic-arrow-drop-right-line.svg'}
