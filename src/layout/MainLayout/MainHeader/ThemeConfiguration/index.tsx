@@ -38,7 +38,7 @@ const ThemeConfiguration = ({
       onClose();
     },
     onError() {
-      toast.success(t('Failed Theme Configuration'));
+      toast.error(t('Failed Theme Configuration'));
     },
   });
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
@@ -48,7 +48,7 @@ const ThemeConfiguration = ({
       requestGetTheme();
     },
     onError() {
-      toast.success(t('Failed Theme Configuration'));
+      toast.error(t('Failed Theme Configuration'));
     },
   });
 

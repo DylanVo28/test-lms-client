@@ -37,7 +37,7 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     return languages.find((lang) => lang.code === code)?.name || '';
   };
   const showLangs = useMemo<{ code: string; name: string }[]>(() => {
-    if (dataThemeConfig.langs.length > 0) {
+    if (dataThemeConfig?.langs?.length > 0) {
       return dataThemeConfig.langs.map((code) => {
         if (!findLang(code)) {
           return {

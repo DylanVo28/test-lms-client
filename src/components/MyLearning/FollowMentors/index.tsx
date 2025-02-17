@@ -110,12 +110,11 @@ const FollowMentors = () => {
             {list?.map((item) => {
               return <CardMentor mentor={item?.followedUser} key={item?.id} />;
             })}
-            {list?.length === 0 && <NoData />}
           </div>
         </>
       )}
       {loading && <Loading />}
-
+      {list?.length === 0 && <NoData />}
       {/* {!loading && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
