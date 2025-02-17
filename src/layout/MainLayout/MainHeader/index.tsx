@@ -176,7 +176,9 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            <ThemeConfiguration
+              setUrlLogo={setUrlLogo}
+            />
 
             {/* <div className="w-full">
               <ConnectButton />
