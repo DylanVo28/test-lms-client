@@ -23,7 +23,7 @@ const RATINGS = [
   { key: '1', label: '1 Star' },
 ];
 const FollowMentors = () => {
-  const [level, setLevel] = useState();
+  const [rating, setRating] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const { t } = useTranslation('common');
 
@@ -33,12 +33,12 @@ const FollowMentors = () => {
   const { list, reload, loading } = useGetListFollowers({
     pageSize: 50,
     search: valueSearch,
-    level: level,
+    rating: rating,
   });
 
   useEffect(() => {
     reload();
-  }, [debounceVal, level]);
+  }, [debounceVal, rating]);
 
   useEffect(() => {
     console.log('Debounced:', valueSearch);
@@ -79,9 +79,9 @@ const FollowMentors = () => {
               placeholder="Ratings"
               className="min-w-[40px]"
               options={RATINGS}
-              value={level}
+              value={rating}
               onChange={(value: any) => {
-                setLevel(value.target.value);
+                setRating(value.target.value);
               }}
             />
           </div>
@@ -97,9 +97,9 @@ const FollowMentors = () => {
             placeholder="Default"
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={RATINGS}
-            value={level}
+            value={rating}
             onChange={(value: any) => {
-              setLevel(value.target.value);
+              setRating(value.target.value);
             }}
           />
         </div>
