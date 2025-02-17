@@ -6,26 +6,17 @@ import { profileAtom } from './profile';
 import { API_PATH } from '@/api/constant';
 import { PREFIX_API, privateRequest } from '@/api/request';
 
-interface IOptions {
-  onSuccess?: (r: any) => void;
-}
-
-export const useProfileInitial = (options?: IOptions) => {
+export const useProfileInitial = () => {
   const [profile, setProfile] = useAtom(profileAtom);
   const run = () => {
     const init = async () => {
-      try {
-        const res = await privateRequest(
-          fetch,
-          `${PREFIX_API}${API_PATH.GET_USER}`
-        ).then((res) => res.json());
-        setProfile({
-          ...res?.data,
-        });
-        options?.onSuccess?.(res);
-      } catch (error) {
-        console.error(error);
-      }
+      const res = await privateRequest(
+        fetch,
+        `${PREFIX_API}${API_PATH.GET_USER}`
+      ).then((res) => res.json());
+      setProfile({
+        ...res?.data,
+      });
     };
     init();
   };
