@@ -92,7 +92,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             </div>
             <Button
               onClick={() => refModalShare.current.onOpen()}
-              className="rounded w-[90px] border-white/10 border-1 bg-white/10"
+              className="rounded w-[90px] border-white-10 border-1 bg-white-10"
               size="lg"
             >
               <div className="flex items-center gap-1">

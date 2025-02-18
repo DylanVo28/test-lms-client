@@ -51,7 +51,7 @@ const CardComment = ({
     setValueRating(rating);
   };
   return (
-    <div className="rounded p-4 bg-white/5 flex gap-6 items-start">
+    <div className="rounded p-4 bg-white-5 flex gap-6 items-start">
       <div>
         <Image
           src={profile?.avatar || getAvatar()}

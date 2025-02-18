@@ -15,7 +15,7 @@ const ContentQuestions = ({
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex flex-col justify-between p-3  border-1 border-t-0 border-white/15 gap-3">
+    <div className="flex flex-col justify-between p-3  border-1 border-t-0 border-white-15 gap-3">
       {questions?.map((item: any, index: number) => {
         return (
           <div className="flex justify-between items-center" key={index}>

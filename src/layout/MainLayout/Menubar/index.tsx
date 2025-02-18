@@ -51,7 +51,7 @@ const Menubar = () => {
                   : item.href === router.pathname,
               }
             )}
-            type="font-16-600"
+            type="font-16-500"
           >
             {t(item?.label)}
           </Text>

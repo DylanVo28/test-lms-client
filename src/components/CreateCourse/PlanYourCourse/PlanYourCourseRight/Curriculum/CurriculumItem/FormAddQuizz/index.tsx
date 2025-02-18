@@ -36,13 +36,13 @@ const FormAddQuizz = ({
           }
         />
       ) : (
-        <div className="flex justify-center py-3 flex-col border-1 border-t-0 border-white/15 items-center gap-3">
+        <div className="flex justify-center py-3 flex-col border-1 border-t-0 border-white-15 items-center gap-3">
           <div
             className="flex items-center gap-6"
             onClick={handleClickAddQuestion}
           >
-            <div className="flex flex-col cursor-pointer items-center border-1 border-white/20 min-w-[70px]">
-              <div className="border-b w-full items-center justify-center flex py-2 border-b-white/20">
+            <div className="flex flex-col cursor-pointer items-center border-1 border-white-20 min-w-[70px]">
+              <div className="border-b w-full items-center justify-center flex py-2 border-b-white-20">
                 <QuestionMark size={32} color="#8C8C8C" weight="fill" />
               </div>
 

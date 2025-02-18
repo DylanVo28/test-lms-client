@@ -62,7 +62,7 @@ const MainBanner = () => {
                 return (
                   <div
                     key={item}
-                    className="rounded-full bg-white/10 border-1 border-white/10 py-1 px-3 flex justify-center items-center"
+                    className="rounded-full bg-white-10 border-1 border-white-10 py-1 px-3 flex justify-center items-center"
                   >
                     <Text type="font-14-400" className="text-black-7">
                       {item}

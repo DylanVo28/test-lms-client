@@ -67,7 +67,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
         />
       </div>
 
-      <div className="p-4 rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -144,7 +144,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
 
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-18-600">
-              {t("This course includes")}
+              {t('This course includes')}
             </Text>
             <div className="flex flex-col gap-1">
               {DATA_NOTE?.map((item) => {

@@ -63,7 +63,7 @@ const DrawerMenu = (props: any, ref: any) => {
         <>
           <DrawerBody className="p-0">
             <div className="flex flex-col">
-              <div className="py-4 px-4 flex items-center border-b-1 border-white/10 justify-between">
+              <div className="py-4 px-4 flex items-center border-b-1 border-white-10 justify-between">
                 <Text type="font-20-600" className="text-white">
                   {t('Menu')}
                 </Text>

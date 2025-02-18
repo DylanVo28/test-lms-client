@@ -42,7 +42,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           e.target.srcset = '/images/img-default.png';
         }}
       />
-      <div className="py-4 px-3 rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="py-4 px-3 rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />
@@ -63,7 +63,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         <Text type="font-16-500" className="line-clamp-2 capitalize">
           {item?.title}
         </Text>
-        <div className="flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
+        <div className="flex flex-col gap-[14px] border-b border-b-white-5 pb-4">
           <div className="flex items-center gap-2">
             <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
             <ReactStars

@@ -238,7 +238,7 @@ export const CustomRadio = (props: any) => {
       value={value}
       classNames={{
         base: clsx(
-          'inline-flex min-w-full m-0 bg-white/5 hover:bg-white/10 text-start items-centers',
+          'inline-flex min-w-full m-0 bg-white-5 hover:bg-white-10 text-start items-centers',
           'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
           'data-[selected=true]:border-primary'
         ),

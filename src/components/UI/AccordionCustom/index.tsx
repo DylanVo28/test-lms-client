@@ -26,11 +26,11 @@ export default function AccordionCustom({
           '!h-[50px]': isCreateCourse,
           '!bg-black-10 !border-b-1 border-b-black-9': isSection,
         }),
-        base: clsx('bg-white/5 rounded border-1 relative border-[#D9D9D91A]', {
+        base: clsx('bg-white-5 rounded border-1 relative border-[#D9D9D91A]', {
           '!bg-transparent rounded-none': isSection,
-          '!bg-transparent !border-white/15': isCreateCourse,
+          '!bg-transparent !border-white-15': isCreateCourse,
 
-          '!bg-[#161B21] !border-white/10': isMobile,
+          '!bg-[#161B21] !border-white-10': isMobile,
         }),
       }}
     >

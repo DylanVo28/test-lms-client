@@ -9,26 +9,31 @@ import clsx from 'clsx';
 const DATA_COLOR_LIGHT = [
   {
     id: 1,
+    color: '#fff',
+    theme: 'white',
+  },
+  {
+    id: 2,
     color: '#A2DFF7',
     theme: 'skyBlue',
   },
   {
-    id: 2,
+    id: 3,
     color: '#FAE7F4',
     theme: 'lightPink',
   },
   {
-    id: 3,
+    id: 4,
     color: '#FFF3B0',
     theme: 'lightYellow',
   },
   {
-    id: 4,
+    id: 5,
     color: '#F5F5DC',
     theme: 'lightBeige',
   },
   {
-    id: 5,
+    id: 6,
     color: '#D3F8E2',
     theme: 'lightGreen',
   },
@@ -44,6 +49,11 @@ const DATA_COLOR_DARK = [
     id: 1,
     color: '#000',
     theme: 'black',
+  },
+  {
+    id: 1,
+    color: '#0A0F15',
+    theme: 'graphite',
   },
   {
     id: 2,
@@ -93,56 +103,62 @@ const ColorTheme = ({
         {t('Color theme')}
       </Text>
       <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-4">
-            <Text type="font-16-700" className="text-white">
-              {t('Light color')}
-            </Text>
-            <div className="flex items-center gap-4">
-              {DATA_COLOR_LIGHT?.map((item) => {
-                return (
-                  <div
-                    className={clsx('p-2 rounded-full', {
-                      ['border-2 border-main']: theme.color === item?.theme,
-                    })}
-                  >
+        <div className="flex flex-col gap-3">
+          <Text type="font-18-600" className="text-white">
+            {t('Background')}
+          </Text>
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-4">
+              <Text type="font-16-700" className="text-white">
+                {t('Light color')}
+              </Text>
+              <div className="flex items-center gap-4">
+                {DATA_COLOR_LIGHT?.map((item) => {
+                  return (
                     <div
-                      onClick={() =>
-                        handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
-                      }
-                      className="w-[30px] p-2 h-[30px] cursor-pointer rounded-full"
-                      style={{ background: item?.color }}
-                    />
-                  </div>
-                );
-              })}
+                      className={clsx('p-2 rounded-full', {
+                        ['border-2 border-main']: theme.color === item?.theme,
+                      })}
+                    >
+                      <div
+                        onClick={() =>
+                          handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
+                        }
+                        className="w-[30px] p-2 h-[30px] cursor-pointer rounded-full"
+                        style={{ background: item?.color }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <Text type="font-16-700" className="text-white">
+                {t('Dark color')}
+              </Text>
+              <div className="flex items-center gap-4">
+                {DATA_COLOR_DARK?.map((item) => {
+                  return (
+                    <div
+                      className={clsx('p-2 rounded-full', {
+                        ['border-2 border-main']: theme.color === item?.color,
+                      })}
+                    >
+                      <div
+                        onClick={() =>
+                          handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
+                        }
+                        className="w-[30px] h-[30px] cursor-pointer rounded-full"
+                        style={{ background: item?.color }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <Text type="font-16-700" className="text-white">
-              {t('Dark color')}
-            </Text>
-            <div className="flex items-center gap-4">
-              {DATA_COLOR_DARK?.map((item) => {
-                return (
-                  <div
-                    className={clsx('p-2 rounded-full', {
-                      ['border-2 border-main']: theme.color === item?.color,
-                    })}
-                  >
-                    <div
-                      onClick={() =>
-                        handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
-                      }
-                      className="w-[30px] h-[30px] cursor-pointer rounded-full"
-                      style={{ background: item?.color }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
           {/* <div className="grid grid-cols-2 gap-[16px] h-fit">
             {presetColors.map((color) => (
               <div

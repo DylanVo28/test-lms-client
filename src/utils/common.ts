@@ -51,3 +51,17 @@ export const generateRandomId = () => {
     3
   )}-${getRandomValue()}-${getRandomValue()}${getRandomValue()}${getRandomValue()}`;
 };
+
+export enum COLOR_THEME {
+  WHITE = 'white',
+  SKY_BLUE = 'skyBlue',
+  LIGHT_PINK = 'lightPink',
+  LIGHT_YELLOW = 'lightYellow',
+  LIGHT_BEIGE = 'lightBeige',
+  BLACK = 'black',
+  GRAPHITE = 'graphite',
+  DARK_GRAY = 'darkGray',
+  NAVY_BLUE = 'navyBule',
+  CHARCOAL_GRAY = 'charcoalGray',
+  CHEST_BROWN = 'chestnutBrown',
+}

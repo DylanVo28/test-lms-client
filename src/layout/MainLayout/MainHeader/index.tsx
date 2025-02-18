@@ -22,6 +22,9 @@ import {
 } from '@nextui-org/react';
 import Notification from '@/components/Notification';
 import IconSearch from '@/components/UI/Icons/IconSearch';
+import { COLOR_THEME } from '@/utils/common';
+import { useTheme } from '@/store/theme/useTheme';
+import IconNotification from '@/components/UI/Icons/IconNotification';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -33,6 +36,7 @@ const MainHeader = () => {
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const [urlLogo, setUrlLogo] = useState<string>('');
+  const { theme } = useTheme();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -95,17 +99,36 @@ const MainHeader = () => {
     }
   };
 
+  console.log(theme, 'theme');
+
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
-        <Image
-          onClick={() => router.push(ROUTE_PATH.HOME)}
-          alt="logo"
-          width={125}
-          height={46}
-          className="cursor-pointer"
-          src={urlLogo || '/logo.png'}
-        />
+        {[
+          COLOR_THEME.WHITE,
+          COLOR_THEME.SKY_BLUE,
+          COLOR_THEME.LIGHT_PINK,
+          COLOR_THEME.LIGHT_YELLOW,
+          COLOR_THEME.LIGHT_BEIGE,
+        ].includes(theme.color as any) ? (
+          <Image
+            onClick={() => router.push(ROUTE_PATH.HOME)}
+            alt="logo"
+            width={125}
+            height={46}
+            className="cursor-pointer"
+            src={urlLogo || '/logo-dark.png'}
+          />
+        ) : (
+          <Image
+            onClick={() => router.push(ROUTE_PATH.HOME)}
+            alt="logo"
+            width={125}
+            height={46}
+            className="cursor-pointer"
+            src={urlLogo || '/logo.png'}
+          />
+        )}
 
         <Image
           onClick={() => refDrawerMenu.current.onOpen()}
@@ -115,7 +138,6 @@ const MainHeader = () => {
           alt=""
           className="w-10 h-10 block md:hidden"
         />
-
         <div className="md:flex hidden items-center gap-4">
           <Menubar />
 
@@ -143,12 +165,7 @@ const MainHeader = () => {
                   isIconOnly
                   className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
                 >
-                  <Image
-                    src={'/icons/ic-notification.svg'}
-                    height={20}
-                    width={20}
-                    alt=""
-                  />
+                  <IconNotification />
                 </Button>
               </PopoverTrigger>
               <PopoverContent>

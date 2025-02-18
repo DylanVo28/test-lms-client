@@ -410,7 +410,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
           <div className="w-full" key={item?.id}>
             <div
               className={clsx(
-                'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white/15',
+                'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white-15',
                 {
                   ['rounded-b-none']: [
                     TYPE_COURSE.LECTURE,

@@ -573,7 +573,7 @@ const Lesson = () => {
             defaultSelectedKey={'2'}
             classNames={{
               tabList:
-                'gap-3 w-full relative rounded-none p-0 border-b border-white/10',
+                'gap-3 w-full relative rounded-none p-0 border-b border-white-10',
               cursor: 'w-full bg-[#129DDB]',
               tab: 'max-w-fit px-5 h-16 text-[16px] font-medium text-[#BFBFBF]',
               tabContent: 'group-data-[selected=true]:text-white',

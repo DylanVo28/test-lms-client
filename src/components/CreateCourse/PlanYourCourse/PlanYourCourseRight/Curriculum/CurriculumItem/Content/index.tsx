@@ -28,7 +28,7 @@ const Content = ({
     return formattedTime;
   }, [info?.duration]);
   return (
-    <div className="flex items-start justify-between p-3  border-1 border-t-0 border-white/15 gap-3">
+    <div className="flex items-start justify-between p-3  border-1 border-t-0 border-white-15 gap-3">
       <div className="flex items-center gap-2 cursor-pointer">
         {info?.thumbnailUrl ? (
           <Image

@@ -17,7 +17,7 @@ const FormAddArticle = ({
   const [valueDocument, setValueDocument] = useState(valueContent || '');
   const [isError, setIsError] = useState(false);
   return (
-    <div className="flex justify-center py-3 px-4 flex-col border-1 border-t-0 border-white/15 items-center gap-4">
+    <div className="flex justify-center py-3 px-4 flex-col border-1 border-t-0 border-white-15 items-center gap-4">
       <QuillEditor
         value={valueDocument}
         autoFocus

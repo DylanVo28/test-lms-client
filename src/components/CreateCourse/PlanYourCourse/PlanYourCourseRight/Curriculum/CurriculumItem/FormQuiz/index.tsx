@@ -20,7 +20,7 @@ const FormQuiz = ({
   const [errorForm, setErrorForm] = useState(false);
 
   return (
-    <div className="border-1 bg-transparent border-white/15 rounded py-4 px-3 flex flex-col gap-4 w-full">
+    <div className="border-1 bg-transparent border-white-15 rounded py-4 px-3 flex flex-col gap-4 w-full">
       <div className="flex items-start gap-2">
         <div className="w-[100px]">
           <Text type="font-16-700" className="text-white">
