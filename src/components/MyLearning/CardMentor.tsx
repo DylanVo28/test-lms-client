@@ -20,19 +20,24 @@ export default function CardMentor({ mentor }: IProps) {
   };
   return (
     <div className="w-full bg-[#FFFFFF0D] rounded-[4px] overflow-hidden cursor-pointer flex flex-row gap-3 p-4">
-      <Image
-        src={mentor?.avatar || '/images/img-default.png'}
-        alt={'avatar'}
-        width={64}
-        height={64}
-        className="h-[64px] w-[64px] rounded-full"
-        layout="contain"
-        onError={(e: any) => {
-          e.target.srcset = '/images/img-default.png';
-        }}
-      />
-      <div className="flex flex-col gap-1 flex-1">
-        <Text type="font-18-600" className="truncate max-w-[240px]">
+      <div className="h-[64px] w-[64px]">
+        <Image
+          src={mentor?.avatar || '/images/img-default.png'}
+          alt={'avatar'}
+          width={64}
+          height={64}
+          className="rounded-full h-full w-full object-cover"
+          layout="contain"
+          onError={(e: any) => {
+            e.target.srcset = '/images/img-default.png';
+          }}
+        />
+      </div>
+      <div className="flex flex-col gap-1 flex-grow">
+        <Text
+          type="font-18-600"
+          className="truncate 2xl:max-w-[240px] xl:max-w-[200px] md:max-w-[120px] sm:max-w-[120px]"
+        >
           {generateMentors()}
         </Text>
         <Text type="font-16-400">{mentor?.headline}</Text>

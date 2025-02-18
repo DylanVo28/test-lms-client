@@ -82,8 +82,10 @@ const Mentors = ({ mentor }: any) => {
   };
 
   const isNotMentor = mentor?.id !== profile?.id;
+  console.log('mentorProfile', mentorProfile);
 
   const followMentor = () => {
+    if (mentorProfile?.isFollowing) return;
     requestFollowMentor.run(mentorProfile?.id);
   };
 
