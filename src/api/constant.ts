@@ -85,5 +85,5 @@ export const API_PATH = {
   THEMES: '/api/themes',
   THEME_DETAIL: '/api/themes/detail',
 
-  FCM_TOKEN: '/fcm',
+  FCM_TOKEN: '/api/fcm',
 };
