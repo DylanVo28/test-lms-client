@@ -37,7 +37,6 @@ const { connectors } = getDefaultWallets({
   projectId: 'fc44d249918338bb571eab6da79776df',
 });
 
-// Tạo wagmi config
 const config = createConfig({
   chains: [mainnet, polygon, optimism, arbitrum, base],
   connectors,

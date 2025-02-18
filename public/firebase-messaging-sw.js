@@ -24,6 +24,8 @@ if (typeof window === 'undefined') {
     const messaging = firebase.messaging();
 
     messaging.onBackgroundMessage((payload) => {
+      console.log(payload, 'payload');
+
       const { title, body } = payload.notification;
 
       self.registration.showNotification(title, {

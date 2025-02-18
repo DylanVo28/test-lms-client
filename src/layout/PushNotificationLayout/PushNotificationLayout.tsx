@@ -3,21 +3,20 @@ import { useEffect } from 'react';
 import { useDebounceFn } from 'ahooks';
 import { getAccessToken } from '@/store/auth';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
+import { useNotifications } from '@/store/notification/useNotification';
 
 const PushNotificationLayout = () => {
-  // const { requestCheckHasNotification } = useNotifications();
-  // const { reloadDataNotificationPopup } = useDelegateNotification();
+  const { requestCheckHasNotification } = useNotifications();
 
   const { run: updateNoti } = useDebounceFn(
     () => {
-      const isLogin = getAccessToken();
-      if (!isLogin) {
+      console.log('232323');
+
+      const accessToken = getAccessToken();
+      if (!accessToken) {
         return;
       }
-      // requestCheckHasNotification.run();
-      // if (reloadDataNotificationPopup) {
-      //   reloadDataNotificationPopup();
-      // }
+      requestCheckHasNotification.run();
     },
     {
       wait: 300,

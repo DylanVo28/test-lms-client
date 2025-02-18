@@ -4,7 +4,7 @@ import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
 import { useEffect, useRef, useState } from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useConnect, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
 import { toast } from '@/components/UI/Toast/toast';
@@ -21,6 +21,8 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import Notification from '@/components/Notification';
+import { useNotifications } from '@/store/notification/useNotification';
+import { useMount } from 'ahooks';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');

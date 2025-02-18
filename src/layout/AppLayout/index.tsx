@@ -13,8 +13,6 @@ const AppLayout = ({ children }: any) => {
   const token = getAccessToken();
 
   useEffect(() => {
-    console.log(token, 'token');
-
     if (token) {
       requestGetProfile();
       requestUpdateFcmToken?.run(token);

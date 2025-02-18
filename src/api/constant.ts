@@ -86,4 +86,10 @@ export const API_PATH = {
   THEME_DETAIL: '/api/themes/detail',
 
   FCM_TOKEN: '/api/fcm',
+
+  NOTIFICATION: '/api/notifications',
+
+  GET_COUNT_NOTIFICATION: '/api/notifications/count',
+
+  READ_NOTIFICATION: (id: string) => `/api/notifications/${id}/read`,
 };

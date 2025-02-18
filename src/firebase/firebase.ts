@@ -8,6 +8,7 @@ import {
 } from 'firebase/messaging';
 import localforage from 'localforage';
 
+// Firebase config
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -20,7 +21,7 @@ const firebaseConfig = {
 
 const FIREBASE_VAPID_KEY = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
 
-// Initialize Firebase9
+// Initialize Firebase
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
 const firebaseCloudMessaging = {
@@ -28,15 +29,19 @@ const firebaseCloudMessaging = {
     const token = await localforage.getItem('fcm_token_client');
     return token;
   },
+
   removeFcmToken: async () => {
     await localforage.removeItem('fcm_token_client');
   },
+
   onMessage: async (onCallback: any) => {
     try {
-      const messaging = getMessaging();
-
-      onMessage(messaging, onCallback);
-    } catch {}
+      const messaging = getMessaging(app); // Pass app to getMessaging
+      console.log(messaging, 'messaging');
+      onMessage(messaging, onCallback); // Set up onMessage handler
+    } catch (error) {
+      console.error('Error handling message:', error);
+    }
   },
 
   init: async function () {
@@ -54,7 +59,7 @@ const firebaseCloudMessaging = {
         return isSupport;
       }
 
-      const messaging = getMessaging(app);
+      const messaging = getMessaging(app); // Pass app to getMessaging
 
       await Notification.requestPermission();
 
@@ -63,19 +68,18 @@ const firebaseCloudMessaging = {
       });
 
       if (fcmToken) {
-        // Send the token to your server and update the UI if necessary
-        // save the token in your database
+        // Save token in local storage (localforage)
         localforage.setItem('fcm_token_client', fcmToken);
         console.log('fcm_token_client', fcmToken);
         return fcmToken;
       } else {
-        // Show permission request UI
+        // Handle case where the token is not available
         console.log(
           'NOTIFICACION, No registration token available. Request permission to generate one.'
         );
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error initializing Firebase messaging:', error);
     }
   },
 };

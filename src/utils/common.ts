@@ -51,3 +51,8 @@ export const generateRandomId = () => {
     3
   )}-${getRandomValue()}-${getRandomValue()}${getRandomValue()}${getRandomValue()}`;
 };
+
+export const enum UserType {
+  STUDENT = 'STUDENT',
+  INSTRUCTOR = 'INSTRUCTOR',
+}
