@@ -45,6 +45,10 @@ const MainHeader = () => {
         token: res?.data?.accessToken,
       });
     },
+    onError(err) {
+      console.log('errrrrrr', err);
+      toast.error(err?.message);
+    },
   });
   const { run: runGetUserNonce } = useGetUserNonce({
     onSuccess(res) {
@@ -60,8 +64,9 @@ const MainHeader = () => {
         signature: sig,
         refCode: (router.query.refCode as string) || '',
       });
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error('ERROR: ', err);
+      toast.error(err?.message);
     }
   };
 
@@ -176,9 +181,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            <ThemeConfiguration
-              setUrlLogo={setUrlLogo}
-            />
+            <ThemeConfiguration setUrlLogo={setUrlLogo} />
 
             {/* <div className="w-full">
               <ConnectButton />
