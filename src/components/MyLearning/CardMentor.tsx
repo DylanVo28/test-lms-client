@@ -14,7 +14,7 @@ export default function CardMentor({ mentor }: IProps) {
 
   const generateMentors = () => {
     if (mentor?.firstName || mentor?.lastName) {
-      return `${mentor?.firstName || ''} ${mentor?.author?.lastName || ''}`;
+      return `${mentor?.firstName || ''} ${mentor?.lastName || ''}`;
     }
     return mentor?.walletAddress;
   };
