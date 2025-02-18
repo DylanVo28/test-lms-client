@@ -32,6 +32,7 @@ const Mentors = ({ mentor }: any) => {
 
   const requestFollowMentor = useFollowMentor({
     onSuccess: async (res: any) => {
+      toast.success('Follow successfully!');
       const newData = {
         ...mentorProfile,
         isFollowing: true,
@@ -42,7 +43,14 @@ const Mentors = ({ mentor }: any) => {
   });
 
   const requestUnFollowMentor = useUnFollowMentor({
-    onSuccess: async (res: any) => {},
+    onSuccess: async (res: any) => {
+      toast.success('Unfollow successfully!');
+      const newData = {
+        ...mentorProfile,
+        isFollowing: false,
+      };
+      setMentorProfile(newData);
+    },
     onError: (error: any) => {
       toast.error(error.message);
 
@@ -85,8 +93,11 @@ const Mentors = ({ mentor }: any) => {
   console.log('mentorProfile', mentorProfile);
 
   const followMentor = () => {
-    if (mentorProfile?.isFollowing) return;
-    requestFollowMentor.run(mentorProfile?.id);
+    if (mentorProfile?.isFollowing) {
+      requestUnFollowMentor.run(mentorProfile?.id);
+    } else {
+      requestFollowMentor.run(mentorProfile?.id);
+    }
   };
 
   return (
@@ -207,7 +218,7 @@ const Mentors = ({ mentor }: any) => {
               className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
               onClick={followMentor}
             >
-              {!mentorProfile?.isFollowing ? t('Follow') : t('Followed')}
+              {!mentorProfile?.isFollowing ? t('Follow') : t('Unfollow')}
             </Button>
           )}
         </div>
