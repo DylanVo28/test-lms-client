@@ -172,7 +172,7 @@ const DetailCourse = () => {
             />
           </div>
           <div className="col-span-3">
-            <div className="sticky top-28 z-[100000]">
+            <div className="sticky top-28 z-50">
               <CardEnrollNow course={dataDetail?.data} />
             </div>
           </div>
