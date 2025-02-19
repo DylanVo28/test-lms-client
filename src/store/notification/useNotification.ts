@@ -6,6 +6,7 @@ import { useMount, useRequest } from 'ahooks';
 import { useAtom } from 'jotai';
 import { getAccessToken } from '../auth';
 import { notificationAtom } from './notification';
+import { toast } from '@/components/UI/Toast/toast';
 
 export interface IResNotification {
   data: INotification[];
@@ -101,6 +102,8 @@ export const useNotifications = () => {
           };
         } else return item;
       });
+
+      toast.success('Successfully');
 
       setNotifications({
         ...notifications,

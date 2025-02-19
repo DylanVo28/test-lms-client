@@ -43,9 +43,20 @@ const firebaseCloudMessaging = {
       console.error('Error handling message:', error);
     }
   },
+  requestPermissions: async () => {
+    const permission = await Notification.permission;
+    if (permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  },
 
   init: async function () {
     try {
+      const permission = await Notification.permission;
+      if (permission !== 'granted') {
+        return;
+      }
+
       let fcmToken = await this.tokenInLocalForage();
       console.log(fcmToken, 'fcmToken');
 
@@ -60,8 +71,6 @@ const firebaseCloudMessaging = {
       }
 
       const messaging = getMessaging(app); // Pass app to getMessaging
-
-      await Notification.requestPermission();
 
       fcmToken = await getToken(messaging, {
         vapidKey: FIREBASE_VAPID_KEY,

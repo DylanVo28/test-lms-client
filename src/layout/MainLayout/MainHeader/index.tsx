@@ -23,6 +23,9 @@ import {
 import Notification from '@/components/Notification';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
+import Text from '@/components/UI/Text';
+import { notificationAtom } from '@/store/notification/notification';
+import { useAtom } from 'jotai';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -34,6 +37,7 @@ const MainHeader = () => {
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const [urlLogo, setUrlLogo] = useState<string>('');
+  const [notifications] = useAtom(notificationAtom);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -159,17 +163,22 @@ const MainHeader = () => {
               placement="bottom-end"
             >
               <PopoverTrigger>
-                <Button
-                  isIconOnly
-                  className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
-                >
+                <div className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10">
+                  {notifications?.totalCount > 0 && (
+                    <div className="absolute bg-error rounded-full top-[-8px] right-[-8px] w-5 h-5 flex justify-center items-center">
+                      <Text type="font-12-500" className="text-white">
+                        {notifications?.totalCount}
+                      </Text>
+                    </div>
+                  )}
+
                   <Image
                     src={'/icons/ic-notification.svg'}
                     height={20}
                     width={20}
                     alt=""
                   />
-                </Button>
+                </div>
               </PopoverTrigger>
               <PopoverContent>
                 <Notification />

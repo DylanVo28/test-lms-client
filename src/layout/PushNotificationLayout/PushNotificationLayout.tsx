@@ -10,8 +10,6 @@ const PushNotificationLayout = () => {
 
   const { run: updateNoti } = useDebounceFn(
     () => {
-      console.log('232323');
-
       const accessToken = getAccessToken();
       if (!accessToken) {
         return;

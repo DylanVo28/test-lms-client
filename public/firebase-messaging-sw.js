@@ -11,13 +11,13 @@ if (typeof window === 'undefined') {
 
   try {
     const config = {
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+      apiKey: 'AIzaSyBU41qXUPYVYEPgeGpp0MU66Zgw9D8zh1Q',
+      authDomain: 'storage-testing-6d416.firebaseapp.com',
+      projectId: 'storage-testing-6d416',
+      storageBucket: 'storage-testing-6d416.appspot.com',
+      messagingSenderId: '984782636729',
+      appId: '1:984782636729:web:bd2d89ea8f2c987d3a3d68',
+      measurementId: 'G-LB7PRTMNNQ',
     };
 
     firebase.initializeApp(config);
@@ -26,34 +26,33 @@ if (typeof window === 'undefined') {
     messaging.onBackgroundMessage((payload) => {
       console.log(payload, 'payload');
 
-      const { title, body } = payload.notification;
+      // const { title, body } = payload.notification;
 
-      self.registration.showNotification(title, {
-        body,
-        icon: '/favicon.png',
-      });
+      // self.registration.showNotification(title, {
+      //   body,
+      //   icon: '/favicon.png',
+      //   data: payload.data,
+      // });
     });
 
-    self.addEventListener(
-      'push',
-      function (event) {
-        const message = event.data.json();
-        const notificationTitle = message.data?.title || '';
-        const notificationOptions = {
-          body: message.data?.content || '',
-          badge: '/favicon.png',
-          icon: '/favicon.png',
-          data: message?.data,
-        };
+    self.addEventListener('push', function (event) {
+      const message = event.data.json();
+      console.log(message, 'message');
 
-        const notificationPromise = self.registration.showNotification(
-          notificationTitle,
-          notificationOptions
-        );
-        event.waitUntil(notificationPromise);
-      },
-      false
-    );
+      const notificationTitle = message.notification?.title || '';
+      const notificationOptions = {
+        body: message.notification?.body || '',
+        badge: '/favicon.png',
+        icon: '/favicon.png',
+        data: message?.data,
+      };
+
+      const notificationPromise = self.registration.showNotification(
+        notificationTitle,
+        notificationOptions
+      );
+      event.waitUntil(notificationPromise);
+    });
 
     self.addEventListener('notificationclick', function (event) {
       console.log(event, 'event');

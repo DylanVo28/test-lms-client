@@ -28,8 +28,8 @@ const Notification = () => {
 
   const {
     requestReadNotification,
-    requestCheckHasNotification,
     notifications,
+    loading,
     requestGetNotification,
   } = useNotifications();
 
@@ -38,7 +38,6 @@ const Notification = () => {
       page: 1,
       pageSize: 50,
     };
-    requestCheckHasNotification?.run();
     requestGetNotification.run(params);
   });
 
@@ -97,6 +96,7 @@ const Notification = () => {
       <ListNotification
         handleReadNotification={handleReadNotification}
         listNotification={notifications?.content}
+        loading={loading}
       />
     </div>
   );

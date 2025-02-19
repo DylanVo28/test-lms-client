@@ -1,4 +1,5 @@
 import NoData from '@/components/ListCourse/NoData';
+import Loading from '@/components/UI/Loading';
 import Text from '@/components/UI/Text';
 import { Avatar } from '@nextui-org/react';
 import clsx from 'clsx';
@@ -8,12 +9,14 @@ import { useTranslation } from 'next-i18next';
 const ListNotification = ({
   listNotification,
   handleReadNotification,
+  loading,
 }: any) => {
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex flex-col gap-2 pr-2 scroll-custom max-h-[330px] overflow-auto">
-      {listNotification?.length > 0 &&
+    <div className="flex flex-col gap-2 pr-2 scroll-custom min-h-[300px] max-h-[300px] overflow-auto">
+      {!loading &&
+        listNotification?.length > 0 &&
         listNotification?.map((item: any) => {
           return (
             <div
@@ -51,6 +54,14 @@ const ListNotification = ({
             </div>
           );
         })}
+
+      {loading && (
+        <div className="min-h-[300px]">
+          <div className="pt-10">
+            <Loading />
+          </div>
+        </div>
+      )}
       {listNotification?.length === 0 && (
         <div className="pb-10">
           <NoData text={t('No notification')} />
