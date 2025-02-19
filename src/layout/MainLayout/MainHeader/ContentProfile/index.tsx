@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
 import LanguageModal from '../LanguageModal';
 import { useTranslation } from 'next-i18next';
+import { notificationAtom } from '@/store/notification/notification';
+import { useAtom } from 'jotai';
 
 const MENUS = [
   {
@@ -37,11 +39,14 @@ const ContentProfile = ({
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const router = useRouter();
+  const [, setNotifications] = useAtom(notificationAtom);
+
   const handleRedirectPage = (link: string) => {
     router.push(link);
   };
   const handleLogout = () => {
     disconnect();
+    setNotifications({});
     setAuthCookies({
       token: '',
     });

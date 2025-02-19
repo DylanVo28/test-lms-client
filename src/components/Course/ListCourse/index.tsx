@@ -147,7 +147,7 @@ const ListCourse = () => {
             <>
               <div
                 className={clsx(
-                  'grid grid-cols-1 md:grid-cols-4 gap-6 w-full',
+                  'grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full',
                   {}
                 )}
               >

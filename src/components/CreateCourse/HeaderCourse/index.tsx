@@ -35,7 +35,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
       <Progress
         maxValue={4}
         classNames={{
-          indicator: 'bg-green-1',
+          indicator: 'bg-main',
           track: 'max-h-[8px]',
         }}
         className="w-full"

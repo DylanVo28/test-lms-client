@@ -5,6 +5,7 @@ import { useState } from 'react';
 import ListNotification from './ListNotification';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
+import clsx from 'clsx';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -70,9 +71,18 @@ const Notification = () => {
           {t('Notification')}
         </Text>
         {notifications?.totalCount > 0 && (
-          <div className="min-w-7 min-h-4 py-[2px] px-1 flex justify-center items-center max-h-4 rounded-2xl bg-error-1">
-            <Text type="font-12-600" className="text-white">
-              {`${notifications?.totalCount}+`}
+          <div
+            className={clsx(
+              ' bg-error rounded-full min-w-5 w-max h-5 flex justify-center items-center',
+              {
+                ['!min-w-8']: notifications?.totalCount > 99,
+              }
+            )}
+          >
+            <Text type="font-12-500" className="text-white">
+              {notifications?.totalCount > 99
+                ? '99+'
+                : notifications?.totalCount}
             </Text>
           </div>
         )}

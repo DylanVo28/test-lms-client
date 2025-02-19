@@ -20,6 +20,8 @@ const IntendedLearners = ({
     name: 'objectives',
   });
 
+  console.log(control, 'control');
+
   const {
     fields: fieldsRequirements,
     append: appendRequirements,
@@ -63,9 +65,9 @@ const IntendedLearners = ({
             )}
           </Text>
         </div>
-        {fields?.map((field, index) => {
+        {fields?.map((item: any, index) => {
           return (
-            <div key={field?.id} className="flex items-center gap-3">
+            <div key={item?.id} className="flex items-center gap-3">
               <div className="w-full">
                 <Controller
                   name={`objectives.${index}.name`}
@@ -79,7 +81,9 @@ const IntendedLearners = ({
                         maxLength={160}
                         endContent
                         className="md:min-w-[500px]"
-                        placeholder={t('Type')}
+                        placeholder={
+                          item?.pladholder ? item?.pladholder : t('Type')
+                        }
                         inputDefault
                       />
                     );
@@ -124,9 +128,9 @@ const IntendedLearners = ({
           )}
         </Text>
 
-        {fieldsRequirements?.map((field, index) => {
+        {fieldsRequirements?.map((item: any, index) => {
           return (
-            <div key={field?.id} className="flex items-center gap-3">
+            <div key={item?.id} className="flex items-center gap-3">
               <div className="w-full">
                 <Controller
                   name={`requirements.${index}.name`}
@@ -137,7 +141,9 @@ const IntendedLearners = ({
                       maxLength={160}
                       endContent
                       className="md:min-w-[500px]"
-                      placeholder={t('Type')}
+                      placeholder={
+                        item?.pladholder ? item?.pladholder : t('Type')
+                      }
                       inputDefault
                     />
                   )}
@@ -178,9 +184,9 @@ const IntendedLearners = ({
           )}
         </Text>
 
-        {fieldsIntenedLeaners?.map((field, index) => {
+        {fieldsIntenedLeaners?.map((item: any, index) => {
           return (
-            <div key={field?.id} className="flex items-center gap-3">
+            <div key={item?.id} className="flex items-center gap-3">
               <div className="w-full">
                 <Controller
                   name={`intenedLeaners.${index}.name`}
@@ -191,7 +197,9 @@ const IntendedLearners = ({
                       maxLength={160}
                       endContent
                       className="md:min-w-[500px]"
-                      placeholder={t('Type')}
+                      placeholder={
+                        item?.pladholder ? item?.pladholder : t('Type')
+                      }
                       inputDefault
                     />
                   )}

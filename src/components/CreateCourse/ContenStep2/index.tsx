@@ -26,7 +26,7 @@ const ContenStep2 = ({ control }: { control: Control }) => {
             <InputText
               maxLength={60}
               className="md:min-w-[620px] w-full"
-              placeholder={t('Type')}
+              placeholder={t('e.g Learn photoshop CS6 from Scratch')}
               value={field.value}
               onChange={field.onChange}
               isInputSubmit

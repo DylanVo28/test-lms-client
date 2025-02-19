@@ -9,23 +9,23 @@ import { useTranslation } from 'next-i18next';
 
 const inputFields = [
   {
-    name: 'firstName',
-    label: 'First Name',
-    placeholder: 'First Name',
+    name: 'fullName',
+    label: 'Full Name',
+    placeholder: 'Full Name',
     type: 'text',
     atRow: 1,
   },
-  {
-    name: 'lastName',
-    label: 'Last Name',
-    placeholder: 'Type',
-    type: 'text',
-    atRow: 1,
-  },
+  // {
+  //   name: 'lastName',
+  //   label: 'Last Name',
+  //   placeholder: 'Type',
+  //   type: 'text',
+  //   atRow: 1,
+  // },
   {
     name: 'email',
     label: 'Email',
-    placeholder: 'Type',
+    placeholder: 'example@gmail.com',
     type: 'text',
     atRow: 1,
   },
@@ -186,8 +186,9 @@ const Field = ({
             return (
               <InputTextArena
                 placeholder={t(fieldItem.placeholder)}
-                className={`bg-[#242A30] w-full h-full`}
                 value={field.value}
+                minRows={5}
+                inputDefault
                 onChange={field.onChange}
               />
             );

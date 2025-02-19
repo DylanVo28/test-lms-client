@@ -40,8 +40,8 @@ const PlanYourCourseRight = ({
       {activePlan === 3 && (
         <CourseLandingPage watch={watch} control={control} />
       )}
-      {activePlan === 4 && <Referral control={control} />}
-      {activePlan === 5 && <SetPrice control={control} />}
+      {/* {activePlan === 4 && <Referral control={control} />} */}
+      {activePlan === 4 && <SetPrice control={control} />}
     </div>
   );
 };

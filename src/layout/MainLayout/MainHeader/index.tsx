@@ -26,6 +26,7 @@ import { useMount } from 'ahooks';
 import Text from '@/components/UI/Text';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
+import clsx from 'clsx';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -111,6 +112,7 @@ const MainHeader = () => {
     }
   };
 
+  const totalCount = 100;
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
@@ -132,7 +134,7 @@ const MainHeader = () => {
           className="w-10 h-10 block md:hidden"
         />
 
-        <div className="md:flex hidden items-center gap-4">
+        <div className="md:flex hidden items-center gap-8">
           <Menubar />
 
           <div className="flex items-center gap-4">
@@ -148,7 +150,7 @@ const MainHeader = () => {
                   src={'/images/img-search.png'}
                 />
               }
-              className="min-w-[470px]"
+              className="xl:min-w-[470px] lg:min-w-[320px]"
               radius="sm"
               placeholder={t('Search')}
             />
@@ -165,9 +167,19 @@ const MainHeader = () => {
               <PopoverTrigger>
                 <div className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10">
                   {notifications?.totalCount > 0 && (
-                    <div className="absolute bg-error rounded-full top-[-8px] right-[-8px] w-5 h-5 flex justify-center items-center">
+                    <div
+                      className={clsx(
+                        'absolute bg-error rounded-full top-[-8px] right-[-8px] min-w-5 w-max h-5 flex justify-center items-center',
+                        {
+                          ['!min-w-8 !right-[-12px] !top-[-12px]']:
+                            notifications?.totalCount > 99,
+                        }
+                      )}
+                    >
                       <Text type="font-12-500" className="text-white">
-                        {notifications?.totalCount}
+                        {notifications?.totalCount > 99
+                          ? '99+'
+                          : notifications?.totalCount}
                       </Text>
                     </div>
                   )}

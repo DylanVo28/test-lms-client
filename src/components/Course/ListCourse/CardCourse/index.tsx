@@ -28,21 +28,31 @@ const CardCourse = ({ item }: { item?: any }) => {
   };
   return (
     <div
-      onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
+      onClick={() => {
+        router.push(ROUTE_PATH.DETAIL_COURSE(item?.id));
+      }}
       className="rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
     >
-      <Image
-        src={item?.image || '/images/img-default.png'}
-        width={302}
-        height={200}
-        alt=""
-        className="w-full h-[200px] rounded rounded-b-none"
-        layout="contain"
-        onError={(e: any) => {
-          e.target.srcset = '/images/img-default.png';
-        }}
-      />
-      <div className="py-4 px-3 rounded bg-white/10 flex flex-col gap-[10px]">
+      <a
+        href={item?.image || '/images/img-default.png'}
+        target="_blank"
+        onClick={(e) => e.preventDefault()}
+      >
+        {/* <div className="w-full rounded-b-none h-max rounded justify-center items-center bg-white/10"> */}
+        <Image
+          src={item?.image || '/images/img-default.png'}
+          width={302}
+          height={200}
+          alt=""
+          className="w-full h-[200px]"
+          layout="contain"
+          onError={(e: any) => {
+            e.target.srcset = '/images/img-default.png';
+          }}
+        />
+        {/* </div> */}
+      </a>
+      <div className="py-4 px-3 rounded-t-none rounded bg-white/10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />

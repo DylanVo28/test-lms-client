@@ -37,17 +37,23 @@ export default function CourseCard({
       onClick={() => router.push(ROUTE_PATH.DETAIL_LESSON(id))}
     >
       <div className="w-full">
-        <Image
-          src={image || '/images/img-default.png'}
-          alt={name}
-          width={302}
-          height={200}
-          className="w-full h-[200px]"
-          layout="contain"
-          onError={(e: any) => {
-            e.target.srcset = '/images/img-default.png';
-          }}
-        />
+        <a
+          href={image || '/images/img-default.png'}
+          target="_blank"
+          onClick={(e) => e.preventDefault()}
+        >
+          <Image
+            src={image || '/images/img-default.png'}
+            alt={name}
+            width={302}
+            height={200}
+            className="w-full h-[200px]"
+            layout="contain"
+            onError={(e: any) => {
+              e.target.srcset = '/images/img-default.png';
+            }}
+          />
+        </a>
       </div>
       <div className="py-4 px-3 flex flex-col gap-4">
         <div className="flex flex-col gap-[10px]">
