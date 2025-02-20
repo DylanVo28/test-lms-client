@@ -8,14 +8,6 @@ import { getAccessToken } from '../auth';
 import { notificationAtom } from './notification';
 import { toast } from '@/components/UI/Toast/toast';
 
-export interface IResNotification {
-  data: INotification[];
-  page: number;
-  page_size: number;
-  total: number;
-  total_page: number;
-}
-
 export interface INotification {
   id: string;
   title: string;
@@ -40,7 +32,7 @@ export interface INotification {
 export const getAllNotification = (filters?: any) => {
   const params = {
     page: filters?.page || 1,
-    page_size: filters?.pageSize || 10,
+    pageSize: filters?.pageSize || 10,
     userType: filters?.userType,
   };
 
