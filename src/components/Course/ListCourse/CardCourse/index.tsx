@@ -37,6 +37,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
+        className="bg-white/10"
       >
         {/* <div className="w-full rounded-b-none h-max rounded justify-center items-center bg-white/10"> */}
         <Image
@@ -44,8 +45,9 @@ const CardCourse = ({ item }: { item?: any }) => {
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px]"
+          className="w-full h-[200px] bg-white/10 object-scale-down"
           layout="contain"
+          objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}

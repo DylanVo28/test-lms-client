@@ -81,13 +81,16 @@ const CardCourse = ({
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
+        className="bg-white/10"
       >
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px] rounded rounded-b-none"
+          layout="contain"
+          className="w-full h-[200px] rounded rounded-b-none object-scale-down bg-white/10"
+          objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
