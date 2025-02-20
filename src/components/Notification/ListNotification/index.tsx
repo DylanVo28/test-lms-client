@@ -5,6 +5,7 @@ import { Avatar, Tooltip } from '@nextui-org/react';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 const ListNotification = ({
   listNotification,
@@ -31,7 +32,18 @@ const ListNotification = ({
               >
                 <div className="flex items-center gap-4">
                   <div>
-                    <Avatar src="" className="w-10 h-10" />
+                    {item?.data?.avatar ? (
+                      <Image
+                        src={item?.data?.avatar}
+                        className="w-10 h-10"
+                        width={40}
+                        height={40}
+                        alt="avtar"
+                        layout="contain"
+                      />
+                    ) : (
+                      <Avatar src="" className="w-10 h-10" />
+                    )}
                   </div>
                   <div className="flex flex-col gap-1">
                     <Text type="font-16-500" className="truncate max-w-[430px]">
