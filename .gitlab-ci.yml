@@ -9,6 +9,7 @@ deploy_to_vps:
     - echo "VPS_USER: $VPS_USER"
     - echo "VPS_HOST: $VPS_HOST"
     - echo "VPS_SSH_KEY length: ${#VPS_SSH_KEY}"
+      EOF
   #   - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
   #   - eval $(ssh-agent -s)
   #   - mkdir -p ~/.ssh
@@ -30,5 +31,5 @@ deploy_to_vps:
   #     pm2 startup
   #     EOF
 
-  # environment:
-  #   name: develop
+  environment:
+    name: develop
