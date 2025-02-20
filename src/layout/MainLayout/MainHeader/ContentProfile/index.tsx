@@ -55,7 +55,7 @@ const ContentProfile = ({
 
   const generateName = () => {
     if (profile?.fullName) {
-      return profile;
+      return profile?.fullName;
     }
     return profile?.walletAddress;
   };
