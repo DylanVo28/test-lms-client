@@ -15,15 +15,15 @@ deploy_to_vps:
     - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts || true
     # Deploy to VPS
     - ssh $VPS_USER@$VPS_HOST << 'EOF'
-      cd ~/apps/nextjs-app
-      git pull origin develop
-      npm install -f
-      npm run build
-      pm2 delete lms-web
-      pm2 start "npm run start" --name lms-web
-      pm2 save
-      pm2 startup
-      EOF
+    - cd ~/lms/lms-fe
+    - git pull origin develop
+    - npm install -f
+    - npm run build
+    - pm2 delete lms-web
+    - pm2 start "npm run start" --name lms-web
+    - pm2 save
+    - pm2 startup
+    - EOF
 
   environment:
     name: develop
