@@ -6,7 +6,8 @@ deploy_to_vps:
   only:
     - develop
   script:
-    - env
+    - echo "$VPS_USER"
+    - echo "$VPS_HOST"
     - apt-get update -y && apt-get install -y openssh-client
     - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
