@@ -14,7 +14,7 @@ deploy_to_vps:
     - echo "$VPS_SSH_KEY"
     - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts || true
     # Deploy to VPS
-    - ssh $VPS_USER@$VPS_HOST << 'EOF'
+    - ssh root@46.250.236.144 << 'EOF'
     - cd ~/lms/lms-fe
     - git pull origin develop
     - npm install -f
