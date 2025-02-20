@@ -88,7 +88,7 @@ const MyProfile = () => {
             avatar:
               user?.avatar ||
               'https://i1.sndcdn.com/avatars-000225974941-3icznp-t500x500.jpg',
-            fullname: `${user?.firstName || '-'} ${user?.lastName || '-'}`,
+            fullname: user?.fullName || '--',
             email: user?.email || '--',
             verify: true,
             customers: {

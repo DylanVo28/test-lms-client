@@ -21,8 +21,8 @@ const CardCourse = ({ item }: { item?: any }) => {
   }, 0);
 
   const generateMentors = () => {
-    if (item?.author?.firstName || item?.author?.lastName) {
-      return `${item?.author?.firstName || ''} ${item?.author?.lastName || ''}`;
+    if (item?.author?.fullName) {
+      return item?.author?.fullName;
     }
     return item?.author?.walletAddress;
   };

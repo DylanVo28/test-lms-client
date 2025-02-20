@@ -35,6 +35,7 @@ export const referralRequest = {
 export interface TUser {
   id: string;
   email: string | null;
+  fullName: string | null;
   firstName: string | null;
   lastName: string | null;
   role: string;

@@ -36,7 +36,7 @@ const Comment = ({
 }) => {
   const { address } = useAccount();
   const { profile } = useProfile();
-  
+
   const meLiked = item?.reactions?.some(
     (reaction: any) => reaction?.userId === profile?.id
   );
@@ -62,9 +62,7 @@ const Comment = ({
         />
 
         <Text type="font-16-600" className="text-white">
-          {item?.user?.firstName
-            ? `${item?.user?.firstName} ${item?.user?.lastName}`
-            : address}
+          {item?.user?.fullName || address}
         </Text>
       </div>
       <div className="flex items-center gap-2">

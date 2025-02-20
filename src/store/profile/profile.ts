@@ -5,6 +5,7 @@ export interface InitProfile {
   avatar: string;
   email: string;
   id: string;
+  fullName?: string;
   firstName?: string;
   lastName?: string;
   role?: string;
@@ -16,6 +17,7 @@ export const initialProfile: InitProfile = {
   avatar: '',
   email: '',
   id: '',
+  fullName: '',
   firstName: '',
   lastName: '',
   role: '',

@@ -54,8 +54,8 @@ const ContentProfile = ({
   };
 
   const generateName = () => {
-    if (profile?.firstName || profile?.lastName) {
-      return `${profile?.firstName} ${profile?.lastName}`;
+    if (profile?.fullName) {
+      return profile;
     }
     return profile?.walletAddress;
   };

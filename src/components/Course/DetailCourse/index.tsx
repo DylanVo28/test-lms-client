@@ -75,13 +75,8 @@ const DetailCourse = () => {
   };
 
   const generateMentors = () => {
-    if (
-      dataDetail?.data?.author?.firstName ||
-      dataDetail?.data?.author?.lastName
-    ) {
-      return `${dataDetail?.data?.author?.firstName || ''} ${
-        dataDetail?.data?.author?.lastName || ''
-      }`;
+    if (dataDetail?.data?.author?.fullName) {
+      return dataDetail?.data?.author?.fullName;
     }
     return dataDetail?.data?.author?.walletAddress;
   };

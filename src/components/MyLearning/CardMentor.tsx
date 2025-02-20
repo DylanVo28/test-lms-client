@@ -13,8 +13,8 @@ export default function CardMentor({ mentor }: IProps) {
   const { t } = useTranslation('common');
 
   const generateMentors = () => {
-    if (mentor?.firstName || mentor?.lastName) {
-      return `${mentor?.firstName || ''} ${mentor?.lastName || ''}`;
+    if (mentor?.fullName) {
+      return mentor?.fullName;
     }
     return mentor?.walletAddress;
   };
