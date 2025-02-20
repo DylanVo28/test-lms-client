@@ -6,31 +6,24 @@ deploy_to_vps:
   only:
     - develop
   script:
+    - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - echo "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - echo "$VPS_SSH_KEY"
+    - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
     # Deploy to VPS
-    - echo "VPS_USER: $VPS_USER"
-    - echo "VPS_HOST: $VPS_HOST"
-    - echo "VPS_SSH_KEY length: ${#VPS_SSH_KEY}"
+    - ssh $VPS_USER@$VPS_HOST << 'EOF'
+      cd ~/apps/nextjs-app
+      git pull origin develop
+      npm install -f
+      npm run build
+      pm2 delete lms-web
+      pm2 start "npm run start" --name lms-web
+      pm2 save
+      pm2 startup
       EOF
-  #   - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
-  #   - eval $(ssh-agent -s)
-  #   - mkdir -p ~/.ssh
-  #   - echo "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-  #   - echo "VPS_USER: $VPS_USER"
-  #   - echo "VPS_HOST: $VPS_HOST"
-  #   - echo "VPS_SSH_KEY length: ${#VPS_SSH_KEY}"
-  #   - chmod 600 ~/.ssh/id_ed25519
-  #   - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-  #   # Deploy to VPS
-  #   - ssh $VPS_USER@$VPS_HOST << 'EOF'
-  #     cd ~/apps/nextjs-app
-  #     git pull origin develop
-  #     npm install -f
-  #     npm run build
-  #     pm2 delete lms-web
-  #     pm2 start "npm run start" --name lms-web
-  #     pm2 save
-  #     pm2 startup
-  #     EOF
 
   environment:
     name: develop
