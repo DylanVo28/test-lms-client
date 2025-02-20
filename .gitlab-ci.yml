@@ -15,7 +15,6 @@ deploy_to_vps:
     - echo "VPS_SSH_KEY length: ${#VPS_SSH_KEY}"
     - chmod 600 ~/.ssh/id_ed25519
     - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-    - ssh $VPS_USER@$VPS_HOST "echo 'SSH Connection Successful'"
     # Deploy to VPS
     - ssh $VPS_USER@$VPS_HOST << 'EOF'
       cd ~/apps/nextjs-app
