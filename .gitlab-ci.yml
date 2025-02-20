@@ -6,6 +6,7 @@ deploy_to_vps:
   only:
     - develop
   script:
+    - apt-get update -y && apt-get install -y openssh-client
     - 'which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
@@ -14,16 +15,17 @@ deploy_to_vps:
     - echo "$VPS_SSH_KEY"
     - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts || true
     # Deploy to VPS
-    - ssh root@46.250.236.144 << 'EOF'
-    - cd ~/lms/lms-fe
-    - git pull origin develop
-    - npm install -f
-    - npm run build
-    - pm2 delete lms-web
-    - pm2 start "npm run start" --name lms-web
-    - pm2 save
-    - pm2 startup
-    - EOF
+    - ssh -o StrictHostKeyChecking=no root@46.250.236.144 "echo 'SSH Connection Successful'"
+    - ssh -o StrictHostKeyChecking=no root@46.250.236.144 << 'EOF'
+      cd ~/lms/lms-fe
+      git pull origin develop
+      npm install -f
+      npm run build
+      pm2 delete lms-web
+      pm2 start "npm run start" --name lms-web
+      pm2 save
+      pm2 startup
+      EOF
 
   environment:
     name: develop
