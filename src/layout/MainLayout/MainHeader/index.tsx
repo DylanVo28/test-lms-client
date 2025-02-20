@@ -169,7 +169,7 @@ const MainHeader = () => {
                   {notifications?.totalCount > 0 && (
                     <div
                       className={clsx(
-                        'absolute bg-error rounded-full top-[-8px] right-[-8px] min-w-5 w-max h-5 flex justify-center items-center',
+                        'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-[18px] flex justify-center items-center',
                         {
                           ['!min-w-8 !right-[-12px] !top-[-12px]']:
                             notifications?.totalCount > 99,
