@@ -6,6 +6,7 @@ deploy_to_vps:
   only:
     - develop
   script:
+    # Deploy to VPS
     - echo "VPS_USER: $VPS_USER"
     - echo "VPS_HOST: $VPS_HOST"
     - echo "VPS_SSH_KEY length: ${#VPS_SSH_KEY}"
