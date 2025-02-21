@@ -39,6 +39,7 @@ const MainHeader = () => {
   const refDrawerMenu: any = useRef(null);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
+  const prevIsConnected = useRef<boolean | null>(null);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -64,6 +65,10 @@ const MainHeader = () => {
   });
 
   const handleSignMessage = async (messageNonce: string) => {
+    if (!isConnected || !address) {
+      return;
+    }
+
     try {
       const sig = await signMessageAsync({ message: messageNonce });
       runLoginWeb3({
@@ -112,7 +117,6 @@ const MainHeader = () => {
     }
   };
 
-  const totalCount = 100;
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">

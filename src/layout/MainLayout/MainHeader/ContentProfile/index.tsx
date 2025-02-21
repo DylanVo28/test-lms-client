@@ -53,7 +53,7 @@ const ContentProfile = ({
     toast.success(t('Logout successfully'));
   };
 
-  const generateName = () => {
+  const generateName = (): any => {
     if (profile?.fullName) {
       return profile;
     }
