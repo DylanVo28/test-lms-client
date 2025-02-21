@@ -9,18 +9,20 @@ import { useTranslation } from 'next-i18next';
 
 const IntendedLearners = ({
   control,
+  errors,
 }: {
   control: Control;
   idDetail: string;
   handleSubmit: any;
+  errors: any;
 }) => {
   const { t } = useTranslation('common');
+  console.log(errors, 'errors');
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'objectives',
   });
-
-  console.log(control, 'control');
 
   const {
     fields: fieldsRequirements,
@@ -73,8 +75,6 @@ const IntendedLearners = ({
                   name={`objectives.${index}.name`}
                   control={control}
                   render={({ field }) => {
-                    console.log(field, 'field');
-
                     return (
                       <InputText
                         {...field}

@@ -15,6 +15,29 @@ import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  objectives: yup
+    .array()
+    .of(
+      yup.object().shape({
+        name: yup.string().required('This field is required'),
+      })
+    )
+    .min(4, 'You must enter at least 4 learning objectives'),
+  requirements: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required('This field is required'),
+    })
+  ),
+  intenedLeaners: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required('This field is required'),
+    })
+  ),
+});
 
 const dataObjectivesDefault = [
   {
@@ -80,20 +103,26 @@ const PlanYourCourse = () => {
         res?.data?.title && res?.data?.categoryId;
       res?.data?.level && res?.data?.lang;
 
-      const allLessonsHaveContent = res?.data?.sections?.every(
-        (section: any) =>
-          section.lessons.length > 0 &&
-          section.lessons.every((lesson: any) => lesson.content !== null)
-      );
+      const allLessonsHaveContent =
+        Array.isArray(res?.data?.sections) &&
+        res.data.sections.length > 0 &&
+        res.data.sections.every(
+          (section: any) =>
+            section.lessons.length > 0 &&
+            section.lessons.every((lesson: any) => lesson.content !== null)
+        );
 
-      const allQuizzesHaveQuestions = res?.data?.sections?.every(
-        (section: any) =>
-          section.quizzes.length > 0 &&
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-      );
+      const allQuizzesHaveQuestions =
+        Array.isArray(res?.data?.sections) &&
+        res.data.sections.length > 0 &&
+        res.data.sections.every(
+          (section: any) =>
+            section.quizzes.length > 0 &&
+            section.quizzes.every(
+              (quizz: any) =>
+                Array.isArray(quizz.questions) && quizz.questions.length > 0
+            )
+        );
 
       const isEnoughCurruclum =
         allLessonsHaveContent || allQuizzesHaveQuestions;
@@ -150,7 +179,15 @@ const PlanYourCourse = () => {
     },
   });
 
-  const { control, handleSubmit, reset, watch, setValue } = useForm<any>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<any>({
+    resolver: yupResolver(schema),
     defaultValues: {
       objectives: [{ name: '' }, { name: '' }, { name: '' }, { name: '' }],
       requirements: [{ name: '' }],
@@ -161,6 +198,8 @@ const PlanYourCourse = () => {
     },
   });
 
+  console.log(errors, 'errors');
+
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
@@ -170,20 +209,26 @@ const PlanYourCourse = () => {
     onSuccess: async (res: any) => {
       const resData = await fetchDetailSection();
 
-      const allLessonsHaveContent = resData?.data?.every(
-        (section: any) =>
-          section.lessons.length > 0 &&
-          section.lessons.every((lesson: any) => lesson.content !== null)
-      );
+      const allLessonsHaveContent =
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every(
+          (section: any) =>
+            section.lessons.length > 0 &&
+            section.lessons.every((lesson: any) => lesson.content !== null)
+        );
 
-      const allQuizzesHaveQuestions = resData?.data?.every(
-        (section: any) =>
-          section.quizzes.length > 0 &&
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-      );
+      const allQuizzesHaveQuestions =
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every(
+          (section: any) =>
+            section.quizzes.length > 0 &&
+            section.quizzes.every(
+              (quizz: any) =>
+                Array.isArray(quizz.questions) && quizz.questions.length > 0
+            )
+        );
 
       const isEnoughIntendedLearners =
         res?.data?.objectives?.length > 0 &&
@@ -266,20 +311,26 @@ const PlanYourCourse = () => {
   const onPublish = async (values: any) => {
     const resData = await fetchDetailSection();
 
-    const allLessonsHaveContent = resData?.data?.every(
-      (section: any) =>
-        section.lessons.length > 0 &&
-        section.lessons.every((lesson: any) => lesson.content !== null)
-    );
+    const allLessonsHaveContent =
+      Array.isArray(resData?.data) &&
+      resData?.data.length > 0 &&
+      resData?.data.every(
+        (section: any) =>
+          section.lessons.length > 0 &&
+          section.lessons.every((lesson: any) => lesson.content !== null)
+      );
 
-    const allQuizzesHaveQuestions = resData?.data?.every(
-      (section: any) =>
-        section.quizzes.length > 0 &&
-        section.quizzes.every(
-          (quizz: any) =>
-            Array.isArray(quizz.questions) && quizz.questions.length > 0
-        )
-    );
+    const allQuizzesHaveQuestions =
+      Array.isArray(resData?.data) &&
+      resData?.data.length > 0 &&
+      resData?.data.every(
+        (section: any) =>
+          section.quizzes.length > 0 &&
+          section.quizzes.every(
+            (quizz: any) =>
+              Array.isArray(quizz.questions) && quizz.questions.length > 0
+          )
+      );
 
     const isEnoughtSetPrice = values?.price && values?.originPrice;
     const isEnoughIntendedLearners =
@@ -395,20 +446,26 @@ const PlanYourCourse = () => {
     dataDetail?.data?.level &&
     dataDetail?.data?.lang;
 
-  const allLessonsHaveContent = dataDetail?.data?.sections?.every(
-    (section: any) =>
-      section.lessons.length > 0 &&
-      section.lessons.every((lesson: any) => lesson.content !== null)
-  );
+  const allLessonsHaveContent =
+    Array.isArray(dataDetail?.data?.sections) &&
+    dataDetail?.data?.sections.length > 0 &&
+    dataDetail?.data?.sections.every(
+      (section: any) =>
+        section.lessons.length > 0 &&
+        section.lessons.every((lesson: any) => lesson.content !== null)
+    );
 
-  const allQuizzesHaveQuestions = dataDetail?.data?.sections?.every(
-    (section: any) =>
-      section.quizzes.length > 0 &&
-      section.quizzes.every(
-        (quizz: any) =>
-          Array.isArray(quizz.questions) && quizz.questions.length > 0
-      )
-  );
+  const allQuizzesHaveQuestions =
+    Array.isArray(dataDetail?.data?.sections) &&
+    dataDetail?.data?.sections.length > 0 &&
+    dataDetail?.data?.sections.every(
+      (section: any) =>
+        section.quizzes.length > 0 &&
+        section.quizzes.every(
+          (quizz: any) =>
+            Array.isArray(quizz.questions) && quizz.questions.length > 0
+        )
+    );
 
   const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
 
@@ -443,6 +500,7 @@ const PlanYourCourse = () => {
                 <PlanYourCourseRight
                   handleSubmit={handleSubmit}
                   watch={watch}
+                  errors={errors}
                   setValue={setValue}
                   idDetail={router.query.id as string}
                   control={control}
