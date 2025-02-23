@@ -137,7 +137,7 @@ const CardCourse = ({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
+            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
                 {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>

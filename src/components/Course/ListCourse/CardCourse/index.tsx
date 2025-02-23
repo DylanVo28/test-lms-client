@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
+import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 
 dayjs.extend(relativeTime);
 
@@ -85,7 +86,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
+            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
                 {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>
@@ -106,12 +107,7 @@ const CardCourse = ({ item }: { item?: any }) => {
               <Text type="font-14-500" className="text-white">
                 {t('Enroll Course')}
               </Text>
-              <Image
-                src={'/icons/ic-arrow-right-up-line.svg'}
-                width={20}
-                height={20}
-                alt=""
-              />
+              <IconArrowUp />
             </div>
           </Button>
         </div>

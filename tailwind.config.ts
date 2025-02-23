@@ -18,6 +18,7 @@ module.exports = {
       colors: {
         white: 'var(--theme-white)',
         'white-10': 'var(--theme-white-10)',
+        'white-5': 'var(--theme-white-5)',
 
         primary: 'var(--theme-primary)',
         'black-10': 'var(--theme-black-10)',
@@ -31,6 +32,9 @@ module.exports = {
         'black-7': 'var(--theme-black-7)',
         'black-6': 'var(--theme-black-6)',
         orange: 'var(--theme-orange)',
+        'orange-10': 'var(--theme-orange-10)',
+        'orange-50': 'var(--theme-orange-50)',
+
         gray: 'var(--theme-gray)',
         'secondary-500': 'var(--theme-secondary-500)',
 
