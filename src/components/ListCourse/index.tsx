@@ -129,7 +129,7 @@ const ListCourse = () => {
                   key={item?.id}
                   onMouseEnter={() => handleMouseEnter(item?.id)}
                   onMouseLeave={handleMouseLeave}
-                  className="rounded hover:bg-black/80  hover:backdrop-blur-md cursor-pointer transition-all flex flex-col md:flex-row gap-2 w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-[#181F25]"
+                  className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
                 >
                   <Image
                     alt=""
@@ -140,7 +140,7 @@ const ListCourse = () => {
                   />
                   <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
                     {idHovered === item?.id && (
-                      <div className="absolute inset-0 bg-[#000000B3] bg-blur-custom z-50 h-full">
+                      <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
                         <div className="flex flex-row items-center gap-4 justify-center h-full">
                           <div
                             className="flex gap-2 justify-center items-center z-[1000]"
@@ -227,7 +227,7 @@ const IconEdit = () => {
     >
       <path
         d="M6.414 16.0001L16.556 5.85808L15.142 4.44408L5 14.5861V16.0001H6.414ZM7.243 18.0001H3V13.7571L14.435 2.32208C14.6225 2.13461 14.8768 2.0293 15.142 2.0293C15.4072 2.0293 15.6615 2.13461 15.849 2.32208L18.678 5.15108C18.8655 5.33861 18.9708 5.59292 18.9708 5.85808C18.9708 6.12325 18.8655 6.37756 18.678 6.56508L7.243 18.0001ZM3 20.0001H21V22.0001H3V20.0001Z"
-        fill="white"
+        fill="var(--theme-white)"
       />
     </svg>
   );
@@ -244,12 +244,12 @@ const IconDelete = () => {
       <g clip-path="url(#clip0_795_5780)">
         <path
           d="M4 8H20V21C20 21.2652 19.8946 21.5196 19.7071 21.7071C19.5196 21.8946 19.2652 22 19 22H5C4.73478 22 4.48043 21.8946 4.29289 21.7071C4.10536 21.5196 4 21.2652 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.73478 7.10536 2.48043 7.29289 2.29289C7.48043 2.10536 7.73478 2 8 2H16C16.2652 2 16.5196 2.10536 16.7071 2.29289C16.8946 2.48043 17 2.73478 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"
-          fill="white"
+          fill="var(--theme-white)"
         />
       </g>
       <defs>
         <clipPath id="clip0_795_5780">
-          <rect width="24" height="24" fill="white" />
+          <rect width="24" height="24" fill="var(--theme-white)" />
         </clipPath>
       </defs>
     </svg>
@@ -266,7 +266,7 @@ const IconSearch = () => {
     >
       <path
         d="M18.031 16.617L22.314 20.899L20.899 22.314L16.617 18.031C15.0237 19.3082 13.042 20.0029 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20.0029 13.042 19.3082 15.0237 18.031 16.617ZM16.025 15.875C17.2941 14.5699 18.0029 12.8204 18 11C18 7.132 14.867 4 11 4C7.132 4 4 7.132 4 11C4 14.867 7.132 18 11 18C12.8204 18.0029 14.5699 17.2941 15.875 16.025L16.025 15.875Z"
-        fill="#BFBFBF"
+        fill="var(--theme-gray-30)"
       />
     </svg>
   );

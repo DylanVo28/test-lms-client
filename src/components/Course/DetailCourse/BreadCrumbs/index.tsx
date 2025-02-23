@@ -1,3 +1,6 @@
+import IconArrowLeft from '@/components/UI/Icons/IconArrowLeft';
+import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
+import IconHome from '@/components/UI/Icons/IconHome';
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
@@ -16,14 +19,9 @@ const BreadCrumbs = () => {
         variant="light"
         size="md"
       >
-        <Image src={'/icons/ic-home.svg'} width={24} height={24} alt="" />
+        <IconHome />
       </Button>
-      <Image
-        src={'/images/img-arrow-right.png'}
-        width={20}
-        height={20}
-        alt=""
-      />
+      <IconArrowRight />
       <Text
         type="font-14-500"
         onClick={() => router.push(ROUTE_PATH.COURSE)}
@@ -32,12 +30,8 @@ const BreadCrumbs = () => {
         {t(`Course`)}
       </Text>
 
-      <Image
-        src={'/images/img-arrow-right.png'}
-        width={20}
-        height={20}
-        alt=""
-      />
+      <IconArrowRight />
+
       <Text type="font-14-500" className="text-main">
         {t('Course details')}
       </Text>

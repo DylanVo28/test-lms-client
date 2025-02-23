@@ -133,13 +133,13 @@ const InputText = (props: InputTextProps) => {
               '!bg-transparent !border-white min-h-[40px] ': isLesson,
               [classInputWrapper]: classInputWrapper,
 
-              '!bg-[#181F25] !py-[10px] !px-4  !border-none min-h-[44px] ':
+              '!bg-black-30 !py-[10px] !px-4  !border-none min-h-[44px] ':
                 isInput,
-              '!bg-[#181F25] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-black-30 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 isInputSubmit,
-              '!bg-[#0A0F1580] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-gray-80 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 inputDefault,
-              '!bg-[#0A0F1580]  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
+              '!bg-gray-80  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
               '!bg-[#F0F0F0] border-1 !border-white !py-[12px] !px-[16px] data-[hover=true]:!border-white group-data-[focus=true]:!border-white':
                 inputShare,

@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 
 dayjs.extend(relativeTime);
 
@@ -153,12 +154,7 @@ const CardCourse = ({
               <Text type="font-14-500" className="text-white">
                 {t('Enroll Course')}
               </Text>
-              <Image
-                src={'/icons/ic-arrow-right-up-line.svg'}
-                width={20}
-                height={20}
-                alt=""
-              />
+              <IconArrowUp />
             </div>
           </Button>
         </div>

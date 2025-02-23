@@ -104,13 +104,7 @@ const MainHeader = () => {
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
-        {[
-          COLOR_THEME.WHITE,
-          COLOR_THEME.SKY_BLUE,
-          COLOR_THEME.LIGHT_PINK,
-          COLOR_THEME.LIGHT_YELLOW,
-          COLOR_THEME.LIGHT_BEIGE,
-        ].includes(theme.color as any) ? (
+        {theme?.colorMode === 'light' ? (
           <Image
             onClick={() => router.push(ROUTE_PATH.HOME)}
             alt="logo"

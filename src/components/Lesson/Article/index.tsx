@@ -57,7 +57,7 @@ const Article = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )} */}
       {containerBounds && (
@@ -83,7 +83,7 @@ const Article = ({
               size="sm"
               radius="sm"
             >
-              <CaretLeft size={24} />
+              <CaretLeft size={24} className="fill-text-white" />
             </Button>
           )}
 
@@ -112,7 +112,7 @@ const Article = ({
             }}
             radius="sm"
           >
-            <CaretRight size={24} />
+            <CaretRight size={24} className="fill-text-white" />
           </Button>
         </>
       )}
@@ -143,7 +143,7 @@ const Article = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button> */}
     </div>
   );

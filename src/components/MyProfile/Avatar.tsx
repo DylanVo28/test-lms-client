@@ -90,18 +90,18 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         <sup className="text-[#FF3132]">*</sup> {t('Upload File')}
       </div>
 
-      <div className="opacity-50">
+      <div className="text-white">
         {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
       </div>
 
-      <div className="p-[20px] h-[241px] bg-[#32383E] w-full rounded-[4px]">
-        <div className="relative w-full h-full bg-[#181F25] border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
-          <div className="text-[#ffffff7f]">
+      <div className="p-[20px] h-[241px] bg-gray-50 w-full rounded-[4px]">
+        <div className="relative w-full h-full bg-gray-70 border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
+          <div className="text-white">
             {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
           </div>
           <Button
             isLoading={loadingFile}
-            className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] border border-[var(--main-color)]"
+            className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] text-main border border-[var(--main-color)]"
           >
             {t('Choose File')}
           </Button>
@@ -120,7 +120,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         onClick={onSave}
         isLoading={loading}
         type="button"
-        className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+        className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
       >
         {t('Save Profile')}
       </Button>

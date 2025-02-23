@@ -15,6 +15,7 @@ import { useCreateTheme, useUpdateTheme } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import Text from '@/components/UI/Text';
 
 const ThemeConfiguration = ({
   setUrlLogo,
@@ -112,11 +113,11 @@ const ThemeConfiguration = ({
         onOpenChange={onOpenChange}
         closeButton={<></>}
       >
-        <DrawerContent className="p-[24px] flex flex-col gap-[32px] bg-[#24292fe5] backdrop-blur-xl">
+        <DrawerContent className="p-[24px] flex flex-col gap-[32px] bg-gray-40 backdrop-blur-xl">
           {(onClose) => (
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
-                <span className="text-[28px] font-bold leading-[150%]">
+                <span className="text-[28px] font-bold leading-[150%] text-white">
                   {t('Theme Configuration')}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
@@ -146,6 +147,6 @@ const ThemeConfiguration = ({
   );
 };
 
-const Divided = () => <div className="w-full border border-[#2B3032]" />;
+const Divided = () => <div className="w-full border border-gray-60" />;
 
 export default ThemeConfiguration;

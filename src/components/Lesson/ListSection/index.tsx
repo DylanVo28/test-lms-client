@@ -31,7 +31,7 @@ const ListSection = ({
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex flex-col bg-[#0F141A] overflow-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
+    <div className="flex flex-col bg-black-70 overflow-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
       <LoadingContainer loading={loading} />
 
       <div className="mx-[-8px]">

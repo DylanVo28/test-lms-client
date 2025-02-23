@@ -39,7 +39,7 @@ const NoDataContent = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
@@ -62,7 +62,7 @@ const NoDataContent = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button>
       <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
         <IconNodata />

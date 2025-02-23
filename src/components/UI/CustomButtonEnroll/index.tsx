@@ -48,7 +48,7 @@ const CustomButtonEnroll = ({
                 onPress={handleClickButton}
                 className="bg-main w-full min-h-[40px] rounded"
               >
-                <Text className="text-white" type="font-16-600">
+                <Text className="text-text-white" type="font-16-600">
                   {course?.isOwner ? t('Go to course') : t('Enroll Now')}
                 </Text>
               </Button>

@@ -28,7 +28,7 @@ const PlanYourCourseRight = ({
   const { t } = useTranslation('common');
 
   return (
-    <div className="bg-[#181F25] p-4 md:py-6 md:px-8 flex flex-col rounded shadow-lg w-full gap-8">
+    <div className="bg-gray-70 p-4 md:py-6 md:px-8 flex flex-col rounded shadow-lg w-full gap-8">
       {activePlan === 1 && (
         <IntendedLearners
           handleSubmit={handleSubmit}
@@ -40,8 +40,8 @@ const PlanYourCourseRight = ({
       {activePlan === 3 && (
         <CourseLandingPage watch={watch} control={control} />
       )}
-      {activePlan === 4 && <Referral control={control} />}
-      {activePlan === 5 && <SetPrice control={control} />}
+      {/* {activePlan === 4 && <Referral control={control} />} */}
+      {activePlan === 4 && <SetPrice control={control} />}
     </div>
   );
 };

@@ -101,10 +101,10 @@ const ColorTheme = ({
 
   return (
     <div>
-      <Text className="text-[18px] font-semibold mb-[16px]">
+      <Text className="text-[18px] text-white font-semibold mb-[16px]">
         {t('Color theme')}
       </Text>
-      <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
+      <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
         <div className="flex flex-col gap-3">
           <Text type="font-18-600" className="text-white">
             {t('Background')}

@@ -53,7 +53,9 @@ const FormLecture = ({
             }}
             className="rounded bg-main"
           >
-            <Text type="font-16-400">{t('Add lecture')}</Text>
+            <Text className="text-text-white" type="font-16-400">
+              {t('Add lecture')}
+            </Text>
           </Button>
         </div>
       </div>

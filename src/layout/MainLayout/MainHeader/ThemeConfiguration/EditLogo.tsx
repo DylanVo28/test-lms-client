@@ -77,15 +77,15 @@ const EditLogo = ({
   };
   return (
     <div>
-      <Text className="text-[18px] font-semibold mb-[16px]">
+      <Text className="text-[18px] text-white font-semibold mb-[16px]">
         {t('Edit logo')}
       </Text>
-      <p className="text-md text-[#ffffff7f] mb-[8px]">
+      <p className="text-md text-white mb-[8px]">
         {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
       </p>
-      <div className="p-[20px] bg-[#242A30] rounded-[4px] border border-[#00000033]">
-        <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-[#181F25] rounded-[4px] ">
-          <div className="text-[#ffffff7f]">
+      <div className="p-[20px] bg-gray-50 rounded-[4px] border border-[#00000033]">
+        <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
+          <div className="text-white">
             {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
           </div>
           <div className="relative">

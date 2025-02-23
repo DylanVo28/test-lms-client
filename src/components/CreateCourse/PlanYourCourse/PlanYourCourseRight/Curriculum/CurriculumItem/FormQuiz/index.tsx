@@ -62,7 +62,9 @@ const FormQuiz = ({
             isLoading={loading}
             className="rounded bg-main"
           >
-            <Text type="font-16-400">{t('Add quizz')}</Text>
+            <Text type="font-16-400" className="text-text-white">
+              {t('Add quizz')}
+            </Text>
           </Button>
         </div>
       </div>

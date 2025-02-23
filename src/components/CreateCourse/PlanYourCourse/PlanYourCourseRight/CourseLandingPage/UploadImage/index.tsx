@@ -77,7 +77,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:min-w-[480px] h-[270px] bg-gray-800 flex items-center justify-center">
+        <div className="relative md:min-w-[480px] h-[270px] bg-default flex items-center justify-center">
           <Image
             src={value || '/img-default.png'}
             className="w-full md:w-[480px] h-[270px]"
@@ -116,7 +116,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
                 </div>
               </div>
             ) : (
-              <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bgDefault border-black-10">
+              <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bg-default border-black-10">
                 <Text type="font-16-400" className="text-black-8">
                   {t('No file selected')}
                 </Text>

@@ -163,7 +163,7 @@ const Curriculum = ({ setValue }: any) => {
               )}
 
               {field?.title ? (
-                <div className="border-1 overflow-auto bg-[#0A0F1580] border-black-10 rounded py-4 px-3 flex flex-col gap-6">
+                <div className="border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6">
                   {valueLesson?.id === field?.id ? (
                     <FormAddSection
                       handleSaveAddSection={(values: any) => {
@@ -275,7 +275,7 @@ export const IconClose = () => {
     >
       <path
         d="M9.99999 8.82129L14.125 4.69629L15.3033 5.87462L11.1783 9.99962L15.3033 14.1246L14.125 15.303L9.99999 11.178L5.87499 15.303L4.69666 14.1246L8.82166 9.99962L4.69666 5.87462L5.87499 4.69629L9.99999 8.82129Z"
-        fill="white"
+        fill="var(--theme-white)"
       />
     </svg>
   );

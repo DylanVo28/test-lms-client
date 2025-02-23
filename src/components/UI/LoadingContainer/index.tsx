@@ -9,7 +9,7 @@ const LoadingContainer = ({ loading }: { loading: boolean }) => {
             left: '0',
             right: '0',
             bottom: '0',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'var(--theme-black-60)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

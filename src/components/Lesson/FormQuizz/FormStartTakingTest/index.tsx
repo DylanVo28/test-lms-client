@@ -92,7 +92,7 @@ const FormStartTakingTest = ({
         <div className="md:w-6/12 pt-10 py-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
           {answerCorrectly === true && (
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
-              <CheckCircle className="text-green" size={30} weight="fill" />
+              <CheckCircle className="fill-green" size={30} weight="fill" />
               <Text className="text-green" type="font-16-400">
                 {t('You did great')}
               </Text>
@@ -100,7 +100,7 @@ const FormStartTakingTest = ({
           )}
           {answerCorrectly === false && (
             <div className="p-4 w-full bg-transparent flex items-center gap-3   rounded-2xl border-1 border-red-500">
-              <XCircle size={30} weight="fill" className="text-red-500" />
+              <XCircle size={30} weight="fill" className="fill-red-500" />
               <Text className="text-red-500" type="font-16-400">
                 {t('The answer is not correct. Please try again.')}
               </Text>
@@ -155,10 +155,14 @@ const FormStartTakingTest = ({
             className="bg-main w-max  rounded min-w-[120px]"
           >
             <div className="flex items-center gap-2">
-              <Text className="text-white" type="font-16-400">
+              <Text className="text-text-white" type="font-16-400">
                 {t('Continue')}
               </Text>
-              <CaretRight size={16} weight="light" />
+              <CaretRight
+                size={16}
+                weight="light"
+                className="fill-text-white"
+              />
             </div>
           </Button>
         )}
@@ -168,10 +172,14 @@ const FormStartTakingTest = ({
             className="bg-main w-max  rounded min-w-[150px]"
           >
             <div className="flex items-center gap-2">
-              <Text className="text-white" type="font-16-400">
+              <Text className="text-text-white" type="font-16-400">
                 {t('See results')}
               </Text>
-              <CaretRight size={16} weight="light" />
+              <CaretRight
+                size={16}
+                weight="light"
+                className="fill-text-white"
+              />
             </div>
           </Button>
         )}
@@ -187,10 +195,14 @@ const FormStartTakingTest = ({
               className="bg-main w-max  rounded min-w-[100px]"
             >
               <div className="flex items-center gap-2">
-                <Text className="text-white" type="font-16-400">
+                <Text className="text-text-white" type="font-16-400">
                   {t('Continue')}
                 </Text>
-                <CaretRight size={16} weight="light" />
+                <CaretRight
+                  size={16}
+                  weight="light"
+                  className="fill-text-white"
+                />
               </div>
             </Button>
           )}
@@ -203,10 +215,14 @@ const FormStartTakingTest = ({
                 onPress={handleNextQuestion}
               >
                 <div className="flex items-center gap-2">
-                  <Text className="text-white" type="font-16-400">
+                  <Text className="text-text-white" type="font-16-400">
                     {t('Next')}
                   </Text>
-                  <CaretRight size={16} weight="light" />
+                  <CaretRight
+                    size={16}
+                    weight="light"
+                    className="fill-text-white"
+                  />
                 </div>
               </Button>
             ) : (
@@ -215,7 +231,7 @@ const FormStartTakingTest = ({
                 onPress={() => handleCheckAnswer()}
                 className="bg-main w-max  rounded min-w-[150px]"
               >
-                <Text className="text-white" type="font-16-400">
+                <Text className="text-text-white" type="font-16-400">
                   {t('Check the answer')}
                 </Text>
               </Button>

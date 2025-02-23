@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
+import IconCourse from '@/components/UI/Icons/IconCourse';
 
 const DATA_CONTENT = [
   {
@@ -51,7 +52,8 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                     }
                   )}
                 >
-                  <Image alt="" width={48} height={48} src={item?.img} />
+                  <IconCourse />
+                  {/* <Image alt="" width={48} height={48} src={item?.img} /> */}
                   <Text type="font-20-700" className="text-white">
                     {t(item?.label)}
                   </Text>

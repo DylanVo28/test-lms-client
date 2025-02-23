@@ -37,7 +37,7 @@ export default function AccordionCustom({
       <AccordionItem
         key="1"
         classNames={{
-          indicator: 'data-[open=true]:rotate-180',
+          indicator: 'data-[open=true]:rotate-180 ',
         }}
         indicator={<IconArrowUp />}
         aria-label="Accordion 1"

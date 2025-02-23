@@ -117,9 +117,9 @@ const InputTextArena = (props: InputTextProps) => {
                 isInput,
               '!bg-[#181F25] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 isInputSubmit,
-              '!bg-[#0A0F1580] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-gray-80 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 inputDefault,
-              '!bg-[#0A0F1580] !rounded !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
+              '!bg-gray-80 !rounded !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
             }
           ),

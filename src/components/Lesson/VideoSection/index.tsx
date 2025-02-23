@@ -198,7 +198,7 @@ const VideoSection = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
@@ -244,7 +244,7 @@ const VideoSection = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button>
 
       <LoadingContainer loading={loading} />

@@ -3,12 +3,29 @@
 :root {
   --main-color: #02a6c2;
   --theme-white: #fff;
+  --theme-white-50: #ffffff50;
+
+  --theme-default: rgba(10, 15, 21, 0.5);
+
   --theme-gray-30: #bfbfbf;
   --theme-white-10: #f0f0f01a;
+  --theme-white-15: #ffffff15;
+
   --theme-white-5: #ffffff05;
+
+  --theme-text-white: #ffffff;
 
   --theme-primary: #0a0f15;
   --theme-black-10: #262626;
+  --theme-black-20: #ffffff0d;
+  --theme-black-30: #1d2329;
+  --theme-black-40: #000000b3;
+  --theme-black-50: #1d2228;
+  --theme-black-70: #0f141a;
+
+  --theme-black-60: #26262660;
+  --theme-black-80: #00000080;
+
   --theme-black-5: #d9d9d9;
   --theme-black-3: #f5f5f5;
   --theme-black-9: #454545;
@@ -24,8 +41,13 @@
   --theme-gray: #1f242a;
   --theme-gray-10: #f0f0f01a;
   --theme-gray-20: #f0f0f033;
+  --theme-gray-40: #24292fe5;
+  --theme-gray-50: #242a30;
+  --theme-gray-60: #2b3032;
+  --theme-gray-70: #181f25;
+  --theme-gray-80: #0a0f1580;
 
-  // --theme-secondary-500:#
+  --theme-secondary-500: #a4a4a4;
 
   --theme-main: #02a6c2;
   --theme-main-60: #02a6c260;
@@ -33,9 +55,14 @@
   --theme-main-10: #02a6c210;
 
   --theme-green: #09a552;
+  --theme-green-10: #09a55210;
+  --theme-green-50: #09a55250;
+
   --theme-green-1: #1db78d;
 
   --theme-error: #df2638;
+  --theme-error-10: #df263810;
+
   --theme-error-1: #ff4a4a;
   --theme-noti-red: #e55151;
 }
@@ -44,26 +71,46 @@
 [data-theme='white'] {
   --theme-gray-30: #454545;
   --theme-white: #141414;
+  --theme-default: #00000020;
+  --theme-white-15: #00000020;
+  --theme-white-50: #ffffff50;
+
   --theme-white-10: #00000008;
   --theme-white-5: #00000005;
+  --theme-black-60: #26262610;
+  --theme-black-20: #00000008;
+  --theme-black-30: #00000008;
+  --theme-black-40: #ffffff90;
+  --theme-black-80: #00000080;
+  --theme-black-50: #00000010;
+  --theme-black-70: #f5f5f5;
+
+  --theme-text-white: #ffffff;
 
   --theme-primary: #ffffff;
   --theme-black-10: #ffffff20;
   --theme-black-5: #1f1f1f;
-  --theme-black-3: #f5f5f5;
-  --theme-black-9: #454545;
+  --theme-black-3: #a4a4a4;
+  --theme-black-9: #00000020;
   --theme-black-2: #fcfcfc;
   --theme-black-4: #00000008;
   --theme-black-8: #595959;
   --theme-black-7: #454545;
-  --theme-black-6: #bfbfbf;
+  --theme-black-6: #a4a4a4;
   --theme-orange: #f26f21;
   --theme-orange-10: #f26f2110;
   --theme-orange-50: #f26f2150;
 
+  --theme-secondary-500: #a4a4a4;
+
   --theme-gray: #f5f5f5;
   --theme-gray-10: #00000008;
   --theme-gray-20: #ffffff20;
+  --theme-gray-40: #f5f5f5;
+  --theme-gray-50: #00000005;
+  --theme-gray-60: #00000005;
+  --theme-gray-70: #00000010;
+  --theme-gray-80: #00000020;
 
   --theme-main: #02a6c2;
   --theme-main-60: #02a6c260;
@@ -71,11 +118,15 @@
   --theme-main-10: #02a6c210;
 
   --theme-green: #09a552;
+  --theme-green-50: #09a55250;
+
   --theme-green-1: #1db78d;
+  --theme-green-10: #00000010;
 
   --theme-error: #df2638;
   --theme-error-1: #ff4a4a;
   --theme-noti-red: #e55151;
+  --theme-error-10: #df263810;
 }
 
 //skyBlue
@@ -404,7 +455,7 @@ body {
   line-height: normal;
   text-rendering: optimizeSpeed;
   font-family: 'Roboto Flex', serif;
-  // color: var(--theme-white);
+  color: var(--theme-white);
   // background-color: var(--theme-primary);
   -webkit-text-size-adjust: 100%;
 }
@@ -437,6 +488,9 @@ body {
 .react-rater {
   margin-bottom: 4px;
 }
+.vjs-modal-dialog-content {
+  background: var(--theme-primary);
+}
 
 .video-js {
   width: 100% !important;
@@ -468,16 +522,16 @@ body {
     border-radius: 4px !important;
     border-top-right-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border: 1px solid #262626 !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    border: 1px solid var(--theme-black-10) !important;
+    background: var(--theme-default) !important;
   }
   .ql-toolbar.ql-snow {
     border-radius: 4px !important;
     border-bottom-right-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
-    border: 1px solid #262626 !important;
+    border: 1px solid var(--theme-black-10) !important;
     border-bottom: none !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    background: var(--theme-default) !important;
   }
   &:hover {
     .ql-container.ql-snow,
@@ -527,7 +581,7 @@ body {
     border-top-right-radius: 0px !important;
     border-top-left-radius: 0px !important;
     border: 1px solid #c20e4d !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    background: var(--theme-default) !important;
   }
   .ql-container.ql-snow {
     border: 1px solid #c20e4d !important;
@@ -538,7 +592,7 @@ body {
     border-bottom-left-radius: 0px !important;
     border: 1px solid #c20e4d !important;
     border-bottom: none !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    background: var(--theme-default) !important;
   }
   &:hover {
     .ql-container.ql-snow,
@@ -566,16 +620,16 @@ body {
     border-radius: 4px !important;
     border-top-right-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border: 1px solid #262626 !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    border: 1px solid var(--theme-black-10) !important;
+    background: var(--theme-default) !important;
   }
   .ql-toolbar.ql-snow {
     border-radius: 4px !important;
     border-bottom-right-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
-    border: 1px solid #262626 !important;
+    border: 1px solid var(--theme-black-10) !important;
     border-bottom: none !important;
-    background: rgba(10, 15, 21, 0.5) !important;
+    background: var(--theme-default) !important;
   }
   &:hover {
     .ql-container.ql-snow,
@@ -617,8 +671,8 @@ body {
   background: rgba(2, 166, 194, 0.1);
 }
 
-.bgDefault {
-  background: rgba(10, 15, 21, 0.5);
+.bg-default {
+  background: var(--theme-default);
 }
 
 .bgFile {

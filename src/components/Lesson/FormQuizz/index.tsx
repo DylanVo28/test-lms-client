@@ -72,7 +72,7 @@ const FormQuizz = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
@@ -121,7 +121,7 @@ const FormQuizz = ({
                 onPress={handleStartTakingTheTest}
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
-                <Text className="text-white" type="font-16-400">
+                <Text className="text-text-white" type="font-16-400">
                   {t('Start taking the test')}
                 </Text>
               </Button>
@@ -158,7 +158,7 @@ const FormQuizz = ({
           }}
           radius="sm"
         >
-          <CaretRight size={24} />
+          <CaretRight size={24} className="fill-text-white" />
         </Button>
       )}
     </div>

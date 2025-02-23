@@ -16,6 +16,7 @@ import { ReactNode, useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import MainHeader from '../MainLayout/MainHeader';
 import { useTranslation } from 'next-i18next';
+import IconCup from '@/components/UI/Icons/IconCup';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -66,13 +67,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             <div className="flex items-center gap-2 cursor-pointer">
               <div className="flex items-center justify-center relative">
                 <div className="absolute">
-                  <Image
-                    src="/images/img-trophy-line.png"
-                    width={16}
-                    height={16}
-                    alt="Trophy"
-                    className="w-5 h-5"
-                  />
+                  <IconCup />
                 </div>
                 <CircularProgress
                   classNames={{
@@ -132,7 +127,7 @@ const IconShare = () => {
     >
       <path
         d="M11.3332 11.6667V15.8333L19.6665 9.16667L11.3332 2.5V6.66667C6.73067 6.66667 2.99984 10.3975 2.99984 15C2.99984 15.2275 3.00817 15.4525 3.0265 15.675C3.66284 14.4651 4.61777 13.4522 5.78807 12.7458C6.95836 12.0393 8.2995 11.6661 9.6665 11.6667H11.3332Z"
-        fill="white"
+        fill="var(--theme-white)"
       />
     </svg>
   );

@@ -129,7 +129,7 @@ const FormAddVideo = ({
             <div
               onClick={handleClickUploadFile}
               className={clsx(
-                'cursor-pointer w-full py-3 px-[10px] bgDefault rounded border-1 border-white-20',
+                'cursor-pointer w-full py-3 px-[10px] bg-gray-800rounded border-1 border-white-20',
                 {
                   ['!border-danger-300']: !valueFile?.urlVideo && isError,
                 }

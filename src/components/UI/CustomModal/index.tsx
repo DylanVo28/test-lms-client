@@ -65,7 +65,7 @@ const CustomModal = (props: ICustomModlaProps) => {
           placementMoblie === 'bottom'
             ? 'mx-0 my-0  !rounded-b-none'
             : '!my-4 !mx-4 !rounded-sm',
-          'bg-[#24292FE5] !z-[10000] backdrop-blur-[25px]',
+          'bg-gray-40 !z-[10000] backdrop-blur-[25px]',
         ],
       }}
       onClose={onClose}
