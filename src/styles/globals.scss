@@ -36,6 +36,42 @@
 }
 
 //skyBlue
+[data-theme='white'] {
+  --theme-gray-30: #bfbfbf;
+  --theme-white: #fff;
+  --theme-white-10: #f0f0f01a;
+
+  --theme-primary: #ffffff;
+  --theme-black-10: #ffffff20;
+  --theme-black-5: #1f1f1f;
+  --theme-black-3: #f5f5f5;
+  --theme-black-9: #454545;
+  --theme-black-2: #fcfcfc;
+  --theme-black-4: #24292f;
+  --theme-black-8: #595959;
+  --theme-black-7: #8c8c8c;
+  --theme-black-6: #bfbfbf;
+  --theme-orange: #f26f21;
+
+  --theme-gray: #1f242a;
+  --theme-gray-10: #1f1f1f;
+  --theme-gray-20: #ffffff20;
+  --theme-gray-30: #bfbfbf;
+
+  --theme-main: #02a6c2;
+  --theme-main-60: #02a6c260;
+  --theme-main-20: #02a6c220;
+  --theme-main-10: #02a6c210;
+
+  --theme-green: #09a552;
+  --theme-green-1: #1db78d;
+
+  --theme-error: #df2638;
+  --theme-error-1: #ff4a4a;
+  --theme-noti-red: #e55151;
+}
+
+//skyBlue
 [data-theme='skyBlue'] {
   --theme-gray-30: #bfbfbf;
   --theme-white: #fff;
@@ -713,4 +749,8 @@ input[type='number'] {
 .exit-fullscreen {
   height: 566px !important;
   width: 100% !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #bfbfbf;
 }

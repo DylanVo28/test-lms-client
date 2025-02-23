@@ -23,10 +23,13 @@ const AppLayout = ({ children }: any) => {
       requestUpdateFcmToken?.run(token);
     }
   }, [token]);
+
+  console.log(theme, 'theme');
+
   return (
     <>
       <main>
-        <NextThemesProvider attribute="class" defaultTheme="dark">
+        <NextThemesProvider attribute="class" forcedTheme={theme?.colorMode}>
           <NextUIProvider>{children}</NextUIProvider>
         </NextThemesProvider>
 

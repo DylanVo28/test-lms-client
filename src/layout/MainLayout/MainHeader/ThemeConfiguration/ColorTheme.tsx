@@ -88,6 +88,8 @@ const ColorTheme = ({
   const { theme, setTheme } = useTheme();
 
   const handleChangeThemeColor = (item: any, colorMode: IColorMode) => {
+    console.log(colorMode, 'colorMode');
+
     setTheme({
       ...theme,
       color: item?.theme,
@@ -147,7 +149,7 @@ const ColorTheme = ({
                     >
                       <div
                         onClick={() =>
-                          handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
+                          handleChangeThemeColor(item, IColorMode.DARK_MODE)
                         }
                         className="w-[30px] h-[30px] cursor-pointer rounded-full"
                         style={{ background: item?.color }}
