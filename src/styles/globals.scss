@@ -366,3 +366,8 @@ input[type='number'] {
   height: 566px !important;
   width: 100% !important;
 }
+
+.bgDrawer {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+}

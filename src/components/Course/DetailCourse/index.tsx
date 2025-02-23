@@ -87,6 +87,9 @@ const DetailCourse = () => {
         <BreadCrumbs />
 
         <div className="md:grid md:grid-cols-10 gap-[70px]">
+          <div className="block mb-4 md:hidden">
+            <CardEnrollNow course={dataDetail?.data} />
+          </div>
           <div className="col-span-7 flex flex-col gap-10">
             <div className="flex flex-col border-b-1 border-b-black-10 pb-10 gap-5">
               <Text type="font-32-700" className="text-white">
@@ -166,7 +169,7 @@ const DetailCourse = () => {
               author={dataDetail?.data?.author}
             />
           </div>
-          <div className="col-span-3">
+          <div className="col-span-3 hidden md:block">
             <div className="sticky top-28 z-50">
               <CardEnrollNow course={dataDetail?.data} />
             </div>
