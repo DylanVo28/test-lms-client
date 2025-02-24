@@ -19,6 +19,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
 import { initialTheme } from '@/store/theme/theme';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import { useTheme } from '@/store/theme/useTheme';
 
 const ThemeConfiguration = ({
   setUrlLogo,
@@ -37,7 +38,10 @@ const ThemeConfiguration = ({
     requestGetTheme,
     setTheme,
   } = useThemeInitial();
+  const { theme } = useTheme();
   const { i18n } = useTranslation();
+  console.log(theme, 'theme');
+
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
@@ -72,7 +76,12 @@ const ThemeConfiguration = ({
   };
 
   const onSave = () => {
-    const body = { color, logo, langs };
+    const body = {
+      color: theme?.color,
+      modeTheme: theme?.modeTheme,
+      logo,
+      langs,
+    };
     if (dataThemeConfig?.userId) {
       updateTheme(dataThemeConfig.userId, body);
       return;
@@ -101,14 +110,6 @@ const ThemeConfiguration = ({
       setIsNonUserSave(false);
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
-
-  useEffect(() => {
-    if (profile?.id) {
-      requestGetTheme();
-    } else {
-      setTheme(initialTheme);
-    }
-  }, [profile]);
 
   return (
     <>
@@ -139,7 +140,7 @@ const ThemeConfiguration = ({
               <Divided />
               <div className="flex flex-col gap-[32px] p-0">
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
-                <ColorTheme dataColor={color} onChangeColor={onChangeColor} />
+                <ColorTheme />
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
                   <ConnectButton.Custom>

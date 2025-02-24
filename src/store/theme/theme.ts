@@ -6,13 +6,13 @@ export interface InitTheme {
   color: string;
   langs: string[];
   code: string;
-  colorMode: 'dark' | 'light';
+  modeTheme: 'dark' | 'light';
   userId: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export enum IColorMode {
+export enum ImodeTheme {
   LIGHT_MODE = 'light',
   DARK_MODE = 'dark',
 }
@@ -21,7 +21,7 @@ export const initialTheme: InitTheme = {
   id: '',
   logo: '',
   color: '',
-  colorMode: 'dark',
+  modeTheme: 'dark',
   langs: [],
   code: '',
   userId: '',

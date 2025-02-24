@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'next-i18next';
 import { useTheme } from '@/store/theme/useTheme';
 import { set } from 'video.js/dist/types/tech/middleware';
-import { IColorMode } from '@/store/theme/theme';
+import { ImodeTheme } from '@/store/theme/theme';
 import clsx from 'clsx';
 
 const DATA_COLOR_LIGHT = [
@@ -78,27 +78,17 @@ const DATA_COLOR_DARK = [
   },
 ];
 
-const ColorTheme = ({
-  onChangeColor,
-  dataColor,
-}: {
-  onChangeColor: (value: string) => void;
-  dataColor: string;
-}) => {
+const ColorTheme = ({}: {}) => {
   const { t } = useTranslation('common');
   const { theme, setTheme } = useTheme();
 
-  const handleChangeThemeColor = (item: any, colorMode: IColorMode) => {
-    console.log(colorMode, 'colorMode');
-
+  const handleChangeThemeColor = (item: any, modeTheme: ImodeTheme) => {
     setTheme({
       ...theme,
       color: item?.theme,
-      colorMode,
+      modeTheme,
     });
   };
-
-  console.log(theme, 'theme');
 
   return (
     <div>
@@ -125,7 +115,7 @@ const ColorTheme = ({
                     >
                       <div
                         onClick={() =>
-                          handleChangeThemeColor(item, IColorMode.LIGHT_MODE)
+                          handleChangeThemeColor(item, ImodeTheme.LIGHT_MODE)
                         }
                         className="w-[30px] p-2 h-[30px] cursor-pointer rounded-full"
                         style={{ background: item?.color }}
@@ -150,7 +140,7 @@ const ColorTheme = ({
                     >
                       <div
                         onClick={() =>
-                          handleChangeThemeColor(item, IColorMode.DARK_MODE)
+                          handleChangeThemeColor(item, ImodeTheme.DARK_MODE)
                         }
                         className="w-[30px] h-[30px] cursor-pointer rounded-full"
                         style={{ background: item?.color }}

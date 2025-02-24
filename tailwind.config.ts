@@ -15,6 +15,25 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {},
+      animation: {
+        ping: 'ping 1s ease-out infinite',
+        ping200: 'ping200 1s ease-out infinite',
+        ping400: 'ping400 1s ease-out infinite',
+      },
+      keyframes: {
+        ping: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.2)', opacity: '0.5' },
+        },
+        ping200: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.5)', opacity: '0.5' },
+        },
+        ping400: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.8)', opacity: '0.5' },
+        },
+      },
       colors: {
         white: 'var(--theme-white)',
         'white-10': 'var(--theme-white-10)',

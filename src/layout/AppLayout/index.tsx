@@ -1,7 +1,7 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { getAccessToken } from '@/store/auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import PushNotificationLayout from '../PushNotificationLayout/PushNotificationLayout';
 import { useAuth } from '@/store/auth/useAuth';
@@ -9,14 +9,24 @@ import { COLOR_THEME } from '@/utils/common';
 import { useTheme } from '@/store/theme/useTheme';
 import { useNotifications } from '@/store/notification/useNotification';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { initialTheme } from '@/store/theme/theme';
+import LoadingBase from '@/components/UI/LoadingBase';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
   const { requestUpdateFcmToken } = useAuth();
   const { theme } = useTheme();
-
+  const { requestGetTheme, setTheme } = useThemeInitial();
   const { requestCheckHasNotification } = useNotifications();
   const token = getAccessToken();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     firebaseCloudMessaging.requestPermissions();
@@ -25,23 +35,28 @@ const AppLayout = ({ children }: any) => {
   useEffect(() => {
     if (token) {
       requestGetProfile();
+      requestGetTheme();
+
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
+    } else {
+      setTheme(initialTheme);
     }
   }, [token]);
 
-  console.log(theme, 'theme');
-
   return (
-    <>
-      <main>
-        <NextThemesProvider attribute="class" forcedTheme={theme?.colorMode}>
+    <main>
+      <LoadingBase loading={loading} />
+      {!loading && (
+        <NextThemesProvider
+          attribute="class"
+          forcedTheme={theme?.modeTheme || 'dark'}
+        >
           <NextUIProvider>{children}</NextUIProvider>
         </NextThemesProvider>
-
-        <PushNotificationLayout />
-      </main>
-    </>
+      )}
+      <PushNotificationLayout />
+    </main>
   );
 };
 
