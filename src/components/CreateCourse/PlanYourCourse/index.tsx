@@ -61,6 +61,8 @@ const PlanYourCourse = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
 
+  const [dataSections, setDataSections] = useState([]);
+
   const refModalSubmitError: any = useRef(null);
   const accessToken = getAccessToken();
 
@@ -69,7 +71,9 @@ const PlanYourCourse = () => {
     loading,
     data: dataDetail,
   } = useGetDetailCourse({
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
+      const resData = await fetchDetailSection();
+
       const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
       const isEnoughIntendedLearners =
         res?.data?.objectives?.length > 0 &&
@@ -81,18 +85,18 @@ const PlanYourCourse = () => {
       res?.data?.level && res?.data?.lang;
 
       const allLessonsHaveContent =
-        Array.isArray(res?.data?.sections) &&
-        res.data.sections.length > 0 &&
-        res.data.sections.every(
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every(
           (section: any) =>
             section.lessons.length > 0 &&
             section.lessons.every((lesson: any) => lesson.content !== null)
         );
 
       const allQuizzesHaveQuestions =
-        Array.isArray(res?.data?.sections) &&
-        res.data.sections.length > 0 &&
-        res.data.sections.every(
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every(
           (section: any) =>
             section.quizzes.length > 0 &&
             section.quizzes.every(
@@ -102,7 +106,7 @@ const PlanYourCourse = () => {
         );
 
       const isEnoughCurruclum =
-        allLessonsHaveContent || allQuizzesHaveQuestions;
+        allLessonsHaveContent && allQuizzesHaveQuestions;
 
       if (
         isEnoughIntendedLearners &&
@@ -174,13 +178,13 @@ const PlanYourCourse = () => {
     },
   });
 
-  console.log(errors, 'errors');
-
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
+      fetchDetailSection();
     }
   }, [router.query.id, profile?.id]);
+
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
       const resData = await fetchDetailSection();
@@ -219,7 +223,8 @@ const PlanYourCourse = () => {
         setActivePlan(activePlan + 1);
       }
       if (
-        (allLessonsHaveContent || allQuizzesHaveQuestions) &&
+        allLessonsHaveContent &&
+        allQuizzesHaveQuestions &&
         activePlan === 2
       ) {
         setActivePlan(activePlan + 1);
@@ -231,21 +236,6 @@ const PlanYourCourse = () => {
       getDetailCourse(router.query.id as string);
       toast.success(res?.message);
       setIsSubmit(true);
-      // useEffect(() => {
-      //   if (
-      //     (isEnoughIntendedLearners ||
-      //       isEnoughCurruclum ||
-      //       isEnoughCourseLangdingePage) &&
-      //     !isFirstLoad
-      //   ) {
-      //     setActivePlan(activePlan + 1);
-      //   }
-      // }, [
-      //   isEnoughIntendedLearners,
-      //   isEnoughCurruclum,
-      //   isEnoughCourseLangdingePage,
-      //   isFirstLoad,
-      // ]);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -279,6 +269,8 @@ const PlanYourCourse = () => {
       });
       const data = await res.json();
       setLoadingFetchDetail(false);
+
+      setDataSections(data?.data);
 
       return data;
     } catch (error) {}
@@ -317,14 +309,13 @@ const PlanYourCourse = () => {
       values?.title && values?.categoryId && values?.level && values?.lang;
 
     if (
-      allLessonsHaveContent ||
-      allQuizzesHaveQuestions ||
+      !(allLessonsHaveContent && allQuizzesHaveQuestions) ||
       !isEnoughtSetPrice ||
       !isEnoughIntendedLearners ||
       !isEnoughCourseLangdingePage
     ) {
       const dataError = {
-        dataCurriculum: resData,
+        dataCurriculum: resData?.data,
         ...values,
       };
       refModalSubmitError.current.onOpen(dataError);
@@ -424,18 +415,18 @@ const PlanYourCourse = () => {
     dataDetail?.data?.lang;
 
   const allLessonsHaveContent =
-    Array.isArray(dataDetail?.data?.sections) &&
-    dataDetail.data.sections.length > 0 &&
-    dataDetail.data.sections.every(
+    Array.isArray(dataSections) &&
+    dataSections.length > 0 &&
+    dataSections.every(
       (section: any) =>
         section.lessons.length > 0 &&
         section.lessons.every((lesson: any) => !!lesson.content)
     );
 
   const allQuizzesHaveQuestions =
-    Array.isArray(dataDetail?.data?.sections) &&
-    dataDetail?.data?.sections.length > 0 &&
-    dataDetail?.data?.sections.every(
+    Array.isArray(dataSections) &&
+    dataSections.length > 0 &&
+    dataSections.every(
       (section: any) =>
         section.quizzes.length > 0 &&
         section.quizzes.every(
@@ -444,7 +435,7 @@ const PlanYourCourse = () => {
         )
     );
 
-  const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
+  const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
   return (
     <LoadingScreen isLoading={loading}>

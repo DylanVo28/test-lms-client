@@ -40,24 +40,26 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
     (item: any) => item?.name.trim() !== ''
   );
 
-  const allLessonsHaveContent = valuesError?.dataCurriculum?.data?.every(
-    (section: any) =>
-      section.lessons.length > 0 &&
-      section.lessons.every((lesson: any) => lesson.content !== null)
-  );
+  const allLessonsHaveContent =
+    Array.isArray(valuesError?.dataCurriculum) &&
+    valuesError?.dataCurriculum.length > 0 &&
+    valuesError?.dataCurriculum.every(
+      (section: any) =>
+        section.lessons.length > 0 &&
+        section.lessons.every((lesson: any) => !!lesson.content)
+    );
 
-  const allQuizzesHaveQuestions = valuesError?.dataCurriculum?.data?.every(
-    (section: any) =>
-      section.quizzes.length > 0 &&
-      section.quizzes.every(
-        (quizz: any) =>
-          Array.isArray(quizz.questions) && quizz.questions.length > 0
-      )
-  );
-
-  console.log(valuesError, 'valuesError');
-
-  console.log({ allLessonsHaveContent, allQuizzesHaveQuestions });
+  const allQuizzesHaveQuestions =
+    Array.isArray(valuesError?.dataCurriculum) &&
+    valuesError?.dataCurriculum.length > 0 &&
+    valuesError?.dataCurriculum.every(
+      (section: any) =>
+        section.quizzes.length > 0 &&
+        section.quizzes.every(
+          (quizz: any) =>
+            Array.isArray(quizz.questions) && quizz.questions.length > 0
+        )
+    );
 
   return (
     <CustomModal
@@ -92,7 +94,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
                   }
                 </Text>
               )}
-              {!allLessonsHaveContent && !allQuizzesHaveQuestions && (
+              {(!allLessonsHaveContent || !allQuizzesHaveQuestions) && (
                 <Text className="text-error">
                   {
                     '- Please create full content and quiz questions for the section.'
