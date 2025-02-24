@@ -80,7 +80,7 @@ const ListCourse = () => {
   }, [sort, category, price]);
 
   return (
-    <div className="flex flex-col gap-[26px] md:pt-0 pt-10 md:px-10">
+    <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">
       <div className="flex justify-between flex-wrap gap-5 items-center">
         <div className="flex items-center gap-3">
           <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">

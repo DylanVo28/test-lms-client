@@ -15,8 +15,6 @@ import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
 const dataObjectivesDefault = [
   {
@@ -319,7 +317,8 @@ const PlanYourCourse = () => {
       values?.title && values?.categoryId && values?.level && values?.lang;
 
     if (
-      (!allLessonsHaveContent && !allQuizzesHaveQuestions) ||
+      allLessonsHaveContent ||
+      allQuizzesHaveQuestions ||
       !isEnoughtSetPrice ||
       !isEnoughIntendedLearners ||
       !isEnoughCourseLangdingePage
@@ -426,11 +425,11 @@ const PlanYourCourse = () => {
 
   const allLessonsHaveContent =
     Array.isArray(dataDetail?.data?.sections) &&
-    dataDetail?.data?.sections.length > 0 &&
-    dataDetail?.data?.sections.every(
+    dataDetail.data.sections.length > 0 &&
+    dataDetail.data.sections.every(
       (section: any) =>
         section.lessons.length > 0 &&
-        section.lessons.every((lesson: any) => lesson.content !== null)
+        section.lessons.every((lesson: any) => !!lesson.content)
     );
 
   const allQuizzesHaveQuestions =
@@ -445,7 +444,7 @@ const PlanYourCourse = () => {
         )
     );
 
-  const isEnoughCurruclum = !(allLessonsHaveContent && allQuizzesHaveQuestions);
+  const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
 
   return (
     <LoadingScreen isLoading={loading}>
