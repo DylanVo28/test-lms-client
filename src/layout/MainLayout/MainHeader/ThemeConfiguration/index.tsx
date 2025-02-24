@@ -86,11 +86,11 @@ const ThemeConfiguration = ({
   useEffect(() => {
     setLogo(dataThemeConfig.logo);
     setUrlLogo(dataThemeConfig.logo);
-    setColor(dataThemeConfig.color || DEFAULT_COLOR);
-    document.documentElement.style.setProperty(
-      '--main-color',
-      dataThemeConfig.color || DEFAULT_COLOR
-    );
+    // setColor(dataThemeConfig.color || DEFAULT_COLOR);
+    // document.documentElement.style.setProperty(
+    //   '--main-color',
+    //   dataThemeConfig.color || DEFAULT_COLOR
+    // );
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
       i18n.changeLanguage(dataThemeConfig.langs[0]);
