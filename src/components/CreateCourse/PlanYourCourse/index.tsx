@@ -18,27 +18,6 @@ import { useTranslation } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const schema = yup.object().shape({
-  objectives: yup
-    .array()
-    .of(
-      yup.object().shape({
-        name: yup.string().required('This field is required'),
-      })
-    )
-    .min(4, 'You must enter at least 4 learning objectives'),
-  requirements: yup.array().of(
-    yup.object().shape({
-      name: yup.string().required('This field is required'),
-    })
-  ),
-  intenedLeaners: yup.array().of(
-    yup.object().shape({
-      name: yup.string().required('This field is required'),
-    })
-  ),
-});
-
 const dataObjectivesDefault = [
   {
     name: '',
@@ -187,7 +166,6 @@ const PlanYourCourse = () => {
     setValue,
     formState: { errors },
   } = useForm<any>({
-    resolver: yupResolver(schema),
     defaultValues: {
       objectives: [{ name: '' }, { name: '' }, { name: '' }, { name: '' }],
       requirements: [{ name: '' }],
