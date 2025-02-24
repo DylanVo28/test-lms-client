@@ -21,8 +21,8 @@ deploy_to_vps:
     - ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "echo 'SSH Connection Successful'"
     - ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST << 'EOF'
     - cd ~/lms/lms-fe
-    - cp .env.example .env
     - git pull origin develop
+    - cp .env.example .env
     - npm install -f
     - npm run build
     - pm2 delete lms-web
