@@ -222,7 +222,7 @@ const PlanYourCourse = () => {
       }
       if (
         (allLessonsHaveContent || allQuizzesHaveQuestions) &&
-        activePlan === 4
+        activePlan === 2
       ) {
         setActivePlan(activePlan + 1);
       }
@@ -445,7 +445,7 @@ const PlanYourCourse = () => {
         )
     );
 
-  const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
+  const isEnoughCurruclum = !(allLessonsHaveContent && allQuizzesHaveQuestions);
 
   return (
     <LoadingScreen isLoading={loading}>
