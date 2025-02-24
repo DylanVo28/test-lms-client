@@ -91,7 +91,7 @@ const CardCourse = ({ item }: { item?: any }) => {
             <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
           </div>
           {item?.author?.walletAddress && (
-            <Text type="font-14-400" className="break-words">
+            <Text type="font-14-400" className="text-main break-words">
               {t('By')}:  {generateMentors()}
             </Text>
           )}

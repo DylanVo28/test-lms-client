@@ -58,13 +58,13 @@ const SelectCustom = (props: SelectCustomProps) => {
       classNames={{
         value: '!text-[14px] text-black-6 font-medium capitalize',
         trigger: clsx(
-          '!bg-white-10 rounded min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main',
+          '!bg-white-10 rounded min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-black-30',
           {
-            '!bg-transparent border-white min-h-[40px] hover:!border-main transition-all':
+            '!bg-transparent border-white min-h-[40px] hover:!border-main transition-all bg-black-30':
               isLesson,
-            '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10 group-data-[focus=true]:!border-main':
+            '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-black-30 group-data-[focus=true]:!border-main':
               isSelectSubmit,
-            '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 group-data-[focus=true]:!border-main':
+            '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-black-30 group-data-[focus=true]:!border-main':
               inputDefault,
           }
         ),

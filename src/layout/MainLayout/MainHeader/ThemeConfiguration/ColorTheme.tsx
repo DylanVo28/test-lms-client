@@ -18,24 +18,25 @@ const DATA_COLOR_LIGHT = [
     theme: 'skyBlue',
   },
   {
-    id: 3,
-    color: '#FAE7F4',
-    theme: 'lightPink',
+    id: 6,
+    color: '#B5E1C7',
+    theme: 'lightGreen',
   },
   {
     id: 4,
-    color: '#FFF3B0',
+    color: '#E2DDBE',
     theme: 'lightYellow',
   },
   {
     id: 5,
-    color: '#F5F5DC',
+    color: '#E5E5D0',
     theme: 'lightBeige',
   },
+
   {
-    id: 6,
-    color: '#D3F8E2',
-    theme: 'lightGreen',
+    id: 3,
+    color: '#E5DBDB',
+    theme: 'lightPink',
   },
 
   // {
@@ -56,14 +57,14 @@ const DATA_COLOR_DARK = [
     theme: 'graphite',
   },
   {
-    id: 2,
-    color: '#333',
-    theme: 'darkGray',
-  },
-  {
     id: 3,
     color: '#036',
     theme: 'navyBule',
+  },
+  {
+    id: 5,
+    color: '#201816',
+    theme: 'chestnutBrown',
   },
   {
     id: 4,
@@ -71,9 +72,9 @@ const DATA_COLOR_DARK = [
     theme: 'charcoalGray',
   },
   {
-    id: 5,
-    color: '#2B1B17',
-    theme: 'chestnutBrown',
+    id: 2,
+    color: '#333',
+    theme: 'darkGray',
   },
 ];
 
@@ -144,7 +145,7 @@ const ColorTheme = ({
                   return (
                     <div
                       className={clsx('p-2 rounded-full', {
-                        ['border-2 border-main']: theme.color === item?.color,
+                        ['border-2 border-main']: theme.color === item?.theme,
                       })}
                     >
                       <div

@@ -101,7 +101,7 @@ const ListCourse = () => {
             <SelectCustom
               placeholder={t('Sort by type')}
               isSelectSubmit
-              className="w-full md:min-w-[120px] md:max-w-[140px] min-h-[44px]"
+              className="w-full md:min-w-[120px] md:max-w-[140px] min-h-[44px] !bg-black-30"
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {
