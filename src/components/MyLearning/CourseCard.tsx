@@ -37,17 +37,24 @@ export default function CourseCard({
       onClick={() => router.push(ROUTE_PATH.DETAIL_LESSON(id))}
     >
       <div className="w-full">
-        <Image
-          src={image || '/images/img-default.png'}
-          alt={name}
-          width={302}
-          height={200}
-          className="w-full h-[200px]"
-          layout="contain"
-          onError={(e: any) => {
-            e.target.srcset = '/images/img-default.png';
-          }}
-        />
+        <a
+          href={image || '/images/img-default.png'}
+          target="_blank"
+          onClick={(e) => e.preventDefault()}
+        >
+          <Image
+            src={image || '/images/img-default.png'}
+            alt={name}
+            width={302}
+            height={200}
+            className="w-full h-[200px] object-scale-down"
+            layout="contain"
+            objectFit="scale-down"
+            onError={(e: any) => {
+              e.target.srcset = '/images/img-default.png';
+            }}
+          />
+        </a>
       </div>
       <div className="py-4 px-3 flex flex-col gap-4">
         <div className="flex flex-col gap-[10px]">
@@ -61,7 +68,9 @@ export default function CourseCard({
         <div className="flex items-center justify-between">
           <Text type="font-14-500">
             {t('{{progress}}% complete', {
-              progress: (progress * 100).toFixed(0),
+              progress: (progress * 100 > 100 ? 100 : progress * 100).toFixed(
+                0
+              ),
             })}
           </Text>
           <div className="flex items-center gap-2">

@@ -4,41 +4,41 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
   useDisclosure,
   Image,
   RadioGroup,
   Radio,
+  Button,
 } from '@nextui-org/react';
 
 import languages from '../ThemeConfiguration/data/languages.json';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
 
-export default function LanguageModal() {
+interface IProps {
+  onClosePopover: VoidFunction;
+}
+
+export default function LanguageModal({ onClosePopover }: IProps) {
   const { t, i18n } = useTranslation('common');
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const [langSelected, setLangSelected] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const onChangeRadioGroup = (e: any) => {
-    setLangSelected(e.target.value);
-  };
-
-  const onSave = () => {
-    if (langSelected) {
-      i18n.changeLanguage(langSelected);
-    }
+    const value = e.target.value;
+    i18n.changeLanguage(value);
+    onClose();
+    onClosePopover();
   };
 
   const findLang = (code: string) => {
     return languages.find((lang) => lang.code === code)?.name || '';
   };
   const showLangs = useMemo<{ code: string; name: string }[]>(() => {
-    if (dataThemeConfig.langs.length > 0) {
+    if (dataThemeConfig?.langs?.length > 0) {
       return dataThemeConfig.langs.map((code) => {
         if (!findLang(code)) {
           return {
@@ -68,14 +68,14 @@ export default function LanguageModal() {
         <IconArrowRight />
       </div>
       <CustomModal isOpen={isOpen} onClose={onClose}>
-        <ModalHeader className="flex flex-col gap-1">
+        <ModalHeader className="flex justify-between items-center gap-1">
           {t('Select Language')}
         </ModalHeader>
         <ModalBody>
           <RadioGroup
             color="default"
             onChange={onChangeRadioGroup}
-            value={langSelected || i18n.language}
+            value={i18n.language}
           >
             {showLangs.map((lang) => {
               return (
@@ -93,23 +93,10 @@ export default function LanguageModal() {
           </RadioGroup>
         </ModalBody>
         <ModalFooter>
-          <Button
-            className="rounded-md"
-            color="danger"
-            variant="light"
-            onPress={onOpenChange}
-          >
-            {t('Close')}
-          </Button>
-          <Button
-            className="bg-main rounded-md"
-            color="primary"
-            onPress={() => {
-              onSave();
-              onOpenChange();
-            }}
-          >
-            {t('Save')}
+          <Button onPress={onClose} className="min-h-[40px] rounded mt-2">
+            <Text className="text-white" type="font-16-600">
+              {t('Close')}
+            </Text>
           </Button>
         </ModalFooter>
       </CustomModal>

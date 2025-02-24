@@ -25,7 +25,7 @@ const MainBanner = () => {
       className={clsx(
         "w-full py-[20px] bg-transparent rounded-md md:py-[40px] md:px-8 min-h-[400px] md:min-h-[410px] bg-[url('/images/bg-banner.png')] bg-center bg-no-repeat bg-[length:100%_100%]",
         {
-          ["bg-[url('/images/bg-banner-mobile.png')]"]: isMobile,
+          ["bg-[url('/bg-banner-mobile.png')]"]: isMobile,
         }
       )}
     >

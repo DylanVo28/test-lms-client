@@ -5,19 +5,20 @@ import { Button, Input, ModalBody, Spinner, Textarea } from '@nextui-org/react';
 import Image from 'next/image';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
-import { useDeleteCourse } from '@/components/CreateCourse/service';
-import { toast } from '@/components/UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
+import { values } from 'video.js/dist/types/utils/obj';
 
 interface IModalSubmitError {}
 
 const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
   const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
+  const [valuesError, setValuesError] = useState<any>({});
 
   useImperativeHandle(ref, () => {
     return {
-      onOpen: (id: string) => {
+      onOpen: (dataError: any) => {
+        setValuesError(dataError);
         setVisible(true);
       },
       onClose: () => setVisible(false),
@@ -27,10 +28,41 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
     setVisible(!visible);
   };
 
+  console.log(valuesError, 'valuesError');
+
+  const isValidObjectives = valuesError?.objectives?.every(
+    (item: any) => item?.name.trim() !== ''
+  );
+  const isValidIntenedLeaners = valuesError?.intenedLeaners?.every(
+    (item: any) => item?.name.trim() !== ''
+  );
+  const isValidRequirements = valuesError?.requirements?.every(
+    (item: any) => item?.name.trim() !== ''
+  );
+
+  const allLessonsHaveContent = valuesError?.dataCurriculum?.data?.every(
+    (section: any) =>
+      section.lessons.length > 0 &&
+      section.lessons.every((lesson: any) => lesson.content !== null)
+  );
+
+  const allQuizzesHaveQuestions = valuesError?.dataCurriculum?.data?.every(
+    (section: any) =>
+      section.quizzes.length > 0 &&
+      section.quizzes.every(
+        (quizz: any) =>
+          Array.isArray(quizz.questions) && quizz.questions.length > 0
+      )
+  );
+
+  console.log(valuesError, 'valuesError');
+
+  console.log({ allLessonsHaveContent, allQuizzesHaveQuestions });
+
   return (
     <CustomModal
       placementMoblie="center"
-      size="md"
+      size="lg"
       isOpen={visible}
       onClose={onVisible}
     >
@@ -47,9 +79,43 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
             <Text type="font-20-700" className="text-white">
               {t('Publish course')}
             </Text>
-            <Text type="font-16-400" className="text-black-6">
+            <Text type="font-16-400" className="text-black-6 text-start">
               {t('Please enter the required fields')}
             </Text>
+            <div className="flex flex-col gap-3 items-start my-3">
+              {(!isValidObjectives ||
+                !isValidIntenedLeaners ||
+                !isValidRequirements) && (
+                <Text className="text-error">
+                  {
+                    '- Please fill in all information for the lntended learners section.'
+                  }
+                </Text>
+              )}
+              {!allLessonsHaveContent && !allQuizzesHaveQuestions && (
+                <Text className="text-error">
+                  {
+                    '- Please create full content and quiz questions for the section.'
+                  }
+                </Text>
+              )}
+
+              {(!valuesError?.title ||
+                !valuesError?.categoryId ||
+                !valuesError?.level ||
+                !valuesError?.lang) && (
+                <Text className="text-error">
+                  {
+                    '- Please fill in all information for the course langding page.'
+                  }
+                </Text>
+              )}
+              {(!valuesError?.price || !valuesError?.originPrice) && (
+                <Text className="text-error">
+                  {'- Please fill in all information for the set price.'}
+                </Text>
+              )}
+            </div>
             <Button
               onClick={onVisible}
               className="bg-main w-full min-h-[40px] rounded mt-2"

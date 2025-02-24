@@ -15,7 +15,10 @@ import { useCreateTheme, useUpdateTheme } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
+import { initialTheme } from '@/store/theme/theme';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
 
 const ThemeConfiguration = ({
   setUrlLogo,
@@ -27,9 +30,14 @@ const ThemeConfiguration = ({
   const [color, setColor] = useState<string>('');
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
-  const { theme: dataThemeConfig, requestGetTheme } = useThemeInitial();
+  const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
+  const { profile } = useProfileInitial();
+  const {
+    theme: dataThemeConfig,
+    requestGetTheme,
+    setTheme,
+  } = useThemeInitial();
   const { i18n } = useTranslation();
-
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
       toast.success(t('Saved Theme Configuration'));
@@ -37,7 +45,7 @@ const ThemeConfiguration = ({
       onClose();
     },
     onError() {
-      toast.success(t('Failed Theme Configuration'));
+      toast.error(t('Failed Theme Configuration'));
     },
   });
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
@@ -47,7 +55,7 @@ const ThemeConfiguration = ({
       requestGetTheme();
     },
     onError() {
-      toast.success(t('Failed Theme Configuration'));
+      toast.error(t('Failed Theme Configuration'));
     },
   });
 
@@ -65,7 +73,7 @@ const ThemeConfiguration = ({
 
   const onSave = () => {
     const body = { color, logo, langs };
-    if (dataThemeConfig) {
+    if (dataThemeConfig?.userId) {
       updateTheme(dataThemeConfig.userId, body);
       return;
     }
@@ -73,11 +81,9 @@ const ThemeConfiguration = ({
   };
 
   useEffect(() => {
-    if (dataThemeConfig.logo) {
-      setLogo(dataThemeConfig.logo);
-      setUrlLogo(dataThemeConfig.logo);
-    }
-    if (dataThemeConfig.langs && dataThemeConfig.langs.length > 0) {
+    setLogo(dataThemeConfig.logo);
+    setUrlLogo(dataThemeConfig.logo);
+    if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
       i18n.changeLanguage(dataThemeConfig.langs[0]);
     } else {
@@ -85,17 +91,24 @@ const ThemeConfiguration = ({
     }
     if (dataThemeConfig.color) {
       setColor(dataThemeConfig.color);
-      // document.documentElement.style.setProperty(
-      //   '--bg-main-color',
-      //   dataThemeConfig.color
-      // );
       document.body.setAttribute('data-theme', dataThemeConfig.color);
     }
   }, [dataThemeConfig]);
 
   useEffect(() => {
-    requestGetTheme();
-  }, []);
+    if (isNonUserSave && profile?.id && dataThemeConfig?.userId) {
+      onSave();
+      setIsNonUserSave(false);
+    }
+  }, [isNonUserSave, profile, dataThemeConfig]);
+
+  useEffect(() => {
+    if (profile?.id) {
+      requestGetTheme();
+    } else {
+      setTheme(initialTheme);
+    }
+  }, [profile]);
 
   return (
     <>
@@ -129,14 +142,35 @@ const ThemeConfiguration = ({
                 <ColorTheme dataColor={color} onChangeColor={onChangeColor} />
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
-                  <Button
-                    isLoading={createThemeLoading || updateThemeLoading}
-                    onPress={onSave}
-                    type="submit"
-                    className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
-                  >
-                    {t('Save')}
-                  </Button>
+                  <ConnectButton.Custom>
+                    {({ account, chain, openConnectModal, mounted }) => {
+                      const ready = mounted;
+                      const connected = ready && account && chain;
+
+                      const onPress = () => {
+                        if (!connected) {
+                          openConnectModal();
+                          setIsNonUserSave(true);
+                        } else {
+                          onSave();
+                        }
+                      };
+
+                      return (
+                        <div>
+                          <Button
+                            isLoading={createThemeLoading || updateThemeLoading}
+                            onPress={onPress}
+                            className="min-h-[40px] rounded mt-2 bg-main"
+                          >
+                            <Text className="text-white" type="font-16-600">
+                              Save
+                            </Text>
+                          </Button>
+                        </div>
+                      );
+                    }}
+                  </ConnectButton.Custom>
                 </div>
               </div>
             </>

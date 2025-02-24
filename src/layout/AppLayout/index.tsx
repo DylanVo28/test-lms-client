@@ -7,20 +7,26 @@ import PushNotificationLayout from '../PushNotificationLayout/PushNotificationLa
 import { useAuth } from '@/store/auth/useAuth';
 import { COLOR_THEME } from '@/utils/common';
 import { useTheme } from '@/store/theme/useTheme';
+import { useNotifications } from '@/store/notification/useNotification';
+import { firebaseCloudMessaging } from '@/firebase/firebase';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
   const { requestUpdateFcmToken } = useAuth();
   const { theme } = useTheme();
 
+  const { requestCheckHasNotification } = useNotifications();
   const token = getAccessToken();
 
   useEffect(() => {
-    console.log(token, 'token');
+    firebaseCloudMessaging.requestPermissions();
+  }, []);
 
+  useEffect(() => {
     if (token) {
       requestGetProfile();
       requestUpdateFcmToken?.run(token);
+      requestCheckHasNotification?.run();
     }
   }, [token]);
 

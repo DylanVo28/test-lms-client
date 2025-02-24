@@ -78,8 +78,18 @@ export const API_PATH = {
 
   WISH_LISH: '/api/courses/wishlist',
 
+  LIST_FOLLOWER: '/api/users/followings',
+
+  FOLLOW_MENTOR: (id: string) => `/api/users/${id}/follow`,
+  UN_FOLLOW_MENTOR: (id: string) => `/api/users/${id}/unfollow`,
   THEMES: '/api/themes',
   THEME_DETAIL: '/api/themes/detail',
 
-  FCM_TOKEN: '/fcm',
+  FCM_TOKEN: '/api/fcm',
+
+  NOTIFICATION: '/api/notifications',
+
+  GET_COUNT_NOTIFICATION: '/api/notifications/count',
+
+  READ_NOTIFICATION: (id: string) => `/api/notifications/${id}/read`,
 };

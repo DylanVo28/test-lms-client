@@ -13,6 +13,7 @@ const CourseLandingPage = dynamic(() => import('./CourseLandingPage'), {
 const PlanYourCourseRight = ({
   activePlan,
   control,
+  errors,
   watch,
   idDetail,
   handleSubmit,
@@ -20,6 +21,7 @@ const PlanYourCourseRight = ({
 }: {
   control: Control;
   activePlan: number;
+  errors: any;
   idDetail: string;
   handleSubmit: any;
   watch?: any;
@@ -32,6 +34,7 @@ const PlanYourCourseRight = ({
       {activePlan === 1 && (
         <IntendedLearners
           handleSubmit={handleSubmit}
+          errors={errors}
           control={control}
           idDetail={idDetail}
         />

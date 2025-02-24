@@ -5,6 +5,13 @@
   "View All": "Xem tất cả",
   "Instructor": "Người hướng dẫn",
   "Student": "Học sinh",
+  "Follow Mentors": "Theo dõi người cố vấn",
+  "Followed": "Đã theo dõi",
+  "No notification": "Không có thông báo",
+  "e.g Learn photoshop CS6 from Scratch": "ví dụ: Học photoshop CS6 từ đầu",
+
+  "courses": "các khóa học",
+  "students": "sinh viên",
 
   "About This Course": "Về khóa học này",
   "Course": "Khóa học",
@@ -238,5 +245,7 @@
   "YouTube": "YouTube",
   "Username": "Tên người dùng",
   "URL": "URL",
-  "Information": "Thông tin"
+  "Information": "Thông tin",
+  "Follow": "Follow",
+  "Unfollow": "Unfollow"
 }

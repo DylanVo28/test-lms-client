@@ -22,28 +22,40 @@ const CardCourse = ({ item }: { item?: any }) => {
   }, 0);
 
   const generateMentors = () => {
-    if (item?.author?.firstName || item?.author?.lastName) {
-      return `${item?.author?.firstName || ''} ${item?.author?.lastName || ''}`;
+    if (item?.author?.fullName) {
+      return item?.author?.fullName;
     }
     return item?.author?.walletAddress;
   };
   return (
     <div
-      onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
+      onClick={() => {
+        router.push(ROUTE_PATH.DETAIL_COURSE(item?.id));
+      }}
       className="rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
     >
-      <Image
-        src={item?.image || '/images/img-default.png'}
-        width={302}
-        height={200}
-        alt=""
-        className="w-full h-[200px] rounded rounded-b-none"
-        layout="contain"
-        onError={(e: any) => {
-          e.target.srcset = '/images/img-default.png';
-        }}
-      />
-      <div className="py-4 px-3 rounded bg-white-10 flex flex-col gap-[10px]">
+      <a
+        href={item?.image || '/images/img-default.png'}
+        target="_blank"
+        onClick={(e) => e.preventDefault()}
+        className="bg-white-10"
+      >
+        {/* <div className="w-full rounded-b-none h-max rounded justify-center items-center bg-white/10"> */}
+        <Image
+          src={item?.image || '/images/img-default.png'}
+          width={302}
+          height={200}
+          alt=""
+          className="w-full h-[200px] bg-white-10 object-scale-down"
+          layout="contain"
+          objectFit="scale-down"
+          onError={(e: any) => {
+            e.target.srcset = '/images/img-default.png';
+          }}
+        />
+        {/* </div> */}
+      </a>
+      <div className="py-4 px-3 rounded-t-none rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />

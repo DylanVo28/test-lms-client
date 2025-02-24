@@ -14,12 +14,13 @@ import { DefaultSeo, DefaultSeoProps } from 'next-seo';
 import AppLayout from '@/layout/AppLayout';
 import { appWithTranslation } from 'next-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { http, WagmiProvider } from 'wagmi';
+import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, base } from 'wagmi/chains';
 import {
   getDefaultConfig,
   RainbowKitProvider,
   darkTheme,
+  getDefaultWallets,
 } from '@rainbow-me/rainbowkit';
 import nextI18nConfig from '../../next-i18next.config';
 import { Toaster } from 'sonner';
@@ -31,14 +32,26 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const config = getDefaultConfig({
+const { connectors } = getDefaultWallets({
   appName: 'LMS',
   projectId: 'fc44d249918338bb571eab6da79776df',
+});
+
+const config = createConfig({
+  chains: [mainnet, polygon, optimism, arbitrum, base],
+  connectors,
   transports: {
     [mainnet.id]: http(),
+    [polygon.id]: http(),
+    [optimism.id]: http(),
+    [arbitrum.id]: http(),
+    [base.id]: http(),
   },
-  chains: [mainnet, polygon, optimism, arbitrum, base],
-  ssr: true,
+  ssr: false,
+  storage:
+    typeof window !== 'undefined'
+      ? createStorage({ storage: window.localStorage })
+      : undefined,
 });
 
 const queryClient = new QueryClient();
@@ -105,6 +118,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 accentColor: '#02A6C2',
                 borderRadius: 'small',
               })}
+              initialChain={mainnet}
             >
               <Toaster position="top-center" />
               {getLayout(<Component {...pageProps} />)}

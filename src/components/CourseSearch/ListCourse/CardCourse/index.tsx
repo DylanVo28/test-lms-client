@@ -40,8 +40,8 @@ const CardCourse = ({
   }, 0);
 
   const generateMentors = () => {
-    if (item?.author?.firstName || item?.author?.lastName) {
-      return `${item?.author?.firstName || ''} ${item?.author?.lastName || ''}`;
+    if (item?.author?.fullName) {
+      return item.author.fullName;
     }
     return item?.author?.walletAddress;
   };
@@ -78,16 +78,25 @@ const CardCourse = ({
         </div>
       )}
 
-      <Image
-        src={item?.image ? item?.image : '/images/img-default.png'}
-        width={302}
-        height={200}
-        alt=""
-        className="w-full h-[200px] rounded rounded-b-none"
-        onError={(e: any) => {
-          e.target.srcset = '/images/img-default.png';
-        }}
-      />
+      <a
+        href={item?.image || '/images/img-default.png'}
+        target="_blank"
+        onClick={(e) => e.preventDefault()}
+        className="bg-white-10"
+      >
+        <Image
+          src={item?.image ? item?.image : '/images/img-default.png'}
+          width={302}
+          height={200}
+          alt=""
+          layout="contain"
+          className="w-full h-[200px] rounded rounded-b-none object-scale-down bg-white-10"
+          objectFit="scale-down"
+          onError={(e: any) => {
+            e.target.srcset = '/images/img-default.png';
+          }}
+        />
+      </a>
       <div className="py-4 px-3 rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">

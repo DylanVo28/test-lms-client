@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
 import LanguageModal from '../LanguageModal';
 import { useTranslation } from 'next-i18next';
+import { notificationAtom } from '@/store/notification/notification';
+import { useAtom } from 'jotai';
 
 const MENUS = [
   {
@@ -27,24 +29,33 @@ const MENUS = [
   },
 ];
 
-const ContentProfile = ({ disconnect }: { disconnect: any }) => {
+const ContentProfile = ({
+  disconnect,
+  onClosePopover,
+}: {
+  disconnect: any;
+  onClosePopover: VoidFunction;
+}) => {
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const router = useRouter();
+  const [, setNotifications] = useAtom(notificationAtom);
+
   const handleRedirectPage = (link: string) => {
     router.push(link);
   };
   const handleLogout = () => {
     disconnect();
+    setNotifications({});
     setAuthCookies({
       token: '',
     });
     toast.success(t('Logout successfully'));
   };
 
-  const generateName = () => {
-    if (profile?.firstName || profile?.lastName) {
-      return `${profile?.firstName} ${profile?.lastName}`;
+  const generateName = (): any => {
+    if (profile?.fullName) {
+      return profile?.fullName;
     }
     return profile?.walletAddress;
   };
@@ -69,7 +80,7 @@ const ContentProfile = ({ disconnect }: { disconnect: any }) => {
       <div className="border-b-1 border-solid border-b-[#F0F0F01A]">
         {MENUS?.map((item) => {
           if (item.id === 3) {
-            return <LanguageModal />;
+            return <LanguageModal onClosePopover={onClosePopover} />;
           }
           return (
             <div

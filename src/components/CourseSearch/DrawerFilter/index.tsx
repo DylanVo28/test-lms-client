@@ -31,7 +31,10 @@ const DrawerFilter = (props: any, ref: any) => {
     <Drawer
       radius="none"
       hideCloseButton
-      size="sm"
+      size="full"
+      classNames={{
+        base: 'bgDrawer',
+      }}
       isOpen={visible}
       onClose={onVisible}
     >
@@ -40,9 +43,13 @@ const DrawerFilter = (props: any, ref: any) => {
           <DrawerBody className="p-0">
             <div className="flex flex-col">
               <div className="flex p-4 items-center justify-between border-b-1 border-white-10">
-                <Text type="font-20-600" className="text-white">
-                  {t('Filter')}
-                </Text>
+                <Image
+                  alt="logo"
+                  width={125}
+                  height={46}
+                  className="cursor-pointer"
+                  src={'/logo.png'}
+                />
                 <Image
                   onClick={onVisible}
                   src={'/images/ic-close.png'}

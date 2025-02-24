@@ -3,6 +3,9 @@ import Text from '../UI/Text';
 import { Tab, Tabs } from '@nextui-org/react';
 import { useState } from 'react';
 import ListNotification from './ListNotification';
+import { useNotifications } from '@/store/notification/useNotification';
+import { useMount } from 'ahooks';
+import clsx from 'clsx';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -14,8 +17,32 @@ const Notification = () => {
   const { t } = useTranslation('common');
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
   const onChangeTab = (tab: any) => {
+    const params = {
+      page: 1,
+      pageSize: 50,
+      userType: tab === TAB_NOTIFICATION?.VIEW_ALL ? '' : tab,
+    };
+    requestGetNotification.run(params);
+
     setTab(tab);
   };
+
+  const {
+    requestReadNotification,
+    notifications,
+    requestCheckHasNotification,
+    loading,
+    requestGetNotification,
+  } = useNotifications();
+
+  useMount(() => {
+    const params = {
+      page: 1,
+      pageSize: 50,
+    };
+    requestCheckHasNotification?.run();
+    requestGetNotification.run(params);
+  });
 
   const DATA_TAB_NOTIFICATION = [
     {
@@ -32,18 +59,35 @@ const Notification = () => {
     },
   ];
 
+  const handleReadNotification = (item: any) => {
+    if (item?.read) {
+      return;
+    }
+    requestReadNotification.run(item?.id);
+  };
+
   return (
     <div className="flex p-4 min-w-[552px] flex-col gap-5">
       <div className="flex items-center gap-2">
         <Text type="font-18-600" className="text-white">
           {t('Notification')}
         </Text>
-
-        <div className="min-w-7 min-h-4 py-[2px] px-1 flex justify-center items-center max-h-4 rounded-2xl bg-error-1">
-          <Text type="font-12-600" className="text-white">
-            99+
-          </Text>
-        </div>
+        {notifications?.totalCount > 0 && (
+          <div
+            className={clsx(
+              ' bg-error rounded-full h-[18px] w-[18px] flex justify-center items-center',
+              {
+                ['!min-w-8']: notifications?.totalCount > 99,
+              }
+            )}
+          >
+            <Text type="font-12-500" className="text-white">
+              {notifications?.totalCount > 99
+                ? '99+'
+                : notifications?.totalCount}
+            </Text>
+          </div>
+        )}
       </div>
       <Tabs
         onSelectionChange={onChangeTab}
@@ -63,7 +107,11 @@ const Notification = () => {
         })}
       </Tabs>
 
-      {tab === TAB_NOTIFICATION.VIEW_ALL && <ListNotification />}
+      <ListNotification
+        handleReadNotification={handleReadNotification}
+        listNotification={notifications?.content}
+        loading={loading}
+      />
     </div>
   );
 };

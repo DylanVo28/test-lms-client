@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.0",
     "@nextui-org/react": "^2.6.11",
     "@phosphor-icons/react": "^2.1.7",
     "@rainbow-me/rainbowkit": "^2.2.2",
@@ -46,7 +47,8 @@
     "video.js": "^8.21.0",
     "videojs-hls-quality-selector": "^2.0.0",
     "viem": "^2.22.9",
-    "wagmi": "^2.14.8"
+    "wagmi": "^2.14.8",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

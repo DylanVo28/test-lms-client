@@ -4,7 +4,7 @@ import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
 import { useEffect, useRef, useState } from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useConnect, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
 import { toast } from '@/components/UI/Toast/toast';
@@ -25,6 +25,12 @@ import IconSearch from '@/components/UI/Icons/IconSearch';
 import { COLOR_THEME } from '@/utils/common';
 import { useTheme } from '@/store/theme/useTheme';
 import IconNotification from '@/components/UI/Icons/IconNotification';
+import { useNotifications } from '@/store/notification/useNotification';
+import { useMount } from 'ahooks';
+import Text from '@/components/UI/Text';
+import { notificationAtom } from '@/store/notification/notification';
+import { useAtom } from 'jotai';
+import clsx from 'clsx';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -37,6 +43,8 @@ const MainHeader = () => {
   const refDrawerMenu: any = useRef(null);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const { theme } = useTheme();
+  const [notifications] = useAtom(notificationAtom);
+  const prevIsConnected = useRef<boolean | null>(null);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -50,6 +58,10 @@ const MainHeader = () => {
         token: res?.data?.accessToken,
       });
     },
+    onError(err) {
+      console.log('errrrrrr', err);
+      toast.error(err?.message);
+    },
   });
   const { run: runGetUserNonce } = useGetUserNonce({
     onSuccess(res) {
@@ -58,6 +70,10 @@ const MainHeader = () => {
   });
 
   const handleSignMessage = async (messageNonce: string) => {
+    if (!isConnected || !address) {
+      return;
+    }
+
     try {
       const sig = await signMessageAsync({ message: messageNonce });
       runLoginWeb3({
@@ -65,8 +81,9 @@ const MainHeader = () => {
         signature: sig,
         refCode: (router.query.refCode as string) || '',
       });
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error('ERROR: ', err);
+      toast.error(err?.message);
     }
   };
 
@@ -77,6 +94,12 @@ const MainHeader = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (router.pathname !== ROUTE_PATH.COURSE_SEARCH) {
+      setValueSearch('');
+    }
+  }, [router.pathname]);
 
   useEffect(() => {
     if (isConnected && address && !token) {
@@ -132,15 +155,17 @@ const MainHeader = () => {
           alt=""
           className="w-10 h-10 block md:hidden"
         />
-        <div className="md:flex hidden items-center gap-4">
+
+        <div className="md:flex hidden items-center gap-8">
           <Menubar />
 
           <div className="flex items-center gap-4">
             <InputText
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}
+              value={valueSearch}
               startContent={<IconSearch />}
-              className="min-w-[470px]"
+              className="xl:min-w-[470px] lg:min-w-[320px]"
               radius="sm"
               placeholder={t('Search')}
             />
@@ -155,12 +180,27 @@ const MainHeader = () => {
               placement="bottom-end"
             >
               <PopoverTrigger>
-                <Button
-                  isIconOnly
-                  className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
-                >
+                <div className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10">
+                  {notifications?.totalCount > 0 && (
+                    <div
+                      className={clsx(
+                        'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-[18px] flex justify-center items-center',
+                        {
+                          ['!min-w-8 !right-[-12px] !top-[-12px]']:
+                            notifications?.totalCount > 99,
+                        }
+                      )}
+                    >
+                      <Text type="font-12-500" className="text-white">
+                        {notifications?.totalCount > 99
+                          ? '99+'
+                          : notifications?.totalCount}
+                      </Text>
+                    </div>
+                  )}
+
                   <IconNotification />
-                </Button>
+                </div>
               </PopoverTrigger>
               <PopoverContent>
                 <Notification />

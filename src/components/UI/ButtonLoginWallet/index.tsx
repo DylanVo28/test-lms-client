@@ -9,15 +9,28 @@ import Text from '../Text';
 import Image from 'next/image';
 import ContentProfile from '@/layout/MainLayout/MainHeader/ContentProfile';
 import { useDisconnect } from 'wagmi';
+import { useState } from 'react';
+import { getAccessToken } from '@/store/auth';
 import IconUser from '../Icons/IconUser';
 
 const ButtonLoginWallet = () => {
   const { disconnect } = useDisconnect();
+  const accessToken = getAccessToken();
+
+  const [isOpen, setOpen] = useState(false);
+  const onClose = () => {
+    setOpen(false);
+  };
+  const onOpen = () => {
+    setOpen(true);
+  };
+  console.log(accessToken, 'accessToken');
+
   return (
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {
         const ready = mounted;
-        const connected = ready && account && chain;
+        const connected = ready && account && chain && accessToken;
 
         return (
           <div>
@@ -32,6 +45,9 @@ const ButtonLoginWallet = () => {
               </Button>
             ) : (
               <Popover
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpenChange={onOpen}
                 classNames={{
                   content:
                     'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
@@ -48,7 +64,10 @@ const ButtonLoginWallet = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent>
-                  <ContentProfile disconnect={disconnect} />
+                  <ContentProfile
+                    onClosePopover={onClose}
+                    disconnect={disconnect}
+                  />
                 </PopoverContent>
               </Popover>
             )}

@@ -34,12 +34,13 @@ const ListCourse = () => {
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
-  const { dataCourses, loadMore, noMore, reload, loading } = useGetListCourse({
-    pageSize,
-    order: sort,
-    categories: category,
-    prices: price,
-  });
+  const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
+    useGetListCourse({
+      pageSize,
+      order: sort,
+      categories: category,
+      prices: price,
+    });
 
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
@@ -146,7 +147,7 @@ const ListCourse = () => {
             <>
               <div
                 className={clsx(
-                  'grid grid-cols-1 md:grid-cols-4 gap-6 w-full',
+                  'grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full',
                   {}
                 )}
               >

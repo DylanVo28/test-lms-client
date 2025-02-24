@@ -65,3 +65,7 @@ export enum COLOR_THEME {
   CHARCOAL_GRAY = 'charcoalGray',
   CHEST_BROWN = 'chestnutBrown',
 }
+export const enum UserType {
+  STUDENT = 'STUDENT',
+  INSTRUCTOR = 'INSTRUCTOR',
+}
