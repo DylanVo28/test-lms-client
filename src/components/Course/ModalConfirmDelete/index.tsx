@@ -40,6 +40,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
   };
 
   const submitDeleteCourse = () => {
+    if (loading) return;
     runDeleteCourse(courseId);
   };
 
