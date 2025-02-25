@@ -9,6 +9,7 @@ import { useGetListWishList } from '../service';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
+import { useProfile } from '@/store/profile/useProfile';
 
 const Wishlist = () => {
   const { t } = useTranslation('common');
@@ -20,7 +21,7 @@ const Wishlist = () => {
   const { data: prices } = useGetPrices();
   const [category, setCategory] = useState();
   const [sort, setSort] = useState();
-
+  const { profile } = useProfile();
   const [price, setPrice] = useState();
 
   const { list, reload, loading, loadingMore } = useGetListWishList({
@@ -50,7 +51,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     reload();
-  }, [sort, category, price]);
+  }, [sort, category, price, profile]);
 
   return (
     <div className="flex flex-col gap-[26px]">

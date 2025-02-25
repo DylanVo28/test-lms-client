@@ -15,6 +15,7 @@ import CardMentor from '../CardMentor';
 import { useDebounce } from 'ahooks';
 import { useGetListFollowers } from '../service';
 import { useTranslation } from 'next-i18next';
+import { useProfile } from '@/store/profile/useProfile';
 const RATINGS = [
   { key: '5', label: '5 Star' },
   { key: '4', label: '4 Star' },
@@ -26,7 +27,7 @@ const FollowMentors = () => {
   const [rating, setRating] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const { t } = useTranslation('common');
-
+  const { profile } = useProfile();
   const [debounceVal, setDebounceVal] = useState('');
   const debounceValue = useDebounce(valueSearch, { wait: 500 });
 
@@ -38,7 +39,7 @@ const FollowMentors = () => {
 
   useEffect(() => {
     reload();
-  }, [debounceVal, rating]);
+  }, [debounceVal, rating, profile]);
 
   useEffect(() => {
     console.log('Debounced:', valueSearch);
