@@ -161,7 +161,7 @@ const DrawerMenu = (props: any, ref: any) => {
                       <Notification />
                     </PopoverContent>
                   </Popover>
-                  <ButtonLoginWallet />
+                  <ButtonLoginWallet setVisible={setVisible} />
                   <ThemeConfiguration setUrlLogo={setUrlLogo} />
                 </div>
               </div>

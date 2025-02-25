@@ -12,13 +12,16 @@ import { useDisconnect } from 'wagmi';
 import { useState } from 'react';
 import { getAccessToken } from '@/store/auth';
 
-const ButtonLoginWallet = () => {
+const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
   const accessToken = getAccessToken();
 
   const [isOpen, setOpen] = useState(false);
   const onClose = () => {
     setOpen(false);
+    if (setVisible) {
+      setVisible(false);
+    }
   };
   const onOpen = () => {
     setOpen(true);

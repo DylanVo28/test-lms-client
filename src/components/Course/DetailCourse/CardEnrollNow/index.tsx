@@ -42,7 +42,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
   const discountCalculator = (originPrice: any, price: any) => {
     const discountPercentage = ((originPrice - price) / originPrice) * 100;
 
-    return `${discountPercentage}%`;
+    return `${discountPercentage.toFixed(0)}%`;
   };
 
   return (
@@ -144,7 +144,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
 
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-18-600">
-              {t("This course includes")}
+              {t('This course includes')}
             </Text>
             <div className="flex flex-col gap-1">
               {DATA_NOTE?.map((item) => {

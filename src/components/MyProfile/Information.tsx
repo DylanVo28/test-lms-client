@@ -28,6 +28,11 @@ const inputFields = [
     placeholder: 'example@gmail.com',
     type: 'text',
     atRow: 1,
+    rules: {
+      validate: (value: string) =>
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ||
+        'Invalid email format',
+    },
   },
   {
     name: 'headline',
@@ -88,7 +93,9 @@ export default function Information({
   user?: TUser;
 }) {
   const { t } = useTranslation('common');
-  const { handleSubmit, setValue, control, getValues } = useForm();
+  const { handleSubmit, setValue, control, getValues } = useForm({
+    mode: 'onChange', // Triggers validation on each change
+  });
   const [loading, setLoading] = useState(false);
   const [initialData, setInitialData] = useState<any>({});
 
@@ -133,14 +140,24 @@ export default function Information({
             {inputFields
               .filter((field) => field.atRow === 1)
               .map((field, index) => (
-                <Field fieldItem={field} key={index} control={control} />
+                <Field
+                  fieldItem={field}
+                  key={index}
+                  control={control}
+                  rules={field.rules}
+                />
               ))}
           </div>
           <div className="flex flex-col gap-6 w-full">
             {inputFields
               .filter((field) => field.atRow === 2)
               .map((field, index) => (
-                <Field fieldItem={field} key={index} control={control} />
+                <Field
+                  fieldItem={field}
+                  key={index}
+                  control={control}
+                  rules={field.rules}
+                />
               ))}
           </div>
         </div>
@@ -162,6 +179,7 @@ export default function Information({
 const Field = ({
   fieldItem,
   control,
+  rules,
 }: {
   fieldItem: {
     name: string;
@@ -171,6 +189,7 @@ const Field = ({
     atRow: number;
   };
   control: any;
+  rules: any;
 }) => {
   const { t } = useTranslation('common');
   console.log(fieldItem, 'fieldItem');
