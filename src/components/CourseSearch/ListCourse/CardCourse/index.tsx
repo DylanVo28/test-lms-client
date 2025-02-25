@@ -47,7 +47,7 @@ const CardCourse = ({
   return (
     <div
       onClick={handleClickCardCourse}
-      className="rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
+      className="flex flex-col rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
@@ -96,7 +96,7 @@ const CardCourse = ({
           }}
         />
       </a>
-      <div className="py-4 px-3 rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="flex-1 py-4 px-3 rounded bg-white/10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />
@@ -117,7 +117,7 @@ const CardCourse = ({
         <Text type="font-16-500" className="line-clamp-2 capitalize">
           {item?.title}
         </Text>
-        <div className="flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
+        <div className="flex-1 flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
           <div className="flex items-center gap-2">
             <Text type="font-14-500">{item?.rating}</Text>
             <ReactStars
