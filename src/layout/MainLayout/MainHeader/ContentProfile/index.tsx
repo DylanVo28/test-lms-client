@@ -43,6 +43,7 @@ const ContentProfile = ({
 
   const handleRedirectPage = (link: string) => {
     router.push(link);
+    onClosePopover();
   };
   const handleLogout = () => {
     disconnect();
