@@ -181,31 +181,56 @@ const Field = ({
         {t(fieldItem.label)}
       </label>
 
-      <Controller
-        name={fieldItem.name}
-        control={control}
-        render={({ field }) => {
-          if (fieldItem.type === 'textarea') {
+      {fieldItem?.name === 'email' ? (
+        <Controller
+          name={'email'}
+          control={control}
+          rules={{
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: t('message_email'),
+            },
+          }}
+          render={({ field, fieldState }) => {
             return (
-              <InputTextArena
+              <InputText
+                error={fieldState?.error?.message}
+                className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
                 placeholder={t(fieldItem.placeholder)}
-                value={field.value}
-                minRows={5}
-                inputDefault
+                value={field.value || ''}
                 onChange={field.onChange}
               />
             );
-          }
-          return (
-            <InputText
-              className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
-              placeholder={t(fieldItem.placeholder)}
-              value={field.value || ''}
-              onChange={field.onChange}
-            />
-          );
-        }}
-      />
+          }}
+        />
+      ) : (
+        <Controller
+          name={fieldItem.name}
+          control={control}
+          render={({ field }) => {
+            if (fieldItem.type === 'textarea') {
+              return (
+                <InputTextArena
+                  placeholder={t(fieldItem.placeholder)}
+                  value={field.value}
+                  minRows={5}
+                  inputDefault
+                  onChange={field.onChange}
+                />
+              );
+            }
+
+            return (
+              <InputText
+                className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
+                placeholder={t(fieldItem.placeholder)}
+                value={field.value || ''}
+                onChange={field.onChange}
+              />
+            );
+          }}
+        />
+      )}
     </div>
   );
 };

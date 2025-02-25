@@ -3,6 +3,8 @@
   "Instructor": "Instructor",
   "Student": "Student",
   "Follow": "Follow",
+  "message_email": "Invalid email",
+
   "No notification": "No notification",
   "Unfollow": "Unfollow",
   "Follow Mentors": "Follow Mentors",
