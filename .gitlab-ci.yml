@@ -25,10 +25,7 @@ deploy_to_vps:
     - git pull origin develop
     - npm install -f
     - npm run build
-    - pm2 delete lms-web
-    - pm2 start "npm run start" --name lms-web
-    - pm2 save
-    - pm2 startup
+    - pm2 reload lms-web --update-env
     - EOF
 
   environment:
