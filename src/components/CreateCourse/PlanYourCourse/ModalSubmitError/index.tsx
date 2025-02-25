@@ -49,7 +49,9 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
       }
 
       return section.lessons.every(
-        (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+        (lesson: any) =>
+          (lesson.id && (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+          !lesson.id
       );
     });
   const allQuizzesHaveQuestions =
