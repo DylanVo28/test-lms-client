@@ -87,23 +87,32 @@ const PlanYourCourse = () => {
       const allLessonsHaveContent =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.lessons.length > 0 &&
-            section.lessons.every((lesson: any) => lesson.content !== null)
-        );
+        resData?.data.every((section: any) => {
+          if (section.lessons.length === 0) {
+            return section.quizzes.length > 0;
+          }
+
+          return section.lessons.every(
+            (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+          );
+        });
 
       const allQuizzesHaveQuestions =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.quizzes.length > 0 &&
-            section.quizzes.every(
-              (quizz: any) =>
-                Array.isArray(quizz.questions) && quizz.questions.length > 0
-            )
-        );
+        resData?.data.every((section: any) => {
+          if (section.quizzes.length === 0) {
+            return section.lessons.length > 0;
+          }
+
+          return section.quizzes.every(
+            (quizz: any) =>
+              (quizz.id &&
+                Array.isArray(quizz.questions) &&
+                quizz.questions.length > 0) ||
+              !quizz.id
+          );
+        });
 
       const isEnoughCurruclum =
         allLessonsHaveContent && allQuizzesHaveQuestions;
@@ -192,23 +201,32 @@ const PlanYourCourse = () => {
       const allLessonsHaveContent =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.lessons.length > 0 &&
-            section.lessons.every((lesson: any) => lesson.content !== null)
-        );
+        resData?.data.every((section: any) => {
+          if (section.lessons.length === 0) {
+            return section.quizzes.length > 0;
+          }
+
+          return section.lessons.every(
+            (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+          );
+        });
 
       const allQuizzesHaveQuestions =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.quizzes.length > 0 &&
-            section.quizzes.every(
-              (quizz: any) =>
-                Array.isArray(quizz.questions) && quizz.questions.length > 0
-            )
-        );
+        resData?.data.every((section: any) => {
+          if (section.quizzes.length === 0) {
+            return section.lessons.length > 0;
+          }
+
+          return section.quizzes.every(
+            (quizz: any) =>
+              (quizz.id &&
+                Array.isArray(quizz.questions) &&
+                quizz.questions.length > 0) ||
+              !quizz.id
+          );
+        });
 
       const isEnoughIntendedLearners =
         res?.data?.objectives?.length > 0 &&
@@ -282,23 +300,31 @@ const PlanYourCourse = () => {
     const allLessonsHaveContent =
       Array.isArray(resData?.data) &&
       resData?.data.length > 0 &&
-      resData?.data.every(
-        (section: any) =>
-          section.lessons.length > 0 &&
-          section.lessons.every((lesson: any) => lesson.content !== null)
-      );
+      resData?.data.every((section: any) => {
+        if (section.lessons.length === 0) {
+          return section.quizzes.length > 0;
+        }
 
+        return section.lessons.every(
+          (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+        );
+      });
     const allQuizzesHaveQuestions =
       Array.isArray(resData?.data) &&
       resData?.data.length > 0 &&
-      resData?.data.every(
-        (section: any) =>
-          section.quizzes.length > 0 &&
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-      );
+      resData?.data.every((section: any) => {
+        if (section.quizzes.length === 0) {
+          return section.lessons.length > 0;
+        }
+
+        return section.quizzes.every(
+          (quizz: any) =>
+            (quizz.id &&
+              Array.isArray(quizz.questions) &&
+              quizz.questions.length > 0) ||
+            !quizz.id
+        );
+      });
 
     const isEnoughtSetPrice = values?.price && values?.originPrice;
     const isEnoughIntendedLearners =
@@ -307,9 +333,17 @@ const PlanYourCourse = () => {
       values?.requirements?.length > 0;
     const isEnoughCourseLangdingePage =
       values?.title && values?.categoryId && values?.level && values?.lang;
-
+    if (isEnoughIntendedLearners && activePlan === 1) {
+      setActivePlan(activePlan + 1);
+    }
+    if (allLessonsHaveContent && allQuizzesHaveQuestions && activePlan === 2) {
+      setActivePlan(activePlan + 1);
+    }
+    if (isEnoughCourseLangdingePage && activePlan === 3) {
+      setActivePlan(activePlan + 1);
+    }
     if (
-      !(allLessonsHaveContent && allQuizzesHaveQuestions) ||
+      (!allLessonsHaveContent && !allQuizzesHaveQuestions) ||
       !isEnoughtSetPrice ||
       !isEnoughIntendedLearners ||
       !isEnoughCourseLangdingePage
@@ -417,23 +451,32 @@ const PlanYourCourse = () => {
   const allLessonsHaveContent =
     Array.isArray(dataSections) &&
     dataSections.length > 0 &&
-    dataSections.every(
-      (section: any) =>
-        section.lessons.length > 0 &&
-        section.lessons.every((lesson: any) => !!lesson.content)
-    );
+    dataSections.every((section: any) => {
+      if (section.lessons.length === 0) {
+        return section.quizzes.length > 0;
+      }
+
+      return section.lessons.every(
+        (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+      );
+    });
 
   const allQuizzesHaveQuestions =
     Array.isArray(dataSections) &&
     dataSections.length > 0 &&
-    dataSections.every(
-      (section: any) =>
-        section.quizzes.length > 0 &&
-        section.quizzes.every(
-          (quizz: any) =>
-            Array.isArray(quizz.questions) && quizz.questions.length > 0
-        )
-    );
+    dataSections.every((section: any) => {
+      if (section.quizzes.length === 0) {
+        return section.lessons.length > 0;
+      }
+
+      return section.quizzes.every(
+        (quizz: any) =>
+          (quizz.id &&
+            Array.isArray(quizz.questions) &&
+            quizz.questions.length > 0) ||
+          !quizz.id
+      );
+    });
 
   const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 

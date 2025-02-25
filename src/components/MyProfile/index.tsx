@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 import Security from './Security';
 import { userRequest, TUser, referralRequest } from './service';
 import { useTranslation } from 'next-i18next';
+import { getAccessToken } from '@/store/auth';
 
 enum TAB {
   INFORMATION = 'information',
@@ -38,8 +39,9 @@ interface Summary {
 const MyProfile = () => {
   const { t } = useTranslation('common');
   const [tabSelected, setTabSelected] = useState<TAB>(TAB.INFORMATION);
-  const [user, setUser] = useState<TUser>();
+  const [user, setUser] = useState<any>({});
   const [summary, setSummary] = useState<Summary>();
+  const accessToken = getAccessToken();
 
   const getMe = async () => {
     try {
@@ -72,9 +74,13 @@ const MyProfile = () => {
   };
 
   useEffect(() => {
-    getMe();
-    getReferral();
-  }, []);
+    if (accessToken) {
+      getMe();
+      getReferral();
+    }
+  }, [accessToken]);
+
+  console.log(user, 'user');
 
   return (
     <div className="flex flex-col gap-[50px]">

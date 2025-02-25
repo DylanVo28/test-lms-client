@@ -43,23 +43,31 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
   const allLessonsHaveContent =
     Array.isArray(valuesError?.dataCurriculum) &&
     valuesError?.dataCurriculum.length > 0 &&
-    valuesError?.dataCurriculum.every(
-      (section: any) =>
-        section.lessons.length > 0 &&
-        section.lessons.every((lesson: any) => !!lesson.content)
-    );
+    valuesError?.dataCurriculum.every((section: any) => {
+      if (section.lessons.length === 0) {
+        return section.quizzes.length > 0;
+      }
 
+      return section.lessons.every(
+        (lesson: any) => (lesson.id && !!lesson.content) || !lesson.id
+      );
+    });
   const allQuizzesHaveQuestions =
     Array.isArray(valuesError?.dataCurriculum) &&
     valuesError?.dataCurriculum.length > 0 &&
-    valuesError?.dataCurriculum.every(
-      (section: any) =>
-        section.quizzes.length > 0 &&
-        section.quizzes.every(
-          (quizz: any) =>
-            Array.isArray(quizz.questions) && quizz.questions.length > 0
-        )
-    );
+    valuesError?.dataCurriculum.every((section: any) => {
+      if (section.quizzes.length === 0) {
+        return section.lessons.length > 0;
+      }
+
+      return section.quizzes.every(
+        (quizz: any) =>
+          (quizz.id &&
+            Array.isArray(quizz.questions) &&
+            quizz.questions.length > 0) ||
+          !quizz.id
+      );
+    });
 
   return (
     <CustomModal

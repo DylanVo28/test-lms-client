@@ -101,6 +101,7 @@ export default function Information({
         userData[key] = value;
       }
     });
+    setValue('fullName', user?.fullName);
     setInitialData(userData);
   }, [user]);
 
@@ -172,6 +173,8 @@ const Field = ({
   control: any;
 }) => {
   const { t } = useTranslation('common');
+  console.log(fieldItem, 'fieldItem');
+
   return (
     <div className="w-full">
       <label className="block text-base font-semibold mb-1">
@@ -195,10 +198,9 @@ const Field = ({
           }
           return (
             <InputText
-              name={field.name}
               className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
               placeholder={t(fieldItem.placeholder)}
-              value={field.value}
+              value={field.value || ''}
               onChange={field.onChange}
             />
           );
