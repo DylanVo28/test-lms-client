@@ -27,7 +27,7 @@ const QuillEditor = ({
   onChange?: (value: string) => void;
   autoFocus?: boolean;
 }) => {
-  const editorRef = useRef(null);
+  const editorRef: any = useRef(null);
   const [editor, setEditor] = useState<Quill | null>(null);
 
   const accessToken = getAccessToken();
@@ -35,6 +35,7 @@ const QuillEditor = ({
   useEffect(() => {
     if (editorRef.current) {
       // Custom clipboard matcher để xử lý paste
+
       const customClipboard = {
         matchers: [
           [
@@ -221,6 +222,12 @@ const QuillEditor = ({
       }
     };
   };
+
+  // const toolbar = editorRef.current?.querySelector('.ql-header');
+  // if (toolbar) {
+  //   toolbar.childNodes[0].textContent = 'Tiêu đề lớn';
+  //   toolbar.childNodes[1].textContent = 'Tiêu đề nhỏ';
+  // }
 
   return (
     <div className="w-full flex flex-col gap-2">

@@ -51,6 +51,7 @@ const SelectCustom = (props: SelectCustomProps) => {
       onChange={onChange}
       value={value}
       selectedKeys={[value]}
+      showScrollIndicators={false}
       onOpenChange={(open: boolean) => {
         setOpenSelect(!open);
       }}
