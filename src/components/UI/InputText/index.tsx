@@ -118,7 +118,7 @@ const InputText = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2',
+            'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2 !pr-10',
             {
               'placeholder:text-white/20': isInputSubmit,
               'placeholder:!text-white/20': inputDefault,
@@ -127,7 +127,7 @@ const InputText = (props: InputTextProps) => {
           ),
 
           inputWrapper: clsx(
-            'px-2 border-1 rounded min-h-[40px] !border-gray-10 data-[hover=true]:!border-main group-data-[focus=true]:!border-main',
+            'px-2 border-1 rounded min-h-[40px] !border-gray-10 data-[hover=true]:!border-main group-data-[focus=true]:!border-main !pr-10',
             {
               '!px-4 !bg-primary': isFilter,
               '!bg-transparent !border-white min-h-[40px] ': isLesson,
