@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import { formatWalletAddress } from '@/utils/common';
 
 dayjs.extend(relativeTime);
 
@@ -42,7 +43,7 @@ const CardCourse = ({
     if (item?.author?.fullName) {
       return item.author.fullName;
     }
-    return item?.author?.walletAddress;
+    return formatWalletAddress(item?.author?.walletAddress);
   };
   return (
     <div
@@ -144,7 +145,7 @@ const CardCourse = ({
             </div>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex-wrap flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
               <Text type="font-16-600" className="text-orange">

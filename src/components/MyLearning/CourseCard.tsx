@@ -6,13 +6,14 @@ import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import { formatWalletAddress } from '@/utils/common';
 
 interface IProps {
   id: string;
   image: string;
   progress: number;
   name: string;
-  authorName: string;
+  author: any;
   course: any;
   countReviews: number;
 }
@@ -21,13 +22,20 @@ export default function CourseCard({
   id,
   name,
   progress = 0,
-  authorName,
+  author,
   image,
   course,
   countReviews,
 }: IProps) {
   const router = useRouter();
   const { t } = useTranslation('common');
+
+  const generateMentors = () => {
+    if (author?.fullName) {
+      return author?.fullName;
+    }
+    return formatWalletAddress(author?.walletAddress);
+  };
 
   console.log('progress', progress);
 
@@ -61,7 +69,7 @@ export default function CourseCard({
           <Text type="font-16-500">{name}</Text>
 
           <Text type="font-14-400" className="text-[#8C8C8C] break-all">
-            {authorName}
+            {generateMentors()}
           </Text>
         </div>
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />

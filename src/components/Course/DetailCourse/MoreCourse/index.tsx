@@ -18,7 +18,7 @@ import { useEffect } from 'react';
 import CardComment from './CardComment';
 import CustomButtonComment from '@/components/UI/CustomButtonComment';
 import NoData from '@/components/ListCourse/NoData';
-import { TypeReactions } from '@/utils/common';
+import { TypeReactions, formatWalletAddress } from '@/utils/common';
 import { useTranslation } from 'next-i18next';
 
 const MoreCourse = (props: any) => {
@@ -167,7 +167,7 @@ const MoreCourse = (props: any) => {
     if (author?.fullName) {
       return author?.fullName;
     }
-    return author?.walletAddress;
+    return formatWalletAddress(author?.walletAddress);
   };
 
   console.log(dataCourses, 'dataCourses');

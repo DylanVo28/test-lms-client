@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useGetDetailCourse } from '@/components/CreateCourse/service';
 import dayjs from 'dayjs';
-import { clean, getAvatar } from '@/utils/common';
+import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
@@ -78,7 +78,7 @@ const DetailCourse = () => {
     if (dataDetail?.data?.author?.fullName) {
       return dataDetail?.data?.author?.fullName;
     }
-    return dataDetail?.data?.author?.walletAddress;
+    return formatWalletAddress(dataDetail?.data?.author?.walletAddress);
   };
 
   return (

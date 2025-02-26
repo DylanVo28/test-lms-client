@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
+import { formatWalletAddress } from '@/utils/common';
 
 dayjs.extend(relativeTime);
 
@@ -24,7 +25,7 @@ const CardCourse = ({ item }: { item?: any }) => {
     if (item?.author?.fullName) {
       return item?.author?.fullName;
     }
-    return item?.author?.walletAddress;
+    return formatWalletAddress(item?.author?.walletAddress);
   };
   return (
     <div
