@@ -21,6 +21,7 @@ import Rater from 'react-rater';
 import { useFollowMentor, useUnFollowMentor } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { getAccessToken } from '@/store/auth';
+import { formatWalletAddress } from '@/utils/common';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
@@ -86,7 +87,7 @@ const Mentors = ({ mentor }: any) => {
     if (mentor?.fullName) {
       return mentor?.fullName;
     }
-    return mentor?.walletAddress;
+    return formatWalletAddress(mentor?.walletAddress);
   };
 
   const isNotMentor = mentor?.id !== profile?.id;

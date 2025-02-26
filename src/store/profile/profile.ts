@@ -9,7 +9,7 @@ export interface InitProfile {
   firstName?: string;
   lastName?: string;
   role?: string;
-  walletAddress?: string;
+  walletAddress: string;
 }
 
 export const initialProfile: InitProfile = {

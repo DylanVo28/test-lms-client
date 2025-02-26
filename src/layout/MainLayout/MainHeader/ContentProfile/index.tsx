@@ -10,6 +10,7 @@ import LanguageModal from '../LanguageModal';
 import { useTranslation } from 'next-i18next';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
+import { formatWalletAddress } from '@/utils/common';
 
 const MENUS = [
   {
@@ -58,7 +59,7 @@ const ContentProfile = ({
     if (profile?.fullName) {
       return profile?.fullName;
     }
-    return profile?.walletAddress;
+    return formatWalletAddress(profile?.walletAddress);
   };
 
   return (

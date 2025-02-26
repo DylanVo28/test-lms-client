@@ -96,10 +96,10 @@ const CardCourse = ({ item }: { item?: any }) => {
             </Text>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
-              <Text type="font-16-600" className="text-orange">
+              <Text type="font-16-600" className="text-orange w-max">
                 {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>
             </div>
@@ -116,7 +116,7 @@ const CardCourse = ({ item }: { item?: any }) => {
             onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
           >
             <div className="flex items-center gap-1">
-              <Text type="font-14-500" className="text-white">
+              <Text type="font-14-500" className="text-white w-max">
                 {t('Enroll Course')}
               </Text>
               <Image
