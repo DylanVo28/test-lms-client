@@ -1,10 +1,14 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Lesson from '@/components/Lesson';
 import LessonLayout from '@/layout/LessonLayout';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
+import useNavigate from '@/hooks/useNavigate';
 
 const DetailLessonPage = () => {
-  return <Lesson />;
+  const { params } = useNavigate();
+  console.log(params, 'params');
+
+  return <Lesson idQuery={params?.id} />;
 };
 
 DetailLessonPage.getLayout = function getLayout(page: ReactElement) {

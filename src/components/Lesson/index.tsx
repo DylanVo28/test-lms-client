@@ -41,12 +41,14 @@ import {
 import { useTranslation } from 'next-i18next';
 
 export const valueProgressAtom = atom<any>({});
-const Lesson = () => {
+const Lesson = ({ idQuery }: { idQuery: any }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const [endCourse, setEndCourse] = useState(false);
+
+  console.log(router, 'router');
 
   const refModalClaimCertifications: any = useRef<any>(null);
 
@@ -160,15 +162,15 @@ const Lesson = () => {
   } = useGetListReview();
 
   const handleGetReviews = () => {
-    runGetListReview(router.query.id as string);
-    runGetListReviewSummary(router.query.id as string);
+    runGetListReview(idQuery as string);
+    runGetListReviewSummary(idQuery as string);
   };
 
   useEffect(() => {
-    if (router.query.id) {
+    if (idQuery) {
       handleGetReviews();
     }
-  }, [router.query.id]);
+  }, [idQuery]);
 
   const itemsTab = [
     {
@@ -211,7 +213,7 @@ const Lesson = () => {
           onChange={onChange}
           mutate={mutate}
           dataListReview={dataListReview}
-          courseId={router.query.id as string}
+          courseId={idQuery as string}
         />
       ),
     },
@@ -222,15 +224,15 @@ const Lesson = () => {
     // },
   ];
   useEffect(() => {
-    if (router.query.id) {
-      getDetailCourse(router.query.id as string, profile?.id);
+    if (idQuery) {
+      getDetailCourse(idQuery as string, profile?.id);
     }
-  }, [router.query.id, profile?.id]);
+  }, [idQuery, profile?.id]);
 
   const { run: runClaimCertificates } = useClaimCertificates({
     onSuccess(res) {
       if (res?.data?.certificateId) {
-        getDetailCourse(router.query.id as string, profile?.id);
+        getDetailCourse(idQuery as string, profile?.id);
         refModalClaimCertifications.current.onOpen(res?.data);
       }
     },
@@ -249,7 +251,7 @@ const Lesson = () => {
 
     if (!dataDetail?.data?.receivedCertificate && isEightyPercent) {
       const body = {
-        courseId: router.query.id as string,
+        courseId: idQuery as string,
       };
       runClaimCertificates(body);
     }
@@ -286,7 +288,7 @@ const Lesson = () => {
   const requestProgressStatusLesson = useProgressStatusLesson({
     onSuccess: (res: any) => {
       // toast.success(res?.message);
-      runGetListSession(router.query.id as string, profile?.id);
+      runGetListSession(idQuery as string, profile?.id);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -296,7 +298,7 @@ const Lesson = () => {
     onSuccess: (res: any) => {
       // toast.success(res?.message);
 
-      runGetListSession(router.query.id as string, profile?.id);
+      runGetListSession(idQuery as string, profile?.id);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -304,10 +306,10 @@ const Lesson = () => {
   });
 
   useEffect(() => {
-    if (router?.query?.id && profile?.id) {
-      runGetListSession(router.query.id as string, profile?.id);
+    if (idQuery && profile?.id) {
+      runGetListSession(idQuery as string, profile?.id);
     }
-  }, [router?.query?.id, profile?.id]);
+  }, [idQuery, profile?.id]);
 
   const handleScrollTop = () => {
     const element: any = document.querySelector('#topLesson');
@@ -375,7 +377,7 @@ const Lesson = () => {
 
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
-      // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
+      // const newPath = `/lesson/${idQuery}?idChildSection=${nextItem?.id}`;
       // router.push(newPath);
       setActiveItemSection(nextItem?.id);
     } else {
@@ -436,7 +438,7 @@ const Lesson = () => {
     currentType: string,
     contentType?: string
   ) => {
-    // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
+    // const newPath = `/lesson/${idQuery}?idChildSection=${idNext}`;
     // router.push(newPath);
     setActiveItemSection(idNext);
     setTypeLoadContent(type);
@@ -471,7 +473,7 @@ const Lesson = () => {
     idCurrent: string,
     currentType: string
   ) => {
-    // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
+    // const newPath = `/lesson/${idQuery}?idChildSection=${idNext}`;
     // router.push(newPath);
     setActiveItemSection(idNext);
     setTypeLoadContent(type);
@@ -519,7 +521,7 @@ const Lesson = () => {
         {endCourse && !typeLoadContent && (
           <FormEndCourse
             handleGetReviews={handleGetReviews}
-            courseId={router.query.id as string}
+            courseId={idQuery as string}
           />
         )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (

@@ -7,12 +7,16 @@ import PushNotificationLayout from '../PushNotificationLayout/PushNotificationLa
 import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import useNavigate from '@/hooks/useNavigate';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
   const { requestUpdateFcmToken } = useAuth();
   const { requestCheckHasNotification } = useNotifications();
+  const { requestGetTheme } = useThemeInitial();
   const token = getAccessToken();
+  const { params } = useNavigate();
 
   useEffect(() => {
     firebaseCloudMessaging.requestPermissions();
@@ -23,8 +27,9 @@ const AppLayout = ({ children }: any) => {
       requestGetProfile();
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
+      requestGetTheme();
     }
-  }, [token]);
+  }, [token, params.code]);
   return (
     <>
       <main>

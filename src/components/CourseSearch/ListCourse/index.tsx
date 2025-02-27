@@ -21,6 +21,7 @@ import { isMobile } from 'react-device-detect';
 import DrawerFilter from '../DrawerFilter';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useTranslation } from 'next-i18next';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 enum TAB_VIEW {
   GRID = 'grid',
@@ -50,6 +51,7 @@ const ListCourse = () => {
   const refDrawerFilter: any = useRef(null);
 
   const [params, setParams] = useState(initParams);
+  const { theme: dataThemeConfig } = useThemeInitial();
 
   const search = searchParams.get('keySearch');
   const {
@@ -70,6 +72,7 @@ const ListCourse = () => {
     topics: params?.topics?.join(','),
     levels: params?.levels?.join(','),
     search,
+    authors: dataThemeConfig?.kolId,
   });
 
   const { run: runLikeCourse } = useLikeCourse({

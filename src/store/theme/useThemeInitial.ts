@@ -5,25 +5,19 @@ import { useAtom } from 'jotai';
 import { themeAtom } from './theme';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-import { useSearchParams } from 'next/navigation';
-import { use } from 'react';
+import useNavigate from '@/hooks/useNavigate';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
-
-  const searchParams = useSearchParams();
-
-  const codeKol = searchParams.get('code');
-
-  console.log('codeKol', codeKol);
+  const { params } = useNavigate();
 
   const run = () => {
     const init = async () => {
       let res;
-      if (codeKol) {
+      if (params?.code) {
         res = await privateRequest(
           request.get,
-          API_PATH.THEMES + `/${codeKol}`
+          API_PATH.THEMES + `/${params?.code}`
         );
         setTheme({
           ...res?.data,

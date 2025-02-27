@@ -4,10 +4,15 @@ import { Button, Progress } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { atom, useAtom } from 'jotai';
+
+export const totalStepAtom = atom<number>(4);
 
 const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
+
+  const [totalStep] = useAtom(totalStepAtom);
 
   return (
     <div>
@@ -20,7 +25,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           src={'/logo.png'}
         />
         <Text type="font-16-500" className="text-white">
-          {t('Step')} {currentStep} {t('Of 4')}
+          {`${t('Step')} ${currentStep} Of ${totalStep}`}
         </Text>
 
         <Button
@@ -33,7 +38,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
         </Button>
       </div>
       <Progress
-        maxValue={4}
+        maxValue={totalStep}
         classNames={{
           indicator: 'bg-main',
           track: 'max-h-[8px]',
