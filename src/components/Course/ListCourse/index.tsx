@@ -44,7 +44,7 @@ const ListCourse = () => {
       order: sort,
       categories: category,
       prices: price,
-      authors: dataThemeConfig?.userId,
+      authors: dataThemeConfig?.kolId,
     });
 
   const { data: categories } = useGetCategories();
@@ -82,7 +82,7 @@ const ListCourse = () => {
   };
   useEffect(() => {
     reload();
-  }, [sort, category, price, dataThemeConfig?.userId]);
+  }, [sort, category, price, dataThemeConfig?.kolId]);
 
   return (
     <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">

@@ -7,6 +7,7 @@ export interface InitTheme {
   langs: string[];
   code: string;
   userId: string;
+  kolId: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -18,6 +19,7 @@ export const initialTheme: InitTheme = {
   langs: [],
   code: '',
   userId: '',
+  kolId: '',
   createdAt: '',
   updatedAt: '',
 };

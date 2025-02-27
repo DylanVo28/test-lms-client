@@ -25,12 +25,16 @@ export const useThemeInitial = () => {
           request.get,
           API_PATH.THEMES + `/${codeKol}`
         );
+        setTheme({
+          ...res?.data,
+          kolId: res?.data?.userId,
+        });
       } else {
         res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
+        setTheme({
+          ...res?.data,
+        });
       }
-      setTheme({
-        ...res?.data,
-      });
     };
     init();
   };
