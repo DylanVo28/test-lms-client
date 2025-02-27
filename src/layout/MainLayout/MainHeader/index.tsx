@@ -27,6 +27,7 @@ import Text from '@/components/UI/Text';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import clsx from 'clsx';
+import { useProfile } from '@/store/profile/useProfile';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -40,6 +41,7 @@ const MainHeader = () => {
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
+  const { profile } = useProfile();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -208,7 +210,9 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            {profile?.role !== 'USER' && (
+              <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            )}
 
             {/* <div className="w-full">
               <ConnectButton />

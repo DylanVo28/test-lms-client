@@ -14,6 +14,7 @@ import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 export const CATEGORIES = [
   { key: 'business', label: 'Business' },
@@ -34,12 +35,16 @@ const ListCourse = () => {
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
+  const { theme: dataThemeConfig } = useThemeInitial();
+  console.log('dataThemeConfig', dataThemeConfig);
+
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
     useGetListCourse({
       pageSize,
       order: sort,
       categories: category,
       prices: price,
+      authors: dataThemeConfig?.userId,
     });
 
   const { data: categories } = useGetCategories();
@@ -77,7 +82,7 @@ const ListCourse = () => {
   };
   useEffect(() => {
     reload();
-  }, [sort, category, price]);
+  }, [sort, category, price, dataThemeConfig?.userId]);
 
   return (
     <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">

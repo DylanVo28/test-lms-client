@@ -19,6 +19,8 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
 import { initialTheme } from '@/store/theme/theme';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import InputText from '@/components/UI/InputText';
+import { useSearchParams } from 'next/navigation';
 
 const DEFAULT_SELECT_LANG = 'en';
 const DEFAULT_COLOR = '#02A6C2';
@@ -33,6 +35,7 @@ const ThemeConfiguration = ({
   const [color, setColor] = useState<string>('');
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
+  const [code, setCode] = useState<string>('');
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
   const { profile } = useProfileInitial();
   const {
@@ -41,24 +44,25 @@ const ThemeConfiguration = ({
     setTheme,
   } = useThemeInitial();
   const { i18n } = useTranslation();
+
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
-      toast.success(t('Saved Theme Configuration'));
+      toast.success(t('Saved White Labeling'));
       requestGetTheme();
       onClose();
     },
     onError() {
-      toast.error(t('Failed Theme Configuration'));
+      toast.error(t('Failed White Labeling'));
     },
   });
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
     onSuccess() {
-      toast.success(t('Saved Theme Configuration'));
+      toast.success(t('Saved White Labeling'));
       onClose();
       requestGetTheme();
     },
     onError() {
-      toast.error(t('Failed Theme Configuration'));
+      toast.error(t('Failed White Labeling'));
     },
   });
 
@@ -74,8 +78,12 @@ const ThemeConfiguration = ({
     setLogo(logo);
   };
 
+  const onChangeCode = (e: any) => {
+    setCode(e.target.value);
+  };
+
   const onSave = () => {
-    const body = { color, logo, langs };
+    const body = { color, logo, langs, code };
     if (dataThemeConfig?.userId) {
       updateTheme(dataThemeConfig.userId, body);
       return;
@@ -86,6 +94,7 @@ const ThemeConfiguration = ({
   useEffect(() => {
     setLogo(dataThemeConfig.logo);
     setUrlLogo(dataThemeConfig.logo);
+    setCode(dataThemeConfig.code);
     // setColor(dataThemeConfig.color || DEFAULT_COLOR);
     // document.documentElement.style.setProperty(
     //   '--main-color',
@@ -114,6 +123,13 @@ const ThemeConfiguration = ({
     }
   }, [profile]);
 
+  const onCopy = () => {
+    window.navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_APP_URL}/?code=${code}`
+    );
+    toast.success(t('Copied!'));
+  };
+
   return (
     <>
       <Button
@@ -135,13 +151,38 @@ const ThemeConfiguration = ({
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
                 <span className="text-[28px] font-bold leading-[150%]">
-                  {t('Theme Configuration')}
+                  {t('White Labeling')}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
               </DrawerHeader>
 
               <Divided />
               <div className="flex flex-col gap-[32px] p-0">
+                <>
+                  <Text className="text-[18px] font-semibold">
+                    {t('Domain')}
+                  </Text>
+                  <InputText
+                    onChange={onChangeCode}
+                    startContent={
+                      <div className="pointer-events-none flex items-center">
+                        <span className="text-default-400 w-max">
+                          {process.env.NEXT_PUBLIC_APP_URL}/
+                        </span>
+                      </div>
+                    }
+                    value={code}
+                    className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
+                    // radius="sm"
+                    placeholder={t('slug')}
+                  />
+                  <Button
+                    onClick={onCopy}
+                    className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
+                  >
+                    {t('Copy Address')}
+                  </Button>
+                </>
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
                 <ColorTheme dataColor={color} onChangeColor={onChangeColor} />
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />

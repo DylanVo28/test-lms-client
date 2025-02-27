@@ -19,6 +19,7 @@ import ThemeConfiguration from '../../MainHeader/ThemeConfiguration';
 import Notification from '@/components/Notification';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
+import { useProfile } from '@/store/profile/useProfile';
 
 const MENUS = [
   {
@@ -43,6 +44,7 @@ const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
+  const { profile } = useProfile();
 
   const router = useRouter();
   const handleClickRedirectPage = (key: number) => {
@@ -162,7 +164,9 @@ const DrawerMenu = (props: any, ref: any) => {
                     </PopoverContent>
                   </Popover>
                   <ButtonLoginWallet setVisible={setVisible} />
-                  <ThemeConfiguration setUrlLogo={setUrlLogo} />
+                  {profile?.role !== 'USER' && (
+                    <ThemeConfiguration setUrlLogo={setUrlLogo} />
+                  )}
                 </div>
               </div>
             </div>

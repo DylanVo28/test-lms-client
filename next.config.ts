@@ -44,6 +44,55 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/:code/',
+  //       destination: '/',
+  //     },
+  //     {
+  //       source: '/:code/course',
+  //       destination: '/course',
+  //     },
+  //     {
+  //       source: '/:code/course/:id',
+  //       destination: '/course/:id',
+  //     },
+  //     {
+  //       source: '/:code/course-search',
+  //       destination: '/course-search',
+  //     },
+  //     {
+  //       source: '/:code/create-course',
+  //       destination: '/create-course',
+  //     },
+  //     {
+  //       source: '/:code/create-course/:id',
+  //       destination: '/create-course/:id',
+  //     },
+  //     {
+  //       source: '/:code/lesson',
+  //       destination: '/lesson',
+  //     },
+  //     {
+  //       source: '/:code/lesson/:id',
+  //       destination: '/lesson/:id',
+  //     },
+  //     {
+  //       source: '/:code/list-course',
+  //       destination: '/list-course',
+  //     },
+  //     {
+  //       source: '/:code/my-learning',
+  //       destination: '/my-learning',
+  //     },
+  //     {
+  //       source: '/:code/my-profile',
+  //       destination: '/my-profile',
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;

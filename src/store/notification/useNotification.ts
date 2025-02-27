@@ -95,7 +95,7 @@ export const useNotifications = () => {
         } else return item;
       });
 
-      toast.success('Successfully');
+      // toast.success('Successfully');
 
       setNotifications({
         ...notifications,
