@@ -4,30 +4,48 @@ import { ROUTE_PATH } from '@/utils/const';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import DrawerMenu from './DrawerMenu';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
-
-const MENUS = [
-  {
-    key: 1,
-    label: 'My Learning',
-    href: ROUTE_PATH.MY_LEARNING,
-  },
-  {
-    key: 2,
-    label: 'Wish List',
-    href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
-  },
-  {
-    key: 3,
-    label: 'Teach',
-    href: ROUTE_PATH.LIST_COURSE,
-  },
-];
+import { useProfile } from '@/store/profile/useProfile';
 
 const Menubar = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
+  const { profile } = useProfile();
+  const MENUS = useMemo(
+    () =>
+      profile?.role === 'KOL'
+        ? [
+            {
+              key: 1,
+              label: 'My learning',
+              href: ROUTE_PATH.MY_LEARNING,
+            },
+            {
+              key: 2,
+              label: 'Wish list',
+              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+            },
+            {
+              key: 3,
+              label: 'Teach',
+              href: ROUTE_PATH.LIST_COURSE,
+            },
+          ]
+        : [
+            {
+              key: 1,
+              label: 'My learning',
+              href: ROUTE_PATH.MY_LEARNING,
+            },
+            {
+              key: 2,
+              label: 'Wish list',
+              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+            },
+          ],
+    [profile?.role]
+  );
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
     if (menuItem?.href) {

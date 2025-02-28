@@ -210,7 +210,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            {profile?.role !== 'USER' && (
+            {profile?.role === 'KOL' && (
               <ThemeConfiguration setUrlLogo={setUrlLogo} />
             )}
 

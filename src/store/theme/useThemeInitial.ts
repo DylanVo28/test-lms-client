@@ -24,10 +24,10 @@ export const useThemeInitial = () => {
           kolId: res?.data?.userId,
         });
       } else {
-        res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
-        setTheme({
-          ...res?.data,
-        });
+        // res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
+        // setTheme({
+        //   ...res?.data,
+        // });
       }
     };
     init();
