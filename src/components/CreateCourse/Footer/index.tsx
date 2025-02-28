@@ -52,7 +52,7 @@ const Footer = ({
               {t('Previous')}
             </Text>
           </Button>
-          {typeWatch === TYPE_CREATE_COURSE?.PRACTICE_TESTS ? (
+          {typeWatch === TYPE_CREATE_COURSE?.PREMADE_CONTENT ? (
             <Button
               isDisabled={!courseIdWatch}
               isLoading={loading}

@@ -7,7 +7,7 @@ import ContenStep3 from './ContenStep3';
 import ContenStep4 from './ContenStep4';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useCreateCourse } from './service';
+import { useCreateCourse, useDuplicateCourse } from './service';
 import { toast } from '../UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import ContenStepDuplicateCourse from './ContenStepDuplicateCourse';
@@ -20,6 +20,13 @@ const CreateCourse = () => {
   const { run: runCreateCourse, loading } = useCreateCourse({
     onSuccess(res) {
       router.push(`/create-course/${res?.data?.id}`);
+      toast.success(res?.message);
+    },
+  });
+
+  const { run: runDuplicateCourse } = useDuplicateCourse({
+    onSuccess(res) {
+      router.push(`/list-course`);
       toast.success(res?.message);
     },
   });
@@ -37,16 +44,16 @@ const CreateCourse = () => {
       runCreateCourse(body);
       return;
     }
-    if (step === 2 && typeWatch === TYPE_CREATE_COURSE.COURSE) {
+    if (step === 2 && typeWatch === TYPE_CREATE_COURSE.PREMADE_CONTENT) {
       const values = getValues();
-      const body = {
-        title: values?.title,
-        categoryId: values.categoryId,
-        type: values.type,
-        timeSpent: values.timeSpent,
-        // timeSpent: 'im so busy',
-      };
-      runCreateCourse(body);
+      // const body = {
+      //   title: values?.title,
+      //   categoryId: values.categoryId,
+      //   type: values.type,
+      //   timeSpent: values.timeSpent,
+      //   // timeSpent: 'im so busy',
+      // };
+      runDuplicateCourse(values.courseId);
       return;
     }
     setStep(step + 1);
@@ -80,7 +87,7 @@ const CreateCourse = () => {
           {step === 2 && typeWatch === TYPE_CREATE_COURSE?.COURSE && (
             <ContenStep2 control={control} />
           )}
-          {step === 2 && typeWatch === TYPE_CREATE_COURSE?.PRACTICE_TESTS && (
+          {step === 2 && typeWatch === TYPE_CREATE_COURSE?.PREMADE_CONTENT && (
             <ContenStepDuplicateCourse control={control} />
           )}
 

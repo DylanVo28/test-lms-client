@@ -15,7 +15,7 @@ const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
   const { dataCourses, reload } = useGetListCourse({
     pageSize: 50,
     order: 'createdAt asc',
-    authors: dataThemeConfig?.kolId,
+    // authors: dataThemeConfig?.kolId,
   });
 
   useEffect(() => {

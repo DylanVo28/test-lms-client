@@ -9,7 +9,7 @@ import { totalStepAtom } from '../HeaderCourse';
 
 export const enum TYPE_CREATE_COURSE {
   COURSE = 'COURSE',
-  PRACTICE_TESTS = 'PRACTICE_TESTS',
+  PREMADE_CONTENT = 'PREMADE_CONTENT',
 }
 
 const DATA_CONTENT = [
@@ -21,7 +21,7 @@ const DATA_CONTENT = [
       'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.',
   },
   {
-    id: 'PRACTICE_TESTS',
+    id: 'PREMADE_CONTENT',
     label: 'Premade Content',
     img: '/images/img-practice.png',
     description:
@@ -49,7 +49,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                 <div
                   key={item?.id}
                   onClick={() => {
-                    if (item?.id === TYPE_CREATE_COURSE.PRACTICE_TESTS) {
+                    if (item?.id === TYPE_CREATE_COURSE.PREMADE_CONTENT) {
                       setTotalStep(2);
                     } else {
                       setTotalStep(4);
