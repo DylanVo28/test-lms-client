@@ -8,6 +8,7 @@ import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useRouter } from 'next/router';
 import useNavigate from '@/hooks/useNavigate';
 
 const AppLayout = ({ children }: any) => {
@@ -16,7 +17,7 @@ const AppLayout = ({ children }: any) => {
   const { requestCheckHasNotification } = useNotifications();
   const { requestGetTheme } = useThemeInitial();
   const token = getAccessToken();
-  const { params } = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     firebaseCloudMessaging.requestPermissions();
@@ -29,7 +30,7 @@ const AppLayout = ({ children }: any) => {
       requestCheckHasNotification?.run();
       requestGetTheme();
     }
-  }, [token, params.code]);
+  }, [token, router.query.code]);
   return (
     <>
       <main>

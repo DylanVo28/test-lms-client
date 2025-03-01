@@ -20,6 +20,7 @@ import Notification from '@/components/Notification';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import { useProfile } from '@/store/profile/useProfile';
+import useNavigate from '@/hooks/useNavigate';
 
 const DrawerMenu = (props: any, ref: any) => {
   const { t } = useTranslation('common');
@@ -29,6 +30,7 @@ const DrawerMenu = (props: any, ref: any) => {
   const { profile } = useProfile();
 
   const router = useRouter();
+  const { navigate } = useNavigate();
 
   const MENUS = useMemo(
     () =>
@@ -42,7 +44,7 @@ const DrawerMenu = (props: any, ref: any) => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+              href: `${ROUTE_PATH.MY_LEARNING}`,
             },
             {
               key: 3,
@@ -59,7 +61,7 @@ const DrawerMenu = (props: any, ref: any) => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+              href: `${ROUTE_PATH.MY_LEARNING}`,
             },
           ],
     [profile?.role]
@@ -67,10 +69,13 @@ const DrawerMenu = (props: any, ref: any) => {
 
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
-    if (menuItem?.href) {
-      router.push(menuItem?.href);
-      onVisible();
+
+    if (key === 2 && menuItem?.href) {
+      navigate(menuItem?.href, { type: TabMyLearning.WISHLIST });
+    } else {
+      menuItem?.href && navigate(menuItem?.href);
     }
+    onVisible();
   };
 
   const onVisible = () => {

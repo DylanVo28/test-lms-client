@@ -11,6 +11,7 @@ import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 dayjs.extend(relativeTime);
 
@@ -20,6 +21,7 @@ const CardCourse = ({ item }: { item?: any }) => {
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);
   }, 0);
+  const { navigate } = useNavigate();
 
   const generateMentors = () => {
     if (item?.author?.fullName) {
@@ -30,7 +32,7 @@ const CardCourse = ({ item }: { item?: any }) => {
   return (
     <div
       onClick={() => {
-        router.push(ROUTE_PATH.DETAIL_COURSE(item?.id));
+        navigate(ROUTE_PATH.DETAIL_COURSE(item?.id));
       }}
       className="flex flex-col rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
     >
@@ -113,7 +115,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           <Button
             variant="light"
             radius="full"
-            onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
+            onPress={() => navigate(ROUTE_PATH.DETAIL_COURSE(item?.id))}
           >
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-white w-max">

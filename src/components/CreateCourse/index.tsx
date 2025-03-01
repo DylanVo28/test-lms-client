@@ -11,22 +11,24 @@ import { useCreateCourse, useDuplicateCourse } from './service';
 import { toast } from '../UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import ContenStepDuplicateCourse from './ContenStepDuplicateCourse';
+import useNavigate from '@/hooks/useNavigate';
 
 const CreateCourse = () => {
   const { t } = useTranslation('common');
   const [step, setStep] = useState(1);
   const router = useRouter();
+  const { navigate } = useNavigate();
 
   const { run: runCreateCourse, loading } = useCreateCourse({
     onSuccess(res) {
-      router.push(`/create-course/${res?.data?.id}`);
+      navigate(`/create-course/${res?.data?.id}`);
       toast.success(res?.message);
     },
   });
 
   const { run: runDuplicateCourse } = useDuplicateCourse({
     onSuccess(res) {
-      router.push(`/list-course`);
+      navigate(`/list-course`);
       toast.success(res?.message);
     },
   });

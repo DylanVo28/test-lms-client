@@ -5,19 +5,18 @@ import { useAtom } from 'jotai';
 import { themeAtom } from './theme';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-import useNavigate from '@/hooks/useNavigate';
+import { useRouter } from 'next/router';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
-  const { params } = useNavigate();
-
+  const router = useRouter();
   const run = () => {
     const init = async () => {
       let res;
-      if (params?.code) {
+      if (router.query?.code) {
         res = await privateRequest(
           request.get,
-          API_PATH.THEMES + `/${params?.code}`
+          API_PATH.THEMES + `/${router.query?.code}`
         );
         setTheme({
           ...res?.data,

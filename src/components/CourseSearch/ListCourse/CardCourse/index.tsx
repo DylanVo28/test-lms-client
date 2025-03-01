@@ -13,6 +13,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 dayjs.extend(relativeTime);
 
@@ -31,9 +32,10 @@ const CardCourse = ({
 }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { navigate } = useNavigate();
 
   const handleClickCardCourse = () => {
-    router.push(ROUTE_PATH.DETAIL_COURSE(item.id));
+    navigate(ROUTE_PATH.DETAIL_COURSE(item.id));
   };
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);

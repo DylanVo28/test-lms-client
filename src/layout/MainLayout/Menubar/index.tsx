@@ -7,11 +7,14 @@ import DrawerMenu from './DrawerMenu';
 import { useMemo, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
+import useNavigate from '@/hooks/useNavigate';
 
 const Menubar = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { profile } = useProfile();
+  const { navigate } = useNavigate();
+
   const MENUS = useMemo(
     () =>
       profile?.role === 'KOL'
@@ -24,7 +27,7 @@ const Menubar = () => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+              href: `${ROUTE_PATH.MY_LEARNING}`,
             },
             {
               key: 3,
@@ -41,15 +44,17 @@ const Menubar = () => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
+              href: `${ROUTE_PATH.MY_LEARNING}`,
             },
           ],
     [profile?.role]
   );
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
-    if (menuItem?.href) {
-      router.push(menuItem?.href);
+    if (key === 2 && menuItem?.href) {
+      navigate(menuItem?.href, { type: TabMyLearning.WISHLIST });
+    } else {
+      menuItem?.href && navigate(menuItem?.href);
     }
   };
 

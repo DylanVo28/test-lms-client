@@ -41,14 +41,12 @@ import {
 import { useTranslation } from 'next-i18next';
 
 export const valueProgressAtom = atom<any>({});
-const Lesson = ({ idQuery }: { idQuery: any }) => {
+const Lesson = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const [endCourse, setEndCourse] = useState(false);
-
-  console.log(router, 'router');
 
   const refModalClaimCertifications: any = useRef<any>(null);
 
@@ -162,15 +160,15 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
   } = useGetListReview();
 
   const handleGetReviews = () => {
-    runGetListReview(idQuery as string);
-    runGetListReviewSummary(idQuery as string);
+    runGetListReview(router.query.id as string);
+    runGetListReviewSummary(router.query.id as string);
   };
 
   useEffect(() => {
-    if (idQuery) {
+    if (router.query.id) {
       handleGetReviews();
     }
-  }, [idQuery]);
+  }, [router.query.id]);
 
   const itemsTab = [
     {
@@ -213,7 +211,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
           onChange={onChange}
           mutate={mutate}
           dataListReview={dataListReview}
-          courseId={idQuery as string}
+          courseId={router.query.id as string}
         />
       ),
     },
@@ -224,15 +222,15 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
     // },
   ];
   useEffect(() => {
-    if (idQuery) {
-      getDetailCourse(idQuery as string, profile?.id);
+    if (router.query.id) {
+      getDetailCourse(router.query.id as string, profile?.id);
     }
-  }, [idQuery, profile?.id]);
+  }, [router.query.id, profile?.id]);
 
   const { run: runClaimCertificates } = useClaimCertificates({
     onSuccess(res) {
       if (res?.data?.certificateId) {
-        getDetailCourse(idQuery as string, profile?.id);
+        getDetailCourse(router.query.id as string, profile?.id);
         refModalClaimCertifications.current.onOpen(res?.data);
       }
     },
@@ -251,7 +249,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
 
     if (!dataDetail?.data?.receivedCertificate && isEightyPercent) {
       const body = {
-        courseId: idQuery as string,
+        courseId: router.query.id as string,
       };
       runClaimCertificates(body);
     }
@@ -288,7 +286,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
   const requestProgressStatusLesson = useProgressStatusLesson({
     onSuccess: (res: any) => {
       // toast.success(res?.message);
-      runGetListSession(idQuery as string, profile?.id);
+      runGetListSession(router.query.id as string, profile?.id);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -298,7 +296,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
     onSuccess: (res: any) => {
       // toast.success(res?.message);
 
-      runGetListSession(idQuery as string, profile?.id);
+      runGetListSession(router.query.id as string, profile?.id);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -306,10 +304,10 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
   });
 
   useEffect(() => {
-    if (idQuery && profile?.id) {
-      runGetListSession(idQuery as string, profile?.id);
+    if (router.query.id && profile?.id) {
+      runGetListSession(router.query.id as string, profile?.id);
     }
-  }, [idQuery, profile?.id]);
+  }, [router.query.id, profile?.id]);
 
   const handleScrollTop = () => {
     const element: any = document.querySelector('#topLesson');
@@ -377,7 +375,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
 
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
-      // const newPath = `/lesson/${idQuery}?idChildSection=${nextItem?.id}`;
+      // const newPath = `/lesson/${router.query.id}?idChildSection=${nextItem?.id}`;
       // router.push(newPath);
       setActiveItemSection(nextItem?.id);
     } else {
@@ -438,7 +436,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
     currentType: string,
     contentType?: string
   ) => {
-    // const newPath = `/lesson/${idQuery}?idChildSection=${idNext}`;
+    // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
     // router.push(newPath);
     setActiveItemSection(idNext);
     setTypeLoadContent(type);
@@ -473,7 +471,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
     idCurrent: string,
     currentType: string
   ) => {
-    // const newPath = `/lesson/${idQuery}?idChildSection=${idNext}`;
+    // const newPath = `/lesson/${router.query.id}?idChildSection=${idNext}`;
     // router.push(newPath);
     setActiveItemSection(idNext);
     setTypeLoadContent(type);
@@ -521,7 +519,7 @@ const Lesson = ({ idQuery }: { idQuery: any }) => {
         {endCourse && !typeLoadContent && (
           <FormEndCourse
             handleGetReviews={handleGetReviews}
-            courseId={idQuery as string}
+            courseId={router.query.id as string}
           />
         )}
         {typeLoadContent === TYPE_COURSE.QUIZ && (

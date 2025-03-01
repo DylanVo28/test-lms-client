@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 interface IProps {
   id: string;
@@ -29,6 +30,7 @@ export default function CourseCard({
 }: IProps) {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { navigate } = useNavigate();
 
   const generateMentors = () => {
     if (author?.fullName) {
@@ -42,7 +44,7 @@ export default function CourseCard({
   return (
     <div
       className="w-full bg-[#FFFFFF0D] rounded overflow-hidden cursor-pointer"
-      onClick={() => router.push(ROUTE_PATH.DETAIL_LESSON(id))}
+      onClick={() => navigate(ROUTE_PATH.DETAIL_LESSON(id))}
     >
       <div className="w-full">
         <a

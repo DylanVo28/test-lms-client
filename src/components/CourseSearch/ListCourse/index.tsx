@@ -48,12 +48,15 @@ const ListCourse = () => {
     { key: 'createdAt asc', label: t('Oldest') },
   ];
 
+  console.log(router, 'router');
+
   const refDrawerFilter: any = useRef(null);
 
   const [params, setParams] = useState(initParams);
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const search = searchParams.get('keySearch');
+
   const {
     dataCourses,
     loadMore,

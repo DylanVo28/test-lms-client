@@ -5,12 +5,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { atom, useAtom } from 'jotai';
+import useNavigate from '@/hooks/useNavigate';
 
 export const totalStepAtom = atom<number>(4);
 
 const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { navigate } = useNavigate();
 
   const [totalStep] = useAtom(totalStepAtom);
 
@@ -18,7 +20,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
     <div>
       <div className="p-4 flex justify-between items-center">
         <Image
-          onClick={() => router.push(ROUTE_PATH.HOME)}
+          onClick={() => navigate(ROUTE_PATH.HOME)}
           alt="logo"
           width={125}
           height={46}
@@ -30,7 +32,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
 
         <Button
           className="py-2 px-4 bg-transparent border-1 border-black-5 rounded"
-          onClick={() => router.push(ROUTE_PATH.LIST_COURSE)}
+          onPress={() => navigate(ROUTE_PATH.LIST_COURSE)}
         >
           <Text type="font-16-500" className="text-white">
             {t('Exit')}
