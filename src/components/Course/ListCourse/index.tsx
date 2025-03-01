@@ -49,6 +49,8 @@ const ListCourse = () => {
       authors: dataThemeConfig?.kolId,
     });
 
+  console.log('dataCourses', dataCourses);
+
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
 

@@ -8,7 +8,7 @@ const useNavigate = () => {
 
     console.log(query, 'query');
 
-    if (router.query.code) {
+    if (router?.query?.code) {
       console.log('test');
 
       router.push({
