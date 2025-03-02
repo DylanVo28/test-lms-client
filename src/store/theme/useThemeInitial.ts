@@ -10,6 +10,8 @@ import { useRouter } from 'next/router';
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
   const router = useRouter();
+  console.log('router', router);
+  
   const run = () => {
     const init = async () => {
       let res;

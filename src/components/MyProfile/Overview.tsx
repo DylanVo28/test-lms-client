@@ -162,9 +162,9 @@ const Overview = ({
             </div>
           </div>
 
-          <Divided />
+          {/* <Divided /> */}
 
-          <div className="flex flex-col gap-[16px] py-[8px]">
+          {/* <div className="flex flex-col gap-[16px] py-[8px]">
             <div className="text-[16px] font-semibold flex gap-[4px]">
               <span className="text-[16px] whitespace-nowrap">
                 {t('Referral link')}:{' '}
@@ -180,7 +180,7 @@ const Overview = ({
             >
               {t('Copy Address')}
             </Button>
-          </div>
+          </div> */}
         </>
       )}
     </div>
