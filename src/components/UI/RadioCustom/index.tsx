@@ -1,7 +1,7 @@
-const RadioCustom = ({ value, onChange }: any) => {
+const RadioCustom = ({ value, onChange, children }: any) => {
   return (
     <>
-      <div className="flex items-center mb-4">
+      <div className="flex items-center gap-2 mb-4">
         <input
           id="default-radio-1"
           type="radio"
@@ -12,6 +12,7 @@ const RadioCustom = ({ value, onChange }: any) => {
           name="custom-radio"
           className="custom-radio"
         />
+        {children && children}
       </div>
     </>
   );

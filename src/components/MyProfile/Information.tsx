@@ -173,7 +173,7 @@ export default function Information({
           <Button
             isLoading={loading}
             type="submit"
-            className="w-fit px-[24px] bg-main text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+            className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
           >
             {t('Save Profile')}
           </Button>
@@ -248,7 +248,7 @@ const Field = ({
 
             return (
               <InputText
-                className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
+                className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
                 placeholder={t(fieldItem.placeholder)}
                 value={field.value || ''}
                 onChange={field.onChange}

@@ -49,7 +49,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
             </Button>
           </div>
           <div className="flex flex-col gap-3 mt-4">
-            <div className="flex p-4 items-center gap-3 rounded border-1 border-white/10 bg-white/10">
+            <div className="flex p-4 items-center gap-3 rounded border-1 border-white-10 bg-white-10">
               <Image
                 src={dataCertifications?.certificate?.image}
                 width={120}

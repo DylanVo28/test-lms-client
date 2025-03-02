@@ -16,6 +16,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
 
 interface IProps {
   onClosePopover: VoidFunction;
@@ -58,18 +59,13 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     <>
       <div
         onClick={onOpen}
-        className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green/10"
+        className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
       >
         <Text type="font-14-500" className="text-white">
           {findLang(i18n.language)}
         </Text>
 
-        <Image
-          src={'/images/img-arrow-right.png'}
-          width={20}
-          height={20}
-          alt=""
-        />
+        <IconArrowRight />
       </div>
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <ModalHeader className="flex justify-between items-center gap-1">
@@ -83,7 +79,13 @@ export default function LanguageModal({ onClosePopover }: IProps) {
           >
             {showLangs.map((lang) => {
               return (
-                <Radio key={lang.code} value={lang.code}>
+                <Radio
+                  classNames={{
+                    wrapper: 'after:!bg-main before:!border-black-7',
+                  }}
+                  key={lang.code}
+                  value={lang.code}
+                >
                   {lang.name}
                 </Radio>
               );

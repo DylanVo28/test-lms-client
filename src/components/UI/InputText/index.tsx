@@ -89,7 +89,7 @@ const InputText = (props: InputTextProps) => {
           <>
             {maxLength ? (
               <div className="absolute right-3">
-                <Text type="font-16-400" className="text-white/20">
+                <Text type="font-16-400" className="text-white-20">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -118,28 +118,28 @@ const InputText = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2 !pr-10',
+            'text-black-5  placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
             {
-              'placeholder:text-white/20': isInputSubmit,
-              'placeholder:!text-white/20': inputDefault,
+              'placeholder:text-white-20': isInputSubmit,
+              'placeholder:!text-white-20': inputDefault,
               'placeholder:!text-[#757575] text-[16px] font-normal': inputShare,
             }
           ),
 
           inputWrapper: clsx(
-            'px-2 border-1 rounded min-h-[40px] !border-gray-10 data-[hover=true]:!border-main group-data-[focus=true]:!border-main !pr-10',
+            'px-2 border-1  rounded min-h-[40px] !border-gray-10 data-[hover=true]:!border-main group-data-[focus=true]:!border-main',
             {
               '!px-4 !bg-primary': isFilter,
               '!bg-transparent !border-white min-h-[40px] ': isLesson,
               [classInputWrapper]: classInputWrapper,
 
-              '!bg-[#181F25] !py-[10px] !px-4  !border-none min-h-[44px] ':
+              '!bg-black-30 !py-[10px] !px-4  !border-none min-h-[44px] ':
                 isInput,
-              '!bg-[#181F25] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-black-30 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 isInputSubmit,
-              '!bg-[#0A0F1580] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-gray-80 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 inputDefault,
-              '!bg-[#0A0F1580]  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
+              '!bg-gray-80  !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
               '!bg-[#F0F0F0] border-1 !border-white !py-[12px] !px-[16px] data-[hover=true]:!border-white group-data-[focus=true]:!border-white':
                 inputShare,

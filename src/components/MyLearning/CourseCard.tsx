@@ -43,7 +43,7 @@ export default function CourseCard({
 
   return (
     <div
-      className="w-full bg-[#FFFFFF0D] rounded overflow-hidden cursor-pointer"
+      className="w-full bg-black-20 rounded overflow-hidden cursor-pointer"
       onClick={() => navigate(ROUTE_PATH.DETAIL_LESSON(id))}
     >
       <div className="w-full">

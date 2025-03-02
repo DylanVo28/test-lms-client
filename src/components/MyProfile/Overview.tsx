@@ -63,7 +63,7 @@ const Overview = ({
   };
 
   return (
-    <div className="p-[20px] bg-[#181F25] rounded-[4px] w-full h-fit max-w-[460px] flex flex-col gap-[12px]">
+    <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit max-w-[460px] flex flex-col gap-[12px]">
       <div className="flex flex-col justify-center items-center gap-[4px]">
         <div className="w-[64px] h-[64px] rounded-full relative overflow-hidden">
           <Image

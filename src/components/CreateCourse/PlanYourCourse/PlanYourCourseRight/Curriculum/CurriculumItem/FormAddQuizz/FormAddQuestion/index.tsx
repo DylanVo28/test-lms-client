@@ -120,7 +120,7 @@ const FormAddQuestion = ({
 
   return (
     <form>
-      <div className="flex py-3 px-4  flex-col border-1 border-t-0 border-white/15  gap-8">
+      <div className="flex py-3 px-4  flex-col border-1 border-t-0 border-white-15  gap-8">
         <Controller
           name={`question`}
           control={control}

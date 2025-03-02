@@ -97,7 +97,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         label: 'w-full',
         base: clsx(
-          'inline-flex md:min-w-[416px] lg:min-w-[916px] max-w-full w-full m-0 bg-white/5 hover:bg-white/10 text-start items-centers',
+          'inline-flex md:min-w-[416px] lg:min-w-[916px] max-w-full w-full m-0 bg-white-5 hover:bg-white-10 text-start items-centers',
           'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
           'data-[selected=true]:border-primary'
         ),

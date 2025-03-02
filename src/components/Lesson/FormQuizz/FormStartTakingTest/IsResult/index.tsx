@@ -17,12 +17,12 @@ const IsResult = ({
 
   return (
     <div className="flex flex-col h-full flex-1">
-      <div className="bg-green/50 md:p-8 p-4 min-h-[140px] md:min-h-[240px]">
+      <div className="bg-green-50 md:p-8 p-4 min-h-[140px] md:min-h-[240px]">
         <div className="flex flex-col justify-center  gap-3 md:w-6/12 mx-auto">
           <div className="flex items-center gap-4">
             <div className="w-full bg-white h-[2px]" />
-            <div className="min-w-14 min-h-14 flex justify-center rounded-full  items-center bg-white">
-              <Star size={32} className="text-green" weight="bold" />
+            <div className="min-w-14 min-h-14 flex justify-center rounded-full  items-center bg-text-white">
+              <Star size={32} className="!fill-green" weight="bold" />
             </div>
             <div className="w-full bg-white h-[2px]" />
           </div>
@@ -41,7 +41,7 @@ const IsResult = ({
       <div className="flex-1 md:p-12 px-4 py-8 md:w-6/12 mx-auto h-full flex flex-col gap-5">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 mb-4">
-            <Check size={24} weight="light" className="text-green" />
+            <Check size={24} weight="light" className="fill-green" />
             <Text className="text-white" type="font-24-700">
               {t('Things you need to know')}
             </Text>

@@ -28,7 +28,7 @@ const Footer = ({
   const timeSpentWatch = watch('timeSpent');
 
   return (
-    <div className="py-[26px] px-[40px] min-h-[96px] bg-[#1D2228] w-full flex justify-between items-center">
+    <div className="py-[26px] px-[40px] min-h-[96px] bg-black-50 w-full flex justify-between items-center">
       {currentStep === 1 && (
         <div className="flex justify-center items-center w-full">
           <Button
@@ -36,7 +36,7 @@ const Footer = ({
             onPress={() => handleClickNextStep(currentStep)}
             className="bg-main rounded py-[10px] px-6"
           >
-            <Text type="font-16-700" className="text-white">
+            <Text type="font-16-700" className="text-text-white">
               {t('Continue')}
             </Text>
           </Button>

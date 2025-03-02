@@ -573,7 +573,7 @@ const Lesson = () => {
             defaultSelectedKey={'2'}
             classNames={{
               tabList:
-                'gap-3 w-full relative rounded-none p-0 border-b border-white/10',
+                'gap-3 w-full relative rounded-none p-0 border-b border-white-10',
               cursor: 'w-full bg-[#129DDB]',
               tab: 'max-w-fit px-5 h-16 text-[16px] font-medium text-[#BFBFBF]',
               tabContent: 'group-data-[selected=true]:text-white',
@@ -597,7 +597,7 @@ const Lesson = () => {
       </div>
       <div className="md:col-span-3 px-4 md:px-0">
         <div className="w-full sticky top-0 right-0 z-[10] h-full bg-[#0F141A]">
-          <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-[#D9D9D91A] border-l-[#D9D9D91A] sticky top-0 z-[1000] bg-gray">
+          <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-black-9 border-l-black-9 sticky top-0 z-[1000] bg-gray">
             <div className="flex items-center gap-2">
               {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
               <div className="flex flex-col gap-[2px]">

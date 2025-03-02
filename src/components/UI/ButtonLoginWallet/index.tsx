@@ -11,6 +11,7 @@ import ContentProfile from '@/layout/MainLayout/MainHeader/ContentProfile';
 import { useDisconnect } from 'wagmi';
 import { useState } from 'react';
 import { getAccessToken } from '@/store/auth';
+import IconUser from '../Icons/IconUser';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
@@ -62,12 +63,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
                     isIconOnly
                     className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
                   >
-                    <Image
-                      src={'/icons/ic-user.svg'}
-                      height={20}
-                      width={20}
-                      alt=""
-                    />
+                    <IconUser />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent>

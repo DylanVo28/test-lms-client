@@ -23,7 +23,7 @@ const HeaderPlanYourCourse = ({
   const { navigate } = useNavigate();
 
   return (
-    <div className="w-full p-4 sticky top-0 bg-primary z-[1000] shadow-2xl flex justify-between items-center border-b border-b-black-10">
+    <div className="w-full p-4 sticky top-0 bg-primary z-[1000]  flex justify-between items-center border-b border-b-black-10">
       <div className="flex items-center gap-5">
         <Button
           onPress={() => navigate(ROUTE_PATH.LIST_COURSE)}
@@ -58,7 +58,7 @@ const HeaderPlanYourCourse = ({
           isLoading={loadingPublish}
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-text-white">
             {t('Publish')}
           </Text>
         </Button>
@@ -94,7 +94,7 @@ const IconBlack = () => {
     >
       <path
         d="M9.02344 10.0004L13.1484 14.1254L11.9701 15.3037L6.66677 10.0004L11.9701 4.69704L13.1484 5.87538L9.02344 10.0004Z"
-        fill="white"
+        fill="var(--theme-white)"
       />
     </svg>
   );

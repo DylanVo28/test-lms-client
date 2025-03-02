@@ -105,7 +105,7 @@ const FormAddVideo = ({
   };
 
   return (
-    <div className="flex py-3 px-4 flex-col gap-3 border-1 border-t-0 border-white/15">
+    <div className="flex py-3 px-4 flex-col gap-3 border-1 border-t-0 border-white-15">
       <div className="flex items-start gap-4">
         <div className="flex flex-col gap-2 w-full">
           {valueFile?.urlVideo ? (
@@ -129,7 +129,7 @@ const FormAddVideo = ({
             <div
               onClick={handleClickUploadFile}
               className={clsx(
-                'cursor-pointer w-full py-3 px-[10px] bgDefault rounded border-1 border-white/20',
+                'cursor-pointer w-full py-3 px-[10px] bg-gray-800rounded border-1 border-white-20',
                 {
                   ['!border-danger-300']: !valueFile?.urlVideo && isError,
                 }

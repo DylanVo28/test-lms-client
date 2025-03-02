@@ -76,7 +76,7 @@ const InputTextArena = (props: InputTextProps) => {
           <>
             {maxLength && (
               <div className="absolute right-3">
-                <Text type="font-16-400" className="text-white/20">
+                <Text type="font-16-400" className="text-white-20">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -101,7 +101,8 @@ const InputTextArena = (props: InputTextProps) => {
           input: clsx(
             'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2',
             {
-              'placeholder:text-white/20': isInputSubmit,
+              'placeholder:text-white-20': isInputSubmit,
+              'placeholder:!text-white-20': inputDefault,
             }
           ),
 
@@ -116,9 +117,9 @@ const InputTextArena = (props: InputTextProps) => {
                 isInput,
               '!bg-[#181F25] !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 isInputSubmit,
-              '!bg-[#242A30] !rounded !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
+              '!bg-gray-80 !py-[12px] !px-[10px]  data-[hover=true]:!border-main min-h-[48px] ':
                 inputDefault,
-              '!bg-[#0A0F1580] !rounded !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
+              '!bg-gray-80 !rounded !py-[12px] !px-[16px] data-[hover=true]:!border-main min-h-[50px] ':
                 isBlack,
             }
           ),

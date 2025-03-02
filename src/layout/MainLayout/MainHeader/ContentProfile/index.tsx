@@ -89,7 +89,7 @@ const ContentProfile = ({
             <div
               key={item?.id}
               onClick={() => handleRedirectPage(item?.href)}
-              className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green/10"
+              className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
             >
               <Text type="font-14-500" className="text-white">
                 {t(item?.label)}
@@ -100,7 +100,7 @@ const ContentProfile = ({
       </div>
       <div
         onClick={handleLogout}
-        className="cursor-pointer transition-all rounded-b-[4px] hover:bg-error/10 py-3 px-4 flex items-center gap-3"
+        className="cursor-pointer transition-all rounded-b-[4px] hover:bg-error-10 py-3 px-4 flex items-center gap-3"
       >
         <Image src={'/images/ig-logout.png'} width={24} height={24} alt="" />
         <Text type="font-14-500" className="text-error">

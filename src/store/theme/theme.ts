@@ -6,16 +6,23 @@ export interface InitTheme {
   color: string;
   langs: string[];
   code: string;
+  modeTheme: 'dark' | 'light';
   userId: string;
   kolId: string;
   createdAt: string;
   updatedAt: string;
 }
 
+export enum ImodeTheme {
+  LIGHT_MODE = 'light',
+  DARK_MODE = 'dark',
+}
+
 export const initialTheme: InitTheme = {
   id: '',
   logo: '',
   color: '',
+  modeTheme: 'dark',
   langs: [],
   code: '',
   userId: '',

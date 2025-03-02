@@ -7,7 +7,7 @@ import { ROUTE_PATH } from '@/utils/const';
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   return (
-    <div className="w-screen bg-primary h-screen overflow-x-hidden overflow-auto flex flex-col relative">
+    <div className="w-screen bg-[var(--theme-primary)] h-screen overflow-x-hidden overflow-auto flex flex-col relative">
       <MainHeader />
       <div
         className={clsx('w-full p-4 md:p-10', {

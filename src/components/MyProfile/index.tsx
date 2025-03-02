@@ -106,7 +106,7 @@ const MyProfile = () => {
             },
           }}
         />
-        <div className="bg-[#181F25] w-full p-[20px] rounded-[4px] box-border">
+        <div className="bg-gray-70 w-full p-[20px] rounded-[4px] box-border">
           <div className="flex gap-[12px] mb-[32px] border-b border-[#2B3032]">
             {tabs.map((item) => (
               <div

@@ -17,8 +17,9 @@ import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
-import { initialTheme } from '@/store/theme/theme';
+import { ImodeTheme, initialTheme } from '@/store/theme/theme';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import { useTheme } from '@/store/theme/useTheme';
 import InputText from '@/components/UI/InputText';
 import { useSearchParams } from 'next/navigation';
 
@@ -36,6 +37,8 @@ const ThemeConfiguration = ({
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
   const [code, setCode] = useState<string>('');
+  const [valueColorTheme, setValueColorTheme] = useState<any>({});
+
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
   const { profile } = useProfileInitial();
   const {
@@ -43,6 +46,7 @@ const ThemeConfiguration = ({
     requestGetTheme,
     setTheme,
   } = useThemeInitial();
+  const { theme } = useTheme();
   const { i18n } = useTranslation();
 
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
@@ -83,7 +87,13 @@ const ThemeConfiguration = ({
   };
 
   const onSave = () => {
-    const body = { color, logo, langs, code };
+    const body = {
+      color: valueColorTheme?.color,
+      code,
+      modeTheme: valueColorTheme?.modeTheme,
+      logo,
+      langs,
+    };
     if (dataThemeConfig?.userId) {
       updateTheme(dataThemeConfig.userId, body);
       return;
@@ -95,16 +105,19 @@ const ThemeConfiguration = ({
     setLogo(dataThemeConfig.logo);
     setUrlLogo(dataThemeConfig.logo);
     setCode(dataThemeConfig.code);
-    // setColor(dataThemeConfig.color || DEFAULT_COLOR);
-    // document.documentElement.style.setProperty(
-    //   '--main-color',
-    //   dataThemeConfig.color || DEFAULT_COLOR
-    // );
+    setValueColorTheme({
+      color: dataThemeConfig?.color,
+      modeTheme: dataThemeConfig?.modeTheme,
+    });
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
       i18n.changeLanguage(dataThemeConfig.langs[0]);
     } else {
-      i18n.changeLanguage(DEFAULT_SELECT_LANG);
+      i18n.changeLanguage('en');
+    }
+    if (dataThemeConfig.color) {
+      setColor(dataThemeConfig.color);
+      document.body.setAttribute('data-theme', dataThemeConfig.color);
     }
   }, [dataThemeConfig]);
 
@@ -130,6 +143,13 @@ const ThemeConfiguration = ({
     toast.success(t('Copied!'));
   };
 
+  const handleChangeValueColor = (item: any, modeTheme: ImodeTheme) => {
+    setValueColorTheme({
+      color: item?.theme,
+      modeTheme,
+    });
+  };
+
   return (
     <>
       <Button
@@ -146,12 +166,12 @@ const ThemeConfiguration = ({
         onOpenChange={onOpenChange}
         closeButton={<></>}
       >
-        <DrawerContent className="p-[24px] flex flex-col gap-[32px] bg-[#24292fe5] backdrop-blur-xl">
+        <DrawerContent className="p-[24px] flex flex-col gap-[32px] bg-gray-40 backdrop-blur-xl">
           {(onClose) => (
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
-                <span className="text-[28px] font-bold leading-[150%]">
-                  {t('White Labeling')}
+                <span className="text-[28px] font-bold leading-[150%] text-white">
+                  {t('Theme Configuration')}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
               </DrawerHeader>
@@ -163,16 +183,17 @@ const ThemeConfiguration = ({
                     {t('Domain')}
                   </Text>
                   <InputText
+                    inputDefault
                     onChange={onChangeCode}
                     startContent={
                       <div className="pointer-events-none flex items-center">
-                        <span className="text-default-400 w-max">
+                        <Text type="font-16-400" className="w-max text-black-7">
                           {process.env.NEXT_PUBLIC_APP_URL}/
-                        </span>
+                        </Text>
                       </div>
                     }
                     value={code}
-                    className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
+                    className="w-full rounded-[4px] active:outline-hidden"
                     // radius="sm"
                     placeholder={t('slug')}
                   />
@@ -184,7 +205,10 @@ const ThemeConfiguration = ({
                   </Button>
                 </>
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
-                <ColorTheme dataColor={color} onChangeColor={onChangeColor} />
+                <ColorTheme
+                  valueColorTheme={valueColorTheme}
+                  handleChangeValueColor={handleChangeValueColor}
+                />
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
                   <ConnectButton.Custom>
@@ -226,6 +250,6 @@ const ThemeConfiguration = ({
   );
 };
 
-const Divided = () => <div className="w-full border border-[#2B3032]" />;
+const Divided = () => <div className="w-full border border-gray-60" />;
 
 export default ThemeConfiguration;

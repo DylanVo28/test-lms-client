@@ -42,7 +42,7 @@ const DrawerFilter = (props: any, ref: any) => {
         <>
           <DrawerBody className="p-0">
             <div className="flex flex-col">
-              <div className="flex p-4 items-center justify-between border-b-1 border-white/10">
+              <div className="flex p-4 items-center justify-between border-b-1 border-white-10">
                 <Image
                   alt="logo"
                   width={125}

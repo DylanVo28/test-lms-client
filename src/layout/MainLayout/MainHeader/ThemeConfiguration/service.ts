@@ -13,6 +13,7 @@ export interface DataConfig {
   id: string;
   logo: string;
   color: string;
+  modeTheme: string;
   langs: string[];
   code: string;
   userId: string;

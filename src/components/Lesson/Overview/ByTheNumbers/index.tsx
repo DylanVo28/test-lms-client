@@ -48,7 +48,8 @@ const ByTheNumbers = ({ course }: { course: any }) => {
           {t('Skill level')}: {course?.level}
         </Text>
         <Text type="font-14-400" className="text-white">
-          {t('Students')}: {course?.userCourses?.length || course?.countStudents}
+          {t('Students')}:{' '}
+          {course?.userCourses?.length || course?.countStudents}
         </Text>
         <Text type="font-14-400" className="text-white">
           {t('Languages')}: {course?.lang}

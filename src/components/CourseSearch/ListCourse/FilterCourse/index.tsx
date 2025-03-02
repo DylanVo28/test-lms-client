@@ -174,7 +174,7 @@ const FilterCourse = (props: any) => {
                     {item?.label}
                   </Text>
                   <Text className="text-black-7" type="font-14-400">
-                    {item?.total}
+                    ({item?.total})
                   </Text>
                 </div>
               </Radio>

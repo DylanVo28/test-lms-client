@@ -44,7 +44,7 @@ const Article = ({
     >
       {/* {dataItemPrev?.id && (
         <Button
-          className="absolute group-hover:opacity-100 opacity-0  left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute group-hover:opacity-100 opacity-0  left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           onClick={() => {
             handlePrevChildSection(
@@ -57,7 +57,7 @@ const Article = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )} */}
       {containerBounds && (
@@ -65,7 +65,7 @@ const Article = ({
           {/* Left button */}
           {dataItemPrev?.id && (
             <Button
-              className="fixed bg-main border-1 border-white/50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              className="fixed bg-main border-1 border-white-50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
               style={{
                 left: containerBounds.left,
                 top: containerBounds.top + containerBounds.height / 2,
@@ -83,13 +83,13 @@ const Article = ({
               size="sm"
               radius="sm"
             >
-              <CaretLeft size={24} />
+              <CaretLeft size={24} className="fill-text-white" />
             </Button>
           )}
 
           {/* Right button */}
           <Button
-            className="fixed bg-main border-1 border-white/50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+            className="fixed bg-main border-1 border-white-50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
             style={{
               right: window.innerWidth - containerBounds.right,
               top: containerBounds.top + containerBounds.height / 2,
@@ -112,7 +112,7 @@ const Article = ({
             }}
             radius="sm"
           >
-            <CaretRight size={24} />
+            <CaretRight size={24} className="fill-text-white" />
           </Button>
         </>
       )}
@@ -126,7 +126,7 @@ const Article = ({
         />
       </div>
       {/* <Button
-        className="absolute right-0 group-hover:opacity-100 opacity-0  bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        className="absolute right-0 group-hover:opacity-100 opacity-0  bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
         isIconOnly
         size="sm"
         onClick={() => {
@@ -143,7 +143,7 @@ const Article = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button> */}
     </div>
   );

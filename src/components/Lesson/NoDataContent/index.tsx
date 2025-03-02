@@ -26,7 +26,7 @@ const NoDataContent = ({
       <LoadingContainer loading={loading} />
       {dataItemPrev?.id && (
         <Button
-          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           onClick={() => {
             handlePrevChildSection(
@@ -39,12 +39,12 @@ const NoDataContent = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
       <Button
-        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
         isIconOnly
         size="sm"
         onClick={() => {
@@ -62,7 +62,7 @@ const NoDataContent = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button>
       <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
         <IconNodata />

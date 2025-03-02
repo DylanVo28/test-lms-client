@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 
@@ -69,7 +70,7 @@ const CardCourse = ({
               }
             }}
             variant="light"
-            className="hover:!bg-white/25 rounded-full"
+            className="hover:!bg-white-25 rounded-full"
           >
             {item?.liked || isWishList ? (
               <IconLikedCourse />
@@ -84,7 +85,7 @@ const CardCourse = ({
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white/10"
+        className="bg-white-10"
       >
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
@@ -92,14 +93,14 @@ const CardCourse = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[200px] rounded rounded-b-none object-scale-down bg-white/10"
+          className="w-full h-[200px] rounded rounded-b-none object-scale-down bg-white-10"
           objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
       </a>
-      <div className="flex-1 py-4 px-3 rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="py-4 px-3 rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />
@@ -120,7 +121,7 @@ const CardCourse = ({
         <Text type="font-16-500" className="line-clamp-2 capitalize">
           {item?.title}
         </Text>
-        <div className="flex-1 flex flex-col gap-[14px] border-b border-b-white/5 pb-4">
+        <div className="flex flex-col gap-[14px] border-b border-b-white-5 pb-4">
           <div className="flex items-center gap-2">
             <Text type="font-14-500">{item?.rating}</Text>
             <ReactStars
@@ -149,8 +150,8 @@ const CardCourse = ({
         </div>
         <div className="flex-wrap flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
-              <Text type="font-16-600" className="text-orange w-max">
+            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
+              <Text type="font-16-600" className="text-orange">
                 {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>
             </div>
@@ -168,12 +169,7 @@ const CardCourse = ({
               <Text type="font-14-500" className="text-white">
                 {t('Enroll Course')}
               </Text>
-              <Image
-                src={'/icons/ic-arrow-right-up-line.svg'}
-                width={20}
-                height={20}
-                alt=""
-              />
+              <IconArrowUp />
             </div>
           </Button>
         </div>

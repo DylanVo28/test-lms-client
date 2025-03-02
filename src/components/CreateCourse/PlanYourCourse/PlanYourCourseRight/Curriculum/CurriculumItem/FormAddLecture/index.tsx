@@ -62,7 +62,7 @@ const FormAddLecture = ({
           )}
         </>
       ) : (
-        <div className="flex text-center justify-center py-3 flex-col border-1 border-t-0 border-white/15 items-center gap-3">
+        <div className="flex text-center justify-center py-3 flex-col border-1 border-t-0 border-white-15 items-center gap-3">
           <Text className="text-black-7 px-20" type="font-14-400">
             {t(
               'Select the primary content type. Files and links can be added as resources. Learn about content types.'
@@ -71,9 +71,9 @@ const FormAddLecture = ({
           <div className="flex items-center gap-6">
             <div
               onClick={handleClickVideo}
-              className="flex hover:opacity-80 transition-all flex-col cursor-pointer items-center border-1 border-white/20 min-w-[70px]"
+              className="flex hover:opacity-80 transition-all flex-col cursor-pointer items-center border-1 border-white-20 min-w-[70px]"
             >
-              <div className="border-b w-full items-center justify-center flex py-2 border-b-white/20">
+              <div className="border-b w-full items-center justify-center flex py-2 border-b-white-20">
                 <PlayCircle size={32} color="#8C8C8C" weight="fill" />
               </div>
 
@@ -83,9 +83,9 @@ const FormAddLecture = ({
             </div>
             <div
               onClick={handleClickArticle}
-              className="flex transition-all hover:opacity-80 flex-col cursor-pointer items-center border-1 border-white/20 min-w-[70px]"
+              className="flex transition-all hover:opacity-80 flex-col cursor-pointer items-center border-1 border-white-20 min-w-[70px]"
             >
-              <div className="border-b w-full items-center justify-center flex py-2 border-b-white/20">
+              <div className="border-b w-full items-center justify-center flex py-2 border-b-white-20">
                 <File size={32} color="#8C8C8C" weight="bold" />
               </div>
 

@@ -28,9 +28,9 @@ const Languages = ({
   };
 
   return (
-    <div className="p-[20px] bg-[#242A30] border border-[#00000033] rounded-[4px]">
+    <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
       <div className="flex justify-between">
-        <Text className="text-[18px] font-semibold mb-[16px]">
+        <Text className="text-[18px] text-white font-semibold mb-[16px]">
           {t('Language')}{' '}
           <span className="bg-[#E55151] rounded-full py-[2px] px-[6px] leading-[16px] text-[12px]">
             {dataLangs.length}
@@ -42,7 +42,8 @@ const Languages = ({
 
       <div className="mb-[16px]">
         <InputText
-          className="w-full text-[12px] bg-[#0a0f157f]"
+          inputDefault
+          className="w-full text-[12px]"
           placeholder={t('Search...')}
           onChange={onSearch}
         />

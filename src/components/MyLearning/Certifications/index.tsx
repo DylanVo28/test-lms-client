@@ -48,7 +48,7 @@ const Certifications = () => {
               return (
                 <div
                   key={item?.id}
-                  className="rounded border-1 border-white/10 bg-white/10 p-4 flex items-center gap-3"
+                  className="rounded border-1 border-white-10 bg-white-10 p-4 flex items-center gap-3"
                 >
                   <Image
                     src={item?.certificate?.image}

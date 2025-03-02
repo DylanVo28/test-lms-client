@@ -59,7 +59,7 @@ const FormQuizz = ({
     <div className="relative group">
       {dataItemPrev?.id && !isMobile && (
         <Button
-          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           onClick={() => {
             handlePrevChildSection(
@@ -72,7 +72,7 @@ const FormQuizz = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
@@ -121,7 +121,7 @@ const FormQuizz = ({
                 onPress={handleStartTakingTheTest}
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
-                <Text className="text-white" type="font-16-400">
+                <Text className="text-text-white" type="font-16-400">
                   {t('Start taking the test')}
                 </Text>
               </Button>
@@ -140,7 +140,7 @@ const FormQuizz = ({
       )}
       {!isMobile && (
         <Button
-          className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           size="sm"
           onClick={() => {
@@ -158,7 +158,7 @@ const FormQuizz = ({
           }}
           radius="sm"
         >
-          <CaretRight size={24} />
+          <CaretRight size={24} className="fill-text-white" />
         </Button>
       )}
     </div>

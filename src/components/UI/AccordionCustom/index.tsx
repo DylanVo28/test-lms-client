@@ -26,18 +26,18 @@ export default function AccordionCustom({
           '!h-[50px]': isCreateCourse,
           '!bg-black-10 !border-b-1 border-b-black-9': isSection,
         }),
-        base: clsx('bg-white/5 rounded border-1 relative border-[#D9D9D91A]', {
+        base: clsx('bg-white-5 rounded border-1 relative border-[#D9D9D91A]', {
           '!bg-transparent rounded-none': isSection,
-          '!bg-transparent !border-white/15': isCreateCourse,
+          '!bg-transparent !border-white-15': isCreateCourse,
 
-          '!bg-[#161B21] !border-white/10': isMobile,
+          '!bg-[#161B21] !border-white-10': isMobile,
         }),
       }}
     >
       <AccordionItem
         key="1"
         classNames={{
-          indicator: 'data-[open=true]:rotate-180',
+          indicator: 'data-[open=true]:rotate-180 ',
         }}
         indicator={<IconArrowUp />}
         aria-label="Accordion 1"
@@ -61,7 +61,7 @@ export const IconArrowUp = () => {
     >
       <path
         d="M12 10.828L7.04999 15.778L5.63599 14.364L12 8L18.364 14.364L16.95 15.778L12 10.828Z"
-        fill="white"
+        fill="var(--theme-white)"
       />
     </svg>
   );

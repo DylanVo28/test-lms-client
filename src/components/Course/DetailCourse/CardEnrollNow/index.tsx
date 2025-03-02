@@ -72,7 +72,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
         />
       </div>
 
-      <div className="p-4 rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

@@ -15,6 +15,7 @@ import CardMentor from '../CardMentor';
 import { useDebounce } from 'ahooks';
 import { useGetListFollowers } from '../service';
 import { useTranslation } from 'next-i18next';
+import IconSearch from '@/components/UI/Icons/IconSearch';
 import { useProfile } from '@/store/profile/useProfile';
 const RATINGS = [
   { key: '5', label: '5 Star' },
@@ -59,14 +60,7 @@ const FollowMentors = () => {
           <div className="w-full">
             <InputText
               onChange={handleChangeSearch}
-              startContent={
-                <Image
-                  width={20}
-                  height={20}
-                  alt=""
-                  src={'/images/img-search.png'}
-                />
-              }
+              startContent={<IconSearch />}
               className="md:min-w-[470px] md:max-w-[470px]"
               radius="sm"
               placeholder="Search"
@@ -108,14 +102,17 @@ const FollowMentors = () => {
       {!loading && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {list?.map((item) => {
-              return <CardMentor mentor={item?.followedUser} key={item?.id} />;
-            })}
+            {list?.length > 0 &&
+              list?.map((item) => {
+                return (
+                  <CardMentor mentor={item?.followedUser} key={item?.id} />
+                );
+              })}
           </div>
+          {list?.length === 0 && <NoData />}
         </>
       )}
       {loading && <Loading />}
-      {list?.length === 0 && <NoData />}
       {/* {!loading && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
+import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 
@@ -40,7 +41,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white/10"
+        className="bg-white-10"
       >
         {/* <div className="w-full rounded-b-none h-max rounded justify-center items-center bg-white/10"> */}
         <Image
@@ -48,7 +49,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px] bg-white/10 object-scale-down"
+          className="w-full h-[200px] bg-white-10 object-scale-down"
           layout="contain"
           objectFit="scale-down"
           onError={(e: any) => {
@@ -57,7 +58,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         />
         {/* </div> */}
       </a>
-      <div className="flex-1 py-4 px-3 rounded-t-none rounded bg-white/10 flex flex-col gap-[10px]">
+      <div className="py-4 px-3 rounded-t-none rounded bg-white-10 flex flex-col gap-[10px]">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
             <IconDate />
@@ -78,7 +79,7 @@ const CardCourse = ({ item }: { item?: any }) => {
         <Text type="font-16-500" className="line-clamp-2 capitalize">
           {item?.title}
         </Text>
-        <div className="flex flex-col flex-1 gap-[14px] border-b border-b-white/5 pb-4">
+        <div className="flex flex-col gap-[14px] border-b border-b-white-5 pb-4">
           <div className="flex items-center gap-2">
             <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
             <ReactStars
@@ -93,15 +94,15 @@ const CardCourse = ({ item }: { item?: any }) => {
             <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
           </div>
           {item?.author?.walletAddress && (
-            <Text type="font-14-400" className="break-words">
+            <Text type="font-14-400" className="text-main break-words">
               {t('By')}:  {generateMentors()}
             </Text>
           )}
         </div>
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2">
-            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
-              <Text type="font-16-600" className="text-orange w-max">
+            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
+              <Text type="font-16-600" className="text-orange">
                 {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
               </Text>
             </div>
@@ -121,12 +122,7 @@ const CardCourse = ({ item }: { item?: any }) => {
               <Text type="font-14-500" className="text-white w-max">
                 {t('Enroll Course')}
               </Text>
-              <Image
-                src={'/icons/ic-arrow-right-up-line.svg'}
-                width={20}
-                height={20}
-                alt=""
-              />
+              <IconArrowUp />
             </div>
           </Button>
         </div>

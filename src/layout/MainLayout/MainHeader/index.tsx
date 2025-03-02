@@ -21,6 +21,10 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import Notification from '@/components/Notification';
+import IconSearch from '@/components/UI/Icons/IconSearch';
+import { COLOR_THEME } from '@/utils/common';
+import { useTheme } from '@/store/theme/useTheme';
+import IconNotification from '@/components/UI/Icons/IconNotification';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
 import Text from '@/components/UI/Text';
@@ -40,6 +44,7 @@ const MainHeader = () => {
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const [urlLogo, setUrlLogo] = useState<string>('');
+  const { theme } = useTheme();
   const [notifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
   const { profile } = useProfile();
@@ -128,17 +133,30 @@ const MainHeader = () => {
     }
   };
 
+  console.log(theme, 'theme');
+
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
-        <Image
-          onClick={() => navigate(ROUTE_PATH.HOME)}
-          alt="logo"
-          width={125}
-          height={46}
-          className="cursor-pointer"
-          src={urlLogo || '/logo.png'}
-        />
+        {theme?.modeTheme === 'light' ? (
+          <Image
+            onClick={() => router.push(ROUTE_PATH.HOME)}
+            alt="logo"
+            width={125}
+            height={46}
+            className="cursor-pointer"
+            src={urlLogo || '/logo-dark.png'}
+          />
+        ) : (
+          <Image
+            onClick={() => router.push(ROUTE_PATH.HOME)}
+            alt="logo"
+            width={125}
+            height={46}
+            className="cursor-pointer"
+            src={urlLogo || '/logo.png'}
+          />
+        )}
 
         <Image
           onClick={() => refDrawerMenu.current.onOpen()}
@@ -157,14 +175,7 @@ const MainHeader = () => {
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}
               value={valueSearch}
-              startContent={
-                <Image
-                  width={20}
-                  height={20}
-                  alt=""
-                  src={'/images/img-search.png'}
-                />
-              }
+              startContent={<IconSearch />}
               className="xl:min-w-[470px] lg:min-w-[320px]"
               radius="sm"
               placeholder={t('Search')}
@@ -199,12 +210,7 @@ const MainHeader = () => {
                     </div>
                   )}
 
-                  <Image
-                    src={'/icons/ic-notification.svg'}
-                    height={20}
-                    width={20}
-                    alt=""
-                  />
+                  <IconNotification />
                 </div>
               </PopoverTrigger>
               <PopoverContent>

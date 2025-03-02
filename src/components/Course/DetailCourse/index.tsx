@@ -150,7 +150,7 @@ const DetailCourse = () => {
                   height={24}
                   className="rounded-full w-6 h-6"
                 />
-                <Text type="font-16-500" className="text-black-7">
+                <Text type="font-16-500" className="text-main">
                   {t('By')}
                 </Text>
                 <Text

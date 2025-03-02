@@ -183,7 +183,7 @@ const VideoSection = ({
     >
       {dataItemPrev?.id && (
         <Button
-          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+          className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           onClick={() => {
             resetVideo();
@@ -198,7 +198,7 @@ const VideoSection = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} />
+          <CaretLeft size={24} className="fill-text-white" />
         </Button>
       )}
 
@@ -224,7 +224,7 @@ const VideoSection = ({
         />
       )}
       <Button
-        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white/50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
+        className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
         isIconOnly
         size="sm"
         onClick={() => {
@@ -244,7 +244,7 @@ const VideoSection = ({
         }}
         radius="sm"
       >
-        <CaretRight size={24} />
+        <CaretRight size={24} className="fill-text-white" />
       </Button>
 
       <LoadingContainer loading={loading} />

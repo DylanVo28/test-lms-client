@@ -81,14 +81,14 @@ const ModalShare = (props: IModalShare, ref?: any) => {
               <FacebookShareButton
                 url={`${ENV.APP_URL}/course/${router.query.id}`}
               >
-                <button className="w-10 hover:opacity-80 h-10 bg-white/5 flex items-center justify-center rounded-lg">
+                <button className="w-10 hover:opacity-80 h-10 bg-white-5 flex items-center justify-center rounded-lg">
                   <IconFacebook />
                 </button>
               </FacebookShareButton>
               <TwitterShareButton
                 url={`${ENV.APP_URL}/course/${router.query.id}`}
               >
-                <button className="w-10 hover:opacity-80 h-10 bg-white/5 flex items-center justify-center rounded-lg">
+                <button className="w-10 hover:opacity-80 h-10 bg-white-5 flex items-center justify-center rounded-lg">
                   <XLogo className="text-white" size={20} />
                 </button>
               </TwitterShareButton>
