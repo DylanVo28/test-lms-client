@@ -75,11 +75,16 @@ const MainHeader = () => {
 
     try {
       const sig = await signMessageAsync({ message: messageNonce });
-      runLoginWeb3({
+      const body = {
         address: address as string,
         signature: sig,
-        refCode: (router.query.refCode as string) || '',
-      });
+        themeCode: router.query.code as any,
+      };
+
+      if (router.query.code === 'platform') {
+        delete body?.themeCode;
+      }
+      runLoginWeb3(body);
     } catch (err: any) {
       console.error('ERROR: ', err);
       toast.error(err?.message);
