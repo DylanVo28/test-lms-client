@@ -1,7 +1,8 @@
 {
   "Notification": "Thông báo",
   "message_email": "Email không hợp lệ",
-
+  "Choose courses": "Chọn khóa học",
+  "Choose a course": "Chọn khóa học",
   "View All": "Xem tất cả",
   "Instructor": "Người hướng dẫn",
   "Student": "Học sinh",
@@ -9,6 +10,7 @@
   "Followed": "Đã theo dõi",
   "No notification": "Không có thông báo",
   "e.g Learn photoshop CS6 from Scratch": "ví dụ: Học photoshop CS6 từ đầu",
+  "Duplicate": "Sao chép",
 
   "courses": "các khóa học",
   "students": "sinh viên",
@@ -88,7 +90,7 @@
   "Logout": "Đăng xuất",
   "Select Language": "Chọn ngôn ngữ",
   "Close": "Đóng",
-  "Theme Configuration": "Cấu hình chủ đề",
+  "White Labeling": "Cấu hình chủ đề",
   "Color theme": "Chủ đề màu sắc",
   "Background": "Nền",
   "Language": "Ngôn ngữ",

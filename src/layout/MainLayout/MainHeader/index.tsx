@@ -27,6 +27,8 @@ import Text from '@/components/UI/Text';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import clsx from 'clsx';
+import { useProfile } from '@/store/profile/useProfile';
+import useNavigate from '@/hooks/useNavigate';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -40,6 +42,8 @@ const MainHeader = () => {
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
+  const { profile } = useProfile();
+  const { navigate } = useNavigate();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -71,11 +75,16 @@ const MainHeader = () => {
 
     try {
       const sig = await signMessageAsync({ message: messageNonce });
-      runLoginWeb3({
+      const body = {
         address: address as string,
         signature: sig,
-        refCode: (router.query.refCode as string) || '',
-      });
+        themeCode: router.query.code as any,
+      };
+
+      if (router.query.code === 'platform') {
+        delete body?.themeCode;
+      }
+      runLoginWeb3(body);
     } catch (err: any) {
       console.error('ERROR: ', err);
       toast.error(err?.message);
@@ -110,10 +119,12 @@ const MainHeader = () => {
 
   const handleKeyUp = (event: any) => {
     if (event.key === 'Enter') {
-      router.push({
-        pathname: ROUTE_PATH.COURSE_SEARCH,
-        query: { keySearch: valueSearch },
-      });
+      navigate(ROUTE_PATH.COURSE_SEARCH, { keySearch: valueSearch });
+
+      // router.push({
+      //   pathname: ROUTE_PATH.COURSE_SEARCH,
+      //   query: { keySearch: valueSearch },
+      // });
     }
   };
 
@@ -121,7 +132,7 @@ const MainHeader = () => {
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
         <Image
-          onClick={() => router.push(ROUTE_PATH.HOME)}
+          onClick={() => navigate(ROUTE_PATH.HOME)}
           alt="logo"
           width={125}
           height={46}
@@ -208,7 +219,9 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            {profile?.role === 'KOL' && (
+              <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            )}
 
             {/* <div className="w-full">
               <ConnectButton />

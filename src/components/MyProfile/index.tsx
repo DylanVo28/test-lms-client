@@ -97,6 +97,7 @@ const MyProfile = () => {
             fullname: user?.fullName || '--',
             email: user?.email || '--',
             verify: true,
+            role: user?.role || 'USER',
             customers: {
               f1: summary?.f1 ? Number(summary?.f1) : 0,
               f2: summary?.f2 ? Number(summary?.f2) : 0,

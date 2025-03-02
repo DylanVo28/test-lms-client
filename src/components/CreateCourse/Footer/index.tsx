@@ -1,6 +1,7 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
+import { TYPE_CREATE_COURSE } from '../ContenStep1';
 
 const Footer = ({
   currentStep,
@@ -18,7 +19,11 @@ const Footer = ({
 }) => {
   const { t } = useTranslation('common');
   const typeWatch = watch('type');
+  const courseIdWatch = watch('courseId');
   const titleWatch = watch('title');
+
+  console.log(courseIdWatch, 'courseIdWatch');
+
   const categoryWatch = watch('categoryId');
   const timeSpentWatch = watch('timeSpent');
 
@@ -47,22 +52,35 @@ const Footer = ({
               {t('Previous')}
             </Text>
           </Button>
-          <Button
-            isDisabled={
-              currentStep === 2
-                ? !titleWatch
-                : currentStep === 3
-                ? !categoryWatch
-                : !timeSpentWatch
-            }
-            isLoading={loading}
-            onPress={() => handleClickNextStep(currentStep)}
-            className="bg-main rounded py-[10px] px-6"
-          >
-            <Text type="font-16-700" className="text-white">
-              {t('Continue')}
-            </Text>
-          </Button>
+          {typeWatch === TYPE_CREATE_COURSE?.PREMADE_CONTENT ? (
+            <Button
+              isDisabled={!courseIdWatch}
+              isLoading={loading}
+              onPress={() => handleClickNextStep(currentStep)}
+              className="bg-main rounded py-[10px] px-6"
+            >
+              <Text type="font-16-700" className="text-white">
+                {t('Duplicate')}
+              </Text>
+            </Button>
+          ) : (
+            <Button
+              isDisabled={
+                currentStep === 2
+                  ? !titleWatch
+                  : currentStep === 3
+                  ? !categoryWatch
+                  : !timeSpentWatch
+              }
+              isLoading={loading}
+              onPress={() => handleClickNextStep(currentStep)}
+              className="bg-main rounded py-[10px] px-6"
+            >
+              <Text type="font-16-700" className="text-white">
+                {t('Continue')}
+              </Text>
+            </Button>
+          )}
         </>
       )}
     </div>

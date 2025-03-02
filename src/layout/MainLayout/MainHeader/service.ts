@@ -15,12 +15,8 @@ export const useGetUserNonce = (options?: IOptions) => {
   return useRequest(serviceGetUserNonce, { manual: true, ...options });
 };
 
-const serviceLoginWeb3 = async (data: {
-  address: string;
-  signature: string;
-  refCode: string;
-}) => {
-  return privateRequest(request.post, API_PATH.LOGIN_WEB3, { data });
+const serviceLoginWeb3 = async (body: any) => {
+  return privateRequest(request.post, API_PATH.LOGIN_WEB3, { data: body });
 };
 
 export const useLoginWeb3 = (options?: IOptions) => {

@@ -11,6 +11,9 @@ import { getAccessToken } from '@/store/auth';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
+import useNavigate from '@/hooks/useNavigate';
+import { toast } from '@/components/UI/Toast/toast';
+import { error } from 'console';
 
 const DATA_NOTE = [
   '12 hours of on-demand video',
@@ -27,17 +30,19 @@ const CardEnrollNow = ({ course }: { course: any }) => {
   const router = useRouter();
   const token = getAccessToken();
   const { profile } = useProfile();
+  const { navigate } = useNavigate();
 
   const { run, loading } = useEnrollCourse({
     onSuccess: (res) => {
       console.log(res, 'res123');
 
       if (res?.data?.courseId) {
-        router.push({
-          pathname: ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId),
-        });
+        navigate(ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId));
       }
     },
+    onError: (err) => {
+      toast.error(err?.message)
+    }
   });
   const discountCalculator = (originPrice: any, price: any) => {
     const discountPercentage = ((originPrice - price) / originPrice) * 100;
@@ -129,9 +134,7 @@ const CardEnrollNow = ({ course }: { course: any }) => {
               course={course}
               handleClickButton={() => {
                 if (course?.isOwner || course?.authorId === profile?.id) {
-                  router.push({
-                    pathname: ROUTE_PATH.DETAIL_LESSON(course?.id),
-                  });
+                  navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
                   run(course.id);
                 }

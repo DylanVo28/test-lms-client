@@ -5,6 +5,7 @@ import { Button } from '@nextui-org/react';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
 import { useTranslation } from 'next-i18next';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -21,6 +22,7 @@ const Overview = ({
     fullname: string;
     email: string;
     verify: boolean;
+    role: any;
     customers: {
       total: number;
       f1: number;
@@ -33,7 +35,7 @@ const Overview = ({
   const { t } = useTranslation('common');
   const [origin, setOrigin] = useState('');
   const [refCode, setRefCode] = useState('');
-
+  const { theme: dataThemeConfig } = useThemeInitial();
   const getProfile = async () => {
     try {
       const res = await referralRequest.getProfile();
@@ -53,7 +55,7 @@ const Overview = ({
     }
   }, []);
 
-  const refLink = `${origin}/?refCode=${refCode}`;
+  const refLink = `${origin}/${dataThemeConfig.code}`;
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(refLink);
@@ -82,93 +84,105 @@ const Overview = ({
         <Image src={'/icons/ic-kyc.svg'} alt="kyc" width={24} height={24} />
       </div>
 
-      <Divided />
+      {data?.role === 'KOL' && (
+        <>
+          <Divided />
 
-      <div className="flex flex-col gap-[8px] py-[8px]">
-        <div className="flex justify-between items-center">
-          <Text type="font-16-600">{t('Customers')}</Text>
-          <div className="px-[8px] py-[2px] bg-[#2F353B] w-fit rounded-full text-[12px] leading-normal font-semibold">
-            {data.customers.total}
-          </div>
-        </div>
-        <div className="flex gap-[2px] w-full ease-in-out duration-200">
-          <div
-            className="flex flex-col gap-[8px]"
-            style={{
-              width: `${
-                calculatePercentage(data.customers.f1, data.customers.total) ||
-                25
-              }%`,
-            }}
-          >
-            <div className="h-[12px] w-full bg-[#02A6C2] rounded-l-full" />
-            <div className="opacity-50">F1: {data.customers.f1}</div>
-          </div>
-          <div
-            className="flex flex-col gap-[8px]"
-            style={{
-              width: `${
-                calculatePercentage(data.customers.f2, data.customers.total) ||
-                25
-              }%`,
-            }}
-          >
-            <div className="h-[12px] w-full bg-[#35B6CC]" />
-            <div className="opacity-50">F2: {data.customers.f2}</div>
-          </div>
-          <div
-            className="flex flex-col gap-[8px]"
-            style={{
-              width: `${
-                calculatePercentage(data.customers.f3, data.customers.total) ||
-                25
-              }%`,
-            }}
-          >
-            <div className="h-[12px] w-full bg-[#79BEB6]" />
-            <div className="opacity-50">F3: {data.customers.f3}</div>
-          </div>
-          <div
-            className="flex flex-col gap-[8px]"
-            style={{
-              width: `${
-                calculatePercentage(
-                  data.customers.total -
-                    (data.customers.f1 + data.customers.f2 + data.customers.f3),
-                  data.customers.total
-                ) || 25
-              }%`,
-            }}
-          >
-            <div className="h-[12px] w-full bg-[#B4D4D9] rounded-r-full" />
-            <div className="opacity-50">
-              ø:{' '}
-              {data.customers.total -
-                (data.customers.f1 + data.customers.f2 + data.customers.f3)}
+          <div className="flex flex-col gap-[8px] py-[8px]">
+            <div className="flex justify-between items-center">
+              <Text type="font-16-600">{t('Customers')}</Text>
+              <div className="px-[8px] py-[2px] bg-[#2F353B] w-fit rounded-full text-[12px] leading-normal font-semibold">
+                {data.customers.total}
+              </div>
+            </div>
+            <div className="flex gap-[2px] w-full ease-in-out duration-200">
+              <div
+                className="flex flex-col gap-[8px]"
+                style={{
+                  width: `${
+                    calculatePercentage(
+                      data.customers.f1,
+                      data.customers.total
+                    ) || 25
+                  }%`,
+                }}
+              >
+                <div className="h-[12px] w-full bg-[#02A6C2] rounded-l-full" />
+                <div className="opacity-50">F1: {data.customers.f1}</div>
+              </div>
+              <div
+                className="flex flex-col gap-[8px]"
+                style={{
+                  width: `${
+                    calculatePercentage(
+                      data.customers.f2,
+                      data.customers.total
+                    ) || 25
+                  }%`,
+                }}
+              >
+                <div className="h-[12px] w-full bg-[#35B6CC]" />
+                <div className="opacity-50">F2: {data.customers.f2}</div>
+              </div>
+              <div
+                className="flex flex-col gap-[8px]"
+                style={{
+                  width: `${
+                    calculatePercentage(
+                      data.customers.f3,
+                      data.customers.total
+                    ) || 25
+                  }%`,
+                }}
+              >
+                <div className="h-[12px] w-full bg-[#79BEB6]" />
+                <div className="opacity-50">F3: {data.customers.f3}</div>
+              </div>
+              <div
+                className="flex flex-col gap-[8px]"
+                style={{
+                  width: `${
+                    calculatePercentage(
+                      data.customers.total -
+                        (data.customers.f1 +
+                          data.customers.f2 +
+                          data.customers.f3),
+                      data.customers.total
+                    ) || 25
+                  }%`,
+                }}
+              >
+                <div className="h-[12px] w-full bg-[#B4D4D9] rounded-r-full" />
+                <div className="opacity-50">
+                  ø:{' '}
+                  {data.customers.total -
+                    (data.customers.f1 + data.customers.f2 + data.customers.f3)}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <Divided />
+          {/* <Divided /> */}
 
-      <div className="flex flex-col gap-[16px] py-[8px]">
-        <div className="text-[16px] font-semibold flex gap-[4px]">
-          <span className="text-[16px] whitespace-nowrap">
-            {t('Referral link')}:{' '}
-          </span>
-          <span className="text-[16px] opacity-50 text-ellipsis overflow-hidden whitespace-nowrap">
-            {refLink}
-          </span>
-        </div>
+          {/* <div className="flex flex-col gap-[16px] py-[8px]">
+            <div className="text-[16px] font-semibold flex gap-[4px]">
+              <span className="text-[16px] whitespace-nowrap">
+                {t('Referral link')}:{' '}
+              </span>
+              <span className="text-[16px] opacity-50 text-ellipsis overflow-hidden whitespace-nowrap">
+                {refLink}
+              </span>
+            </div>
 
-        <Button
-          onClick={onCopy}
-          className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
-        >
-          {t('Copy Address')}
-        </Button>
-      </div>
+            <Button
+              onClick={onCopy}
+              className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
+            >
+              {t('Copy Address')}
+            </Button>
+          </div> */}
+        </>
+      )}
     </div>
   );
 };

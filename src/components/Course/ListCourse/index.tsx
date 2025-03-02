@@ -14,6 +14,8 @@ import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import useNavigate from '@/hooks/useNavigate';
 
 export const CATEGORIES = [
   { key: 'business', label: 'Business' },
@@ -34,13 +36,20 @@ const ListCourse = () => {
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
+  const { theme: dataThemeConfig } = useThemeInitial();
+  console.log('dataThemeConfig', dataThemeConfig);
+  const { navigate } = useNavigate();
+
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
     useGetListCourse({
       pageSize,
       order: sort,
       categories: category,
       prices: price,
+      authors: dataThemeConfig?.kolId,
     });
+
+  console.log('dataCourses', dataCourses);
 
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
@@ -69,15 +78,16 @@ const ListCourse = () => {
 
   const handleKeyUp = (event: any) => {
     if (event.key === 'Enter') {
-      router.push({
-        pathname: ROUTE_PATH.COURSE_SEARCH,
-        query: { keySearch: valueSearch },
-      });
+      navigate(ROUTE_PATH.COURSE_SEARCH, { keySearch: valueSearch });
+      // router.push({
+      //   pathname: ROUTE_PATH.COURSE_SEARCH,
+      //   query: { keySearch: valueSearch },
+      // });
     }
   };
   useEffect(() => {
     reload();
-  }, [sort, category, price]);
+  }, [sort, category, price, dataThemeConfig?.kolId]);
 
   return (
     <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">

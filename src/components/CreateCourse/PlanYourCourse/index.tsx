@@ -15,6 +15,7 @@ import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
+import useNavigate from '@/hooks/useNavigate';
 
 const dataObjectivesDefault = [
   {
@@ -60,6 +61,7 @@ const PlanYourCourse = () => {
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
+  const { navigate } = useNavigate();
 
   const [dataSections, setDataSections] = useState([]);
 
@@ -127,7 +129,7 @@ const PlanYourCourse = () => {
         isEnoughCourseLangdingePage &&
         isSubmit
       ) {
-        router.push(ROUTE_PATH.LIST_COURSE);
+        navigate(ROUTE_PATH.LIST_COURSE);
       }
 
       reset({
@@ -269,7 +271,7 @@ const PlanYourCourse = () => {
   const requestEditPublishCourse = useEditCourse({
     onSuccess: (res: any) => {
       toast.success(res?.message);
-      router.push(ROUTE_PATH.LIST_COURSE);
+      navigate(ROUTE_PATH.LIST_COURSE);
     },
     onError: (error: any) => {
       toast.error(error.message);

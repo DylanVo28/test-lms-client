@@ -16,6 +16,7 @@ import { ReactNode, useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import MainHeader from '../MainLayout/MainHeader';
 import { useTranslation } from 'next-i18next';
+import useNavigate from '@/hooks/useNavigate';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -23,6 +24,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const [valueYourProgress] = useAtom(valueProgressAtom);
   const { profile } = useProfile();
   const refModalShare: any = useRef(null);
+  const { navigate } = useNavigate();
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},
@@ -43,8 +45,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-1">
               <Button
-                onClick={() =>
-                  router.push(ROUTE_PATH.DETAIL_COURSE(router.query.id))
+                onPress={() =>
+                  navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id))
                 }
                 isIconOnly
                 radius="full"

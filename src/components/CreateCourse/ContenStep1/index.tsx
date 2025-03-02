@@ -4,6 +4,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
+import { useAtom } from 'jotai';
+import { totalStepAtom } from '../HeaderCourse';
+
+export const enum TYPE_CREATE_COURSE {
+  COURSE = 'COURSE',
+  PREMADE_CONTENT = 'PREMADE_CONTENT',
+}
 
 const DATA_CONTENT = [
   {
@@ -13,17 +20,18 @@ const DATA_CONTENT = [
     description:
       'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.',
   },
-  // {
-  //   id: 'PRACTICE_TESTS',
-  //   label: 'Practice Tests',
-  //   img: '/images/img-practice.png',
-  //   description:
-  //     'Help students prepare for exams by providing practice questions.',
-  // },
+  {
+    id: 'PREMADE_CONTENT',
+    label: 'Premade Content',
+    img: '/images/img-practice.png',
+    description:
+      'Allows the content creator to just duplicate from our white label database',
+  },
 ];
 
 const ContenStep1 = ({ control }: { control: Control }) => {
   const { t } = useTranslation('common');
+  const [, setTotalStep] = useAtom(totalStepAtom);
 
   return (
     <div className="flex items-center flex-col gap-10">
@@ -41,6 +49,11 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                 <div
                   key={item?.id}
                   onClick={() => {
+                    if (item?.id === TYPE_CREATE_COURSE.PREMADE_CONTENT) {
+                      setTotalStep(2);
+                    } else {
+                      setTotalStep(4);
+                    }
                     field.onChange(item?.id);
                   }}
                   className={clsx(
