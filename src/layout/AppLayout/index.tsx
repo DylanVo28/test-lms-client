@@ -28,8 +28,8 @@ const AppLayout = ({ children }: any) => {
       requestGetProfile();
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
-      requestGetTheme();
     }
+    requestGetTheme();
   }, [token, router.query.code]);
   return (
     <>
