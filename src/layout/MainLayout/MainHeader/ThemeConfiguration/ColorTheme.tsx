@@ -78,16 +78,22 @@ const DATA_COLOR_DARK = [
   },
 ];
 
-const ColorTheme = ({}: {}) => {
+const ColorTheme = ({
+  handleChangeValueColor,
+  valueColorTheme,
+}: {
+  handleChangeValueColor: any;
+  valueColorTheme: any;
+}) => {
   const { t } = useTranslation('common');
-  const { theme, setTheme } = useTheme();
 
   const handleChangeThemeColor = (item: any, modeTheme: ImodeTheme) => {
-    setTheme({
-      ...theme,
-      color: item?.theme,
-      modeTheme,
-    });
+    handleChangeValueColor(item, modeTheme);
+    // setTheme({
+    //   ...theme,
+    //   color: item?.theme,
+    //   modeTheme,
+    // });
   };
 
   return (
@@ -110,7 +116,8 @@ const ColorTheme = ({}: {}) => {
                   return (
                     <div
                       className={clsx('p-2 rounded-full', {
-                        ['border-2 border-main']: theme.color === item?.theme,
+                        ['border-2 border-main']:
+                          valueColorTheme.color === item?.theme,
                       })}
                     >
                       <div
@@ -135,7 +142,8 @@ const ColorTheme = ({}: {}) => {
                   return (
                     <div
                       className={clsx('p-2 rounded-full', {
-                        ['border-2 border-main']: theme.color === item?.theme,
+                        ['border-2 border-main']:
+                          valueColorTheme.color === item?.theme,
                       })}
                     >
                       <div

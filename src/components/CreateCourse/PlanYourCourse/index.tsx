@@ -15,29 +15,7 @@ import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-
-const schema = yup.object().shape({
-  objectives: yup
-    .array()
-    .of(
-      yup.object().shape({
-        name: yup.string().required('This field is required'),
-      })
-    )
-    .min(4, 'You must enter at least 4 learning objectives'),
-  requirements: yup.array().of(
-    yup.object().shape({
-      name: yup.string().required('This field is required'),
-    })
-  ),
-  intenedLeaners: yup.array().of(
-    yup.object().shape({
-      name: yup.string().required('This field is required'),
-    })
-  ),
-});
+import useNavigate from '@/hooks/useNavigate';
 
 const dataObjectivesDefault = [
   {
@@ -83,6 +61,9 @@ const PlanYourCourse = () => {
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
+  const { navigate } = useNavigate();
+
+  const [dataSections, setDataSections] = useState([]);
 
   const refModalSubmitError: any = useRef(null);
   const accessToken = getAccessToken();
@@ -92,7 +73,9 @@ const PlanYourCourse = () => {
     loading,
     data: dataDetail,
   } = useGetDetailCourse({
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
+      const resData = await fetchDetailSection();
+
       const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
       const isEnoughIntendedLearners =
         res?.data?.objectives?.length > 0 &&
@@ -104,28 +87,40 @@ const PlanYourCourse = () => {
       res?.data?.level && res?.data?.lang;
 
       const allLessonsHaveContent =
-        Array.isArray(res?.data?.sections) &&
-        res.data.sections.length > 0 &&
-        res.data.sections.every(
-          (section: any) =>
-            section.lessons.length > 0 &&
-            section.lessons.every((lesson: any) => lesson.content !== null)
-        );
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every((section: any) => {
+          if (section.lessons.length === 0) {
+            return section.quizzes.length > 0;
+          }
+
+          return section.lessons.every(
+            (lesson: any) =>
+              (lesson.id &&
+                (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+              !lesson.id
+          );
+        });
 
       const allQuizzesHaveQuestions =
-        Array.isArray(res?.data?.sections) &&
-        res.data.sections.length > 0 &&
-        res.data.sections.every(
-          (section: any) =>
-            section.quizzes.length > 0 &&
-            section.quizzes.every(
-              (quizz: any) =>
-                Array.isArray(quizz.questions) && quizz.questions.length > 0
-            )
-        );
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every((section: any) => {
+          if (section.quizzes.length === 0) {
+            return section.lessons.length > 0;
+          }
+
+          return section.quizzes.every(
+            (quizz: any) =>
+              (quizz.id &&
+                Array.isArray(quizz.questions) &&
+                quizz.questions.length > 0) ||
+              !quizz.id
+          );
+        });
 
       const isEnoughCurruclum =
-        allLessonsHaveContent || allQuizzesHaveQuestions;
+        allLessonsHaveContent && allQuizzesHaveQuestions;
 
       if (
         isEnoughIntendedLearners &&
@@ -134,7 +129,7 @@ const PlanYourCourse = () => {
         isEnoughCourseLangdingePage &&
         isSubmit
       ) {
-        router.push(ROUTE_PATH.LIST_COURSE);
+        navigate(ROUTE_PATH.LIST_COURSE);
       }
 
       reset({
@@ -187,7 +182,6 @@ const PlanYourCourse = () => {
     setValue,
     formState: { errors },
   } = useForm<any>({
-    resolver: yupResolver(schema),
     defaultValues: {
       objectives: [{ name: '' }, { name: '' }, { name: '' }, { name: '' }],
       requirements: [{ name: '' }],
@@ -198,13 +192,13 @@ const PlanYourCourse = () => {
     },
   });
 
-  console.log(errors, 'errors');
-
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
+      fetchDetailSection();
     }
   }, [router.query.id, profile?.id]);
+
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
       const resData = await fetchDetailSection();
@@ -212,23 +206,35 @@ const PlanYourCourse = () => {
       const allLessonsHaveContent =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.lessons.length > 0 &&
-            section.lessons.every((lesson: any) => lesson.content !== null)
-        );
+        resData?.data.every((section: any) => {
+          if (section.lessons.length === 0) {
+            return section.quizzes.length > 0;
+          }
+
+          return section.lessons.every(
+            (lesson: any) =>
+              (lesson.id &&
+                (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+              !lesson.id
+          );
+        });
 
       const allQuizzesHaveQuestions =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
-        resData?.data.every(
-          (section: any) =>
-            section.quizzes.length > 0 &&
-            section.quizzes.every(
-              (quizz: any) =>
-                Array.isArray(quizz.questions) && quizz.questions.length > 0
-            )
-        );
+        resData?.data.every((section: any) => {
+          if (section.quizzes.length === 0) {
+            return section.lessons.length > 0;
+          }
+
+          return section.quizzes.every(
+            (quizz: any) =>
+              (quizz.id &&
+                Array.isArray(quizz.questions) &&
+                quizz.questions.length > 0) ||
+              !quizz.id
+          );
+        });
 
       const isEnoughIntendedLearners =
         res?.data?.objectives?.length > 0 &&
@@ -243,8 +249,9 @@ const PlanYourCourse = () => {
         setActivePlan(activePlan + 1);
       }
       if (
-        (allLessonsHaveContent || allQuizzesHaveQuestions) &&
-        activePlan === 4
+        allLessonsHaveContent &&
+        allQuizzesHaveQuestions &&
+        activePlan === 2
       ) {
         setActivePlan(activePlan + 1);
       }
@@ -255,21 +262,6 @@ const PlanYourCourse = () => {
       getDetailCourse(router.query.id as string);
       toast.success(res?.message);
       setIsSubmit(true);
-      // useEffect(() => {
-      //   if (
-      //     (isEnoughIntendedLearners ||
-      //       isEnoughCurruclum ||
-      //       isEnoughCourseLangdingePage) &&
-      //     !isFirstLoad
-      //   ) {
-      //     setActivePlan(activePlan + 1);
-      //   }
-      // }, [
-      //   isEnoughIntendedLearners,
-      //   isEnoughCurruclum,
-      //   isEnoughCourseLangdingePage,
-      //   isFirstLoad,
-      // ]);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -279,7 +271,7 @@ const PlanYourCourse = () => {
   const requestEditPublishCourse = useEditCourse({
     onSuccess: (res: any) => {
       toast.success(res?.message);
-      router.push(ROUTE_PATH.LIST_COURSE);
+      navigate(ROUTE_PATH.LIST_COURSE);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -304,6 +296,8 @@ const PlanYourCourse = () => {
       const data = await res.json();
       setLoadingFetchDetail(false);
 
+      setDataSections(data?.data);
+
       return data;
     } catch (error) {}
   };
@@ -314,23 +308,33 @@ const PlanYourCourse = () => {
     const allLessonsHaveContent =
       Array.isArray(resData?.data) &&
       resData?.data.length > 0 &&
-      resData?.data.every(
-        (section: any) =>
-          section.lessons.length > 0 &&
-          section.lessons.every((lesson: any) => lesson.content !== null)
-      );
+      resData?.data.every((section: any) => {
+        if (section.lessons.length === 0) {
+          return section.quizzes.length > 0;
+        }
 
+        return section.lessons.every(
+          (lesson: any) =>
+            (lesson.id && (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+            !lesson.id
+        );
+      });
     const allQuizzesHaveQuestions =
       Array.isArray(resData?.data) &&
       resData?.data.length > 0 &&
-      resData?.data.every(
-        (section: any) =>
-          section.quizzes.length > 0 &&
-          section.quizzes.every(
-            (quizz: any) =>
-              Array.isArray(quizz.questions) && quizz.questions.length > 0
-          )
-      );
+      resData?.data.every((section: any) => {
+        if (section.quizzes.length === 0) {
+          return section.lessons.length > 0;
+        }
+
+        return section.quizzes.every(
+          (quizz: any) =>
+            (quizz.id &&
+              Array.isArray(quizz.questions) &&
+              quizz.questions.length > 0) ||
+            !quizz.id
+        );
+      });
 
     const isEnoughtSetPrice = values?.price && values?.originPrice;
     const isEnoughIntendedLearners =
@@ -339,7 +343,15 @@ const PlanYourCourse = () => {
       values?.requirements?.length > 0;
     const isEnoughCourseLangdingePage =
       values?.title && values?.categoryId && values?.level && values?.lang;
-
+    if (isEnoughIntendedLearners && activePlan === 1) {
+      setActivePlan(activePlan + 1);
+    }
+    if (allLessonsHaveContent && allQuizzesHaveQuestions && activePlan === 2) {
+      setActivePlan(activePlan + 1);
+    }
+    if (isEnoughCourseLangdingePage && activePlan === 3) {
+      setActivePlan(activePlan + 1);
+    }
     if (
       (!allLessonsHaveContent && !allQuizzesHaveQuestions) ||
       !isEnoughtSetPrice ||
@@ -347,7 +359,7 @@ const PlanYourCourse = () => {
       !isEnoughCourseLangdingePage
     ) {
       const dataError = {
-        dataCurriculum: resData,
+        dataCurriculum: resData?.data,
         ...values,
       };
       refModalSubmitError.current.onOpen(dataError);
@@ -447,27 +459,38 @@ const PlanYourCourse = () => {
     dataDetail?.data?.lang;
 
   const allLessonsHaveContent =
-    Array.isArray(dataDetail?.data?.sections) &&
-    dataDetail?.data?.sections.length > 0 &&
-    dataDetail?.data?.sections.every(
-      (section: any) =>
-        section.lessons.length > 0 &&
-        section.lessons.every((lesson: any) => lesson.content !== null)
-    );
+    Array.isArray(dataSections) &&
+    dataSections.length > 0 &&
+    dataSections.every((section: any) => {
+      if (section.lessons.length === 0) {
+        return section.quizzes.length > 0;
+      }
+
+      return section.lessons.every(
+        (lesson: any) =>
+          (lesson.id && (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+          !lesson.id
+      );
+    });
 
   const allQuizzesHaveQuestions =
-    Array.isArray(dataDetail?.data?.sections) &&
-    dataDetail?.data?.sections.length > 0 &&
-    dataDetail?.data?.sections.every(
-      (section: any) =>
-        section.quizzes.length > 0 &&
-        section.quizzes.every(
-          (quizz: any) =>
-            Array.isArray(quizz.questions) && quizz.questions.length > 0
-        )
-    );
+    Array.isArray(dataSections) &&
+    dataSections.length > 0 &&
+    dataSections.every((section: any) => {
+      if (section.quizzes.length === 0) {
+        return section.lessons.length > 0;
+      }
 
-  const isEnoughCurruclum = allLessonsHaveContent || allQuizzesHaveQuestions;
+      return section.quizzes.every(
+        (quizz: any) =>
+          (quizz.id &&
+            Array.isArray(quizz.questions) &&
+            quizz.questions.length > 0) ||
+          !quizz.id
+      );
+    });
+
+  const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
   return (
     <LoadingScreen isLoading={loading}>

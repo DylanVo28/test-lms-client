@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import useNavigate from '@/hooks/useNavigate';
 
 const FormEndCourse = ({
   courseId,
@@ -20,6 +21,8 @@ const FormEndCourse = ({
   const [valueRating, setValueRating] = useState<any>();
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
+  const { navigate } = useNavigate();
+
   const [submitReviewSuccess, setSubmitReviewSuccess] =
     useState<boolean>(false);
 
@@ -58,7 +61,7 @@ const FormEndCourse = ({
 
           <Button
             radius="full"
-            onPress={() => router.push(ROUTE_PATH.HOME)}
+            onPress={() => navigate(ROUTE_PATH.HOME)}
             className=" bg-transparent border-1 border-main min-w-[162px] w-max min-h-[50px] rounded"
           >
             <Text type="font-16-500" className="text-main">

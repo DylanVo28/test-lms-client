@@ -6,11 +6,17 @@ import { useGetMyCertificates } from '../service';
 import NoData from '@/components/ListCourse/NoData';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
+import { useProfile } from '@/store/profile/useProfile';
+import { useEffect } from 'react';
 
 const Certifications = () => {
   const { t } = useTranslation('common');
-  const { dataListCertificates, loading } = useGetMyCertificates();
+  const { profile } = useProfile();
+  const { dataListCertificates, loading, run } = useGetMyCertificates();
 
+  useEffect(() => {
+    run();
+  }, [profile]);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">

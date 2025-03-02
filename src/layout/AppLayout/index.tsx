@@ -12,6 +12,7 @@ import { firebaseCloudMessaging } from '@/firebase/firebase';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { initialTheme } from '@/store/theme/theme';
 import LoadingBase from '@/components/UI/LoadingBase';
+import { useRouter } from 'next/router';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
@@ -27,6 +28,7 @@ const AppLayout = ({ children }: any) => {
       setLoading(false);
     }, 1000);
   }, []);
+  const router = useRouter();
 
   useEffect(() => {
     firebaseCloudMessaging.requestPermissions();
@@ -35,15 +37,14 @@ const AppLayout = ({ children }: any) => {
   useEffect(() => {
     if (token) {
       requestGetProfile();
-      requestGetTheme();
 
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
     } else {
       setTheme(initialTheme);
     }
-  }, [token]);
-
+    requestGetTheme();
+  }, [token, router.query.code]);
   return (
     <main>
       <LoadingBase loading={loading} />

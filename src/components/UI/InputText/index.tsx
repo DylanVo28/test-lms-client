@@ -118,7 +118,7 @@ const InputText = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5 placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2',
+            'text-black-5  placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
             {
               'placeholder:text-white-20': isInputSubmit,
               'placeholder:!text-white-20': inputDefault,

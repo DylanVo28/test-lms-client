@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useGetDetailCourse } from '@/components/CreateCourse/service';
 import dayjs from 'dayjs';
-import { clean } from '@/utils/common';
+import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
@@ -78,7 +78,7 @@ const DetailCourse = () => {
     if (dataDetail?.data?.author?.fullName) {
       return dataDetail?.data?.author?.fullName;
     }
-    return dataDetail?.data?.author?.walletAddress;
+    return formatWalletAddress(dataDetail?.data?.author?.walletAddress);
   };
 
   return (
@@ -143,7 +143,9 @@ const DetailCourse = () => {
               <div className="flex items-center gap-[6px]">
                 <Image
                   alt=""
-                  src={dataDetail?.data?.author?.avatar}
+                  src={
+                    dataDetail?.data?.author?.avatar || '/images/user-line.png'
+                  }
                   width={24}
                   height={24}
                   className="rounded-full w-6 h-6"

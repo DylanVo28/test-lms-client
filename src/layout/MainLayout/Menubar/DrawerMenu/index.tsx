@@ -12,45 +12,70 @@ import {
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import ThemeConfiguration from '../../MainHeader/ThemeConfiguration';
 import Notification from '@/components/Notification';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
-
-const MENUS = [
-  {
-    key: 1,
-    label: 'My learning',
-    href: ROUTE_PATH.MY_LEARNING,
-  },
-  {
-    key: 2,
-    label: 'Wish list',
-    href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
-  },
-  {
-    key: 3,
-    label: 'Teach',
-    href: ROUTE_PATH.LIST_COURSE,
-  },
-];
+import { useProfile } from '@/store/profile/useProfile';
+import useNavigate from '@/hooks/useNavigate';
 
 const DrawerMenu = (props: any, ref: any) => {
   const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
+  const { profile } = useProfile();
 
   const router = useRouter();
+  const { navigate } = useNavigate();
+
+  const MENUS = useMemo(
+    () =>
+      profile?.role === 'KOL'
+        ? [
+            {
+              key: 1,
+              label: 'My learning',
+              href: ROUTE_PATH.MY_LEARNING,
+            },
+            {
+              key: 2,
+              label: 'Wish list',
+              href: `${ROUTE_PATH.MY_LEARNING}`,
+            },
+            {
+              key: 3,
+              label: 'Teach',
+              href: ROUTE_PATH.LIST_COURSE,
+            },
+          ]
+        : [
+            {
+              key: 1,
+              label: 'My learning',
+              href: ROUTE_PATH.MY_LEARNING,
+            },
+            {
+              key: 2,
+              label: 'Wish list',
+              href: `${ROUTE_PATH.MY_LEARNING}`,
+            },
+          ],
+    [profile?.role]
+  );
+
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
-    if (menuItem?.href) {
-      router.push(menuItem?.href);
-      onVisible();
+
+    if (key === 2 && menuItem?.href) {
+      navigate(menuItem?.href, { type: TabMyLearning.WISHLIST });
+    } else {
+      menuItem?.href && navigate(menuItem?.href);
     }
+    onVisible();
   };
 
   const onVisible = () => {
@@ -161,8 +186,10 @@ const DrawerMenu = (props: any, ref: any) => {
                       <Notification />
                     </PopoverContent>
                   </Popover>
-                  <ButtonLoginWallet />
-                  <ThemeConfiguration setUrlLogo={setUrlLogo} />
+                  <ButtonLoginWallet setVisible={setVisible} />
+                  {profile?.role === 'KOL' && (
+                    <ThemeConfiguration setUrlLogo={setUrlLogo} />
+                  )}
                 </div>
               </div>
             </div>

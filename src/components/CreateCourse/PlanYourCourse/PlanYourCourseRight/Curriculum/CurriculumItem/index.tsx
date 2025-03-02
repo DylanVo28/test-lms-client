@@ -634,8 +634,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
       })}
 
       {isAddCurriculum ? (
-        <div className="flex items-start gap-1">
-          <div className="absolute left-[-4px] top-[-4px] md:top-0 md:left-4">
+        <div className="flex items-start gap-1 relative">
+          <div className="absolute left-[-28px] top-[-4px] md:top-0 md:left-[-38px]">
             <Button
               onPress={() => {
                 setIsAddCurriculum(false);

@@ -27,6 +27,57 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/:code',
+  //       destination: '/',
+  //     },
+  //     {
+  //       source: '/',
+  //       destination: '/',
+  //     },
+  //     {
+  //       source: '/:code/lesson/:id',
+  //       destination: '/lesson/:id',
+  //     },
+  //     {
+  //       source: '/lesson/:id',
+  //       destination: '/lesson/:id',
+  //     },
+
+  //     {
+  //       source: '/:code/course/:id',
+  //       destination: '/course/:id',
+  //     },
+  //     {
+  //       source: '/course/:id',
+  //       destination: '/course/:id',
+  //     },
+  //     // {
+  //     //   source: '/:id/lesson/:lessonId',
+  //     //   destination: '/lesson/:id/:lessonId',
+  //     // },
+  //     // {
+  //     //   source: '/lesson/:lessonId',
+  //     //   destination: '/lesson/:lessonId',
+  //     // },
+  //     // {
+  //     //   source: '/:id/course/:courseId',
+  //     //   destination: '/course/:courseId',
+  //     // },
+  //   ];
+  // },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/platform',
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

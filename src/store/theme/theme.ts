@@ -8,6 +8,7 @@ export interface InitTheme {
   code: string;
   modeTheme: 'dark' | 'light';
   userId: string;
+  kolId: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -25,6 +26,7 @@ export const initialTheme: InitTheme = {
   langs: [],
   code: '',
   userId: '',
+  kolId: '',
   createdAt: '',
   updatedAt: '',
 };

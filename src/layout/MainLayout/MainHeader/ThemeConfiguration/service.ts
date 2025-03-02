@@ -30,6 +30,9 @@ const themeServices = {
   getDetail: async () => {
     return await privateRequest(request.get, API_PATH.THEME_DETAIL);
   },
+  getKolTheme: async (id: string) => {
+    return await privateRequest(request.get, API_PATH.THEMES + `/${id}`);
+  },
   updateTheme: async (id: string, body: Config) => {
     return await privateRequest(request.patch, API_PATH.THEMES + `/${id}`, {
       data: body,

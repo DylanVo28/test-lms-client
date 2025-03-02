@@ -132,7 +132,7 @@ export default function ListCourses() {
                   name={item?.course?.title}
                   countReviews={item?.countReviews}
                   course={item?.course}
-                  authorName={item?.course?.author?.walletAddress || ''}
+                  author={item?.course?.author}
                   image={item?.course?.image}
                   progress={item?.progress || 0}
                 />

@@ -10,6 +10,8 @@ import LanguageModal from '../LanguageModal';
 import { useTranslation } from 'next-i18next';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
+import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 const MENUS = [
   {
@@ -40,9 +42,10 @@ const ContentProfile = ({
   const { profile } = useProfile();
   const router = useRouter();
   const [, setNotifications] = useAtom(notificationAtom);
-
+  const { navigate } = useNavigate();
   const handleRedirectPage = (link: string) => {
-    router.push(link);
+    navigate(link);
+    onClosePopover();
   };
   const handleLogout = () => {
     disconnect();
@@ -57,7 +60,7 @@ const ContentProfile = ({
     if (profile?.fullName) {
       return profile?.fullName;
     }
-    return profile?.walletAddress;
+    return formatWalletAddress(profile?.walletAddress);
   };
 
   return (

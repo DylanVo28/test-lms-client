@@ -42,9 +42,9 @@ const Languages = ({
 
       <div className="mb-[16px]">
         <InputText
-          className="w-full text-[12px] bg-[#0a0f157f]"
+          inputDefault
+          className="w-full text-[12px]"
           placeholder={t('Search...')}
-          isFilter
           onChange={onSearch}
         />
       </div>

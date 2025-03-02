@@ -65,6 +65,18 @@ export const useCreateCourse = (options?: IOptions) => {
   return useRequest(serviceCreateCourse, { manual: true, ...options });
 };
 
+const serviceDuplicateCourse = async (id: string) => {
+  return privateRequest(
+    request.post,
+    `${API_PATH.CREATE_COURSE}/${id}/duplicate`,
+    { data: {} }
+  );
+};
+
+export const useDuplicateCourse = (options?: IOptions) => {
+  return useRequest(serviceDuplicateCourse, { manual: true, ...options });
+};
+
 const getDetailCourse = async (id: string, userId?: string): Promise<any> => {
   return privateRequest(request.get, `${API_PATH.CREATE_COURSE}/${id}`, {
     params: { userId },

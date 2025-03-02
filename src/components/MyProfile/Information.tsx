@@ -9,6 +9,13 @@ import { useTranslation } from 'next-i18next';
 
 const inputFields = [
   {
+    name: 'code',
+    label: 'Full Name',
+    placeholder: 'Full Name',
+    type: 'text',
+    atRow: 1,
+  },
+  {
     name: 'fullName',
     label: 'Full Name',
     placeholder: 'Full Name',
@@ -28,6 +35,11 @@ const inputFields = [
     placeholder: 'example@gmail.com',
     type: 'text',
     atRow: 1,
+    rules: {
+      validate: (value: string) =>
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ||
+        'Invalid email format',
+    },
   },
   {
     name: 'headline',
@@ -88,7 +100,9 @@ export default function Information({
   user?: TUser;
 }) {
   const { t } = useTranslation('common');
-  const { handleSubmit, setValue, control, getValues } = useForm();
+  const { handleSubmit, setValue, control, getValues } = useForm({
+    mode: 'onChange', // Triggers validation on each change
+  });
   const [loading, setLoading] = useState(false);
   const [initialData, setInitialData] = useState<any>({});
 
@@ -101,6 +115,7 @@ export default function Information({
         userData[key] = value;
       }
     });
+    setValue('fullName', user?.fullName);
     setInitialData(userData);
   }, [user]);
 
@@ -132,14 +147,24 @@ export default function Information({
             {inputFields
               .filter((field) => field.atRow === 1)
               .map((field, index) => (
-                <Field fieldItem={field} key={index} control={control} />
+                <Field
+                  fieldItem={field}
+                  key={index}
+                  control={control}
+                  rules={field.rules}
+                />
               ))}
           </div>
           <div className="flex flex-col gap-6 w-full">
             {inputFields
               .filter((field) => field.atRow === 2)
               .map((field, index) => (
-                <Field fieldItem={field} key={index} control={control} />
+                <Field
+                  fieldItem={field}
+                  key={index}
+                  control={control}
+                  rules={field.rules}
+                />
               ))}
           </div>
         </div>
@@ -161,6 +186,7 @@ export default function Information({
 const Field = ({
   fieldItem,
   control,
+  rules,
 }: {
   fieldItem: {
     name: string;
@@ -170,40 +196,67 @@ const Field = ({
     atRow: number;
   };
   control: any;
+  rules: any;
 }) => {
   const { t } = useTranslation('common');
+  console.log(fieldItem, 'fieldItem');
+
   return (
     <div className="w-full">
       <label className="block text-base font-semibold mb-1">
         {t(fieldItem.label)}
       </label>
 
-      <Controller
-        name={fieldItem.name}
-        control={control}
-        render={({ field }) => {
-          if (fieldItem.type === 'textarea') {
+      {fieldItem?.name === 'email' ? (
+        <Controller
+          name={'email'}
+          control={control}
+          rules={{
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: t('message_email'),
+            },
+          }}
+          render={({ field, fieldState }) => {
             return (
-              <InputTextArena
+              <InputText
+                error={fieldState?.error?.message}
+                className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
                 placeholder={t(fieldItem.placeholder)}
-                value={field.value}
-                minRows={5}
-                inputDefault
+                value={field.value || ''}
                 onChange={field.onChange}
               />
             );
-          }
-          return (
-            <InputText
-              name={field.name}
-              className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
-              placeholder={t(fieldItem.placeholder)}
-              value={field.value}
-              onChange={field.onChange}
-            />
-          );
-        }}
-      />
+          }}
+        />
+      ) : (
+        <Controller
+          name={fieldItem.name}
+          control={control}
+          render={({ field }) => {
+            if (fieldItem.type === 'textarea') {
+              return (
+                <InputTextArena
+                  placeholder={t(fieldItem.placeholder)}
+                  value={field.value}
+                  minRows={5}
+                  inputDefault
+                  onChange={field.onChange}
+                />
+              );
+            }
+
+            return (
+              <InputText
+                className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
+                placeholder={t(fieldItem.placeholder)}
+                value={field.value || ''}
+                onChange={field.onChange}
+              />
+            );
+          }}
+        />
+      )}
     </div>
   );
 };

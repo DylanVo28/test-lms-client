@@ -11,6 +11,8 @@ import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
+import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 dayjs.extend(relativeTime);
 
@@ -20,19 +22,20 @@ const CardCourse = ({ item }: { item?: any }) => {
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);
   }, 0);
+  const { navigate } = useNavigate();
 
   const generateMentors = () => {
     if (item?.author?.fullName) {
       return item?.author?.fullName;
     }
-    return item?.author?.walletAddress;
+    return formatWalletAddress(item?.author?.walletAddress);
   };
   return (
     <div
       onClick={() => {
-        router.push(ROUTE_PATH.DETAIL_COURSE(item?.id));
+        navigate(ROUTE_PATH.DETAIL_COURSE(item?.id));
       }}
-      className="rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
+      className="flex flex-col rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
     >
       <a
         href={item?.image || '/images/img-default.png'}
@@ -96,7 +99,7 @@ const CardCourse = ({ item }: { item?: any }) => {
             </Text>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
@@ -113,10 +116,10 @@ const CardCourse = ({ item }: { item?: any }) => {
           <Button
             variant="light"
             radius="full"
-            onClick={() => router.push(ROUTE_PATH.DETAIL_COURSE(item?.id))}
+            onPress={() => navigate(ROUTE_PATH.DETAIL_COURSE(item?.id))}
           >
             <div className="flex items-center gap-1">
-              <Text type="font-14-500" className="text-white">
+              <Text type="font-14-500" className="text-white w-max">
                 {t('Enroll Course')}
               </Text>
               <IconArrowUp />

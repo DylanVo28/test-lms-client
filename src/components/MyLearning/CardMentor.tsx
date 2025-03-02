@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import Rater from 'react-rater';
 import { useTranslation } from 'next-i18next';
+import { formatWalletAddress } from '@/utils/common';
 
 interface IProps {
   mentor?: any;
@@ -16,7 +17,7 @@ export default function CardMentor({ mentor }: IProps) {
     if (mentor?.fullName) {
       return mentor?.fullName;
     }
-    return mentor?.walletAddress;
+    return formatWalletAddress(mentor?.walletAddress);
   };
   return (
     <div className="w-full bg-[#FFFFFF0D] rounded-[4px] overflow-hidden cursor-pointer flex flex-row gap-3 p-4">

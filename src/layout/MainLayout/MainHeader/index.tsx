@@ -31,6 +31,8 @@ import Text from '@/components/UI/Text';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import clsx from 'clsx';
+import { useProfile } from '@/store/profile/useProfile';
+import useNavigate from '@/hooks/useNavigate';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -45,6 +47,8 @@ const MainHeader = () => {
   const { theme } = useTheme();
   const [notifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
+  const { profile } = useProfile();
+  const { navigate } = useNavigate();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -76,11 +80,16 @@ const MainHeader = () => {
 
     try {
       const sig = await signMessageAsync({ message: messageNonce });
-      runLoginWeb3({
+      const body = {
         address: address as string,
         signature: sig,
-        refCode: (router.query.refCode as string) || '',
-      });
+        themeCode: router.query.code as any,
+      };
+
+      if (router.query.code === 'platform') {
+        delete body?.themeCode;
+      }
+      runLoginWeb3(body);
     } catch (err: any) {
       console.error('ERROR: ', err);
       toast.error(err?.message);
@@ -115,10 +124,12 @@ const MainHeader = () => {
 
   const handleKeyUp = (event: any) => {
     if (event.key === 'Enter') {
-      router.push({
-        pathname: ROUTE_PATH.COURSE_SEARCH,
-        query: { keySearch: valueSearch },
-      });
+      navigate(ROUTE_PATH.COURSE_SEARCH, { keySearch: valueSearch });
+
+      // router.push({
+      //   pathname: ROUTE_PATH.COURSE_SEARCH,
+      //   query: { keySearch: valueSearch },
+      // });
     }
   };
 
@@ -214,7 +225,9 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            {profile?.role === 'KOL' && (
+              <ThemeConfiguration setUrlLogo={setUrlLogo} />
+            )}
 
             {/* <div className="w-full">
               <ConnectButton />

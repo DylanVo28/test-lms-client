@@ -13,6 +13,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
+import { formatWalletAddress } from '@/utils/common';
+import useNavigate from '@/hooks/useNavigate';
 
 dayjs.extend(relativeTime);
 
@@ -31,9 +33,10 @@ const CardCourse = ({
 }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
+  const { navigate } = useNavigate();
 
   const handleClickCardCourse = () => {
-    router.push(ROUTE_PATH.DETAIL_COURSE(item.id));
+    navigate(ROUTE_PATH.DETAIL_COURSE(item.id));
   };
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);
@@ -43,12 +46,12 @@ const CardCourse = ({
     if (item?.author?.fullName) {
       return item.author.fullName;
     }
-    return item?.author?.walletAddress;
+    return formatWalletAddress(item?.author?.walletAddress);
   };
   return (
     <div
       onClick={handleClickCardCourse}
-      className="rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
+      className="flex flex-col rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
@@ -145,7 +148,7 @@ const CardCourse = ({
             </div>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex-wrap flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
@@ -153,7 +156,10 @@ const CardCourse = ({
               </Text>
             </div>
             {item?.price && (
-              <Text type="font-14-400" className="text-black-6 line-through">
+              <Text
+                type="font-14-400"
+                className="text-black-6 line-through w-max"
+              >
                 $ {item.price}
               </Text>
             )}

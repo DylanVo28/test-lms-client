@@ -100,7 +100,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
           <div className="flex items-center gap-2">
             {value ? (
               <div className="relative w-full">
-                <Progress
+                {/* <Progress
                   radius="none"
                   classNames={{
                     indicator: 'bg-main',
@@ -108,8 +108,8 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
                   }}
                   className="w-full"
                   value={valueProgress}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
+                /> */}
+                <div className="flex items-center justify-center bg-[#02A6C2] p-3">
                   <Text type="font-16-500" className="text-white">
                     {valueProgress}%
                   </Text>

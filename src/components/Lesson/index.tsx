@@ -304,10 +304,10 @@ const Lesson = () => {
   });
 
   useEffect(() => {
-    if (router?.query?.id && profile?.id) {
+    if (router.query.id && profile?.id) {
       runGetListSession(router.query.id as string, profile?.id);
     }
-  }, [router?.query?.id, profile?.id]);
+  }, [router.query.id, profile?.id]);
 
   const handleScrollTop = () => {
     const element: any = document.querySelector('#topLesson');

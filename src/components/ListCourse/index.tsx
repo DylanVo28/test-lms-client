@@ -18,6 +18,7 @@ import { isMobile } from 'react-device-detect';
 import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 import Loading from '../UI/Loading';
 import { useTranslation } from 'next-i18next';
+import useNavigate from '@/hooks/useNavigate';
 
 const ListCourse = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ const ListCourse = () => {
   const [sort, setSort] = useState('createdAt desc');
   const [search, setSearch] = useState('');
   const [debounceVal, setDebounceVal] = useState('');
+  const { navigate } = useNavigate();
 
   const debounceValue = useDebounce(search, { wait: 500 });
   const [idHovered, setIdHovered] = useState<string>('');
@@ -82,7 +84,7 @@ const ListCourse = () => {
           {isMobile && (
             <CustomButtonNewCourse
               handleClickButton={() => {
-                router.push(ROUTE_PATH.CREATE_COURSE);
+                navigate(ROUTE_PATH.CREATE_COURSE);
               }}
             />
           )}
@@ -113,7 +115,7 @@ const ListCourse = () => {
           <div className="hidden md:block">
             <CustomButtonNewCourse
               handleClickButton={() => {
-                router.push(ROUTE_PATH.CREATE_COURSE);
+                navigate(ROUTE_PATH.CREATE_COURSE);
               }}
             />
           </div>
@@ -145,7 +147,7 @@ const ListCourse = () => {
                           <div
                             className="flex gap-2 justify-center items-center z-[1000]"
                             onClick={() =>
-                              router.push(
+                              navigate(
                                 `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
                               )
                             }
