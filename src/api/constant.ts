@@ -1,6 +1,6 @@
 export const API_PATH = {
   // Auth
-  AUTH_LOGIN: '/api/v1/auth/login',
+  AUTH_LOGIN: '/api/admin/auth/login',
 
   GET_USER: '/api/users/me',
 
