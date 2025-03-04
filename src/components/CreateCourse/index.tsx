@@ -24,12 +24,18 @@ const CreateCourse = () => {
       navigate(`/create-course/${res?.data?.id}`);
       toast.success(res?.message);
     },
+    onError(err) {
+      toast.error(err?.message);
+    },
   });
 
   const { run: runDuplicateCourse } = useDuplicateCourse({
     onSuccess(res) {
       navigate(`/list-course`);
       toast.success(res?.message);
+    },
+    onError(err) {
+      toast.error(err?.message);
     },
   });
 
