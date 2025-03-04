@@ -140,7 +140,7 @@ const MainHeader = () => {
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
         {theme?.modeTheme === 'light' ? (
           <Image
-            onClick={() => router.push(ROUTE_PATH.HOME)}
+            onClick={() => navigate(ROUTE_PATH.HOME)}
             alt="logo"
             width={125}
             height={46}
@@ -149,7 +149,7 @@ const MainHeader = () => {
           />
         ) : (
           <Image
-            onClick={() => router.push(ROUTE_PATH.HOME)}
+            onClick={() => navigate(ROUTE_PATH.HOME)}
             alt="logo"
             width={125}
             height={46}

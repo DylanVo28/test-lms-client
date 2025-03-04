@@ -102,6 +102,7 @@ const FormEndCourse = ({
             <div className="flex items-end justify-end mt-2">
               <Button
                 radius="full"
+                isDisabled={!valueRating}
                 isLoading={loadingComment}
                 onPress={handleClickSave}
                 className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"

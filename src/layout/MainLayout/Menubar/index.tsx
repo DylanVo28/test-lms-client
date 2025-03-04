@@ -27,7 +27,7 @@ const Menubar = () => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}`,
+              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
             {
               key: 3,
@@ -44,7 +44,7 @@ const Menubar = () => {
             {
               key: 2,
               label: 'Wish list',
-              href: `${ROUTE_PATH.MY_LEARNING}`,
+              href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
           ],
     [profile?.role]
@@ -52,11 +52,14 @@ const Menubar = () => {
   const handleClickRedirectPage = (key: number) => {
     const menuItem = MENUS.find((item) => item.key === key);
     if (key === 2 && menuItem?.href) {
-      navigate(menuItem?.href, { type: TabMyLearning.WISHLIST });
+      const url = menuItem?.href;
+      const resultUrl = url.split('?')[0];
+      navigate(resultUrl, { type: TabMyLearning.WISHLIST });
     } else {
       menuItem?.href && navigate(menuItem?.href);
     }
   };
+  const cleanedPath = router.pathname.replace(/^\/\[[^/]+\]/, '');
 
   return (
     <div className="flex items-center gap-8">
@@ -71,7 +74,7 @@ const Menubar = () => {
                 'text-main font-bold': router.query.type
                   ? router.query.type === TabMyLearning.WISHLIST &&
                     item?.key === 2
-                  : item.href === router.pathname,
+                  : item.href === cleanedPath,
               }
             )}
             type="font-16-500"

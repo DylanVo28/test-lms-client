@@ -49,16 +49,19 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 onPress={() =>
                   navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id))
                 }
-                isIconOnly
-                radius="full"
+                className="hover:bg-black-10"
+                radius="md"
                 size="md"
                 variant="light"
               >
-                <IconArrowLeft />
+                <div className="flex items-center gap-2">
+                  <IconArrowLeft />
+
+                  <Text type="font-16-500" className="text-white">
+                    {t('Home')}
+                  </Text>
+                </div>
               </Button>
-              <Text type="font-16-500" className="text-white">
-                {t('Home')}
-              </Text>
             </div>
             <div className="w-[1px] h-6 bg-black-6" />
             <Text type="font-16-500" className="text-white">
