@@ -3,6 +3,7 @@ import { extend } from 'umi-request';
 
 import { ENV } from '@/utils/env';
 import { deleteAuthCookies, getAccessToken } from '@/store/auth';
+import { toast } from '@/components/UI/Toast/toast';
 
 const REQ_TIMEOUT = 25 * 1000;
 export const isDev = ENV.NODE_ENV === 'development';
@@ -15,11 +16,14 @@ const request = extend({
   prefix: PREFIX_API,
   timeout: REQ_TIMEOUT,
   errorHandler: (error) => {
-    // if (getAccessToken() && error?.data?.status_code === 401) {
-    //   deleteAuthCookies();
-    //   window.location.href = '/';
-    //   return;
-    // }
+    console.log(error.data, 'error');
+
+    if (error?.data?.statusCode === 403) {
+      deleteAuthCookies();
+      toast.error('Expire Token');
+      window.location.href = '/';
+      return;
+    }
 
     throw error?.data || error?.response;
   },
