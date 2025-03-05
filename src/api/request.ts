@@ -18,7 +18,7 @@ const handleLogout = async () => {
     console.error('Logout API failed', error);
   }
   deleteAuthCookies();
-  toast.error('Expire Token');
+  // toast.error('Expire Token');
   window.location.href = '/';
 };
 
