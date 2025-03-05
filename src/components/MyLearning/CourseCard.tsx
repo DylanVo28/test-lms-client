@@ -57,9 +57,9 @@ export default function CourseCard({
             alt={name}
             width={302}
             height={200}
-            className="w-full h-[200px] object-scale-down"
-            layout="contain"
-            objectFit="scale-down"
+            className="w-full h-[200px]"
+            // layout="contain"
+            // objectFit="scale-down"
             onError={(e: any) => {
               e.target.srcset = '/images/img-default.png';
             }}
