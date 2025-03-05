@@ -35,13 +35,13 @@ const CardCourse = ({ item }: { item?: any }) => {
       onClick={() => {
         navigate(ROUTE_PATH.DETAIL_COURSE(item?.id));
       }}
-      className="flex flex-col rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
+      className="flex flex-col h-full rounded transition-all cursor-pointer  duration-300 hover:opacity-80"
     >
       <a
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white-10"
+        className="bg-white-10 rounded rounded-b-none"
       >
         {/* <div className="w-full rounded-b-none h-max rounded justify-center items-center bg-white/10"> */}
         <Image
@@ -49,7 +49,7 @@ const CardCourse = ({ item }: { item?: any }) => {
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px] bg-white-10 object-scale-down"
+          className="w-full h-[200px] rounded rounded-b-none bg-white-10 object-scale-down"
           layout="contain"
           objectFit="scale-down"
           onError={(e: any) => {
@@ -58,47 +58,50 @@ const CardCourse = ({ item }: { item?: any }) => {
         />
         {/* </div> */}
       </a>
-      <div className="py-4 px-3 rounded-t-none rounded bg-white-10 flex flex-col gap-[10px]">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <IconDate />
-            <Text type="font-12-500">
-              {lessonCount} {t('Lessons')}
-            </Text>
-          </div>
-
-          <div className="w-[1px] h-3 bg-white" />
-
-          <div className="flex items-center gap-1">
-            <IconTime />
-            <Text type="font-12-500">
-              {dayjs(item?.createdAt).fromNow(true)}
-            </Text>
-          </div>
-        </div>
-        <Text type="font-16-500" className="line-clamp-2 capitalize">
-          {item?.title}
-        </Text>
-        <div className="flex flex-col gap-[14px] border-b border-b-white-5 pb-4">
+      <div className="py-4 px-3 rounded-t-none rounded h-full bg-white-10 flex flex-col gap-[10px]">
+        <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
-            <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
-            <ReactStars
-              count={5}
-              color1="#D9D9D9"
-              color2="#F2B021"
-              value={item?.rating}
-              size={16}
-              edit={false}
-              className="flex items-center gap-1 mb-1"
-            />
-            <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
+            <div className="flex items-center gap-1">
+              <IconDate />
+              <Text type="font-12-500">
+                {lessonCount} {t('Lessons')}
+              </Text>
+            </div>
+
+            <div className="w-[1px] h-3 bg-white" />
+
+            <div className="flex items-center gap-1">
+              <IconTime />
+              <Text type="font-12-500">
+                {dayjs(item?.createdAt).fromNow(true)}
+              </Text>
+            </div>
           </div>
-          {item?.author?.walletAddress && (
-            <Text type="font-14-400" className="text-main break-words">
-              {t('By')}:  {generateMentors()}
-            </Text>
-          )}
+          <Text type="font-16-500" className="line-clamp-2 capitalize">
+            {item?.title}
+          </Text>
+          <div className="flex flex-col gap-[14px]  pb-4">
+            <div className="flex items-center gap-2">
+              <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
+              <ReactStars
+                count={5}
+                color1="#D9D9D9"
+                color2="#F2B021"
+                value={item?.rating}
+                size={16}
+                edit={false}
+                className="flex items-center gap-1 mb-1"
+              />
+              <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
+            </div>
+            {item?.author?.walletAddress && (
+              <Text type="font-14-400" className="text-main break-words">
+                {t('By')}:  {generateMentors()}
+              </Text>
+            )}
+          </div>
         </div>
+
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">

@@ -13,6 +13,7 @@ import { useAtom } from 'jotai';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import { useLogout } from '../service';
+import { initialTheme, themeAtom } from '@/store/theme/theme';
 
 const MENUS = [
   {
@@ -48,6 +49,7 @@ const ContentProfile = ({
     navigate(link);
     onClosePopover();
   };
+  const [_, setTheme] = useAtom(themeAtom);
 
   const { run: runLogout } = useLogout({
     onSuccess(res) {},
@@ -56,6 +58,9 @@ const ContentProfile = ({
     disconnect();
     setNotifications({});
     runLogout();
+    setTheme(initialTheme);
+    document.body.setAttribute('data-theme', '');
+
     setAuthCookies({
       token: '',
     });

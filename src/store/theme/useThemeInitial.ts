@@ -7,31 +7,37 @@ import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { useRouter } from 'next/router';
 import { useProfile } from '../profile/useProfile';
+import { getAccessToken } from '../auth';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
   const router = useRouter();
-  console.log('router', router);
   const { profile } = useProfile();
+  const token = getAccessToken();
+
   const run = () => {
     const init = async () => {
       let res;
-      if (router.query?.code) {
-        if (profile?.role === 'KOL') {
-          res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
-          setTheme({
-            ...res?.data,
-          });
-        } else {
-          res = await privateRequest(
-            request.get,
-            API_PATH.THEMES + `/${router.query?.code}`
-          );
-          setTheme({
-            ...res?.data,
-            kolId: res?.data?.userId,
-          });
-        }
+      if (router.query?.code && router.query?.code !== 'platform') {
+        res = await privateRequest(
+          request.get,
+          API_PATH.THEMES + `/${router.query?.code}`
+        );
+        setTheme({
+          ...res?.data,
+          kolId: res?.data?.userId,
+        });
+        document.body.setAttribute('data-theme', res?.data?.color);
+        return;
+      }
+
+      if (profile?.role === 'KOL' && token) {
+        res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
+        setTheme({
+          ...res?.data,
+        });
+        document.body.setAttribute('data-theme', res?.data?.color);
+        return;
       }
     };
     init();

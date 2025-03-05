@@ -30,8 +30,6 @@ const QuillEditor = ({
   const editorRef: any = useRef(null);
   const [editor, setEditor] = useState<Quill | null>(null);
 
-  const accessToken = getAccessToken();
-
   useEffect(() => {
     if (editorRef.current) {
       // Custom clipboard matcher để xử lý paste
@@ -112,6 +110,24 @@ const QuillEditor = ({
           ],
           [
             'h2',
+            function (node: HTMLElement, delta: any) {
+              const ops = delta.ops.map((op: any) => {
+                if (op.insert && typeof op.insert === 'string') {
+                  return {
+                    insert: op.insert,
+                    attributes: {
+                      ...op.attributes,
+                      color: 'white',
+                    },
+                  };
+                }
+                return op;
+              });
+              return { ops };
+            },
+          ],
+          [
+            'h3',
             function (node: HTMLElement, delta: any) {
               const ops = delta.ops.map((op: any) => {
                 if (op.insert && typeof op.insert === 'string') {

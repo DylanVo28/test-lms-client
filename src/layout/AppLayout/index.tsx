@@ -13,15 +13,17 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { initialTheme } from '@/store/theme/theme';
 import LoadingBase from '@/components/UI/LoadingBase';
 import { useRouter } from 'next/router';
+import { useProfile } from '@/store/profile/useProfile';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
   const { requestUpdateFcmToken } = useAuth();
   const { theme } = useTheme();
-  const { requestGetTheme, setTheme } = useThemeInitial();
+  const { requestGetTheme } = useThemeInitial();
   const { requestCheckHasNotification } = useNotifications();
   const token = getAccessToken();
   const [loading, setLoading] = useState(true);
+  const { profile } = useProfile();
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,11 +41,9 @@ const AppLayout = ({ children }: any) => {
       requestGetProfile();
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
-    } else {
-      setTheme(initialTheme);
     }
     requestGetTheme();
-  }, [token, router.query.code]);
+  }, [token, router.query.code, profile?.id]);
   return (
     <main>
       <LoadingBase loading={loading} />

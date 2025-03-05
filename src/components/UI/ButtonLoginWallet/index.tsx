@@ -12,6 +12,8 @@ import { useDisconnect } from 'wagmi';
 import { useState } from 'react';
 import { getAccessToken } from '@/store/auth';
 import IconUser from '../Icons/IconUser';
+import { UserRejectedRequestError } from 'viem';
+import { toast } from '../Toast/toast';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
@@ -39,7 +41,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
           <div>
             {!connected ? (
               <Button
-                onClick={openConnectModal}
+                onPress={openConnectModal}
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">

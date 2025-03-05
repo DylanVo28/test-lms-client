@@ -4,7 +4,7 @@ import Menubar from '../Menubar';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
 import { useEffect, useRef, useState } from 'react';
-import { useAccount, useConnect, useSignMessage } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
 import { getAccessToken, setAuthCookies } from '@/store/auth';
 import { useGetUserNonce, useLoginWeb3 } from './service';
 import { toast } from '@/components/UI/Toast/toast';
@@ -51,6 +51,7 @@ const MainHeader = () => {
   const { profile } = useProfile();
   const { navigate } = useNavigate();
   // const { requestGetTheme } = useThemeInitial();
+  const { disconnect } = useDisconnect();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -94,8 +95,8 @@ const MainHeader = () => {
       }
       runLoginWeb3(body);
     } catch (err: any) {
-      console.error('ERROR: ', err);
-      toast.error(err?.message);
+      toast.error(t('Wallet connection cancelled'));
+      disconnect();
     }
   };
 

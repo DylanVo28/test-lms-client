@@ -41,11 +41,7 @@ const ThemeConfiguration = ({
 
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
   const { profile } = useProfileInitial();
-  const {
-    theme: dataThemeConfig,
-    requestGetTheme,
-    setTheme,
-  } = useThemeInitial();
+  const { theme: dataThemeConfig, requestGetTheme } = useThemeInitial();
   const { theme } = useTheme();
   const { i18n } = useTranslation();
 
@@ -116,8 +112,10 @@ const ThemeConfiguration = ({
       i18n.changeLanguage('en');
     }
     if (dataThemeConfig.color) {
+      //   console.log(dataThemeConfig, 'dataThemeConfig');
+
       setColor(dataThemeConfig.color);
-      document.body.setAttribute('data-theme', dataThemeConfig.color);
+      //   document.body.setAttribute('data-theme', dataThemeConfig.color);
     }
   }, [dataThemeConfig]);
 
@@ -128,13 +126,11 @@ const ThemeConfiguration = ({
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
 
-  useEffect(() => {
-    if (profile?.id) {
-      requestGetTheme();
-    } else {
-      setTheme(initialTheme);
-    }
-  }, [profile]);
+  // useEffect(() => {
+  //   if (profile?.id) {
+  //     requestGetTheme();
+  //   }
+  // }, [profile]);
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(

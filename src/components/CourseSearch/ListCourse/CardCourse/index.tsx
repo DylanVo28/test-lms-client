@@ -85,7 +85,7 @@ const CardCourse = ({
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white-10"
+        className="bg-white-10 rounded rounded-b-none"
       >
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
@@ -100,54 +100,57 @@ const CardCourse = ({
           }}
         />
       </a>
-      <div className="py-4 px-3 rounded bg-white-10 flex flex-col gap-[10px]">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <IconDate />
-            <Text type="font-12-500">
-              {lessonCount} {t('Lessons')}
-            </Text>
-          </div>
-
-          <div className="w-[1px] h-3 bg-white" />
-
-          <div className="flex items-center gap-1">
-            <IconTime />
-            <Text type="font-12-500">
-              {dayjs(item?.createdAt).fromNow(true)}
-            </Text>
-          </div>
-        </div>
-        <Text type="font-16-500" className="line-clamp-2 capitalize">
-          {item?.title}
-        </Text>
-        <div className="flex flex-col gap-[14px] border-b border-b-white-5 pb-4">
+      <div className="py-4 px-3 rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
+        <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
-            <Text type="font-14-500">{item?.rating}</Text>
-            <ReactStars
-              count={5}
-              color1="#D9D9D9"
-              color2="#F2B021"
-              value={item?.rating}
-              size={16}
-              className="flex items-center gap-1 mb-1"
-            />
-            <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
-          </div>
-          {item?.author?.walletAddress && (
-            <div className="flex gap-0.5 break-words">
-              <Text type="font-14-400" className="text-main break-words">
-                {t('By')}:
-              </Text>
-              <Text
-                type="font-14-400"
-                className="text-main underline break-all"
-              >
-                {generateMentors()}
+            <div className="flex items-center gap-1">
+              <IconDate />
+              <Text type="font-12-500">
+                {lessonCount} {t('Lessons')}
               </Text>
             </div>
-          )}
+
+            <div className="w-[1px] h-3 bg-white" />
+
+            <div className="flex items-center gap-1">
+              <IconTime />
+              <Text type="font-12-500">
+                {dayjs(item?.createdAt).fromNow(true)}
+              </Text>
+            </div>
+          </div>
+          <Text type="font-16-500" className="line-clamp-2 capitalize">
+            {item?.title}
+          </Text>
+          <div className="flex flex-col gap-[14px] pb-4">
+            <div className="flex items-center gap-2">
+              <Text type="font-14-500">{item?.rating}</Text>
+              <ReactStars
+                count={5}
+                color1="#D9D9D9"
+                color2="#F2B021"
+                value={item?.rating}
+                size={16}
+                className="flex items-center gap-1 mb-1"
+              />
+              <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
+            </div>
+            {item?.author?.walletAddress && (
+              <div className="flex gap-0.5 break-words">
+                <Text type="font-14-400" className="text-main break-words">
+                  {t('By')}:
+                </Text>
+                <Text
+                  type="font-14-400"
+                  className="text-main underline break-all"
+                >
+                  {generateMentors()}
+                </Text>
+              </div>
+            )}
+          </div>
         </div>
+
         <div className="flex-wrap flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">

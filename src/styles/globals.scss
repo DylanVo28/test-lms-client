@@ -951,6 +951,10 @@ body {
     span {
       background: transparent !important;
     }
+    a {
+      background: transparent !important;
+    }
+
     p {
       font-size: 16px;
       span:not([style*='color']) {
@@ -1248,6 +1252,10 @@ input[type='number'] {
   font-size: 32px !important;
   font-weight: 600 !important;
   line-height: 1.4 !important;
+}
+.ql-snow .ql-editor img {
+  margin: auto !important;
+  padding: 10px 0 !important;
 }
 
 .ql-editor h2 {
