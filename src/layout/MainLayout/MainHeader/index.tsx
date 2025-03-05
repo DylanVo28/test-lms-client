@@ -33,6 +33,7 @@ import { useAtom } from 'jotai';
 import clsx from 'clsx';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -49,6 +50,7 @@ const MainHeader = () => {
   const prevIsConnected = useRef<boolean | null>(null);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
+  const { requestGetTheme } = useThemeInitial();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -58,6 +60,7 @@ const MainHeader = () => {
     onSuccess(res) {
       toast.success(t('Login successfully'));
       requestGetProfile();
+      requestGetTheme();
       setAuthCookies({
         token: res?.data?.accessToken,
       });
