@@ -8,13 +8,13 @@ import { toast } from '../UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 
 const inputFields = [
-  {
-    name: 'code',
-    label: 'Full Name',
-    placeholder: 'Full Name',
-    type: 'text',
-    atRow: 1,
-  },
+  // {
+  //   name: 'code',
+  //   label: 'Full Name',
+  //   placeholder: 'Full Name',
+  //   type: 'text',
+  //   atRow: 1,
+  // },
   {
     name: 'fullName',
     label: 'Full Name',
