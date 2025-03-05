@@ -79,10 +79,10 @@ const PromotionalVideo = ({
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:min-w-[480px] h-[270px] bg-default flex items-center justify-center">
+        <div className="relative md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
           <Image
             src={'/img-default.png'}
-            className="w-full md:w-[480px] h-[270px]"
+            className="w-full md:w-[480px] h-[200px] object-contain"
             alt=""
             width={480}
             height={270}

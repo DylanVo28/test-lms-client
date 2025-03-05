@@ -4,15 +4,23 @@ import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
 
 const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
+
+  const cropperRef: any = useRef(null);
+
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  console.log(value, 'value23');
 
   useEffect(() => {
     if (!value) {
@@ -34,6 +42,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   const { run: runUploadFile, loading } = useUploadFile({
     onSuccess(res) {
       onChange(res?.data?.url);
+      setImageSrc('');
     },
   });
 
@@ -48,21 +57,62 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
       toast.error(
         t('Can only upload files in .jpg, .jpeg, .gif or .png format')
       );
-
       return;
     }
 
-    runUploadFile(file);
+    const img = new window.Image();
+
+    img.onload = () => {
+      const minWidth = 302;
+      const minHeight = 200;
+      console.log(img.width, 'width');
+
+      if (img.width < minWidth || img.height < minHeight) {
+        toast.error(
+          t(`Image must be at least ${minWidth}x${minHeight} pixels`)
+        );
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    };
+
+    // Trigger the image loading
+    img.src = URL.createObjectURL(file);
   };
   const handleClickUploadFile = () => {
-    if (value) {
+    if (valueProgress === 100 && value) {
       setValueProgress(0);
-      onChange(null);
+      fileInputRef.current.value = null;
       setInputKey(Date.now());
     } else {
       fileInputRef.current.click();
     }
   };
+  const getCropData = () => {
+    if (cropperRef.current) {
+      const cropper = cropperRef.current?.cropper;
+      const croppedCanvas = cropper.getCroppedCanvas({
+        width: 302,
+        height: 200,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+      });
+
+      croppedCanvas.toBlob(async (blob: any) => {
+        const file = new File([blob], 'cropped-image.jpg', {
+          type: 'image/jpeg',
+        });
+
+        runUploadFile(file);
+      }, 'image/png');
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-white">
@@ -77,8 +127,37 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:min-w-[480px] h-[270px] bg-default flex items-center justify-center">
-          <Image
+        <div className="relative md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
+          {imageSrc ? (
+            <div
+              style={{ width: '100%', height: '200px', position: 'relative' }}
+            >
+              <Cropper
+                ref={cropperRef}
+                src={imageSrc}
+                style={{ height: 200, width: '100%' }}
+                aspectRatio={302 / 200}
+                guides={true}
+                cropBoxResizable={false}
+                dragMode="move"
+                zoomable={false}
+                zoomOnWheel={false}
+                zoomOnTouch={false}
+                minCropBoxWidth={302}
+                minCropBoxHeight={200}
+              />
+            </div>
+          ) : (
+            <Image
+              src={value || '/img-default.png'}
+              className="w-full md:w-[480px] h-[200px] object-contain"
+              alt=""
+              width={480}
+              height={270}
+            />
+          )}
+
+          {/* <Image
             src={value || '/img-default.png'}
             className="w-full md:w-[480px] h-[270px]"
             alt=""
@@ -89,7 +168,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             <div className="absolute flex items-center justify-center w-full h-full bg-black bg-opacity-50">
               <Spinner />
             </div>
-          )}
+          )} */}
         </div>
         <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
@@ -98,39 +177,46 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             )}
           </Text>
           <div className="flex items-center gap-2">
-            {value ? (
-              <div className="relative w-full">
-                {/* <Progress
-                  radius="none"
-                  classNames={{
-                    indicator: 'bg-main',
-                    track: 'min-h-[48px]',
-                  }}
-                  className="w-full"
-                  value={valueProgress}
-                /> */}
-                <div className="flex items-center justify-center bg-[#02A6C2] p-3">
-                  <Text type="font-16-500" className="text-white">
-                    {valueProgress}%
-                  </Text>
-                </div>
-              </div>
-            ) : (
-              <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bg-default border-black-10">
-                <Text type="font-16-400" className="text-black-8">
-                  {t('No file selected')}
-                </Text>
-              </div>
+            {!imageSrc && (
+              <>
+                {valueProgress > 10 && value ? (
+                  <div className="relative w-full">
+                    <div className="flex items-center justify-center bg-[#02A6C2] p-3">
+                      <Text type="font-16-500" className="text-white">
+                        {valueProgress}%
+                      </Text>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bg-default border-black-10">
+                    <Text type="font-16-400" className="text-black-8">
+                      {t('No file selected')}
+                    </Text>
+                  </div>
+                )}
+              </>
             )}
 
-            <Button
-              onClick={handleClickUploadFile}
-              className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
-            >
-              <Text type="font-16-700" className="text-main">
-                {value ? t('Change') : t('Upload File')}
-              </Text>
-            </Button>
+            {imageSrc ? (
+              <Button
+                isLoading={loading}
+                onClick={getCropData}
+                className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
+              >
+                <Text type="font-16-700" className="text-main">
+                  {'Crop image'}
+                </Text>
+              </Button>
+            ) : (
+              <Button
+                onClick={handleClickUploadFile}
+                className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
+              >
+                <Text type="font-16-700" className="text-main">
+                  {valueProgress > 10 && value ? t('Change') : t('Upload File')}
+                </Text>
+              </Button>
+            )}
           </div>
         </div>
       </div>
