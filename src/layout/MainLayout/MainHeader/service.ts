@@ -22,3 +22,11 @@ const serviceLoginWeb3 = async (body: any) => {
 export const useLoginWeb3 = (options?: IOptions) => {
   return useRequest(serviceLoginWeb3, { manual: true, ...options });
 };
+
+const serviceLogout = async () => {
+  return privateRequest(request.post, API_PATH.LOGOUT);
+};
+
+export const useLogout = (options?: IOptions) => {
+  return useRequest(serviceLogout, { manual: true, ...options });
+};

@@ -12,6 +12,7 @@ import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
+import { useLogout } from '../service';
 
 const MENUS = [
   {
@@ -47,9 +48,14 @@ const ContentProfile = ({
     navigate(link);
     onClosePopover();
   };
+
+  const { run: runLogout } = useLogout({
+    onSuccess(res) {},
+  });
   const handleLogout = () => {
     disconnect();
     setNotifications({});
+    runLogout();
     setAuthCookies({
       token: '',
     });

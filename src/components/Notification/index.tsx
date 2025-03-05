@@ -1,11 +1,12 @@
 import { useTranslation } from 'next-i18next';
 import Text from '../UI/Text';
 import { Tab, Tabs } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ListNotification from './ListNotification';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
 import clsx from 'clsx';
+import { getAccessToken } from '@/store/auth';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -16,6 +17,8 @@ export enum TAB_NOTIFICATION {
 const Notification = () => {
   const { t } = useTranslation('common');
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
+  const token = getAccessToken();
+
   const onChangeTab = (tab: any) => {
     const params = {
       page: 1,
@@ -35,14 +38,16 @@ const Notification = () => {
     requestGetNotification,
   } = useNotifications();
 
-  useMount(() => {
-    const params = {
-      page: 1,
-      pageSize: 50,
-    };
-    requestCheckHasNotification?.run();
-    requestGetNotification.run(params);
-  });
+  useEffect(() => {
+    if (token) {
+      const params = {
+        page: 1,
+        pageSize: 50,
+      };
+      requestCheckHasNotification?.run();
+      requestGetNotification.run(params);
+    }
+  }, [token]);
 
   const DATA_TAB_NOTIFICATION = [
     {

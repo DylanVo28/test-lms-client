@@ -19,6 +19,7 @@ import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 import Loading from '../UI/Loading';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
+import { getAccessToken } from '@/store/auth';
 
 const ListCourse = () => {
   const router = useRouter();
@@ -41,6 +42,7 @@ const ListCourse = () => {
     search: debounceVal,
   });
   const { profile } = useProfile();
+  const token = getAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
@@ -62,8 +64,10 @@ const ListCourse = () => {
   };
 
   useEffect(() => {
-    reload();
-  }, [sort, debounceVal, profile]);
+    if (token) {
+      reload();
+    }
+  }, [token, sort, debounceVal, profile]);
 
   const deleteCourse = (id: string) => {
     console.log('idddd', id);
