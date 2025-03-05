@@ -138,7 +138,7 @@ const ThemeConfiguration = ({
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_APP_URL}/?code=${code}`
+      `${process.env.NEXT_PUBLIC_APP_URL}/${code}`
     );
     toast.success(t('Copied!'));
   };
