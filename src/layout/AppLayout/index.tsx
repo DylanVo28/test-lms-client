@@ -37,12 +37,12 @@ const AppLayout = ({ children }: any) => {
   useEffect(() => {
     if (token) {
       requestGetProfile();
-      requestGetTheme();
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
     } else {
       setTheme(initialTheme);
     }
+    requestGetTheme();
   }, [token, router.query.code]);
   return (
     <main>

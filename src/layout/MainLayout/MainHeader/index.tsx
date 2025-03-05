@@ -50,7 +50,7 @@ const MainHeader = () => {
   const prevIsConnected = useRef<boolean | null>(null);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
-  const { requestGetTheme } = useThemeInitial();
+  // const { requestGetTheme } = useThemeInitial();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -60,7 +60,7 @@ const MainHeader = () => {
     onSuccess(res) {
       toast.success(t('Login successfully'));
       requestGetProfile();
-      requestGetTheme();
+      // requestGetTheme();
       setAuthCookies({
         token: res?.data?.accessToken,
       });
