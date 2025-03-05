@@ -49,9 +49,9 @@ const CardCourse = ({ item }: { item?: any }) => {
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px] rounded rounded-b-none bg-white-10 object-scale-down"
-          layout="contain"
-          objectFit="scale-down"
+          className="w-full h-[200px] bg-white-10"
+          // layout="contain"
+          // objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
