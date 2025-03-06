@@ -1,10 +1,10 @@
-# LMS-FE
+# What Exchange-FE
 
 ## **Manual build VPS**
 
 1. **Connect to VPS**
    - ssh
-2. **Go to LMS FE**
+2. **Go to What Exchange FE**
    - cd lms
    - cd lms-fe
 3. **Pull code**

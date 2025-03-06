@@ -42,7 +42,7 @@ const Login = () => {
           src={'/logo.png'}
         />
         <Text type="font-28-700" className="text-white">
-          Sign in to LMS Study
+          Sign in to What Exchange Study
         </Text>
       </div>
 
