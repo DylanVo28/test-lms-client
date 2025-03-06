@@ -27,7 +27,7 @@ const request = extend({
   errorHandler: (error) => {
     if (error?.data?.statusCode === 403 || error?.data?.statusCode === 401) {
       if (getAccessToken()) {
-        handleLogout();
+        // handleLogout();
       }
       deleteAuthCookies();
       window.location.href = '/';

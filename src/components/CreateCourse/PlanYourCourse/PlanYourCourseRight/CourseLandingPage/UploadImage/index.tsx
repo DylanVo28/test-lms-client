@@ -70,7 +70,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
       if (img.width < minWidth || img.height < minHeight) {
         toast.error(
           t(
-            `The uploaded image is too small. Minimum image size is 750x422px. Please upload a larger image.`
+            `The uploaded image is too small. Minimum image size is 302x200px. Please upload a larger image.`
           )
         );
         return;
@@ -175,7 +175,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
             {t(
-              'Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.'
+              'Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 302x200 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.'
             )}
           </Text>
           <div className="flex items-center gap-2">
