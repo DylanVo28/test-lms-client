@@ -72,7 +72,7 @@ const Notification = () => {
   };
 
   return (
-    <div className="flex p-4 min-w-[552px] flex-col gap-5">
+    <div className="flex p-4 w-full md:min-w-[552px] flex-col gap-5">
       <div className="flex items-center gap-2">
         <Text type="font-18-600" className="text-white">
           {t('Notification')}
