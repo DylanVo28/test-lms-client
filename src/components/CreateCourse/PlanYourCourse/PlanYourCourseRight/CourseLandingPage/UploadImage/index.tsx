@@ -69,7 +69,9 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
 
       if (img.width < minWidth || img.height < minHeight) {
         toast.error(
-          t(`Image must be at least ${minWidth}x${minHeight} pixels`)
+          t(
+            `The uploaded image is too small. Minimum image size is 750x422px. Please upload a larger image.`
+          )
         );
         return;
       }

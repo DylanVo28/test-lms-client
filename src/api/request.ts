@@ -17,17 +17,21 @@ const handleLogout = async () => {
   } catch (error) {
     console.error('Logout API failed', error);
   }
-  deleteAuthCookies();
   // toast.error('Expire Token');
-  window.location.href = '/';
 };
+console.log(getAccessToken(), 'getAccessToken');
 
 const request = extend({
   prefix: PREFIX_API,
   timeout: REQ_TIMEOUT,
   errorHandler: (error) => {
     if (error?.data?.statusCode === 403 || error?.data?.statusCode === 401) {
-      handleLogout();
+      if (getAccessToken()) {
+        handleLogout();
+      }
+      deleteAuthCookies();
+      window.location.href = '/';
+
       return;
     }
 
