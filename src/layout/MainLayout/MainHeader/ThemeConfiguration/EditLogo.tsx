@@ -125,7 +125,7 @@ const EditLogo = ({
         {t('Edit logo')}
       </Text>
       <p className="text-md text-white mb-[8px]">
-        {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
+        {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
       </p>
       <div className="flex flex-col gap-4">
         <div className="p-[20px] bg-gray-50 rounded-[4px] border border-[#00000033]">
