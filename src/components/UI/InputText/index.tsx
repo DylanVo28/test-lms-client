@@ -71,6 +71,33 @@ const InputText = (props: InputTextProps) => {
     isInput,
     ...rest
   } = props;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // If type is number, block 'e', '+', '-' and other non-numeric keys
+    if (type === 'number') {
+      if (['e', 'E', '+', '-'].includes(e.key)) {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const handleChange = (e: any) => {
+    if (type === 'number') {
+      // For number inputs, ensure only numbers and decimal points
+      // This is a backup in case any non-numeric characters somehow get through
+      const sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
+
+      // If the value was changed, update it
+      if (sanitizedValue !== e.target.value) {
+        e.target.value = sanitizedValue;
+      }
+    }
+
+    // Call the original onChange handler
+    if (onChange) {
+      onChange(e);
+    }
+  };
   return (
     <div className="flex flex-col gap-2 relative justify-center">
       {label && (
@@ -105,8 +132,9 @@ const InputText = (props: InputTextProps) => {
         maxLength={maxLength}
         autoComplete="off"
         value={value}
+        onKeyDown={handleKeyDown}
         autoFocus={autoFocus}
-        onChange={onChange}
+        onChange={handleChange}
         isDisabled={isDisabled}
         readOnly={readOnly}
         defaultValue={defaultValue}

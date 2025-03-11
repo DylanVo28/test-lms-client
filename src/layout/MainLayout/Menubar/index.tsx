@@ -17,7 +17,7 @@ const Menubar = () => {
 
   const MENUS = useMemo(
     () =>
-      profile?.role === 'KOL'
+      profile?.role === 'KOL' || profile?.role === 'ADMIN'
         ? [
             {
               key: 1,

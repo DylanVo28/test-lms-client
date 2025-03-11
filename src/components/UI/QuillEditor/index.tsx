@@ -3,10 +3,6 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import Text from '../Text';
 import clsx from 'clsx';
-import { useUploadFile } from '@/components/CreateCourse/service';
-import { PREFIX_API } from '@/api/request';
-import { API_PATH } from '@/api/constant';
-import { getAccessToken } from '@/store/auth';
 
 const QuillEditor = ({
   label,
@@ -16,7 +12,6 @@ const QuillEditor = ({
   inputQuizz,
   onChange,
   error,
-  autoFocus = false,
 }: {
   label?: string;
   inputDefault?: boolean;
@@ -32,121 +27,6 @@ const QuillEditor = ({
 
   useEffect(() => {
     if (editorRef.current) {
-      // Custom clipboard matcher để xử lý paste
-
-      const customClipboard = {
-        matchers: [
-          [
-            'span',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-          [
-            'p',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-          [
-            'strong',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-          [
-            'h1',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-          [
-            'h2',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-          [
-            'h3',
-            function (node: HTMLElement, delta: any) {
-              const ops = delta.ops.map((op: any) => {
-                if (op.insert && typeof op.insert === 'string') {
-                  return {
-                    insert: op.insert,
-                    attributes: {
-                      ...op.attributes,
-                      color: 'white',
-                    },
-                  };
-                }
-                return op;
-              });
-              return { ops };
-            },
-          ],
-        ],
-      };
-
       const quill = new Quill(editorRef.current, {
         theme: 'snow',
         modules: {
@@ -155,7 +35,7 @@ const QuillEditor = ({
               [{ header: '1' }, { header: '2' }],
               [{ list: 'ordered' }, { list: 'bullet' }],
               ['bold', 'italic', 'underline'],
-              [{ color: [] }, { background: [] }],
+              [{ color: [] }],
               [{ align: [] }],
               ['image'],
             ],
@@ -164,14 +44,14 @@ const QuillEditor = ({
             },
           },
           clipboard: {
-            ...customClipboard,
             matchVisual: false,
           },
         },
         placeholder,
       });
 
-      quill.clipboard.addMatcher('span', ((node: Node, delta: any) => {
+      // @ts-ignore
+      quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
         const ops = delta.ops.map((op: any) => {
           if (op.insert && typeof op.insert === 'string') {
             return {
@@ -185,7 +65,24 @@ const QuillEditor = ({
           return op;
         });
         return { ops };
-      }) as any);
+      });
+
+      // @ts-ignore
+      quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
+        return {
+          ops: delta.ops.map((op: any) => {
+            if (op.insert && typeof op.insert === 'string') {
+              return {
+                insert: op.insert,
+                attributes: {
+                  color: 'white',
+                },
+              };
+            }
+            return op;
+          }),
+        };
+      });
 
       setEditor(quill);
       quill.on('text-change', () => {
@@ -194,6 +91,9 @@ const QuillEditor = ({
           onChange(content);
         }
       });
+
+      // Thiết lập màu chữ mặc định cho editor là trắng
+      quill.format('color', 'white');
     }
 
     return () => {
@@ -238,12 +138,6 @@ const QuillEditor = ({
       }
     };
   };
-
-  // const toolbar = editorRef.current?.querySelector('.ql-header');
-  // if (toolbar) {
-  //   toolbar.childNodes[0].textContent = 'Tiêu đề lớn';
-  //   toolbar.childNodes[1].textContent = 'Tiêu đề nhỏ';
-  // }
 
   return (
     <div className="w-full flex flex-col gap-2">

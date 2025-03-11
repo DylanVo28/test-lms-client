@@ -112,9 +112,9 @@ const Mentors = ({ mentor }: any) => {
           width={240}
           height={202}
           className="rounded w-[240px] h-[202px] bg-[#212121]"
-          src={mentor?.avatar || '/images/img-mentor-default'}
+          src={mentor?.avatar || '/images/img-mentor-default.png'}
           onError={(e: any) => {
-            e.target.srcset = '/images/img-mentor-default';
+            e.target.srcset = '/images/img-mentor-default.png';
           }}
         />
         <div className="flex flex-col gap-4">

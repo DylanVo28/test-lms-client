@@ -33,7 +33,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const { connectors } = getDefaultWallets({
-  appName: 'LMS',
+  appName: 'What Exchange',
   projectId: 'fc44d249918338bb571eab6da79776df',
 });
 
@@ -57,12 +57,12 @@ const config = createConfig({
 const queryClient = new QueryClient();
 
 export const SEO: DefaultSeoProps = {
-  titleTemplate: 'LMS',
-  defaultTitle: 'LMS',
-  description: 'LMS',
+  titleTemplate: 'What Exchange',
+  defaultTitle: 'What Exchange',
+  description: 'What Exchange',
   openGraph: {
-    title: 'LMS',
-    description: 'LMS',
+    title: 'What Exchange',
+    description: 'What Exchange',
     images: [
       {
         url: 'banner-1.png',
@@ -88,8 +88,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
-        <meta name="title" content="LMS" />
-        <meta name="description" content="LMS" />
+        <meta name="title" content="What Exchange" />
+        <meta name="description" content="What Exchange" />
         <link rel="shortcut icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />

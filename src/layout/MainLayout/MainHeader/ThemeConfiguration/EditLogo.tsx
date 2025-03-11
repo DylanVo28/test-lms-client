@@ -2,8 +2,11 @@ import { useUploadFile } from '@/components/CreateCourse/service';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import Image from 'next/image';
 
 interface UploadedFile {
   url: string;
@@ -19,13 +22,18 @@ const EditLogo = ({
   logo: string;
 }) => {
   const { t } = useTranslation('common');
-  const [valueFile, setValueFile] = useState<UploadedFile>();
+  const [imageSrc, setImageSrc] = useState<string>('');
+  const cropperRef: any = useRef(null);
+  const fileInputRef: any = useRef(null);
+  const [inputKey, setInputKey] = useState(Date.now());
+
   const { run, loading: loadingFile } = useUploadFile({
     onSuccess(response) {
       const data = response.data;
-      setValueFile(data);
       onChangeLogo(data.url as string);
       toast.success(t('File uploaded successfully!'));
+      setImageSrc('');
+      // fileInputRef.current.value = null;
     },
     onError(error) {
       toast.error(t('File uploaded failed!'));
@@ -37,8 +45,8 @@ const EditLogo = ({
     if (file) {
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
       const maxSize = 10 * 1024 * 1024; // 10 MB
-      const minWidth = 200;
-      const minHeight = 200;
+      const minWidth = 124;
+      const minHeight = 46;
       const maxWidth = 3000;
       const maxHeight = 3000;
 
@@ -54,7 +62,8 @@ const EditLogo = ({
         return;
       }
 
-      const img = new Image();
+      const img = new window.Image();
+
       img.src = URL.createObjectURL(file);
       img.onload = () => {
         if (
@@ -70,39 +79,115 @@ const EditLogo = ({
           );
           return;
         }
-
-        run(file);
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImageSrc(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+        // run(file);
       };
     }
   };
+  const getCropData = () => {
+    if (cropperRef.current) {
+      const cropper = cropperRef.current?.cropper;
+      const croppedCanvas = cropper.getCroppedCanvas({
+        width: 124,
+        height: 46,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+      });
+
+      croppedCanvas.toBlob(async (blob: any) => {
+        const file = new File([blob], 'cropped-image.jpg', {
+          type: 'image/jpeg',
+        });
+
+        run(file);
+      }, 'image/png');
+    }
+  };
+
+  const handleClickUploadFile = () => {
+    fileInputRef.current.click();
+  };
   return (
     <div>
+      <input
+        type="file"
+        key={inputKey}
+        ref={fileInputRef}
+        onChange={onChangeFile}
+        style={{ display: 'none' }}
+        accept="image/jpeg, image/png, image/jpg"
+      />
       <Text className="text-[18px] text-white font-semibold mb-[16px]">
         {t('Edit logo')}
       </Text>
       <p className="text-md text-white mb-[8px]">
-        {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
+        {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
       </p>
-      <div className="p-[20px] bg-gray-50 rounded-[4px] border border-[#00000033]">
-        <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-          <div className="text-white">
-            {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
-          </div>
-          <div className="relative">
-            <Button
-              isLoading={loadingFile}
-              className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+      <div className="flex flex-col gap-4">
+        <div className="p-[20px] bg-gray-50 rounded-[4px] border border-[#00000033]">
+          {imageSrc ? (
+            <div
+              style={{ width: '100%', height: '100%', position: 'relative' }}
             >
-              {t('Choose file')}
-            </Button>
-            <input
-              type="file"
-              onChange={onChangeFile}
-              className="absolute top-0 w-full h-full left-0 opacity-0 cursor-pointer"
-              accept="image/jpeg, image/png, image/jpg"
-            />
-          </div>
+              <Cropper
+                ref={cropperRef}
+                src={imageSrc}
+                style={{ height: 100, width: '100%' }}
+                aspectRatio={280 / 100}
+                guides={true}
+                cropBoxResizable={false}
+                dragMode="move"
+                zoomable={false}
+                zoomOnWheel={false}
+                zoomOnTouch={false}
+                minCropBoxWidth={280}
+                minCropBoxHeight={100}
+              />
+            </div>
+          ) : (
+            <>
+              {logo ? (
+                <div className="min-h-[100px] bg-gray-70 rounded-md flex justify-center items-center">
+                  <Image src={logo} alt="" width={124} height={46} />
+                </div>
+              ) : (
+                <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
+                  <div className="text-white">
+                    {t('JPEG, PNG or JPG . Max 10mb.')}
+                  </div>
+                  <div className="relative">
+                    <Button
+                      onClick={handleClickUploadFile}
+                      isLoading={loadingFile}
+                      className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                    >
+                      {t('Choose file')}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
+        {imageSrc ? (
+          <Button
+            onClick={getCropData}
+            className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
+          >
+            {'Crop image'}
+          </Button>
+        ) : (
+          <Button
+            onClick={handleClickUploadFile}
+            className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
+          >
+            {t('Change')}
+          </Button>
+        )}
       </div>
     </div>
   );

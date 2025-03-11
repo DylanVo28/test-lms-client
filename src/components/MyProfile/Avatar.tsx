@@ -91,7 +91,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
       </div>
 
       <div className="text-white">
-        {t('Minimum 200x200 pixels, Maximum 3000x3000 pixels')}
+        {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
       </div>
 
       <div className="p-[20px] h-[241px] bg-gray-50 w-full rounded-[4px]">

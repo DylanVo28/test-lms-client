@@ -34,7 +34,7 @@ const DrawerMenu = (props: any, ref: any) => {
 
   const MENUS = useMemo(
     () =>
-      profile?.role === 'KOL'
+      profile?.role === 'KOL' || profile?.role === 'ADMIN'
         ? [
             {
               key: 1,
@@ -147,6 +147,10 @@ const DrawerMenu = (props: any, ref: any) => {
                 </div>
                 <div className="flex justify-center items-center gap-4">
                   <Popover
+                    style={{
+                      width: '100%',
+                      paddingRight: '24px',
+                    }}
                     classNames={{
                       content:
                         'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
