@@ -60,7 +60,6 @@ const MainHeader = () => {
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
       toast.success(t('Login successfully'));
-      requestGetProfile();
       // requestGetTheme();
       setAuthCookies({
         token: res?.data?.accessToken,
@@ -71,6 +70,12 @@ const MainHeader = () => {
       toast.error(err?.message);
     },
   });
+
+  useEffect(() => {
+    if (token) {
+      requestGetProfile();
+    }
+  }, [token]);
   const { run: runGetUserNonce } = useGetUserNonce({
     onSuccess(res) {
       handleSignMessage(res?.data);

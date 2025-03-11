@@ -44,7 +44,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
         control={control}
         defaultValue={'COURSE'}
         render={({ field }) => (
-          <div className="flex items-center gap-6">
+          <div className="flex md:flex-row flex-col items-center gap-6">
             {DATA_CONTENT?.map((item) => {
               return (
                 <div

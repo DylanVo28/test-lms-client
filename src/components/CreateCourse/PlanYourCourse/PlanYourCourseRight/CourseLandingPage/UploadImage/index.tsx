@@ -129,7 +129,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
+        <div className="relative w-full md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
           {imageSrc ? (
             <div
               style={{ width: '100%', height: '200px', position: 'relative' }}

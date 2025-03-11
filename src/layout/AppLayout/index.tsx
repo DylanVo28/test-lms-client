@@ -38,7 +38,7 @@ const AppLayout = ({ children }: any) => {
 
   useEffect(() => {
     if (token) {
-      requestGetProfile();
+      // requestGetProfile();
       requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
     }

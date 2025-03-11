@@ -131,82 +131,112 @@ const ListCourse = () => {
           {dataCourses?.length > 0 &&
             dataCourses?.map((item: any) => {
               return (
-                <div
-                  key={item?.id}
-                  onMouseEnter={() => handleMouseEnter(item?.id)}
-                  onMouseLeave={handleMouseLeave}
-                  className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
-                >
-                  <Image
-                    alt=""
-                    src={'/img-course.png'}
-                    width={200}
-                    height={202}
-                    className="w-[200px] h-full mx-auto md:mx-0"
-                  />
-                  <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
-                    {idHovered === item?.id && (
-                      <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
-                        <div className="flex flex-row items-center gap-4 justify-center h-full">
-                          <div
-                            className="flex gap-2 justify-center items-center z-[1000]"
-                            onClick={() =>
-                              navigate(
-                                `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
-                              )
-                            }
-                          >
-                            <IconEdit />
-                            <Text className="text-[20px] font-bold text-white">
-                              {t('Edit Course')}
-                            </Text>
-                          </div>
-                          <div
-                            className="flex gap-2 justify-center items-center z-[1000]"
-                            onClick={() => deleteCourse(item.id)}
-                          >
-                            <IconDelete />
-                            <Text className="text-[20px] font-bold text-white">
-                              {t('Delete Course')}
-                            </Text>
+                <div key={item?.id} className="flex flex-col gap-4">
+                  <div
+                    onMouseEnter={() => handleMouseEnter(item?.id)}
+                    onMouseLeave={handleMouseLeave}
+                    className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
+                  >
+                    <Image
+                      alt=""
+                      src={'/img-course.png'}
+                      width={200}
+                      height={202}
+                      className="w-[200px] h-full mx-auto md:mx-0"
+                    />
+                    <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
+                      {idHovered === item?.id && (
+                        <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
+                          <div className="flex flex-row items-center gap-4 justify-center h-full">
+                            <div
+                              className="flex gap-2 justify-center items-center z-[1000]"
+                              onClick={() =>
+                                navigate(
+                                  `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
+                                )
+                              }
+                            >
+                              <IconEdit />
+                              <Text className="text-[20px] font-bold text-white">
+                                {t('Edit Course')}
+                              </Text>
+                            </div>
+                            <div
+                              className="flex gap-2 justify-center items-center z-[1000]"
+                              onClick={() => deleteCourse(item.id)}
+                            >
+                              <IconDelete />
+                              <Text className="text-[20px] font-bold text-white">
+                                {t('Delete Course')}
+                              </Text>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    <Text className="text-[16px] md:text-[20px] font-bold">
-                      {item?.title}
-                    </Text>
-                    <div className="flex md:justify-end md:items-end">
-                      <div className="flex items-center w-full md:w-8/12 gap-4">
-                        <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
-                          {t('Finish your courses')}
-                        </Text>
-                        <Progress
-                          maxValue={6}
-                          classNames={{
-                            indicator: 'bg-main',
-                            track: 'max-h-[8px]',
-                          }}
-                          className="w-full"
-                          value={2}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-[30px]">
-                      <Text
-                        type={!item?.isPublish ? 'font-16-700' : 'font-16-400'}
-                        className="text-white"
-                      >
-                        {t('Draft')}
+                      )}
+                      <Text className="text-[16px] md:text-[20px] font-bold">
+                        {item?.title}
                       </Text>
+                      <div className="flex md:justify-end md:items-end">
+                        <div className="flex items-center w-full md:w-8/12 gap-4">
+                          <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
+                            {t('Finish your courses')}
+                          </Text>
+                          <Progress
+                            maxValue={6}
+                            classNames={{
+                              indicator: 'bg-main',
+                              track: 'max-h-[8px]',
+                            }}
+                            className="w-full"
+                            value={2}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-[30px]">
+                          <Text
+                            type={
+                              !item?.isPublish ? 'font-16-700' : 'font-16-400'
+                            }
+                            className="text-white"
+                          >
+                            {t('Draft')}
+                          </Text>
 
-                      <Text
-                        type={item?.isPublish ? 'font-16-700' : 'font-16-400'}
-                        className="text-white"
-                      >
-                        {t('Public')}
-                      </Text>
+                          <Text
+                            type={
+                              item?.isPublish ? 'font-16-700' : 'font-16-400'
+                            }
+                            className="text-white"
+                          >
+                            {t('Public')}
+                          </Text>
+                        </div>
+                        {isMobile && (
+                          <div className="flex items-center justify-end gap-3">
+                            <Button
+                              isIconOnly
+                              size="lg"
+                              onPress={() =>
+                                navigate(
+                                  `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
+                                )
+                              }
+                              className="bg-black-9 rounded-full"
+                            >
+                              <IconEdit />
+                            </Button>
+                            <Button
+                              isIconOnly
+                              size="lg"
+                              onPress={() => deleteCourse(item.id)}
+                              className="bg-black-9 rounded-full"
+                            >
+                              <IconDelete />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

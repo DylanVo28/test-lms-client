@@ -132,9 +132,12 @@ const VideoSection = ({
         const duration = playerRef.current.duration();
         const progress = (currentTime / duration) * 100;
 
-        if (progress >= 80) {
+        if (progress >= 90) {
           // setProgressVideo(progress);
           playerRef.current.off('timeupdate', handleTimeUpdate);
+          if (isMobile) {
+            setEndVideo(true);
+          }
         }
       };
 
