@@ -125,7 +125,7 @@ const PromotionalVideo = ({
               </div>
             )}
             <Button
-              onClick={handleClickUploadFile}
+              onPress={handleClickUploadFile}
               className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
             >
               <Text type="font-16-700" className="text-main">

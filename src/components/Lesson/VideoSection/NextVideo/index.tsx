@@ -74,7 +74,7 @@ const NextVideo = ({
           />
         </div>
         <Button
-          onClick={() => handleCancelNextChilSection()}
+          onPress={() => handleCancelNextChilSection()}
           className="min-w-[80px] mx-auto"
           variant="light"
         >

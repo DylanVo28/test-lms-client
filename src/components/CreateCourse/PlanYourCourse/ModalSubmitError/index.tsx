@@ -129,7 +129,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               )}
             </div>
             <Button
-              onClick={onVisible}
+              onPress={onVisible}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-white" type="font-16-600">

@@ -62,7 +62,7 @@ const CardCourse = ({
         <div className="absolute right-2 top-2">
           <Button
             isIconOnly
-            onClick={() => {
+            onPress={() => {
               if (item?.liked) {
                 handleUnLike && handleUnLike(item?.id);
               } else {
@@ -167,7 +167,7 @@ const CardCourse = ({
               </Text>
             )}
           </div>
-          <Button variant="light" radius="full" onClick={handleClickCardCourse}>
+          <Button variant="light" radius="full" onPress={handleClickCardCourse}>
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-white">
                 {t('Enroll Course')}

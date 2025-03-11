@@ -185,7 +185,7 @@ const ListCourse = () => {
                     radius="full"
                     className="w-max hover:bg-main-20"
                     variant="light"
-                    onClick={clearFilter}
+                    onPress={clearFilter}
                   >
                     <div className="flex items-center gap-2">
                       <IconDeleteMain />
@@ -243,7 +243,7 @@ const ListCourse = () => {
                 variant="light"
                 radius="full"
                 className="hover:bg-main-20 w-max mx-auto"
-                onClick={loadMore}
+                onPress={loadMore}
               >
                 <div className="flex items-center gap-[2px]">
                   <Text type="font-14-500" className="text-main">

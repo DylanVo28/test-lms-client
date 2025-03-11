@@ -65,7 +65,7 @@ const ModalConfirmDeleteQuestion = (
             </div>
             <div className="flex items-end gap-3 justify-end mt-4">
               <Button
-                onClick={() => {
+                onPress={() => {
                   onVisible();
                   handleSubmitDelete(dataDelete);
                 }}
@@ -77,7 +77,7 @@ const ModalConfirmDeleteQuestion = (
                 </Text>
               </Button>
               <Button
-                onClick={() => setVisible(false)}
+                onPress={() => setVisible(false)}
                 className="bg-[#383d41] w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">

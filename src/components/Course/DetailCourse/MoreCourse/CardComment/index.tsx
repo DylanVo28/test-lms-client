@@ -87,7 +87,7 @@ const CardComment = ({
         <Button
           radius="full"
           isLoading={loadingComment}
-          onClick={handleReview}
+          onPress={handleReview}
           className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
         >
           <Text type="font-16-500" className="text-white">

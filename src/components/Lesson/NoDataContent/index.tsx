@@ -28,7 +28,7 @@ const NoDataContent = ({
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
-          onClick={() => {
+          onPress={() => {
             handlePrevChildSection(
               dataItemPrev?.type,
               dataItemPrev?.id,
@@ -47,7 +47,7 @@ const NoDataContent = ({
         className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
         isIconOnly
         size="sm"
-        onClick={() => {
+        onPress={() => {
           if (lastIndex === allItems?.length - 1) {
             handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
           } else {

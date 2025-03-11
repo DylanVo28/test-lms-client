@@ -40,7 +40,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
               You have received a certificate for this course.
             </Text>
             <Button
-              onClick={onVisible}
+              onPress={onVisible}
               isIconOnly
               variant="light"
               radius="full"

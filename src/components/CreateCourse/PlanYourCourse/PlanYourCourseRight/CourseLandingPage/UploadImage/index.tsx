@@ -202,7 +202,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             {imageSrc ? (
               <Button
                 isLoading={loading}
-                onClick={getCropData}
+                onPress={getCropData}
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
@@ -211,7 +211,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
               </Button>
             ) : (
               <Button
-                onClick={handleClickUploadFile}
+                onPress={handleClickUploadFile}
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">

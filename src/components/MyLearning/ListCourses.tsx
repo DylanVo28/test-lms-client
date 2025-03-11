@@ -148,7 +148,7 @@ export default function ListCourses() {
           variant="light"
           radius="full"
           className="hover:!bg-main-20 w-max mx-auto"
-          onClick={loadMore}
+          onPress={loadMore}
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">

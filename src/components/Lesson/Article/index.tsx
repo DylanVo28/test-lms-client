@@ -72,7 +72,7 @@ const Article = ({
                 transform: 'translateY(-50%)',
               }}
               isIconOnly
-              onClick={() => {
+              onPress={() => {
                 handlePrevChildSection(
                   dataItemPrev?.type,
                   dataItemPrev?.id,
@@ -97,7 +97,7 @@ const Article = ({
             }}
             isIconOnly
             size="sm"
-            onClick={() => {
+            onPress={() => {
               if (lastIndex === allItems?.length - 1) {
                 handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
               } else {

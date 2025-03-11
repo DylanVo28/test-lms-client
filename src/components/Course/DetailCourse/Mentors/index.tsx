@@ -220,7 +220,7 @@ const Mentors = ({ mentor }: any) => {
             <Button
               isLoading={requestFollowMentor?.loading}
               className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
-              onClick={followMentor}
+              onPress={followMentor}
             >
               {!mentorProfile?.isFollowing ? t('Follow') : t('Unfollow')}
             </Button>

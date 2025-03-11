@@ -143,7 +143,7 @@ const FormQuizz = ({
           className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
           size="sm"
-          onClick={() => {
+          onPress={() => {
             if (lastIndex === allItems?.length - 1) {
               handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
             } else {

@@ -68,7 +68,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
               )}
             </div>
             <Button
-              onClick={submitDeleteCourse}
+              onPress={submitDeleteCourse}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-white" type="font-16-600">
@@ -76,7 +76,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
               </Text>
             </Button>
             <Button
-              onClick={() => setVisible(false)}
+              onPress={() => setVisible(false)}
               className="bg-[#383d41] w-full min-h-[40px] rounded"
             >
               <Text className="text-white" type="font-16-600">

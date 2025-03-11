@@ -27,7 +27,7 @@ const BreadCrumbs = () => {
       <IconArrowRight />
       <Text
         type="font-14-500"
-        onClick={() => navigate(ROUTE_PATH.COURSE)}
+        onPress={() => navigate(ROUTE_PATH.COURSE)}
         className="text-white hover:opacity-80 cursor-pointer"
       >
         {t(`Course`)}

@@ -88,7 +88,7 @@ const Comment = ({
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <Button
-            onClick={() => {
+            onPress={() => {
               if (
                 meLiked &&
                 (meReaction?.name === TypeReactions?.LIKE ||
@@ -123,7 +123,7 @@ const Comment = ({
         </div>
         <div className="flex items-center gap-1">
           <Button
-            onClick={() => {
+            onPress={() => {
               if (meLiked && meReaction?.name === TypeReactions?.DISLIKE) {
                 handleUnDisLikeReview(idLikedMe);
               } else {

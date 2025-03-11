@@ -117,7 +117,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
 
       <Button
         isDisabled={!valueFile}
-        onClick={onSave}
+        onPress={onSave}
         isLoading={loading}
         type="button"
         className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"

@@ -52,7 +52,7 @@ const ModalShare = (props: IModalShare, ref?: any) => {
               Share this course
             </Text>
             <Button
-              onClick={onVisible}
+              onPress={onVisible}
               isIconOnly
               variant="light"
               radius="full"
@@ -69,7 +69,7 @@ const ModalShare = (props: IModalShare, ref?: any) => {
                 inputShare
               />
               <Button
-                onClick={onCopy}
+                onPress={onCopy}
                 className="bg-main w-full min-h-[44px] rounded"
               >
                 <Text className="text-white" type="font-16-600">

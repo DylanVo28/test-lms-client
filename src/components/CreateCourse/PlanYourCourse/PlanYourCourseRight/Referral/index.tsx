@@ -53,7 +53,7 @@ const Referral = ({ control }: { control: Control }) => {
         })}
 
         <Button
-          onClick={() => append({ type: 'OKX' })}
+          onPress={() => append({ type: 'OKX' })}
           size="sm"
           variant="light"
           className="w-max"
@@ -93,7 +93,7 @@ const Referral = ({ control }: { control: Control }) => {
         })}
 
         <Button
-          onClick={() => append1({ type: 'Minimum trade volume' })}
+          onPress={() => append1({ type: 'Minimum trade volume' })}
           size="sm"
           variant="light"
           className="w-max"

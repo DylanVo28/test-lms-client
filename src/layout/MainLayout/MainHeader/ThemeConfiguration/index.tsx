@@ -194,7 +194,7 @@ const ThemeConfiguration = ({
                     placeholder={t('slug')}
                   />
                   <Button
-                    onClick={onCopy}
+                    onPress={onCopy}
                     className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
                   >
                     {t('Copy Address')}
