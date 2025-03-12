@@ -51,7 +51,7 @@ const CardCourse = ({
   return (
     <div
       onClick={handleClickCardCourse}
-      className="flex flex-col rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80"
+      className="flex flex-col rounded transition-all min-w-[280px] md:min-w-full relative cursor-pointer duration-300 hover:opacity-80 h-full"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">

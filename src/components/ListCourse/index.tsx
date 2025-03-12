@@ -137,13 +137,16 @@ const ListCourse = () => {
                     onMouseLeave={handleMouseLeave}
                     className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
                   >
-                    <Image
-                      alt=""
-                      src={'/img-course.png'}
-                      width={200}
-                      height={202}
-                      className="w-[200px] h-full mx-auto md:mx-0"
-                    />
+                    <div className="h-full bg-white">
+                      <Image
+                        alt=""
+                        src={item.image || '/img-course.png'}
+                        width={200}
+                        height={202}
+                        className="w-[200px] h-[202px] mx-auto md:mx-0 object-contain"
+                      />
+                    </div>
+
                     <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
                       {idHovered === item?.id && (
                         <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
@@ -194,23 +197,17 @@ const ListCourse = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-[30px]">
-                          <Text
-                            type={
-                              !item?.isPublish ? 'font-16-700' : 'font-16-400'
-                            }
-                            className="text-white"
-                          >
-                            {t('Draft')}
-                          </Text>
+                          {!item?.isPublish && (
+                            <Text type={'font-16-700'} className="text-white">
+                              {t('Draft')}
+                            </Text>
+                          )}
 
-                          <Text
-                            type={
-                              item?.isPublish ? 'font-16-700' : 'font-16-400'
-                            }
-                            className="text-white"
-                          >
-                            {t('Public')}
-                          </Text>
+                          {item?.isPublish && (
+                            <Text type={'font-16-700'} className="text-white">
+                              {t('Public')}
+                            </Text>
+                          )}
                         </div>
                         {isMobile && (
                           <div className="flex items-center justify-end gap-3">
