@@ -21,7 +21,7 @@ import Rater from 'react-rater';
 import { useFollowMentor, useUnFollowMentor } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { getAccessToken } from '@/store/auth';
-import { formatWalletAddress } from '@/utils/common';
+import { formatWalletAddress, isValidURL } from '@/utils/common';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
@@ -101,6 +101,17 @@ const Mentors = ({ mentor }: any) => {
     }
   };
 
+  const openSocial = (url: string) => {
+    if (isValidURL(url)) {
+      window.open(url, '_blank');
+    } else {
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.write(url);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
       <Text className="text-white" type="font-20-600">
@@ -174,7 +185,7 @@ const Mentors = ({ mentor }: any) => {
                 {mentor?.facebook && (
                   <div
                     className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                    onClick={() => window.open(mentor?.facebook, '_blank')}
+                    onClick={() => openSocial(mentor?.facebook)}
                   >
                     <IconFb />
                   </div>
@@ -182,7 +193,7 @@ const Mentors = ({ mentor }: any) => {
                 {mentor?.youtube && (
                   <div
                     className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                    onClick={() => window.open(mentor?.youtube, '_blank')}
+                    onClick={() => openSocial(mentor?.youtube)}
                   >
                     <IconYoutube />
                   </div>
@@ -190,7 +201,7 @@ const Mentors = ({ mentor }: any) => {
                 {mentor?.linkedin && (
                   <div
                     className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                    onClick={() => window.open(mentor?.linkedin, '_blank')}
+                    onClick={() => openSocial(mentor?.linkedin)}
                   >
                     <IconLinkedIn />
                   </div>
@@ -198,7 +209,7 @@ const Mentors = ({ mentor }: any) => {
                 {mentor?.x && (
                   <div
                     className="w-10 h-10 py-2 px-[5px] cursor-pointer hover:opacity-90 bg-[#161b21] rounded-[8px] flex justify-center items-center"
-                    onClick={() => window.open(mentor?.x, '_blank')}
+                    onClick={() => openSocial(mentor?.x)}
                   >
                     <IconX />
                   </div>

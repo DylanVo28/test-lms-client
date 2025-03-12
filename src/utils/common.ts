@@ -78,3 +78,12 @@ export const formatWalletAddress = (
   if (!address || address.length < startLength + endLength) return address;
   return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
 };
+
+export const isValidURL = (url: string) => {
+  try {
+    new URL(url); // If the URL is valid, this will not throw an error
+    return true;
+  } catch (e) {
+    return false; // If invalid, it will throw an error
+  }
+};
