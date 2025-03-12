@@ -130,6 +130,64 @@ const ListCourse = () => {
         <>
           {dataCourses?.length > 0 &&
             dataCourses?.map((item: any) => {
+              console.log(item, 'item');
+
+              const isEnoughIntendedLearners =
+                item?.objectives?.length > 0 &&
+                item?.intenedLeaners?.length > 0 &&
+                item?.requirements?.length > 0
+                  ? 1
+                  : 0;
+
+              const isEnoughCourseLangdingePage =
+                item?.title && item?.categoryId && item?.level && item?.lang
+                  ? 1
+                  : 0;
+
+              const isEnoughSetPrice = item?.originPrice && item?.price ? 1 : 0;
+
+              const allLessonsHaveContent =
+                Array.isArray(item?.sections) &&
+                item?.sections?.length > 0 &&
+                item?.sections?.every((section: any) => {
+                  if (section?.lessons?.length === 0) {
+                    return section?.quizzes?.length > 0;
+                  }
+
+                  return section?.lessons?.every(
+                    (lesson: any) =>
+                      (lesson?.id &&
+                        (!!lesson?.content || !!lesson?.info?.thumbnailUrl)) ||
+                      !lesson?.id
+                  );
+                });
+
+              const allQuizzesHaveQuestions =
+                Array.isArray(item?.sections) &&
+                item?.sections?.length > 0 &&
+                item?.sections?.every((section: any) => {
+                  if (section?.quizzes?.length === 0) {
+                    return section?.lessons?.length > 0;
+                  }
+
+                  return section?.quizzes?.every(
+                    (quizz: any) =>
+                      (quizz?.id &&
+                        Array.isArray(quizz?.questions) &&
+                        quizz?.questions?.length > 0) ||
+                      !quizz.id
+                  );
+                });
+
+              const isEnoughCurruclum =
+                allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
+
+              const totalProgress =
+                isEnoughCurruclum +
+                isEnoughSetPrice +
+                isEnoughIntendedLearners +
+                isEnoughCourseLangdingePage;
+
               return (
                 <div key={item?.id} className="flex flex-col gap-4">
                   <div
@@ -182,13 +240,13 @@ const ListCourse = () => {
                             {t('Finish your courses')}
                           </Text>
                           <Progress
-                            maxValue={6}
+                            maxValue={4}
                             classNames={{
                               indicator: 'bg-main',
                               track: 'max-h-[8px]',
                             }}
                             className="w-full"
-                            value={2}
+                            value={totalProgress}
                           />
                         </div>
                       </div>

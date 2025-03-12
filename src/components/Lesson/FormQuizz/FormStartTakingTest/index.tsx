@@ -26,6 +26,7 @@ const FormStartTakingTest = ({
   const [loading, setLoading] = useState(false);
 
   const [stepAnswerQuestion, setStepAnswerQuestion] = useState<string>('');
+  const [valueExplain, setValueExplain] = useState<string>('');
 
   useEffect(() => {
     if (dataQuizz?.progress?.status === UserCourseProgressStatus.COMPLETED) {
@@ -47,7 +48,12 @@ const FormStartTakingTest = ({
 
   const handleCheckAnswer = () => {
     const isAnswers = checkIsCorrectById(valueQuestion);
+    const valueExplain = dataQuizz?.questions?.[
+      currentQuestion - 1
+    ]?.answers?.find((item: any) => item.id === valueQuestion);
+    console.log(valueExplain, 'valueExplain');
 
+    setValueExplain(valueExplain?.explain);
     setLoading(true);
 
     setTimeout(() => {
@@ -79,6 +85,8 @@ const FormStartTakingTest = ({
     }, 500);
   };
 
+  console.log(dataQuizz?.questions?.[currentQuestion - 1], 'currentQuestion');
+
   return (
     <div className="w-full flex flex-col min-h-[400px] md:min-h-[566px] relative">
       <LoadingContainer loading={loading} />
@@ -92,18 +100,32 @@ const FormStartTakingTest = ({
         <div className="md:w-6/12 pt-10 py-10 flex-1 mx-auto flex items-start text-start flex-col gap-4">
           {answerCorrectly === true && (
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
-              <CheckCircle className="fill-green" size={30} weight="fill" />
-              <Text className="text-green" type="font-16-400">
-                {t('You did great')}
-              </Text>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="fill-green" size={30} weight="fill" />
+                  <Text className="text-green" type="font-16-400">
+                    {t('You did great')}
+                  </Text>
+                </div>
+                <Text className="text-white" type="font-14-400">
+                  {valueExplain}
+                </Text>
+              </div>
             </div>
           )}
           {answerCorrectly === false && (
             <div className="p-4 w-full bg-transparent flex items-center gap-3   rounded-2xl border-1 border-red-500">
-              <XCircle size={30} weight="fill" className="fill-red-500" />
-              <Text className="text-red-500" type="font-16-400">
-                {t('The answer is not correct. Please try again.')}
-              </Text>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <XCircle size={30} weight="fill" className="fill-red-500" />
+                  <Text className="text-red-500" type="font-16-400">
+                    {t('The answer is not correct. Please try again.')}
+                  </Text>
+                </div>
+                <Text className="text-black-7" type="font-14-400">
+                  {valueExplain}
+                </Text>
+              </div>
             </div>
           )}
 

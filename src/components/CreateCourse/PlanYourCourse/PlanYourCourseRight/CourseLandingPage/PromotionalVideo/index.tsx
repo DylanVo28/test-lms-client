@@ -45,10 +45,14 @@ const PromotionalVideo = ({
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
-    const allowedTypes = ['mp4', 'mov', 'avi'];
+    const allowedMimeTypes = [
+      'video/mp4',
+      'video/quicktime',
+      'video/x-msvideo',
+    ];
     const file = files[0];
 
-    if (!allowedTypes.includes(file.type)) {
+    if (!allowedMimeTypes.includes(file.type)) {
       toast.error(t('Can only upload video in .mp4, .mov, .avi'));
 
       return;

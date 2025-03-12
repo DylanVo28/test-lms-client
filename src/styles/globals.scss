@@ -1285,3 +1285,23 @@ input[type='number'] {
     color: #06c !important;
   }
 }
+
+.customContentEditor {
+  h1,
+  h2,
+  h3,
+  h4 {
+    background: transparent !important;
+  }
+  strong {
+    background: transparent !important;
+  }
+
+  span {
+    background: transparent !important;
+  }
+
+  p {
+    background: transparent !important;
+  }
+}
