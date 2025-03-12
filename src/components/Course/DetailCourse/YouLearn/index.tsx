@@ -48,23 +48,67 @@ const YouLearn = ({ data }: { data: any }) => {
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
-      <Text className="text-white" type="font-20-600">
-        {t("What you'll learn")}
-      </Text>
-      <div className="grid grid-cols-2 gap-4">
-        {data?.intenedLeaners?.map((item: any) => {
-          return (
-            <div key={item?.id} className="py-4 flex items-center gap-4">
-              <IconCheck />
-              <Text type="font-14-400" className="text-white">
-                {item}
-              </Text>
-            </div>
-          );
-        })}
+    <>
+      <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
+        <Text className="text-white" type="font-20-600">
+          {t("What you'll learn")}
+        </Text>
+        <div className="grid grid-cols-2 gap-4">
+          {data?.objectives?.map((item: any) => {
+            return (
+              <div key={item?.id} className="py-4 flex items-center gap-4">
+                <div className="w-6 h-6">
+                  <IconCheck />
+                </div>
+                <Text type="font-14-400" className="text-white">
+                  {item}
+                </Text>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+      <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
+        <Text className="text-white" type="font-20-600">
+          {t(
+            'What are the requirements or prerequisites for taking your course?'
+          )}
+        </Text>
+        <div className="grid grid-cols-2 gap-4">
+          {data?.requirements?.map((item: any) => {
+            return (
+              <div key={item?.id} className="py-4 flex items-center gap-4">
+                <div className="w-6 h-6">
+                  <IconCheck />
+                </div>
+                <Text type="font-14-400" className="text-white">
+                  {item}
+                </Text>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
+        <Text className="text-white" type="font-20-600">
+          {t('Who is this course for?')}
+        </Text>
+        <div className="grid grid-cols-2 gap-4">
+          {data?.intenedLeaners?.map((item: any) => {
+            return (
+              <div key={item?.id} className="py-4 flex items-center gap-4">
+                <div className="w-6 h-6">
+                  <IconCheck />
+                </div>
+                <Text type="font-14-400" className="text-white">
+                  {item}
+                </Text>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 };
 export default YouLearn;
