@@ -14,10 +14,12 @@ import { getAccessToken } from '@/store/auth';
 import IconUser from '../Icons/IconUser';
 import { UserRejectedRequestError } from 'viem';
 import { toast } from '../Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
   const accessToken = getAccessToken();
+  const { t } = useTranslation('common');
 
   const [isOpen, setOpen] = useState(false);
   const onClose = () => {
@@ -45,7 +47,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  Connect Wallet
+                  {t('Connect Wallet')}
                 </Text>
               </Button>
             ) : (
