@@ -21,6 +21,10 @@ import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
 import { User } from '@phosphor-icons/react';
+import {
+  useLikeCourse,
+  useUnLikeCourse,
+} from '@/components/CourseSearch/service';
 
 const DetailCourse = () => {
   const router = useRouter();
@@ -31,6 +35,7 @@ const DetailCourse = () => {
     run: getDetailCourse,
     data: dataDetail,
     loading,
+    mutate,
   } = useGetDetailCourse({
     onSuccess: () => {
       handleScrollTop();
@@ -64,6 +69,32 @@ const DetailCourse = () => {
     }
   };
 
+  console.log(dataDetail, 'dataDetail');
+
+  const { run: runLikeCourse } = useLikeCourse({
+    onSuccess(res) {
+      mutate({
+        ...dataDetail,
+        data: {
+          ...dataDetail?.data,
+          liked: true,
+        },
+      });
+    },
+  });
+
+  const { run: runUnLikeCourse } = useUnLikeCourse({
+    onSuccess(res) {
+      mutate({
+        ...dataDetail,
+        data: {
+          ...dataDetail?.data,
+          liked: false,
+        },
+      });
+    },
+  });
+
   const mapCategoryCourse = () => {
     if (!dataDetail?.data) return '';
     const catRelated = [
@@ -80,6 +111,13 @@ const DetailCourse = () => {
       return dataDetail?.data?.author?.fullName;
     }
     return formatWalletAddress(dataDetail?.data?.author?.walletAddress);
+  };
+
+  const handleLike = (id: string) => {
+    runLikeCourse(id);
+  };
+  const handleUnLike = (id: string) => {
+    runUnLikeCourse(id);
   };
 
   return (
@@ -183,7 +221,11 @@ const DetailCourse = () => {
           </div>
           <div className="col-span-3 hidden md:block">
             <div className="sticky top-28 z-50">
-              <CardEnrollNow course={dataDetail?.data} />
+              <CardEnrollNow
+                handleUnLike={handleUnLike}
+                handleLike={handleLike}
+                course={dataDetail?.data}
+              />
             </div>
           </div>
         </div>

@@ -3,9 +3,11 @@ import IconTime from '@/components/UI/Icons/IconTime';
 import RateStar from '@/components/UI/RateStar';
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
-import { Button } from '@nextui-org/react';
+import { Button, Modal, ModalContent, ModalBody } from '@nextui-org/react';
 import Image from 'next/image';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import ReactPlayer from 'react-player/lazy';
 import { useEnrollCourse } from './service';
 import { getAccessToken } from '@/store/auth';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';
@@ -15,6 +17,9 @@ import useNavigate from '@/hooks/useNavigate';
 import { toast } from '@/components/UI/Toast/toast';
 import { error } from 'console';
 import { formatNumber, formatPrice } from '@/utils/common';
+import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
+import IconLikeCourse from '@/components/UI/IconLikeCourse';
+import ModalViewVideo from './ModalViewVideo';
 
 const DATA_NOTE = [
   '12 hours of on-demand video',
@@ -25,13 +30,24 @@ const DATA_NOTE = [
   'Certificate of completion',
 ];
 
-const CardEnrollNow = ({ course }: { course: any }) => {
+const CardEnrollNow = ({
+  course,
+  handleLike,
+  handleUnLike,
+}: {
+  course: any;
+  handleLike?: (id: string) => void;
+  handleUnLike?: (id: string) => void;
+}) => {
   console.log(course, 'course');
   const { t } = useTranslation('common');
   const router = useRouter();
   const token = getAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+
+  const refModalViewVideo: any = useRef(null);
 
   const { run, loading } = useEnrollCourse({
     onSuccess: (res) => {
@@ -51,9 +67,25 @@ const CardEnrollNow = ({ course }: { course: any }) => {
     return `${discountPercentage.toFixed(0)}%`;
   };
 
+  console.log(course?.video, 'course.video');
+
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
+        <Button
+          isIconOnly
+          onPress={() => {
+            if (course?.liked) {
+              handleUnLike && handleUnLike(course?.id);
+            } else {
+              handleLike && handleLike(course?.id);
+            }
+          }}
+          variant="light"
+          className="hover:!bg-white-25 rounded-full absolute top-2 right-4 z-[100]"
+        >
+          {course?.liked ? <IconLikedCourse /> : <IconLikeCourse />}
+        </Button>
         <Image
           src={course?.image || '/images/img-default.png'}
           width={302}
@@ -64,13 +96,46 @@ const CardEnrollNow = ({ course }: { course: any }) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
-        <Image
-          src={'/images/img-youtube.png'}
-          width={64}
-          height={64}
-          alt=""
-          className="absolute"
-        />
+        {course?.video && (
+          <>
+            <Image
+              src={'/images/img-youtube.png'}
+              width={64}
+              height={64}
+              alt=""
+              className="absolute cursor-pointer"
+              onClick={() => refModalViewVideo.current.onOpen(course)}
+            />
+            {/* <Modal
+              isOpen={isVideoModalOpen}
+              onOpenChange={setIsVideoModalOpen}
+              size="4xl"
+              hideCloseButton
+              backdrop="blur"
+            >
+              <ModalContent>
+                <ModalBody className="p-0">
+                  <ReactPlayer
+                    url={course.video}
+                    width="100%"
+                    height="500px"
+                    controls
+                    playing={isVideoModalOpen}
+                    pip
+                    config={{
+                      file: {
+                        attributes: {
+                          crossOrigin: 'anonymous',
+                          controlsList: 'nodownload',
+                        },
+                      },
+                    }}
+                  />
+                </ModalBody>
+              </ModalContent>
+            </Modal> */}
+          </>
+        )}
       </div>
 
       <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
@@ -167,6 +232,8 @@ const CardEnrollNow = ({ course }: { course: any }) => {
           </div>
         </div>
       </div>
+
+      <ModalViewVideo ref={refModalViewVideo} />
     </div>
   );
 };
