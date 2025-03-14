@@ -20,12 +20,6 @@ import useNavigate from '@/hooks/useNavigate';
 const ListCourse = () => {
   const { t } = useTranslation('common');
 
-  const CATEGORIES = [
-    { key: 'business', label: t('Business') },
-    { key: 'finance', label: t('Finance') },
-    { key: 'it', label: t('IT & Software') },
-    { key: 'personal', label: t('Personal Development') },
-  ];
   const SORT_BY = [
     { key: 'createdAt desc', label: t('Newest') },
     { key: 'createdAt asc', label: t('Oldest') },

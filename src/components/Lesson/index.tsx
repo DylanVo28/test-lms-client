@@ -367,8 +367,6 @@ const Lesson = () => {
     }, []);
     const currentIndex = allItems?.findIndex((item: any) => item?.id === id);
 
-    console.log(currentIndex, 'currentIndex');
-
     if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
       const nextItem = allItems?.[currentIndex + 1];
       console.log(nextItem, 'nextItem');
@@ -423,6 +421,12 @@ const Lesson = () => {
     }
   };
   const handleClickContinueQuizz = (id: string) => {
+    const body = {
+      status: UserCourseProgressStatus.COMPLETED,
+    };
+    requestProgressStatusQuizz.run(body, id);
+  };
+  const handleProgressStatusQuizz = (id: string) => {
     const body = {
       status: UserCourseProgressStatus.COMPLETED,
     };
@@ -526,6 +530,7 @@ const Lesson = () => {
           <FormQuizz
             handleStartTakingTheTest={() => setStartTakingTest(true)}
             startTakingTest={startTakingTest}
+            handleProgressStatusQuizz={handleProgressStatusQuizz}
             handleClickContinueQuizz={handleClickContinueQuizz}
             loading={loadingQuizz || requestProgressStatusQuizz?.loading}
             handleSkipQuizz={handleSkipQuizz}

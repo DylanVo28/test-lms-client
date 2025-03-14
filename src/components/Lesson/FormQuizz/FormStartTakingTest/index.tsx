@@ -16,17 +16,29 @@ const enum STEP_ANSWER_QUESTION {
 const FormStartTakingTest = ({
   dataQuizz,
   handleClickContinueQuizz,
+  handleProgressStatusQuizz,
+  isLast,
 }: {
   handleClickContinueQuizz: (id: string) => void;
+  handleProgressStatusQuizz: (id: string) => void;
   dataQuizz: any;
+  isLast: boolean;
 }) => {
   const { t } = useTranslation('common');
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerCorrectly, setAnswerCorrectly] = useState<any>('');
   const [loading, setLoading] = useState(false);
 
+  console.log(isLast, 'isLast');
+
   const [stepAnswerQuestion, setStepAnswerQuestion] = useState<string>('');
   const [valueExplain, setValueExplain] = useState<string>('');
+
+  useEffect(() => {
+    if (stepAnswerQuestion === STEP_ANSWER_QUESTION.SEE_RESULTS) {
+      handleProgressStatusQuizz(dataQuizz?.id);
+    }
+  }, [stepAnswerQuestion]);
 
   useEffect(() => {
     if (dataQuizz?.progress?.status === UserCourseProgressStatus.COMPLETED) {
@@ -51,7 +63,6 @@ const FormStartTakingTest = ({
     const valueExplain = dataQuizz?.questions?.[
       currentQuestion - 1
     ]?.answers?.find((item: any) => item.id === valueQuestion);
-    console.log(valueExplain, 'valueExplain');
 
     setValueExplain(valueExplain?.explain);
     setLoading(true);
@@ -77,6 +88,10 @@ const FormStartTakingTest = ({
   };
 
   const handleSeeResult = () => {
+    if (isLast) {
+      handleClickContinueQuizz(dataQuizz?.id);
+      return;
+    }
     setLoading(true);
     setTimeout(() => {
       setStepAnswerQuestion(STEP_ANSWER_QUESTION.CONTINUE);
@@ -84,8 +99,6 @@ const FormStartTakingTest = ({
       setLoading(false);
     }, 500);
   };
-
-  console.log(dataQuizz?.questions?.[currentQuestion - 1], 'currentQuestion');
 
   return (
     <div className="w-full flex flex-col min-h-[400px] md:min-h-[566px] relative">

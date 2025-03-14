@@ -134,6 +134,10 @@ const VideoSection = ({
 
         if (progress >= 90) {
           // setProgressVideo(progress);
+          if (lastIndex === allItems?.length - 1) {
+            handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
+            return;
+          }
           playerRef.current.off('timeupdate', handleTimeUpdate);
           if (isMobile) {
             setEndVideo(true);

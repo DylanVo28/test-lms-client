@@ -1,4 +1,3 @@
-import { CATEGORIES } from '@/components/Course/ListCourse';
 import InputText from '@/components/UI/InputText';
 import QuillEditor from '@/components/UI/QuillEditor';
 import SelectCustom from '@/components/UI/SelectCustom';

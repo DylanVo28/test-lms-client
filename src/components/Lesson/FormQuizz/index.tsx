@@ -13,6 +13,7 @@ const FormQuizz = ({
   handleStartTakingTheTest,
   dataQuizz,
   handleClickContinueQuizz,
+  handleProgressStatusQuizz,
   handleSkipQuizz,
   loading,
   handleFindIdNextChildSection,
@@ -26,6 +27,7 @@ const FormQuizz = ({
   handleNextLastSection: (id: string, type: string) => void;
   handleStartTakingTheTest: VoidFunction;
   handleClickContinueQuizz: (id: string) => void;
+  handleProgressStatusQuizz: (id: string) => void;
   loading: boolean;
   dataQuizz: any;
   handleSkipQuizz: any;
@@ -55,6 +57,8 @@ const FormQuizz = ({
     (item: any) => item?.id === dataQuizz?.id
   );
 
+  console.log(dataItemNext, 'dataItemNext');
+
   return (
     <div className="relative group">
       {dataItemPrev?.id && !isMobile && (
@@ -80,6 +84,8 @@ const FormQuizz = ({
 
       {startTakingTest ? (
         <FormStartTakingTest
+          isLast={!dataItemNext}
+          handleProgressStatusQuizz={handleProgressStatusQuizz}
           handleClickContinueQuizz={(id) => {
             if (lastIndex === allItems?.length - 1) {
               handleNextLastSection(dataQuizz?.id, TYPE_COURSE.QUIZ);
