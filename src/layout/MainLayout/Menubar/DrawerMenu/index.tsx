@@ -191,9 +191,7 @@ const DrawerMenu = (props: any, ref: any) => {
                     </PopoverContent>
                   </Popover>
                   <ButtonLoginWallet setVisible={setVisible} />
-                  {profile?.role === 'KOL' && (
-                    <ThemeConfiguration setUrlLogo={setUrlLogo} />
-                  )}
+                  {profile?.role === 'KOL' && <ThemeConfiguration />}
                 </div>
               </div>
             </div>
