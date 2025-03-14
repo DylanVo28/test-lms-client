@@ -269,6 +269,21 @@
   "Username": "اسم المستخدم",
   "URL": "الرابط",
   "Information": "معلومات",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "متابعة",
+  "Unfollow": "إلغاء المتابعة",
+  "Business": "الأعمال",
+  "Finance": "المالية",
+  "IT & Software": "تكنولوجيا المعلومات والبرمجيات",
+  "Personal Development": "التطوير الشخصي",
+  "Error handling message": "خطأ في معالجة الرسالة",
+  "Error initializing Firebase messaging": "خطأ في تهيئة رسائل Firebase",
+  "Player is ready": "المشغل جاهز",
+  "Video player error": "خطأ في مشغل الفيديو",
+  "Player initialization error": "خطأ في تهيئة المشغل",
+  "Error updating video source": "خطأ في تحديث مصدر الفيديو",
+  "Error disposing player": "خطأ في إغلاق المشغل",
+  "Expire Token": "انتهاء صلاحية الرمز",
+  "Logout API failed": "فشل في API تسجيل الخروج",
+  "Follow successfully": "تمت المتابعة بنجاح",
+  "Unfollow successfully": "تم إلغاء المتابعة بنجاح"
 }

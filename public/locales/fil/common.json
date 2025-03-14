@@ -268,6 +268,21 @@
   "Username": "Username",
   "URL": "URL",
   "Information": "Impormasyon",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Sundan",
+  "Unfollow": "Hindi na Sundan",
+  "Business": "Negosyo",
+  "Finance": "Pananalapi",
+  "IT & Software": "IT at Software",
+  "Personal Development": "Personal na Pag-unlad",
+  "Error handling message": "Error sa paghawak ng mensahe",
+  "Error initializing Firebase messaging": "Error sa pagsisimula ng Firebase messaging",
+  "Player is ready": "Handa na ang player",
+  "Video player error": "Error sa video player",
+  "Player initialization error": "Error sa pagsisimula ng player",
+  "Error updating video source": "Error sa pag-update ng video source",
+  "Error disposing player": "Error sa pagtatanggal ng player",
+  "Expire Token": "Nag-expire na Token",
+  "Logout API failed": "Nabigo ang Logout API",
+  "Follow successfully": "Matagumpay na pagsunod",
+  "Unfollow successfully": "Matagumpay na hindi na sinundan"
 }

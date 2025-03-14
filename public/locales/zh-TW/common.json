@@ -266,6 +266,21 @@
   "Username": "用戶名",
   "URL": "URL",
   "Information": "信息",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "關注",
+  "Unfollow": "取消關注",
+  "Business": "商業",
+  "Finance": "金融",
+  "IT & Software": "IT與軟體",
+  "Personal Development": "個人發展",
+  "Error handling message": "訊息處理錯誤",
+  "Error initializing Firebase messaging": "Firebase訊息初始化錯誤",
+  "Player is ready": "播放器已就緒",
+  "Video player error": "視頻播放器錯誤",
+  "Player initialization error": "播放器初始化錯誤",
+  "Error updating video source": "更新視頻源錯誤",
+  "Error disposing player": "播放器釋放錯誤",
+  "Expire Token": "權杖過期",
+  "Logout API failed": "登出API失敗",
+  "Follow successfully": "關注成功",
+  "Unfollow successfully": "取消關注成功"
 }

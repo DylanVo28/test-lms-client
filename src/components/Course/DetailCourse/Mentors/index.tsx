@@ -33,7 +33,7 @@ const Mentors = ({ mentor }: any) => {
 
   const requestFollowMentor = useFollowMentor({
     onSuccess: async (res: any) => {
-      toast.success('Follow successfully!');
+      toast.success(t('Follow successfully'));
       const newData = {
         ...mentorProfile,
         isFollowing: true,
@@ -45,7 +45,7 @@ const Mentors = ({ mentor }: any) => {
 
   const requestUnFollowMentor = useUnFollowMentor({
     onSuccess: async (res: any) => {
-      toast.success('Unfollow successfully!');
+      toast.success(t('Unfollow successfully'));
       const newData = {
         ...mentorProfile,
         isFollowing: false,

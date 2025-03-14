@@ -268,6 +268,21 @@
   "Username": "Kullanıcı adı",
   "URL": "URL",
   "Information": "Bilgi",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Takip Et",
+  "Unfollow": "Takibi Bırak",
+  "Business": "İşletme",
+  "Finance": "Finans",
+  "IT & Software": "BT ve Yazılım",
+  "Personal Development": "Kişisel Gelişim",
+  "Error handling message": "Hata işleme mesajı",
+  "Error initializing Firebase messaging": "Firebase mesajlaşma başlatılırken hata",
+  "Player is ready": "Oynatıcı hazır",
+  "Video player error": "Video oynatıcı hatası",
+  "Player initialization error": "Oynatıcı başlatma hatası",
+  "Error updating video source": "Video kaynağı güncellenirken hata",
+  "Error disposing player": "Oynatıcı kapatılırken hata",
+  "Expire Token": "Token Süresi Doldu",
+  "Logout API failed": "Çıkış API'si başarısız oldu",
+  "Follow successfully": "Başarıyla takip edildi",
+  "Unfollow successfully": "Başarıyla takipten çıkıldı"
 }

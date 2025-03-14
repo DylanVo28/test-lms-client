@@ -20,6 +20,7 @@ import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
+import { User } from '@phosphor-icons/react';
 
 const DetailCourse = () => {
   const router = useRouter();
@@ -141,18 +142,24 @@ const DetailCourse = () => {
               </div>
 
               <div className="flex items-center gap-[6px]">
-                <Image
-                  alt=""
-                  src={
-                    dataDetail?.data?.author?.avatar || '/images/user-line.png'
-                  }
-                  width={24}
-                  height={24}
-                  className="rounded-full w-6 h-6"
-                  onError={(e: any) => {
-                    e.target.srcset = '/images/user-line.png';
-                  }}
-                />
+                {dataDetail?.data?.author?.avatar ? (
+                  <Image
+                    alt=""
+                    src={
+                      dataDetail?.data?.author?.avatar ||
+                      '/images/user-line.png'
+                    }
+                    width={24}
+                    height={24}
+                    className="rounded-full w-6 h-6"
+                    onError={(e: any) => {
+                      e.target.srcset = '/images/user-line.png';
+                    }}
+                  />
+                ) : (
+                  <User size={22} />
+                )}
+
                 <Text type="font-16-500" className="text-main">
                   {t('By')}
                 </Text>

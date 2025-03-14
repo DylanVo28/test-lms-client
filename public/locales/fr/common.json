@@ -268,6 +268,21 @@
   "Username": "Nom d'utilisateur",
   "URL": "URL",
   "Information": "Information",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Suivre",
+  "Unfollow": "Ne plus suivre",
+  "Business": "Affaires",
+  "Finance": "Finance",
+  "IT & Software": "IT et Logiciels",
+  "Personal Development": "Développement Personnel",
+  "Error handling message": "Erreur lors du traitement du message",
+  "Error initializing Firebase messaging": "Erreur d'initialisation de la messagerie Firebase",
+  "Player is ready": "Lecteur prêt",
+  "Video player error": "Erreur du lecteur vidéo",
+  "Player initialization error": "Erreur d'initialisation du lecteur",
+  "Error updating video source": "Erreur de mise à jour de la source vidéo",
+  "Error disposing player": "Erreur lors de la libération du lecteur",
+  "Expire Token": "Jeton expiré",
+  "Logout API failed": "Échec de l'API de déconnexion",
+  "Follow successfully": "Suivi avec succès",
+  "Unfollow successfully": "Désabonnement réussi"
 }

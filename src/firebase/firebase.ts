@@ -1,5 +1,6 @@
 /* eslint-disable require-await */
 import { initializeApp, getApps, getApp } from 'firebase/app';
+import { translate } from '@/utils/i18n-utils';
 import {
   getToken,
   getMessaging,
@@ -40,7 +41,7 @@ const firebaseCloudMessaging = {
       console.log(messaging, 'messaging');
       onMessage(messaging, onCallback); // Set up onMessage handler
     } catch (error) {
-      console.error('Error handling message:', error);
+      console.error(translate('Error handling message') + ':', error);
     }
   },
   requestPermissions: async () => {
@@ -88,7 +89,10 @@ const firebaseCloudMessaging = {
         );
       }
     } catch (error) {
-      console.error('Error initializing Firebase messaging:', error);
+      console.error(
+        translate('Error initializing Firebase messaging') + ':',
+        error
+      );
     }
   },
 };

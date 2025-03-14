@@ -268,6 +268,21 @@
   "Username": "Nama pengguna",
   "URL": "URL",
   "Information": "Informasi",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Ikuti",
+  "Unfollow": "Berhenti Mengikuti",
+  "Business": "Bisnis",
+  "Finance": "Keuangan",
+  "IT & Software": "TI & Perangkat Lunak",
+  "Personal Development": "Pengembangan Diri",
+  "Error handling message": "Kesalahan menangani pesan",
+  "Error initializing Firebase messaging": "Kesalahan menginisialisasi pesan Firebase",
+  "Player is ready": "Pemutar siap",
+  "Video player error": "Kesalahan pemutar video",
+  "Player initialization error": "Kesalahan inisialisasi pemutar",
+  "Error updating video source": "Kesalahan memperbarui sumber video",
+  "Error disposing player": "Kesalahan membuang pemutar",
+  "Expire Token": "Token Kedaluwarsa",
+  "Logout API failed": "API Keluar gagal",
+  "Follow successfully": "Berhasil mengikuti",
+  "Unfollow successfully": "Berhasil berhenti mengikuti"
 }

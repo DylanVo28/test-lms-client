@@ -2,6 +2,7 @@ import Text from '@/components/UI/Text';
 import { formatTimeDuration } from '@/utils/common';
 import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
+import { isMobile } from 'react-device-detect';
 
 const ByTheNumbers = ({ course }: { course: any }) => {
   const { t } = useTranslation('common');
@@ -39,33 +40,63 @@ const ByTheNumbers = ({ course }: { course: any }) => {
     return formattedTime;
   }, [course?.sections]);
   return (
-    <div className="py-6 grid grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
+    <div className="py-6 grid grid-cols-1 gap-5 md:gap-0 md:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
       <Text type="font-18-600" className="text-white">
         {t('By the numbers')}
       </Text>
-      <div className="flex flex-col gap-1">
-        <Text type="font-14-400" className="text-white">
-          {t('Skill level')}: {course?.level}
-        </Text>
-        <Text type="font-14-400" className="text-white">
-          {t('Students')}:{' '}
-          {course?.userCourses?.length || course?.countStudents}
-        </Text>
-        <Text type="font-14-400" className="text-white">
-          {t('Languages')}: {course?.lang}
-        </Text>
-        <Text type="font-14-400" className="text-white">
-          {t('Captions')}: {t('Yes')}
-        </Text>
-      </div>
-      <div className="flex flex-col gap-1">
-        <Text type="font-14-400" className="text-white">
-          {t('Lectures')}: {lessonCount || 0}
-        </Text>
-        <Text type="font-14-400" className="text-white">
-          {`${t('Video')}: ${formatTimeDuration(formattedTime)}`}
-        </Text>
-      </div>
+      {isMobile ? (
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-1">
+            <Text type="font-14-400" className="text-white">
+              {t('Skill level')}: {course?.level}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Students')}:{' '}
+              {course?.userCourses?.length || course?.countStudents}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Languages')}: {course?.lang}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Captions')}: {t('Yes')}
+            </Text>
+          </div>
+          <div className="flex flex-col gap-1">
+            <Text type="font-14-400" className="text-white">
+              {t('Lectures')}: {lessonCount || 0}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {`${t('Video')}: ${formatTimeDuration(formattedTime)}`}
+            </Text>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col gap-1">
+            <Text type="font-14-400" className="text-white">
+              {t('Skill level')}: {course?.level}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Students')}:{' '}
+              {course?.userCourses?.length || course?.countStudents}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Languages')}: {course?.lang}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {t('Captions')}: {t('Yes')}
+            </Text>
+          </div>
+          <div className="flex flex-col gap-1">
+            <Text type="font-14-400" className="text-white">
+              {t('Lectures')}: {lessonCount || 0}
+            </Text>
+            <Text type="font-14-400" className="text-white">
+              {`${t('Video')}: ${formatTimeDuration(formattedTime)}`}
+            </Text>
+          </div>
+        </>
+      )}
     </div>
   );
 };

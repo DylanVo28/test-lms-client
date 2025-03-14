@@ -17,15 +17,15 @@ import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import useNavigate from '@/hooks/useNavigate';
 
-export const CATEGORIES = [
-  { key: 'business', label: 'Business' },
-  { key: 'finance', label: 'Finance' },
-  { key: 'it', label: 'IT & Software' },
-  { key: 'personal', label: 'Personal Development' },
-];
-
 const ListCourse = () => {
   const { t } = useTranslation('common');
+
+  const CATEGORIES = [
+    { key: 'business', label: t('Business') },
+    { key: 'finance', label: t('Finance') },
+    { key: 'it', label: t('IT & Software') },
+    { key: 'personal', label: t('Personal Development') },
+  ];
   const SORT_BY = [
     { key: 'createdAt desc', label: t('Newest') },
     { key: 'createdAt asc', label: t('Oldest') },
@@ -93,9 +93,11 @@ const ListCourse = () => {
     <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">
       <div className="flex justify-between flex-wrap gap-5 items-center">
         <div className="flex items-center gap-3">
-          <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
-            <IconFilter />
-            <Text className="text-main" type="font-14-500">
+          <div className="py-2 px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
+            <div>
+              <IconFilter />
+            </div>
+            <Text className="text-main w-max" type="font-14-500">
               {t('All Filter')}
             </Text>
           </div>
@@ -157,7 +159,7 @@ const ListCourse = () => {
             <>
               <div
                 className={clsx(
-                  'grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full',
+                  'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full',
                   {}
                 )}
               >

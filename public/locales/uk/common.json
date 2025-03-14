@@ -268,6 +268,21 @@
   "Username": "Ім'я користувача",
   "URL": "URL",
   "Information": "Інформація",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Стежити",
+  "Unfollow": "Відписатися",
+  "Business": "Бізнес",
+  "Finance": "Фінанси",
+  "IT & Software": "ІТ та програмне забезпечення",
+  "Personal Development": "Особистий розвиток",
+  "Error handling message": "Помилка обробки повідомлення",
+  "Error initializing Firebase messaging": "Помилка ініціалізації Firebase повідомлень",
+  "Player is ready": "Плеєр готовий",
+  "Video player error": "Помилка відеоплеєра",
+  "Player initialization error": "Помилка ініціалізації плеєра",
+  "Error updating video source": "Помилка оновлення джерела відео",
+  "Error disposing player": "Помилка закриття плеєра",
+  "Expire Token": "Термін дії токена закінчився",
+  "Logout API failed": "Помилка API виходу",
+  "Follow successfully": "Успішно підписано",
+  "Unfollow successfully": "Успішно відписано"
 }

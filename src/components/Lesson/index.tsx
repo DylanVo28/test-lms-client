@@ -171,11 +171,11 @@ const Lesson = () => {
   }, [router.query.id]);
 
   const itemsTab = [
-    {
-      key: '1',
-      icon: <IconSearch />,
-      children: <Search />,
-    },
+    // {
+    //   key: '1',
+    //   icon: <IconSearch />,
+    //   children: <Search />,
+    // },
     {
       key: '2',
       label: t('Overview'),
@@ -583,11 +583,7 @@ const Lesson = () => {
           >
             {itemsTab?.map((item) => {
               return (
-                <Tab
-                  key={item?.key}
-                  className="py-6"
-                  title={item?.icon ? item?.icon : item?.label}
-                >
+                <Tab key={item?.key} className="py-6" title={item?.label}>
                   {item?.children && item?.children}
                 </Tab>
               );

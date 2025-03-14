@@ -68,7 +68,9 @@ export default function CourseCard({
       </div>
       <div className="py-4 px-3 flex flex-col gap-4">
         <div className="flex flex-col gap-[10px]">
-          <Text type="font-16-500">{name}</Text>
+          <Text type="font-16-500" className="line-clamp-2">
+            {name}
+          </Text>
 
           <Text type="font-14-400" className="text-[#8C8C8C] break-all">
             {generateMentors()}

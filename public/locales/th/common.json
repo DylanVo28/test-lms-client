@@ -268,6 +268,21 @@
   "Username": "ชื่อผู้ใช้",
   "URL": "URL",
   "Information": "ข้อมูล",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "ติดตาม",
+  "Unfollow": "เลิกติดตาม",
+  "Business": "ธุรกิจ",
+  "Finance": "การเงิน",
+  "IT & Software": "ไอทีและซอฟต์แวร์",
+  "Personal Development": "การพัฒนาตนเอง",
+  "Error handling message": "ข้อผิดพลาดในการจัดการข้อความ",
+  "Error initializing Firebase messaging": "ข้อผิดพลาดในการเริ่มต้น Firebase messaging",
+  "Player is ready": "เครื่องเล่นพร้อมแล้ว",
+  "Video player error": "ข้อผิดพลาดของเครื่องเล่นวิดีโอ",
+  "Player initialization error": "ข้อผิดพลาดในการเริ่มต้นเครื่องเล่น",
+  "Error updating video source": "ข้อผิดพลาดในการอัปเดตแหล่งที่มาของวิดีโอ",
+  "Error disposing player": "ข้อผิดพลาดในการจัดการเครื่องเล่น",
+  "Expire Token": "โทเค็นหมดอายุ",
+  "Logout API failed": "API การออกจากระบบล้มเหลว",
+  "Follow successfully": "ติดตามสำเร็จ",
+  "Unfollow successfully": "เลิกติดตามสำเร็จ"
 }

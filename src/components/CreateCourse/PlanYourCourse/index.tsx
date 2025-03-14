@@ -16,6 +16,7 @@ import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
+import { set } from 'video.js/dist/types/tech/middleware';
 
 const dataObjectivesDefault = [
   {
@@ -180,6 +181,7 @@ const PlanYourCourse = () => {
     reset,
     watch,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<any>({
     defaultValues: {
@@ -492,6 +494,10 @@ const PlanYourCourse = () => {
 
   const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
+  const handleChangeTab = (plan: number) => {
+    setActivePlan(plan);
+  };
+
   return (
     <LoadingScreen isLoading={loading}>
       <form>
@@ -515,7 +521,7 @@ const PlanYourCourse = () => {
                     isEnoughCurruclum={isEnoughCurruclum}
                     isEnoughIntendedLearners={isEnoughIntendedLearners}
                     activePlan={activePlan}
-                    handleActivePlan={(plan) => setActivePlan(plan)}
+                    handleActivePlan={(plan) => handleChangeTab(plan)}
                   />
                 </div>
               </div>

@@ -268,6 +268,21 @@
   "Username": "Имя пользователя",
   "URL": "URL",
   "Information": "Информация",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Подписаться",
+  "Unfollow": "Отписаться",
+  "Business": "Бизнес",
+  "Finance": "Финансы",
+  "IT & Software": "ИТ и ПО",
+  "Personal Development": "Личностное развитие",
+  "Error handling message": "Ошибка обработки сообщения",
+  "Error initializing Firebase messaging": "Ошибка инициализации Firebase messaging",
+  "Player is ready": "Плеер готов",
+  "Video player error": "Ошибка видеоплеера",
+  "Player initialization error": "Ошибка инициализации плеера",
+  "Error updating video source": "Ошибка обновления источника видео",
+  "Error disposing player": "Ошибка освобождения плеера",
+  "Expire Token": "Срок действия токена истек",
+  "Logout API failed": "Ошибка API выхода",
+  "Follow successfully": "Подписка выполнена успешно",
+  "Unfollow successfully": "Отписка выполнена успешно"
 }

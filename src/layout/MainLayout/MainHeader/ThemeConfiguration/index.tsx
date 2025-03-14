@@ -26,11 +26,7 @@ import { useSearchParams } from 'next/navigation';
 const DEFAULT_SELECT_LANG = 'en';
 const DEFAULT_COLOR = '#02A6C2';
 
-const ThemeConfiguration = ({
-  setUrlLogo,
-}: {
-  setUrlLogo: (value: string) => void;
-}) => {
+const ThemeConfiguration = ({}: {}) => {
   const { t } = useTranslation('common');
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [color, setColor] = useState<string>('');
@@ -99,7 +95,6 @@ const ThemeConfiguration = ({
 
   useEffect(() => {
     setLogo(dataThemeConfig.logo);
-    setUrlLogo(dataThemeConfig.logo);
     setCode(dataThemeConfig.code);
     setValueColorTheme({
       color: dataThemeConfig?.color,

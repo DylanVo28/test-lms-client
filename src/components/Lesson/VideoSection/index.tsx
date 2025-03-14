@@ -111,17 +111,17 @@ const VideoSection = ({
           options,
           function onPlayerReady() {
             playerRef.current.hlsQualitySelector();
-            console.log('Player is ready');
+            console.log(t('Player is ready'));
           }
         );
 
         playerRef.current.on('fullscreenchange', handleFullscreenChange);
 
         playerRef.current.on('error', function (error: any) {
-          console.error('Video player error:', error);
+          console.error(t('Video player error') + ':', error);
         });
       } catch (error) {
-        console.error('Player initialization error:', error);
+        console.error(t('Player initialization error') + ':', error);
       }
     }
 
@@ -148,7 +148,7 @@ const VideoSection = ({
         });
         playerRef.current.on('timeupdate', handleTimeUpdate);
       } catch (error) {
-        console.error('Error updating video source:', error);
+        console.error(t('Error updating video source') + ':', error);
       }
     }
 
@@ -158,7 +158,7 @@ const VideoSection = ({
           playerRef.current.dispose();
           playerRef.current = null;
         } catch (error) {
-          console.error('Error disposing player:', error);
+          console.error(t('Error disposing player') + ':', error);
         }
       }
     };

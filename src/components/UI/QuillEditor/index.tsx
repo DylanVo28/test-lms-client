@@ -51,6 +51,7 @@ const QuillEditor = ({
       });
 
       // @ts-ignore
+      // Handle pasted content formatting
       quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
         const ops = delta.ops.map((op: any) => {
           if (op.insert && typeof op.insert === 'string') {
@@ -59,6 +60,7 @@ const QuillEditor = ({
               attributes: {
                 ...(op.attributes || {}),
                 color: 'white',
+                background: 'transparent',
               },
             };
           }
@@ -76,12 +78,26 @@ const QuillEditor = ({
                 insert: op.insert,
                 attributes: {
                   color: 'white',
+                  background: 'transparent',
                 },
               };
             }
             return op;
           }),
         };
+      });
+
+      // Override default paste behavior
+      quill.root.addEventListener('paste', function (e: ClipboardEvent) {
+        e.preventDefault();
+        const text = e.clipboardData?.getData('text/plain') || '';
+        const range = quill.getSelection();
+        if (range) {
+          quill.insertText(range.index, text, {
+            color: 'white',
+            background: 'transparent',
+          });
+        }
       });
 
       setEditor(quill);

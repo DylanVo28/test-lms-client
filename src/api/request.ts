@@ -1,7 +1,7 @@
 import { injectBearer } from 'brainless-token-manager';
 import { extend } from 'umi-request';
-
 import { ENV } from '@/utils/env';
+import { translate } from '@/utils/i18n-utils';
 import { deleteAuthCookies, getAccessToken } from '@/store/auth';
 import { toast } from '@/components/UI/Toast/toast';
 import { API_PATH } from './constant';
@@ -15,9 +15,9 @@ const handleLogout = async () => {
   try {
     await privateRequest(request.post, `${API_PATH.LOGOUT}`, {});
   } catch (error) {
-    console.error('Logout API failed', error);
+    console.error(translate('Logout API failed'), error);
   }
-  // toast.error('Expire Token');
+  toast.error(translate('Expire Token'));
 };
 console.log(getAccessToken(), 'getAccessToken');
 

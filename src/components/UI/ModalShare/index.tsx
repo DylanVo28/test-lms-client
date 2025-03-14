@@ -20,6 +20,8 @@ const ModalShare = (props: IModalShare, ref?: any) => {
   const [visible, setVisible] = useState(false);
   const router = useRouter();
 
+  console.log(router, 'router');
+
   useImperativeHandle(ref, () => {
     return {
       onOpen: (id: string) => {
@@ -33,7 +35,7 @@ const ModalShare = (props: IModalShare, ref?: any) => {
   };
 
   const onCopy = () => {
-    const linkCopy = `${ENV.APP_URL}/course/${router.query.id}`;
+    const linkCopy = `${ENV.APP_URL}/${router.query.code}/course/${router.query.id}`;
     window.navigator.clipboard.writeText(linkCopy);
     toast.success('Copied!');
   };
@@ -63,7 +65,7 @@ const ModalShare = (props: IModalShare, ref?: any) => {
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2">
               <InputText
-                placeholder={`${ENV.APP_URL}/course/${router.query.id}`}
+                placeholder={`${ENV.APP_URL}/${router.query.code}/course/${router.query.id}`}
                 isReadOnly
                 classInputWrapper="min-w-[450px] min-h-[44px]"
                 inputShare

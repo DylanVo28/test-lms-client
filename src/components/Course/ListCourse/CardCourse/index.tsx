@@ -11,7 +11,7 @@ import ReactStars from 'react-stars';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
-import { formatWalletAddress } from '@/utils/common';
+import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 
 dayjs.extend(relativeTime);
@@ -106,12 +106,14 @@ const CardCourse = ({ item }: { item?: any }) => {
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.originPrice ? `$ ${item?.originPrice}` : t('Free')}
+                {item?.originPrice
+                  ? `$ ${formatNumber(item?.originPrice)}`
+                  : t('Free')}
               </Text>
             </div>
             {item?.price && (
               <Text type="font-14-400" className="text-black-6 line-through">
-                $ {item.price}
+                $ {formatNumber(item.price)}
               </Text>
             )}
           </div>

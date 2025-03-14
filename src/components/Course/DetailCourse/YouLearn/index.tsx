@@ -53,7 +53,7 @@ const YouLearn = ({ data }: { data: any }) => {
         <Text className="text-white" type="font-20-600">
           {t("What you'll learn")}
         </Text>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {data?.objectives?.map((item: any) => {
             return (
               <div key={item?.id} className="py-4 flex items-center gap-4">
@@ -74,7 +74,7 @@ const YouLearn = ({ data }: { data: any }) => {
             'What are the requirements or prerequisites for taking your course?'
           )}
         </Text>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {data?.requirements?.map((item: any) => {
             return (
               <div key={item?.id} className="py-4 flex items-center gap-4">
@@ -93,7 +93,7 @@ const YouLearn = ({ data }: { data: any }) => {
         <Text className="text-white" type="font-20-600">
           {t('Who is this course for?')}
         </Text>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {data?.intenedLeaners?.map((item: any) => {
             return (
               <div key={item?.id} className="py-4 flex items-center gap-4">

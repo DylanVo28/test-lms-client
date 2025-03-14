@@ -191,7 +191,7 @@ const MoreCourse = (props: any) => {
       )}
       <div className="flex flex-col gap-10">
         <Text className="text-white" type="font-20-600">
-          {t('Comments')}
+          {t('Reviews')}
         </Text>
 
         {/* {!token ? (

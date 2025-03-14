@@ -268,6 +268,21 @@
   "Username": "Nume de utilizator",
   "URL": "URL",
   "Information": "Informații",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Urmărește",
+  "Unfollow": "Nu mai urmări",
+  "Business": "Afaceri",
+  "Finance": "Finanțe",
+  "IT & Software": "IT și Software",
+  "Personal Development": "Dezvoltare personală",
+  "Error handling message": "Eroare la gestionarea mesajului",
+  "Error initializing Firebase messaging": "Eroare la inițializarea mesageriei Firebase",
+  "Player is ready": "Player-ul este pregătit",
+  "Video player error": "Eroare player video",
+  "Player initialization error": "Eroare de inițializare player",
+  "Error updating video source": "Eroare la actualizarea sursei video",
+  "Error disposing player": "Eroare la eliminarea player-ului",
+  "Expire Token": "Token expirat",
+  "Logout API failed": "API-ul de deconectare a eșuat",
+  "Follow successfully": "Urmărire cu succes",
+  "Unfollow successfully": "Nu mai urmărești cu succes"
 }

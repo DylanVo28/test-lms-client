@@ -28,7 +28,9 @@ const Certifications = () => {
             <Text type="font-16-400" className="text-white">
               {t('You are preparing for')}{' '}
               <Text element="span" type="font-16-700" className="text-white">
-                {`${dataListCertificates?.data?.length} ${t('certifications')}`}
+                {`${dataListCertificates?.data?.length || 0} ${t(
+                  'certifications'
+                )}`}
               </Text>
             </Text>
             <Info className="text-white" size={18} />
@@ -62,7 +64,10 @@ const Certifications = () => {
                   />
 
                   <div className="flex flex-col gap-3">
-                    <Text type="font-18-600" className="text-white">
+                    <Text
+                      type="font-18-600"
+                      className="text-white line-clamp-2"
+                    >
                       {item?.certificate?.name}
                     </Text>
                     <Text type="font-16-400" className="text-black-7">

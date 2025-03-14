@@ -44,10 +44,10 @@ const MainHeader = () => {
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
-  const [urlLogo, setUrlLogo] = useState<string>('');
   const { theme } = useTheme();
   const [notifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
+  const prevAddress = useRef<string | null>(null);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
   // const { requestGetTheme } = useThemeInitial();
@@ -56,6 +56,8 @@ const MainHeader = () => {
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
   };
+
+  console.log(theme, 'theme');
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -106,28 +108,46 @@ const MainHeader = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (localStorage.getItem('logo')) {
-        setUrlLogo(localStorage.getItem('logo') as string);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (router.pathname !== ROUTE_PATH.COURSE_SEARCH) {
       setValueSearch('');
     }
   }, [router.pathname]);
 
   useEffect(() => {
+    // Handle initial connection
     if (isConnected && address && !token) {
       runGetUserNonce(address);
     }
+
+    // Handle account change only when staying connected
+    if (
+      isConnected &&
+      address &&
+      prevAddress.current &&
+      prevAddress.current !== address
+    ) {
+      // Disconnect old account
+      setAuthCookies({
+        token: '',
+      });
+      setProfile(initialProfile);
+      // Connect new account
+      runGetUserNonce(address);
+    }
+
+    // Handle disconnection - must be after account change check
     if (!isConnected && !token) {
       setAuthCookies({
         token: '',
       });
       setProfile(initialProfile);
+    }
+
+    // Update previous address reference only when connected
+    if (isConnected && address) {
+      prevAddress.current = address;
+    } else {
+      prevAddress.current = null;
     }
   }, [token, isConnected, address]);
 
@@ -154,7 +174,7 @@ const MainHeader = () => {
             width={125}
             height={46}
             className="cursor-pointer"
-            src={urlLogo || '/logo-dark.png'}
+            src={theme?.logo || '/logo-dark.png'}
           />
         ) : (
           <Image
@@ -163,7 +183,7 @@ const MainHeader = () => {
             width={125}
             height={46}
             className="cursor-pointer"
-            src={urlLogo || '/logo.png'}
+            src={theme?.logo || '/logo.png'}
           />
         )}
 
@@ -234,9 +254,7 @@ const MainHeader = () => {
             </Button> */}
 
             <ButtonLoginWallet />
-            {profile?.role === 'KOL' && (
-              <ThemeConfiguration setUrlLogo={setUrlLogo} />
-            )}
+            {profile?.role === 'KOL' && <ThemeConfiguration />}
 
             {/* <div className="w-full">
               <ConnectButton />
