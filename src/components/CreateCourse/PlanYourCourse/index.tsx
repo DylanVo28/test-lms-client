@@ -18,43 +18,6 @@ import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import { set } from 'video.js/dist/types/tech/middleware';
 
-const dataObjectivesDefault = [
-  {
-    name: '',
-    pladholder:
-      'Example: Identifying the roles and responsibilities of a project manager',
-  },
-  {
-    name: '',
-    pladholder: 'Example: Project schedule and budget estimates',
-  },
-  {
-    name: '',
-    pladholder: 'Example: Identifying and Managing Project Risks',
-  },
-  {
-    name: '',
-    pladholder:
-      'Example: Complete a case study for managing a project from concept to completion',
-  },
-];
-
-const dataRequirementsDefault = [
-  {
-    name: '',
-    pladholder:
-      'For example: No programming experience required. You will learn everything you need to know.',
-  },
-];
-
-const dataIntenedLeanersDefault = [
-  {
-    name: '',
-    pladholder:
-      'Example: Entry-level Python developers who want to learn data science',
-  },
-];
-
 const PlanYourCourse = () => {
   const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
@@ -63,6 +26,47 @@ const PlanYourCourse = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
   const { navigate } = useNavigate();
+
+  const dataObjectivesDefault = [
+    {
+      name: '',
+      pladholder: t(
+        'Example: Identifying the roles and responsibilities of a project manager'
+      ),
+    },
+    {
+      name: '',
+      pladholder: t('Example: Project schedule and budget estimates'),
+    },
+    {
+      name: '',
+      pladholder: t('Example: Identifying and Managing Project Risks'),
+    },
+    {
+      name: '',
+      pladholder: t(
+        'Example: Complete a case study for managing a project from concept to completion'
+      ),
+    },
+  ];
+
+  const dataRequirementsDefault = [
+    {
+      name: '',
+      pladholder: t(
+        'For example: No programming experience required. You will learn everything you need to know.'
+      ),
+    },
+  ];
+
+  const dataIntenedLeanersDefault = [
+    {
+      name: '',
+      pladholder: t(
+        'Example: Entry-level Python developers who want to learn data science'
+      ),
+    },
+  ];
 
   const [dataSections, setDataSections] = useState([]);
 

@@ -282,5 +282,13 @@
   "Expire Token": "權杖過期",
   "Logout API failed": "登出API失敗",
   "Follow successfully": "關注成功",
-  "Unfollow successfully": "取消關注成功"
+  "Unfollow successfully": "取消關注成功",
+  "Allows the content creator to just duplicate from our white label database": "允許內容創作者直接從我們的白標資料庫複製",
+  "Example: Entry-level Python developers who want to learn data science": "示例：想要學習資料科學的初級Python開發者",
+  "For example: No programming experience required. You will learn everything you need to know.": "例如：無需編程經驗。您將學到所需的一切知識。",
+  "Example: Complete a case study for managing a project from concept to completion": "示例：完成從概念到完成的專案管理案例研究",
+  "Example: Identifying and Managing Project Risks": "示例：識別和管理專案風險",
+  "Example: Project schedule and budget estimates": "示例：專案時程表和預算估算",
+  "Example: Identifying the roles and responsibilities of a project manager": "示例：識別專案經理的角色和職責",
+  "Plan your course": "規劃您的課程"
 }

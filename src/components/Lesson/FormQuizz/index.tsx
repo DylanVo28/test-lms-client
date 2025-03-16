@@ -57,8 +57,6 @@ const FormQuizz = ({
     (item: any) => item?.id === dataQuizz?.id
   );
 
-  console.log(dataItemNext, 'dataItemNext');
-
   return (
     <div className="relative group">
       {dataItemPrev?.id && !isMobile && (

@@ -282,5 +282,13 @@
   "Expire Token": "Token wygasł",
   "Logout API failed": "Błąd API wylogowania",
   "Follow successfully": "Pomyślnie zaobserwowano",
-  "Unfollow successfully": "Pomyślnie przestano obserwować"
+  "Unfollow successfully": "Pomyślnie przestano obserwować",
+  "Example: Entry-level Python developers who want to learn data science": "Przykład: Początkujący programiści Python, którzy chcą nauczyć się data science",
+  "For example: No programming experience required. You will learn everything you need to know.": "Na przykład: Nie jest wymagane doświadczenie w programowaniu. Nauczysz się wszystkiego, co musisz wiedzieć.",
+  "Example: Complete a case study for managing a project from concept to completion": "Przykład: Ukończ studium przypadku zarządzania projektem od koncepcji do realizacji",
+  "Example: Identifying and Managing Project Risks": "Przykład: Identyfikacja i zarządzanie ryzykami projektu",
+  "Example: Project schedule and budget estimates": "Przykład: Harmonogram projektu i szacowanie budżetu",
+  "Example: Identifying the roles and responsibilities of a project manager": "Przykład: Identyfikacja ról i obowiązków kierownika projektu",
+  "Plan your course": "Zaplanuj swój kurs",
+  "Allows the content creator to just duplicate from our white label database": "Pozwala twórcy treści na duplikowanie z naszej bazy white label"
 }

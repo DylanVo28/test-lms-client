@@ -32,46 +32,6 @@ import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import { useTranslation } from 'next-i18next';
 
-const DATA_RATE = [
-  {
-    id: '1',
-    label: 'From 4.5',
-    total: '(1657)',
-    value: 4.5,
-  },
-  {
-    id: '2',
-    label: 'From 4.0',
-    total: '(960)',
-    value: 4,
-  },
-  {
-    id: '3',
-    label: 'From 3.5',
-    total: '(350)',
-    value: 3.5,
-  },
-  {
-    id: '4',
-    label: 'From 3.0',
-    total: '(142)',
-    value: 3,
-  },
-];
-const DATA_PRACTICAL = [
-  {
-    id: '1',
-    label: 'Multiple choice',
-  },
-  {
-    id: '2',
-    label: 'Coding exercises',
-  },
-  {
-    id: '3',
-    label: 'Practice test',
-  },
-];
 const DATA_LANGUAGE = [
   {
     id: '1',

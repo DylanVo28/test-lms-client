@@ -28,8 +28,6 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
     setVisible(!visible);
   };
 
-  console.log(valuesError, 'valuesError');
-
   const isValidObjectives = valuesError?.objectives?.every(
     (item: any) => item?.name.trim() !== ''
   );

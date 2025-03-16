@@ -88,7 +88,7 @@ const CardComment = ({
           radius="full"
           isLoading={loadingComment}
           onPress={handleReview}
-          className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
+          className="bg-main min-w-[142px] w-max min-h-[40px] rounded"
         >
           <Text type="font-16-500" className="text-white">
             {t('Comment')}

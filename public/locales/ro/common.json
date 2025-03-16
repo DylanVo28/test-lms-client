@@ -282,5 +282,13 @@
   "Expire Token": "Token expirat",
   "Logout API failed": "API-ul de deconectare a eșuat",
   "Follow successfully": "Urmărire cu succes",
-  "Unfollow successfully": "Nu mai urmărești cu succes"
+  "Unfollow successfully": "Nu mai urmărești cu succes",
+  "Allows the content creator to just duplicate from our white label database": "Permite creatorului de conținut să duplice din baza noastră de date white label",
+  "Example: Entry-level Python developers who want to learn data science": "Exemplu: Dezvoltatori Python începători care doresc să învețe știința datelor",
+  "For example: No programming experience required. You will learn everything you need to know.": "De exemplu: Nu este necesară experiență în programare. Vei învăța tot ce trebuie să știi.",
+  "Example: Complete a case study for managing a project from concept to completion": "Exemplu: Completează un studiu de caz pentru gestionarea unui proiect de la concept la finalizare",
+  "Example: Identifying and Managing Project Risks": "Exemplu: Identificarea și gestionarea riscurilor proiectului",
+  "Example: Project schedule and budget estimates": "Exemplu: Estimări pentru programul și bugetul proiectului",
+  "Example: Identifying the roles and responsibilities of a project manager": "Exemplu: Identificarea rolurilor și responsabilităților unui manager de proiect",
+  "Plan your course": "Planifică-ți cursul"
 }

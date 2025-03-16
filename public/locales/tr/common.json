@@ -282,5 +282,13 @@
   "Expire Token": "Token Süresi Doldu",
   "Logout API failed": "Çıkış API'si başarısız oldu",
   "Follow successfully": "Başarıyla takip edildi",
-  "Unfollow successfully": "Başarıyla takipten çıkıldı"
+  "Unfollow successfully": "Başarıyla takipten çıkıldı",
+  "Allows the content creator to just duplicate from our white label database": "İçerik oluşturucunun white label veritabanımızdan kopyalama yapmasına izin verir",
+  "Example: Entry-level Python developers who want to learn data science": "Örnek: Veri bilimini öğrenmek isteyen başlangıç seviyesi Python geliştiricileri",
+  "For example: No programming experience required. You will learn everything you need to know.": "Örneğin: Programlama deneyimi gerekmez. Bilmeniz gereken her şeyi öğreneceksiniz.",
+  "Example: Complete a case study for managing a project from concept to completion": "Örnek: Bir projeyi konseptten tamamlanmaya kadar yönetmek için vaka çalışması tamamlayın",
+  "Example: Identifying and Managing Project Risks": "Örnek: Proje Risklerini Tanımlama ve Yönetme",
+  "Example: Project schedule and budget estimates": "Örnek: Proje takvimi ve bütçe tahminleri",
+  "Example: Identifying the roles and responsibilities of a project manager": "Örnek: Proje yöneticisinin rol ve sorumluluklarını tanımlama",
+  "Plan your course": "Kursunuzu planlayın"
 }

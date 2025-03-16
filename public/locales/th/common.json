@@ -282,5 +282,13 @@
   "Expire Token": "โทเค็นหมดอายุ",
   "Logout API failed": "API การออกจากระบบล้มเหลว",
   "Follow successfully": "ติดตามสำเร็จ",
-  "Unfollow successfully": "เลิกติดตามสำเร็จ"
+  "Unfollow successfully": "เลิกติดตามสำเร็จ",
+  "Allows the content creator to just duplicate from our white label database": "อนุญาตให้ผู้สร้างเนื้อหาทำสำเนาจากฐานข้อมูล white label ของเรา",
+  "Example: Entry-level Python developers who want to learn data science": "ตัวอย่าง: นักพัฒนา Python ระดับเริ่มต้นที่ต้องการเรียนรู้วิทยาศาสตร์ข้อมูล",
+  "For example: No programming experience required. You will learn everything you need to know.": "ตัวอย่าง: ไม่จำเป็นต้องมีประสบการณ์การเขียนโปรแกรม คุณจะได้เรียนรู้ทุกสิ่งที่คุณต้องรู้",
+  "Example: Complete a case study for managing a project from concept to completion": "ตัวอย่าง: ทำกรณีศึกษาการจัดการโครงการตั้งแต่แนวคิดจนถึงการเสร็จสิ้น",
+  "Example: Identifying and Managing Project Risks": "ตัวอย่าง: การระบุและจัดการความเสี่ยงของโครงการ",
+  "Example: Project schedule and budget estimates": "ตัวอย่าง: กำหนดการโครงการและการประมาณการงบประมาณ",
+  "Example: Identifying the roles and responsibilities of a project manager": "ตัวอย่าง: การระบุบทบาทและความรับผิดชอบของผู้จัดการโครงการ",
+  "Plan your course": "วางแผนหลักสูตรของคุณ"
 }

@@ -266,6 +266,19 @@
   "Username": "Nome de usuário",
   "URL": "URL",
   "Information": "Informação",
-  "Follow": "Follow",
-  "Unfollow": "Unfollow"
+  "Follow": "Seguir",
+  "Unfollow": "Deixar de seguir",
+  "Business": "Negócios",
+  "Finance": "Finanças",
+  "IT & Software": "TI e Software",
+  "Personal Development": "Desenvolvimento Pessoal",
+  "Error handling message": "Erro ao processar mensagem",
+  "Error initializing Firebase messaging": "Erro ao inicializar mensagens do Firebase",
+  "Player is ready": "Player está pronto",
+  "Video player error": "Erro no player de vídeo",
+  "Player initialization error": "Erro na inicialização do player",
+  "Error updating video source": "Erro ao atualizar fonte do vídeo",
+  "Error disposing player": "Erro ao descartar player",
+  "Expire Token": "Token expirado",
+  "Logout API failed": "Falha na API de logout"
 }

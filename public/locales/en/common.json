@@ -110,6 +110,7 @@
   "Copy Address": "Copy Address",
   "Edit logo": "Edit logo",
   "Choose file": "Choose file",
+  "Allows the content creator to just duplicate from our white label database": "Allows the content creator to just duplicate from our white label database",
   "First, let's find out what type of course you're making.": "First, let's find out what type of course you're making.",
   "Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.": "Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.",
   "It's ok if you can't think of a good title now. You can change it later.": "It's ok if you can't think of a good title now. You can change it later.",
@@ -299,5 +300,12 @@
   "Error updating video source": "Error updating video source",
   "Error disposing player": "Error disposing player",
   "Follow successfully": "Follow successfully",
-  "Unfollow successfully": "Unfollow successfully"
+  "Unfollow successfully": "Unfollow successfully",
+  "Example: Entry-level Python developers who want to learn data science": "Example: Entry-level Python developers who want to learn data science",
+  "For example: No programming experience required. You will learn everything you need to know.": "For example: No programming experience required. You will learn everything you need to know.",
+  "Example: Complete a case study for managing a project from concept to completion": "Example: Complete a case study for managing a project from concept to completion",
+  "Example: Identifying and Managing Project Risks": "Example: Identifying and Managing Project Risks",
+  "Example: Project schedule and budget estimates": "Example: Project schedule and budget estimates",
+  "Example: Identifying the roles and responsibilities of a project manager": "Example: Identifying the roles and responsibilities of a project manager",
+  "Plan your course": "Plan your course"
 }

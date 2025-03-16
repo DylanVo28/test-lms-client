@@ -282,5 +282,13 @@
   "Expire Token": "Срок действия токена истек",
   "Logout API failed": "Ошибка API выхода",
   "Follow successfully": "Подписка выполнена успешно",
-  "Unfollow successfully": "Отписка выполнена успешно"
+  "Unfollow successfully": "Отписка выполнена успешно",
+  "Allows the content creator to just duplicate from our white label database": "Позволяет создателю контента просто дублировать из нашей базы данных white label",
+  "Example: Entry-level Python developers who want to learn data science": "Пример: Разработчики Python начального уровня, которые хотят изучать науку о данных",
+  "For example: No programming experience required. You will learn everything you need to know.": "Например: Опыт программирования не требуется. Вы узнаете всё, что вам нужно знать.",
+  "Example: Complete a case study for managing a project from concept to completion": "Пример: Выполните кейс-стади по управлению проектом от концепции до завершения",
+  "Example: Identifying and Managing Project Risks": "Пример: Определение и управление рисками проекта",
+  "Example: Project schedule and budget estimates": "Пример: Расписание проекта и оценки бюджета",
+  "Example: Identifying the roles and responsibilities of a project manager": "Пример: Определение ролей и обязанностей менеджера проекта",
+  "Plan your course": "Спланируйте свой курс"
 }

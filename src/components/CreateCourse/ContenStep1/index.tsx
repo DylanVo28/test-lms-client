@@ -13,26 +13,28 @@ export const enum TYPE_CREATE_COURSE {
   PREMADE_CONTENT = 'PREMADE_CONTENT',
 }
 
-const DATA_CONTENT = [
-  {
-    id: 'COURSE',
-    label: 'Courses',
-    img: '/images/img-courses.png',
-    description:
-      'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.',
-  },
-  {
-    id: 'PREMADE_CONTENT',
-    label: 'Premade Content',
-    img: '/images/img-practice.png',
-    description:
-      'Allows the content creator to just duplicate from our white label database',
-  },
-];
-
 const ContenStep1 = ({ control }: { control: Control }) => {
   const { t } = useTranslation('common');
   const [, setTotalStep] = useAtom(totalStepAtom);
+
+  const DATA_CONTENT = [
+    {
+      id: 'COURSE',
+      label: 'Courses',
+      img: '/images/img-courses.png',
+      description: t(
+        'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.'
+      ),
+    },
+    {
+      id: 'PREMADE_CONTENT',
+      label: 'Premade Content',
+      img: '/images/img-practice.png',
+      description: t(
+        'Allows the content creator to just duplicate from our white label database'
+      ),
+    },
+  ];
 
   return (
     <div className="flex items-center flex-col gap-10">

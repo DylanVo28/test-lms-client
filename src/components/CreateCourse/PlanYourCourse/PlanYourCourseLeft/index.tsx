@@ -6,29 +6,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 
-const DATA_CONTENT = [
-  {
-    id: 1,
-    content: 'Intended learners',
-  },
-  {
-    id: 2,
-    content: 'Curriculum',
-  },
-  {
-    id: 3,
-    content: 'Course landing page',
-  },
-  {
-    id: 4,
-    content: 'Set Price',
-  },
-  // {
-  //   id: 4,
-  //   content: 'Referral',
-  // },
-];
-
 const PlanYourCourseLeft = ({
   activePlan,
   handleActivePlan,
@@ -45,6 +22,29 @@ const PlanYourCourseLeft = ({
   isEnoughIntendedLearners: any;
 }) => {
   const { t } = useTranslation('common');
+
+  const DATA_CONTENT = [
+    {
+      id: 1,
+      content: t('Intended learners'),
+    },
+    {
+      id: 2,
+      content: t('Curriculum'),
+    },
+    {
+      id: 3,
+      content: t('Course landing page'),
+    },
+    {
+      id: 4,
+      content: t('Set Price'),
+    },
+    // {
+    //   id: 4,
+    //   content: 'Referral',
+    // },
+  ];
 
   return (
     <div className="flex flex-col gap-4">

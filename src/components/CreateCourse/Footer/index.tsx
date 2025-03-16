@@ -22,8 +22,6 @@ const Footer = ({
   const courseIdWatch = watch('courseId');
   const titleWatch = watch('title');
 
-  console.log(courseIdWatch, 'courseIdWatch');
-
   const categoryWatch = watch('categoryId');
   const timeSpentWatch = watch('timeSpent');
 

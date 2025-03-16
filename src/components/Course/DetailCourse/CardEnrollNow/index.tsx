@@ -21,15 +21,6 @@ import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
 import IconLikeCourse from '@/components/UI/IconLikeCourse';
 import ModalViewVideo from './ModalViewVideo';
 
-const DATA_NOTE = [
-  '12 hours of on-demand video',
-  'Exercises',
-  '1 downloadable resource',
-  'Mobile and TV access',
-  'Timed access',
-  'Certificate of completion',
-];
-
 const CardEnrollNow = ({
   course,
   handleLike,
@@ -41,11 +32,19 @@ const CardEnrollNow = ({
 }) => {
   console.log(course, 'course');
   const { t } = useTranslation('common');
-  const router = useRouter();
+
+  const DATA_NOTE = [
+    t('12 hours of on-demand video'),
+    t('Exercises'),
+    t('1 downloadable resource'),
+    t('Mobile and TV access'),
+    t('Timed access'),
+    t('Certificate of completion'),
+  ];
+
   const token = getAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const refModalViewVideo: any = useRef(null);
 

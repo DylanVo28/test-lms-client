@@ -5,25 +5,6 @@ import clsx from 'clsx';
 import { Control, Controller } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
 
-const DATA_CONTENT = [
-  {
-    id: '0-2',
-    content: 'I’m very busy right now (0-2 hours)',
-  },
-  {
-    id: '2-4',
-    content: 'I’ll work on this on the side (2-4 hours)',
-  },
-  {
-    id: '5+',
-    content: 'I have lots of flexibility (5+ hours)',
-  },
-  {
-    id: 'no-time',
-    content: 'I haven’t yet decided if I have time',
-  },
-];
-
 const ContenStep4 = ({
   control,
   setValue,
@@ -32,6 +13,25 @@ const ContenStep4 = ({
   setValue: any;
 }) => {
   const { t } = useTranslation('common');
+
+  const DATA_CONTENT = [
+    {
+      id: '0-2',
+      content: t('I’m very busy right now (0-2 hours)'),
+    },
+    {
+      id: '2-4',
+      content: t('I’ll work on this on the side (2-4 hours)'),
+    },
+    {
+      id: '5+',
+      content: t('I have lots of flexibility (5+ hours)'),
+    },
+    {
+      id: 'no-time',
+      content: t('I haven’t yet decided if I have time'),
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-10 items-center text-center">

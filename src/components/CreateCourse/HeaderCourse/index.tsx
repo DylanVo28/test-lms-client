@@ -2,7 +2,6 @@ import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, Progress } from '@nextui-org/react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { atom, useAtom } from 'jotai';
 import useNavigate from '@/hooks/useNavigate';
@@ -10,7 +9,6 @@ import useNavigate from '@/hooks/useNavigate';
 export const totalStepAtom = atom<number>(4);
 
 const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 

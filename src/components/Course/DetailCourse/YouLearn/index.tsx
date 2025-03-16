@@ -1,49 +1,6 @@
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
 
-const DATA_LEARN = [
-  {
-    id: 1,
-    text: 'Prepare for Industry Certification Exam',
-  },
-  {
-    id: 2,
-    text: 'Earn Certification that is Proof of your Competence',
-  },
-  {
-    id: 3,
-    text: 'Hours and Hours of Video Instruction',
-  },
-  {
-    id: 4,
-    text: 'Dozens of Code Examples to Download and Study',
-  },
-  {
-    id: 5,
-    text: 'Over 25 Engaging Lab Exercises',
-  },
-  {
-    id: 6,
-    text: 'All Lab Solutions',
-  },
-  {
-    id: 7,
-    text: 'Instructor Available by Email or on the Forums',
-  },
-  {
-    id: 8,
-    text: 'All Free Tools',
-  },
-  {
-    id: 9,
-    text: 'Comprehensive Coverage of HTML and CSS',
-  },
-  {
-    id: 10,
-    text: 'Client Side Programming with Javascript',
-  },
-];
-
 const YouLearn = ({ data }: { data: any }) => {
   const { t } = useTranslation('common');
 

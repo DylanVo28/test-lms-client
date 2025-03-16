@@ -1,12 +1,6 @@
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
 
-const DATA_REQUIREMENTS = [
-  `There are no skill prerequisites for this course although it's helpful if you are familiar with operating your internet.`,
-  `You can take this course using a Mac, PC or LInux machine.`,
-  `It is recommended that you download the free Komodo text editor.`,
-];
-
 const Requirements = ({ data }: { data: any }) => {
   const { t } = useTranslation('common');
 

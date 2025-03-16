@@ -33,5 +33,13 @@
   "Logout API failed": "登出API失败",
   "Follow successfully": "关注成功",
   "Unfollow successfully": "取消关注成功",
-  "No data": "无数据"
+  "No data": "无数据",
+  "Allows the content creator to just duplicate from our white label database": "允许内容创作者直接从我们的白标数据库复制",
+  "Example: Entry-level Python developers who want to learn data science": "示例：想要学习数据科学的初级Python开发者",
+  "For example: No programming experience required. You will learn everything you need to know.": "例如：无需编程经验。您将学到所需的一切知识。",
+  "Example: Complete a case study for managing a project from concept to completion": "示例：完成从概念到完成的项目管理案例研究",
+  "Example: Identifying and Managing Project Risks": "示例：识别和管理项目风险",
+  "Example: Project schedule and budget estimates": "示例：项目时间表和预算估算",
+  "Example: Identifying the roles and responsibilities of a project manager": "示例：识别项目经理的角色和职责",
+  "Plan your course": "规划您的课程"
 }

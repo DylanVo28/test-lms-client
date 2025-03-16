@@ -170,8 +170,6 @@ const MoreCourse = (props: any) => {
     return formatWalletAddress(author?.walletAddress);
   };
 
-  console.log(dataCourses, 'dataCourses');
-
   if (!author) return null;
   return (
     <div className="flex flex-col gap-10 pb-10 border-b-1 border-b-black-10">
