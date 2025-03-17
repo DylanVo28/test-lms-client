@@ -32,11 +32,16 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const projectId = 'fc44d249918338bb571eab6da79776df';
+const chains = [mainnet, polygon, optimism, arbitrum, base];
+
+// Initialize RainbowKit with wallets
 const { connectors } = getDefaultWallets({
   appName: 'What Exchange',
-  projectId: 'fc44d249918338bb571eab6da79776df',
+  projectId,
 });
 
+// Configure wagmi client
 const config = createConfig({
   chains: [mainnet, polygon, optimism, arbitrum, base],
   connectors,
@@ -48,11 +53,45 @@ const config = createConfig({
     [base.id]: http(),
   },
   ssr: false,
-  storage:
-    typeof window !== 'undefined'
-      ? createStorage({ storage: window.localStorage })
-      : undefined,
+  // Enhanced storage handling for WalletConnect
+  storage: createStorage({
+    storage:
+      typeof window !== 'undefined'
+        ? {
+            getItem: (key) => {
+              const item = window.localStorage.getItem(key);
+              // Keep WalletConnect session active
+              if (key.startsWith('wc@2:client:')) {
+                return item || window.localStorage.getItem('wagmi.wallet');
+              }
+              // Handle returning from mobile wallet
+              if (
+                window.location.href.includes('wc?') &&
+                key.includes('wagmi')
+              ) {
+                return item || 'true';
+              }
+              return item;
+            },
+            setItem: (key, value) => window.localStorage.setItem(key, value),
+            removeItem: (key) => window.localStorage.removeItem(key),
+          }
+        : undefined,
+  }),
 });
+
+// Handle WalletConnect session restoration and URL cleanup
+if (typeof window !== 'undefined') {
+  const hasWalletConnectSession = Object.keys(window.localStorage).some((key) =>
+    key.startsWith('wc@2:client:')
+  );
+
+  if (hasWalletConnectSession && window.location.href.includes('wc?')) {
+    // Clean URL immediately to avoid reconnection loops
+    const cleanUrl = window.location.href.split('?')[0];
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+}
 
 const queryClient = new QueryClient();
 

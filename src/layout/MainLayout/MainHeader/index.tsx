@@ -114,28 +114,7 @@ const MainHeader = () => {
   }, [router.pathname]);
 
   useEffect(() => {
-    // Handle initial connection
-    if (isConnected && address && !token) {
-      runGetUserNonce(address);
-    }
-
-    // Handle account change only when staying connected
-    if (
-      isConnected &&
-      address &&
-      prevAddress.current &&
-      prevAddress.current !== address
-    ) {
-      // Disconnect old account
-      setAuthCookies({
-        token: '',
-      });
-      setProfile(initialProfile);
-      // Connect new account
-      runGetUserNonce(address);
-    }
-
-    // Handle disconnection - must be after account change check
+    // Handle account change and disconnection
     if (!isConnected && !token) {
       setAuthCookies({
         token: '',
@@ -143,8 +122,15 @@ const MainHeader = () => {
       setProfile(initialProfile);
     }
 
-    // Update previous address reference only when connected
+    // Update previous address reference
     if (isConnected && address) {
+      if (prevAddress.current && prevAddress.current !== address) {
+        // Disconnect old account on address change
+        setAuthCookies({
+          token: '',
+        });
+        setProfile(initialProfile);
+      }
       prevAddress.current = address;
     } else {
       prevAddress.current = null;
