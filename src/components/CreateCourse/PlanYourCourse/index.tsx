@@ -25,6 +25,9 @@ const PlanYourCourse = () => {
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
+
+  const [isNextStepSubmit, setIsNextStepSubmit] = useState(false);
+
   const { navigate } = useNavigate();
 
   const dataObjectivesDefault = [
@@ -132,7 +135,8 @@ const PlanYourCourse = () => {
         isEnoughCurruclum &&
         isEnoughtSetPrice &&
         isEnoughCourseLangdingePage &&
-        isSubmit
+        isSubmit &&
+        !isNextStepSubmit
       ) {
         navigate(ROUTE_PATH.LIST_COURSE);
       }
@@ -251,17 +255,22 @@ const PlanYourCourse = () => {
         res?.data?.categoryId &&
         res?.data?.level &&
         res?.data?.lang;
-      if (isEnoughIntendedLearners && activePlan === 1) {
+      if (isEnoughIntendedLearners && activePlan === 1 && !isNextStepSubmit) {
         setActivePlan(activePlan + 1);
       }
       if (
         allLessonsHaveContent &&
         allQuizzesHaveQuestions &&
-        activePlan === 2
+        activePlan === 2 &&
+        !isNextStepSubmit
       ) {
         setActivePlan(activePlan + 1);
       }
-      if (isEnoughCourseLangdingePage && activePlan === 3) {
+      if (
+        isEnoughCourseLangdingePage &&
+        activePlan === 3 &&
+        !isNextStepSubmit
+      ) {
         setActivePlan(activePlan + 1);
       }
 
@@ -408,6 +417,8 @@ const PlanYourCourse = () => {
         );
       })
     );
+    setIsNextStepSubmit(false);
+
     requestEditPublishCourse.run(filteredBody, router.query.id as string);
   };
   const onSubmit = (values: any) => {
@@ -448,6 +459,7 @@ const PlanYourCourse = () => {
         );
       })
     );
+    setIsNextStepSubmit(false);
     requestEditCourse.run(filteredBody, router.query.id as string);
   };
 
@@ -500,6 +512,50 @@ const PlanYourCourse = () => {
 
   const handleChangeTab = (plan: number) => {
     setActivePlan(plan);
+
+    if (activePlan < plan) {
+      setIsNextStepSubmit(true);
+      const values = getValues();
+
+      const body: any = {
+        objectives: values?.objectives
+          ?.filter((v: any) => !!v?.name)
+          ?.map((item: any) => item?.name),
+        requirements: values?.requirements
+          ?.filter((v: any) => !!v?.name)
+          ?.map((item: any) => item?.name),
+        intenedLeaners: values?.intenedLeaners
+          ?.filter((v: any) => !!v?.name)
+          ?.map((item: any) => item?.name),
+        description: values?.description,
+        image: values?.image,
+        video: values?.video,
+        subtitle: values?.subtitle,
+        title: values?.title,
+        subCategoryId: values?.subCategoryId,
+        categoryId: values?.categoryId,
+        topics: [values.topics],
+        lang: values.lang,
+        level: values.level,
+
+        price: values?.price,
+        originPrice: values?.originPrice,
+        promotionPeriod: values?.promotionPeriod,
+      };
+      if (!values.topics) {
+        delete body.topics;
+      }
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([_, value]) => {
+          return (
+            value !== undefined &&
+            value !== null &&
+            (Array.isArray(value) ? value.length > 0 : value !== '')
+          );
+        })
+      );
+      requestEditCourse.run(filteredBody, router.query.id as string);
+    }
   };
 
   return (

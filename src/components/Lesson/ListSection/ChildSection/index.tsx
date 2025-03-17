@@ -99,18 +99,11 @@ const ChildSection = ({
               </div>
               {item?.type === TYPE_COURSE.LECTURE && (
                 <div className="flex items-center gap-2">
-                  {item?.info?.duration ? (
+                  {item?.info?.duration && (
                     <>
                       <MonitorPlay size={20} className="text-black-5" />
                       <Text type="font-14-400" className="text-black-5">
                         {formattedTime}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <File size={20} className="text-black-5" />
-                      <Text type="font-14-400" className="text-black-5">
-                        {t('0 min')}
                       </Text>
                     </>
                   )}

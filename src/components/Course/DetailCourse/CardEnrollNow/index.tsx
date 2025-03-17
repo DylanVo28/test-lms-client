@@ -7,7 +7,6 @@ import { Button, Modal, ModalContent, ModalBody } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import ReactPlayer from 'react-player/lazy';
 import { useEnrollCourse } from './service';
 import { getAccessToken } from '@/store/auth';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';

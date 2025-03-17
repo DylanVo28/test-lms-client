@@ -130,6 +130,7 @@ const CardCourse = ({
                 color1="#D9D9D9"
                 color2="#F2B021"
                 value={item?.rating}
+                edit={false}
                 size={16}
                 className="flex items-center gap-1 mb-1"
               />
