@@ -164,7 +164,7 @@ const ListCourse = () => {
               </div>
               {dataCourses?.length === 0 && (
                 <div className="flex justify-center items-center">
-                  <NoData />
+                  <NoData text={t('No data')} />
                 </div>
               )}
             </>

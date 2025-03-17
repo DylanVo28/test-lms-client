@@ -40,7 +40,7 @@ const ByTheNumbers = ({ course }: { course: any }) => {
     return formattedTime;
   }, [course?.sections]);
   return (
-    <div className="py-6 grid grid-cols-1 gap-5 md:gap-0 md:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
+    <div className="py-6 grid grid-cols-1 gap-5 lg:gap-0 lg:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
       <Text type="font-18-600" className="text-white">
         {t('By the numbers')}
       </Text>

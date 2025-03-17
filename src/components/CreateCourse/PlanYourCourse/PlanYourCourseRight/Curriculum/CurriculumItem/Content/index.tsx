@@ -16,7 +16,6 @@ const Content = ({
   info: any;
 }) => {
   const { t } = useTranslation('common');
-  console.log(info, 'info');
 
   const formattedTime: string = useMemo(() => {
     const minutes = Math.floor(info?.duration / 60);
@@ -50,13 +49,9 @@ const Content = ({
               {info?.fileNameVideo}
             </Text>
           )}
-          {info?.duration ? (
+          {info?.duration && (
             <Text type="font-14-400" className="text-white">
               {formattedTime}
-            </Text>
-          ) : (
-            <Text type="font-14-400" className="text-white">
-              00:00
             </Text>
           )}
 

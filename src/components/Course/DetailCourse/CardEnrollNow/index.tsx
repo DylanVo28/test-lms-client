@@ -141,13 +141,11 @@ const CardEnrollNow = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Text type="font-20-400" className="text-orange">
-                {course?.originPrice
-                  ? `$ ${formatNumber(course?.originPrice)}`
-                  : t('Free')}
+                {course?.price ? `$ ${formatNumber(course?.price)}` : t('Free')}
               </Text>
-              {course?.price && (
+              {course?.originPrice && (
                 <Text type="font-14-400" className="text-black-6 line-through">
-                  $ {formatNumber(course?.price)}
+                  $ {formatNumber(course?.originPrice)}
                 </Text>
               )}
               {/* <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">

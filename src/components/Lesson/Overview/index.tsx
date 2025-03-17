@@ -39,7 +39,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
   }, [dataListSection]);
 
   return (
-    <div className="flex flex-col gap-5 md:pl-[80px] md:pr-[32px]">
+    <div className="flex flex-col gap-5 md:p-4 lg:pl-[80px] lg:pr-[32px]">
       <Text className="text-white" type="font-24-700">
         {dataDetail?.data?.subtitle}
       </Text>
