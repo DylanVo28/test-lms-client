@@ -23,6 +23,7 @@ import { useRouter } from 'next/router';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useAtom } from 'jotai';
 import { notificationAtom } from '@/store/notification/notification';
+import { isMobile } from 'react-device-detect';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
@@ -94,7 +95,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
 
   // Track initial connection
   useEffect(() => {
-    if (isConnected) {
+    if (isConnected && isMobile) {
       connectedOnce.current = true;
     }
   }, [isConnected]);
@@ -117,7 +118,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
       !initialCheckDone.current &&
       (isMobileReturn() || connectedOnce.current);
 
-    if (shouldTriggerSign) {
+    if (shouldTriggerSign && isMobile) {
       initialCheckDone.current = true;
 
       // Clean URL if needed
@@ -133,7 +134,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
 
   // Reset states on disconnect
   useEffect(() => {
-    if (!isConnected) {
+    if (!isConnected && isMobile) {
       initialCheckDone.current = false;
       setIsProcessing(false);
       setNotifications({});

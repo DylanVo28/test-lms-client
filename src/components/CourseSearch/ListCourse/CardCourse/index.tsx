@@ -100,7 +100,7 @@ const CardCourse = ({
           }}
         />
       </a>
-      <div className="py-4 px-3 rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
+      <div className="py-4 px-3 max-w-[302px] min-h-[196px] lg:min-h-max lg:max-w-max lg:w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
