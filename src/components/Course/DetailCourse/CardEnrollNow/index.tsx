@@ -29,7 +29,8 @@ const CardEnrollNow = ({
   handleLike?: (id: string) => void;
   handleUnLike?: (id: string) => void;
 }) => {
-  console.log(course, 'course');
+  const accessToken = getAccessToken();
+
   const { t } = useTranslation('common');
 
   const DATA_NOTE = [
@@ -65,13 +66,12 @@ const CardEnrollNow = ({
     return `${discountPercentage.toFixed(0)}%`;
   };
 
-  console.log(course?.video, 'course.video');
-
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
         <Button
           isIconOnly
+          isDisabled={!accessToken}
           onPress={() => {
             if (course?.liked) {
               handleUnLike && handleUnLike(course?.id);
@@ -80,7 +80,7 @@ const CardEnrollNow = ({
             }
           }}
           variant="light"
-          className="hover:!bg-white-25 rounded-full absolute top-2 right-4 z-[100]"
+          className="hover:!bg-white-25 rounded-full absolute top-2 right-4 z-[10]"
         >
           {course?.liked ? <IconLikedCourse /> : <IconLikeCourse />}
         </Button>

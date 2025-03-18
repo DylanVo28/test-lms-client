@@ -275,7 +275,6 @@ const PlanYourCourse = () => {
       }
 
       getDetailCourse(router.query.id as string);
-      toast.success(res?.message);
       setIsSubmit(true);
     },
     onError: (error: any) => {

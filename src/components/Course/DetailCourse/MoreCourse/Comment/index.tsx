@@ -16,6 +16,7 @@ import IconUnLikeReview from '@/components/UI/Icons/IconUnLikeReview';
 import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
 import { getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
+import { getAccessToken } from '@/store/auth';
 
 dayjs.extend(relativeTime);
 
@@ -36,6 +37,7 @@ const Comment = ({
 }) => {
   const { address } = useAccount();
   const { profile } = useProfile();
+  const accessToken = getAccessToken();
 
   const meLiked = item?.reactions?.some(
     (reaction: any) => reaction?.userId === profile?.id
@@ -72,6 +74,7 @@ const Comment = ({
         <ReactStars
           count={5}
           color1="#D9D9D9"
+          edit={false}
           color2="#F2B021"
           value={item?.rating}
           size={14}
@@ -88,6 +91,7 @@ const Comment = ({
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-1">
           <Button
+            isDisabled={!accessToken}
             onPress={() => {
               if (
                 meLiked &&
@@ -123,6 +127,7 @@ const Comment = ({
         </div>
         <div className="flex items-center gap-1">
           <Button
+            isDisabled={!accessToken}
             onPress={() => {
               if (meLiked && meReaction?.name === TypeReactions?.DISLIKE) {
                 handleUnDisLikeReview(idLikedMe);

@@ -17,19 +17,19 @@ const FormStartTakingTest = ({
   dataQuizz,
   handleClickContinueQuizz,
   handleProgressStatusQuizz,
+  reviewed,
   isLast,
 }: {
   handleClickContinueQuizz: (id: string) => void;
   handleProgressStatusQuizz: (id: string) => void;
   dataQuizz: any;
+  reviewed: boolean;
   isLast: boolean;
 }) => {
   const { t } = useTranslation('common');
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerCorrectly, setAnswerCorrectly] = useState<any>('');
   const [loading, setLoading] = useState(false);
-
-  console.log(isLast, 'isLast');
 
   const [stepAnswerQuestion, setStepAnswerQuestion] = useState<string>('');
   const [valueExplain, setValueExplain] = useState<string>('');
@@ -88,7 +88,7 @@ const FormStartTakingTest = ({
   };
 
   const handleSeeResult = () => {
-    if (isLast) {
+    if (isLast && !reviewed) {
       handleClickContinueQuizz(dataQuizz?.id);
       return;
     }

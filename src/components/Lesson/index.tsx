@@ -41,6 +41,8 @@ import {
 import { useTranslation } from 'next-i18next';
 
 export const valueProgressAtom = atom<any>({});
+export const reviewedAtom = atom<boolean>(false);
+
 const Lesson = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
@@ -53,6 +55,7 @@ const Lesson = () => {
   const { profile } = useProfile();
   const [, setActiveItemSection] = useAtom(activeItemSectionAtom);
   const [valueYourProgress, setValueYourProgress] = useAtom(valueProgressAtom);
+  const [reviewed, setReviewed] = useAtom(reviewedAtom);
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
@@ -147,7 +150,12 @@ const Lesson = () => {
       handleScrollTop();
     },
   });
-  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({});
+  const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
+    onSuccess: (res) => {
+      console.log(res, 'res234');
+      setReviewed(res?.data?.reviewed);
+    },
+  });
 
   const { dataListReviewSummary, run: runGetListReviewSummary } =
     useGetListReviewSummary();

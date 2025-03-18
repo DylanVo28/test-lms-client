@@ -178,7 +178,7 @@ const MoreCourse = (props: any) => {
           <Text className="text-white truncate w-full" type="font-20-600">
             {t('More Course By')} {generateMentors()}
           </Text>
-          <div className="md:grid md:grid-cols-3 flex items-center overflow-auto gap-6">
+          <div className="lg:grid lg:grid-cols-3 flex items-center overflow-auto gap-6">
             {dataCourses?.length > 0 &&
               dataCourses.map((item: any, key: number) => {
                 return <CardCourse noLike item={item} key={key} />;

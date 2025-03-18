@@ -1,5 +1,6 @@
 /* eslint-disable require-await */
 import { API_PATH } from '@/api/constant';
+import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useRequest } from 'ahooks';
 
@@ -28,10 +29,15 @@ const serviceGetPrices = async () => {
   return await privateRequest(request.get, API_PATH.FILTER_PRICE, {});
 };
 
-export const useGetPrices = () => {
-  const { data, loading, run } = useRequest(async () => {
-    return await serviceGetPrices();
-  });
+export const useGetPrices = (options?: IOptions) => {
+  const { data, loading, run } = useRequest(
+    async () => {
+      return await serviceGetPrices();
+    },
+    {
+      ...options,
+    }
+  );
 
   return {
     data,
@@ -44,10 +50,15 @@ const serviceGetTopics = async () => {
   return await privateRequest(request.get, API_PATH.FILTER_TOPIC, {});
 };
 
-export const useGetTopics = () => {
-  const { data, loading, run } = useRequest(async () => {
-    return await serviceGetTopics();
-  });
+export const useGetTopics = (options?: IOptions) => {
+  const { data, loading, run } = useRequest(
+    async () => {
+      return await serviceGetTopics();
+    },
+    {
+      ...options,
+    }
+  );
 
   return {
     data,
@@ -60,10 +71,15 @@ const serviceGetLevels = async () => {
   return await privateRequest(request.get, API_PATH.FILTER_LEVEL, {});
 };
 
-export const useGetLevels = () => {
-  const { data, loading, run } = useRequest(async () => {
-    return await serviceGetLevels();
-  });
+export const useGetLevels = (options?: IOptions) => {
+  const { data, loading, run } = useRequest(
+    async () => {
+      return await serviceGetLevels();
+    },
+    {
+      ...options,
+    }
+  );
 
   return {
     data,
@@ -76,10 +92,15 @@ const serviceGetLanguages = async () => {
   return await privateRequest(request.get, API_PATH.FILTER_LANGUAGE, {});
 };
 
-export const useGetLanguages = () => {
-  const { data, loading, run } = useRequest(async () => {
-    return await serviceGetLanguages();
-  });
+export const useGetLanguages = (options?: IOptions) => {
+  const { data, loading, run } = useRequest(
+    async () => {
+      return await serviceGetLanguages();
+    },
+    {
+      ...options,
+    }
+  );
 
   return {
     data,
@@ -124,10 +145,15 @@ const serviceGetFeatures = async () => {
   return await privateRequest(request.get, API_PATH.FILTER_FEATURES, {});
 };
 
-export const useGetFeatures = () => {
-  const { data, loading, run } = useRequest(async () => {
-    return await serviceGetFeatures();
-  });
+export const useGetFeatures = (options?: IOptions) => {
+  const { data, loading, run } = useRequest(
+    async () => {
+      return await serviceGetFeatures();
+    },
+    {
+      ...options,
+    }
+  );
 
   return {
     data,

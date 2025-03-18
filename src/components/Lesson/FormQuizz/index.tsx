@@ -7,6 +7,8 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
+import { reviewedAtom } from '..';
+import { useAtom } from 'jotai';
 
 const FormQuizz = ({
   startTakingTest,
@@ -56,6 +58,7 @@ const FormQuizz = ({
   const lastIndex = allItems.findIndex(
     (item: any) => item?.id === dataQuizz?.id
   );
+  const [reviewed] = useAtom(reviewedAtom);
 
   return (
     <div className="relative group">
@@ -83,6 +86,7 @@ const FormQuizz = ({
       {startTakingTest ? (
         <FormStartTakingTest
           isLast={!dataItemNext}
+          reviewed={reviewed}
           handleProgressStatusQuizz={handleProgressStatusQuizz}
           handleClickContinueQuizz={(id) => {
             if (lastIndex === allItems?.length - 1) {
@@ -142,7 +146,7 @@ const FormQuizz = ({
           </div>
         </div>
       )}
-      {!isMobile && (
+      {!isMobile && !reviewed && (
         <Button
           className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly

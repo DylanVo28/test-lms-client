@@ -9,6 +9,8 @@ import { useState } from 'react';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
+import { reviewedAtom } from '..';
+import { useAtom } from 'jotai';
 
 const FormEndCourse = ({
   courseId,
@@ -22,6 +24,7 @@ const FormEndCourse = ({
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
   const { navigate } = useNavigate();
+  const [reviewed, setReviewed] = useAtom(reviewedAtom);
 
   const [submitReviewSuccess, setSubmitReviewSuccess] =
     useState<boolean>(false);
@@ -32,6 +35,7 @@ const FormEndCourse = ({
       setValueRating(0);
       setSubmitReviewSuccess(true);
       handleGetReviews();
+      setReviewed(true);
     },
     onError(err) {
       setValueComment('');

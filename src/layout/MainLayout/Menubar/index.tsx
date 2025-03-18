@@ -8,12 +8,18 @@ import { useMemo, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
+import { getAccessToken } from '@/store/auth';
+import { useAccount, useConnect } from 'wagmi';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const Menubar = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
+  const accessToken = getAccessToken();
+
+  const { openConnectModal }: any = useConnectModal();
 
   const MENUS = useMemo(
     () =>
@@ -50,6 +56,10 @@ const Menubar = () => {
     [profile?.role]
   );
   const handleClickRedirectPage = (key: number) => {
+    if (!accessToken) {
+      openConnectModal();
+      return;
+    }
     const menuItem = MENUS.find((item) => item.key === key);
     if (key === 2 && menuItem?.href) {
       const url = menuItem?.href;

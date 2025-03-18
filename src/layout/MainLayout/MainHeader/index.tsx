@@ -45,7 +45,7 @@ const MainHeader = () => {
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const { theme } = useTheme();
-  const [notifications] = useAtom(notificationAtom);
+  const [notifications, setNotifications] = useAtom(notificationAtom);
   const prevIsConnected = useRef<boolean | null>(null);
   const prevAddress = useRef<string | null>(null);
   const { profile } = useProfile();
@@ -119,6 +119,7 @@ const MainHeader = () => {
       setAuthCookies({
         token: '',
       });
+      setNotifications({});
       setProfile(initialProfile);
     }
 
@@ -147,8 +148,6 @@ const MainHeader = () => {
       // });
     }
   };
-
-  console.log(theme, 'theme');
 
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">

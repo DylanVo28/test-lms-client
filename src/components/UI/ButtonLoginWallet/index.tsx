@@ -21,6 +21,8 @@ import {
 } from '@/layout/MainLayout/MainHeader/service';
 import { useRouter } from 'next/router';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import { useAtom } from 'jotai';
+import { notificationAtom } from '@/store/notification/notification';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
@@ -36,6 +38,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const { requestGetProfile, setProfile } = useProfileInitial();
   const token = getAccessToken();
+  const [notifications, setNotifications] = useAtom(notificationAtom);
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -133,6 +136,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
     if (!isConnected) {
       initialCheckDone.current = false;
       setIsProcessing(false);
+      setNotifications({});
     }
   }, [isConnected]);
 

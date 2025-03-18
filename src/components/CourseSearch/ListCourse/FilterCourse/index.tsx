@@ -1,9 +1,7 @@
 import AccordionCustom from '@/components/UI/AccordionCustom';
 import InputText from '@/components/UI/InputText';
-import TagCount from '@/components/UI/TagCount';
 import Text from '@/components/UI/Text';
 import {
-  useGetCategories,
   useGetFeatures,
   useGetLanguages,
   useGetLevels,
@@ -12,22 +10,9 @@ import {
   useGetTopics,
 } from '@/services/filter.service';
 import { mapRatingData } from '@/utils/common';
-import {
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  Radio,
-  RadioGroup,
-} from '@nextui-org/react';
+import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
-import Image from 'next/image';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Rater from 'react-rater';
 import 'react-rater/lib/react-rater.css';
 import { useTranslation } from 'next-i18next';
@@ -65,12 +50,39 @@ const FilterCourse = (props: any) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef: any = useRef(null);
   const [contentHeight, setContentHeight] = useState(0);
+
+  const [langues, setLangues] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [levels, setLevels] = useState([]);
+  const [pricesData, setPricesData] = useState([]);
+
   const { data: ratingsData } = useGetRatings();
-  const { data: languagesData } = useGetLanguages();
-  const { data: featuresData } = useGetFeatures();
-  const { data: topicsData } = useGetTopics();
-  const { data: levelsData } = useGetLevels();
-  const { data: prices } = useGetPrices();
+  const { data: languagesData } = useGetLanguages({
+    onSuccess: (res) => {
+      setLangues(res?.data);
+    },
+  });
+  const { data: featuresData } = useGetFeatures({
+    onSuccess: (res) => {
+      setFeatures(res?.data);
+    },
+  });
+  const { data: topicsData } = useGetTopics({
+    onSuccess: (res) => {
+      setTopics(res?.data);
+    },
+  });
+  const { data: levelsData } = useGetLevels({
+    onSuccess: (res) => {
+      setLevels(res?.data);
+    },
+  });
+  const { data: prices } = useGetPrices({
+    onSuccess: (res) => {
+      setPricesData(res?.data);
+    },
+  });
   const [ratings, setRatings] = useState([]);
   const { t } = useTranslation('common');
 
@@ -92,6 +104,42 @@ const FilterCourse = (props: any) => {
       setContentHeight(contentRef.current.scrollHeight);
     }
   }, [expanded, DATA_LANGUAGE]);
+
+  const onSearchLanguages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    const filteredLangs = languagesData?.data?.filter((lang: any) =>
+      lang.label.toLowerCase().includes(value)
+    );
+    setLangues(filteredLangs);
+  };
+  const onSearchFeatures = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    const filteredFeatures = featuresData?.data?.filter((feaure: any) =>
+      feaure.label.toLowerCase().includes(value)
+    );
+    setFeatures(filteredFeatures);
+  };
+  const onSearchTopic = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    const filteredTopics = topicsData?.data?.filter((topic: any) =>
+      topic.label.toLowerCase().includes(value)
+    );
+    setTopics(filteredTopics);
+  };
+  const onSearchLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    const filteredLevels = levelsData?.data?.filter((level: any) =>
+      level.label.toLowerCase().includes(value)
+    );
+    setLevels(filteredLevels);
+  };
+  const onSearchPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    const filteredPrices = prices?.data?.filter((price: any) =>
+      price.label.toLowerCase().includes(value)
+    );
+    setPricesData(filteredPrices);
+  };
 
   return (
     <div className="flex flex-col gap-5 mx-[-8px]">
@@ -133,9 +181,9 @@ const FilterCourse = (props: any) => {
                   <Text className="text-white" type="font-14-400">
                     {item?.label}
                   </Text>
-                  <Text className="text-black-7" type="font-14-400">
+                  {/* <Text className="text-black-7" type="font-14-400">
                     ({item?.total})
-                  </Text>
+                  </Text> */}
                 </div>
               </Radio>
             );
@@ -154,10 +202,14 @@ const FilterCourse = (props: any) => {
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder={t('Search...')} />
+          <InputText
+            onChange={onSearchLanguages}
+            isFilter
+            placeholder={t('Search...')}
+          />
           <div className="flex flex-col gap-2">
             <CheckboxGroup size="lg" radius="sm" value={params.langs}>
-              {languagesData?.data?.map((item: any) => {
+              {langues?.map((item: any) => {
                 return (
                   <Checkbox
                     classNames={{
@@ -272,9 +324,13 @@ const FilterCourse = (props: any) => {
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder={t('Search...')} />
+          <InputText
+            onChange={onSearchFeatures}
+            isFilter
+            placeholder={t('Search...')}
+          />
           <CheckboxGroup size="lg" radius="sm" value={params.features}>
-            {featuresData?.data?.map((item: any) => {
+            {features?.map((item: any) => {
               return (
                 <Checkbox
                   classNames={{
@@ -324,9 +380,13 @@ const FilterCourse = (props: any) => {
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder={t('Search...')} />
+          <InputText
+            onChange={onSearchTopic}
+            isFilter
+            placeholder={t('Search...')}
+          />
           <CheckboxGroup size="lg" radius="sm" value={params.topics}>
-            {topicsData?.data?.map((item: any) => {
+            {topics?.map((item: any) => {
               return (
                 <Checkbox
                   classNames={{
@@ -374,9 +434,13 @@ const FilterCourse = (props: any) => {
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder={t('Search...')} />
+          <InputText
+            onChange={onSearchLevel}
+            isFilter
+            placeholder={t('Search...')}
+          />
           <CheckboxGroup size="lg" radius="sm" value={params.levels}>
-            {levelsData?.data?.map((item: any) => {
+            {levels?.map((item: any) => {
               return (
                 <Checkbox
                   classNames={{
@@ -424,9 +488,13 @@ const FilterCourse = (props: any) => {
         }
       >
         <div className="flex flex-col gap-4">
-          <InputText isFilter placeholder={t('Search...')} />
+          <InputText
+            onChange={onSearchPrice}
+            isFilter
+            placeholder={t('Search...')}
+          />
           <CheckboxGroup size="lg" radius="sm" value={params.prices}>
-            {prices?.data?.map((item: any) => {
+            {pricesData?.map((item: any) => {
               return (
                 <Checkbox
                   classNames={{
