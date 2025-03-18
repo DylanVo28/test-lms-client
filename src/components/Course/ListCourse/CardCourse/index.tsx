@@ -106,14 +106,12 @@ const CardCourse = ({ item }: { item?: any }) => {
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.originPrice
-                  ? `$ ${formatNumber(item?.originPrice)}`
-                  : t('Free')}
+                {item?.price ? `$ ${formatNumber(item?.price)}` : t('Free')}
               </Text>
             </div>
-            {item?.price && (
+            {item?.originPrice && (
               <Text type="font-14-400" className="text-black-6 line-through">
-                $ {formatNumber(item.price)}
+                $ {formatNumber(item.originPrice)}
               </Text>
             )}
           </div>
