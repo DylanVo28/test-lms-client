@@ -3,6 +3,7 @@ import {
   Drawer,
   DrawerContent,
   DrawerHeader,
+  Slider,
   useDisclosure,
 } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
@@ -22,6 +23,10 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
 import InputText from '@/components/UI/InputText';
 import { useSearchParams } from 'next/navigation';
+import TagInput, { topicsAtom } from '@/components/UI/TagInput';
+import { useAtom } from 'jotai';
+import InputTextArena from '@/components/UI/InputTextArena';
+import EditBanner from './EditBanner';
 
 const DEFAULT_SELECT_LANG = 'en';
 const DEFAULT_COLOR = '#02A6C2';
@@ -33,6 +38,11 @@ const ThemeConfiguration = ({}: {}) => {
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
   const [code, setCode] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [topics, setTopics] = useAtom(topicsAtom);
+  const [banner, setBanner] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+
   const [valueColorTheme, setValueColorTheme] = useState<any>({});
 
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
@@ -78,6 +88,14 @@ const ThemeConfiguration = ({}: {}) => {
     setCode(e.target.value);
   };
 
+  const onChangeTitle = (e: any) => {
+    setTitle(e.target.value);
+  };
+
+  const onChangeDescription = (e: any) => {
+    setDescription(e.target.value);
+  };
+
   const onSave = () => {
     const body = {
       color: valueColorTheme?.color,
@@ -85,6 +103,10 @@ const ThemeConfiguration = ({}: {}) => {
       modeTheme: valueColorTheme?.modeTheme,
       logo,
       langs,
+      title,
+      banner,
+      description,
+      topics,
     };
     if (dataThemeConfig?.userId) {
       updateTheme(dataThemeConfig.userId, body);
@@ -96,10 +118,15 @@ const ThemeConfiguration = ({}: {}) => {
   useEffect(() => {
     setLogo(dataThemeConfig.logo);
     setCode(dataThemeConfig.code);
+    setTitle(dataThemeConfig?.title);
+    setDescription(dataThemeConfig?.description);
+    setTopics(dataThemeConfig?.topics);
+    setBanner(dataThemeConfig?.banner);
     setValueColorTheme({
       color: dataThemeConfig?.color,
       modeTheme: dataThemeConfig?.modeTheme,
     });
+
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
       i18n.changeLanguage(dataThemeConfig.langs[0]);
@@ -132,6 +159,10 @@ const ThemeConfiguration = ({}: {}) => {
       `${process.env.NEXT_PUBLIC_APP_URL}/${code}`
     );
     toast.success(t('Copied!'));
+  };
+
+  const onChangeBanner = (urlImg: string) => {
+    setBanner(urlImg);
   };
 
   const handleChangeValueColor = (item: any, modeTheme: ImodeTheme) => {
@@ -169,7 +200,7 @@ const ThemeConfiguration = ({}: {}) => {
 
               <Divided />
               <div className="flex flex-col gap-[32px] p-0">
-                <>
+                <div className="flex flex-col gap-4">
                   <Text className="text-[18px] font-semibold">
                     {t('Domain')}
                   </Text>
@@ -194,8 +225,45 @@ const ThemeConfiguration = ({}: {}) => {
                   >
                     {t('Copy Address')}
                   </Button>
-                </>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <Text className="text-[18px] font-semibold">
+                    {t('Title')}
+                  </Text>
+                  <InputText
+                    inputDefault
+                    onChange={onChangeTitle}
+                    value={title}
+                    className="w-full rounded-[4px] active:outline-hidden"
+                    // radius="sm"
+                    placeholder={t('Title')}
+                  />
+                </div>
+                <div className="flex flex-col gap-4">
+                  <Text className="text-[18px] font-semibold">
+                    {t('Description')}
+                  </Text>
+                  <InputTextArena
+                    inputDefault
+                    onChange={onChangeDescription}
+                    value={description}
+                    minRows={4}
+                    className="w-full rounded-[4px] active:outline-hidden"
+                    // radius="sm"
+                    placeholder={t('Description')}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <Text className="text-[18px] font-semibold">
+                    {t('Topics')}
+                  </Text>
+                  <TagInput />
+                </div>
+                <EditBanner value={banner} onChange={onChangeBanner} />
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
+
                 <ColorTheme
                   valueColorTheme={valueColorTheme}
                   handleChangeValueColor={handleChangeValueColor}

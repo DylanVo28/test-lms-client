@@ -39,7 +39,7 @@ const InputTextArena = (props: InputTextProps) => {
     errors,
     placeholder,
     type,
-    radius = 'full',
+    radius = 'sm',
     className = '',
     borderNone = false,
     readOnly,

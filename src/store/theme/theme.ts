@@ -11,6 +11,11 @@ export interface InitTheme {
   kolId: string;
   createdAt: string;
   updatedAt: string;
+  title: string;
+  banner: string;
+  description: string;
+
+  topics: string[];
 }
 
 export enum ImodeTheme {
@@ -22,11 +27,15 @@ export const initialTheme: InitTheme = {
   id: '',
   logo: '',
   color: '',
+  title: '',
+  topics: [],
+  description: '',
   modeTheme: 'dark',
   langs: [],
   code: '',
   userId: '',
   kolId: '',
+  banner: '',
   createdAt: '',
   updatedAt: '',
 };
