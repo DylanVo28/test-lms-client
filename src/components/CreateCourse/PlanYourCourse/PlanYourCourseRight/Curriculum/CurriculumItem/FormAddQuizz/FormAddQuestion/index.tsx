@@ -130,6 +130,7 @@ const FormAddQuestion = ({
               value={field.value}
               inputQuizz
               label={t('Ask a question')}
+              placeholder={t('Question')}
             />
           )}
         />

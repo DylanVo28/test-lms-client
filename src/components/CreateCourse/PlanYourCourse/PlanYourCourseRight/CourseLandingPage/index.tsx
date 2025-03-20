@@ -64,7 +64,7 @@ const CourseLandingPage = ({
               onChange={field.onChange}
               maxLength={160}
               label={t('Course title')}
-              placeholder={t('Type')}
+              placeholder={t('From Beginner to Expert')}
               inputDefault
             />
           )}
@@ -85,7 +85,7 @@ const CourseLandingPage = ({
               onChange={field.onChange}
               maxLength={160}
               label={t('Course subtitle')}
-              placeholder={t('Type')}
+              placeholder={t('Everything You Need to Know to Get Started')}
               inputDefault
             />
           )}
@@ -102,7 +102,9 @@ const CourseLandingPage = ({
           control={control}
           render={({ field }) => (
             <QuillEditor
-              placeholder={t('Add a new note...')}
+              placeholder={t(
+                'Are you ready to master [Topic]? This comprehensive course will take you from beginner to expert, covering everything you need to know step by step...'
+              )}
               onChange={field.onChange}
               value={field.value}
               label={t('Course description')}
@@ -184,7 +186,7 @@ const CourseLandingPage = ({
               />
             )}
           />
-          <Controller
+          {/* <Controller
             name="subCategoryId"
             control={control}
             render={({ field }) => (
@@ -204,7 +206,7 @@ const CourseLandingPage = ({
                 }
               />
             )}
-          />
+          /> */}
         </div>
         <Text type="font-12-400" className="text-black-7">
           {t(
