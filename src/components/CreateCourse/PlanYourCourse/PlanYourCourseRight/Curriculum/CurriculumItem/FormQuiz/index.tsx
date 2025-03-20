@@ -36,7 +36,7 @@ const FormQuiz = ({
             classInputWrapper="!min-h-[34px]"
             onChange={(e: any) => setValueTitle(e.target.value)}
             className="w-full"
-            placeholder={t('Enter title')}
+            placeholder={t('Introduction to JavaScript Functions')}
             inputDefault
           />
           <QuillEditor

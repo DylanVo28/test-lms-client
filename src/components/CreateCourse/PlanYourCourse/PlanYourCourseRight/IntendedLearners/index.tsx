@@ -82,7 +82,11 @@ const IntendedLearners = ({
                         endContent
                         className="md:min-w-[500px]"
                         placeholder={
-                          item?.pladholder ? item?.pladholder : t('Type')
+                          item?.pladholder
+                            ? item?.pladholder
+                            : t(
+                                'Understand the fundamentals of [Topic] and its real-world applications'
+                              )
                         }
                         inputDefault
                       />
@@ -142,7 +146,11 @@ const IntendedLearners = ({
                       endContent
                       className="md:min-w-[500px]"
                       placeholder={
-                        item?.pladholder ? item?.pladholder : t('Type')
+                        item?.pladholder
+                          ? item?.pladholder
+                          : t(
+                              'No prior experience needed – this course is beginner-friendly!'
+                            )
                       }
                       inputDefault
                     />
@@ -198,7 +206,11 @@ const IntendedLearners = ({
                       endContent
                       className="md:min-w-[500px]"
                       placeholder={
-                        item?.pladholder ? item?.pladholder : t('Type')
+                        item?.pladholder
+                          ? item?.pladholder
+                          : t(
+                              'Beginners who want to learn [Topic] from scratch'
+                            )
                       }
                       inputDefault
                     />

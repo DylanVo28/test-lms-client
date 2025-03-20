@@ -48,7 +48,7 @@ const FormAddSection = ({
                   onChange={field.onChange}
                   value={field.value}
                   className="w-full"
-                  placeholder={t('Type')}
+                  placeholder={t('Mastering the Fundamentals of [Topic]')}
                   inputDefault
                 />
               );
@@ -73,7 +73,9 @@ const FormAddSection = ({
                     onChange={field.onChange}
                     value={field.value}
                     className="w-full"
-                    placeholder={t('Type')}
+                    placeholder={t(
+                      'Apply the key concepts of [Topic] to solve real-world problems'
+                    )}
                     inputDefault
                   />
                 );
