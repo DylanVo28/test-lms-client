@@ -20,25 +20,12 @@ deploy_to_vps:
     # Deploy to VPS
     - ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "echo 'SSH Connection Successful'"
     - ssh -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST << 'EOF'
-      set -e
-      cd ~/lms/lms-fe
-      echo "🔙 Creating backup of current build..."
-      rm -rf .next_backup
-      cp -r .next .next_backup || echo "⚠️ No previous build found, skipping backup."
-      git pull origin develop
-      cp .env.example .env
-      npm install -f
-      echo "🚧 Building the app..."
-      if npm run build; then
-      echo "✅ Build successful!"
-      pm2 reload lms-web --update-env
-      else
-      echo "❌ Build failed! Rolling back to previous version..."
-      rm -rf .next
-      mv .next_backup .next || echo "⚠️ No backup found, rollback failed."
-      pm2 reload lms-web --update-env
-      exit 1
-      fi
+    - cd ~/lms/lms-fe
+    - git pull origin develop
+    - cp .env.example .env
+    - npm install -f
+    - npm run build
+    - pm2 reload lms-web --update-env
     - EOF
 
   environment:
