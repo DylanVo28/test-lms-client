@@ -14,7 +14,7 @@ const FormAddSection = ({
   valueLesson,
 }: {
   handleCancelFormAddSection: VoidFunction;
-  control: Control;
+  control: string;
   handleSubmit: any;
   handleSaveAddSection: any;
   loading: boolean;
