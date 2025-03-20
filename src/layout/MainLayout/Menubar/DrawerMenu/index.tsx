@@ -32,6 +32,7 @@ const DrawerMenu = (props: any, ref: any) => {
   const { profile } = useProfile();
   const accessToken = getAccessToken();
   const { openConnectModal }: any = useConnectModal();
+  const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
   const { navigate } = useNavigate();
@@ -85,6 +86,10 @@ const DrawerMenu = (props: any, ref: any) => {
       menuItem?.href && navigate(menuItem?.href);
     }
     onVisible();
+  };
+
+  const onOpen = () => {
+    setOpen(true);
   };
 
   const onVisible = () => {
@@ -160,6 +165,9 @@ const DrawerMenu = (props: any, ref: any) => {
                       width: '100%',
                       paddingRight: '24px',
                     }}
+                    isOpen={isOpen}
+                    onClose={() => setOpen(false)}
+                    onOpenChange={onOpen}
                     classNames={{
                       content:
                         'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
@@ -196,7 +204,7 @@ const DrawerMenu = (props: any, ref: any) => {
                       </div>
                     </PopoverTrigger>
                     <PopoverContent>
-                      <Notification />
+                      <Notification isOpen={isOpen} />
                     </PopoverContent>
                   </Popover>
                   <ButtonLoginWallet setVisible={setVisible} />
