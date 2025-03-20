@@ -20,51 +20,64 @@ const ListNotification = ({
         listNotification?.length > 0 &&
         listNotification?.map((item: any) => {
           return (
-            <Tooltip content={item?.body} key={item?.id}>
-              <div
-                onClick={() => handleReadNotification(item)}
-                className={clsx(
-                  'p-2 flex rounded  cursor-pointer transition-all hover:bg-black-4 justify-between items-center gap-4',
-                  {
-                    ['bg-black-4']: !item?.read,
-                  }
-                )}
-              >
-                <div className="flex items-center gap-4">
-                  <div>
-                    {item?.data?.avatar ? (
-                      <Image
-                        src={item?.data?.avatar}
-                        className="w-10 h-10"
-                        width={40}
-                        height={40}
-                        alt="avtar"
-                        layout="contain"
-                      />
-                    ) : (
-                      <Avatar src="" className="w-10 h-10" />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <Text type="font-16-500" className="truncate max-w-[430px]">
-                      {item?.body}
-                    </Text>
-                    <Text type="font-14-400" className="text-secondary-500">
-                      {dayjs(item?.createdAt).format('DD/MM/YYYY hh:mm A')}
-                    </Text>
-                  </div>
-                </div>
-
+            <div
+              key={item?.id}
+              onClick={() => handleReadNotification(item)}
+              className={clsx(
+                'p-2 flex rounded  cursor-pointer transition-all hover:bg-black-4 justify-between items-center gap-4',
+                {
+                  ['bg-black-4']: !item?.read,
+                }
+              )}
+            >
+              <div className="flex items-center gap-4">
                 <div>
-                  {!item?.read && (
-                    <div
-                      className="w-2 h-2 rounded-full bg-error-1
-                  "
+                  {item?.data?.avatar ? (
+                    <Image
+                      src={item?.data?.avatar}
+                      className="w-10 h-10"
+                      width={40}
+                      height={40}
+                      alt="avtar"
+                      layout="contain"
                     />
+                  ) : (
+                    <Avatar src="" className="w-10 h-10" />
                   )}
                 </div>
+                <div className="flex flex-col gap-1">
+                  <Tooltip
+                    radius="md"
+                    classNames={{
+                      content: 'p-2 rounded',
+                    }}
+                    content={item?.body}
+                  >
+                    <a>
+                      <Text
+                        type="font-16-500"
+                        className="truncate max-w-[430px]"
+                      >
+                        {item?.body}
+                      </Text>
+                    </a>
+                  </Tooltip>
+
+                  <Text type="font-14-400" className="text-secondary-500">
+                    {dayjs(item?.createdAt).format('DD/MM/YYYY hh:mm A')}
+                  </Text>
+                </div>
               </div>
-            </Tooltip>
+
+              <div>
+                {!item?.read && (
+                  <div
+                    className="w-2 h-2 rounded-full bg-error-1
+                  "
+                  />
+                )}
+              </div>
+            </div>
           );
         })}
 

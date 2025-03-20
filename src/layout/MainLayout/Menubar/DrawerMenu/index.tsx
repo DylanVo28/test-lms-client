@@ -21,6 +21,8 @@ import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
+import { getAccessToken } from '@/store/auth';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const DrawerMenu = (props: any, ref: any) => {
   const { t } = useTranslation('common');
@@ -28,6 +30,8 @@ const DrawerMenu = (props: any, ref: any) => {
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
   const { profile } = useProfile();
+  const accessToken = getAccessToken();
+  const { openConnectModal }: any = useConnectModal();
 
   const router = useRouter();
   const { navigate } = useNavigate();
@@ -68,6 +72,11 @@ const DrawerMenu = (props: any, ref: any) => {
   );
 
   const handleClickRedirectPage = (key: number) => {
+    if (!accessToken) {
+      openConnectModal();
+      return;
+    }
+
     const menuItem = MENUS.find((item) => item.key === key);
 
     if (key === 2 && menuItem?.href) {

@@ -223,7 +223,7 @@ const ListCourse = () => {
               </div>
 
               <div
-                className={clsx('grid grid-cols-1 md:grid-cols-3 gap-6', {})}
+                className={clsx('grid grid-cols-1 lg:grid-cols-3 gap-6', {})}
               >
                 {dataCourses.map((item: any, key: number) => {
                   return (

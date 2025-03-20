@@ -19,7 +19,7 @@ import { getAccessToken } from '@/store/auth';
 
 dayjs.extend(relativeTime);
 
-const CardCourse = ({
+const CardCourseMore = ({
   item,
   noLike,
   handleLike,
@@ -32,11 +32,10 @@ const CardCourse = ({
   item: any;
   noLike?: boolean;
 }) => {
-  const accessToken = getAccessToken();
-
   const router = useRouter();
   const { t } = useTranslation('common');
   const { navigate } = useNavigate();
+  const accessToken = getAccessToken();
 
   const handleClickCardCourse = () => {
     navigate(ROUTE_PATH.DETAIL_COURSE(item.id));
@@ -54,7 +53,7 @@ const CardCourse = ({
   return (
     <div
       onClick={handleClickCardCourse}
-      className="flex flex-col h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80"
+      className="flex flex-col rounded transition-all min-w-max md:min-w-max lg:min-w-full relative  cursor-pointer duration-300 hover:opacity-80 h-full"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
@@ -65,7 +64,6 @@ const CardCourse = ({
         <div className="absolute right-2 top-2">
           <Button
             isIconOnly
-            isDisabled={!accessToken}
             onPress={() => {
               if (item?.liked) {
                 handleUnLike && handleUnLike(item?.id);
@@ -74,6 +72,7 @@ const CardCourse = ({
               }
             }}
             variant="light"
+            isDisabled={!accessToken}
             className="hover:!bg-white-25 rounded-full"
           >
             {item?.liked || isWishList ? (
@@ -89,7 +88,7 @@ const CardCourse = ({
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white-10 w-full rounded rounded-b-none"
+        className="bg-white-10 w-full lg:w-max rounded rounded-b-none"
       >
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
@@ -97,14 +96,14 @@ const CardCourse = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[200px] rounded rounded-b-none bg-white-10"
+          className="w-full h-[200px] lg:w-max rounded rounded-b-none bg-white-10"
           // objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
       </a>
-      <div className="py-4 px-3 w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
+      <div className="py-4 px-3 max-w-[302px] min-h-[196px] lg:min-w-[302px] lg:min-h-max lg:w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
@@ -128,7 +127,7 @@ const CardCourse = ({
           </Text>
           <div className="flex flex-col gap-[14px] pb-4">
             <div className="flex items-center gap-2">
-              <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
+              <Text type="font-14-500">{item?.rating}</Text>
               <ReactStars
                 count={5}
                 color1="#D9D9D9"
@@ -185,4 +184,4 @@ const CardCourse = ({
     </div>
   );
 };
-export default CardCourse;
+export default CardCourseMore;

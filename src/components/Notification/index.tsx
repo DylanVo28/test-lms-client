@@ -7,6 +7,7 @@ import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
 import clsx from 'clsx';
 import { getAccessToken } from '@/store/auth';
+import { useTheme } from '@/store/theme/useTheme';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -14,16 +15,21 @@ export enum TAB_NOTIFICATION {
   STUDENT = 'STUDENT',
 }
 
-const Notification = () => {
-  const { t } = useTranslation('common');
+const Notification = ({ isOpen }: { isOpen: boolean }) => {
+  const { t, i18n } = useTranslation('common');
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
   const token = getAccessToken();
+
+  // const findLang = (code: string) => {
+  //   return languages.find((lang) => lang.code === code)?.name || '';
+  // };
 
   const onChangeTab = (tab: any) => {
     const params = {
       page: 1,
       pageSize: 50,
       userType: tab === TAB_NOTIFICATION?.VIEW_ALL ? '' : tab,
+      lang: i18n.language,
     };
     requestGetNotification.run(params);
 
@@ -39,15 +45,16 @@ const Notification = () => {
   } = useNotifications();
 
   useEffect(() => {
-    if (token) {
+    if (token && isOpen) {
       const params = {
         page: 1,
         pageSize: 50,
+        lang: i18n.language,
       };
       requestCheckHasNotification?.run();
       requestGetNotification.run(params);
     }
-  }, [token]);
+  }, [token, isOpen]);
 
   const DATA_TAB_NOTIFICATION = [
     {

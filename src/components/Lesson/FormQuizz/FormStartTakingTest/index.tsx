@@ -219,7 +219,8 @@ const FormStartTakingTest = ({
           </Button>
         )}
         {stepAnswerQuestion === STEP_ANSWER_QUESTION.CONTINUE &&
-          answerCorrectly && (
+          answerCorrectly &&
+          !reviewed && (
             <Button
               onPress={() => {
                 setStepAnswerQuestion('');

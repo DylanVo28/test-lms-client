@@ -34,6 +34,7 @@ export const getAllNotification = (filters?: any) => {
     page: filters?.page || 1,
     pageSize: filters?.pageSize || 10,
     userType: filters?.userType,
+    lang: filters?.lang,
   };
 
   if (!params?.userType) {

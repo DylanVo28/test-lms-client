@@ -20,6 +20,7 @@ import CustomButtonComment from '@/components/UI/CustomButtonComment';
 import NoData from '@/components/ListCourse/NoData';
 import { TypeReactions, formatWalletAddress } from '@/utils/common';
 import { useTranslation } from 'next-i18next';
+import CardCourseMore from './CardCourseMore';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
@@ -181,7 +182,7 @@ const MoreCourse = (props: any) => {
           <div className="lg:grid lg:grid-cols-3 flex h-full items-center lg:overflow-hidden overflow-auto gap-6">
             {dataCourses?.length > 0 &&
               dataCourses.map((item: any, key: number) => {
-                return <CardCourse noLike item={item} key={key} />;
+                return <CardCourseMore noLike item={item} key={key} />;
               })}
           </div>
           {dataCourses?.length == 0 && <NoData />}

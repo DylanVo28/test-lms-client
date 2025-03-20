@@ -70,7 +70,7 @@ module.exports = {
 
         gray: 'var(--theme-gray)',
         'secondary-500': 'var(--theme-secondary-500)',
-
+        secondary: 'var(--theme-main)',
         main: 'var(--theme-main)',
         'main-60': 'var(--theme-main-60)',
         'main-20': 'var(--theme-main-20)',

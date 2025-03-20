@@ -52,6 +52,7 @@ const MainHeader = () => {
   const { navigate } = useNavigate();
   // const { requestGetTheme } = useThemeInitial();
   const { disconnect } = useDisconnect();
+  const [isOpen, setOpen] = useState(false);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -161,6 +162,9 @@ const MainHeader = () => {
       // });
     }
   };
+  const onOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
@@ -210,6 +214,9 @@ const MainHeader = () => {
             <div className="border-1 border-gray-20 h-8" />
 
             <Popover
+              isOpen={isOpen}
+              onClose={() => setOpen(false)}
+              onOpenChange={onOpen}
               classNames={{
                 content:
                   'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
@@ -241,7 +248,7 @@ const MainHeader = () => {
                 </div>
               </PopoverTrigger>
               <PopoverContent>
-                <Notification />
+                <Notification isOpen={isOpen} />
               </PopoverContent>
             </Popover>
             {/* <Button

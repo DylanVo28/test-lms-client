@@ -73,15 +73,19 @@ export default function LanguageModal({ onClosePopover }: IProps) {
         </ModalHeader>
         <ModalBody>
           <RadioGroup
-            color="default"
+            classNames={{
+              wrapper: 'gap-3',
+            }}
             onChange={onChangeRadioGroup}
             value={i18n.language}
           >
             {showLangs.map((lang) => {
               return (
                 <Radio
+                  color="secondary"
                   classNames={{
-                    wrapper: 'after:!bg-main before:!border-black-7',
+                    wrapper:
+                      '!border-1 !border-black-7  group-data-[selected=true]:!border-main',
                   }}
                   key={lang.code}
                   value={lang.code}
@@ -93,7 +97,10 @@ export default function LanguageModal({ onClosePopover }: IProps) {
           </RadioGroup>
         </ModalBody>
         <ModalFooter>
-          <Button onPress={onClose} className="min-h-[40px] rounded mt-2">
+          <Button
+            onPress={onClose}
+            className="min-h-[40px] bg-main rounded mt-2"
+          >
             <Text className="text-white" type="font-16-600">
               {t('Close')}
             </Text>
