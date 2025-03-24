@@ -15,7 +15,14 @@ import AppLayout from '@/layout/AppLayout';
 import { appWithTranslation } from 'next-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, base } from 'wagmi/chains';
+import {
+  mainnet,
+  polygon,
+  optimism,
+  arbitrum,
+  base,
+  fantomTestnet,
+} from 'wagmi/chains';
 import {
   getDefaultConfig,
   RainbowKitProvider,
@@ -43,14 +50,16 @@ const { connectors } = getDefaultWallets({
 
 // Configure wagmi client
 const config = createConfig({
-  chains: [mainnet, polygon, optimism, arbitrum, base],
+  // chains: [mainnet, polygon, optimism, arbitrum, base],
+  chains: [fantomTestnet],
   connectors,
   transports: {
-    [mainnet.id]: http(),
-    [polygon.id]: http(),
-    [optimism.id]: http(),
-    [arbitrum.id]: http(),
-    [base.id]: http(),
+    [fantomTestnet.id]: http('https://rpc.testnet.fantom.network/'),
+    // [mainnet.id]: http(),
+    // [polygon.id]: http(),
+    // [optimism.id]: http(),
+    // [arbitrum.id]: http(),
+    // [base.id]: http(),
   },
   ssr: false,
   // Enhanced storage handling for WalletConnect

@@ -19,6 +19,10 @@ import { formatNumber, formatPrice } from '@/utils/common';
 import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
 import IconLikeCourse from '@/components/UI/IconLikeCourse';
 import ModalViewVideo from './ModalViewVideo';
+import { usdcAbi } from '@/abis/usdc';
+import { coursePaymentVaultAbi } from '@/abis/coursePaymentVault';
+import { useWriteContract } from 'wagmi';
+import { parseUnits } from 'viem';
 
 const CardEnrollNow = ({
   course,
@@ -45,6 +49,7 @@ const CardEnrollNow = ({
   const token = getAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
+  const { writeContractAsync } = useWriteContract();
 
   const refModalViewVideo: any = useRef(null);
 
@@ -196,11 +201,28 @@ const CardEnrollNow = ({
           {profile?.id !== course?.author?.id && (
             <CustomButtonEnroll
               course={course}
-              handleClickButton={() => {
+              handleClickButton={async () => {
                 if (course?.isOwner || course?.authorId === profile?.id) {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
-                  run(course.id);
+                  await writeContractAsync({
+                    abi: usdcAbi,
+                    address: '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F',
+                    functionName: 'approve',
+                    args: [
+                      '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
+                      parseUnits('0.1', 18),
+                    ],
+                  });
+
+                  const txHash = await writeContractAsync({
+                    abi: coursePaymentVaultAbi,
+                    address: '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
+                    functionName: 'pay',
+                    args: [course.id, parseUnits('0.1', 18)],
+                  });
+
+                  run(course.id, txHash);
                 }
               }}
               loading={loading}
