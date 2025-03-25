@@ -53,7 +53,8 @@ const CardEnrollNow = ({
 
   const refModalViewVideo: any = useRef(null);
 
-  const { run, loading } = useEnrollCourse({
+  const { run, loading, cancel } = useEnrollCourse({
+    pollingInterval: 5000,
     onSuccess: (res) => {
       console.log(res, 'res123');
 
@@ -62,6 +63,9 @@ const CardEnrollNow = ({
       }
     },
     onError: (err) => {
+      if (err?.message === 'Transaction failed') {
+        cancel();
+      }
       toast.error(err?.message);
     },
   });
