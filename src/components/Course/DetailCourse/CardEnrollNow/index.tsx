@@ -209,24 +209,31 @@ const CardEnrollNow = ({
                 if (course?.isOwner || course?.authorId === profile?.id) {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
-                  await writeContractAsync({
-                    abi: usdcAbi,
-                    address: '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F',
-                    functionName: 'approve',
-                    args: [
-                      '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
-                      parseUnits('0.1', 18),
-                    ],
-                  });
+                  try {
+                    await writeContractAsync({
+                      abi: usdcAbi,
+                      address: '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F',
+                      functionName: 'approve',
+                      args: [
+                        '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
+                        parseUnits('0.1', 18),
+                      ],
+                    });
 
-                  const txHash = await writeContractAsync({
-                    abi: coursePaymentVaultAbi,
-                    address: '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
-                    functionName: 'pay',
-                    args: [course.id, parseUnits('0.1', 18)],
-                  });
+                    const txHash = await writeContractAsync({
+                      abi: coursePaymentVaultAbi,
+                      address: '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
+                      functionName: 'pay',
+                      args: [course.id, parseUnits('0.1', 18)],
+                    });
 
-                  run(course.id, txHash);
+                    run(course.id, txHash);
+                  } catch (error) {
+                    console.error('Contract interaction failed:', error);
+                    toast.error(
+                      t('Failed to enroll in the course. Please try again.')
+                    );
+                  }
                 }
               }}
               loading={loading}
