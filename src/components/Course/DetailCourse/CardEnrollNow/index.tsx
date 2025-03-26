@@ -54,7 +54,7 @@ const CardEnrollNow = ({
   const refModalViewVideo: any = useRef(null);
 
   const { run, loading, cancel } = useEnrollCourse({
-    pollingInterval: 5000,
+    pollingInterval: 3000,
     onSuccess: (res) => {
       console.log(res, 'res123');
 
@@ -64,9 +64,9 @@ const CardEnrollNow = ({
     },
     onError: (err) => {
       if (err?.message === 'Transaction failed') {
+        toast.error(err?.message);
         cancel();
       }
-      toast.error(err?.message);
     },
   });
   const discountCalculator = (originPrice: any, price: any) => {
@@ -216,7 +216,7 @@ const CardEnrollNow = ({
                       functionName: 'approve',
                       args: [
                         '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
-                        parseUnits('0.1', 18),
+                        parseUnits('0.01', 18),
                       ],
                     });
 
@@ -224,7 +224,7 @@ const CardEnrollNow = ({
                       abi: coursePaymentVaultAbi,
                       address: '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35',
                       functionName: 'pay',
-                      args: [course.id, parseUnits('0.1', 18)],
+                      args: [course.id, parseUnits('0.01', 18)],
                     });
 
                     run(course.id, txHash);
