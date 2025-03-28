@@ -5,6 +5,17 @@ import { privateRequest, request } from '@/api/request';
 import { useInfiniteScroll, useRequest } from 'ahooks';
 import { useMemo } from 'react';
 
+const serviceMintCertificate = async (data: {
+  to: string;
+  certificateId: string;
+}) => {
+  return privateRequest(request.post, API_PATH.MINT_CERTIFICATE, { data });
+};
+
+export const useMintCertificate = (options?: IOptions) => {
+  return useRequest(serviceMintCertificate, { manual: true, ...options });
+};
+
 const getListUserCourse = async (params: any) => {
   return await privateRequest(request.get, API_PATH.MY_LEARNINGS, { params });
 };

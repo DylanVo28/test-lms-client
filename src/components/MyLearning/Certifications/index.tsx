@@ -2,21 +2,36 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { Info } from '@phosphor-icons/react';
 import Image from 'next/image';
-import { useGetMyCertificates } from '../service';
+import { useGetMyCertificates, useMintCertificate } from '../service';
 import NoData from '@/components/ListCourse/NoData';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
+import { toast } from '@/components/UI/Toast/toast';
 
 const Certifications = () => {
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const { dataListCertificates, loading, run } = useGetMyCertificates();
+  const { address: walletAddress } = useAccount();
+  const [tokenId, setTokenId] = useState('');
 
   useEffect(() => {
     run();
   }, [profile]);
+
+  const { run: runMintCertificate, loading: isMinting } = useMintCertificate({
+    onSuccess(res) {
+      setTokenId(res?.data?.tokenId);
+      toast.success('Minted certificate successfully');
+    },
+    onError(e) {
+      toast.error(e.message);
+    },
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
@@ -73,6 +88,21 @@ const Certifications = () => {
                     <Text type="font-16-400" className="text-black-7">
                       {item?.certificate?.description}
                     </Text>
+                    {!item?.tokenId && walletAddress && !tokenId && (
+                      <Button
+                        onPress={() =>
+                          runMintCertificate({
+                            to: walletAddress.toString(),
+                            certificateId: item.certificate.id,
+                          })
+                        }
+                        isLoading={isMinting}
+                      >
+                        <Text type="font-16-600" className="text-main">
+                          Mint
+                        </Text>
+                      </Button>
+                    )}
                   </div>
                 </div>
               );
