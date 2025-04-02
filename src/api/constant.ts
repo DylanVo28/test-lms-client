@@ -48,6 +48,8 @@ export const API_PATH = {
 
   CLAIM_CERTIFICATES: '/api/certificates/claim',
 
+  MINT_CERTIFICATE: '/api/mintNFT',
+
   FILTER_TOPIC: '/api/filters/topic',
 
   FILTER_LEVEL: '/api/filters/level',
