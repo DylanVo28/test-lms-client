@@ -172,7 +172,7 @@ const FormAddVideo = ({
         </Text>
       )}
       <Text type="font-12-500" className="text-yellow-500 italic">
-        {t('Note: All files must be at least 720p and less than 4 GB.')}
+        {t('Note: All files must be at least 720p and less than 500MB.')}
       </Text>
 
       <div className="flex justify-end items-end">
