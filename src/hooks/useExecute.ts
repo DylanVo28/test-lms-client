@@ -2,18 +2,18 @@ import BigNumber from 'bignumber.js';
 import { useCallback } from 'react';
 import { useSignMessage } from 'wagmi';
 import { getUSDCContract, getVaultContract } from './useContract';
+import { calculateGasMargin } from '@/utils/common';
+import { BIG_TEN } from '@/utils/bigNumber';
 
 const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
 const VAULT_ADDRESS = '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35';
 
 const parseAmount = (amount: string | number) => {
-  return BigNumber(amount)
-    .multipliedBy(10 ** 18)
-    .toFixed(0);
+  return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
 };
 
 export const useUSDCOperations = () => {
-  const { signMessage } = useSignMessage();
+  const { signMessageAsync } = useSignMessage();
 
   const usdcContract = getUSDCContract(USDC_ADDRESS);
   const vaultContract = getVaultContract(VAULT_ADDRESS);
@@ -26,13 +26,15 @@ export const useUSDCOperations = () => {
       }
       try {
         const message = `Approve ${spender} to spend ${amount} USDC`;
-        const sig = await signMessage({ message });
+        const sig = await signMessageAsync({ message });
         console.log('Signature created:', sig);
-        const estimateGas = await usdcContract.estimateGas.approve(
+        const estimatedGas = await usdcContract.estimateGas.approve(
           spender,
           parseAmount(amount)
         );
-        const tx = await usdcContract.approve(spender, parseAmount(amount));
+        const tx = await usdcContract.approve(spender, parseAmount(amount), {
+          gasLimit: calculateGasMargin(estimatedGas),
+        });
         console.log('Approval tx sent:', tx.hash);
         await tx.wait();
         console.log('Approval successful');
@@ -40,7 +42,7 @@ export const useUSDCOperations = () => {
         console.error('Approval failed:', error);
       }
     },
-    [usdcContract, signMessage]
+    [usdcContract, signMessageAsync]
   );
 
   const transferUSDC = useCallback(
@@ -51,13 +53,15 @@ export const useUSDCOperations = () => {
       }
       try {
         const message = `Buy course ${courseId} with ${amount} USDC`;
-        const sig = await signMessage({ message });
+        const sig = await signMessageAsync({ message });
         console.log('Signature created:', sig);
-        const estimateGas = await vaultContract.estimateGas.pay(
+        const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
           parseAmount(amount)
         );
-        const tx = await vaultContract.pay(courseId, parseAmount(amount));
+        const tx = await vaultContract.pay(courseId, parseAmount(amount), {
+          gasLimit: calculateGasMargin(estimatedGas),
+        });
         console.log('Transfer tx sent:', tx.hash);
         await tx.wait();
         console.log('Transfer successful');
@@ -65,7 +69,7 @@ export const useUSDCOperations = () => {
         console.error('Transfer failed:', error);
       }
     },
-    [vaultContract, signMessage]
+    [vaultContract, signMessageAsync]
   );
 
   return { approveUSDC, transferUSDC };

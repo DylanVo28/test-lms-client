@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber';
+
 export const mapRatingData = (rating: any) => {
   if (!rating) return {};
   const valueRating = rating?.value?.split('+');
@@ -101,3 +103,7 @@ export const formatPrice = (price: any) => {
     maximumFractionDigits: 2,
   }).format(price);
 };
+
+export function calculateGasMargin(value: BigNumber): BigNumber {
+  return value.mul(BigNumber.from(150)).div(BigNumber.from(100));
+}
