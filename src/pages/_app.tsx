@@ -39,11 +39,11 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-const projectId = 'fc44d249918338bb571eab6da79776df';
+export const projectId = 'fc44d249918338bb571eab6da79776df';
 const chains = [mainnet, polygon, optimism, arbitrum, base];
 
 // Initialize RainbowKit with wallets
-const { connectors } = getDefaultWallets({
+export const { connectors } = getDefaultWallets({
   appName: 'What Exchange',
   projectId,
 });
