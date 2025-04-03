@@ -28,7 +28,10 @@ export const useUSDCOperations = () => {
         const message = `Approve ${spender} to spend ${amount} USDC`;
         const sig = await signMessage({ message });
         console.log('Signature created:', sig);
-
+        const estimateGas = await usdcContract.estimateGas.approve(
+          spender,
+          parseAmount(amount)
+        );
         const tx = await usdcContract.approve(spender, parseAmount(amount));
         console.log('Approval tx sent:', tx.hash);
         await tx.wait();
@@ -50,7 +53,10 @@ export const useUSDCOperations = () => {
         const message = `Buy course ${courseId} with ${amount} USDC`;
         const sig = await signMessage({ message });
         console.log('Signature created:', sig);
-
+        const estimateGas = await vaultContract.estimateGas.pay(
+          courseId,
+          parseAmount(amount)
+        );
         const tx = await vaultContract.pay(courseId, parseAmount(amount));
         console.log('Transfer tx sent:', tx.hash);
         await tx.wait();
