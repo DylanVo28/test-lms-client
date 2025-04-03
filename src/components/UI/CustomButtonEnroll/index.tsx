@@ -17,6 +17,7 @@ const CustomButtonEnroll = ({
   label: string;
 }) => {
   const { t } = useTranslation('common');
+
   return (
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {
@@ -47,9 +48,14 @@ const CustomButtonEnroll = ({
                 isLoading={loading}
                 onPress={handleClickButton}
                 className="bg-main w-full min-h-[40px] rounded"
+                disabled={course?.enroll === 'pending'}
               >
                 <Text className="text-text-white" type="font-16-600">
-                  {course?.isOwner ? t('Go to course') : t('Enroll Now')}
+                  {course?.enroll === 'completed'
+                    ? t('Go to course')
+                    : course?.enroll === 'pending'
+                    ? t('Verifying...')
+                    : t('Enroll Now')}
                 </Text>
               </Button>
             )}

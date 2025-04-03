@@ -21,13 +21,12 @@ export const useUSDCOperations = () => {
   const approveUSDC = useCallback(
     async (spender: string, amount: string | number) => {
       if (!usdcContract) {
-        console.error('USDC contract chưa được khởi tạo');
+        console.error('USDC contract not initialized');
         return;
       }
       try {
         const message = `Approve ${spender} to spend ${amount} USDC`;
-        const sig = await signMessageAsync({ message });
-        console.log('Signature created:', sig);
+        await signMessageAsync({ message });
         const estimatedGas = await usdcContract.estimateGas.approve(
           spender,
           parseAmount(amount)
@@ -45,16 +44,15 @@ export const useUSDCOperations = () => {
     [usdcContract, signMessageAsync]
   );
 
-  const transferUSDC = useCallback(
+  const buyCourse = useCallback(
     async (courseId: string, amount: string | number) => {
       if (!vaultContract) {
-        console.error('USDC contract chưa được khởi tạo');
+        console.error('Vault contract not initialized');
         return;
       }
       try {
         const message = `Buy course ${courseId} with ${amount} USDC`;
-        const sig = await signMessageAsync({ message });
-        console.log('Signature created:', sig);
+        await signMessageAsync({ message });
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
           parseAmount(amount)
@@ -65,6 +63,7 @@ export const useUSDCOperations = () => {
         console.log('Transfer tx sent:', tx.hash);
         await tx.wait();
         console.log('Transfer successful');
+        return tx.hash;
       } catch (error) {
         console.error('Transfer failed:', error);
       }
@@ -72,5 +71,5 @@ export const useUSDCOperations = () => {
     [vaultContract, signMessageAsync]
   );
 
-  return { approveUSDC, transferUSDC };
+  return { approveUSDC, buyCourse };
 };

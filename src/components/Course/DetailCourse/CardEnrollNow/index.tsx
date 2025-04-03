@@ -14,19 +14,22 @@ import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { parseUnits } from 'viem';
+import { parseGwei, parseUnits } from 'viem';
 import { usePublicClient, useWriteContract } from 'wagmi';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
+import { useUSDCOperations } from '@/hooks/useExecute';
 
 const CardEnrollNow = ({
   course,
   handleLike,
   handleUnLike,
+  getDetailCourse,
 }: {
   course: any;
   handleLike?: (id: string) => void;
   handleUnLike?: (id: string) => void;
+  getDetailCourse?: (id: string, userId?: string | undefined) => void;
 }) => {
   const accessToken = getAccessToken();
   const { t } = useTranslation('common');
@@ -47,22 +50,18 @@ const CardEnrollNow = ({
   const { navigate } = useNavigate();
   const { writeContractAsync } = useWriteContract();
 
+  const { approveUSDC, buyCourse } = useUSDCOperations();
+
   const refModalViewVideo: any = useRef(null);
-
-  const publicClient = usePublicClient();
-
-  const wagmiContractConfig = {
-    address: '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F',
-    abi: usdcAbi,
-  } as const;
-
+  const amount = 0.01;
   const { run, loading, cancel } = useEnrollCourse({
     pollingInterval: 3000,
     onSuccess: (res) => {
-      console.log(res, 'res123');
-
-      if (res?.data?.courseId) {
-        navigate(ROUTE_PATH.DETAIL_LESSON(res?.data?.courseId));
+      if (res?.message === 'Successfully') {
+        toast.success('Enrollment initiated successfully.');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     },
     onError: (err) => {
@@ -116,34 +115,6 @@ const CardEnrollNow = ({
               className="absolute cursor-pointer"
               onClick={() => refModalViewVideo.current.onOpen(course)}
             />
-            {/* <Modal
-              isOpen={isVideoModalOpen}
-              onOpenChange={setIsVideoModalOpen}
-              size="4xl"
-              hideCloseButton
-              backdrop="blur"
-            >
-              <ModalContent>
-                <ModalBody className="p-0">
-                  <ReactPlayer
-                    url={course.video}
-                    width="100%"
-                    height="500px"
-                    controls
-                    playing={isVideoModalOpen}
-                    pip
-                    config={{
-                      file: {
-                        attributes: {
-                          crossOrigin: 'anonymous',
-                          controlsList: 'nodownload',
-                        },
-                      },
-                    }}
-                  />
-                </ModalBody>
-              </ModalContent>
-            </Modal> */}
           </>
         )}
       </div>
@@ -160,16 +131,6 @@ const CardEnrollNow = ({
                   $ {formatNumber(course?.originPrice)}
                 </Text>
               )}
-              {/* <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange/50 bg-orange/10 rounded-full">
-                <Text type="font-16-600" className="text-orange">
-                  {course?.price ? `$${course?.price}` : 'Free'}
-                </Text>
-              </div>
-              {course?.price && (
-                <Text type="font-14-400" className="text-black-6 line-through">
-                  ${course?.price * 1.5}
-                </Text>
-              )} */}
             </div>
             {course?.originPrice && course?.price && (
               <div className="rounded-full border-1 border-[#F26F2133] py-1 px-3 bg-[#F26F2133] flex items-center gap-1">
@@ -181,29 +142,6 @@ const CardEnrollNow = ({
                 </Text>
               </div>
             )}
-
-            {/* {!course?.isOwner && (
-              <Button
-                variant="light"
-                radius="full"
-                onClick={() => {
-                  if (course?.isOwner) return;
-                  run(course.id);
-                }}
-              >
-                <div className="flex items-center gap-1">
-                  <Text type="font-14-500" className="text-white">
-                    Enroll Course
-                  </Text>
-                  <Image
-                    src={'/icons/ic-arrow-right-up-line.svg'}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
-                </div>
-              </Button>
-            )} */}
           </div>
           {profile?.id !== course?.author?.id && (
             <CustomButtonEnroll
@@ -213,42 +151,13 @@ const CardEnrollNow = ({
                 if (course.isOwner || course.authorId === profile?.id) {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
-                  console.log('debugg:::', course);
                   try {
-                    // await writeContractAsync({
-                    //   abi: usdcAbi,
-                    //   address: USDC_ADDRESS,
-                    //   functionName: 'approve',
-                    //   args: [VAULT_ADDRESS, parseUnits('0.01', 18)],
-                    // });
-
-                    const amount = parseUnits('0.01', 18);
-
-                    const estimatedGas =
-                      await publicClient?.estimateContractGas({
-                        address: VAULT_ADDRESS,
-                        abi: coursePaymentVaultAbi,
-                        functionName: 'pay',
-                        args: [course.id, amount],
-                        account: profile.walletAddress as `0x${string}`,
-                      });
-
-                    if (estimatedGas) {
-                      const gasLimit = estimatedGas * BigInt(2);
-
-                      const txHash = await writeContractAsync({
-                        abi: coursePaymentVaultAbi,
-                        address: VAULT_ADDRESS,
-                        functionName: 'pay',
-                        args: [course.id, amount],
-                        gas: gasLimit,
-                      });
-
-                      console.log({ txHash });
+                    await approveUSDC(VAULT_ADDRESS, amount);
+                    const txHash = await buyCourse(course.id, amount);
+                    if (txHash) {
+                      run(course.id, txHash);
                     }
-                    // // run(course.id, txHash);
                   } catch (error) {
-                    console.error('Contract interaction failed:', error);
                     toast.error(
                       t('Failed to enroll in the course. Please try again.')
                     );
