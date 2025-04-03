@@ -151,7 +151,6 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
   const onOpen = () => {
     setOpen(true);
   };
-
   return (
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {

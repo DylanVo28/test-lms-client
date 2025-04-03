@@ -50,7 +50,7 @@ const CardEnrollNow = ({
   const { navigate } = useNavigate();
   const { writeContractAsync } = useWriteContract();
 
-  const { approveUSDC, buyCourse } = useUSDCOperations();
+  const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
   const amount = 0.01;
@@ -152,6 +152,7 @@ const CardEnrollNow = ({
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
                   try {
+                    console.log('buy');
                     await approveUSDC(VAULT_ADDRESS, amount);
                     const txHash = await buyCourse(course.id, amount);
                     if (txHash) {
@@ -164,7 +165,7 @@ const CardEnrollNow = ({
                   }
                 }
               }}
-              loading={loading}
+              loading={loadingBuy}
               token={token}
               label={t('Enroll Now')}
             />

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useSignMessage } from 'wagmi';
 import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
@@ -14,6 +14,7 @@ const parseAmount = (amount: string | number) => {
 
 export const useUSDCOperations = () => {
   const { signMessageAsync } = useSignMessage();
+  const [loading, setLoading] = useState(false);
 
   const usdcContract = getUSDCContract(USDC_ADDRESS);
   const vaultContract = getVaultContract(VAULT_ADDRESS);
@@ -25,6 +26,7 @@ export const useUSDCOperations = () => {
         return;
       }
       try {
+        setLoading(true);
         const message = `Approve ${spender} to spend ${amount} USDC`;
         await signMessageAsync({ message });
         const estimatedGas = await usdcContract.estimateGas.approve(
@@ -39,6 +41,8 @@ export const useUSDCOperations = () => {
         console.log('Approval successful');
       } catch (error) {
         console.error('Approval failed:', error);
+      } finally {
+        setLoading(false);
       }
     },
     [usdcContract, signMessageAsync]
@@ -51,6 +55,7 @@ export const useUSDCOperations = () => {
         return;
       }
       try {
+        setLoading(true);
         const message = `Buy course ${courseId} with ${amount} USDC`;
         await signMessageAsync({ message });
         const estimatedGas = await vaultContract.estimateGas.pay(
@@ -66,10 +71,12 @@ export const useUSDCOperations = () => {
         return tx.hash;
       } catch (error) {
         console.error('Transfer failed:', error);
+      } finally {
+        setLoading(false);
       }
     },
     [vaultContract, signMessageAsync]
   );
 
-  return { approveUSDC, buyCourse };
+  return { approveUSDC, buyCourse, loading };
 };
