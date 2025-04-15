@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
 import { useEffect, useRef, useState } from 'react';
 import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
-import { getAccessToken, setAuthCookies } from '@/store/auth';
-import { useGetUserNonce, useLoginWeb3 } from './service';
+import { setAuthCookies } from '@/store/auth';
+import { serviceCheckAddress, useGetUserNonce, useLoginWeb3 } from './service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { initialProfile } from '@/store/profile/profile';
@@ -34,31 +34,33 @@ import clsx from 'clsx';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import RegisterFormModal from '@/components/RegisterFormModal';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { setCookie } from 'cookies-next';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
-  const { isConnected, address } = useAccount();
-  const token = getAccessToken();
+  const account = useAccount();
+  const { isConnected, address } = account;
+  const token = useAccessToken();
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile, setProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const { theme } = useTheme();
   const [notifications, setNotifications] = useAtom(notificationAtom);
-  const prevIsConnected = useRef<boolean | null>(null);
   const prevAddress = useRef<string | null>(null);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
-  // const { requestGetTheme } = useThemeInitial();
   const { disconnect } = useDisconnect();
   const [isOpen, setOpen] = useState(false);
+
+  const [registerFormData, setRegisterFormData] = useState<any>(null);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
   };
-
-  console.log(theme, 'theme');
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -101,6 +103,19 @@ const MainHeader = () => {
       if (router.query.code === 'platform') {
         delete body?.themeCode;
       }
+
+      // check if address is already in the database, show register form.\
+      const isAddressInDatabase = (await serviceCheckAddress(address))?.data;
+      if (!isAddressInDatabase) {
+        setRegisterFormData({
+          address: address as string,
+          signature: sig,
+          themeCode: router.query.code as any,
+        });
+        return;
+      }
+
+      // if address already in the database, login.
       runLoginWeb3(body);
     } catch (err: any) {
       toast.error(t('Wallet connection cancelled'));
@@ -116,6 +131,7 @@ const MainHeader = () => {
 
   useEffect(() => {
     // Handle initial connection
+
     if (isConnected && address && !token) {
       runGetUserNonce(address);
     }
@@ -268,6 +284,10 @@ const MainHeader = () => {
         </div>
       </div>
       <DrawerMenu ref={refDrawerMenu} />
+      <RegisterFormModal
+        registerFormData={registerFormData}
+        handleClose={() => setRegisterFormData(null)}
+      />
     </div>
   );
 };

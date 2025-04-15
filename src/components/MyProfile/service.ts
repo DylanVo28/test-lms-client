@@ -1,6 +1,6 @@
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-import { getAccessToken } from '@/store/auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useProfile } from '@/store/profile/useProfile';
 
 export const userRequest = {
@@ -13,7 +13,7 @@ export const userRequest = {
 
   getUserDetail(id: string, params: any) {
     // const { profile } = useProfile();
-    // const accessToken = getAccessToken();
+    // const accessToken = useAccessToken();
     // const params = {
     //   userId: accessToken ? profile?.id : '',
     // };

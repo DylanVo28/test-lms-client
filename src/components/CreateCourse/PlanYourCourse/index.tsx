@@ -11,12 +11,13 @@ import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import ModalSubmitError from './ModalSubmitError';
 import { API_PATH } from '@/api/constant';
-import { getAccessToken } from '@/store/auth';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import { set } from 'video.js/dist/types/tech/middleware';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 const PlanYourCourse = () => {
   const { t } = useTranslation('common');
@@ -74,7 +75,8 @@ const PlanYourCourse = () => {
   const [dataSections, setDataSections] = useState([]);
 
   const refModalSubmitError: any = useRef(null);
-  const accessToken = getAccessToken();
+  const { address } = useAccount();
+  const accessToken = useAccessToken();
 
   const {
     run: getDetailCourse,

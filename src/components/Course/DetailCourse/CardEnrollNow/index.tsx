@@ -6,7 +6,6 @@ import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import useNavigate from '@/hooks/useNavigate';
-import { getAccessToken } from '@/store/auth';
 import { useProfile } from '@/store/profile/useProfile';
 import { formatNumber } from '@/utils/common';
 import { ROUTE_PATH } from '@/utils/const';
@@ -15,10 +14,11 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { parseGwei, parseUnits } from 'viem';
-import { usePublicClient, useWriteContract } from 'wagmi';
+import { useAccount, usePublicClient, useWriteContract } from 'wagmi';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
 import { useUSDCOperations } from '@/hooks/useExecute';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 
 const CardEnrollNow = ({
   course,
@@ -31,7 +31,6 @@ const CardEnrollNow = ({
   handleUnLike?: (id: string) => void;
   getDetailCourse?: (id: string, userId?: string | undefined) => void;
 }) => {
-  const accessToken = getAccessToken();
   const { t } = useTranslation('common');
 
   const DATA_NOTE = [
@@ -43,9 +42,8 @@ const CardEnrollNow = ({
     t('Certificate of completion'),
   ];
 
-  const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
   const VAULT_ADDRESS = '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35';
-  const token = getAccessToken();
+  const accessToken = useAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
   const { writeContractAsync } = useWriteContract();
@@ -166,7 +164,7 @@ const CardEnrollNow = ({
                 }
               }}
               loading={loadingBuy}
-              token={token}
+              token={accessToken}
               label={t('Enroll Now')}
             />
           )}

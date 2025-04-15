@@ -7,13 +7,15 @@ import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { useRouter } from 'next/router';
 import { useProfile } from '../profile/useProfile';
-import { getAccessToken } from '../auth';
+import useAccessToken from '../auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
   const router = useRouter();
   const { profile } = useProfile();
-  const token = getAccessToken();
+  const { address } = useAccount();
+  const token = useAccessToken();
 
   const run = () => {
     const init = async () => {

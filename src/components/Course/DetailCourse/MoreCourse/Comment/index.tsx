@@ -16,7 +16,7 @@ import IconUnLikeReview from '@/components/UI/Icons/IconUnLikeReview';
 import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
 import { getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
-import { getAccessToken } from '@/store/auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 
 dayjs.extend(relativeTime);
 
@@ -35,9 +35,9 @@ const Comment = ({
   handleUnDisLikeReview: (id: string) => void;
   // handleUnLikeComment: (id: string) => void;
 }) => {
-  const { address } = useAccount();
   const { profile } = useProfile();
-  const accessToken = getAccessToken();
+  const { address } = useAccount();
+  const accessToken = useAccessToken();
 
   const meLiked = item?.reactions?.some(
     (reaction: any) => reaction?.userId === profile?.id

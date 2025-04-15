@@ -158,22 +158,24 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      <AppLayout>
+      <main>
         <WagmiProvider config={config}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider
-              theme={darkTheme({
-                accentColor: '#02A6C2',
-                borderRadius: 'small',
-              })}
-              initialChain={mainnet}
-            >
-              <Toaster position="top-center" />
-              {getLayout(<Component {...pageProps} />)}
-            </RainbowKitProvider>
-          </QueryClientProvider>
+          <AppLayout>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider
+                theme={darkTheme({
+                  accentColor: '#02A6C2',
+                  borderRadius: 'small',
+                })}
+                initialChain={mainnet}
+              >
+                <Toaster position="top-center" />
+                {getLayout(<Component {...pageProps} />)}
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </AppLayout>
         </WagmiProvider>
-      </AppLayout>
+      </main>
     </>
   );
 }

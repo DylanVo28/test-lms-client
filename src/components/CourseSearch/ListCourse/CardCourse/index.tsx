@@ -15,8 +15,7 @@ import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
-import { getAccessToken } from '@/store/auth';
-
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 dayjs.extend(relativeTime);
 
 const CardCourse = ({
@@ -32,7 +31,7 @@ const CardCourse = ({
   item: any;
   noLike?: boolean;
 }) => {
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
 
   const router = useRouter();
   const { t } = useTranslation('common');

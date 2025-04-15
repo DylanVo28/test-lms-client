@@ -1,7 +1,6 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { getAccessToken } from '@/store/auth';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import PushNotificationLayout from '../PushNotificationLayout/PushNotificationLayout';
 import { useAuth } from '@/store/auth/useAuth';
@@ -14,6 +13,8 @@ import { initialTheme } from '@/store/theme/theme';
 import LoadingBase from '@/components/UI/LoadingBase';
 import { useRouter } from 'next/router';
 import { useProfile } from '@/store/profile/useProfile';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 const AppLayout = ({ children }: any) => {
   const { requestGetProfile } = useProfileInitial();
@@ -21,7 +22,8 @@ const AppLayout = ({ children }: any) => {
   const { theme } = useTheme();
   const { requestGetTheme } = useThemeInitial();
   const { requestCheckHasNotification } = useNotifications();
-  const token = getAccessToken();
+  const { address } = useAccount();
+  const token = useAccessToken();
   const [loading, setLoading] = useState(true);
   const { profile } = useProfile();
 
@@ -44,8 +46,9 @@ const AppLayout = ({ children }: any) => {
     }
     requestGetTheme();
   }, [token, router.query.code, profile?.id]);
+
   return (
-    <main>
+    <Fragment>
       <LoadingBase loading={loading} />
       {!loading && (
         <NextThemesProvider
@@ -56,7 +59,7 @@ const AppLayout = ({ children }: any) => {
         </NextThemesProvider>
       )}
       <PushNotificationLayout />
-    </main>
+    </Fragment>
   );
 };
 

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 import { useDebounceFn } from 'ahooks';
-import { getAccessToken } from '@/store/auth';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
 import { useNotifications } from '@/store/notification/useNotification';
+import { getAccessToken } from '@/store/auth';
 
 const PushNotificationLayout = () => {
   const { requestCheckHasNotification } = useNotifications();

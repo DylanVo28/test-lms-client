@@ -2,11 +2,10 @@
 /* eslint-disable require-await */
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-import { useMount, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import { useAtom } from 'jotai';
-import { getAccessToken } from '../auth';
 import { notificationAtom } from './notification';
-import { toast } from '@/components/UI/Toast/toast';
+import { getAccessToken } from '../auth';
 
 export interface INotification {
   id: string;

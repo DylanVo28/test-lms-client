@@ -20,14 +20,15 @@ import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 import { useFollowMentor, useUnFollowMentor } from './service';
 import { toast } from '@/components/UI/Toast/toast';
-import { getAccessToken } from '@/store/auth';
 import { formatWalletAddress, isValidURL } from '@/utils/common';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
   console.log('mentor', mentor);
   const { t } = useTranslation('common');
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 

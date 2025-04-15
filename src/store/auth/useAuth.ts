@@ -4,12 +4,13 @@ import { useRequest } from 'ahooks';
 import { useRouter } from 'next/router';
 import request from 'umi-request';
 
-import { getAccessToken } from '.';
 import { PREFIX_API } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import { firebaseCloudMessaging } from '@/firebase/firebase';
+import { getAccessToken } from '.';
 
 export const useAuth = () => {
+  const accessToken = getAccessToken();
   const requestUpdateFcmToken = useRequest(
     async (token: any) => {
       const fcmToken = await firebaseCloudMessaging.tokenInLocalForage();
@@ -30,6 +31,6 @@ export const useAuth = () => {
 
   return {
     requestUpdateFcmToken,
-    isLogin: !!getAccessToken(),
+    isLogin: !!accessToken,
   };
 };

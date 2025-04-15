@@ -15,7 +15,8 @@ import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
-import { getAccessToken } from '@/store/auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 dayjs.extend(relativeTime);
 
@@ -32,10 +33,9 @@ const CardCourseMore = ({
   item: any;
   noLike?: boolean;
 }) => {
-  const router = useRouter();
   const { t } = useTranslation('common');
   const { navigate } = useNavigate();
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
 
   const handleClickCardCourse = () => {
     navigate(ROUTE_PATH.DETAIL_COURSE(item.id));

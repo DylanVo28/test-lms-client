@@ -15,7 +15,8 @@ const Certifications = () => {
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const { dataListCertificates, loading, run } = useGetMyCertificates();
-  const { address: walletAddress } = useAccount();
+  const account = useAccount();
+  const { address: walletAddress } = account;
   const [tokenId, setTokenId] = useState('');
 
   useEffect(() => {

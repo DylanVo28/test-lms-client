@@ -23,6 +23,17 @@ export const useLoginWeb3 = (options?: IOptions) => {
   return useRequest(serviceLoginWeb3, { manual: true, ...options });
 };
 
+export const registerUser = async (body: any) => {
+  return privateRequest(request.post, API_PATH.REGISTER_USER, { data: body });
+};
+
+// check if address is already in the database
+export const serviceCheckAddress = async (address: string) => {
+  return privateRequest(request.get, API_PATH.CHECK_ADDRESS, {
+    params: { address },
+  });
+};
+
 const serviceLogout = async () => {
   return privateRequest(request.post, API_PATH.LOGOUT);
 };

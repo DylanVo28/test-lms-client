@@ -3,7 +3,6 @@ import Comment from './Comment';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
-import { getAccessToken } from '@/store/auth';
 import {
   useCommentCours,
   useGetListComment,
@@ -21,10 +20,12 @@ import NoData from '@/components/ListCourse/NoData';
 import { TypeReactions, formatWalletAddress } from '@/utils/common';
 import { useTranslation } from 'next-i18next';
 import CardCourseMore from './CardCourseMore';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
-  const token = getAccessToken();
+
   const { t } = useTranslation('common');
 
   const { dataCourses, loadMore, noMore, reload } = useGetListCourse({

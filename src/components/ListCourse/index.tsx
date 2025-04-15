@@ -19,8 +19,7 @@ import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 import Loading from '../UI/Loading';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
-import { getAccessToken } from '@/store/auth';
-
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -42,7 +41,7 @@ const ListCourse = () => {
     search: debounceVal,
   });
   const { profile } = useProfile();
-  const token = getAccessToken();
+  const token = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
 

@@ -21,7 +21,7 @@ import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
-import { getAccessToken } from '@/store/auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const DrawerMenu = (props: any, ref: any) => {
@@ -30,7 +30,7 @@ const DrawerMenu = (props: any, ref: any) => {
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
   const { profile } = useProfile();
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
   const { openConnectModal }: any = useConnectModal();
   const [isOpen, setOpen] = useState(false);
 

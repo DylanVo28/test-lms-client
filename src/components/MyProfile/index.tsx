@@ -6,8 +6,7 @@ import Avatar from './Avatar';
 import Security from './Security';
 import { userRequest, TUser, referralRequest } from './service';
 import { useTranslation } from 'next-i18next';
-import { getAccessToken } from '@/store/auth';
-
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 enum TAB {
   INFORMATION = 'information',
   AVATAR = 'avatar',
@@ -41,7 +40,7 @@ const MyProfile = () => {
   const [tabSelected, setTabSelected] = useState<TAB>(TAB.INFORMATION);
   const [user, setUser] = useState<any>({});
   const [summary, setSummary] = useState<Summary>();
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
 
   const getMe = async () => {
     try {

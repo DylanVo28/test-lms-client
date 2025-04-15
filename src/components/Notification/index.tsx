@@ -6,8 +6,9 @@ import ListNotification from './ListNotification';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useMount } from 'ahooks';
 import clsx from 'clsx';
-import { getAccessToken } from '@/store/auth';
 import { useTheme } from '@/store/theme/useTheme';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -18,7 +19,7 @@ export enum TAB_NOTIFICATION {
 const Notification = ({ isOpen }: { isOpen: boolean }) => {
   const { t, i18n } = useTranslation('common');
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
-  const token = getAccessToken();
+  const token = useAccessToken();
 
   // const findLang = (code: string) => {
   //   return languages.find((lang) => lang.code === code)?.name || '';

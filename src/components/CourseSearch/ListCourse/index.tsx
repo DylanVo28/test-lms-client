@@ -15,7 +15,6 @@ import { useGetListCourse } from '@/components/Course/ListCourse/service';
 import { useGetCategories, useGetPrices } from '@/services/filter.service';
 import { useSearchParams } from 'next/navigation';
 import { useLikeCourse, useUnLikeCourse } from '../service';
-import { getAccessToken } from '@/store/auth';
 import { useProfile } from '@/store/profile/useProfile';
 import { isMobile } from 'react-device-detect';
 import DrawerFilter from '../DrawerFilter';

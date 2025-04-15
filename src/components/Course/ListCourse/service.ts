@@ -2,10 +2,11 @@
 import { API_PATH } from '@/api/constant';
 import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
-import { getAccessToken } from '@/store/auth';
 import { useProfile } from '@/store/profile/useProfile';
 import { useInfiniteScroll, useRequest } from 'ahooks';
 import { useMemo } from 'react';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useAccount } from 'wagmi';
 
 const getListCourse = async (params: any) => {
   return await privateRequest(request.get, API_PATH.LIST_COURSE, { params });
@@ -13,7 +14,7 @@ const getListCourse = async (params: any) => {
 
 export const useGetListCourse = (initialParams: any) => {
   const { profile } = useProfile();
-  const accessToken = getAccessToken();
+  const accessToken = useAccessToken();
   const memoizedParams = useMemo(() => initialParams, [initialParams]);
 
   const { data, loading, loadMore, loadingMore, noMore, reload, mutate } =
