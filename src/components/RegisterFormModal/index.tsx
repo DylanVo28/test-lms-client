@@ -43,9 +43,8 @@ const RegisterFormModal = ({
   const handleRegister = async () => {
     try {
       await registerUser({
-        address: registerFormData?.address,
-        signature: registerFormData?.signature,
         referralCode,
+        ...registerFormData,
       });
 
       runLoginWeb3({

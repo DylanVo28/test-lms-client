@@ -41,7 +41,6 @@ export const setAuthCookies = (
     res: reqOnServer?.res,
     req: reqOnServer?.req,
   });
-  localStorage.setItem('accessToken', token);
 };
 
 export const deleteAuthCookies = () => {
@@ -49,5 +48,4 @@ export const deleteAuthCookies = () => {
   deleteCookie('accessRefreshToken');
   deleteCookie('tokenExpiredTime');
   deleteCookie('ismsLogin');
-  localStorage.removeItem('accessToken');
 };

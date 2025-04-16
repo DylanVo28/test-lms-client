@@ -37,6 +37,8 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import RegisterFormModal from '@/components/RegisterFormModal';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { setCookie } from 'cookies-next';
+import { useEthersSigner } from '@/hooks/useEthersSigner';
+import { ethers } from 'ethers';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -86,18 +88,47 @@ const MainHeader = () => {
       handleSignMessage(res?.data);
     },
   });
+  const signer = useEthersSigner();
 
   const handleSignMessage = async (messageNonce: string) => {
     if (!isConnected || !address) {
       return;
     }
+    const OFF_CHAIN_DOMAIN = {
+      name: 'Orderly',
+      version: '1',
+      chainId: 1,
+      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+    };
+
+    const message = {
+      brokerId: 'what_exchange',
+      chainId: 1,
+      timestamp: String(Date.now()),
+      registrationNonce: messageNonce,
+    };
+
+    const signature = await signer?._signTypedData(
+      OFF_CHAIN_DOMAIN,
+      {
+        Registration: [
+          { name: 'brokerId', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'timestamp', type: 'uint64' },
+          { name: 'registrationNonce', type: 'uint256' },
+        ],
+      },
+      {
+        ...message,
+      }
+    );
 
     try {
-      const sig = await signMessageAsync({ message: messageNonce });
       const body = {
         address: address as string,
-        signature: sig,
+        signature,
         themeCode: router.query.code as any,
+        message,
       };
 
       if (router.query.code === 'platform') {
@@ -107,11 +138,7 @@ const MainHeader = () => {
       // check if address is already in the database, show register form.\
       const isAddressInDatabase = (await serviceCheckAddress(address))?.data;
       if (!isAddressInDatabase) {
-        setRegisterFormData({
-          address: address as string,
-          signature: sig,
-          themeCode: router.query.code as any,
-        });
+        setRegisterFormData(body);
         return;
       }
 
