@@ -2,6 +2,9 @@ export const API_PATH = {
   // Auth
   AUTH_LOGIN: '/api/admin/auth/login',
   REGISTER_USER: '/api/auth/register',
+  VERIFY_REFERRAL_CODE: '/api/auth/verify-referral-code',
+  ADD_ORDERLY_KEY: '/api/auth/add-orderly-key',
+  BIND_REFERRAL_CODE: '/api/auth/bind-referral-code',
 
   CHECK_ADDRESS: '/api/auth/check-address',
 

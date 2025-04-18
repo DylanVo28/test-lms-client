@@ -39,6 +39,9 @@ import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { setCookie } from 'cookies-next';
 import { useEthersSigner } from '@/hooks/useEthersSigner';
 import { ethers } from 'ethers';
+import useSignRegistration from '@/hooks/useSignRegistration';
+import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
+import { generatePrivateKey } from 'viem/accounts';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -52,13 +55,12 @@ const MainHeader = () => {
   const refDrawerMenu: any = useRef(null);
   const { theme } = useTheme();
   const [notifications, setNotifications] = useAtom(notificationAtom);
-  const prevAddress = useRef<string | null>(null);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
   const { disconnect } = useDisconnect();
   const [isOpen, setOpen] = useState(false);
 
-  const [registerFormData, setRegisterFormData] = useState<any>(null);
+  const signAddOrderlyKey = useSignAddOrderlyKey();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -83,117 +85,12 @@ const MainHeader = () => {
       requestGetProfile();
     }
   }, [token]);
-  const { run: runGetUserNonce } = useGetUserNonce({
-    onSuccess(res) {
-      handleSignMessage(res?.data);
-    },
-  });
-  const signer = useEthersSigner();
-
-  const handleSignMessage = async (messageNonce: string) => {
-    if (!isConnected || !address) {
-      return;
-    }
-    const OFF_CHAIN_DOMAIN = {
-      name: 'Orderly',
-      version: '1',
-      chainId: 1,
-      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
-    };
-
-    const message = {
-      brokerId: 'what_exchange',
-      chainId: 1,
-      timestamp: String(Date.now()),
-      registrationNonce: messageNonce,
-    };
-
-    const signature = await signer?._signTypedData(
-      OFF_CHAIN_DOMAIN,
-      {
-        Registration: [
-          { name: 'brokerId', type: 'string' },
-          { name: 'chainId', type: 'uint256' },
-          { name: 'timestamp', type: 'uint64' },
-          { name: 'registrationNonce', type: 'uint256' },
-        ],
-      },
-      {
-        ...message,
-      }
-    );
-
-    try {
-      const body = {
-        address: address as string,
-        signature,
-        themeCode: router.query.code as any,
-        message,
-      };
-
-      if (router.query.code === 'platform') {
-        delete body?.themeCode;
-      }
-
-      // check if address is already in the database, show register form.\
-      const isAddressInDatabase = (await serviceCheckAddress(address))?.data;
-      if (!isAddressInDatabase) {
-        setRegisterFormData(body);
-        return;
-      }
-
-      // if address already in the database, login.
-      runLoginWeb3(body);
-    } catch (err: any) {
-      toast.error(t('Wallet connection cancelled'));
-      disconnect();
-    }
-  };
 
   useEffect(() => {
     if (router.pathname !== ROUTE_PATH.COURSE_SEARCH) {
       setValueSearch('');
     }
   }, [router.pathname]);
-
-  useEffect(() => {
-    // Handle initial connection
-
-    if (isConnected && address && !token) {
-      runGetUserNonce(address);
-    }
-
-    // Handle account change only when staying connected
-    if (
-      isConnected &&
-      address &&
-      prevAddress.current &&
-      prevAddress.current !== address
-    ) {
-      // Disconnect old account
-      setAuthCookies({
-        token: '',
-      });
-      setProfile(initialProfile);
-      // Connect new account
-      runGetUserNonce(address);
-    }
-
-    // Handle disconnection - must be after account change check
-    if (!isConnected && !token) {
-      setAuthCookies({
-        token: '',
-      });
-      setProfile(initialProfile);
-    }
-
-    // Update previous address reference only when connected
-    if (isConnected && address) {
-      prevAddress.current = address;
-    } else {
-      prevAddress.current = null;
-    }
-  }, [token, isConnected, address]);
 
   const handleKeyUp = (event: any) => {
     if (event.key === 'Enter') {
@@ -311,10 +208,7 @@ const MainHeader = () => {
         </div>
       </div>
       <DrawerMenu ref={refDrawerMenu} />
-      <RegisterFormModal
-        registerFormData={registerFormData}
-        handleClose={() => setRegisterFormData(null)}
-      />
+      <RegisterFormModal />
     </div>
   );
 };

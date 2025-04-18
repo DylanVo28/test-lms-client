@@ -4,7 +4,7 @@ import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useRequest } from 'ahooks';
 
-const serviceGetUserNonce = async (address: string) => {
+export const serviceGetUserNonce = async (address: string) => {
   const params = {
     address,
   };
@@ -33,6 +33,21 @@ export const serviceCheckAddress = async (address: string) => {
     params: { address },
   });
 };
+export const verifyReferralCode = async (referralCode: string) => {
+  const res = await privateRequest(request.get, API_PATH.VERIFY_REFERRAL_CODE, {
+    params: { referralCode },
+  });
+
+  return res?.data;
+};
+
+export const bindReferralCode = async (body: any) => {
+  const res = await privateRequest(request.post, API_PATH.BIND_REFERRAL_CODE, {
+    data: body,
+  });
+
+  return res;
+};
 
 const serviceLogout = async () => {
   return privateRequest(request.post, API_PATH.LOGOUT);
@@ -40,4 +55,12 @@ const serviceLogout = async () => {
 
 export const useLogout = (options?: IOptions) => {
   return useRequest(serviceLogout, { manual: true, ...options });
+};
+
+export const serviceAddOrderlyKey = async (body: any) => {
+  const res = await privateRequest(request.post, API_PATH.ADD_ORDERLY_KEY, {
+    data: body,
+  });
+
+  return res?.data;
 };
