@@ -15,7 +15,7 @@ export const useGetUserNonce = (options?: IOptions) => {
   return useRequest(serviceGetUserNonce, { manual: true, ...options });
 };
 
-const serviceLoginWeb3 = async (body: any) => {
+export const serviceLoginWeb3 = async (body: any) => {
   return privateRequest(request.post, API_PATH.LOGIN_WEB3, { data: body });
 };
 

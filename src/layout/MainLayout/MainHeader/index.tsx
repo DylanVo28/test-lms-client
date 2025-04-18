@@ -51,7 +51,7 @@ const MainHeader = () => {
   const { isConnected, address } = account;
   const token = useAccessToken();
   const { signMessageAsync } = useSignMessage();
-  const { requestGetProfile, setProfile } = useProfileInitial();
+  const { requestGetProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const { theme } = useTheme();
   const [notifications, setNotifications] = useAtom(notificationAtom);

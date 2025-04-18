@@ -9,129 +9,24 @@ import {
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import IconUser from '../Icons/IconUser';
 import Text from '../Text';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { getCookie } from 'cookies-next';
+import { useProfile } from '@/store/profile/useProfile';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
   const { address } = useAccount();
   const accessToken = useAccessToken();
   const { t } = useTranslation('common');
-  // const router = useRouter();
-  const initialCheckDone = useRef(false);
-  // const connectedOnce = useRef(false);
+  const { profile } = useProfile();
 
-  console.log('adress:::::xxxxx', address, accessToken);
+  console.log('profile:::', profile);
 
   const [isOpen, setOpen] = useState(false);
-  // const [isProcessing, setIsProcessing] = useState(false);
-  // const { requestGetProfile } = useProfileInitial();
-  // const token = useAccessToken();
-  const [setNotifications] = useAtom(notificationAtom);
-
-  // const { run: runLoginWeb3 } = useLoginWeb3({
-  //   onSuccess(res) {
-  //     toast.success(t('Login successfully'));
-  //     setAuthCookies({
-  //       token: res?.data?.accessToken,
-  //     });
-  //     setIsProcessing(false);
-  //   },
-  //   onError(err) {
-  //     toast.error(err?.message);
-  //     disconnect();
-  //     setIsProcessing(false);
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   if (token) {
-  //     requestGetProfile();
-  //   }
-  // }, [token]);
-
-  // const handleSignMessage = async (messageNonce: string) => {
-  //   if (!isConnected || !address || accessToken || isProcessing) {
-  //     return;
-  //   }
-
-  //   try {
-  //     setIsProcessing(true);
-  //     const sig = await signMessageAsync({ message: messageNonce });
-  //     const body = {
-  //       address: address as string,
-  //       signature: sig,
-  //       themeCode: router.query.code as any,
-  //     };
-
-  //     if (router.query.code === 'platform') {
-  //       delete body?.themeCode;
-  //     }
-  //     runLoginWeb3(body);
-  //   } catch (err: any) {
-  //     toast.error(t('Wallet connection cancelled'));
-  //     disconnect();
-  //     setIsProcessing(false);
-  //   }
-  // };
-
-  // const { run: runGetUserNonce } = useGetUserNonce({
-  //   onSuccess(res) {
-  //     handleSignMessage(res?.data);
-  //   },
-  // });
-
-  // Track initial connection
-  // useEffect(() => {
-  //   if (isConnected && isMobile) {
-  //     connectedOnce.current = true;
-  //   }
-  // }, [isConnected]);
-
-  // // Handle mobile wallet return and initial connection
-  // useEffect(() => {
-  //   if (typeof window === 'undefined' || accessToken || isProcessing) return;
-
-  //   const isMobileReturn = () => {
-  //     const hasWalletConnectParams = window.location.href.includes('wc?');
-  //     const hasWalletConnectSession = Object.keys(window.localStorage).some(
-  //       (key) => key.startsWith('wc@2:client:') || key.includes('wagmi.wallet')
-  //     );
-  //     return hasWalletConnectParams || hasWalletConnectSession;
-  //   };
-
-  //   const shouldTriggerSign =
-  //     isConnected &&
-  //     address &&
-  //     !initialCheckDone.current &&
-  //     (isMobileReturn() || connectedOnce.current);
-
-  //   if (shouldTriggerSign && isMobile) {
-  //     initialCheckDone.current = true;
-
-  //     // Clean URL if needed
-  //     if (window.location.href.includes('wc?')) {
-  //       const cleanUrl = window.location.href.split('?')[0];
-  //       window.history.replaceState({}, document.title, cleanUrl);
-  //     }
-
-  //     // Trigger sign message
-  //     runGetUserNonce(address);
-  //   }
-  // }, [isConnected, address, accessToken, isProcessing]);
-
-  // Reset states on disconnect
-  // useEffect(() => {
-  //   if (!isConnected && isMobile) {
-  //     initialCheckDone.current = false;
-  //     setIsProcessing(false);
-  //     setNotifications({});
-  //   }
-  // }, [isConnected]);
 
   const onClose = () => {
     setOpen(false);
@@ -147,11 +42,9 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
   return (
     <ConnectButton.Custom>
       {({ openConnectModal, mounted }) => {
-        const connected = address && accessToken;
-
         return (
           <div>
-            {!connected ? (
+            {!profile.id ? (
               <Button
                 onPress={() => {
                   disconnect();
@@ -170,13 +63,13 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
               <Popover
                 isOpen={isOpen}
                 onClose={onClose}
-                onOpenChange={onOpen}
                 classNames={{
                   content:
                     'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
                 }}
                 color="default"
                 placement="bottom-end"
+                onOpenChange={onOpen}
               >
                 <PopoverTrigger>
                   <Button

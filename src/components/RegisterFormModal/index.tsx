@@ -51,6 +51,7 @@ const RegisterFormModal = () => {
       setAuthCookies({
         token: res?.data?.accessToken,
       });
+      requestGetProfile();
     },
     onError(err) {
       console.log('errrrrrr', err);
@@ -69,9 +70,10 @@ const RegisterFormModal = () => {
     const handleCheckAddress = async () => {
       const res = await serviceCheckAddress(address as string);
       if (res?.data) {
-        runLoginWeb3({
+        const loginRes = await runLoginWeb3({
           address: address as string,
         });
+        console.log('loginRes:::', loginRes);
         return;
       }
       setShowRegisterForm(true);
@@ -144,6 +146,10 @@ const RegisterFormModal = () => {
       toast.error(t(error?.message));
     }
   };
+
+  useEffect(() => {
+    setReferralCode('');
+  }, [showRegisterForm]);
 
   return (
     <CustomModal

@@ -14,6 +14,7 @@ import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import { useLogout } from '../service';
 import { initialTheme, themeAtom } from '@/store/theme/theme';
+import { initialProfile } from '@/store/profile/profile';
 
 const MENUS = [
   {
@@ -41,7 +42,7 @@ const ContentProfile = ({
   onClosePopover: VoidFunction;
 }) => {
   const { t } = useTranslation('common');
-  const { profile } = useProfile();
+  const { profile, setProfile } = useProfile();
   const router = useRouter();
   const [, setNotifications] = useAtom(notificationAtom);
   const { navigate } = useNavigate();
@@ -64,7 +65,8 @@ const ContentProfile = ({
     setAuthCookies({
       token: '',
     });
-    toast.success(t('Logout successfully'));
+    setProfile(initialProfile);
+    // toast.success(t('Logout successfully'));
   };
 
   const generateName = (): any => {
