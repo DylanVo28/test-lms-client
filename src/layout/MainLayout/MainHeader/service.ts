@@ -64,3 +64,9 @@ export const serviceAddOrderlyKey = async (body: any) => {
 
   return res?.data;
 };
+
+export const serviceGetUserVolumn = async (address: string) => {
+  return privateRequest(request.get, API_PATH.GET_USER_VOLUMN, {
+    params: { address },
+  });
+};

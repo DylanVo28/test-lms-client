@@ -28,6 +28,12 @@ const WhatExchangeVolumnHistoryItem = ({ item, hasDivided = false }: any) => {
             </Text>
             <Text type="font-14-500">{item.realized_pnl.toFixed(3)}</Text>
           </div>
+          <div className="flex flex-col">
+            <Text type="font-12-400 text-[#02A6C2]" className="opacity-70">
+              {t('Point')}
+            </Text>
+            <Text type="font-14-500">{item?.points?.toFixed(2)}</Text>
+          </div>
         </div>
       </div>
       {hasDivided && <div className="w-full h-[1px] opacity-10 bg-[#fff]" />}

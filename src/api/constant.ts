@@ -5,6 +5,7 @@ export const API_PATH = {
   VERIFY_REFERRAL_CODE: '/api/auth/verify-referral-code',
   ADD_ORDERLY_KEY: '/api/auth/add-orderly-key',
   BIND_REFERRAL_CODE: '/api/auth/bind-referral-code',
+  GET_USER_VOLUMN: '/api/referral/get-user-volumn',
 
   CHECK_ADDRESS: '/api/auth/check-address',
 

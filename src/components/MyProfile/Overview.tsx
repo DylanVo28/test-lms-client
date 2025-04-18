@@ -7,49 +7,8 @@ import { referralRequest } from './service';
 import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import WhatExchangeVolumnHistoryItem from './WhatExchangeVolumnHistoryItem';
-
-const mockResponse = {
-  status: true,
-  message: 'Successfully',
-  data: {
-    success: true,
-    data: {
-      rows: [
-        {
-          date: '2025-03-18',
-          account_id:
-            '0x8dc288d8a8cef13eb622327d986fcfb2c5e6bc25e1c5747e729d3cb7243b0850',
-          perp_volume: 180.158,
-          perp_taker_volume: 180.158,
-          perp_maker_volume: 0,
-          total_fee: 0.108096,
-          broker_fee: 0.063055,
-          address: '0x2618011014d672a20c0dbc0220392041d79e91a3',
-          realized_pnl: 1.09,
-        },
-        {
-          date: '2025-03-19',
-          account_id:
-            '0x8dc288d8a8cef13eb622327d986fcfb2c5e6bc25e1c5747e729d3cb7243b0850',
-          perp_volume: 365.165,
-          perp_taker_volume: 365.165,
-          perp_maker_volume: 0,
-          total_fee: 0.219102,
-          broker_fee: 0.127806,
-          address: '0x2618011014d672a20c0dbc0220392041d79e91a3',
-          realized_pnl: 2.877,
-        },
-      ],
-      meta: {
-        total: 2,
-        records_per_page: 50,
-        current_page: 1,
-      },
-      snapshot_time: 1744970400000,
-    },
-    timestamp: 1744973108278,
-  },
-};
+import { useVolumnData } from '@/hooks/useVolumnData';
+import { useAccount } from 'wagmi';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -72,7 +31,6 @@ const Overview = ({
       f1: number;
       f2: number;
       f3: number;
-      // o: number;
     };
   };
 }) => {
@@ -80,6 +38,16 @@ const Overview = ({
   const [origin, setOrigin] = useState('');
   const [refCode, setRefCode] = useState('');
   const { theme: dataThemeConfig } = useThemeInitial();
+
+  const { address } = useAccount();
+  const {
+    data: volumnData,
+    loading,
+    totalPoint,
+  } = useVolumnData({
+    address: '0x2618011014d672a20c0dbc0220392041d79e91a3' as string,
+  });
+
   const getProfile = async () => {
     try {
       const res = await referralRequest.getProfile();
@@ -107,7 +75,7 @@ const Overview = ({
   };
 
   return (
-    <div className="w-full h-fit max-w-[460px] flex flex-col gap-[12px]">
+    <div className="w-full h-fit max-w-[460px] flex flex-col gap-[20px]">
       <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit flex flex-col gap-[12px]">
         <div className="flex flex-col justify-center items-center gap-[4px]">
           <div className="w-[64px] h-[64px] rounded-full relative overflow-hidden">
@@ -214,18 +182,38 @@ const Overview = ({
 
       <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit flex flex-col gap-[12px]">
         <div className="text-[16px] font-semibold">
+          Total point:{' '}
+          <span className="text-[#02A6C2] text-[16px]">{totalPoint}</span>
+        </div>
+
+        <div className="text-[14px] opacity-70">
+          Point = Perp Volume × (1 + 0.2 × Realized PnL)
+        </div>
+        <Divided />
+
+        <div className="text-[16px] font-semibold">
           What exchange volumn history
         </div>
 
-        <div className="flex flex-col gap-4">
-          {mockResponse.data.data.rows.map((item, index) => (
-            <WhatExchangeVolumnHistoryItem
-              key={index}
-              item={item}
-              hasDivided={index < mockResponse.data.data.rows.length - 1}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center">Loading...</div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {volumnData?.data?.rows?.map((item, index) => (
+              <WhatExchangeVolumnHistoryItem
+                key={index}
+                item={item}
+                hasDivided={index < volumnData.data.rows.length - 1}
+              />
+            ))}
+
+            {volumnData?.data?.rows?.length === 0 && (
+              <div className="text-start opacity-50">
+                {t('You have not made any trades yet')}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
