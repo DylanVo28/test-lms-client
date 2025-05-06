@@ -9,6 +9,7 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import WhatExchangeVolumnHistoryItem from './WhatExchangeVolumnHistoryItem';
 import { useVolumnData } from '@/hooks/useVolumnData';
 import { useAccount } from 'wagmi';
+import CopyIcon from '@/icons/CopyIcon';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -45,7 +46,7 @@ const Overview = ({
     loading,
     totalPoint,
   } = useVolumnData({
-    address: '0x2618011014d672a20c0dbc0220392041d79e91a3' as string,
+    address: '0x73332479db4259f786b9bdac8dc4dcb3dc8259e8' as string,
   });
 
   const getProfile = async () => {
@@ -67,10 +68,8 @@ const Overview = ({
     }
   }, []);
 
-  const refLink = `${origin}/${dataThemeConfig.code}`;
-
-  const onCopy = () => {
-    window.navigator.clipboard.writeText(refLink);
+  const onCopy = (text: string) => {
+    window.navigator.clipboard.writeText(text);
     toast.success(t('Copied!'));
   };
 
@@ -100,6 +99,38 @@ const Overview = ({
         {data?.role === 'KOL' && (
           <>
             <Divided />
+
+            <div className="flex gap-x-2 items-center">
+              <Text type="font-16-600">Referral code:</Text>
+              <Text type="font-16-600">{refCode}</Text>
+
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  onCopy(refCode);
+                }}
+              >
+                <CopyIcon />
+              </div>
+            </div>
+
+            <div className="">
+              <Text type="font-16-600">Platform link:</Text>
+              <div className="flex items-center gap-x-2">
+                <Text type="font-16-600">
+                  {origin}/{dataThemeConfig.code}
+                </Text>
+
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    onCopy(`${origin}/${dataThemeConfig.code}`);
+                  }}
+                >
+                  <CopyIcon />
+                </div>
+              </div>
+            </div>
 
             <div className="flex flex-col gap-[8px] py-[8px]">
               <div className="flex justify-between items-center">
@@ -186,9 +217,7 @@ const Overview = ({
           <span className="text-[#02A6C2] text-[16px]">{totalPoint}</span>
         </div>
 
-        <div className="text-[14px] opacity-70">
-          Point = Perp Volume × (1 + 0.2 × Realized PnL)
-        </div>
+        <div className="text-[14px] opacity-70">Point = Perp Volume / 1000</div>
         <Divided />
 
         <div className="text-[16px] font-semibold">

@@ -1,18 +1,22 @@
+import { useAccount } from 'wagmi';
 import { useEthersSigner } from './useEthersSigner';
 
+// todo apply mutiple chain
 const useSignRegistration = () => {
   const signer = useEthersSigner();
+  const { chainId } = useAccount();
+
   const handleSign = async ({ messageNonce }: { messageNonce: string }) => {
     const OFF_CHAIN_DOMAIN = {
       name: 'Orderly',
       version: '1',
-      chainId: 1,
+      chainId: chainId,
       verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
     };
 
     const message = {
       brokerId: 'what_exchange',
-      chainId: 1,
+      chainId: chainId,
       timestamp: String(Date.now()),
       registrationNonce: messageNonce,
     };

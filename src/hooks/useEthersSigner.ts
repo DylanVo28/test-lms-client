@@ -1,9 +1,9 @@
 import { providers } from 'ethers';
 import { useMemo } from 'react';
-import type { Account, Chain, Client, Transport } from 'viem';
+// import type { Account, Chain, Client, Transport } from 'viem';
 import { Config, useConnectorClient } from 'wagmi';
 
-export function clientToSigner(client: Client<Transport, Chain, Account>) {
+export function clientToSigner(client: any) {
   const { account, chain, transport } = client;
   const network = {
     chainId: chain.id,

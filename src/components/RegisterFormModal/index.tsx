@@ -47,7 +47,7 @@ const RegisterFormModal = () => {
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
-      toast.success(t('Login successfully'));
+      // toast.success(t('Login successfully'));
       setAuthCookies({
         token: res?.data?.accessToken,
       });
@@ -126,6 +126,8 @@ const RegisterFormModal = () => {
           signature: addOrderlyKeySignature,
           userAddress: address,
         });
+
+        console.log('addOrderlyKeyRes::::', addOrderlyKeyRes);
 
         // bind orderly key to user
         const bindReferralCodeRes = await bindReferralCode({

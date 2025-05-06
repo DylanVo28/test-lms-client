@@ -48,7 +48,6 @@ const MainHeader = () => {
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
   const account = useAccount();
-  const { isConnected, address } = account;
   const token = useAccessToken();
   const { signMessageAsync } = useSignMessage();
   const { requestGetProfile } = useProfileInitial();
@@ -57,28 +56,11 @@ const MainHeader = () => {
   const [notifications, setNotifications] = useAtom(notificationAtom);
   const { profile } = useProfile();
   const { navigate } = useNavigate();
-  const { disconnect } = useDisconnect();
   const [isOpen, setOpen] = useState(false);
-
-  const signAddOrderlyKey = useSignAddOrderlyKey();
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
   };
-
-  const { run: runLoginWeb3 } = useLoginWeb3({
-    onSuccess(res) {
-      toast.success(t('Login successfully'));
-      // requestGetTheme();
-      setAuthCookies({
-        token: res?.data?.accessToken,
-      });
-    },
-    onError(err) {
-      console.log('errrrrrr', err);
-      toast.error(err?.message);
-    },
-  });
 
   useEffect(() => {
     if (token) {
