@@ -4,6 +4,7 @@ import { useUploadFile } from '../CreateCourse/service';
 import { toast } from '../UI/Toast/toast';
 import { userRequest, TUser } from './service';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 interface UploadedFile {
   url: string;
@@ -48,7 +49,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         return;
       }
 
-      const img = new Image();
+      const img = new window.Image();
       img.src = URL.createObjectURL(file);
       img.onload = () => {
         if (
@@ -74,8 +75,10 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
     if (!valueFile?.url) return;
     try {
       setLoading(true);
+
       await userRequest.update({ ...user, avatar: valueFile.url });
       reload();
+      setValueFile(undefined);
       toast.success(t('Avatar uploaded successfully!'));
     } catch (error) {
       toast.error(t('Avatar uploaded failed!'));
@@ -94,11 +97,17 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
         {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
       </div>
 
-      <div className="p-[20px] h-[241px] bg-gray-50 w-full rounded-[4px]">
+      <div className="p-[20px] h-[180px] bg-gray-50 w-full rounded-[4px]">
         <div className="relative w-full h-full bg-gray-70 border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
-          <div className="text-white">
-            {valueFile?.filename || t('JPEG, PNG or JPG . Max 10mb.')}
-          </div>
+          {valueFile?.url && (
+            <Image
+              src={valueFile.url ?? ''}
+              alt="avatar"
+              className="w-[60px] h-[60px]"
+              width={60}
+              height={60}
+            />
+          )}
           <Button
             isLoading={loadingFile}
             className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] text-main border border-[var(--main-color)]"
