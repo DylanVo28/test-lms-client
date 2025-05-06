@@ -1,49 +1,32 @@
 import CustomModal from '@/components/UI/CustomModal';
 import { toast } from '@/components/UI/Toast/toast';
+import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
+import useSignRegistration from '@/hooks/useSignRegistration';
 import {
   bindReferralCode,
   registerUser,
   serviceAddOrderlyKey,
   serviceCheckAddress,
   serviceGetUserNonce,
-  useGetUserNonce,
   useLoginWeb3,
   verifyReferralCode,
 } from '@/layout/MainLayout/MainHeader/service';
 import { setAuthCookies } from '@/store/auth';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useRef, useState } from 'react';
-import InputText from '../UI/InputText';
-import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
-import { useAccount, useDisconnect } from 'wagmi';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
-import { initialProfile } from '@/store/profile/profile';
 import { useRouter } from 'next/router';
-import useSignRegistration from '@/hooks/useSignRegistration';
-
-interface IRegisterFormModal {
-  registerFormData?: {
-    address?: string;
-    signature?: string;
-    themeCode?: string;
-    referralCode?: string;
-  };
-  handleClose: () => void;
-}
+import { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
+import InputText from '../UI/InputText';
 
 const RegisterFormModal = () => {
   const { t } = useTranslation('common');
   const [referralCode, setReferralCode] = useState('');
   const { address, isConnected } = useAccount();
-  const token = useAccessToken();
   const { requestGetProfile, setProfile } = useProfileInitial();
-  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
+  const [showRegisterForm, setShowRegisterForm] = useState<any>(null);
   const router = useRouter();
-  const { disconnect } = useDisconnect();
-
-  const prevAddress = useRef<string | null>(null);
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -60,7 +43,7 @@ const RegisterFormModal = () => {
   });
 
   const handleClose = () => {
-    setShowRegisterForm(false);
+    setShowRegisterForm(null);
   };
 
   useEffect(() => {
@@ -73,10 +56,17 @@ const RegisterFormModal = () => {
         const loginRes = await runLoginWeb3({
           address: address as string,
         });
-        console.log('loginRes:::', loginRes);
         return;
       }
-      setShowRegisterForm(true);
+
+      const themeCode =
+        router?.query?.code === 'platform' ? '' : router?.query?.code;
+
+      // because we need a direct user actions, to show metamask popup
+      setShowRegisterForm({
+        isShow: true,
+        themeCode: themeCode as any,
+      });
     };
 
     handleCheckAddress();
@@ -112,7 +102,10 @@ const RegisterFormModal = () => {
         message,
       });
 
-      if (registerRes?.status === true && referralCode) {
+      const parentCode = registerRes?.data?.parentCode;
+      const orderlyAccountId = registerRes?.data?.orderlyAccountId;
+
+      if (parentCode && orderlyAccountId) {
         const {
           message: addOrderlyKeyMessage,
           signature: addOrderlyKeySignature,
@@ -127,12 +120,10 @@ const RegisterFormModal = () => {
           userAddress: address,
         });
 
-        console.log('addOrderlyKeyRes::::', addOrderlyKeyRes);
-
         // bind orderly key to user
         const bindReferralCodeRes = await bindReferralCode({
-          orderlyAccountId: registerRes?.data?.account_id,
-          referralCode,
+          orderlyAccountId,
+          referralCode: parentCode,
           orderlyKey,
           privKey,
         });
@@ -161,20 +152,25 @@ const RegisterFormModal = () => {
       onClose={handleClose}
     >
       <ModalBody className="p-6 flex flex-col gap-4 bg-[#191c21]">
-        <div className="text-xl font-bold">Connect wallet</div>
+        <div className="text-xl font-bold">Register account</div>
 
         <div className="text-md text-gray-500">
-          Your previous access has expired, you will receive a signature request
-          to enable trading. Signing is free and will not send a transaction.
+          You register an account using{' '}
+          <span className="text-white font-semibold">
+            [{showRegisterForm?.themeCode || referralCode || 'Referral'}]
+          </span>{' '}
+          code, and you will receive a signature request to enable read access.
+          Signing is free and does not send a transaction.
         </div>
 
-        <InputText
-          classInputWrapper="min-w-[400px] bg-white"
-          placeholder="Referral code (Optional)"
-          isInputSubmit
-          onChange={(e: any) => setReferralCode(e.target.value)}
-        />
-
+        {!showRegisterForm?.themeCode && (
+          <InputText
+            classInputWrapper="min-w-[400px] bg-white"
+            placeholder="Referral code (Optional)"
+            isInputSubmit
+            onChange={(e: any) => setReferralCode(e.target.value)}
+          />
+        )}
         <div className="flex gap-x-2">
           <div
             className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#1d2329] w-fit mx-auto cursor-pointer text-lg font-semibold"

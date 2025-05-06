@@ -1,55 +1,33 @@
-import InputText from '@/components/UI/InputText';
-import Image from 'next/image';
-import Menubar from '../Menubar';
-import { useRouter } from 'next/router';
-import { ROUTE_PATH } from '@/utils/const';
-import { useEffect, useRef, useState } from 'react';
-import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
-import { setAuthCookies } from '@/store/auth';
-import { serviceCheckAddress, useGetUserNonce, useLoginWeb3 } from './service';
-import { toast } from '@/components/UI/Toast/toast';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
-import { initialProfile } from '@/store/profile/profile';
+import Notification from '@/components/Notification';
+import RegisterFormModal from '@/components/RegisterFormModal';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
+import IconNotification from '@/components/UI/Icons/IconNotification';
+import IconSearch from '@/components/UI/Icons/IconSearch';
+import InputText from '@/components/UI/InputText';
+import Text from '@/components/UI/Text';
+import useNavigate from '@/hooks/useNavigate';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { notificationAtom } from '@/store/notification/notification';
+import { useProfile } from '@/store/profile/useProfile';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import { useTheme } from '@/store/theme/useTheme';
+import { ROUTE_PATH } from '@/utils/const';
+import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import clsx from 'clsx';
+import { useAtom } from 'jotai';
+import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import Menubar from '../Menubar';
 import DrawerMenu from '../Menubar/DrawerMenu';
 import ThemeConfiguration from './ThemeConfiguration';
-import { useTranslation } from 'next-i18next';
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@nextui-org/react';
-import Notification from '@/components/Notification';
-import IconSearch from '@/components/UI/Icons/IconSearch';
-import { COLOR_THEME } from '@/utils/common';
-import { useTheme } from '@/store/theme/useTheme';
-import IconNotification from '@/components/UI/Icons/IconNotification';
-import { useNotifications } from '@/store/notification/useNotification';
-import { useMount } from 'ahooks';
-import Text from '@/components/UI/Text';
-import { notificationAtom } from '@/store/notification/notification';
-import { useAtom } from 'jotai';
-import clsx from 'clsx';
-import { useProfile } from '@/store/profile/useProfile';
-import useNavigate from '@/hooks/useNavigate';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import RegisterFormModal from '@/components/RegisterFormModal';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { setCookie } from 'cookies-next';
-import { useEthersSigner } from '@/hooks/useEthersSigner';
-import { ethers } from 'ethers';
-import useSignRegistration from '@/hooks/useSignRegistration';
-import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
-import { generatePrivateKey } from 'viem/accounts';
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
-  const account = useAccount();
   const token = useAccessToken();
-  const { signMessageAsync } = useSignMessage();
   const { requestGetProfile } = useProfileInitial();
   const refDrawerMenu: any = useRef(null);
   const { theme } = useTheme();

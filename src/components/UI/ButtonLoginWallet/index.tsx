@@ -1,5 +1,5 @@
 import ContentProfile from '@/layout/MainLayout/MainHeader/ContentProfile';
-import { notificationAtom } from '@/store/notification/notification';
+import { useProfile } from '@/store/profile/useProfile';
 import {
   Button,
   Popover,
@@ -7,24 +7,16 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useRef, useState } from 'react';
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { useState } from 'react';
+import { useDisconnect } from 'wagmi';
 import IconUser from '../Icons/IconUser';
 import Text from '../Text';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { getCookie } from 'cookies-next';
-import { useProfile } from '@/store/profile/useProfile';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
-  const { address } = useAccount();
-  const accessToken = useAccessToken();
   const { t } = useTranslation('common');
   const { profile } = useProfile();
-
-  console.log('profile:::', profile);
 
   const [isOpen, setOpen] = useState(false);
 
