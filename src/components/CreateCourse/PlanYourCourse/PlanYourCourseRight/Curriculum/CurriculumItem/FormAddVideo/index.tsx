@@ -1,4 +1,6 @@
 import {
+  serviceUploadFile,
+  serviceUploadFileInBackground,
   useUploadFile,
   useUploadMultipleFiles,
 } from '@/components/CreateCourse/service';
@@ -21,6 +23,7 @@ const FormAddVideo = ({
   const [valueFile, setValueFile] = useState<any>({});
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
+  const [uploadFileLoading, setUploadFileLoading] = useState(false);
 
   const [isError, setIsError] = useState(false);
 
@@ -30,20 +33,20 @@ const FormAddVideo = ({
     }
   }, [valueInfo?.duration]);
 
-  const { run: runUploadFiles, loading } = useUploadMultipleFiles({
-    onSuccess: (response) => {
-      console.log('response::::', response);
-      setValueFile({
-        ...valueFile,
-        thumbnailUrl: response?.[1]?.data?.url,
-        urlVideo: response?.[0]?.data?.url,
-        fileNameVideo: response?.[0]?.data?.filename,
-      });
-    },
-    onError: (err) => {
-      console.error('File upload failed', err);
-    },
-  });
+  // const { run: runUploadFiles, loading } = useUploadMultipleFiles({
+  //   onSuccess: (response) => {
+  //     console.log('response::::', response);
+  //     setValueFile({
+  //       ...valueFile,
+  //       thumbnailUrl: response?.[1]?.data?.url,
+  //       urlVideo: response?.[0]?.data?.url,
+  //       fileNameVideo: response?.[0]?.data?.filename,
+  //     });
+  //   },
+  //   onError: (err) => {
+  //     console.error('File upload failed', err);
+  //   },
+  // });
 
   useEffect(() => {
     if (!valueInfo?.duration) {
@@ -62,20 +65,15 @@ const FormAddVideo = ({
     }
   }, [valueFile?.urlVideo, valueInfo?.duration]);
 
-  const handleFileChange = (event: any) => {
+  const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
-    // runUploadFile(file);
+
     if (file && file.type.startsWith('video/')) {
       // Get video duration
       const videoElement = document.createElement('video');
       videoElement.src = URL.createObjectURL(file);
       videoElement.onloadedmetadata = () => {
         const duration = videoElement.duration; // Thời gian video tính bằng giây
-        setValueFile({
-          ...valueFile,
-          duration,
-        });
-        // Create a thumbnail (first frame)
         const canvas = document.createElement('canvas');
         const context: any = canvas.getContext('2d');
         videoElement.currentTime = 1; // Chọn thời điểm 1s đầu tiên
@@ -84,17 +82,37 @@ const FormAddVideo = ({
           context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
           canvas.toBlob(async (blob: any) => {
             if (blob) {
-              const thumbnailFile = new File([blob], 'thumbnail.jpg', {
-                type: 'image/jpeg',
-              });
+              try {
+                setUploadFileLoading(true);
+                const thumbnailFile = new File([blob], 'thumbnail.jpg', {
+                  type: 'image/jpeg',
+                });
 
-              runUploadFiles(file, thumbnailFile);
+                const videoResponse = await serviceUploadFileInBackground(file);
+                const thumbnailResponse = await serviceUploadFileInBackground(
+                  thumbnailFile
+                );
+
+                setValueFile({
+                  ...valueFile,
+                  urlVideo: videoResponse?.data?.url,
+                  thumbnailUrl: thumbnailResponse?.data?.url,
+                  fileNameVideo: videoResponse?.data?.filename,
+                  duration,
+                });
+              } catch (error) {
+              } finally {
+                setUploadFileLoading(false);
+              }
             }
           }, 'image/jpeg');
         };
       };
     }
   };
+
+  console.log('uploadFileLoading::::', uploadFileLoading);
+
   const handleClickUploadFile = () => {
     if (valueFile.urlVideo) {
       setValueProgress(0);
@@ -157,7 +175,7 @@ const FormAddVideo = ({
           style={{ display: 'none' }}
         />
         <Button
-          isLoading={loading}
+          isLoading={uploadFileLoading}
           onPress={handleClickUploadFile}
           className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
         >

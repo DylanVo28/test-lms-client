@@ -51,6 +51,8 @@ export const API_PATH = {
 
   UPLOAD_FILE: '/api/storage/upload',
 
+  UPLOAD_FILE_IN_BACKGROUND: '/api/storage/upload-in-background',
+
   FILTER_PRICE: '/api/filters/price',
 
   CLAIM_CERTIFICATES: '/api/certificates/claim',

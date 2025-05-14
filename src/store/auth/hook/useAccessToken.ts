@@ -12,7 +12,6 @@ const useAccessToken = () => {
 
     const fetchAccessToken = () => {
       const accessToken = getCookie('accessToken');
-      console.log('accessToken:::::::', accessToken);
       setAccessToken(accessToken as string);
     };
 

@@ -18,6 +18,8 @@ import MainHeader from '../MainLayout/MainHeader';
 import { useTranslation } from 'next-i18next';
 import IconCup from '@/components/UI/Icons/IconCup';
 import useNavigate from '@/hooks/useNavigate';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -26,6 +28,13 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const { profile } = useProfile();
   const refModalShare: any = useRef(null);
   const { navigate } = useNavigate();
+
+  const token = useAccessToken();
+
+  const { requestGetProfile } = useProfileInitial();
+  useEffect(() => {
+    requestGetProfile();
+  }, [token]);
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},

@@ -550,7 +550,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                           }
                           className="border-main border-1 bg-transparent rounded h-[30px]"
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1">
                             <IconPlusMain />
                             <Text type="font-16-400" className="text-main">
                               {item.type === TYPE_COURSE.LECTURE

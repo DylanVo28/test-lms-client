@@ -124,6 +124,8 @@ const Curriculum = ({ setValue }: any) => {
     setValueForm('title', item?.title);
     setValueLesson(newData);
   };
+
+  console.log(fields, 'fields:::');
   return (
     <LoadingScreen isLoading={loadingListSession}>
       <div className="flex flex-col gap-8">

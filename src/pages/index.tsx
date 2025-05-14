@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import MainLayout from '@/layout/MainLayout';
 import Course from '@/components/Course';
+import MainLayout from '@/layout/MainLayout';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const HomePage = () => {
   return <Course />;

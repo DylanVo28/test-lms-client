@@ -1,44 +1,36 @@
-import { Avatar, Button, Tab, Tabs } from '@nextui-org/react';
-import Text from '../UI/Text';
-import ListSection from './ListSection';
-import { X } from '@phosphor-icons/react';
-import VideoSection from './VideoSection';
-import IconSearch from '../UI/Icons/IconSearch';
-import Overview from './Overview';
-import QA from './QA';
-import Notes from './Notes';
-import Announcements from './Announcements';
-import Reviews from './Reviews';
-import LearningTools from './LearningTools';
-import Search from './Search';
-import { useRouter } from 'next/router';
-import { useGetDetailCourse, useGetListSession } from '../CreateCourse/service';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import LoadingScreen from '../UI/LoadingScreen';
+import { useClaimCertificates } from '@/layout/LessonLayout/service';
+import { useProfile } from '@/store/profile/useProfile';
+import { UserCourseProgressStatus } from '@/utils/common';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
+import { Button, Tab, Tabs } from '@nextui-org/react';
+import { X } from '@phosphor-icons/react';
+import { atom, useAtom } from 'jotai';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useGetListReview,
+  useGetListReviewSummary,
+} from '../Course/ListCourse/service';
+import { useGetDetailCourse, useGetListSession } from '../CreateCourse/service';
+import ModalClaimCertifications from '../UI/ModalClaimCertifications';
+import Text from '../UI/Text';
+import { toast } from '../UI/Toast/toast';
+import Article from './Article';
+import FormEndCourse from './FormEndCourse';
+import FormQuizz from './FormQuizz';
+import ListSection from './ListSection';
+import { activeItemSectionAtom } from './ListSection/ChildSection';
+import NoDataContent from './NoDataContent';
+import Overview from './Overview';
+import Reviews from './Reviews';
 import {
   useGetLessons,
   useGetQuizz,
   useProgressStatusLesson,
   useProgressStatusQuizz,
 } from './service';
-import FormQuizz from './FormQuizz';
-import Article from './Article';
-import LoadingContainer from '../UI/LoadingContainer';
-import { UserCourseProgressStatus } from '@/utils/common';
-import { toast } from '../UI/Toast/toast';
-import { useProfile } from '@/store/profile/useProfile';
-import { atom, useAtom } from 'jotai';
-import { activeItemSectionAtom } from './ListSection/ChildSection';
-import FormEndCourse from './FormEndCourse';
-import { useClaimCertificates } from '@/layout/LessonLayout/service';
-import NoDataContent from './NoDataContent';
-import ModalClaimCertifications from '../UI/ModalClaimCertifications';
-import {
-  useGetListReview,
-  useGetListReviewSummary,
-} from '../Course/ListCourse/service';
-import { useTranslation } from 'next-i18next';
+import VideoSection from './VideoSection';
 
 export const valueProgressAtom = atom<any>({});
 export const reviewedAtom = atom<boolean>(false);
@@ -141,6 +133,8 @@ const Lesson = () => {
       handleScrollTop();
     },
   });
+
+  console.log('dataLesson', dataLesson);
   const {
     dataQuizz,
     run: runGetQuizz,
@@ -247,10 +241,6 @@ const Lesson = () => {
     },
   });
 
-  const isLargestSeventyPercentProcess = useMemo(() => {
-    return (valueYourProgress.value / valueYourProgress.total) * 100 >= 70;
-  }, [valueYourProgress?.value]);
-  console.log('isLargestSeventyPercentProcess', isLargestSeventyPercentProcess);
   useEffect(() => {
     const isEightyPercent =
       (valueYourProgress.value / valueYourProgress.total) * 100 >= 80;

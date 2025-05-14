@@ -156,22 +156,7 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
               <IconClose />
             </Button>
           </div>
-          {/* <ReactPlayer
-              url={dataVideo?.video}
-              width="100%"
-              height={isMobile ? '300px' : '500px'}
-              controls
-              playing={visible}
-              pip
-              config={{
-                file: {
-                  attributes: {
-                    crossOrigin: 'anonymous',
-                    controlsList: 'nodownload',
-                  },
-                },
-              }}
-            /> */}
+
           <div className="pt-4" ref={videoRef} />
         </ModalBody>
       </>

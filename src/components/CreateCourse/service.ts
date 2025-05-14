@@ -224,24 +224,40 @@ export const useCreateQuizz = (options?: IOptions) => {
   return useRequest(serviceCreateQuizz, { manual: true, ...options });
 };
 
-export const serviceUploadFile = (file: any) => {
+export const serviceUploadFile = async (file: any) => {
   const formData = new FormData();
 
   formData.append('file', file);
 
-  return privateRequest(request.post, API_PATH.UPLOAD_FILE, {
+  return await privateRequest(request.post, API_PATH.UPLOAD_FILE, {
     data: formData,
   });
 };
 
+export const serviceUploadFileInBackground = async (file: any) => {
+  const formData = new FormData();
+
+  formData.append('file', file);
+
+  return await privateRequest(
+    request.post,
+    API_PATH.UPLOAD_FILE_IN_BACKGROUND,
+    {
+      data: formData,
+    }
+  );
+};
 export const useUploadFile = (options?: IOptions) => {
   return useRequest(serviceUploadFile, {
     manual: true,
     ...options,
   });
 };
-export const uploadMultipleFiles = (file1: any, file2: any) => {
-  return Promise.all([serviceUploadFile(file1), serviceUploadFile(file2)]);
+export const uploadMultipleFiles = async (file1: any, file2: any) => {
+  return await Promise.all([
+    serviceUploadFile(file1),
+    serviceUploadFile(file2),
+  ]);
 };
 export const useUploadMultipleFiles = (options?: IOptions) => {
   return useRequest(

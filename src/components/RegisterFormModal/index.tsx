@@ -24,7 +24,7 @@ const RegisterFormModal = () => {
   const { t } = useTranslation('common');
   const [referralCode, setReferralCode] = useState('');
   const { address, isConnected } = useAccount();
-  const { requestGetProfile, setProfile } = useProfileInitial();
+  const { requestGetProfile } = useProfileInitial();
   const [showRegisterForm, setShowRegisterForm] = useState<any>(null);
   const router = useRouter();
 
