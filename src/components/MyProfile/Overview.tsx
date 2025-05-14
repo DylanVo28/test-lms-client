@@ -46,7 +46,8 @@ const Overview = ({
     loading,
     totalPoint,
   } = useVolumnData({
-    address: '0x73332479db4259f786b9bdac8dc4dcb3dc8259e8' as string,
+    // address: '0x73332479db4259f786b9bdac8dc4dcb3dc8259e8' as string,
+    address: address as string,
   });
 
   const getProfile = async () => {

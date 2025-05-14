@@ -120,6 +120,8 @@ const DetailCourse = () => {
     runUnLikeCourse(id);
   };
 
+  console.log(dataDetail?.data, 'dataDetail?.data');
+
   return (
     <LoadingScreen isLoading={loading}>
       <div id="top" className="flex flex-col gap-[40px] md:gap-[52px] relative">

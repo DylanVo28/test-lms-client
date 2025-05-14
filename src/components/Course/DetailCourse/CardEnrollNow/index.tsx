@@ -150,7 +150,7 @@ const CardEnrollNow = ({
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
                   try {
-                    console.log('buy');
+                    console.log('buy::::');
                     await approveUSDC(VAULT_ADDRESS, amount);
                     const txHash = await buyCourse(course.id, amount);
                     if (txHash) {

@@ -32,6 +32,7 @@ const FormAddVideo = ({
 
   const { run: runUploadFiles, loading } = useUploadMultipleFiles({
     onSuccess: (response) => {
+      console.log('response::::', response);
       setValueFile({
         ...valueFile,
         thumbnailUrl: response?.[1]?.data?.url,

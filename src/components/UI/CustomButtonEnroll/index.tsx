@@ -46,7 +46,12 @@ const CustomButtonEnroll = ({
             ) : (
               <Button
                 isLoading={loading}
-                onPress={handleClickButton}
+                onPress={() => {
+                  if (course?.enroll === 'pending') {
+                    return;
+                  }
+                  handleClickButton();
+                }}
                 className="bg-main w-full min-h-[40px] rounded"
                 disabled={course?.enroll === 'pending'}
               >
