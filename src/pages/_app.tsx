@@ -167,7 +167,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                   accentColor: '#02A6C2',
                   borderRadius: 'small',
                 })}
-                initialChain={mainnet}
+                initialChain={fantomTestnet}
               >
                 <Toaster position="top-center" />
                 {getLayout(<Component {...pageProps} />)}

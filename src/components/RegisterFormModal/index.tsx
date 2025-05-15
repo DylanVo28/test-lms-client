@@ -136,6 +136,7 @@ const RegisterFormModal = () => {
 
       handleClose();
     } catch (error: any) {
+      console.log('error::::::', error);
       toast.error(t(error?.message));
     }
   };

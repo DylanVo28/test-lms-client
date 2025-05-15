@@ -1,5 +1,6 @@
 import { etc, getPublicKeyAsync, utils } from '@/utils/noble-ed25519';
 import { useEthersSigner } from './useEthersSigner';
+import { useAccount } from 'wagmi';
 import bs58 from 'bs58';
 
 const generatePrivateKey = async () => {
@@ -19,11 +20,12 @@ const generatePrivateKey = async () => {
 
 const useSignAddOrderlyKey = () => {
   const signer = useEthersSigner();
+  const { chainId } = useAccount();
   const handleSign = async () => {
     const OFF_CHAIN_DOMAIN = {
       name: 'Orderly',
       version: '1',
-      chainId: 1,
+      chainId: chainId,
       verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
     };
 
@@ -44,7 +46,7 @@ const useSignAddOrderlyKey = () => {
 
     const message = {
       brokerId: 'what_exchange',
-      chainId: 1,
+      chainId: chainId,
       orderlyKey: orderlyKey,
       scope: 'read',
       timestamp,
