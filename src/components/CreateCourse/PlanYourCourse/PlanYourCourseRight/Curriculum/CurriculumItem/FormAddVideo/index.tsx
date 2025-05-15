@@ -1,69 +1,35 @@
-import {
-  serviceUploadFile,
-  serviceUploadFileInBackground,
-  useUploadFile,
-  useUploadMultipleFiles,
-} from '@/components/CreateCourse/service';
+import { serviceUploadFileInBackground } from '@/components/CreateCourse/service';
 import Text from '@/components/UI/Text';
-import { Button, Progress } from '@nextui-org/react';
+import { LessonContentType } from '@/utils/const';
+import { Button } from '@nextui-org/react';
+import classNames from 'classnames';
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
-import { set } from 'video.js/dist/types/tech/middleware';
 import { useTranslation } from 'next-i18next';
+import { useRef, useState } from 'react';
+import Content from '../Content';
+import { useCurriculumContext } from '../../context';
 
 const FormAddVideo = ({
   handleSaveVideo,
   valueInfo,
+  lectureItem,
 }: {
   handleSaveVideo: (urlVideo: string) => void;
   valueInfo: any;
+  lectureItem: any;
 }) => {
   const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
-  const [valueFile, setValueFile] = useState<any>({});
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
   const [uploadFileLoading, setUploadFileLoading] = useState(false);
 
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    if (valueInfo?.duration) {
-      setValueFile(valueInfo);
-    }
-  }, [valueInfo?.duration]);
+  const [formData, setFormData] = useState<any>({});
 
-  // const { run: runUploadFiles, loading } = useUploadMultipleFiles({
-  //   onSuccess: (response) => {
-  //     console.log('response::::', response);
-  //     setValueFile({
-  //       ...valueFile,
-  //       thumbnailUrl: response?.[1]?.data?.url,
-  //       urlVideo: response?.[0]?.data?.url,
-  //       fileNameVideo: response?.[0]?.data?.filename,
-  //     });
-  //   },
-  //   onError: (err) => {
-  //     console.error('File upload failed', err);
-  //   },
-  // });
-
-  useEffect(() => {
-    if (!valueInfo?.duration) {
-      const interval = setInterval(() => {
-        setValueProgress((v) => {
-          if (v >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return v + 10;
-        });
-      }, 300);
-      return () => clearInterval(interval);
-    } else {
-      setValueProgress(100);
-    }
-  }, [valueFile?.urlVideo, valueInfo?.duration]);
+  const { handleUpdateEditLessonId, handleUpdateShowBoundingBox } =
+    useCurriculumContext();
 
   const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
@@ -82,28 +48,19 @@ const FormAddVideo = ({
           context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
           canvas.toBlob(async (blob: any) => {
             if (blob) {
-              try {
-                setUploadFileLoading(true);
-                const thumbnailFile = new File([blob], 'thumbnail.jpg', {
-                  type: 'image/jpeg',
-                });
+              const thumbnailFile = new File([blob], 'thumbnail.jpg', {
+                type: 'image/jpeg',
+              });
 
-                const videoResponse = await serviceUploadFileInBackground(file);
-                const thumbnailResponse = await serviceUploadFileInBackground(
-                  thumbnailFile
-                );
+              const blobThumbnailUrl = URL.createObjectURL(thumbnailFile);
 
-                setValueFile({
-                  ...valueFile,
-                  urlVideo: videoResponse?.data?.url,
-                  thumbnailUrl: thumbnailResponse?.data?.url,
-                  fileNameVideo: videoResponse?.data?.filename,
-                  duration,
-                });
-              } catch (error) {
-              } finally {
-                setUploadFileLoading(false);
-              }
+              setFormData({
+                video: file,
+                thumbnail: thumbnailFile,
+                duration,
+                blobThumbnailUrl,
+                videoName: file?.name,
+              });
             }
           }, 'image/jpeg');
         };
@@ -111,23 +68,51 @@ const FormAddVideo = ({
     }
   };
 
-  console.log('uploadFileLoading::::', uploadFileLoading);
-
   const handleClickUploadFile = () => {
-    if (valueFile.urlVideo) {
-      setValueProgress(0);
-      setValueFile({});
-      setInputKey(Date.now());
+    fileInputRef.current.click();
+  };
+
+  const handleClickSaveVideo = async () => {
+    if (formData?.video && formData?.thumbnail) {
+      const videoResponse = await serviceUploadFileInBackground(
+        formData?.video
+      );
+      const thumbnailResponse = await serviceUploadFileInBackground(
+        formData?.thumbnail
+      );
+
+      await handleSaveVideo({
+        ...valueInfo,
+        urlVideo: videoResponse?.data?.url,
+        thumbnailUrl: thumbnailResponse?.data?.url,
+        fileNameVideo: videoResponse?.data?.filename,
+        duration: formData?.duration,
+      });
+
+      setFormData({
+        ...formData,
+        urlVideo: videoResponse?.data?.url,
+      });
+
+      handleUpdateEditLessonId(null);
+      handleUpdateShowBoundingBox(false);
     } else {
-      fileInputRef.current.click();
+      setIsError(true);
     }
   };
 
+  const isHasVideo = !!formData?.duration;
+
   return (
-    <div className="flex py-3 px-4 flex-col gap-3 border-1 border-t-0 border-white-15">
+    <div
+      className={classNames(
+        'flex flex-col gap-3 border-1 border-t-0 border-white-15',
+        isHasVideo ? 'px-0 py-0' : 'px-4 py-3'
+      )}
+    >
       <div className="flex items-start gap-4">
         <div className="flex flex-col gap-2 w-full">
-          {valueFile?.urlVideo ? (
+          {/* {formData?.urlVideo && (
             <div className="relative w-full">
               <Progress
                 radius="none"
@@ -144,13 +129,15 @@ const FormAddVideo = ({
                 </Text>
               </div>
             </div>
-          ) : (
+          )} */}
+
+          {!isHasVideo && (
             <div
               onClick={handleClickUploadFile}
               className={clsx(
                 'cursor-pointer w-full py-3 px-[10px] bg-gray-800rounded border-1 border-white-20',
                 {
-                  ['!border-danger-300']: !valueFile?.urlVideo && isError,
+                  ['!border-danger-300']: isError,
                 }
               )}
             >
@@ -159,8 +146,24 @@ const FormAddVideo = ({
               </Text>
             </div>
           )}
-          {isError && !valueFile?.urlVideo && (
-            <Text type="font-14-400" className="text-danger-300">
+
+          {isHasVideo && (
+            <Content
+              info={{
+                duration: formData?.duration,
+                thumbnailUrl: formData?.blobThumbnailUrl,
+                urlVideo: formData?.urlVideo,
+                fileNameVideo: formData?.videoName,
+              }}
+              type={LessonContentType.VIDEO}
+              handleClickEditContent={() => {
+                fileInputRef.current?.click();
+              }}
+            />
+          )}
+
+          {isError && (
+            <Text type="font-14-400" className="text-danger-300 px-2">
               {t('Please upload the file')}
             </Text>
           )}
@@ -174,35 +177,38 @@ const FormAddVideo = ({
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-        <Button
-          isLoading={uploadFileLoading}
-          onPress={handleClickUploadFile}
-          className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
-        >
-          <Text type="font-14-400" className="text-main">
-            {valueFile?.urlVideo ? t('Change video') : t('Select video')}
-          </Text>
-        </Button>
+
+        {!isHasVideo && (
+          <Button
+            isLoading={uploadFileLoading}
+            onPress={handleClickUploadFile}
+            className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
+          >
+            <Text type="font-14-400" className="text-main">
+              {t('Select video')}
+            </Text>
+          </Button>
+        )}
       </div>
 
-      {valueFile?.urlVideo && (
-        <Text type="font-12-500" className="text-white">
-          {valueFile?.fileNameVideo}
-        </Text>
-      )}
-      <Text type="font-12-500" className="text-yellow-500 italic">
-        {t('Note: All files must be at least 720p and less than 500MB.')}
+      <Text
+        type="font-12-500"
+        className={classNames(
+          'text-yellow-500 italic',
+          isHasVideo ? 'px-2' : 'px-0'
+        )}
+      >
+        {t('Note: All files must be at least 720p and less than 100MB.')}
       </Text>
 
-      <div className="flex justify-end items-end">
+      <div
+        className={classNames(
+          'flex justify-end items-end',
+          isHasVideo && 'mx-2 mb-2'
+        )}
+      >
         <Button
-          onPress={() => {
-            if (valueFile?.urlVideo) {
-              handleSaveVideo(valueFile);
-            } else {
-              setIsError(true);
-            }
-          }}
+          onPress={handleClickSaveVideo}
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">

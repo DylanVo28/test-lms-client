@@ -1,18 +1,3 @@
-import AccordionCustom from '@/components/UI/AccordionCustom';
-import Text from '@/components/UI/Text';
-import { Button, Input } from '@nextui-org/react';
-import { IconClose, IconFile } from '..';
-import { Control, useFieldArray } from 'react-hook-form';
-import { useEffect, useRef, useState } from 'react';
-import { LessonContentType, TYPE_COURSE } from '@/utils/const';
-import FormLecture from './FormLecture';
-import FormQuiz from './FormQuiz';
-import IconPlusMain from '@/components/UI/Icons/IconPlusMain';
-import FormAddContent from './FormAddLecture';
-import clsx from 'clsx';
-import FormAddQuizz from './FormAddQuizz';
-import FormSelectItem from './FomSelectItem';
-import FormAddLecture from './FormAddLecture';
 import {
   useCreateLecture,
   useCreateQuestionQuizz,
@@ -24,14 +9,29 @@ import {
   useEditQuestionQuizz,
   useEditQuizz,
 } from '@/components/CreateCourse/service';
+import IconPlusMain from '@/components/UI/Icons/IconPlusMain';
+import Text from '@/components/UI/Text';
+import { LessonContentType, TYPE_COURSE } from '@/utils/const';
+import { Button } from '@nextui-org/react';
 import { PencilSimpleLine, Question, Trash } from '@phosphor-icons/react';
+import clsx from 'clsx';
+import { useEffect, useRef, useState } from 'react';
+import { IconClose, IconFile } from '..';
+import FormSelectItem from './FomSelectItem';
+import FormAddLecture from './FormAddLecture';
+import FormAddQuizz from './FormAddQuizz';
+import FormLecture from './FormLecture';
+import FormQuiz from './FormQuiz';
+import { toast } from '@/components/UI/Toast/toast';
 
+import InputText from '@/components/UI/InputText';
+import { useTranslation } from 'next-i18next';
+import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import Content from './Content';
 import ContentQuestions from './ContentQuestions';
-import InputText from '@/components/UI/InputText';
-import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
-import { useTranslation } from 'next-i18next';
+import { useCurriculumContext } from '../context';
+import classNames from 'classnames';
 
 const CurriculumItem = ({ item }: { item: any }) => {
   const { t } = useTranslation('common');
@@ -57,6 +57,13 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const [indexContentAdd, setIndexAddContent] = useState<any>([]);
   const [indexAddQuestion, setIndexAddQuestion] = useState<any>([]);
   const [idAddQuestionQuizz, setIdAddQuestionQuizz] = useState<string>('');
+
+  const {
+    editLessonId,
+    handleUpdateEditLessonId,
+    handleUpdateShowBoundingBox,
+    showBoundingBox,
+  } = useCurriculumContext();
 
   useEffect(() => {
     if (item?.id) {
@@ -296,7 +303,17 @@ const CurriculumItem = ({ item }: { item: any }) => {
     setFormAdd('');
   };
 
-  const handleClickAddContent = (type: TYPE_COURSE, index: number) => {
+  const handleClickAddContent = (item: any, index: number) => {
+    const type = item?.type as TYPE_COURSE;
+
+    if (editLessonId) {
+      handleUpdateShowBoundingBox(true);
+      toast.error(t('Please save the lesson before adding a new item'));
+      return;
+    } else {
+      handleUpdateEditLessonId(item?.id);
+    }
+
     if (type === TYPE_COURSE.LECTURE) {
       setIndexAddContent((prev: any) =>
         prev.includes(index)
@@ -402,12 +419,20 @@ const CurriculumItem = ({ item }: { item: any }) => {
   };
 
   return (
-    <div className="flex flex-col min-w-[600px] gap-4 pl-[20px] md:pl-[52px] relative w-full">
+    <div
+      className={classNames(
+        'flex flex-col min-w-[600px] gap-4 pl-[20px] md:pl-[52px] relative w-full'
+      )}
+    >
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
-        console.log(item, 'item');
-
         return (
-          <div className="w-full" key={item?.id}>
+          <div
+            className={classNames('w-full', {
+              'border-1 border-red-500':
+                item?.id === editLessonId && showBoundingBox,
+            })}
+            key={item?.id}
+          >
             <div
               className={clsx(
                 'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white-15',
@@ -519,6 +544,11 @@ const CurriculumItem = ({ item }: { item: any }) => {
                   </Text>
                   <Button
                     onPress={() => {
+                      if (editLessonId) {
+                        handleUpdateEditLessonId(null);
+                        handleUpdateShowBoundingBox(false);
+                      }
+
                       const newData = indexContentAdd?.filter(
                         (item: any) => item !== indexCurriculum
                       );
@@ -546,7 +576,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       {!valueEditEditCotentLesson?.id && (
                         <Button
                           onPress={() =>
-                            handleClickAddContent(item.type, indexCurriculum)
+                            handleClickAddContent(item, indexCurriculum)
                           }
                           className="border-main border-1 bg-transparent rounded h-[30px]"
                         >
@@ -596,7 +626,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
               )}
             {typeAddContent && indexContentAdd?.includes(indexCurriculum) && (
               <>
-                <FormAddContent
+                <FormAddLecture
                   typeAddContent={typeAddContent}
                   valueContent={valueContent}
                   valueInfo={valueInfo}
@@ -607,6 +637,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     handleSaveArticle(value, item?.id, indexCurriculum)
                   }
                   loading={loadingEditLecture}
+                  lectureItem={item}
                 />
               </>
             )}

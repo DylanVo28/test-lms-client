@@ -1309,3 +1309,9 @@ input[type='number'] {
 .video-js .vjs-control-bar {
   background: #000 !important;
 }
+
+.video-js {
+  .vjs-menu-button-popup.vjs-quality-selector {
+    display: none !important;
+  }
+}

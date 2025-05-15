@@ -3,7 +3,7 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { Control, useFieldArray, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   useCreateSesson,
@@ -18,10 +18,12 @@ import FormAddSection from './CurriculumItem/FormAddSection';
 import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
 import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
 import { useTranslation } from 'next-i18next';
+import CurriculumProvider from './context';
 
 const CurriculumItem = dynamic(() => import('./CurriculumItem'), {
   ssr: false,
 });
+
 const Curriculum = ({ setValue }: any) => {
   const { t } = useTranslation('common');
   const {
@@ -125,139 +127,140 @@ const Curriculum = ({ setValue }: any) => {
     setValueLesson(newData);
   };
 
-  console.log(fields, 'fields:::');
   return (
-    <LoadingScreen isLoading={loadingListSession}>
-      <div className="flex flex-col gap-8">
-        <div className="flex justify-between items-center">
-          <Text type="font-28-700" className="text-white">
-            {t('Curriculum item')}
-          </Text>
-          {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
+    <CurriculumProvider>
+      <LoadingScreen isLoading={loadingListSession}>
+        <div className="flex flex-col gap-8">
+          <div className="flex justify-between items-center">
+            <Text type="font-28-700" className="text-white">
+              {t('Curriculum item')}
+            </Text>
+            {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
             <Text type="font-16-700" className="text-white">
               Bulk Uploader
             </Text>
           </Button> */}
-        </div>
+          </div>
 
-        <Text type="font-16-400" className="text-black-6">
-          {t(
-            'Start putting together your course by creating sections, lectures and practice activities (quizzes, coding exercises and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.'
-          )}
-        </Text>
-        {fields?.map((field: any, index: number) => {
-          return (
-            <div className="flex flex-col gap-1 overflow-auto">
-              {index !== 0 && (
-                <Button
-                  onPress={() => handleRemoveSection(index, field.idSection)}
-                  isIconOnly
-                  variant="light"
-                  radius="full"
-                  size="sm"
-                >
-                  <IconClose />
-                </Button>
-              )}
+          <Text type="font-16-400" className="text-black-6">
+            {t(
+              'Start putting together your course by creating sections, lectures and practice activities (quizzes, coding exercises and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.'
+            )}
+          </Text>
+          {fields?.map((field: any, index: number) => {
+            return (
+              <div className="flex flex-col gap-1 overflow-auto">
+                {index !== 0 && (
+                  <Button
+                    onPress={() => handleRemoveSection(index, field.idSection)}
+                    isIconOnly
+                    variant="light"
+                    radius="full"
+                    size="sm"
+                  >
+                    <IconClose />
+                  </Button>
+                )}
 
-              {field?.title ? (
-                <div className="border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6">
-                  {valueLesson?.id === field?.id ? (
-                    <FormAddSection
-                      handleSaveAddSection={(values: any) => {
-                        if (valueLesson?.id) {
-                          handleSaveEditSection(values);
-                        } else {
-                          handleSaveAddSection(values, index);
-                        }
-                      }}
-                      loading={loadingEditSection}
-                      control={control}
-                      valueLesson={valueLesson}
-                      handleSubmit={handleSubmit}
-                      handleCancelFormAddSection={() => {
-                        setValueLesson({});
-                      }}
-                    />
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Text type="font-16-700">{`${t('Part')} ${
-                        index + 1
-                      }:`}</Text>
-                      <div className="flex items-center gap-1">
-                        <IconFile />
-                        <Text type="font-16-400" className="text-black-7">
-                          {field.title}
-                        </Text>
-                        <Button
-                          isIconOnly
-                          onPress={() => {
-                            handleEditLesson(field, index);
-                          }}
-                          size="sm"
-                          radius="full"
-                          variant="light"
-                        >
-                          <PencilSimpleLine size={16} weight="light" />
-                        </Button>
-                        {index !== 0 && (
+                {field?.title ? (
+                  <div className="border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6">
+                    {valueLesson?.id === field?.id ? (
+                      <FormAddSection
+                        handleSaveAddSection={(values: any) => {
+                          if (valueLesson?.id) {
+                            handleSaveEditSection(values);
+                          } else {
+                            handleSaveAddSection(values, index);
+                          }
+                        }}
+                        loading={loadingEditSection}
+                        control={control}
+                        valueLesson={valueLesson}
+                        handleSubmit={handleSubmit}
+                        handleCancelFormAddSection={() => {
+                          setValueLesson({});
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <Text type="font-16-700">{`${t('Part')} ${
+                          index + 1
+                        }:`}</Text>
+                        <div className="flex items-center gap-1">
+                          <IconFile />
+                          <Text type="font-16-400" className="text-black-7">
+                            {field.title}
+                          </Text>
                           <Button
                             isIconOnly
                             onPress={() => {
-                              handleRemoveSection(index, field?.idSection);
+                              handleEditLesson(field, index);
                             }}
                             size="sm"
                             radius="full"
                             variant="light"
                           >
-                            <Trash size={16} weight="light" />
+                            <PencilSimpleLine size={16} weight="light" />
                           </Button>
-                        )}
+                          {index !== 0 && (
+                            <Button
+                              isIconOnly
+                              onPress={() => {
+                                handleRemoveSection(index, field?.idSection);
+                              }}
+                              size="sm"
+                              radius="full"
+                              variant="light"
+                            >
+                              <Trash size={16} weight="light" />
+                            </Button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  <CurriculumItem item={field} />
-                </div>
-              ) : (
-                <FormAddSection
-                  handleSaveAddSection={(values: any) =>
-                    handleSaveAddSection(values, index)
-                  }
-                  loading={loadingAddSection}
-                  control={control}
-                  handleSubmit={handleSubmit}
-                  handleCancelFormAddSection={() => {
-                    setAddSection(false);
-                    remove(index);
-                  }}
-                />
-              )}
-            </div>
-          );
-        })}
-        {!addSection && (
-          <Button
-            onPress={() => {
-              setAddSection(true);
-              append({ title: '', introduction: '' });
-            }}
-            className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
-          >
-            <div className="flex items-center gap-1">
-              <IconPlusMain />
-              <Text type="font-16-400" className="text-main">
-                {t('Section')}
-              </Text>
-            </div>
-          </Button>
-        )}
-      </div>
-      <ModalConfirmDeleteSection
-        handleSubmitDelete={handleSubmitDelete}
-        ref={refModalConfirmDeleteSection}
-      />
-    </LoadingScreen>
+                    <CurriculumItem item={field} />
+                  </div>
+                ) : (
+                  <FormAddSection
+                    handleSaveAddSection={(values: any) =>
+                      handleSaveAddSection(values, index)
+                    }
+                    loading={loadingAddSection}
+                    control={control}
+                    handleSubmit={handleSubmit}
+                    handleCancelFormAddSection={() => {
+                      setAddSection(false);
+                      remove(index);
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
+          {!addSection && (
+            <Button
+              onPress={() => {
+                setAddSection(true);
+                append({ title: '', introduction: '' });
+              }}
+              className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
+            >
+              <div className="flex items-center gap-1">
+                <IconPlusMain />
+                <Text type="font-16-400" className="text-main">
+                  {t('Section')}
+                </Text>
+              </div>
+            </Button>
+          )}
+        </div>
+        <ModalConfirmDeleteSection
+          handleSubmitDelete={handleSubmitDelete}
+          ref={refModalConfirmDeleteSection}
+        />
+      </LoadingScreen>
+    </CurriculumProvider>
   );
 };
 export default Curriculum;

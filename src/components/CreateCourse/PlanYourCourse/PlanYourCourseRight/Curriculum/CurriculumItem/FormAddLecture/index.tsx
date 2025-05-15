@@ -13,6 +13,7 @@ const FormAddLecture = ({
   typeAddContent,
   valueContent,
   valueInfo,
+  lectureItem,
 }: {
   handleSaveArticle: (value: string) => void;
   handleSaveVideo: (urlVideo: string) => void;
@@ -20,6 +21,7 @@ const FormAddLecture = ({
   valueContent?: string;
   typeAddContent: string;
   valueInfo: any;
+  lectureItem: any;
 }) => {
   const { t } = useTranslation('common');
   const [typeAddAction, setTypeAddAction] = useState<string>('');
@@ -58,6 +60,7 @@ const FormAddLecture = ({
             <FormAddVideo
               valueInfo={valueInfo}
               handleSaveVideo={handleSaveVideo}
+              lectureItem={lectureItem}
             />
           )}
         </>

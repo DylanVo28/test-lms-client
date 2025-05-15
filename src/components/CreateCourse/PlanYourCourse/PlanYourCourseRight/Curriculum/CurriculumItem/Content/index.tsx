@@ -11,7 +11,7 @@ const Content = ({
   type,
   info,
 }: {
-  handleClickEditContent: VoidFunction;
+  handleClickEditContent?: VoidFunction;
   type: LessonContentType;
   info: any;
 }) => {
@@ -26,6 +26,7 @@ const Content = ({
 
     return formattedTime;
   }, [info?.duration]);
+
   return (
     <div className="flex items-start justify-between p-3  border-1 border-t-0 border-white-15 gap-3">
       <div className="flex items-center gap-2 cursor-pointer">
@@ -55,34 +56,21 @@ const Content = ({
             </Text>
           )}
 
-          <div
-            onClick={handleClickEditContent}
-            className="flex items-center gap-1"
-          >
-            <IconEdit />
-            <Text type="font-14-400" className="text-[#0059FF]">
-              {type === LessonContentType.VIDEO
-                ? t('Edit video')
-                : t('Edit content')}
-            </Text>
-          </div>
-
-          {/* <div className="flex items-center gap-1">
-            <IconPlay />
-            <Text type="font-14-400" className="text-[#0059FF]">
-              Replace With Video
-            </Text>
-          </div> */}
+          {handleClickEditContent && (
+            <div
+              onClick={handleClickEditContent}
+              className="flex items-center gap-1"
+            >
+              <IconEdit />
+              <Text type="font-14-400" className="text-[#0059FF]">
+                {type === LessonContentType.VIDEO
+                  ? t('Edit video')
+                  : t('Edit content')}
+              </Text>
+            </div>
+          )}
         </div>
       </div>
-      {/* <Button className="bg-main w-max rounded h-[40px]">
-        <div className="flex items-center gap-2">
-          <Text type="font-16-400" className="text-white">
-            Preview
-          </Text>
-          <IconArrowDown />
-        </div>
-      </Button> */}
     </div>
   );
 };
