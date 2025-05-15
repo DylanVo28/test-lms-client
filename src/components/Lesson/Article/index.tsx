@@ -117,7 +117,7 @@ const Article = ({
         </>
       )}
       <div className="flex flex-col gap-8 w-8/12 mx-auto">
-        <Text type="font-32-700">{content?.title}</Text>
+        <Text type="font-28-700">{content?.title}</Text>
         <div
           className="text-2xl text-black-5 customContentEditor"
           dangerouslySetInnerHTML={{

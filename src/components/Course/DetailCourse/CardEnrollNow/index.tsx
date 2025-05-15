@@ -12,7 +12,7 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { parseGwei, parseUnits } from 'viem';
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi';
 import ModalViewVideo from './ModalViewVideo';
@@ -46,20 +46,19 @@ const CardEnrollNow = ({
   const accessToken = useAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
-  const { writeContractAsync } = useWriteContract();
 
   const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
   const amount = 0.01;
   const { run, loading, cancel } = useEnrollCourse({
-    pollingInterval: 3000,
+    // pollingInterval: 3000,
     onSuccess: (res) => {
       if (res?.message === 'Successfully') {
-        toast.success('Enrollment initiated successfully.');
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        getDetailCourse && getDetailCourse(course?.id);
+        toast.success(
+          'You have successfully enrolled in the course. Please wait a moment while the system verifies the transaction.'
+        );
       }
     },
     onError: (err) => {
@@ -69,6 +68,7 @@ const CardEnrollNow = ({
       }
     },
   });
+
   const discountCalculator = (originPrice: any, price: any) => {
     const discountPercentage = ((originPrice - price) / originPrice) * 100;
 
@@ -98,7 +98,7 @@ const CardEnrollNow = ({
           width={302}
           height={200}
           alt=""
-          className="w-full h-[200px] rounded rounded-b-none opacity-80"
+          className="w-full h-[200px] rounded rounded-b-none opacity-80 object-cover"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
@@ -110,7 +110,7 @@ const CardEnrollNow = ({
               width={64}
               height={64}
               alt=""
-              className="absolute cursor-pointer"
+              className="absolute cursor-pointer object-contain"
               onClick={() => refModalViewVideo.current.onOpen(course)}
             />
           </>
@@ -150,7 +150,6 @@ const CardEnrollNow = ({
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                 } else {
                   try {
-                    console.log('buy::::');
                     await approveUSDC(VAULT_ADDRESS, amount);
                     const txHash = await buyCourse(course.id, amount);
                     if (txHash) {

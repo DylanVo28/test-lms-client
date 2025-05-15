@@ -107,7 +107,7 @@ const FormQuizz = ({
       ) : (
         <div className="w-full min-h-[400px] md:min-h-[566px] pt-20 md:p-12">
           <div className="md:w-8/12 mx-auto flex items-start text-start flex-col gap-6">
-            <Text className="text-white" type="font-32-700">
+            <Text className="text-white" type="font-28-700">
               {dataQuizz?.title}
             </Text>
             <div className="flex items-center gap-3">

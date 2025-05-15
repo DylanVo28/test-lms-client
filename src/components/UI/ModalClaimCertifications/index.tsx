@@ -52,19 +52,19 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
             <div className="flex p-4 items-center gap-3 rounded border-1 border-white-10 bg-white-10">
               <Image
                 src={dataCertifications?.certificate?.image}
-                width={120}
-                height={120}
                 alt=""
-                className="w-[120px] h-[120px] rounded-lg"
+                width={240}
+                height={120}
+                className="w-auto h-[120px] rounded-lg"
                 onError={(e: any) => {
                   e.target.srcset = '/images/img-certification.png';
                 }}
               />
               <div className="flex flex-col gap-3">
-                <Text type="font-18-600">
+                <Text type="font-16-600">
                   {dataCertifications?.certificate?.name}
                 </Text>
-                <Text type="font-16-400" className="text-black-7">
+                <Text type="font-14-400" className="text-black-7">
                   {dataCertifications?.certificate?.description}
                 </Text>
               </div>

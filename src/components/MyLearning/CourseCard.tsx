@@ -57,7 +57,7 @@ export default function CourseCard({
             alt={name}
             width={302}
             height={200}
-            className="w-full h-[200px]"
+            className="w-full h-[200px] object-cover"
             // layout="contain"
             // objectFit="scale-down"
             onError={(e: any) => {
@@ -90,7 +90,7 @@ export default function CourseCard({
               count={5}
               color1="#D9D9D9"
               color2="#F2B021"
-              value={course?.rating}
+              value={course?.rating || 5}
               size={16}
               edit={false}
               className="flex items-center gap-1 mb-1"

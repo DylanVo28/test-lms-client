@@ -38,7 +38,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
 
   return (
     <div className="flex items-center flex-col gap-10">
-      <Text className="text-white text-center" type="font-32-700">
+      <Text className="text-white text-center" type="font-28-700">
         {t("First, let's find out what type of course you're making.")}
       </Text>
       <Controller

@@ -10,7 +10,7 @@ interface TextProps {
     | 'font-16-600'
     | 'font-16-700'
     | 'font-14-400'
-    | 'font-32-700'
+    | 'font-28-700'
     | 'font-16-400'
     | 'font-16-500'
     | 'font-18-600'

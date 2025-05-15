@@ -27,8 +27,6 @@ export const useUSDCOperations = () => {
       }
       try {
         setLoading(true);
-        const message = `Approve ${spender} to spend ${amount} USDC`;
-        await signMessageAsync({ message });
         const estimatedGas = await usdcContract.estimateGas.approve(
           spender,
           parseAmount(amount)
@@ -56,8 +54,7 @@ export const useUSDCOperations = () => {
       }
       try {
         setLoading(true);
-        const message = `Buy course ${courseId} with ${amount} USDC`;
-        await signMessageAsync({ message });
+
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
           parseAmount(amount)

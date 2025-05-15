@@ -113,16 +113,16 @@ const Mentors = ({ mentor }: any) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
+    <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-white" type="font-20-600">
         {t('Mentors (KOLs)')}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
           alt=""
-          width={240}
-          height={202}
-          className="rounded w-[240px] h-[202px] bg-[#212121]"
+          width={180}
+          height={120}
+          className="rounded w-[180px] h-[120px] bg-[#212121]"
           src={mentor?.avatar || '/images/img-mentor-default.png'}
           onError={(e: any) => {
             e.target.srcset = '/images/img-mentor-default.png';
@@ -133,18 +133,22 @@ const Mentors = ({ mentor }: any) => {
             <Text className="text-white" type="font-16-600">
               {generateMentors()}
             </Text>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               <Text className="text-black-7" type="font-14-400">
                 {mentor?.headline}
               </Text>
-              <div className="flex items-center gap-2 flex-wrap">
-                <Text type="font-14-400" className="text-white">
-                  {mentorProfile?.instructorInfo?.avgRate?.toFixed(1) || 0}
-                </Text>
-                <Rater
-                  total={5}
-                  rating={mentorProfile?.instructorInfo?.avgRate || 0}
-                />
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex gap-x-2 items-center">
+                  <Text type="font-14-400" className="text-white">
+                    {(mentorProfile?.instructorInfo?.avgRate || 5)?.toFixed(
+                      1
+                    ) || 0}
+                  </Text>
+                  <Rater
+                    total={5}
+                    rating={mentorProfile?.instructorInfo?.avgRate || 5}
+                  />
+                </div>
                 <Text type="font-14-400" className="text-white">
                   {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
                   {t('Reviews')}

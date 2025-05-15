@@ -63,8 +63,8 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
     const img = new window.Image();
 
     img.onload = () => {
-      const minWidth = 302;
-      const minHeight = 200;
+      const minWidth = 200;
+      const minHeight = 150;
       console.log(img.width, 'width');
 
       if (img.width < minWidth || img.height < minHeight) {

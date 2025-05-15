@@ -26,7 +26,7 @@ const BreadCrumbs = () => {
       </Button>
       <IconArrowRight />
       <Text
-        type="font-14-500"
+        type="font-16-500"
         onClick={() => navigate(ROUTE_PATH.COURSE)}
         className="text-white hover:opacity-80 cursor-pointer"
       >
@@ -35,7 +35,7 @@ const BreadCrumbs = () => {
 
       <IconArrowRight />
 
-      <Text type="font-14-500" className="text-main">
+      <Text type="font-16-500" className="text-main">
         {t('Course details')}
       </Text>
     </div>

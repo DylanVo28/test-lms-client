@@ -55,7 +55,7 @@ const MainBanner = () => {
           </div>
           <div className="flex flex-col gap-[40px]">
             <div className="flex flex-col gap-2">
-              <Text type="font-32-700" className="text-white">
+              <Text type="font-28-700" className="text-white">
                 {theme?.title ? theme?.title : t('Web Development Courses')}
               </Text>
               <Text type="font-16-400" className="text-white">

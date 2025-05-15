@@ -120,7 +120,7 @@ const ListCourse = () => {
   return (
     <LoadingScreen isLoading={loading || loadingMore}>
       <div className="flex flex-col gap-8 mb-4 md:mb-0 pt-[36px] md:px-10">
-        <Text type="font-32-700" className="text-white">{`${
+        <Text type="font-28-700" className="text-white">{`${
           dataCourses?.length
         } ${t('results for')} “${router.query.keySearch}”`}</Text>
         <div className={clsx('grid grid-cols-8 gap-6', {})}>

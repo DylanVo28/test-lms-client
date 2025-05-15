@@ -6,7 +6,7 @@ import Image from 'next/image';
 const About = ({ data }: { data: any }) => {
   const { t } = useTranslation('common');
   return (
-    <div className="flex flex-col gap-6 border-b-1 border-b-black-10 pb-10">
+    <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-white" type="font-20-600">
         {t('About This Course')}
       </Text>

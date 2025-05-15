@@ -10,6 +10,7 @@ import { useProfile } from '@/store/profile/useProfile';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { toast } from '@/components/UI/Toast/toast';
+import Link from 'next/link';
 
 const Certifications = () => {
   const { t } = useTranslation('common');
@@ -32,6 +33,8 @@ const Certifications = () => {
       toast.error(e.message);
     },
   });
+
+  console.log('dataListCertificates', dataListCertificates);
 
   return (
     <div className="flex flex-col gap-6">
@@ -61,7 +64,7 @@ const Certifications = () => {
       </div>
       {!loading && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {dataListCertificates?.data?.map((item: any) => {
               return (
                 <div
@@ -71,9 +74,9 @@ const Certifications = () => {
                   <Image
                     src={item?.certificate?.image}
                     alt=""
-                    width={120}
+                    width={240}
                     height={120}
-                    className="w-[120px] h-[120px]"
+                    className="w-[240px] h-[120px]"
                     onError={(e: any) => {
                       e.target.srcset = '/images/img-certification.png';
                     }}
@@ -103,6 +106,19 @@ const Certifications = () => {
                           Mint
                         </Text>
                       </Button>
+                    )}
+
+                    {item.tokenId && (
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <Text type="font-16-400" className="text-white">
+                            {t('Token ID')}
+                          </Text>
+                          <Text type="font-16-400" className="text-white">
+                            {item.tokenId}
+                          </Text>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>

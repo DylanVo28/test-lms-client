@@ -25,7 +25,7 @@ const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
   return (
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
-        <Text type="font-32-700" className="text-white">
+        <Text type="font-28-700" className="text-white">
           {t('Courses')}
         </Text>
       </div>

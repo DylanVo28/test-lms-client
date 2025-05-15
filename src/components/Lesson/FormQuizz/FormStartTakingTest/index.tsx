@@ -142,7 +142,7 @@ const FormStartTakingTest = ({
             </div>
           )}
 
-          <Text type="font-32-700" className="text-white">{`${t(
+          <Text type="font-28-700" className="text-white">{`${t(
             'Question'
           )} ${currentQuestion}`}</Text>
 

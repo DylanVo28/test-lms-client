@@ -36,7 +36,7 @@ const ContenStep4 = ({
   return (
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
-        <Text type="font-32-700" className="text-white">
+        <Text type="font-28-700" className="text-white">
           {t('How much time can you spend creating your course per week?')}
         </Text>
         <Text type="font-16-400" className="text-black-6">

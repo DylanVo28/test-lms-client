@@ -34,11 +34,12 @@ const DetailCourse = () => {
   const {
     run: getDetailCourse,
     data: dataDetail,
-    loading,
+    // loading,
     mutate,
   } = useGetDetailCourse({
+    pollingInterval: 5000,
     onSuccess: () => {
-      handleScrollTop();
+      // handleScrollTop();
     },
   });
 
@@ -123,17 +124,17 @@ const DetailCourse = () => {
   console.log(dataDetail?.data, 'dataDetail?.data');
 
   return (
-    <LoadingScreen isLoading={loading}>
-      <div id="top" className="flex flex-col gap-[40px] md:gap-[52px] relative">
+    <LoadingScreen isLoading={false}>
+      <div id="top" className="flex flex-col gap-[20px] md:gap-[30px] relative">
         <BreadCrumbs />
 
         <div className="md:grid md:grid-cols-10 gap-[70px]">
           <div className="block mb-4 md:hidden">
             <CardEnrollNow course={dataDetail?.data} />
           </div>
-          <div className="col-span-7 flex flex-col gap-10">
-            <div className="flex flex-col border-b-1 border-b-black-10 pb-10 gap-5">
-              <Text type="font-32-700" className="text-white">
+          <div className="col-span-7 flex flex-col gap-5">
+            <div className="flex flex-col border-b-1 border-b-black-10 pb-5 gap-5">
+              <Text type="font-28-700" className="text-white">
                 {dataDetail?.data?.title}
               </Text>
               <Text type="font-14-400" className="text-white">
@@ -142,9 +143,9 @@ const DetailCourse = () => {
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
                   <Text type="font-14-400" className="text-white">
-                    {dataDetail?.data?.rating?.toFixed(1)}
+                    {(dataDetail?.data?.rating || 5)?.toFixed(1)}
                   </Text>
-                  <Rater total={5} rating={dataDetail?.data?.rating} />
+                  <Rater total={5} rating={dataDetail?.data?.rating | 5} />
                 </div>
 
                 <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -197,15 +198,15 @@ const DetailCourse = () => {
                     }}
                   />
                 ) : (
-                  <User size={22} />
+                  <User size={18} />
                 )}
 
-                <Text type="font-16-500" className="text-main">
+                <Text type="font-15-500" className="text-main">
                   {t('By')}
                 </Text>
                 <Text
                   element="span"
-                  type="font-16-500"
+                  type="font-15-500"
                   className="text-white truncate w-full"
                 >
                   {generateMentors()}
