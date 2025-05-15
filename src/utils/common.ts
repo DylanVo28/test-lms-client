@@ -38,6 +38,7 @@ export enum TypeReactions {
   DISLIKE = 'DISLIKE',
 }
 
+// log code
 export const generateRandomId = () => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
