@@ -75,6 +75,18 @@ const CardEnrollNow = ({
     return `${discountPercentage.toFixed(0)}%`;
   };
 
+  const handleEnroll = async () => {
+    try {
+      await approveUSDC(VAULT_ADDRESS, amount);
+      const txHash = await buyCourse(course.id, amount);
+      if (txHash) {
+        run(course.id, txHash);
+      }
+    } catch (error) {
+      toast.error(t('Failed to enroll in the course. Please try again.'));
+    }
+  };
+
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
@@ -145,22 +157,19 @@ const CardEnrollNow = ({
             <CustomButtonEnroll
               course={course}
               handleClickButton={async () => {
+                console.log('course', course);
                 if (!course?.id) return;
                 if (course.isOwner || course.authorId === profile?.id) {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
-                } else {
-                  try {
-                    await approveUSDC(VAULT_ADDRESS, amount);
-                    const txHash = await buyCourse(course.id, amount);
-                    if (txHash) {
-                      run(course.id, txHash);
-                    }
-                  } catch (error) {
-                    toast.error(
-                      t('Failed to enroll in the course. Please try again.')
-                    );
-                  }
+                  return;
                 }
+
+                if (course?.enroll === 'completed') {
+                  navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
+                  return;
+                }
+
+                handleEnroll();
               }}
               loading={loadingBuy}
               token={accessToken}

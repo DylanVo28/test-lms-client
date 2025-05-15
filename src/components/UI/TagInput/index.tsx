@@ -43,7 +43,7 @@ const TagInput = () => {
 
   return (
     <div className="flex flex-wrap gap-2 items-center p-5 border border-[#00000033] rounded-[4px] bg-gray-50">
-      {topics.map((tag: any) => (
+      {topics?.map((tag: any) => (
         <div
           key={tag}
           className="rounded-full bg-white-10 capitalize border-1 gap-2 border-white-10 py-2 px-3 flex justify-center items-center"
