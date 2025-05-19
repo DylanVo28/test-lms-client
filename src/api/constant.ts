@@ -57,7 +57,7 @@ export const API_PATH = {
 
   CLAIM_CERTIFICATES: '/api/certificates/claim',
 
-  MINT_CERTIFICATE: '/api/mintNFT',
+  MINT_CERTIFICATE: '/api/web3/mintNFT',
 
   FILTER_TOPIC: '/api/filters/topic',
 
@@ -105,4 +105,6 @@ export const API_PATH = {
   GET_COUNT_NOTIFICATION: '/api/notifications/count',
 
   READ_NOTIFICATION: (id: string) => `/api/notifications/${id}/read`,
+
+  GET_WITHDRAW_METADATA: '/api/web3/get-metadata',
 };
