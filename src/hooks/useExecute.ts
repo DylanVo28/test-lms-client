@@ -4,8 +4,8 @@ import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
-const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-const VAULT_ADDRESS = '0x6F6D49bBcBfBdb41851D9A7754012e56a702a2b1';
+export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
+export const VAULT_ADDRESS = '0x39b590C256D286Cb0422fEE409609134FE398c1E';
 
 const parseAmount = (amount: string | number) => {
   return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
@@ -32,9 +32,7 @@ export const useUSDCOperations = () => {
         const tx = await usdcContract.approve(spender, parseAmount(amount), {
           gasLimit: calculateGasMargin(estimatedGas),
         });
-        console.log('Approval tx sent:', tx.hash);
         await tx.wait();
-        console.log('Approval successful');
       } catch (error) {
         console.error('Approval failed:', error);
       } finally {

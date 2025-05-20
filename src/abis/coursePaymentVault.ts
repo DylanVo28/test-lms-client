@@ -179,7 +179,7 @@ export const coursePaymentVaultAbi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'string',
         name: 'txId',
         type: 'string',

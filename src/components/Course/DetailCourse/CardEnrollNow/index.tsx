@@ -17,6 +17,7 @@ import { useUSDCOperations } from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
+import { VAULT_ADDRESS } from '../../../../hooks/useExecute';
 
 const CardEnrollNow = ({
   course,
@@ -40,7 +41,6 @@ const CardEnrollNow = ({
     t('Certificate of completion'),
   ];
 
-  const VAULT_ADDRESS = '0x6F6D49bBcBfBdb41851D9A7754012e56a702a2b1';
   const accessToken = useAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
