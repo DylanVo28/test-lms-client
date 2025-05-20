@@ -50,6 +50,7 @@ const CardEnrollNow = ({
     buyCourse,
     loading: loadingBuy,
     withdraw,
+    isTxIdUsed,
   } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
@@ -87,6 +88,18 @@ const CardEnrollNow = ({
       }
     } catch (error) {
       toast.error(t('Failed to enroll in the course. Please try again.'));
+    }
+  };
+
+  const handlecheck = async () => {
+    try {
+      const result = await isTxIdUsed('cmaw7kvyu0004lhldbtmufq67');
+      if (result === true) {
+        await privateRequest(request.get, API_PATH.UPDATE_KOL_REWARD);
+      }
+      toast.success(`${result}`);
+    } catch (error) {
+      toast.error(t(`'Failed to enroll in the course. Please try again.'`));
     }
   };
 
@@ -204,10 +217,7 @@ const CardEnrollNow = ({
               {t('This course includes')}
             </Text>
 
-            <div
-              className="flex flex-col gap-1"
-              onClick={() => handleWithdraw()}
-            >
+            <div className="flex flex-col gap-1" onClick={() => handlecheck()}>
               {DATA_NOTE?.map((item) => {
                 return (
                   <div className="flex items-center gap-1">

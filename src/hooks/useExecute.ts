@@ -131,5 +131,21 @@ export const useUSDCOperations = () => {
     }
   }, [vaultContract]);
 
-  return { approveUSDC, buyCourse, loading, withdraw, execute };
+  const isTxIdUsed = useCallback(
+    async (txId: string) => {
+      if (!vaultContract) {
+        console.error('Vault contract not initialized');
+        return;
+      }
+      try {
+        const isUsed = await vaultContract.isTxIdUsed(txId);
+        return isUsed;
+      } catch (error) {
+        console.error('Error checking transaction ID:', error);
+      }
+    },
+    [vaultContract]
+  );
+
+  return { approveUSDC, buyCourse, loading, withdraw, execute, isTxIdUsed };
 };

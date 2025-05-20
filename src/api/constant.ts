@@ -107,4 +107,5 @@ export const API_PATH = {
   READ_NOTIFICATION: (id: string) => `/api/notifications/${id}/read`,
 
   GET_WITHDRAW_METADATA: '/api/web3/get-metadata',
+  UPDATE_KOL_REWARD: '/api/user/update-reward',
 };
