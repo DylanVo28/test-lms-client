@@ -70,8 +70,6 @@ const DetailCourse = () => {
     }
   };
 
-  console.log(dataDetail, 'dataDetail');
-
   const { run: runLikeCourse } = useLikeCourse({
     onSuccess(res) {
       mutate({
@@ -121,13 +119,10 @@ const DetailCourse = () => {
     runUnLikeCourse(id);
   };
 
-  console.log(dataDetail?.data, 'dataDetail?.data');
-
   return (
     <LoadingScreen isLoading={false}>
       <div id="top" className="flex flex-col gap-[20px] md:gap-[30px] relative">
         <BreadCrumbs />
-
         <div className="md:grid md:grid-cols-10 gap-[70px]">
           <div className="block mb-4 md:hidden">
             <CardEnrollNow course={dataDetail?.data} />

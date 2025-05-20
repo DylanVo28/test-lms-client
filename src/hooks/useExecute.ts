@@ -60,12 +60,10 @@ export const useUSDCOperations = () => {
         const tx = await vaultContract.pay(courseId, parseAmount(amount), {
           gasLimit: calculateGasMargin(estimatedGas),
         });
-        console.log('Transfer tx sent:', tx.hash);
         await tx.wait();
-        console.log('Transfer successful');
         return tx.hash;
       } catch (error) {
-        console.error('Transfer failed:', error);
+        console.log('Transfer failed:', error);
       } finally {
         setLoading(false);
       }
@@ -102,9 +100,7 @@ export const useUSDCOperations = () => {
             gasLimit: calculateGasMargin(estimatedGas),
           }
         );
-        console.log('Transfer tx sent:', tx.hash);
         await tx.wait();
-        console.log('Transfer successful');
         return tx.hash;
       } catch (error) {
         console.error('Transfer failed:', error);

@@ -26,7 +26,6 @@ import { useAccount } from 'wagmi';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
-  console.log('mentor', mentor);
   const { t } = useTranslation('common');
   const accessToken = useAccessToken();
 

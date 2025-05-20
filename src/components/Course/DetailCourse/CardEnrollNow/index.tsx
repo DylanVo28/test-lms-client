@@ -1,5 +1,3 @@
-import { coursePaymentVaultAbi } from '@/abis/coursePaymentVault';
-import { usdcAbi } from '@/abis/usdc';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';
 import IconLikeCourse from '@/components/UI/IconLikeCourse';
 import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
@@ -12,13 +10,13 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
-import { parseGwei, parseUnits } from 'viem';
-import { useAccount, usePublicClient, useWriteContract } from 'wagmi';
+import { useRef } from 'react';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
 import { useUSDCOperations } from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { API_PATH } from '@/api/constant';
+import { privateRequest, request } from '@/api/request';
 
 const CardEnrollNow = ({
   course,
@@ -42,12 +40,17 @@ const CardEnrollNow = ({
     t('Certificate of completion'),
   ];
 
-  const VAULT_ADDRESS = '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35';
+  const VAULT_ADDRESS = '0x6F6D49bBcBfBdb41851D9A7754012e56a702a2b1';
   const accessToken = useAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
 
-  const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
+  const {
+    approveUSDC,
+    buyCourse,
+    loading: loadingBuy,
+    withdraw,
+  } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
   const amount = 0.01;
@@ -84,6 +87,26 @@ const CardEnrollNow = ({
       }
     } catch (error) {
       toast.error(t('Failed to enroll in the course. Please try again.'));
+    }
+  };
+
+  const handleWithdraw = async () => {
+    try {
+      const metadata = await privateRequest(
+        request.get,
+        API_PATH.GET_WITHDRAW_METADATA
+      );
+      const tx = await withdraw(
+        metadata.data.transactionId,
+        metadata.data.amountWithDecimals,
+        metadata.data.deadline,
+        metadata.data.signature
+      );
+      if (tx.hash) {
+        toast.success(t('Successfully withdraw from the course.'));
+      }
+    } catch (error) {
+      toast.error(t('Failed to withdraw from the course. Please try again.'));
     }
   };
 
@@ -157,7 +180,6 @@ const CardEnrollNow = ({
             <CustomButtonEnroll
               course={course}
               handleClickButton={async () => {
-                console.log('course', course);
                 if (!course?.id) return;
                 if (course.isOwner || course.authorId === profile?.id) {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
@@ -182,7 +204,10 @@ const CardEnrollNow = ({
               {t('This course includes')}
             </Text>
 
-            <div className="flex flex-col gap-1">
+            <div
+              className="flex flex-col gap-1"
+              onClick={() => handleWithdraw()}
+            >
               {DATA_NOTE?.map((item) => {
                 return (
                   <div className="flex items-center gap-1">

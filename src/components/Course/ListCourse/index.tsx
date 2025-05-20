@@ -31,7 +31,6 @@ const ListCourse = () => {
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
   const { theme: dataThemeConfig } = useThemeInitial();
-  console.log('dataThemeConfig', dataThemeConfig);
   const { navigate } = useNavigate();
 
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
@@ -42,8 +41,6 @@ const ListCourse = () => {
       prices: price,
       authors: dataThemeConfig?.kolId,
     });
-
-  console.log('dataCourses', dataCourses);
 
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
