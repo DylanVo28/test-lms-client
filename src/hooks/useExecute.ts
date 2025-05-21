@@ -4,8 +4,8 @@ import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
-export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0x39b590C256D286Cb0422fEE409609134FE398c1E';
+const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
+export const VAULT_ADDRESS = '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35';
 
 const parseAmount = (amount: string | number) => {
   return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);

@@ -13,11 +13,10 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
-import { useUSDCOperations } from '@/hooks/useExecute';
+import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-import { VAULT_ADDRESS } from '../../../../hooks/useExecute';
 
 const CardEnrollNow = ({
   course,
