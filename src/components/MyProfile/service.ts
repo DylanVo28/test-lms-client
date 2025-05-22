@@ -50,4 +50,5 @@ export interface TUser {
   youtube: string | null;
   createdAt: string;
   updatedAt: string;
+  withdrawable: number;
 }

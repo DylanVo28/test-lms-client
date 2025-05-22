@@ -3,14 +3,14 @@ import Text from '../UI/Text';
 import Overview from './Overview';
 import Information from './Information';
 import Avatar from './Avatar';
-import Security from './Security';
-import { userRequest, TUser, referralRequest } from './service';
+import { referralRequest, userRequest } from './service';
 import { useTranslation } from 'next-i18next';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import Earnings from './Earnings';
 enum TAB {
   INFORMATION = 'information',
   AVATAR = 'avatar',
-  SECURITY = 'security',
+  EARNINGS = 'earnings',
 }
 
 const tabs = [
@@ -22,10 +22,10 @@ const tabs = [
     title: 'Avatar',
     key: TAB.AVATAR,
   },
-  // {
-  //   title: 'Security',
-  //   key: TAB.SECURITY,
-  // },
+  {
+    title: 'Earnings ',
+    key: TAB.EARNINGS,
+  },
 ];
 
 interface Summary {
@@ -54,7 +54,6 @@ const MyProfile = () => {
   const getReferral = async () => {
     try {
       const res = await referralRequest.getSummary();
-      console.log('resassss', res);
 
       const data = {
         totalNetwork: res.data.totalNetwork || 0,
@@ -78,8 +77,6 @@ const MyProfile = () => {
       getReferral();
     }
   }, [accessToken]);
-
-  console.log(user, 'user');
 
   return (
     <div className="flex flex-col gap-[50px]">
@@ -129,7 +126,7 @@ const MyProfile = () => {
             <Information user={user} reload={reload} />
           )}
           {tabSelected === TAB.AVATAR && <Avatar user={user} reload={reload} />}
-          {tabSelected === TAB.SECURITY && <Security />}
+          {tabSelected === TAB.EARNINGS && <Earnings user={user} />}
         </div>
       </div>
     </div>

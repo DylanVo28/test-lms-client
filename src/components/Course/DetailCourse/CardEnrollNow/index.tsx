@@ -15,8 +15,6 @@ import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
 import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { API_PATH } from '@/api/constant';
-import { privateRequest, request } from '@/api/request';
 
 const CardEnrollNow = ({
   course,
@@ -87,38 +85,6 @@ const CardEnrollNow = ({
       }
     } catch (error) {
       toast.error(t('Failed to enroll in the course. Please try again.'));
-    }
-  };
-
-  const handlecheck = async () => {
-    try {
-      const result = await isTxIdUsed('cmaw7kvyu0004lhldbtmufq67');
-      if (result === true) {
-        await privateRequest(request.get, API_PATH.UPDATE_KOL_REWARD);
-      }
-      toast.success(`${result}`);
-    } catch (error) {
-      toast.error(t(`'Failed to enroll in the course. Please try again.'`));
-    }
-  };
-
-  const handleWithdraw = async () => {
-    try {
-      const metadata = await privateRequest(
-        request.get,
-        API_PATH.GET_WITHDRAW_METADATA
-      );
-      const tx = await withdraw(
-        metadata.data.transactionId,
-        metadata.data.amountWithDecimals,
-        metadata.data.deadline,
-        metadata.data.signature
-      );
-      if (tx.hash) {
-        toast.success(t('Successfully withdraw from the course.'));
-      }
-    } catch (error) {
-      toast.error(t('Failed to withdraw from the course. Please try again.'));
     }
   };
 
@@ -216,7 +182,7 @@ const CardEnrollNow = ({
               {t('This course includes')}
             </Text>
 
-            <div className="flex flex-col gap-1" onClick={() => handlecheck()}>
+            <div className="flex flex-col gap-1">
               {DATA_NOTE?.map((item) => {
                 return (
                   <div className="flex items-center gap-1">
