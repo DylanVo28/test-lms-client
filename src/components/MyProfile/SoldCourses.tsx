@@ -1,58 +1,46 @@
+`use client`;
+
 import React, { useEffect, useState } from 'react';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import Pagination from './Pagination';
+import { formatDateTime } from './RewardHistory';
 import Loading from '@/components/UI/Loading';
 
-interface Reward {
-  txHash: string;
-  amount: string;
-  createdAt: string;
+interface Transaction {
+  walletAddress: string;
+  courseTitle: string;
+  purchaseDate: string;
+  earnings: number;
 }
 
-export const formatDateTime = (dateString: string) => {
-  const date = new Date(dateString);
-  const time = date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  });
-  const formattedDate = date.toLocaleDateString([], {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric',
-  });
-  return `${time} ${formattedDate}`;
-};
-
-const RewardHistory = () => {
-  const [rewards, setRewards] = useState<Reward[]>([]);
+const SoldCourses = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const rowsPerPage = 10;
 
   useEffect(() => {
-    const fetchRewards = async () => {
+    const fetchTransactions = async () => {
       setLoading(true);
       try {
         const response = await privateRequest(
           request.get,
-          API_PATH.REWARD_HISTORY
+          API_PATH.YOUR_NETWORK
         );
-        setRewards(response.data);
+        setTransactions(response.data);
       } catch (error) {
-        console.error('Error fetching reward history:', error);
+        console.error('Error fetching network data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchRewards();
+    fetchTransactions();
   }, []);
 
-  const totalPages = Math.ceil(rewards.length / rowsPerPage);
-  const paginatedData = rewards.slice(
+  const totalPages = Math.ceil(transactions.length / rowsPerPage);
+  const paginatedData = transactions.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
@@ -69,40 +57,44 @@ const RewardHistory = () => {
             <thead className="bg-[#1E1F25]">
               <tr>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
-                  Tx Hash
+                  Wallet Address
                 </th>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
-                  Amount
+                  Course Title
                 </th>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
-                  Date
+                  Purchase Date
+                </th>
+                <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
+                  Earnings
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#23262F]">
-              {paginatedData.map((reward, index) => (
+              {paginatedData.map((tx, index) => (
                 <tr
                   key={index}
                   className="hover:bg-[#1E1F25] transition-colors"
                 >
                   <td className="px-6 py-4">
-                    <a
-                      href={`https://testnet.ftmscan.com/tx/${reward.txHash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white underline hover:text-blue-400 text-xs"
-                    >
-                      {reward.txHash.slice(0, 4)}...{reward.txHash.slice(-4)}
-                    </a>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-[#58BD7D]">
-                      ${parseFloat(reward.amount)}
+                    <span className="text-sm text-gray-300">
+                      {tx.walletAddress.slice(0, 4)}...
+                      {tx.walletAddress.slice(-4)}
                     </span>
                   </td>
                   <td className="px-6 py-4">
                     <span className="text-sm text-gray-300">
-                      {formatDateTime(reward.createdAt)}
+                      {tx.courseTitle}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm text-gray-300">
+                      {formatDateTime(tx.purchaseDate)}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm font-medium text-[#58BD7D]">
+                      +{tx.earnings.toFixed(3)} USDC
                     </span>
                   </td>
                 </tr>
@@ -120,4 +112,4 @@ const RewardHistory = () => {
   );
 };
 
-export default RewardHistory;
+export default SoldCourses;

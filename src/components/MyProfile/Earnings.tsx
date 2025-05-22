@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from '@/components/UI/Card/Card';
 import RewardHistory from './RewardHistory';
-import YourNetwork from './YourNetwork';
+import SoldCourses from './SoldCourses';
 import { TUser } from './service';
 import { useUSDCOperations } from '@/hooks/useExecute';
 import { API_PATH } from '@/api/constant';
@@ -18,7 +18,7 @@ const TabButton: React.FC<{
   children: React.ReactNode;
 }> = ({ active, onClick, children }) => (
   <button
-    className={`flex-1 px-6 py-1 text-sm font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500
+    className={`flex-1 px-6 py-1 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap
       ${
         active
           ? 'bg-[#23262F] text-white shadow-sm'
@@ -33,7 +33,7 @@ const TabButton: React.FC<{
 );
 
 const Earnings = ({ user }: { user?: TUser }) => {
-  const [activeTab, setActiveTab] = useState('network');
+  const [activeTab, setActiveTab] = useState('sold_courses');
   const totalRewards = user?.withdrawable || 0;
   const { withdraw, isTxIdUsed } = useUSDCOperations();
 
@@ -76,15 +76,15 @@ const Earnings = ({ user }: { user?: TUser }) => {
         <div className="">
           <Card>
             <CardContent>
-              <div className="flex flex-col sm:flex-row justify-between items-center">
+              <div className="flex justify-between items-center">
                 <div className="mb-4 sm:mb-0">
-                  <h1 className="text-2xl font-bold bg-clip-text text-white">
+                  <h1 className="text-xl font-bold bg-clip-text text-white">
                     Your Rewards
                   </h1>
                   <p className="text-gray-400 mt-1">Available to claim</p>
                   <div className="text-3xl font-bold text-white mt-1">
                     {totalRewards.toLocaleString()}{' '}
-                    <span className="text-amber-500">USDC</span>
+                    <span className="text-main">USDC</span>
                   </div>
                 </div>
                 <button
@@ -103,13 +103,13 @@ const Earnings = ({ user }: { user?: TUser }) => {
           </Card>
         </div>
 
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto">
           <div className="flex w-fit rounded-xl bg-[#18191D] p-1.5 gap-1">
             <TabButton
-              active={activeTab === 'network'}
-              onClick={() => setActiveTab('network')}
+              active={activeTab === 'sold_courses'}
+              onClick={() => setActiveTab('sold_courses')}
             >
-              Your Network
+              Sold Courses
             </TabButton>
             <TabButton
               active={activeTab === 'rewards'}
@@ -124,17 +124,14 @@ const Earnings = ({ user }: { user?: TUser }) => {
           <Card>
             <CardHeader>
               <CardTitle>
-                {activeTab === 'network' ? 'Your Network' : 'Reward History'}
+                {activeTab === 'sold_courses'
+                  ? 'Sold Courses'
+                  : 'Reward History'}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {activeTab === 'network' ? (
-                <YourNetwork />
-              ) : (
-                <div className="space-y-4">
-                  <RewardHistory />
-                </div>
-              )}
+              {activeTab === 'sold_courses' && <SoldCourses />}
+              {activeTab === 'rewards' && <RewardHistory />}
             </CardContent>
           </Card>
         </div>
