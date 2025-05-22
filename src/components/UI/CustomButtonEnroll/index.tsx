@@ -56,7 +56,7 @@ const CustomButtonEnroll = ({
                 disabled={course?.enroll === 'pending'}
               >
                 <Text className="text-text-white" type="font-16-600">
-                  {course?.enroll === 'completed'
+                  {course?.enroll === 'verified'
                     ? t('Go to course')
                     : course?.enroll === 'pending'
                     ? t('Verifying...')

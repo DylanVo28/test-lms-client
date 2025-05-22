@@ -3,9 +3,10 @@ import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
+import { toast } from '@/components/UI/Toast/toast';
 
 const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0xe9D7daB56CFc0913C93941caFe3d119C7fC3DB35';
+export const VAULT_ADDRESS = '0x8bF8b449eaB9962D60087473A42422069533e4d2';
 
 const parseAmount = (amount: string | number) => {
   return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
@@ -81,8 +82,6 @@ export const useUSDCOperations = () => {
         return;
       }
       try {
-        setLoading(true);
-
         const estimatedGas = await vaultContract.estimateGas.withdraw(
           txId,
           amount,
@@ -101,7 +100,7 @@ export const useUSDCOperations = () => {
         await tx.wait();
         return tx.hash;
       } catch (error) {
-        console.error('Transfer failed:', error);
+        throw error;
       } finally {
         setLoading(false);
       }

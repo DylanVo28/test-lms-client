@@ -110,4 +110,6 @@ export const API_PATH = {
   UPDATE_KOL_REWARD: '/api/user/update-reward',
   YOUR_NETWORK: '/api/courses/your-network',
   REWARD_HISTORY: '/api/users/reward-history',
+
+  CANCEL_TRANSACTION: (id: string) => `/api/users/${id}/cancel-transaction`,
 };

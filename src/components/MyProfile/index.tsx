@@ -72,10 +72,21 @@ const MyProfile = () => {
   };
 
   useEffect(() => {
+    let interval = null;
+
     if (accessToken) {
-      getMe();
+      interval = setInterval(() => {
+        getMe();
+      }, 5000);
+
       getReferral();
     }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [accessToken]);
 
   return (
@@ -126,7 +137,9 @@ const MyProfile = () => {
             <Information user={user} reload={reload} />
           )}
           {tabSelected === TAB.AVATAR && <Avatar user={user} reload={reload} />}
-          {tabSelected === TAB.EARNINGS && <Earnings user={user} />}
+          {tabSelected === TAB.EARNINGS && (
+            <Earnings user={user} reload={reload} />
+          )}
         </div>
       </div>
     </div>

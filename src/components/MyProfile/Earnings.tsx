@@ -12,6 +12,9 @@ import { useUSDCOperations } from '@/hooks/useExecute';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
+import { Info } from '@phosphor-icons/react';
+import { Tooltip, Spinner } from '@nextui-org/react';
+
 const TabButton: React.FC<{
   active: boolean;
   onClick: () => void;
@@ -32,26 +35,17 @@ const TabButton: React.FC<{
   </button>
 );
 
-const Earnings = ({ user }: { user?: TUser }) => {
+const Earnings = ({ user, reload }: { user?: TUser; reload: () => void }) => {
   const [activeTab, setActiveTab] = useState('sold_courses');
+  const [claimLoading, setClaimLoading] = useState(false);
   const totalRewards = user?.withdrawable || 0;
   const { withdraw, isTxIdUsed } = useUSDCOperations();
 
-  const handlecheck = async (txId: string) => {
-    try {
-      const result = await isTxIdUsed(txId);
-      if (result === true) {
-        await privateRequest(request.get, API_PATH.UPDATE_KOL_REWARD);
-      }
-      toast.success(`${result}`);
-    } catch (error) {
-      toast.error(`'Failed to enroll in the course. Please try again.'`);
-    }
-  };
-
   const handleWithdraw = async () => {
+    setClaimLoading(true);
+    let metadata = null;
     try {
-      const metadata = await privateRequest(
+      metadata = await privateRequest(
         request.get,
         API_PATH.GET_WITHDRAW_METADATA
       );
@@ -61,12 +55,28 @@ const Earnings = ({ user }: { user?: TUser }) => {
         metadata.data.deadline,
         metadata.data.signature
       );
-      if (tx.hash) {
-        await handlecheck(metadata.data.transactionId);
+
+      if (tx) {
         toast.success('Successfully withdraw from the course.');
       }
-    } catch (error) {
-      toast.error('Failed to withdraw from the course. Please try again.');
+    } catch (error: any) {
+      const isCancelTransaction = error.message.includes(
+        'user rejected transaction'
+      );
+      if (isCancelTransaction) {
+        const cancelTxRes = await privateRequest(
+          request.post,
+          API_PATH.CANCEL_TRANSACTION(metadata.data.transactionId)
+        );
+
+        toast.success('Cancel transaction.');
+        return;
+      }
+
+      toast.success(error.message);
+    } finally {
+      setClaimLoading(false);
+      reload();
     }
   };
 
@@ -87,17 +97,28 @@ const Earnings = ({ user }: { user?: TUser }) => {
                     <span className="text-main">USDC</span>
                   </div>
                 </div>
-                <button
-                  disabled={totalRewards <= 0}
-                  className={`px-6 py-2 rounded-lg font-medium text-white transition-all ${
-                    totalRewards > 0
-                      ? 'bg-[#35B6CC] hover:opacity-90'
-                      : 'bg-[#3a4757] cursor-not-allowed opacity-50'
-                  }`}
-                  onClick={handleWithdraw}
-                >
-                  Claim
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    disabled={totalRewards <= 0 || claimLoading}
+                    className={`px-6 py-2 rounded-lg font-medium text-white transition-all ${
+                      totalRewards > 0 && !claimLoading
+                        ? 'bg-[#35B6CC] hover:opacity-90'
+                        : 'bg-[#3a4757] cursor-not-allowed opacity-50'
+                    }`}
+                    onClick={handleWithdraw}
+                  >
+                    {claimLoading ? (
+                      <Spinner size="sm" color="default" />
+                    ) : (
+                      'Claim'
+                    )}
+                  </button>
+                  <Tooltip content="Transaction will need gas fee.">
+                    <span className="cursor-pointer">
+                      <Info size={16} className="text-main" color="#818181" />
+                    </span>
+                  </Tooltip>
+                </div>
               </div>
             </CardContent>
           </Card>
