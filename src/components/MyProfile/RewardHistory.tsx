@@ -8,6 +8,7 @@ interface Reward {
   txHash: string;
   amount: string;
   createdAt: string;
+  status?: string;
 }
 
 export const formatDateTime = (dateString: string) => {
@@ -40,7 +41,12 @@ const RewardHistory = () => {
           request.get,
           API_PATH.REWARD_HISTORY
         );
-        setRewards(response.data);
+        // Mock status if not present
+        const dataWithStatus = (response.data || []).map((item: any) => ({
+          ...item,
+          status: item.status || (Math.random() > 0.5 ? 'Success' : 'Pending'),
+        }));
+        setRewards(dataWithStatus);
       } catch (error) {
         console.error('Error fetching reward history:', error);
       } finally {
@@ -50,6 +56,26 @@ const RewardHistory = () => {
 
     fetchRewards();
   }, []);
+
+  const getStatusLabel = (status?: string) => {
+    if (status === 'verified') {
+      return {
+        label: 'Verified',
+        color: '#58BD7D',
+      };
+    }
+    if (status === 'pending') {
+      return {
+        label: 'Pending',
+        color: '#FBBF24',
+      };
+    }
+
+    return {
+      label: '--',
+      color: '#777E90',
+    };
+  };
 
   const totalPages = Math.ceil(rewards.length / rowsPerPage);
   const paginatedData = rewards.slice(
@@ -75,6 +101,9 @@ const RewardHistory = () => {
                   Amount
                 </th>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
                   Date
                 </th>
               </tr>
@@ -98,6 +127,16 @@ const RewardHistory = () => {
                   <td className="px-6 py-4">
                     <span className="text-sm font-medium text-[#58BD7D]">
                       ${parseFloat(reward.amount)}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className="text-sm font-medium"
+                      style={{
+                        color: getStatusLabel(reward.status).color,
+                      }}
+                    >
+                      {getStatusLabel(reward.status).label}
                     </span>
                   </td>
                   <td className="px-6 py-4">
