@@ -5,6 +5,7 @@ import { toast } from '../UI/Toast/toast';
 import { userRequest, TUser } from './service';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import { useProfile } from '@/store/profile/useProfile';
 
 interface UploadedFile {
   url: string;
@@ -12,10 +13,11 @@ interface UploadedFile {
   originalName: string;
 }
 
-const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
+const Avatar = ({ reload }: { reload: VoidFunction }) => {
   const { t } = useTranslation('common');
   const [valueFile, setValueFile] = useState<UploadedFile>();
   const [loading, setLoading] = useState(false);
+  const { profile } = useProfile();
   const { run, loading: loadingFile } = useUploadFile({
     onSuccess(response) {
       const data = response.data;
@@ -76,7 +78,7 @@ const Avatar = ({ user, reload }: { user?: TUser; reload: VoidFunction }) => {
     try {
       setLoading(true);
 
-      await userRequest.update({ ...user, avatar: valueFile.url });
+      await userRequest.update({ ...profile, avatar: valueFile.url });
       reload();
       setValueFile(undefined);
       toast.success(t('Avatar uploaded successfully!'));

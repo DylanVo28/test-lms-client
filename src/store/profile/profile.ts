@@ -10,6 +10,9 @@ export interface InitProfile {
   lastName?: string;
   role?: string;
   walletAddress: string;
+  withdrawable: number;
+  refererCode: string;
+  refererThemeCode: string;
 }
 
 export const initialProfile: InitProfile = {
@@ -22,6 +25,9 @@ export const initialProfile: InitProfile = {
   lastName: '',
   role: '',
   walletAddress: '',
+  withdrawable: 0,
+  refererCode: '',
+  refererThemeCode: '',
 };
 
 export const profileAtom = atom({

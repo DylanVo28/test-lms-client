@@ -1,16 +1,13 @@
-import InputText from '@/components/UI/InputText';
+import { useGetListCourse } from '@/components/Course/ListCourse/service';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
-import { Control, Controller } from 'react-hook-form';
-import { useGetCategories } from '../service';
+import { useProfile } from '@/store/profile/useProfile';
 import { useTranslation } from 'next-i18next';
-import { useGetListCourse } from '@/components/Course/ListCourse/service';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { useEffect } from 'react';
+import { Control, Controller } from 'react-hook-form';
 
 const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
   const { t } = useTranslation('common');
-  const { theme: dataThemeConfig } = useThemeInitial();
 
   const { dataCourses, reload } = useGetListCourse({
     pageSize: 50,

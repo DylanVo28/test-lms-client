@@ -7,6 +7,8 @@ import { referralRequest, userRequest } from './service';
 import { useTranslation } from 'next-i18next';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import Earnings from './Earnings';
+import { useProfile } from '@/store/profile/useProfile';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
 enum TAB {
   INFORMATION = 'information',
   AVATAR = 'avatar',
@@ -38,18 +40,11 @@ interface Summary {
 const MyProfile = () => {
   const { t } = useTranslation('common');
   const [tabSelected, setTabSelected] = useState<TAB>(TAB.INFORMATION);
-  const [user, setUser] = useState<any>({});
+  // const [user, setUser] = useState<any>({});
   const [summary, setSummary] = useState<Summary>();
   const accessToken = useAccessToken();
-
-  const getMe = async () => {
-    try {
-      const response = await userRequest.getMe();
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { profile } = useProfile();
+  const { requestGetProfile } = useProfileInitial();
 
   const getReferral = async () => {
     try {
@@ -68,7 +63,7 @@ const MyProfile = () => {
   };
 
   const reload = () => {
-    getMe();
+    requestGetProfile();
   };
 
   useEffect(() => {
@@ -76,7 +71,7 @@ const MyProfile = () => {
 
     if (accessToken) {
       interval = setInterval(() => {
-        getMe();
+        requestGetProfile();
       }, 5000);
 
       getReferral();
@@ -99,12 +94,12 @@ const MyProfile = () => {
         <Overview
           data={{
             avatar:
-              user?.avatar ||
+              profile?.avatar ||
               'https://i1.sndcdn.com/avatars-000225974941-3icznp-t500x500.jpg',
-            fullname: user?.fullName || '--',
-            email: user?.email || '--',
+            fullname: profile?.fullName || '--',
+            email: profile?.email || '--',
             verify: true,
-            role: user?.role || 'USER',
+            role: profile?.role || 'USER',
             customers: {
               f1: summary?.f1 ? Number(summary?.f1) : 0,
               f2: summary?.f2 ? Number(summary?.f2) : 0,
@@ -133,13 +128,9 @@ const MyProfile = () => {
               </div>
             ))}
           </div>
-          {tabSelected === TAB.INFORMATION && (
-            <Information user={user} reload={reload} />
-          )}
-          {tabSelected === TAB.AVATAR && <Avatar user={user} reload={reload} />}
-          {tabSelected === TAB.EARNINGS && (
-            <Earnings user={user} reload={reload} />
-          )}
+          {tabSelected === TAB.INFORMATION && <Information reload={reload} />}
+          {tabSelected === TAB.AVATAR && <Avatar reload={reload} />}
+          {tabSelected === TAB.EARNINGS && <Earnings reload={reload} />}
         </div>
       </div>
     </div>

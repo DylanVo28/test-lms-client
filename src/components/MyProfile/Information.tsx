@@ -6,6 +6,7 @@ import InputText from '../UI/InputText';
 import InputTextArena from '../UI/InputTextArena';
 import { toast } from '../UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
+import { useProfile } from '@/store/profile/useProfile';
 
 const inputFields = [
   // {
@@ -92,32 +93,27 @@ const inputFields = [
   },
 ];
 
-export default function Information({
-  reload,
-  user,
-}: {
-  reload: VoidFunction;
-  user?: TUser;
-}) {
+export default function Information({ reload }: { reload: VoidFunction }) {
   const { t } = useTranslation('common');
   const { handleSubmit, setValue, control, getValues } = useForm({
     mode: 'onChange', // Triggers validation on each change
   });
   const [loading, setLoading] = useState(false);
   const [initialData, setInitialData] = useState<any>({});
+  const { profile } = useProfile();
 
   useEffect(() => {
-    if (!user) return;
+    if (!profile) return;
     const userData: any = {};
-    Object.entries(user).forEach(([key, value]) => {
+    Object.entries(profile).forEach(([key, value]) => {
       if (inputFields.find((field) => field.name === key)) {
-        setValue(key as keyof typeof user, value);
+        setValue(key as keyof typeof profile, value);
         userData[key] = value;
       }
     });
-    setValue('fullName', user?.fullName);
+    setValue('fullName', profile?.fullName);
     setInitialData(userData);
-  }, [user]);
+  }, [profile]);
 
   const onSubmit = async (data: any) => {
     if (JSON.stringify(data) === JSON.stringify(initialData)) {

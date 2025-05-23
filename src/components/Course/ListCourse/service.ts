@@ -5,8 +5,6 @@ import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useInfiniteScroll, useRequest } from 'ahooks';
 import { useMemo } from 'react';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useAccount } from 'wagmi';
 
 const getListCourse = async (params: any) => {
   return await privateRequest(request.get, API_PATH.LIST_COURSE, { params });
@@ -14,20 +12,26 @@ const getListCourse = async (params: any) => {
 
 export const useGetListCourse = (initialParams: any) => {
   const { profile } = useProfile();
-  const accessToken = useAccessToken();
-  const memoizedParams = useMemo(() => initialParams, [initialParams]);
-
   const { data, loading, loadMore, loadingMore, noMore, reload, mutate } =
     useInfiniteScroll(
       async (lastData) => {
+        if (!initialParams.authors) {
+          return {
+            list: [],
+            page: 1,
+            total: 0,
+            totalPage: 0,
+          };
+        }
+
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
         // console.log('lastData', lastData);
 
         const response = await getListCourse({
-          ...memoizedParams,
-          userId: accessToken ? profile?.id : '',
+          ...initialParams,
           page: nextPage,
+          userId: profile?.id,
         });
         // console.log('lastData', lastData, response);
 

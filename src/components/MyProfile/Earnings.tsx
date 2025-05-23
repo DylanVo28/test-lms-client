@@ -14,6 +14,7 @@ import { privateRequest, request } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
 import { Info } from '@phosphor-icons/react';
 import { Tooltip, Spinner } from '@nextui-org/react';
+import { useProfile } from '@/store/profile/useProfile';
 
 const TabButton: React.FC<{
   active: boolean;
@@ -35,10 +36,11 @@ const TabButton: React.FC<{
   </button>
 );
 
-const Earnings = ({ user, reload }: { user?: TUser; reload: () => void }) => {
+const Earnings = ({ reload }: { reload: () => void }) => {
   const [activeTab, setActiveTab] = useState('sold_courses');
   const [claimLoading, setClaimLoading] = useState(false);
-  const totalRewards = user?.withdrawable || 0;
+  const { profile } = useProfile();
+  const totalRewards = profile?.withdrawable || 0;
   const { withdraw, isTxIdUsed } = useUSDCOperations();
 
   const handleWithdraw = async () => {

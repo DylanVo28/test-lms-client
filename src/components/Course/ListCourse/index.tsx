@@ -16,6 +16,7 @@ import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import useNavigate from '@/hooks/useNavigate';
+import { useProfile } from '@/store/profile/useProfile';
 
 const ListCourse = () => {
   const { t } = useTranslation('common');
@@ -32,6 +33,7 @@ const ListCourse = () => {
   const router = useRouter();
   const { theme: dataThemeConfig } = useThemeInitial();
   const { navigate } = useNavigate();
+  const { profile } = useProfile();
 
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
     useGetListCourse({
@@ -40,6 +42,7 @@ const ListCourse = () => {
       categories: category,
       prices: price,
       authors: dataThemeConfig?.kolId,
+      userId: profile?.id,
     });
 
   const { data: categories } = useGetCategories();
@@ -77,6 +80,7 @@ const ListCourse = () => {
     }
   };
   useEffect(() => {
+    if (!profile?.id) return;
     reload();
   }, [sort, category, price, dataThemeConfig?.kolId]);
 
