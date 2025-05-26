@@ -1,27 +1,16 @@
-import Text from '@/components/UI/Text';
-import Comment from './Comment';
-import { Button } from '@nextui-org/react';
-import Image from 'next/image';
-import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
-import {
-  useCommentCours,
-  useGetListComment,
-  useGetListCourse,
-  useGetListReview,
-  useLikeComment,
-  useLikeReview,
-  useRemoveLikeComment,
-  useUnLikeComment,
-} from '../../ListCourse/service';
-import { useEffect } from 'react';
-import CardComment from './CardComment';
-import CustomButtonComment from '@/components/UI/CustomButtonComment';
 import NoData from '@/components/ListCourse/NoData';
+import Text from '@/components/UI/Text';
 import { TypeReactions, formatWalletAddress } from '@/utils/common';
 import { useTranslation } from 'next-i18next';
+import { useEffect } from 'react';
+import {
+  useGetListCourse,
+  useGetListReview,
+  useLikeReview,
+  useUnLikeComment,
+} from '../../ListCourse/service';
 import CardCourseMore from './CardCourseMore';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useAccount } from 'wagmi';
+import Comment from './Comment';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;

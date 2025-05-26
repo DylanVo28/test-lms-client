@@ -6,20 +6,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import ReactPlayer from 'react-player/lazy';
 
-import { Button, Input, ModalBody, Spinner, Textarea } from '@nextui-org/react';
-import Image from 'next/image';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
-import { useDeleteCourse } from '@/components/CreateCourse/service';
-import { toast } from '@/components/UI/Toast/toast';
+import { Button, ModalBody } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
-import { isMobile } from 'react-device-detect';
 import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
-import 'videojs-hls-quality-selector';
-import 'videojs-contrib-quality-levels';
+
 interface IModalViewVideo {}
 
 const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {

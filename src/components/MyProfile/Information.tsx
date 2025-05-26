@@ -103,7 +103,7 @@ export default function Information({ reload }: { reload: VoidFunction }) {
   const { profile } = useProfile();
 
   useEffect(() => {
-    if (!profile) return;
+    if (!profile?.id) return;
     const userData: any = {};
     Object.entries(profile).forEach(([key, value]) => {
       if (inputFields.find((field) => field.name === key)) {

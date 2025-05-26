@@ -26,7 +26,7 @@ export const useProfileInitial = () => {
   };
 
   useEffect(() => {
-    if (!profile) return;
+    if (!profile?.id) return;
 
     const routeCode = router.query.code;
     const currentThemeCode = profile?.refererThemeCode;

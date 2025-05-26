@@ -3,6 +3,9 @@ import '../styles/globals.scss';
 import '../styles/tailwind.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import 'react-rater/lib/react-rater.css';
+import 'video.js/dist/video-js.css';
+import 'videojs-hls-quality-selector';
+import 'videojs-contrib-quality-levels';
 
 import { ReactElement, ReactNode } from 'react';
 

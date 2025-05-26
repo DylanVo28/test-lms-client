@@ -1,25 +1,22 @@
-import { Button, Progress, Spinner } from '@nextui-org/react';
-import InputText from '../UI/InputText';
-import SelectCustom from '../UI/SelectCustom';
-import Text from '../UI/Text';
-import { useRouter } from 'next/router';
-import { ROUTE_PATH } from '@/utils/const';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import NoData from './NoData';
-import {
-  useGetListCourse,
-  useGetListMyCourse,
-} from '../Course/ListCourse/service';
-import { useDebounce } from 'ahooks';
-import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
-import { useProfile } from '@/store/profile/useProfile';
-import { isMobile } from 'react-device-detect';
-import ModalConfirmDelete from '../Course/ModalConfirmDelete';
-import Loading from '../UI/Loading';
-import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { useProfile } from '@/store/profile/useProfile';
+import { ROUTE_PATH } from '@/utils/const';
+import { Button, Progress } from '@nextui-org/react';
+import { useDebounce } from 'ahooks';
+import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useGetListMyCourse } from '../Course/ListCourse/service';
+import ModalConfirmDelete from '../Course/ModalConfirmDelete';
+import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
+import InputText from '../UI/InputText';
+import Loading from '../UI/Loading';
+import SelectCustom from '../UI/SelectCustom';
+import Text from '../UI/Text';
+import NoData from './NoData';
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');

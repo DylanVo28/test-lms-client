@@ -1,26 +1,22 @@
-import Text from '@/components/UI/Text';
-import CardCourse from './CardCourse';
-import { Button, Tab, Tabs } from '@nextui-org/react';
-import Image from 'next/image';
-import clsx from 'clsx';
-import FilterCourse from './FilterCourse';
-import { useRouter } from 'next/router';
-import IconShowFilter from '@/components/UI/Icons/IconShowFilter';
-import SelectCustom from '@/components/UI/SelectCustom';
-import IconDeleteMain from '@/components/UI/Icons/IconDeleteMain';
-import IconGrid from '@/components/UI/Icons/IconGrid';
-import IconList from '@/components/UI/Icons/IconList';
-import { useEffect, useRef, useState } from 'react';
 import { useGetListCourse } from '@/components/Course/ListCourse/service';
-import { useGetCategories, useGetPrices } from '@/services/filter.service';
+import IconDeleteMain from '@/components/UI/Icons/IconDeleteMain';
+import IconShowFilter from '@/components/UI/Icons/IconShowFilter';
+import LoadingScreen from '@/components/UI/LoadingScreen';
+import SelectCustom from '@/components/UI/SelectCustom';
+import Text from '@/components/UI/Text';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { Button } from '@nextui-org/react';
+import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useLikeCourse, useUnLikeCourse } from '../service';
-import { useProfile } from '@/store/profile/useProfile';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import DrawerFilter from '../DrawerFilter';
-import LoadingScreen from '@/components/UI/LoadingScreen';
-import { useTranslation } from 'next-i18next';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useLikeCourse, useUnLikeCourse } from '../service';
+import CardCourse from './CardCourse';
+import FilterCourse from './FilterCourse';
 
 enum TAB_VIEW {
   GRID = 'grid',
