@@ -3,7 +3,7 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { useUploadFile } from '@/components/CreateCourse/service';
@@ -42,12 +42,12 @@ const EditBanner = ({ onChange, value }: any) => {
     const minHeight = 410;
 
     img.onload = () => {
-      if (img.width < minWidth || img.height < minHeight) {
-        toast.error(
-          t(`Image dimensions must be between ${minWidth}x${minHeight} pixels.`)
-        );
-        return;
-      }
+      // if (img.width < minWidth || img.height < minHeight) {
+      //   toast.error(
+      //     t(`Image dimensions must be between ${minWidth}x${minHeight} pixels.`)
+      //   );
+      //   return;
+      // }
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -61,13 +61,7 @@ const EditBanner = ({ onChange, value }: any) => {
   };
 
   const handleClickUploadFile = () => {
-    if (value) {
-      fileInputRef.current.value = null;
-      setInputKey(Date.now());
-      onChange('');
-    } else {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current.click();
   };
 
   const getCropData = () => {
@@ -92,7 +86,7 @@ const EditBanner = ({ onChange, value }: any) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <Text className="text-[18px] text-white font-semibold mb-[16px]">
+      <Text className="text-[18px] text-white font-semibold mb-[4px]">
         {t('Edit banner')}
       </Text>
       <input
@@ -103,7 +97,7 @@ const EditBanner = ({ onChange, value }: any) => {
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <div className="relative w-full bg-gray-70 rounded">
           {imageSrc ? (
             <div
@@ -113,25 +107,44 @@ const EditBanner = ({ onChange, value }: any) => {
                 ref={cropperRef}
                 src={imageSrc}
                 style={{ height: 200, width: '100%' }}
-                aspectRatio={385 / 200}
+                // aspectRatio={385 / 200}
                 guides={true}
-                cropBoxResizable={false}
+                cropBoxResizable={true}
                 dragMode="move"
-                zoomable={false}
+                zoomable={true}
+                responsive={true}
                 zoomOnWheel={false}
                 zoomOnTouch={false}
-                minCropBoxWidth={385}
-                minCropBoxHeight={200}
+                minCropBoxWidth={50}
+                minCropBoxHeight={50}
               />
             </div>
           ) : (
-            <Image
-              src={value || '/img-default.png'}
-              className="w-full md:w-[480px] h-[200px] object-contain"
-              alt=""
-              width={480}
-              height={270}
-            />
+            <div>
+              {!value && (
+                <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
+                  <div className="text-white">{t('JPEG, PNG or JPG')}</div>
+                  <div className="relative">
+                    <Button
+                      onClick={handleClickUploadFile}
+                      className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                    >
+                      {t('Choose file')}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {value && (
+                <Image
+                  src={value || '/img-default.png'}
+                  className="w-full md:w-[480px] h-fit"
+                  alt=""
+                  width={480}
+                  height={270}
+                />
+              )}
+            </div>
           )}
 
           {/* <Image
@@ -152,21 +165,25 @@ const EditBanner = ({ onChange, value }: any) => {
             <Button
               isLoading={loading}
               onPress={getCropData}
-              className="bg-transparent w-full border-1 border-main min-w-[133px] min-h-[48px] rounded"
+              className="bg-[#16343B] w-full min-w-[133px] min-h-[44px] rounded"
             >
               <Text type="font-16-700" className="text-main">
                 {'Crop image'}
               </Text>
             </Button>
           ) : (
-            <Button
-              onPress={handleClickUploadFile}
-              className="bg-transparent w-full border-1 border-main min-w-[133px] min-h-[48px] rounded"
-            >
-              <Text type="font-16-700" className="text-main">
-                {value ? t('Change') : t('Upload File')}
-              </Text>
-            </Button>
+            <Fragment>
+              {value && (
+                <Button
+                  onPress={handleClickUploadFile}
+                  className="bg-[#16343B] w-full min-w-[133px] min-h-[44px] rounded"
+                >
+                  <Text type="font-16-700" className="text-main">
+                    {t('Change')}
+                  </Text>
+                </Button>
+              )}
+            </Fragment>
           )}
         </div>
       </div>

@@ -95,12 +95,12 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
         <sup className="text-[#FF3132]">*</sup> {t('Upload File')}
       </div>
 
-      <div className="text-white">
+      {/* <div className="text-white">
         {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
-      </div>
+      </div> */}
 
-      <div className="p-[20px] h-[180px] bg-gray-50 w-full rounded-[4px]">
-        <div className="relative w-full h-full bg-gray-70 border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
+      <div className="p-[20px] h-[180px] w-fit bg-gray-50 rounded-[4px]">
+        <div className="relative h-full aspect-square bg-gray-70 border border-dashed rounded-[4px] border-[#32383E] flex flex-col justify-center items-center gap-[16px]">
           {valueFile?.url && (
             <Image
               src={valueFile.url ?? ''}

@@ -69,25 +69,14 @@ const MainHeader = () => {
   return (
     <div className="w-full sticky z-[10] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
-        {theme?.modeTheme === 'light' ? (
-          <Image
-            onClick={() => navigate(ROUTE_PATH.HOME)}
-            alt="logo"
-            width={125}
-            height={46}
-            className="cursor-pointer"
-            src={theme?.logo || '/logo-dark.png'}
-          />
-        ) : (
-          <Image
-            onClick={() => navigate(ROUTE_PATH.HOME)}
-            alt="logo"
-            width={125}
-            height={46}
-            className="cursor-pointer"
-            src={theme?.logo || '/logo.png'}
-          />
-        )}
+        <Image
+          onClick={() => navigate(ROUTE_PATH.HOME)}
+          alt="logo"
+          className="cursor-pointer max-h-[50px] w-auto"
+          src={theme?.logo || '/logo.png'}
+          width={125}
+          height={46}
+        />
 
         <Image
           onClick={() => refDrawerMenu.current.onOpen()}

@@ -124,11 +124,11 @@ const EditLogo = ({
       <Text className="text-[18px] text-white font-semibold mb-[16px]">
         {t('Edit logo')}
       </Text>
-      <p className="text-md text-white mb-[8px]">
+      {/* <p className="text-md text-white mb-[8px]">
         {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
-      </p>
+      </p> */}
       <div className="flex flex-col gap-4">
-        <div className="p-[20px] bg-gray-50 rounded-[4px] border border-[#00000033]">
+        <div className="">
           {imageSrc ? (
             <div
               style={{ width: '100%', height: '100%', position: 'relative' }}
@@ -137,15 +137,16 @@ const EditLogo = ({
                 ref={cropperRef}
                 src={imageSrc}
                 style={{ height: 100, width: '100%' }}
-                aspectRatio={280 / 100}
+                // aspectRatio={280 / 100}
                 guides={true}
-                cropBoxResizable={false}
+                cropBoxResizable={true}
                 dragMode="move"
+                responsive={true}
                 zoomable={false}
                 zoomOnWheel={false}
                 zoomOnTouch={false}
-                minCropBoxWidth={280}
-                minCropBoxHeight={100}
+                minCropBoxWidth={50}
+                minCropBoxHeight={50}
               />
             </div>
           ) : (
@@ -156,9 +157,7 @@ const EditLogo = ({
                 </div>
               ) : (
                 <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                  <div className="text-white">
-                    {t('JPEG, PNG or JPG . Max 10mb.')}
-                  </div>
+                  <div className="text-white">{t('JPEG, PNG or JPG.')}</div>
                   <div className="relative">
                     <Button
                       onClick={handleClickUploadFile}

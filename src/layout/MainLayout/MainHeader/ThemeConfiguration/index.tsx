@@ -237,7 +237,7 @@ const ThemeConfiguration = ({}: {}) => {
                     value={title}
                     className="w-full rounded-[4px] active:outline-hidden"
                     // radius="sm"
-                    placeholder={t('Title')}
+                    placeholder={'Web development course'}
                   />
                 </div>
                 <div className="flex flex-col gap-4">
@@ -251,7 +251,9 @@ const ThemeConfiguration = ({}: {}) => {
                     minRows={4}
                     className="w-full rounded-[4px] active:outline-hidden"
                     // radius="sm"
-                    placeholder={t('Description')}
+                    placeholder={
+                      'With one of our online web development courses, you can explore different areas of this in-demand field.'
+                    }
                   />
                 </div>
 

@@ -95,7 +95,7 @@ const inputFields = [
 
 export default function Information({ reload }: { reload: VoidFunction }) {
   const { t } = useTranslation('common');
-  const { handleSubmit, setValue, control, getValues } = useForm({
+  const { handleSubmit, setValue, control, getValues, reset } = useForm({
     mode: 'onChange', // Triggers validation on each change
   });
   const [loading, setLoading] = useState(false);
@@ -111,9 +111,10 @@ export default function Information({ reload }: { reload: VoidFunction }) {
         userData[key] = value;
       }
     });
-    setValue('fullName', profile?.fullName);
+
+    reset(userData);
     setInitialData(userData);
-  }, [profile]);
+  }, [profile?.id]);
 
   const onSubmit = async (data: any) => {
     if (JSON.stringify(data) === JSON.stringify(initialData)) {
