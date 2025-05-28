@@ -5,15 +5,18 @@ import { useAtom } from 'jotai';
 import { profileAtom } from './profile';
 import { API_PATH } from '@/api/constant';
 import { PREFIX_API, privateRequest } from '@/api/request';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export const useProfileInitial = () => {
   const [profile, setProfile] = useAtom(profileAtom);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const run = () => {
-    const init = async () => {
+
+  const getMe = async () => {
+    try {
+      setLoading(true);
       const res = await privateRequest(
         fetch,
         `${PREFIX_API}${API_PATH.GET_USER}`
@@ -21,8 +24,10 @@ export const useProfileInitial = () => {
       setProfile({
         ...res?.data,
       });
-    };
-    init();
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -32,7 +37,7 @@ export const useProfileInitial = () => {
     const currentThemeCode = profile?.refererThemeCode;
 
     // Ensure `routeCode` is available and not already correct
-    if (typeof routeCode === 'string' && routeCode !== currentThemeCode) {
+    if (routeCode !== currentThemeCode) {
       // navigate to currentThemeCode path
       if (!currentThemeCode) {
         router.replace(`/platform`);
@@ -45,6 +50,7 @@ export const useProfileInitial = () => {
   return {
     profile,
     setProfile,
-    requestGetProfile: run,
+    requestGetProfile: getMe,
+    loading,
   };
 };

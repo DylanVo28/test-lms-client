@@ -69,15 +69,15 @@ const nextConfig: NextConfig = {
   //     // },
   //   ];
   // },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/platform',
-        permanent: false,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/',
+  //       destination: '/platform',
+  //       permanent: false,
+  //     },
+  //   ];
+  // },
   async headers() {
     return [
       {

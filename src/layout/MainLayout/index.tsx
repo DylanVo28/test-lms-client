@@ -6,6 +6,7 @@ import { ROUTE_PATH } from '@/utils/const';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
+
   return (
     <div className="w-screen bg-[var(--theme-primary)] h-screen overflow-x-hidden overflow-auto flex flex-col relative">
       <MainHeader />

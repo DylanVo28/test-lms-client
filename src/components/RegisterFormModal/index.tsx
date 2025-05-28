@@ -16,15 +16,16 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
+import Loading from '../UI/Loading';
 
 const RegisterFormModal = () => {
   const { t } = useTranslation('common');
   const [referralCode, setReferralCode] = useState('');
   const { address, isConnected } = useAccount();
-  const { requestGetProfile } = useProfileInitial();
+  const { requestGetProfile, loading } = useProfileInitial();
   const [showRegisterForm, setShowRegisterForm] = useState<any>(null);
   const router = useRouter();
 
@@ -150,7 +151,6 @@ const RegisterFormModal = () => {
 
       handleClose();
     } catch (error: any) {
-      console.log('error::::::', error);
       toast.error(t(error?.message));
     }
   };
@@ -160,49 +160,51 @@ const RegisterFormModal = () => {
   }, [showRegisterForm]);
 
   return (
-    <CustomModal
-      placementMoblie="center"
-      size="lg"
-      isOpen={showRegisterForm}
-      onClose={handleClose}
-    >
-      <ModalBody className="p-6 flex flex-col gap-4 bg-[#191c21]">
-        <div className="text-xl font-bold">Register account</div>
+    <Fragment>
+      <CustomModal
+        placementMoblie="center"
+        size="lg"
+        isOpen={showRegisterForm}
+        onClose={handleClose}
+      >
+        <ModalBody className="p-6 flex flex-col gap-4 bg-[#191c21]">
+          <div className="text-xl font-bold">Register account</div>
 
-        <div className="text-md text-gray-500">
-          You register an account using{' '}
-          <span className="text-white font-semibold">
-            [{showRegisterForm?.themeCode || referralCode || 'Referral'}]
-          </span>{' '}
-          code, and you will receive a signature request to enable read access.
-          Signing is free and does not send a transaction.
-        </div>
-
-        {!showRegisterForm?.themeCode && (
-          <InputText
-            classInputWrapper="min-w-[400px] bg-white"
-            placeholder="Referral code (Optional)"
-            isInputSubmit
-            onChange={(e: any) => setReferralCode(e.target.value)}
-          />
-        )}
-        <div className="flex gap-x-2">
-          <div
-            className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#1d2329] w-fit mx-auto cursor-pointer text-lg font-semibold"
-            onClick={handleClose}
-          >
-            Cancel
+          <div className="text-md text-gray-500">
+            You register an account using{' '}
+            <span className="text-white font-semibold">
+              [{showRegisterForm?.themeCode || referralCode || 'Referral'}]
+            </span>{' '}
+            code, and you will receive a signature request to enable read
+            access. Signing is free and does not send a transaction.
           </div>
 
-          <div
-            className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#02a6c2] w-fit mx-auto cursor-pointer text-lg font-semibold"
-            onClick={handleRegister}
-          >
-            Sign in
+          {!showRegisterForm?.themeCode && (
+            <InputText
+              classInputWrapper="min-w-[400px] bg-white"
+              placeholder="Referral code (Optional)"
+              isInputSubmit
+              onChange={(e: any) => setReferralCode(e.target.value)}
+            />
+          )}
+          <div className="flex gap-x-2">
+            <div
+              className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#1d2329] w-fit mx-auto cursor-pointer text-lg font-semibold"
+              onClick={handleClose}
+            >
+              Cancel
+            </div>
+
+            <div
+              className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#02a6c2] w-fit mx-auto cursor-pointer text-lg font-semibold"
+              onClick={handleRegister}
+            >
+              Sign in
+            </div>
           </div>
-        </div>
-      </ModalBody>
-    </CustomModal>
+        </ModalBody>
+      </CustomModal>
+    </Fragment>
   );
 };
 
