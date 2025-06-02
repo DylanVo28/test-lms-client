@@ -26,7 +26,7 @@ const request = extend({
   prefix: PREFIX_API,
   timeout: REQ_TIMEOUT,
   errorHandler: (error) => {
-    if (error?.data?.statusCode === 403 || error?.data?.statusCode === 401) {
+    if (error?.data?.statusCode === 401) {
       if (getAccessToken()) {
         handleLogout();
       }
@@ -35,6 +35,8 @@ const request = extend({
 
       return;
     }
+
+    // error?.data?.statusCode === 403 ||
 
     throw error?.data || error?.response;
   },
@@ -46,6 +48,7 @@ const privateRequest = async (
   configs?: any
 ) => {
   const accessToken = getAccessToken();
+  console.log('accessToken', accessToken);
   const token: string = configs?.token ?? (accessToken as string);
 
   return request(suffixUrl, injectBearer(token, configs));

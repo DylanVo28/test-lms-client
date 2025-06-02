@@ -28,7 +28,7 @@ const SoldCourses = () => {
           request.get,
           API_PATH.YOUR_NETWORK
         );
-        setTransactions(response.data);
+        setTransactions(response?.data ?? []);
       } catch (error) {
         console.error('Error fetching network data:', error);
       } finally {

@@ -7,6 +7,7 @@ import { API_PATH } from '@/api/constant';
 import { PREFIX_API, privateRequest } from '@/api/request';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { getAccessToken } from '../auth';
 
 export const useProfileInitial = () => {
   const [profile, setProfile] = useAtom(profileAtom);
@@ -31,6 +32,11 @@ export const useProfileInitial = () => {
   };
 
   useEffect(() => {
+    const accessToken = getAccessToken();
+    if (!accessToken && router.pathname !== '/') {
+      router.replace('/');
+    }
+
     if (!profile?.id) return;
 
     const routeCode = router.query.code;

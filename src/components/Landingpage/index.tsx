@@ -36,12 +36,12 @@ const LandingPage = () => {
       </div>
 
       <div className="w-full flex justify-center items-center flex-col gap-10 h-[80vh]">
-        <div className="max-w-[800px] px-5 flex flex-col gap-5">
-          <h1 className="text-[30px] text-main font-bold">
+        <div className="max-w-[800px] px-5 flex flex-col gap-5 justify-center items-center">
+          <h1 className="text-[30px] text-main font-bold text-center">
             Master Trading with Top KOLs – Learn from the Best
           </h1>
 
-          <h5 className="text-[16px] text-white font-bold">
+          <h5 className="text-[16px] text-white font-bold text-center">
             Join our exclusive learning platform where top trading KOLs share
             their proven strategies and insights. From beginner basics to
             advanced techniques — learn at your own pace, anytime, anywhere.
