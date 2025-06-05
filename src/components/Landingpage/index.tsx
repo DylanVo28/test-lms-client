@@ -12,9 +12,18 @@ import { useAccount, useDisconnect } from 'wagmi';
 import RegisterFormModal from '../RegisterFormModal';
 import Loading from '../UI/Loading';
 import Text from '../UI/Text';
+import { useEffect } from 'react';
+import { getAccessToken } from '@/store/auth';
 
 const LandingPage = () => {
   const { disconnect } = useDisconnect();
+
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      disconnect();
+    }
+  }, []);
 
   return (
     <div

@@ -3,9 +3,11 @@ import MainHeader from './MainHeader';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ROUTE_PATH } from '@/utils/const';
+import useStorageOrCookieChange from '@/hooks/useStorageOrCookieChange';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
+  useStorageOrCookieChange();
 
   return (
     <div className="w-screen bg-[var(--theme-primary)] h-screen overflow-x-hidden overflow-auto flex flex-col relative">

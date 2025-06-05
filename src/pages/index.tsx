@@ -9,6 +9,7 @@ import LandingPage from '@/components/Landingpage';
 function getLayout(page: ReactElement) {
   const LayoutWrapper = () => {
     const router = useRouter();
+
     if (router.pathname === '/') {
       return <Fragment>{page}</Fragment>;
     }
@@ -18,7 +19,6 @@ function getLayout(page: ReactElement) {
 }
 
 const HomePage = () => {
-  // return <Course />;
   return <LandingPage />;
 };
 

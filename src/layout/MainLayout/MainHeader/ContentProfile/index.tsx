@@ -1,6 +1,6 @@
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
-import { setAuthCookies } from '@/store/auth';
+import { deleteAuthCookies, setAuthCookies } from '@/store/auth';
 import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import Image from 'next/image';
@@ -62,9 +62,7 @@ const ContentProfile = ({
     setTheme(initialTheme);
     document.body.setAttribute('data-theme', '');
 
-    setAuthCookies({
-      token: '',
-    });
+    deleteAuthCookies();
     setProfile(initialProfile);
     // toast.success(t('Logout successfully'));
   };
