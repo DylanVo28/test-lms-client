@@ -91,6 +91,7 @@ export const useGetListMyCourse = (initialParams: any) => {
         isNoMore: (d) => {
           return d ? d.page >= d.totalPage : false;
         },
+        manual: true,
       }
     );
 

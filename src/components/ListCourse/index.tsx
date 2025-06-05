@@ -17,6 +17,7 @@ import Loading from '../UI/Loading';
 import SelectCustom from '../UI/SelectCustom';
 import Text from '../UI/Text';
 import NoData from './NoData';
+import { getAccessToken } from '@/store/auth';
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -38,12 +39,10 @@ const ListCourse = () => {
     search: debounceVal,
   });
   const { profile } = useProfile();
-  const token = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
   useEffect(() => {
-    console.log('Debounced:', search);
     setDebounceVal(search);
   }, [debounceValue]);
 
@@ -59,20 +58,15 @@ const ListCourse = () => {
     setIdHovered('');
   };
 
-  useEffect(() => {
-    if (token) {
-      reload();
-    }
-  }, [token, sort, debounceVal, profile]);
-
   const deleteCourse = (id: string) => {
-    console.log('idddd', id);
     refModalConfirmDelete.current.onOpen(id);
   };
 
-  const handleModalClose = () => {
-    reload();
-  };
+  useEffect(() => {
+    if (profile?.id) {
+      reload();
+    }
+  }, [sort, debounceVal, profile?.id]);
 
   return (
     <div className="flex flex-col gap-[50px]">

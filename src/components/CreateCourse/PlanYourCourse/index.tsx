@@ -81,25 +81,29 @@ const PlanYourCourse = () => {
   const {
     run: getDetailCourse,
     loading,
-    data: dataDetail,
+    data: dataDetailRes,
   } = useGetDetailCourse({
-    onSuccess: async (res) => {
-      const resData = await fetchDetailSection();
+    onSuccess: async (courseDetailRes) => {
+      const courseDetail = courseDetailRes?.data ?? {};
 
-      const isEnoughtSetPrice = res?.data?.price && res?.data?.originPrice;
+      const isEnoughtSetPrice =
+        courseDetail?.price && courseDetail?.originPrice;
       const isEnoughIntendedLearners =
-        res?.data?.objectives?.length > 0 &&
-        res?.data?.intenedLeaners?.length > 0 &&
-        res?.data?.requirements?.length > 0;
+        courseDetail?.objectives?.length > 0 &&
+        courseDetail?.intenedLeaners?.length > 0 &&
+        courseDetail?.requirements?.length > 0;
 
       const isEnoughCourseLangdingePage =
-        res?.data?.title && res?.data?.categoryId;
-      res?.data?.level && res?.data?.lang;
+        courseDetail?.title && courseDetail?.categoryId;
+      courseDetail?.level && courseDetail?.lang;
+
+      const detailSectionRes = await fetchDetailSection();
+      const detailSection = detailSectionRes?.data;
 
       const allLessonsHaveContent =
-        Array.isArray(resData?.data) &&
-        resData?.data.length > 0 &&
-        resData?.data.every((section: any) => {
+        Array.isArray(detailSection) &&
+        detailSection?.length > 0 &&
+        detailSection?.every((section: any) => {
           if (section.lessons.length === 0) {
             return section.quizzes.length > 0;
           }
@@ -113,9 +117,9 @@ const PlanYourCourse = () => {
         });
 
       const allQuizzesHaveQuestions =
-        Array.isArray(resData?.data) &&
-        resData?.data.length > 0 &&
-        resData?.data.every((section: any) => {
+        Array.isArray(detailSection) &&
+        detailSection?.length > 0 &&
+        detailSection?.every((section: any) => {
           if (section.quizzes.length === 0) {
             return section.lessons.length > 0;
           }
@@ -145,42 +149,42 @@ const PlanYourCourse = () => {
 
       reset({
         objectives:
-          res?.data?.objectives?.length > 0
-            ? res?.data?.objectives?.map((item: any) => {
+          courseDetail?.objectives?.length > 0
+            ? courseDetail?.objectives?.map((item: any) => {
                 return {
                   name: item,
                 };
               })
             : dataObjectivesDefault,
         requirements:
-          res?.data?.requirements?.length > 0
-            ? res?.data?.requirements?.map((item: any) => {
+          courseDetail?.requirements?.length > 0
+            ? courseDetail?.requirements?.map((item: any) => {
                 return {
                   name: item,
                 };
               })
             : dataRequirementsDefault,
         intenedLeaners:
-          res?.data?.intenedLeaners?.length > 0
-            ? res?.data?.intenedLeaners?.map((item: any) => {
+          courseDetail?.intenedLeaners?.length > 0
+            ? courseDetail?.intenedLeaners?.map((item: any) => {
                 return {
                   name: item,
                 };
               })
             : dataIntenedLeanersDefault,
-        lang: res?.data?.lang,
-        level: res?.data?.level,
-        subtitle: res?.data?.subtitle,
-        title: res?.data?.title,
-        description: res?.data?.description,
-        topics: res?.data?.topics?.[0],
-        image: res?.data?.image,
-        video: res?.data?.video,
-        subCategoryId: res?.data?.subCategoryId,
-        price: res?.data?.price,
-        originPrice: res?.data?.originPrice,
-        promotionPeriod: res?.data?.promotionPeriod,
-        categoryId: res?.data?.categoryId,
+        lang: courseDetail?.lang,
+        level: courseDetail?.level,
+        subtitle: courseDetail?.subtitle,
+        title: courseDetail?.title,
+        description: courseDetail?.description,
+        topics: courseDetail?.topics?.[0],
+        image: courseDetail?.image,
+        video: courseDetail?.video,
+        subCategoryId: courseDetail?.subCategoryId,
+        price: courseDetail?.price,
+        originPrice: courseDetail?.originPrice,
+        promotionPeriod: courseDetail?.promotionPeriod,
+        categoryId: courseDetail?.categoryId,
       });
     },
   });
@@ -464,18 +468,19 @@ const PlanYourCourse = () => {
     requestEditCourse.run(filteredBody, router.query.id as string);
   };
 
-  const isEnoughtSetPrice =
-    dataDetail?.data?.price && dataDetail?.data?.originPrice;
+  const dataDetail = dataDetailRes?.data;
+
+  const isEnoughtSetPrice = dataDetail?.price && dataDetail?.originPrice;
   const isEnoughIntendedLearners =
-    dataDetail?.data?.objectives?.length > 0 &&
-    dataDetail?.data?.intenedLeaners?.length > 0 &&
-    dataDetail?.data?.requirements?.length > 0;
+    dataDetail?.objectives?.length > 0 &&
+    dataDetail?.intenedLeaners?.length > 0 &&
+    dataDetail?.requirements?.length > 0;
 
   const isEnoughCourseLangdingePage =
-    dataDetail?.data?.title &&
-    dataDetail?.data?.categoryId &&
-    dataDetail?.data?.level &&
-    dataDetail?.data?.lang;
+    dataDetail?.title &&
+    dataDetail?.categoryId &&
+    dataDetail?.level &&
+    dataDetail?.lang;
 
   const allLessonsHaveContent =
     Array.isArray(dataSections) &&
@@ -560,14 +565,12 @@ const PlanYourCourse = () => {
   };
 
   return (
-    <LoadingScreen isLoading={loading}>
+    <div>
       <form>
         <div className="bg-primary w-screen h-[100dvh] overflow-auto pb-10">
           <HeaderPlanYourCourse
             loading={requestEditCourse?.loading}
-            loadingPublish={
-              requestEditPublishCourse?.loading || loadingFetchDetail
-            }
+            loadingPublish={requestEditPublishCourse?.loading}
             handleSaveForm={handleSubmit(onSubmit)}
             handlePublishForm={handleSubmit(onPublish)}
           />
@@ -602,7 +605,7 @@ const PlanYourCourse = () => {
         </div>
       </form>
       <ModalSubmitError ref={refModalSubmitError} />
-    </LoadingScreen>
+    </div>
   );
 };
 export default PlanYourCourse;

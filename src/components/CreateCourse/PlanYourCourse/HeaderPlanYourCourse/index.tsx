@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
+import Image from 'next/image';
 
 const HeaderPlanYourCourse = ({
   handleSaveForm,
@@ -32,7 +33,13 @@ const HeaderPlanYourCourse = ({
           size={isMobile ? 'sm' : 'md'}
         >
           <div className="flex items-center gap-1">
-            <IconBlack />
+            <Image
+              src="/icons/ic-back.svg"
+              alt="icon-back"
+              width={20}
+              height={20}
+            />
+
             <Text type="font-16-500" className="text-white">
               {t('Back to courses')}
             </Text>
