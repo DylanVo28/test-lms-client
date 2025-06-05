@@ -3,6 +3,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import MainLayout from '@/layout/MainLayout';
 import Course from '@/components/Course';
 import { GetServerSideProps } from 'next';
+import { getAccessToken } from '@/store/auth';
+import LandingPage from '@/components/Landingpage';
 
 type Props = {
   code: string;

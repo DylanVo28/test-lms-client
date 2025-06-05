@@ -17,7 +17,7 @@ import { ModalBody } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 import Loading from '../UI/Loading';
 
@@ -28,6 +28,7 @@ const RegisterFormModal = () => {
   const { requestGetProfile, loading } = useProfileInitial();
   const [showRegisterForm, setShowRegisterForm] = useState<any>(null);
   const router = useRouter();
+  const { disconnect } = useDisconnect();
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -45,13 +46,14 @@ const RegisterFormModal = () => {
 
   const handleClose = () => {
     setShowRegisterForm(null);
+    disconnect();
   };
 
   const { signMessageAsync } = useSignMessage();
 
   useEffect(() => {
     // Handle initial connection
-    if (!isConnected) return;
+    if (!address) return;
 
     const handleCheckAddress = async () => {
       const res = await serviceCheckAddress(address as string);
@@ -84,7 +86,12 @@ const RegisterFormModal = () => {
       });
     };
 
-    handleCheckAddress();
+    // lib need time to refresh state
+    const timer = setTimeout(() => {
+      handleCheckAddress();
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [isConnected]);
 
   const signRegistration = useSignRegistration();
@@ -165,7 +172,7 @@ const RegisterFormModal = () => {
         placementMoblie="center"
         size="lg"
         isOpen={showRegisterForm}
-        onClose={handleClose}
+        onClose={() => {}}
       >
         <ModalBody className="p-6 flex flex-col gap-4 bg-[#191c21]">
           <div className="text-xl font-bold">Register account</div>

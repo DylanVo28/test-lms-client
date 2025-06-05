@@ -27,9 +27,6 @@ const useStorageOrCookieChange = () => {
       const accessToken = getAccessToken();
 
       if (!accessToken) {
-        console.log('remove cookie');
-
-        router.replace('/');
         setProfile(initialProfile);
         setNotifications({});
         setTheme(initialTheme);

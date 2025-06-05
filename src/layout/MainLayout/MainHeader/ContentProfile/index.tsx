@@ -56,7 +56,6 @@ const ContentProfile = ({
     onSuccess(res) {},
   });
   const handleLogout = () => {
-    disconnect();
     setNotifications({});
     runLogout();
     setTheme(initialTheme);
@@ -64,6 +63,8 @@ const ContentProfile = ({
 
     deleteAuthCookies();
     setProfile(initialProfile);
+    disconnect();
+
     // toast.success(t('Logout successfully'));
   };
 

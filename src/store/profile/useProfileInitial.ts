@@ -34,7 +34,7 @@ export const useProfileInitial = () => {
   useEffect(() => {
     const accessToken = getAccessToken();
     if (!accessToken && router.pathname !== '/') {
-      router.replace('/');
+      // router.replace('/');
     }
 
     if (!profile?.id) return;

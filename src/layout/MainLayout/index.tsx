@@ -4,10 +4,18 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ROUTE_PATH } from '@/utils/const';
 import useStorageOrCookieChange from '@/hooks/useStorageOrCookieChange';
+import { getAccessToken } from '@/store/auth';
+import LandingPage from '@/components/Landingpage';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   useStorageOrCookieChange();
+
+  const accessToken = getAccessToken();
+
+  if (!accessToken) {
+    return <LandingPage />;
+  }
 
   return (
     <div className="w-screen bg-[var(--theme-primary)] h-screen overflow-x-hidden overflow-auto flex flex-col relative">
