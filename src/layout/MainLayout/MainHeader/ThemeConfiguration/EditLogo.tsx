@@ -4,9 +4,8 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import Cropper from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
 import Image from 'next/image';
+import { CropperWrap } from '@/components/Commons/CropperWrap';
 
 interface UploadedFile {
   url: string;
@@ -129,48 +128,33 @@ const EditLogo = ({
       </p> */}
       <div className="flex flex-col gap-4">
         <div className="">
-          {imageSrc ? (
-            <div
-              style={{ width: '100%', height: '100%', position: 'relative' }}
-            >
-              <Cropper
-                ref={cropperRef}
-                src={imageSrc}
-                style={{ height: 100, width: '100%' }}
-                // aspectRatio={280 / 100}
-                guides={true}
-                cropBoxResizable={true}
-                dragMode="move"
-                responsive={true}
-                zoomable={false}
-                zoomOnWheel={false}
-                zoomOnTouch={false}
-                minCropBoxWidth={50}
-                minCropBoxHeight={50}
-              />
-            </div>
-          ) : (
-            <>
-              {logo ? (
-                <div className="min-h-[100px] bg-gray-70 rounded-md flex justify-center items-center">
-                  <Image src={logo} alt="" width={124} height={46} />
-                </div>
-              ) : (
-                <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                  <div className="text-white">{t('JPEG, PNG or JPG.')}</div>
-                  <div className="relative">
-                    <Button
-                      onClick={handleClickUploadFile}
-                      isLoading={loadingFile}
-                      className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
-                    >
-                      {t('Choose file')}
-                    </Button>
+          <CropperWrap
+            imageSrc={imageSrc}
+            value={logo}
+            cropperRef={cropperRef}
+            fallbackElement={
+              <>
+                {logo ? (
+                  <div className="min-h-[100px] bg-gray-70 rounded-md flex justify-center items-center">
+                    <Image src={logo} alt="" width={124} height={46} />
                   </div>
-                </div>
-              )}
-            </>
-          )}
+                ) : (
+                  <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
+                    <div className="text-white">{t('JPEG, PNG or JPG.')}</div>
+                    <div className="relative">
+                      <Button
+                        onClick={handleClickUploadFile}
+                        isLoading={loadingFile}
+                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                      >
+                        {t('Choose file')}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </>
+            }
+          />
         </div>
         {imageSrc ? (
           <Button

@@ -7,8 +7,9 @@ import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
-import Cropper from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
+
+import React from 'react';
+import { CropperWrap } from '@/components/Commons/CropperWrap';
 
 const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   const { t } = useTranslation('common');
@@ -130,47 +131,20 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
         <div className="relative md:max-w-[480px] w-full md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
-          {imageSrc ? (
-            <div
-              style={{ width: '100%', height: '200px', position: 'relative' }}
-            >
-              <Cropper
-                ref={cropperRef}
-                src={imageSrc}
-                style={{ height: 200, width: '100%' }}
-                aspectRatio={302 / 200}
-                guides={true}
-                cropBoxResizable={false}
-                dragMode="move"
-                zoomable={false}
-                zoomOnWheel={false}
-                zoomOnTouch={false}
-                minCropBoxWidth={302}
-                minCropBoxHeight={200}
+          <CropperWrap
+            imageSrc={imageSrc}
+            value={value}
+            cropperRef={cropperRef}
+            fallbackElement={
+              <Image
+                src={value || '/img-default.png'}
+                className="w-full md:w-[480px] h-[200px] object-contain"
+                alt=""
+                width={480}
+                height={270}
               />
-            </div>
-          ) : (
-            <Image
-              src={value || '/img-default.png'}
-              className="w-full md:w-[480px] h-[200px] object-contain"
-              alt=""
-              width={480}
-              height={270}
-            />
-          )}
-
-          {/* <Image
-            src={value || '/img-default.png'}
-            className="w-full md:w-[480px] h-[270px]"
-            alt=""
-            width={480}
-            height={270}
+            }
           />
-          {loading && (
-            <div className="absolute flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-              <Spinner />
-            </div>
-          )} */}
         </div>
         <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">

@@ -4,9 +4,9 @@ import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { Fragment, useRef, useState } from 'react';
-import Cropper from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
+
 import { useUploadFile } from '@/components/CreateCourse/service';
+import { CropperWrap } from '@/components/Commons/CropperWrap';
 
 const EditBanner = ({ onChange, value }: any) => {
   const { t } = useTranslation('common');
@@ -99,66 +99,38 @@ const EditBanner = ({ onChange, value }: any) => {
       />
       <div className="flex flex-col gap-4">
         <div className="relative w-full bg-gray-70 rounded">
-          {imageSrc ? (
-            <div
-              style={{ width: '100%', height: '200px', position: 'relative' }}
-            >
-              <Cropper
-                ref={cropperRef}
-                src={imageSrc}
-                style={{ height: 200, width: '100%' }}
-                // aspectRatio={385 / 200}
-                guides={true}
-                cropBoxResizable={true}
-                dragMode="move"
-                zoomable={true}
-                responsive={true}
-                zoomOnWheel={false}
-                zoomOnTouch={false}
-                minCropBoxWidth={50}
-                minCropBoxHeight={50}
-              />
-            </div>
-          ) : (
-            <div>
-              {!value && (
-                <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                  <div className="text-white">{t('JPEG, PNG or JPG')}</div>
-                  <div className="relative">
-                    <Button
-                      onClick={handleClickUploadFile}
-                      className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
-                    >
-                      {t('Choose file')}
-                    </Button>
+          <CropperWrap
+            imageSrc={imageSrc}
+            value={value}
+            cropperRef={cropperRef}
+            fallbackElement={
+              <div>
+                {!value && (
+                  <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
+                    <div className="text-white">{t('JPEG, PNG or JPG')}</div>
+                    <div className="relative">
+                      <Button
+                        onClick={handleClickUploadFile}
+                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                      >
+                        {t('Choose file')}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {value && (
-                <Image
-                  src={value || '/img-default.png'}
-                  className="w-full md:w-[480px] h-fit"
-                  alt=""
-                  width={480}
-                  height={270}
-                />
-              )}
-            </div>
-          )}
-
-          {/* <Image
-            src={value || '/img-default.png'}
-            className="w-full md:w-[480px] h-[270px]"
-            alt=""
-            width={480}
-            height={270}
+                {value && (
+                  <Image
+                    src={value || '/img-default.png'}
+                    className="w-full md:w-[480px] h-auto"
+                    alt=""
+                    width={480}
+                    height={270}
+                  />
+                )}
+              </div>
+            }
           />
-          {loading && (
-            <div className="absolute flex items-center justify-center w-full h-full bg-black bg-opacity-50">
-              <Spinner />
-            </div>
-          )} */}
         </div>
         <div className="flex items-center gap-2">
           {imageSrc ? (
