@@ -1,5 +1,6 @@
 import { ReactElement, Fragment } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
@@ -19,7 +20,18 @@ function getLayout(page: ReactElement) {
 }
 
 const HomePage = () => {
-  return <LandingPage />;
+  return (
+    <>
+      <Head>
+        <title>What Exchange | Home</title>
+        <meta
+          name="description"
+          content="Welcome to What Exchange, your platform for learning and sharing knowledge."
+        />
+      </Head>
+      <LandingPage />
+    </>
+  );
 };
 
 HomePage.getLayout = getLayout;

@@ -1,8 +1,20 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PlanYourCourse from '@/components/CreateCourse/PlanYourCourse';
+import Head from 'next/head';
 
 const PlanYourCoursePage = () => {
-  return <PlanYourCourse />;
+  return (
+    <>
+      <Head>
+        <title>Plan Your Course | What Exchange</title>
+        <meta
+          name="description"
+          content="Plan your course details on What Exchange."
+        />
+      </Head>
+      <PlanYourCourse />
+    </>
+  );
 };
 
 export async function getServerSideProps({ locale }: any) {

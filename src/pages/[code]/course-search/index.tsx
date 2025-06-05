@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import Head from 'next/head';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import MainLayout from '@/layout/MainLayout';
@@ -6,7 +7,18 @@ import CourseSearch from '@/components/CourseSearch';
 import { GetServerSideProps } from 'next';
 
 const CourseSearchPage = () => {
-  return <CourseSearch />;
+  return (
+    <>
+      <Head>
+        <title>Course Search | What Exchange</title>
+        <meta
+          name="description"
+          content="Search for courses on What Exchange."
+        />
+      </Head>
+      <CourseSearch />
+    </>
+  );
 };
 
 CourseSearchPage.getLayout = function getLayout(page: ReactElement) {

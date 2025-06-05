@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import Head from 'next/head';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import MainLayout from '@/layout/MainLayout';
@@ -9,7 +10,18 @@ const DetailCourse = dynamic(() => import('@/components/Course/DetailCourse'), {
 });
 
 const DetailCoursePage = () => {
-  return <DetailCourse />;
+  return (
+    <>
+      <Head>
+        <title>Course Detail | What Exchange</title>
+        <meta
+          name="description"
+          content="View detailed information about this course on What Exchange."
+        />
+      </Head>
+      <DetailCourse />
+    </>
+  );
 };
 
 DetailCoursePage.getLayout = function getLayout(page: ReactElement) {

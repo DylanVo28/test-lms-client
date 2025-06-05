@@ -5,13 +5,25 @@ import Course from '@/components/Course';
 import { GetServerSideProps } from 'next';
 import { getAccessToken } from '@/store/auth';
 import LandingPage from '@/components/Landingpage';
+import Head from 'next/head';
 
 type Props = {
   code: string;
 };
 
 const HomePage = ({ code }: Props) => {
-  return <Course />;
+  return (
+    <>
+      <Head>
+        <title>{code} | What Exchange</title>
+        <meta
+          name="description"
+          content={`Welcome to the ${code} page on What Exchange.`}
+        />
+      </Head>
+      <Course />
+    </>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({

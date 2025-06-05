@@ -1,9 +1,21 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PlanYourCourse from '@/components/CreateCourse/PlanYourCourse';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 
 const PlanYourCoursePage = () => {
-  return <PlanYourCourse />;
+  return (
+    <>
+      <Head>
+        <title>Plan Your Course | What Exchange</title>
+        <meta
+          name="description"
+          content="Plan your course details on What Exchange."
+        />
+      </Head>
+      <PlanYourCourse />
+    </>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
