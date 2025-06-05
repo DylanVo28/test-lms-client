@@ -108,20 +108,31 @@ if (typeof window !== 'undefined') {
 const queryClient = new QueryClient();
 
 export const SEO: DefaultSeoProps = {
-  titleTemplate: 'What Exchange',
+  titleTemplate: '%s | What Exchange',
   defaultTitle: 'What Exchange',
-  description: 'What Exchange',
+  description:
+    'What Exchange - Your platform for learning and sharing knowledge.',
   openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://app-lms.focalfossa.site/',
+    site_name: 'What Exchange',
     title: 'What Exchange',
-    description: 'What Exchange',
+    description:
+      'What Exchange - Your platform for learning and sharing knowledge.',
     images: [
       {
-        url: 'banner-1.png',
-        width: 800,
-        height: 400,
-        alt: 'Title Banner Alt',
+        url: 'https://app-lms.focalfossa.site/banner-1.png',
+        width: 1200,
+        height: 630,
+        alt: 'What Exchange Banner',
+        type: 'image/png',
       },
     ],
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    site: '@WhatExchange',
   },
 };
 
@@ -153,7 +164,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content="width=device-width,initial-scale=1,maximum-scale=2,shrink-to-fit=no"
         />
       </Head>
-      <DefaultSeo {...SEO} />
+      {/* <DefaultSeo {...SEO} /> */}
 
       <ProgressBar
         height="2px"

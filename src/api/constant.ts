@@ -109,6 +109,7 @@ export const API_PATH = {
   GET_WITHDRAW_METADATA: '/api/web3/get-metadata',
   UPDATE_KOL_REWARD: '/api/user/update-reward',
   YOUR_NETWORK: '/api/courses/your-network',
+  COURSE_METADATA: (id: string) => `/api/courses/metadata/${id}`,
   REWARD_HISTORY: '/api/users/reward-history',
 
   CANCEL_TRANSACTION: (id: string) => `/api/users/${id}/cancel-transaction`,

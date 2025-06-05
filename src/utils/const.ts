@@ -54,3 +54,16 @@ export enum LessonContentType {
   VIDEO_SLIDE_MASHUP = 'VIDEO_SLIDE_MASHUP',
   ARTICLE = 'ARTICLE',
 }
+
+export const DefaultData = {
+  DefaultCourseImage: '/img-default.png',
+  CourseDefaultUrl: 'https://app-lms.focalfossa.site/course',
+  DefaultTitle: 'What Exchange LMS',
+  DefaultDescription:
+    'What Exchange platform for learning and sharing knowledge.',
+  DefaultImage:
+    'https://opengraph.b-cdn.net/production/images/8114e0cd-f577-4898-b01d-ee630c0b3222.png?token=OENDZ31ZgZfNQlF_kRNBMCF-QEL8lhpU6Qc0kDSmgdg&height=256&width=256&expires=33285106981',
+  DefaultUrl: 'https://app-lms.focalfossa.site/',
+  DefaultType: 'website',
+  DefaultDomain: 'app-lms.focalfossa.site',
+};

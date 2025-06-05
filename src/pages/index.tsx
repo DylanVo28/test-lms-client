@@ -1,11 +1,11 @@
 import { ReactElement, Fragment } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LandingPage from '@/components/Landingpage';
+import { NextSeo } from 'next-seo';
 
 function getLayout(page: ReactElement) {
   const LayoutWrapper = () => {
@@ -22,13 +22,10 @@ function getLayout(page: ReactElement) {
 const HomePage = () => {
   return (
     <>
-      <Head>
-        <title>What Exchange | Home</title>
-        <meta
-          name="description"
-          content="Welcome to What Exchange, your platform for learning and sharing knowledge."
-        />
-      </Head>
+      <NextSeo
+        title="What Exchange | Home"
+        description="Welcome to What Exchange, your platform for learning and sharing knowledge123123123."
+      />
       <LandingPage />
     </>
   );
