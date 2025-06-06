@@ -617,7 +617,7 @@ const Lesson = () => {
               size="sm"
               isIconOnly
               radius="full"
-              onClick={}
+              // onClick={}
             >
               <X color="#fff" />
             </Button>

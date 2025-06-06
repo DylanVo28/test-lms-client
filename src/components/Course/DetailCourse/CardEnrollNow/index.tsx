@@ -19,6 +19,8 @@ import {
   ZERO_ADDRESS,
 } from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { privateRequest, request } from '@/api/request';
+import { API_PATH } from '@/api/constant';
 
 const CardEnrollNow = ({
   course,
@@ -50,6 +52,15 @@ const CardEnrollNow = ({
 
   const refModalViewVideo: any = useRef(null);
   const amount = 0.01;
+
+  const preCheckEnroll = async (id: string) => {
+    const res = await privateRequest(
+      request.post,
+      API_PATH.PRE_CHECK_ENROLL(id)
+    );
+    return res.data;
+  };
+
   const { run, loading, cancel } = useEnrollCourse({
     // pollingInterval: 3000,
     onSuccess: (res) => {
@@ -76,23 +87,25 @@ const CardEnrollNow = ({
 
   const handleEnroll = async () => {
     try {
-      const kolAddress = course.author.walletAddress || ZERO_ADDRESS;
-      const commissionRate = kolAddress !== ZERO_ADDRESS ? '50' : '0';
-      await approveUSDC(VAULT_ADDRESS, amount);
-      const txHash = await buyCourse(
-        course.id,
-        amount,
-        kolAddress,
-        commissionRate
-      );
-      if (txHash) {
-        run(course.id, txHash);
+      const res = await preCheckEnroll(course.id);
+      if (res === true) {
+        const kolAddress = course.author.walletAddress || ZERO_ADDRESS;
+        const commissionRate = kolAddress !== ZERO_ADDRESS ? '50' : '0';
+        await approveUSDC(VAULT_ADDRESS, amount);
+        const txHash = await buyCourse(
+          course.id,
+          amount,
+          kolAddress,
+          commissionRate
+        );
+        if (txHash) {
+          run(course.id, txHash);
+        }
       }
     } catch (error) {
       toast.error(t('Failed to enroll in the course. Please try again.'));
     }
   };
-
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
@@ -169,12 +182,12 @@ const CardEnrollNow = ({
                   return;
                 }
 
-                if (course?.enroll === 'completed') {
+                if (course?.enroll === 'verified') {
                   navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                   return;
+                } else {
+                  handleEnroll();
                 }
-
-                handleEnroll();
               }}
               loading={loadingBuy}
               token={accessToken}

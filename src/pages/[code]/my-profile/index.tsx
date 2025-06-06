@@ -3,8 +3,6 @@ import MainLayout from '@/layout/MainLayout';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React, { ReactElement } from 'react';
-import Head from 'next/head';
-import { AppProgressBar } from 'next-nprogress-bar';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';

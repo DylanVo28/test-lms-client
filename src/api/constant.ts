@@ -113,4 +113,5 @@ export const API_PATH = {
   REWARD_HISTORY: '/api/users/reward-history',
 
   CANCEL_TRANSACTION: (id: string) => `/api/users/${id}/cancel-transaction`,
+  PRE_CHECK_ENROLL: (id: string) => `/api/courses/${id}/pre-check-enroll`,
 };
