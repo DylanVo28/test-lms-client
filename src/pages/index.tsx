@@ -6,6 +6,9 @@ import MainLayout from '@/layout/MainLayout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LandingPage from '@/components/Landingpage';
 import { NextSeo } from 'next-seo';
+import AppProvider from '@/components/Provider/AppProvider';
+import SEO from '@/components/SEO';
+import { DefaultData } from '@/utils/const';
 
 function getLayout(page: ReactElement) {
   const LayoutWrapper = () => {
@@ -22,11 +25,14 @@ function getLayout(page: ReactElement) {
 const HomePage = () => {
   return (
     <>
-      <NextSeo
+      <SEO
         title="What Exchange | Home"
-        description="Welcome to What Exchange, your platform for learning and sharing knowledge123123123."
+        description="Welcome to What Exchange, your platform for learning and sharing knowledge."
+        imageUrl={DefaultData.DefaultCourseImage}
       />
-      <LandingPage />
+      <AppProvider>
+        <LandingPage />
+      </AppProvider>
     </>
   );
 };
