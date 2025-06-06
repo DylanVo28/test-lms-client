@@ -172,6 +172,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         options={{ showSpinner: false }}
         shallowRouting
       />
+      {/* oke */}
       <main>
         <WagmiProvider config={config}>
           <AppLayout>
