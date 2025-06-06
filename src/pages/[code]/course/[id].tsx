@@ -36,7 +36,9 @@ DetailCoursePage.getLayout = function getLayout(page: any) {
         imageUrl={courseMedadata?.image || DefaultData.DefaultCourseImage}
       />
       <AppProvider>
-        <DetailCourse />
+        <MainLayout>
+          <DetailCourse />
+        </MainLayout>
       </AppProvider>
     </>
   );
