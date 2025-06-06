@@ -13,7 +13,11 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
-import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
+import {
+  useUSDCOperations,
+  VAULT_ADDRESS,
+  ZERO_ADDRESS,
+} from '@/hooks/useExecute';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 
 const CardEnrollNow = ({
@@ -42,13 +46,7 @@ const CardEnrollNow = ({
   const { profile } = useProfile();
   const { navigate } = useNavigate();
 
-  const {
-    approveUSDC,
-    buyCourse,
-    loading: loadingBuy,
-    withdraw,
-    isTxIdUsed,
-  } = useUSDCOperations();
+  const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
   const amount = 0.01;
@@ -78,8 +76,15 @@ const CardEnrollNow = ({
 
   const handleEnroll = async () => {
     try {
+      const kolAddress = course.author.walletAddress || ZERO_ADDRESS;
+      const commissionRate = kolAddress !== ZERO_ADDRESS ? '50' : '0';
       await approveUSDC(VAULT_ADDRESS, amount);
-      const txHash = await buyCourse(course.id, amount);
+      const txHash = await buyCourse(
+        course.id,
+        amount,
+        kolAddress,
+        commissionRate
+      );
       if (txHash) {
         run(course.id, txHash);
       }

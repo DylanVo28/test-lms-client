@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -7,14 +7,16 @@ import {
 } from '@/components/UI/Card/Card';
 import RewardHistory from './RewardHistory';
 import SoldCourses from './SoldCourses';
-import { TUser } from './service';
-import { useUSDCOperations } from '@/hooks/useExecute';
+import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
 import { Info } from '@phosphor-icons/react';
 import { Tooltip, Spinner } from '@nextui-org/react';
 import { useProfile } from '@/store/profile/useProfile';
+import { getVaultContract } from '@/hooks/useContract';
+import BigNumber from 'bignumber.js';
+import { BIG_TEN } from '@/utils/bigNumber';
 
 const TabButton: React.FC<{
   active: boolean;
@@ -40,8 +42,24 @@ const Earnings = ({ reload }: { reload: () => void }) => {
   const [activeTab, setActiveTab] = useState('sold_courses');
   const [claimLoading, setClaimLoading] = useState(false);
   const { profile } = useProfile();
-  const totalRewards = profile?.withdrawable || 0;
-  const { withdraw, isTxIdUsed } = useUSDCOperations();
+  const [totalRewards, setTotalRewards] = useState(0);
+  const { withdraw } = useUSDCOperations();
+  const vaultContract = getVaultContract(VAULT_ADDRESS);
+
+  const getKOLClaimableAmount = async () => {
+    if (!vaultContract) return;
+    const tx = await vaultContract.getKolClaimableAmount(
+      profile?.walletAddress
+    );
+    const formatByDecimal = BigNumber(tx.toString())
+      .dividedBy(BIG_TEN.pow(18))
+      .toNumber();
+    setTotalRewards(formatByDecimal);
+  };
+
+  useEffect(() => {
+    getKOLClaimableAmount();
+  }, []);
 
   const handleWithdraw = async () => {
     setClaimLoading(true);
@@ -53,7 +71,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
       );
       const tx = await withdraw(
         metadata.data.transactionId,
-        metadata.data.amountWithDecimals,
+        metadata.data.nonce,
         metadata.data.deadline,
         metadata.data.signature
       );
@@ -78,7 +96,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
       toast.success(error.message);
     } finally {
       setClaimLoading(false);
-      reload();
+      getKOLClaimableAmount();
     }
   };
 

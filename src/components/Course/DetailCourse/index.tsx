@@ -30,7 +30,6 @@ const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
   const { t } = useTranslation('common');
-
   const {
     run: getDetailCourse,
     data: dataDetail,
@@ -118,7 +117,6 @@ const DetailCourse = () => {
   const handleUnLike = (id: string) => {
     runUnLikeCourse(id);
   };
-
   return (
     <LoadingScreen isLoading={false}>
       <div id="top" className="flex flex-col gap-[20px] md:gap-[30px] relative">

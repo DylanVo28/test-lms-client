@@ -3,20 +3,18 @@ import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
-import { toast } from '@/components/UI/Toast/toast';
 
 const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0x8bF8b449eaB9962D60087473A42422069533e4d2';
-
+export const VAULT_ADDRESS = '0x094FF872d9a65fA5F3701b1CaFD64c42B60F1dc9';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const parseAmount = (amount: string | number) => {
   return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
 };
-
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
 
-  const usdcContract = getUSDCContract(USDC_ADDRESS);
   const vaultContract = getVaultContract(VAULT_ADDRESS);
+  const usdcContract = getUSDCContract(USDC_ADDRESS);
 
   const approveUSDC = useCallback(
     async (spender: string, amount: string | number) => {
@@ -44,21 +42,33 @@ export const useUSDCOperations = () => {
   );
 
   const buyCourse = useCallback(
-    async (courseId: string, amount: string | number) => {
+    async (
+      courseId: string,
+      amount: string | number,
+      kolAddress: string,
+      commissionRateRate: string
+    ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
         return;
       }
       try {
         setLoading(true);
-
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
-          parseAmount(amount)
+          parseAmount(amount),
+          kolAddress,
+          BigNumber(commissionRateRate).multipliedBy(BIG_TEN.pow(2)).toFixed(0)
         );
-        const tx = await vaultContract.pay(courseId, parseAmount(amount), {
-          gasLimit: calculateGasMargin(estimatedGas),
-        });
+        const tx = await vaultContract.pay(
+          courseId,
+          parseAmount(amount),
+          kolAddress,
+          BigNumber(commissionRateRate).multipliedBy(BIG_TEN.pow(2)).toFixed(0),
+          {
+            gasLimit: calculateGasMargin(estimatedGas),
+          }
+        );
         await tx.wait();
         return tx.hash;
       } catch (error) {

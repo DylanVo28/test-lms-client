@@ -27,9 +27,7 @@ const DetailCoursePage = ({ courseMedadata }: any) => {
           ],
         }}
       />
-      123123
       <DetailCourse />
-      123123
     </>
   );
 };
