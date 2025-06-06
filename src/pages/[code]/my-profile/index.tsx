@@ -4,24 +4,32 @@ import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React, { ReactElement } from 'react';
 import Head from 'next/head';
+import { AppProgressBar } from 'next-nprogress-bar';
+import AppProvider from '@/components/Provider/AppProvider';
+import SEO from '@/components/SEO';
+import { DefaultData } from '@/utils/const';
 
 const MyProfilePage = () => {
   return (
     <>
-      <Head>
-        <title>My Profile | What Exchange</title>
-        <meta
-          name="description"
-          content="Manage your profile and account settings on What Exchange."
-        />
-      </Head>
       <MyProfile />
     </>
   );
 };
 
 MyProfilePage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <>
+      <SEO
+        title="My Profile | What Exchange"
+        description="Manage your profile and account settings on What Exchange."
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
+      <AppProvider>
+        <MainLayout>{page}</MainLayout>
+      </AppProvider>
+    </>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
