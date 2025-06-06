@@ -35,9 +35,9 @@ DetailCoursePage.getLayout = function getLayout(page: any) {
         }
         imageUrl={courseMedadata?.image || DefaultData.DefaultCourseImage}
       />
-      123123
-      <DetailCourse />
-      123123
+      <AppProvider>
+        <DetailCourse />
+      </AppProvider>
     </>
   );
 };
