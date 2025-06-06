@@ -501,6 +501,10 @@ const Lesson = () => {
     setTypeLoadContent('');
   };
 
+  const handleHideSidebar = () => {
+    // setIsHideSidebar(true);
+  };
+
   return (
     <div className="grid md:grid-cols-10 relative" id="topLesson">
       <div className="md:col-span-7 px-4 md:px-0 flex flex-col">
@@ -608,7 +612,13 @@ const Lesson = () => {
                 </Text> */}
               </div>
             </div>
-            <Button variant="light" size="sm" isIconOnly radius="full">
+            <Button
+              variant="light"
+              size="sm"
+              isIconOnly
+              radius="full"
+              onClick={}
+            >
               <X color="#fff" />
             </Button>
           </div>

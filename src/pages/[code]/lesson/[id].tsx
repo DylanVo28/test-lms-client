@@ -11,23 +11,25 @@ import AppProvider from '@/components/Provider/AppProvider';
 const DetailLessonPage = () => {
   return (
     <>
-      <SEO
-        title="Lesson Detail | What Exchange"
-        description="View detailed information about this lesson on What Exchange."
-        imageUrl={DefaultData.DefaultCourseImage}
-      />
-      <AppProvider>
-        <Lesson />
-      </AppProvider>
+      <Lesson />
     </>
   );
 };
 
 DetailLessonPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LessonLayout>
-      <>{page}</>
-    </LessonLayout>
+    <>
+      <SEO
+        title="Lesson Detail | What Exchange"
+        description="View detailed information about this lesson on What Exchange."
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
+      <AppProvider>
+        <LessonLayout>
+          <>{page}</>
+        </LessonLayout>
+      </AppProvider>
+    </>
   );
 };
 
