@@ -1,21 +1,23 @@
 import { ReactElement } from 'react';
-import Head from 'next/head';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import MainLayout from '@/layout/MainLayout';
-import CourseSearch from '@/components/CourseSearch';
 import { GetServerSideProps } from 'next';
+import AppProvider from '@/components/Provider/AppProvider';
+import SEO from '@/components/SEO';
+import { DefaultData } from '@/utils/const';
+import dynamic from 'next/dynamic';
+
+const MainLayout = dynamic(() => import('@/layout/MainLayout'), {
+  ssr: false,
+});
+
+const CourseSearch = dynamic(() => import('@/components/CourseSearch'), {
+  ssr: false,
+});
 
 const CourseSearchPage = () => {
   return (
     <>
-      <Head>
-        <title>Course Search | What Exchange</title>
-        <meta
-          name="description"
-          content="Search for courses on What Exchange."
-        />
-      </Head>
       <CourseSearch />
     </>
   );
@@ -23,9 +25,19 @@ const CourseSearchPage = () => {
 
 CourseSearchPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout>
-      <>{page}</>
-    </MainLayout>
+    <>
+      <SEO
+        title="Course Search | What Exchange"
+        description="Search for courses on What Exchange."
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
+      <AppProvider>
+        <MainLayout>
+          {/* <>{page}</> */}
+          123123
+        </MainLayout>
+      </AppProvider>
+    </>
   );
 };
 

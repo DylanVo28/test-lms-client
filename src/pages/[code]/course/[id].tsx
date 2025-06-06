@@ -8,6 +8,8 @@ import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import { DefaultData } from '@/utils/const';
 import { NextSeo } from 'next-seo';
+import AppProvider from '@/components/Provider/AppProvider';
+import SEO from '@/components/SEO';
 
 const DetailCourse = dynamic(() => import('@/components/Course/DetailCourse'), {
   ssr: false,
@@ -16,27 +18,27 @@ const DetailCourse = dynamic(() => import('@/components/Course/DetailCourse'), {
 const DetailCoursePage = ({ courseMedadata }: any) => {
   return (
     <>
-      <NextSeo
-        title={courseMedadata?.title || DefaultData.DefaultTitle}
-        description={
-          courseMedadata?.description || DefaultData.DefaultDescription
-        }
-        openGraph={{
-          images: [
-            { url: courseMedadata?.image || DefaultData.DefaultCourseImage },
-          ],
-        }}
-      />
       <DetailCourse />
     </>
   );
 };
 
-DetailCoursePage.getLayout = function getLayout(page: ReactElement) {
+DetailCoursePage.getLayout = function getLayout(page: any) {
+  const courseMedadata = page?.props?.courseMedadata;
+
   return (
-    <MainLayout>
-      <>{page}</>
-    </MainLayout>
+    <>
+      <SEO
+        title={courseMedadata?.title || DefaultData.DefaultTitle}
+        description={
+          courseMedadata?.description || DefaultData.DefaultDescription
+        }
+        imageUrl={courseMedadata?.image || DefaultData.DefaultCourseImage}
+      />
+      123123
+      <DetailCourse />
+      123123
+    </>
   );
 };
 

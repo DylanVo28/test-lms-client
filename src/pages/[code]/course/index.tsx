@@ -5,17 +5,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import MainLayout from '@/layout/MainLayout';
 import Course from '@/components/Course';
 import { GetServerSideProps } from 'next';
+import AppProvider from '@/components/Provider/AppProvider';
+import SEO from '@/components/SEO';
+import { DefaultData } from '@/utils/const';
 
 const CoursePage = () => {
   return (
     <>
-      <Head>
-        <title>Courses | What Exchange</title>
-        <meta
-          name="description"
-          content="Explore all courses available on What Exchange."
-        />
-      </Head>
       <Course />
     </>
   );
@@ -23,9 +19,18 @@ const CoursePage = () => {
 
 CoursePage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout>
-      <>{page}</>
-    </MainLayout>
+    <>
+      <SEO
+        title="Courses | What Exchange"
+        description="Explore all courses available on What Exchange."
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
+      <AppProvider>
+        <MainLayout>
+          <>{page}</>
+        </MainLayout>
+      </AppProvider>
+    </>
   );
 };
 

@@ -4,18 +4,21 @@ import LessonLayout from '@/layout/LessonLayout';
 import { ReactElement, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import SEO from '@/components/SEO';
+import { DefaultData } from '@/utils/const';
+import AppProvider from '@/components/Provider/AppProvider';
 
 const DetailLessonPage = () => {
   return (
     <>
-      <Head>
-        <title>Lesson Detail | What Exchange</title>
-        <meta
-          name="description"
-          content="View detailed information about this lesson on What Exchange."
-        />
-      </Head>
-      <Lesson />
+      <SEO
+        title="Lesson Detail | What Exchange"
+        description="View detailed information about this lesson on What Exchange."
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
+      <AppProvider>
+        <Lesson />
+      </AppProvider>
     </>
   );
 };

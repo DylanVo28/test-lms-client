@@ -1,12 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-import '../styles/globals.scss';
-import '../styles/tailwind.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import 'react-rater/lib/react-rater.css';
-import 'video.js/dist/video-js.css';
-import 'videojs-hls-quality-selector';
-import 'videojs-contrib-quality-levels';
-
 import { ReactElement, ReactNode } from 'react';
 
 import type { NextPage } from 'next';
@@ -15,7 +6,6 @@ import Head from 'next/head';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import { DefaultSeo, DefaultSeoProps } from 'next-seo';
 import AppLayout from '@/layout/AppLayout';
-import { appWithTranslation } from 'next-i18next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
 import {
@@ -32,7 +22,6 @@ import {
   darkTheme,
   getDefaultWallets,
 } from '@rainbow-me/rainbowkit';
-import nextI18nConfig from '../../next-i18next.config';
 import { Toaster } from 'sonner';
 
 export type NextPageWithLayout = NextPage & {
@@ -136,9 +125,7 @@ export const SEO: DefaultSeoProps = {
   },
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page: any) => page);
-
+function AppProvider({ children }: any) {
   return (
     <>
       <Head>
@@ -164,7 +151,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content="width=device-width,initial-scale=1,maximum-scale=2,shrink-to-fit=no"
         />
       </Head>
-      {/* <DefaultSeo {...SEO} /> */}
+      <DefaultSeo {...SEO} />
 
       <ProgressBar
         height="2px"
@@ -174,7 +161,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       />
       {/* oke */}
       <main>
-        {/* <WagmiProvider config={config}>
+        <WagmiProvider config={config}>
           <AppLayout>
             <QueryClientProvider client={queryClient}>
               <RainbowKitProvider
@@ -185,15 +172,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 initialChain={fantomTestnet}
               >
                 <Toaster position="top-center" />
-                {getLayout(<Component {...pageProps} />)}
+                {children}
               </RainbowKitProvider>
             </QueryClientProvider>
           </AppLayout>
-        </WagmiProvider> */}
-        {getLayout(<Component {...pageProps} />)}
+        </WagmiProvider>
       </main>
     </>
   );
 }
-// @ts-ignore
-export default appWithTranslation(MyApp, nextI18nConfig);
+
+export default AppProvider;
