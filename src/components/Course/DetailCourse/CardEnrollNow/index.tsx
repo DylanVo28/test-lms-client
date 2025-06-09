@@ -101,6 +101,10 @@ const CardEnrollNow = ({
         if (txHash) {
           run(course.id, txHash);
         }
+      } else {
+        toast.error(
+          res?.message || t('You are not eligible to enroll in this course.')
+        );
       }
     } catch (error) {
       toast.error(t('Failed to enroll in the course. Please try again.'));

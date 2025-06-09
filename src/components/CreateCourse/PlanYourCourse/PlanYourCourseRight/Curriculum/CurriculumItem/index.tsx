@@ -41,6 +41,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const [valueEditEditCotentLesson, setValueEditCotentLesson] = useState<any>(
     {}
   );
+
+  console.log({ item });
   const refModalConfirmDeleteSection: any = useRef(null);
   const refModalConfirmDeleteQuestion: any = useRef(null);
 

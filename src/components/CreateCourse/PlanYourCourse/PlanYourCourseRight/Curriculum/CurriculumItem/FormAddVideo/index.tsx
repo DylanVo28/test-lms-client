@@ -8,6 +8,7 @@ import { useTranslation } from 'next-i18next';
 import { useRef, useState } from 'react';
 import Content from '../Content';
 import { useCurriculumContext } from '../../context';
+import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
 
 const FormAddVideo = ({
   handleSaveVideo,
@@ -18,8 +19,10 @@ const FormAddVideo = ({
   valueInfo: any;
   lectureItem: any;
 }) => {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const { upload, progress, uploading } = useS3MultipartUpload();
+
   const { t } = useTranslation('common');
-  const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
   const [uploadFileLoading, setUploadFileLoading] = useState(false);
@@ -30,10 +33,20 @@ const FormAddVideo = ({
 
   const { handleUpdateEditLessonId, handleUpdateShowBoundingBox } =
     useCurriculumContext();
-
   const handleFileChange = async (event: any) => {
     const file = event.target.files[0];
+    //   const file = fileRef.current?.files?.[0];
 
+    // const handle = async () => {
+    //   if (!file) return;
+    //   try {
+    //     await upload(file);
+    //     alert('Upload success');
+    //   } catch (err) {
+    //     console.error(err);
+    //     alert('Upload failed');
+    //   }
+    // };
     if (file && file.type.startsWith('video/')) {
       // Get video duration
       const videoElement = document.createElement('video');
@@ -69,30 +82,32 @@ const FormAddVideo = ({
   };
 
   const handleClickUploadFile = () => {
-    fileInputRef.current.click();
+    if (!fileRef.current) return;
+    fileRef.current.click();
   };
 
   const handleClickSaveVideo = async () => {
+    const file = fileRef.current?.files?.[0];
+    if (!file) return;
     if (formData?.video && formData?.thumbnail) {
-      const videoResponse = await serviceUploadFileInBackground(
-        formData?.video
-      );
+      const videoResponse = await upload(file);
+
       const thumbnailResponse = await serviceUploadFileInBackground(
         formData?.thumbnail
       );
 
-      await handleSaveVideo({
-        ...valueInfo,
-        urlVideo: videoResponse?.data?.url,
-        thumbnailUrl: thumbnailResponse?.data?.url,
-        fileNameVideo: videoResponse?.data?.filename,
-        duration: formData?.duration,
-      });
+      // await handleSaveVideo({
+      //   ...valueInfo,
+      //   urlVideo: videoResponse?.data?.url,
+      //   thumbnailUrl: thumbnailResponse?.data?.url,
+      //   fileNameVideo: videoResponse?.data?.filename,
+      //   duration: formData?.duration,
+      // });
 
-      setFormData({
-        ...formData,
-        urlVideo: videoResponse?.data?.url,
-      });
+      // setFormData({
+      //   ...formData,
+      //   urlVideo: videoResponse?.data?.url,
+      // });
 
       handleUpdateEditLessonId(null);
       handleUpdateShowBoundingBox(false);
@@ -147,7 +162,7 @@ const FormAddVideo = ({
             </div>
           )}
 
-          {isHasVideo && (
+          {isHasVideo && fileRef && (
             <Content
               info={{
                 duration: formData?.duration,
@@ -157,7 +172,7 @@ const FormAddVideo = ({
               }}
               type={LessonContentType.VIDEO}
               handleClickEditContent={() => {
-                fileInputRef.current?.click();
+                fileRef.current?.click();
               }}
             />
           )}
@@ -172,7 +187,7 @@ const FormAddVideo = ({
         <input
           type="file"
           key={inputKey}
-          ref={fileInputRef}
+          ref={fileRef}
           accept=".mp4,.mov,.avi"
           onChange={handleFileChange}
           style={{ display: 'none' }}
@@ -212,7 +227,7 @@ const FormAddVideo = ({
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">
-            {t('Save')}
+            {uploading ? <div>Progress: {progress}%</div> : t('Save')}
           </Text>
         </Button>
       </div>

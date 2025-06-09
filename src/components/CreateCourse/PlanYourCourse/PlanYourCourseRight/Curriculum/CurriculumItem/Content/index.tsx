@@ -1,10 +1,9 @@
 import Text from '@/components/UI/Text';
 import { LessonContentType } from '@/utils/const';
-import { Button } from '@nextui-org/react';
 import { File } from '@phosphor-icons/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useMemo } from 'react';
-import { useTranslation } from 'next-i18next';
 
 const Content = ({
   handleClickEditContent,
@@ -63,7 +62,7 @@ const Content = ({
             >
               <IconEdit />
               <Text type="font-14-400" className="text-[#0059FF]">
-                {type === LessonContentType.VIDEO
+                {type !== LessonContentType.VIDEO
                   ? t('Edit video')
                   : t('Edit content')}
               </Text>
