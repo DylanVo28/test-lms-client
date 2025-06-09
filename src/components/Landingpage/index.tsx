@@ -1,19 +1,11 @@
-import ContentProfile from '@/layout/MainLayout/MainHeader/ContentProfile';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@nextui-org/react';
+import { getAccessToken } from '@/store/auth';
+import { Button } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
-import { useAccount, useDisconnect } from 'wagmi';
-import RegisterFormModal from '../RegisterFormModal';
-import Loading from '../UI/Loading';
-import Text from '../UI/Text';
 import { useEffect } from 'react';
-import { getAccessToken } from '@/store/auth';
+import { useDisconnect } from 'wagmi';
+import RegisterFormModal from '../RegisterFormModal';
+import Text from '../UI/Text';
 
 const LandingPage = () => {
   const { disconnect } = useDisconnect();

@@ -83,7 +83,7 @@ const SoldCourses = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-gray-300">
+                    <span className="text-sm text-gray-300 line-clamp-2">
                       {tx.courseTitle}
                     </span>
                   </td>
