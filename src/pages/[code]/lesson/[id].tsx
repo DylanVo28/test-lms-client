@@ -24,6 +24,7 @@ DetailLessonPage.getLayout = function getLayout(page: ReactElement) {
         description="View detailed information about this lesson on What Exchange."
         imageUrl={DefaultData.DefaultCourseImage}
       />
+      {/* trigger */}
       <AppProvider>
         <LessonLayout>
           <>{page}</>
