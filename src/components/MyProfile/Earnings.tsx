@@ -59,7 +59,13 @@ const Earnings = ({ reload }: { reload: () => void }) => {
 
   useEffect(() => {
     getKOLClaimableAmount();
-  }, []);
+
+    const interval = setInterval(() => {
+      getKOLClaimableAmount();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [profile?.walletAddress]);
 
   const handleWithdraw = async () => {
     setClaimLoading(true);

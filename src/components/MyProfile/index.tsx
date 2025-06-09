@@ -66,24 +66,6 @@ const MyProfile = () => {
     requestGetProfile();
   };
 
-  useEffect(() => {
-    let interval = null;
-
-    if (accessToken) {
-      interval = setInterval(() => {
-        requestGetProfile();
-      }, 5000);
-
-      getReferral();
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  }, [accessToken]);
-
   return (
     <div className="flex flex-col gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
