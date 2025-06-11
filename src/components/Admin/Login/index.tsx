@@ -78,7 +78,7 @@ const Login = () => {
         onPress={handleLogin}
         className="bg-main min-w-[400px] min-h-[40px] rounded mt-2"
       >
-        Login
+        Admin Login
       </Button>
     </div>
   );
