@@ -111,6 +111,8 @@ const Mentors = ({ mentor }: any) => {
     }
   };
 
+  console.log(mentor, 'mentor::::');
+
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-white" type="font-20-600">
@@ -119,9 +121,9 @@ const Mentors = ({ mentor }: any) => {
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
           alt=""
-          width={180}
+          width={120}
           height={120}
-          className="rounded w-[180px] h-[120px] bg-[#212121]"
+          className="rounded w-[120px] h-[120px] bg-[#212121]"
           src={mentor?.avatar || '/images/img-mentor-default.png'}
           onError={(e: any) => {
             e.target.srcset = '/images/img-mentor-default.png';

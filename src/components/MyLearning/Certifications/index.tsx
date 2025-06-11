@@ -76,7 +76,7 @@ const Certifications = () => {
                     alt=""
                     width={240}
                     height={120}
-                    className="w-[240px] h-[120px]"
+                    className="w-[240px] h-[120px] object-cover"
                     onError={(e: any) => {
                       e.target.srcset = '/images/img-certification.png';
                     }}

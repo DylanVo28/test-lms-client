@@ -55,11 +55,11 @@ const CardCourse = ({
       onClick={handleClickCardCourse}
       className="flex flex-col h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80"
     >
-      <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
+      {/* <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
           {t('Best seller')}
         </Text>
-      </div>
+      </div> */}
       {!noLike && (
         <div className="absolute right-2 top-2">
           <Button
@@ -108,7 +108,7 @@ const CardCourse = ({
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
               <IconDate />
-              <Text type="font-12-500">
+              <Text type="font-14-500">
                 {lessonCount} {t('Lessons')}
               </Text>
             </div>
@@ -117,7 +117,7 @@ const CardCourse = ({
 
             <div className="flex items-center gap-1">
               <IconTime />
-              <Text type="font-12-500">
+              <Text type="font-14-500">
                 {dayjs(item?.createdAt).fromNow(true)}
               </Text>
             </div>
@@ -125,28 +125,28 @@ const CardCourse = ({
           <Text type="font-16-500" className="line-clamp-2 capitalize">
             {item?.title}
           </Text>
-          <div className="flex flex-col gap-[14px] pb-4">
+          <div className="flex flex-col gap-[8px] pb-0">
             <div className="flex items-center gap-2">
-              <Text type="font-14-500">{item?.rating?.toFixed(1)}</Text>
+              <Text type="font-15-500">{(item?.rating || 5)?.toFixed(1)}</Text>
               <ReactStars
                 count={5}
                 color1="#D9D9D9"
                 color2="#F2B021"
-                value={item?.rating}
+                value={item?.rating || 5}
                 edit={false}
                 size={16}
                 className="flex items-center gap-1 mb-1"
               />
-              <Text type="font-14-500">{`(${item?.countReviews})`}</Text>
+              <Text type="font-15-500">{`(${item?.countReviews})`}</Text>
             </div>
             {item?.author?.walletAddress && (
               <div className="flex gap-0.5 break-words">
-                <Text type="font-14-400" className="text-main break-words">
-                  {t('By')}:
+                <Text type="font-15-500" className="text-main break-words">
+                  Mentor:
                 </Text>
                 <Text
-                  type="font-14-400"
-                  className="text-main underline break-all"
+                  type="font-15-500"
+                  className="text-main underline break-all ml-2"
                 >
                   {generateMentors()}
                 </Text>

@@ -1,7 +1,6 @@
 import IconFilter from '@/components/UI/Icons/IconFilter';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
-import CardCourse from './CardCourse';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -17,6 +16,7 @@ import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import useNavigate from '@/hooks/useNavigate';
 import { useProfile } from '@/store/profile/useProfile';
+import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 
 const ListCourse = () => {
   const { t } = useTranslation('common');
