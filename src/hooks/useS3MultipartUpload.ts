@@ -1,7 +1,7 @@
 import { privateRequest, request } from '@/api/request';
 import { useState } from 'react';
 
-const CHUNK_SIZE = 1 * 1024 * 1024;
+const CHUNK_SIZE = 5 * 1024 * 1024;
 
 export function useS3MultipartUpload() {
   const [progress, setProgress] = useState(0);
@@ -54,11 +54,17 @@ export function useS3MultipartUpload() {
     }
 
     // 4. complete
-    await privateRequest(request.post, '/api/storage/multipart/complete', {
-      data: { key, uploadId, parts },
-    });
+    const resComplete = await privateRequest(
+      request.post,
+      '/api/storage/multipart/complete',
+      {
+        data: { key, uploadId, parts },
+      }
+    );
 
     setUploading(false);
+
+    return resComplete.data.Location;
   }
 
   return { upload, progress, uploading };

@@ -16,7 +16,7 @@ const FormAddLecture = ({
   lectureItem,
 }: {
   handleSaveArticle: (value: string) => void;
-  handleSaveVideo: (urlVideo: string) => void;
+  handleSaveVideo: (info: any) => void;
   loading: boolean;
   valueContent?: string;
   typeAddContent: string;

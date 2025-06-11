@@ -242,6 +242,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
       info: values,
       contentType: LessonContentType?.VIDEO,
     };
+    console.log(body, values, 'body:::');
+
     runEditLecture(body, id);
   };
   const handleSaveArticle = (value: string, id: string, index: number) => {

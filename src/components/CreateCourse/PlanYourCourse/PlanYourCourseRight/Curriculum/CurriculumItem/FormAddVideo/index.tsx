@@ -5,7 +5,7 @@ import { Button } from '@nextui-org/react';
 import classNames from 'classnames';
 import clsx from 'clsx';
 import { useTranslation } from 'next-i18next';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Content from '../Content';
 import { useCurriculumContext } from '../../context';
 import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
@@ -15,7 +15,7 @@ const FormAddVideo = ({
   valueInfo,
   lectureItem,
 }: {
-  handleSaveVideo: (urlVideo: string) => void;
+  handleSaveVideo: (info: any) => void;
   valueInfo: any;
   lectureItem: any;
 }) => {
@@ -87,27 +87,28 @@ const FormAddVideo = ({
   };
 
   const handleClickSaveVideo = async () => {
+    if (uploading) return;
     const file = fileRef.current?.files?.[0];
     if (!file) return;
     if (formData?.video && formData?.thumbnail) {
-      const videoResponse = await upload(file);
+      const urlVideo = await upload(file);
 
       const thumbnailResponse = await serviceUploadFileInBackground(
         formData?.thumbnail
       );
 
-      // await handleSaveVideo({
-      //   ...valueInfo,
-      //   urlVideo: videoResponse?.data?.url,
-      //   thumbnailUrl: thumbnailResponse?.data?.url,
-      //   fileNameVideo: videoResponse?.data?.filename,
-      //   duration: formData?.duration,
-      // });
+      await handleSaveVideo({
+        ...valueInfo,
+        urlVideo,
+        thumbnailUrl: thumbnailResponse?.data?.url,
+        fileNameVideo: file.name,
+        duration: formData?.duration,
+      });
 
-      // setFormData({
-      //   ...formData,
-      //   urlVideo: videoResponse?.data?.url,
-      // });
+      setFormData({
+        ...formData,
+        urlVideo,
+      });
 
       handleUpdateEditLessonId(null);
       handleUpdateShowBoundingBox(false);
