@@ -51,7 +51,7 @@ const CardEnrollNow = ({
   const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
-  const amount = 0.01;
+  const amount = +(course?.price ?? 10000000);
 
   const preCheckEnroll = async (id: string) => {
     const res = await privateRequest(

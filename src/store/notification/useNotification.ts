@@ -68,21 +68,6 @@ export const useGetNotification = (options?: any) => {
 export const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationAtom);
 
-  // setNotifications((prev: any) => {
-  //   console.log(prev, 'prev');
-
-  //   const newPrev = prev?.;
-
-  //   return {
-  //     content: {
-  //       data: newPrev?.content?.data?.map((item: any) => ({
-  //         ...item,
-  //         is_read: true,
-  //       })),
-  //     },
-  //   };
-  // });
-
   const requestReadNotification = useRequest(readNotification, {
     manual: true,
     onSuccess: (res) => {
@@ -123,7 +108,6 @@ export const useNotifications = () => {
     },
     {
       manual: true,
-      debounceWait: 350,
       onSuccess: (res: any) => {
         setNotifications((prev: any) => {
           const newPrev = { ...prev };
