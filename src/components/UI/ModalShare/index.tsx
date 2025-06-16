@@ -14,13 +14,15 @@ import { useRouter } from 'next/router';
 import { ENV } from '@/utils/env';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 
-interface IModalShare {}
+interface IModalShare {
+  courseSlug: string;
+}
 
-const ModalShare = (props: IModalShare, ref?: any) => {
+const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
   const [visible, setVisible] = useState(false);
   const router = useRouter();
 
-  console.log(router, 'router');
+  console.log(courseSlug, 'router::::');
 
   useImperativeHandle(ref, () => {
     return {
@@ -34,9 +36,12 @@ const ModalShare = (props: IModalShare, ref?: any) => {
     setVisible(!visible);
   };
 
+  const host = window.location.host;
+
+  const shareUrl = `${host}/${router.query.code}/course/${courseSlug}`;
+
   const onCopy = () => {
-    const linkCopy = `${ENV.APP_URL}/${router.query.code}/course/${router.query.id}`;
-    window.navigator.clipboard.writeText(linkCopy);
+    window.navigator.clipboard.writeText(shareUrl);
     toast.success('Copied!');
   };
 
@@ -65,7 +70,7 @@ const ModalShare = (props: IModalShare, ref?: any) => {
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2">
               <InputText
-                placeholder={`${ENV.APP_URL}/${router.query.code}/course/${router.query.id}`}
+                placeholder={shareUrl}
                 isReadOnly
                 classInputWrapper="min-w-[450px] min-h-[44px]"
                 inputShare
@@ -80,16 +85,12 @@ const ModalShare = (props: IModalShare, ref?: any) => {
               </Button>
             </div>
             <div className="flex items-center gap-4 justify-center">
-              <FacebookShareButton
-                url={`${ENV.APP_URL}/course/${router.query.id}`}
-              >
+              <FacebookShareButton url={shareUrl}>
                 <button className="w-10 hover:opacity-80 h-10 bg-white-5 flex items-center justify-center rounded-lg">
                   <IconFacebook />
                 </button>
               </FacebookShareButton>
-              <TwitterShareButton
-                url={`${ENV.APP_URL}/course/${router.query.id}`}
-              >
+              <TwitterShareButton url={shareUrl}>
                 <button className="w-10 hover:opacity-80 h-10 bg-white-5 flex items-center justify-center rounded-lg">
                   <XLogo className="text-white" size={20} />
                 </button>

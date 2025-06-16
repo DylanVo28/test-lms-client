@@ -94,10 +94,12 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 />
               </div>
 
-              <Text type="font-16-500" className="text-white">
-                {t('Your Progress')}
-              </Text>
-              <IconArrowDown />
+              <div className="flex gap-x-1 items-center">
+                <Text type="font-16-500" className="text-white">
+                  {t('Your Progress')}
+                </Text>
+                <IconArrowDown />
+              </div>
             </div>
             <Button
               onClick={() => refModalShare.current.onOpen()}
@@ -124,7 +126,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
 
       <div className="w-full">{children}</div>
 
-      <ModalShare ref={refModalShare} />
+      <ModalShare ref={refModalShare} courseSlug={dataDetail?.data?.slug} />
     </div>
   );
 };
