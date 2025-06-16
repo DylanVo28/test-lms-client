@@ -33,8 +33,7 @@ CourseSearchPage.getLayout = function getLayout(page: ReactElement) {
       />
       <AppProvider>
         <MainLayout>
-          {/* <>{page}</> */}
-          123123
+          <>{page}</>
         </MainLayout>
       </AppProvider>
     </>

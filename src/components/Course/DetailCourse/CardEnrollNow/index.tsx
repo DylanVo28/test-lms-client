@@ -14,6 +14,7 @@ import { useRef } from 'react';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse } from './service';
 import {
+  USDC_ADDRESS,
   useUSDCOperations,
   VAULT_ADDRESS,
   ZERO_ADDRESS,
@@ -21,6 +22,8 @@ import {
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
+import { useBalance } from 'wagmi';
+import { useTokenInfo } from '@/hooks/useTokenInfo';
 
 const CardEnrollNow = ({
   course,
@@ -106,10 +109,15 @@ const CardEnrollNow = ({
           res?.message || t('You are not eligible to enroll in this course.')
         );
       }
-    } catch (error) {
-      toast.error(t('Failed to enroll in the course. Please try again.'));
+    } catch (error: any) {
+      const message = error?.message?.includes('User rejected transaction')
+        ? 'user rejected transaction'
+        : t('Failed to enroll in the course. Please try again.');
+
+      toast.error(message);
     }
   };
+
   return (
     <div className="rounded transition-all cursor-pointer duration-300">
       <div className="relative flex justify-center items-center">
@@ -195,10 +203,8 @@ const CardEnrollNow = ({
               }}
               loading={loadingBuy}
               token={accessToken}
-              label={t('Enroll Now')}
             />
           )}
-
           <div className="flex flex-col gap-2">
             <Text className="text-white" type="font-18-600">
               {t('This course includes')}

@@ -4,7 +4,7 @@ import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
-const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
+export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
 export const VAULT_ADDRESS = '0x094FF872d9a65fA5F3701b1CaFD64c42B60F1dc9';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const parseAmount = (amount: string | number) => {
@@ -33,7 +33,7 @@ export const useUSDCOperations = () => {
         });
         await tx.wait();
       } catch (error) {
-        console.error('Approval failed:', error);
+        throw error;
       } finally {
         setLoading(false);
       }

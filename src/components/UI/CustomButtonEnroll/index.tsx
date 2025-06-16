@@ -2,11 +2,11 @@ import { Button } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
 import { useTranslation } from 'next-i18next';
+import { useTokenInfo } from '@/hooks/useTokenInfo';
 
 const CustomButtonEnroll = ({
   course,
   loading,
-  label,
   token,
   handleClickButton,
 }: {
@@ -14,9 +14,12 @@ const CustomButtonEnroll = ({
   handleClickButton: VoidFunction;
   loading: boolean;
   token: any;
-  label: string;
 }) => {
   const { t } = useTranslation('common');
+  const { balance, symbol, decimals } = useTokenInfo();
+  const amount = +(course?.price ?? 10000000);
+
+  const isInsufficientBalance = +balance < +amount;
 
   return (
     <ConnectButton.Custom>
@@ -38,30 +41,38 @@ const CustomButtonEnroll = ({
               <Button
                 onPress={openConnectModal}
                 className="bg-main w-full min-h-[40px] rounded"
+                disabled={isInsufficientBalance}
               >
                 <Text className="text-white" type="font-16-600">
-                  {label}
+                  {t('Connect Wallet')}
                 </Text>
               </Button>
             ) : (
               <Button
                 isLoading={loading}
                 onPress={() => {
-                  if (course?.enroll === 'pending') {
+                  if (course?.enroll === 'pending' || isInsufficientBalance) {
                     return;
                   }
                   handleClickButton();
                 }}
                 className="bg-main w-full min-h-[40px] rounded"
-                disabled={course?.enroll === 'pending'}
+                disabled={isInsufficientBalance}
               >
-                <Text className="text-text-white" type="font-16-600">
-                  {course?.enroll === 'verified'
-                    ? t('Go to course')
-                    : course?.enroll === 'pending'
-                    ? t('Verifying...')
-                    : t('Enroll Now')}
-                </Text>
+                {isInsufficientBalance && (
+                  <Text className="text-text-white" type="font-16-600">
+                    {t('Insufficient balance')}
+                  </Text>
+                )}
+                {!isInsufficientBalance && (
+                  <Text className="text-text-white" type="font-16-600">
+                    {course?.enroll === 'verified'
+                      ? t('Go to course')
+                      : course?.enroll === 'pending'
+                      ? t('Verifying...')
+                      : t('Enroll Now')}
+                  </Text>
+                )}
               </Button>
             )}
           </div>

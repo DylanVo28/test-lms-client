@@ -55,7 +55,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
       requestCheckHasNotification?.run();
       requestGetNotification.run(params);
     }
-  }, [token, isOpen, notifications]);
+  }, [token, isOpen]);
 
   const DATA_TAB_NOTIFICATION = [
     {
