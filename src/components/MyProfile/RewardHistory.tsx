@@ -116,7 +116,7 @@ const RewardHistory = () => {
                 >
                   <td className="px-6 py-4">
                     <a
-                      href={`https://testnet.ftmscan.com/tx/${reward.txHash}`}
+                      href={`https://explorer.testnet.fantom.network/transactions/${reward.txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white underline hover:text-blue-400 text-xs"

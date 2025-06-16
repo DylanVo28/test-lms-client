@@ -130,7 +130,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:max-w-[480px] w-full md:min-w-[480px] h-[200px] bg-default flex items-center justify-center">
+        <div className="relative md:max-w-[380px] w-full h-[200px] bg-default flex items-center justify-center">
           <CropperWrap
             imageSrc={imageSrc}
             value={value}
@@ -138,9 +138,9 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             fallbackElement={
               <Image
                 src={value || '/img-default.png'}
-                className="w-full md:w-[480px] h-[200px] object-contain"
+                className="w-full md:w-[380px] h-[200px] object-contain"
                 alt=""
-                width={480}
+                width={380}
                 height={270}
               />
             }
@@ -148,9 +148,8 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         </div>
         <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
-            {t(
-              'Upload your course image here. It must meet our course image quality standards to be accepted. Important guidelines: 302x200 pixels; .jpg, .jpeg,. gif, or .png. no text on the image.'
-            )}
+            Upload your course image here. It must be 302x200 pixels, in .jpg,
+            .jpeg, .gif, or .png format, and contain no text.
           </Text>
           <div className="flex items-center gap-2">
             {!imageSrc && (

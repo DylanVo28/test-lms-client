@@ -16,6 +16,8 @@ import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 dayjs.extend(relativeTime);
 
 const CardCourse = ({
@@ -33,13 +35,15 @@ const CardCourse = ({
 }) => {
   const accessToken = useAccessToken();
 
-  const router = useRouter();
+  const {
+    query: { code },
+  } = useRouter();
   const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
-  const handleClickCardCourse = () => {
-    navigate(ROUTE_PATH.DETAIL_COURSE(item.id));
-  };
+  // const handleClickCardCourse = () => {
+  //   navigate(ROUTE_PATH.DETAIL_COURSE(item.id));
+  // };
   const lessonCount = item?.sections?.reduce((total: number, section: any) => {
     return total + (section.lessons?.length || 0);
   }, 0);
@@ -51,8 +55,8 @@ const CardCourse = ({
     return formatWalletAddress(item?.author?.walletAddress);
   };
   return (
-    <div
-      onClick={handleClickCardCourse}
+    <Link
+      href={`/${code}${ROUTE_PATH.DETAIL_COURSE(item.slug)}`}
       className="flex flex-col h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80"
     >
       {/* <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
@@ -84,12 +88,7 @@ const CardCourse = ({
         </div>
       )}
 
-      <a
-        href={item?.image || '/images/img-default.png'}
-        target="_blank"
-        onClick={(e) => e.preventDefault()}
-        className="bg-white-10 w-full rounded rounded-b-none"
-      >
+      <div className="bg-white-10 w-full rounded rounded-b-none">
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
@@ -102,7 +101,7 @@ const CardCourse = ({
             e.target.srcset = '/images/img-default.png';
           }}
         />
-      </a>
+      </div>
       <div className="py-4 px-3 w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
@@ -171,17 +170,17 @@ const CardCourse = ({
               </Text>
             )}
           </div>
-          <Button variant="light" radius="full" onPress={handleClickCardCourse}>
+          {/* <Button variant="light" radius="full">
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-white">
                 {t('Enroll Course')}
               </Text>
               <IconArrowUp />
             </div>
-          </Button>
+          </Button> */}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export default CardCourse;

@@ -111,8 +111,6 @@ const Mentors = ({ mentor }: any) => {
     }
   };
 
-  console.log(mentor, 'mentor::::');
-
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-white" type="font-20-600">
@@ -121,7 +119,7 @@ const Mentors = ({ mentor }: any) => {
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
           alt=""
-          src={mentor?.avatar || '/images/user-line.png'}
+          src={mentor?.avatar || '/images/img-mentor-default.png'}
           width={40}
           height={40}
           className="rounded w-[120px] h-[120px] bg-[#212121]"

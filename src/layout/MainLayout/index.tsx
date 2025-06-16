@@ -6,14 +6,18 @@ import { ROUTE_PATH } from '@/utils/const';
 import useStorageOrCookieChange from '@/hooks/useStorageOrCookieChange';
 import { getAccessToken } from '@/store/auth';
 import LandingPage from '@/components/Landingpage';
+import { useAccount } from 'wagmi';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   useStorageOrCookieChange();
 
   const accessToken = getAccessToken();
+  const { address } = useAccount();
 
-  if (!accessToken) {
+  console.log(address, accessToken, 'address::::');
+
+  if (!accessToken || !address) {
     return <LandingPage />;
   }
 
