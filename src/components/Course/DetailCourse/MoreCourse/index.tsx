@@ -11,6 +11,7 @@ import {
 } from '../../ListCourse/service';
 import CardCourseMore from './CardCourseMore';
 import Comment from './Comment';
+import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
@@ -172,25 +173,17 @@ const MoreCourse = (props: any) => {
           <div className="lg:grid lg:grid-cols-3 flex h-full items-center lg:overflow-hidden overflow-auto gap-6">
             {dataCourses?.length > 0 &&
               dataCourses.map((item: any, key: number) => {
-                return <CardCourseMore noLike item={item} key={key} />;
+                // return <CardCourseMore noLike item={item} key={key} />;
+                return <CardCourse noLike item={item} key={key} />;
               })}
           </div>
           {dataCourses?.length == 0 && <NoData />}
         </div>
       )}
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4">
         <Text className="text-white" type="font-20-600">
           {t('Reviews')}
         </Text>
-
-        {/* {!token ? (
-          <CustomButtonComment />
-        ) : (
-          <CardComment
-            reloadListReview={reloadListReview}
-            courseId={courseId}
-          />
-        )} */}
 
         {dataListReview?.data?.length > 0 &&
           dataListReview?.data.map((item: any, index: number) => {

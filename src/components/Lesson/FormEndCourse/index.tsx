@@ -80,7 +80,7 @@ const FormEndCourse = ({
             <br /> {t('Would you like to leave a review?')}
           </Text>
           <div className="flex flex-col gap-2 w-full">
-            <Text type="font-16-400" className="text-center">
+            <Text className="text-center text-[16px] font-semibold">
               {t('Select rating')}
             </Text>
 

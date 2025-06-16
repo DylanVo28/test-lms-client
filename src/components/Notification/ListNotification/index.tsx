@@ -6,22 +6,30 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const ListNotification = ({
-  listNotification,
+  listNotification = [],
   handleReadNotification,
   loading,
 }: any) => {
   const { t } = useTranslation('common');
+  const [isInit, setIsInit] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsInit(true);
+    }, 1500);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 pr-2 scroll-custom min-h-[300px] max-h-[300px] overflow-auto">
-      {!loading &&
-        listNotification?.length > 0 &&
-        listNotification?.map((item: any) => {
+      {listNotification?.length > 0 &&
+        listNotification?.map((item: any, index: number) => {
           return (
             <div
-              key={item?.id}
+              key={index}
               onClick={() => handleReadNotification(item)}
               className={clsx(
                 'p-2 flex rounded  cursor-pointer transition-all hover:bg-black-4 justify-between items-center gap-4',
@@ -81,14 +89,15 @@ const ListNotification = ({
           );
         })}
 
-      {loading && (
+      {((loading && listNotification?.length === 0) || !isInit) && (
         <div className="min-h-[300px]">
           <div className="pt-10">
             <Loading />
           </div>
         </div>
       )}
-      {listNotification?.length === 0 && (
+
+      {listNotification?.length === 0 && !loading && isInit && (
         <div className="pb-10">
           <NoData text={t('No notification')} />
         </div>

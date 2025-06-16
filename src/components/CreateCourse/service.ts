@@ -87,8 +87,8 @@ export const useGetDetailCourse = (options?: IOptions) => {
   return useRequest(getDetailCourse, { manual: true, ...options });
 };
 
-const serviceEditCourse = (body: any, slug: string) => {
-  return privateRequest(request.patch, API_PATH.EDIT_COURSE(slug), {
+const serviceEditCourse = (body: any, id: string) => {
+  return privateRequest(request.patch, API_PATH.EDIT_COURSE(id), {
     data: body,
   });
 };
@@ -100,8 +100,8 @@ export const useEditCourse = (options: any) => {
   });
 };
 
-const serviceDeleteCourse = (slug: string) => {
-  return privateRequest(request.delete, API_PATH.EDIT_COURSE(slug));
+const serviceDeleteCourse = (id: string) => {
+  return privateRequest(request.delete, API_PATH.EDIT_COURSE(id));
 };
 
 export const useDeleteCourse = (options: any) => {

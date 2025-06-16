@@ -40,22 +40,22 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
 
   return (
     <div className="flex flex-col gap-5 md:p-4 lg:pl-[80px] lg:pr-[32px]">
-      <Text className="text-white" type="font-24-700">
+      <Text className="text-white" type="font-20-700">
         {dataDetail?.data?.subtitle}
       </Text>
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-5">
-            <div className="flex flex-col gap-[6px]">
+          <div className="flex items-center gap-10">
+            <div className="flex flex-col gap-[3px]">
               <div className="flex items-center gap-1">
                 <Text className="text-white" type="font-14-700">
-                  {dataDetail?.data?.rating?.toFixed(1)}
+                  {+(dataDetail?.data?.rating || 5)?.toFixed(1)}
                 </Text>
                 <ReactStars
                   count={5}
                   color1="#D9D9D9"
                   color2="#F2B021"
-                  value={dataDetail?.data?.rating}
+                  value={+(dataDetail?.data?.rating || 5)}
                   size={16}
                   className="flex items-center gap-1 mb-1"
                   edit={false}

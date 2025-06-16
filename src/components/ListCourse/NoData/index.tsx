@@ -6,7 +6,7 @@ export const NoData = ({ text }: { text?: string }) => {
   return (
     <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
       <IconNodata />
-      <Text type="font-12-400" className="text-neutral">
+      <Text type="font-12-400" className="text-neutral font-semibold">
         {text || t('No data')}
       </Text>
     </div>

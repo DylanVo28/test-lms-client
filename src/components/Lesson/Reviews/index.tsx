@@ -1,23 +1,19 @@
 import Comment from '@/components/Course/DetailCourse/MoreCourse/Comment';
-import IconSearch from '@/components/UI/Icons/IconSearch';
-import InputText from '@/components/UI/InputText';
-import SelectCustom from '@/components/UI/SelectCustom';
-import Text from '@/components/UI/Text';
-import { Button, Progress, Spinner } from '@nextui-org/react';
-import Rater from 'react-rater';
-import 'react-rater/lib/react-rater.css';
-import CommentReviews from './CommentReviews';
-import Image from 'next/image';
 import {
-  useGetListReview,
-  useGetListReviewSummary,
   useLikeReview,
   useUnLikeComment,
 } from '@/components/Course/ListCourse/service';
 import NoData from '@/components/ListCourse/NoData';
-import { useEffect, useState } from 'react';
+import IconSearch from '@/components/UI/Icons/IconSearch';
+import InputText from '@/components/UI/InputText';
+import SelectCustom from '@/components/UI/SelectCustom';
+import Text from '@/components/UI/Text';
 import { TypeReactions } from '@/utils/common';
+import { Progress, Spinner } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
+import { useEffect, useState } from 'react';
+import Rater from 'react-rater';
+import 'react-rater/lib/react-rater.css';
 
 const Reviews = ({
   courseId,
@@ -192,14 +188,17 @@ const Reviews = ({
   };
 
   return (
-    <div className="md:pt-[63px] py-[40px] md:py-0 flex flex-col gap-8 md:px-[80px]">
+    <div className="md:pt-[14px] py-[40px] md:py-0 flex flex-col gap-8 md:px-[80px]">
       <Text type="font-20-600">{t('Student feedbacks')}</Text>
       <div className="flex gap-3 items-start">
         <div className="w-[100px]">
           <Text type="font-20-600">
             {dataListReviewSummary?.data?.avgRate?.toFixed(1) || 0}
           </Text>
-          <Rater total={5} rating={dataListReviewSummary?.data?.avgRate} />
+          <Rater
+            total={5}
+            rating={+(dataListReviewSummary?.data?.avgRate || 5)}
+          />
         </div>
         <div className="flex flex-col gap-2 w-full">
           {DATA_REVIEWS?.map((item) => {
@@ -286,7 +285,9 @@ const Reviews = ({
                 );
               })}
 
-            {dataListReview?.data?.length === 0 && <NoData />}
+            {dataListReview?.data?.length === 0 && (
+              <NoData text={t('No reviews')} />
+            )}
           </>
         )}
 
