@@ -136,7 +136,7 @@ const MainHeader = () => {
                   <IconNotification />
                 </div>
               </PopoverTrigger>
-              <PopoverContent>
+              <PopoverContent className="rounded-lg">
                 <Notification isOpen={isOpen} />
               </PopoverContent>
             </Popover>

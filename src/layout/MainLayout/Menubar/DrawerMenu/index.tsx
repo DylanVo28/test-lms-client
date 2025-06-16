@@ -203,7 +203,7 @@ const DrawerMenu = (props: any, ref: any) => {
                         />
                       </div>
                     </PopoverTrigger>
-                    <PopoverContent>
+                    <PopoverContent className="rounded-lg">
                       <Notification isOpen={isOpen} />
                     </PopoverContent>
                   </Popover>

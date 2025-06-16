@@ -8,7 +8,13 @@ import ProgressCircle from '@/components/UI/ProgressCircle';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
-import { Button, CircularProgress } from '@nextui-org/react';
+import {
+  Button,
+  CircularProgress,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@nextui-org/react';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -20,6 +26,7 @@ import IconCup from '@/components/UI/Icons/IconCup';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import Link from 'next/link';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -45,6 +52,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
       getDetailCourse(router.query.id as string, profile?.id);
     }
   }, [router.query.id, profile?.id]);
+
+  console.log(router, 'valueYourProgress:::');
 
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
@@ -78,29 +87,57 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             </Text>
           </div>
           <div className="flex items-center gap-5">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="flex items-center justify-center relative">
-                <div className="absolute">
-                  <IconCup />
+            <Popover placement="bottom" showArrow={true}>
+              <PopoverTrigger>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <div className="flex items-center justify-center relative">
+                    <div className="absolute">
+                      <IconCup />
+                    </div>
+                    <CircularProgress
+                      classNames={{
+                        svg: 'w-[32px] h-[32px]',
+                        indicator: 'text-green',
+                      }}
+                      maxValue={valueYourProgress?.total}
+                      value={valueYourProgress?.value}
+                      size="sm"
+                    />
+                  </div>
+                  <div className="flex gap-x-1 items-center">
+                    <Text type="font-16-500" className="text-white">
+                      {t('Your Progress')}
+                    </Text>
+                    <IconArrowDown />
+                  </div>
                 </div>
-                <CircularProgress
-                  classNames={{
-                    svg: 'w-[32px] h-[32px]',
-                    indicator: 'text-green',
-                  }}
-                  maxValue={valueYourProgress?.total}
-                  value={valueYourProgress?.value}
-                  size="sm"
-                />
-              </div>
-
-              <div className="flex gap-x-1 items-center">
-                <Text type="font-16-500" className="text-white">
-                  {t('Your Progress')}
-                </Text>
-                <IconArrowDown />
-              </div>
-            </div>
+              </PopoverTrigger>
+              <PopoverContent className="rounded-lg">
+                {valueYourProgress?.total > 0 &&
+                valueYourProgress?.total == valueYourProgress?.value ? (
+                  <div className="px-1 py-2 flex flex-col gap-3">
+                    <div className="font-bold text-lg text-white">
+                      You have completed the course
+                    </div>
+                    <Link
+                      href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.MY_LEARNING}`}
+                      className="text-sm text-main underline font-bold"
+                    >
+                      View your certificate
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="px-1 py-2 flex flex-col gap-3">
+                    <div className="text-lg font-bold text-white">
+                      46 of 65 completed{' '}
+                    </div>
+                    <div className="text-sm ">
+                      Finish course to get your certificate
+                    </div>
+                  </div>
+                )}
+              </PopoverContent>
+            </Popover>
             <Button
               onClick={() => refModalShare.current.onOpen()}
               className="rounded w-[90px] border-white-10 border-1 bg-white-10"

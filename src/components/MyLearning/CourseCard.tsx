@@ -8,6 +8,7 @@ import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
+import Link from 'next/link';
 
 interface IProps {
   id: string;
@@ -39,19 +40,15 @@ export default function CourseCard({
     return formatWalletAddress(author?.walletAddress);
   };
 
-  console.log('progress', progress);
+  console.log('progress', router);
 
   return (
-    <div
+    <Link
       className="w-full bg-black-20 rounded overflow-hidden cursor-pointer"
-      onClick={() => navigate(ROUTE_PATH.DETAIL_LESSON(id))}
+      href={`/${router.query.code}/${ROUTE_PATH.DETAIL_LESSON(id)}`}
     >
       <div className="w-full">
-        <a
-          href={image || '/images/img-default.png'}
-          target="_blank"
-          onClick={(e) => e.preventDefault()}
-        >
+        <div>
           <Image
             src={image || '/images/img-default.png'}
             alt={name}
@@ -64,7 +61,7 @@ export default function CourseCard({
               e.target.srcset = '/images/img-default.png';
             }}
           />
-        </a>
+        </div>
       </div>
       <div className="py-4 px-3 flex flex-col gap-4">
         <div className="flex flex-col gap-[10px]">
@@ -101,7 +98,7 @@ export default function CourseCard({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

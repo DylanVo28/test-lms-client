@@ -71,7 +71,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
                     <IconUser />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent className="rounded-lg">
                   <ContentProfile
                     onClosePopover={onClose}
                     disconnect={disconnect}
