@@ -159,33 +159,7 @@ const ColorTheme = ({
               </div>
             </div>
           </div>
-
-          {/* <div className="grid grid-cols-2 gap-[16px] h-fit">
-            {presetColors.map((color) => (
-              <div
-                onClick={() => onSelectColor(color)}
-                key={color}
-                className={`w-[30px] h-[30px] rounded-full cursor-pointer ${
-                  valueColor === color ? 'border-2 border-white' : ''
-                }`}
-                style={{ background: color }}
-              />
-            ))}
-          </div> */}
         </div>
-        {/* <div className="flex gap-2 mt-4 items-center">
-          <SelectCustom
-            className="w-[40%] text-[12px] h-full bg-transparent"
-            value={typeColor}
-            onChange={onChangeTypeColor}
-            options={typeColors}
-          />
-          <InputText
-            className="w-full text-[12px]"
-            value={valueColor}
-            onChange={onChangeValueColor}
-          />
-        </div> */}
       </div>
     </div>
   );

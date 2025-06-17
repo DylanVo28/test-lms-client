@@ -10,6 +10,7 @@ import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
 import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
+import Link from 'next/link';
 
 const Wishlist = () => {
   const { t } = useTranslation('common');

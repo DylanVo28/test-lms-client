@@ -102,29 +102,33 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
           </div>
         )}
       </div>
-      <Tabs
-        onSelectionChange={onChangeTab}
-        selectedKey={tab}
-        classNames={{
-          tabList: 'w-full',
-          tab: ['h-[40px] !border-0 shadow-none'],
-          cursor: '!bg-main',
-          tabContent: [
-            'text-[16px] group-data-[selected=true]:text-text-white group-data-[selected=true]:font-semibold',
-          ],
-        }}
-        variant={'bordered'}
-      >
-        {DATA_TAB_NOTIFICATION?.map((item) => {
-          return <Tab key={item?.id} title={item?.lable} />;
-        })}
-      </Tabs>
+      {isOpen && (
+        <>
+          <Tabs
+            onSelectionChange={onChangeTab}
+            selectedKey={tab}
+            classNames={{
+              tabList: 'w-full',
+              tab: ['h-[40px] !border-0 shadow-none'],
+              cursor: '!bg-main',
+              tabContent: [
+                'text-[16px] group-data-[selected=true]:text-text-white group-data-[selected=true]:font-semibold',
+              ],
+            }}
+            variant={'bordered'}
+          >
+            {DATA_TAB_NOTIFICATION?.map((item) => {
+              return <Tab key={item?.id} title={item?.lable} />;
+            })}
+          </Tabs>
 
-      <ListNotification
-        handleReadNotification={handleReadNotification}
-        listNotification={notifications?.content}
-        loading={loading}
-      />
+          <ListNotification
+            handleReadNotification={handleReadNotification}
+            listNotification={notifications?.content}
+            loading={loading}
+          />
+        </>
+      )}
     </div>
   );
 };

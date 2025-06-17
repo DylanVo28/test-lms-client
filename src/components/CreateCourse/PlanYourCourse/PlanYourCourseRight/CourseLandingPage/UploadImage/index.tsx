@@ -10,6 +10,7 @@ import { useTranslation } from 'next-i18next';
 
 import React from 'react';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   const { t } = useTranslation('common');
@@ -48,6 +49,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   });
 
   const handleFileChange = (event: any) => {
+    console.log('event:::', event);
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -89,11 +91,6 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
   };
 
   const handleClickUploadFile = () => {
-    if (valueProgress === 100 && value) {
-      setValueProgress(0);
-      fileInputRef.current.value = null;
-      setInputKey(Date.now());
-    }
     fileInputRef.current.click();
   };
   const getCropData = () => {

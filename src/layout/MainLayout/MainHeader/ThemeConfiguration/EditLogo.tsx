@@ -39,6 +39,14 @@ const EditLogo = ({
     },
   });
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cropperImage = localStorage.getItem('cropper-image');
+    if (cropperImage) {
+      toast.error(
+        t('There are some images not cropped, please crop image first')
+      );
+      return;
+    }
+
     const file = e.target?.files?.[0];
 
     if (file) {
@@ -108,6 +116,13 @@ const EditLogo = ({
   };
 
   const handleClickUploadFile = () => {
+    const cropperImage = localStorage.getItem('cropper-image');
+    if (cropperImage) {
+      toast.error(
+        t('There are some images not cropped, please crop image first')
+      );
+      return;
+    }
     fileInputRef.current.click();
   };
   return (

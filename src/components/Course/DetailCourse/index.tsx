@@ -138,7 +138,7 @@ const DetailCourse = () => {
                   <Text type="font-14-400" className="text-white">
                     {(dataDetail?.data?.rating || 5)?.toFixed(1)}
                   </Text>
-                  <Rater total={5} rating={dataDetail?.data?.rating | 5} />
+                  <Rater total={5} rating={dataDetail?.data?.rating || 5} />
                 </div>
 
                 <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />

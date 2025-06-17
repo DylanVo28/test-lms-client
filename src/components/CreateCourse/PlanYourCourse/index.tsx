@@ -327,6 +327,12 @@ const PlanYourCourse = () => {
   };
 
   const onPublish = async (values: any) => {
+    const image = localStorage.getItem('cropper-image');
+
+    if (image) {
+      toast.error(t('There are some images not cropped'));
+      return;
+    }
     const resData = await fetchDetailSection();
 
     const allLessonsHaveContent =
@@ -431,6 +437,13 @@ const PlanYourCourse = () => {
     requestEditPublishCourse.run(filteredBody, router.query.id as string);
   };
   const onSubmit = (values: any) => {
+    const image = localStorage.getItem('cropper-image');
+
+    if (image) {
+      toast.error(t('There are some images not cropped'));
+      return;
+    }
+
     const body: any = {
       objectives: values?.objectives
         ?.filter((v: any) => !!v?.name)

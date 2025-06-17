@@ -24,6 +24,14 @@ const EditBanner = ({ onChange, value }: any) => {
   });
 
   const handleFileChange = (event: any) => {
+    const cropperImage = localStorage.getItem('cropper-image');
+    if (cropperImage) {
+      toast.error(
+        t('There are some images not cropped, please crop image first')
+      );
+      return;
+    }
+
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -42,13 +50,6 @@ const EditBanner = ({ onChange, value }: any) => {
     const minHeight = 410;
 
     img.onload = () => {
-      // if (img.width < minWidth || img.height < minHeight) {
-      //   toast.error(
-      //     t(`Image dimensions must be between ${minWidth}x${minHeight} pixels.`)
-      //   );
-      //   return;
-      // }
-
       const reader = new FileReader();
       reader.onload = () => {
         setImageSrc(reader.result as string);
@@ -61,6 +62,13 @@ const EditBanner = ({ onChange, value }: any) => {
   };
 
   const handleClickUploadFile = () => {
+    const cropperImage = localStorage.getItem('cropper-image');
+    if (cropperImage) {
+      toast.error(
+        t('There are some images not cropped, please crop image first')
+      );
+      return;
+    }
     fileInputRef.current.click();
   };
 
