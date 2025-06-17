@@ -31,6 +31,8 @@ import {
   useProgressStatusQuizz,
 } from './service';
 import VideoSection from './VideoSection';
+import classNames from 'classnames';
+import Image from 'next/image';
 
 export const valueProgressAtom = atom<any>({});
 export const reviewedAtom = atom<boolean>(false);
@@ -51,6 +53,7 @@ const Lesson = () => {
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
+  const [isHideSidebar, setIsHideSidebar] = useState(false);
 
   const {
     run: runGetListSession,
@@ -501,13 +504,24 @@ const Lesson = () => {
     setTypeLoadContent('');
   };
 
-  const handleHideSidebar = () => {
-    // setIsHideSidebar(true);
+  const handleToggleSidebar = () => {
+    setIsHideSidebar(!isHideSidebar);
   };
 
   return (
-    <div className="grid md:grid-cols-10 relative" id="topLesson">
-      <div className="md:col-span-7 px-4 md:px-0 flex flex-col">
+    <div
+      className={classNames(
+        'grid relative',
+        isHideSidebar ? 'md:grid-cols-1' : 'md:grid-cols-10'
+      )}
+      id="topLesson"
+    >
+      <div
+        className={classNames(
+          'md:col-span-7 px-4 md:px-0 flex flex-col',
+          isHideSidebar && 'col-span-1'
+        )}
+      >
         {!dataLesson?.data?.contentType &&
           typeLoadContent !== TYPE_COURSE.QUIZ &&
           !endCourse && (
@@ -598,39 +612,56 @@ const Lesson = () => {
           </Tabs>
         </div>
       </div>
-      <div className="md:col-span-3 px-4 md:px-0">
-        <div className="w-full sticky top-0 right-0 z-[10] h-full bg-[#0F141A]">
-          <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-black-9 border-l-black-9 sticky top-0 z-[1000] bg-gray">
-            <div className="flex items-center gap-2">
-              {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
-              <div className="flex flex-col gap-[2px]">
-                <Text type="text-18-600" className="text-white">
-                  {t('Course content')}
-                </Text>
-                {/* <Text type="font-14-400" className="text-white">
+      {!isHideSidebar && (
+        <div className="md:col-span-3 px-4 md:px-0">
+          <div className="w-full sticky top-0 right-0 z-[10] h-full bg-[#0F141A]">
+            <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-black-9 border-l-black-9 sticky top-0 z-[1000] bg-gray">
+              <div className="flex items-center gap-2">
+                {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
+                <div className="flex flex-col gap-[2px]">
+                  <Text type="text-18-600" className="text-white">
+                    {t('Course content')}
+                  </Text>
+                  {/* <Text type="font-14-400" className="text-white">
                   Set certificate expiration date
                 </Text> */}
+                </div>
               </div>
+              <Button
+                variant="light"
+                size="sm"
+                isIconOnly
+                radius="full"
+                onClick={handleToggleSidebar}
+              >
+                <X color="#fff" />
+              </Button>
             </div>
-            <Button
-              variant="light"
-              size="sm"
-              isIconOnly
-              radius="full"
-              // onClick={}
-            >
-              <X color="#fff" />
-            </Button>
+            <ListSection
+              onChangeCheckBox={onChangeCheckBox}
+              // activeIdChildSection={activeIdChildSection}
+              loading={loadingListSession}
+              handleClickChildLesson={handleClickChildLesson}
+              sections={dataListSession?.data}
+            />
           </div>
-          <ListSection
-            onChangeCheckBox={onChangeCheckBox}
-            // activeIdChildSection={activeIdChildSection}
-            loading={loadingListSession}
-            handleClickChildLesson={handleClickChildLesson}
-            sections={dataListSession?.data}
+        </div>
+      )}
+
+      {isHideSidebar && (
+        <div
+          className="absolute top-[25px] right-0 w-[40px] h-[30px] bg-main rounded-l-lg cursor-pointer flex items-center justify-center"
+          onClick={handleToggleSidebar}
+        >
+          <Image
+            src="/icons/ic-back.svg"
+            alt="icon-back"
+            width={20}
+            height={20}
           />
         </div>
-      </div>
+      )}
+
       <ModalClaimCertifications ref={refModalClaimCertifications} />
     </div>
     // </LoadingScreen>

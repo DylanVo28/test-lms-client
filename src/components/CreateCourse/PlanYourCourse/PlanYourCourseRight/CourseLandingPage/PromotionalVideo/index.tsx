@@ -97,7 +97,7 @@ const PromotionalVideo = ({
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-3 md:gap-2 w-full">
+        <div className="flex flex-col gap-3 md:gap-2">
           <Text type="font-16-600" className="text-white">
             Your course image gives students a first impression of your course.
             A high-quality image helps attract more learners. Make sure it’s the
