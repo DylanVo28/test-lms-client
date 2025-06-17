@@ -8,15 +8,6 @@ import RegisterFormModal from '../RegisterFormModal';
 import Text from '../UI/Text';
 
 const LandingPage = () => {
-  const { disconnect } = useDisconnect();
-
-  // useEffect(() => {
-  //   const accessToken = getAccessToken();
-  //   if (!accessToken) {
-  //     disconnect();
-  //   }
-  // }, []);
-
   return (
     <div
       className="relative min-h-screen w-full h-[100vh]"
@@ -54,12 +45,7 @@ const LandingPage = () => {
               <>
                 <Button
                   onPress={() => {
-                    disconnect();
-                    // sleep 0.5 seconds
-                    setTimeout(() => {
-                      disconnect();
-                      openConnectModal();
-                    }, 500);
+                    openConnectModal();
                   }}
                   className="bg-main w-fit min-h-[40px] rounded"
                 >

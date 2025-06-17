@@ -191,7 +191,7 @@ const ListCourse = () => {
                         src={item.image || '/img-course.png'}
                         width={200}
                         height={200}
-                        className="w-[200px] h-[200px] mx-auto md:mx-0 object-contai bg-black"
+                        className="h-[200px] w-full max-w-[300px] mx-auto md:mx-0 object-cover bg-black"
                       />
                     </div>
 
@@ -229,7 +229,7 @@ const ListCourse = () => {
                       </Text>
                       <div className="flex md:justify-end md:items-end">
                         <div className="flex items-center w-full md:w-8/12 gap-4">
-                          <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px]">
+                          <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px] whitespace-nowrap">
                             {t('Finish your courses')}
                           </Text>
                           <Progress

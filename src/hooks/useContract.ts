@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 import { useEthersSigner } from './useEthersSigner';
 import { ethers } from 'ethers';
 import { fantomTestnet } from 'wagmi/chains';
+import { mintNFTAbi } from '@/abis/mintNFT';
 
 export const simpleRpcProvider = new ethers.providers.JsonRpcProvider(
   fantomTestnet.rpcUrls.default.http[0]
@@ -36,3 +37,6 @@ export const getUSDCContract = (address: string) =>
 
 export const getVaultContract = (address: string) =>
   useContract(address, coursePaymentVaultAbi);
+
+export const getMintNFTContract = (address: string) =>
+  useContract(address, mintNFTAbi);

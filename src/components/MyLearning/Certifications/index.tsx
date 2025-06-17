@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { toast } from '@/components/UI/Toast/toast';
 import Link from 'next/link';
+import { useHasMinted } from '@/hooks/useHasMinted';
+import CertificationItem from './CertificationItem';
 
 const Certifications = () => {
   const { t } = useTranslation('common');
@@ -34,7 +36,10 @@ const Certifications = () => {
     },
   });
 
-  console.log('dataListCertificates', dataListCertificates);
+  const { data: hasMinted } = useHasMinted({
+    address: walletAddress,
+    courseId: dataListCertificates?.data?.[0]?.certificate?.courseId,
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -67,61 +72,12 @@ const Certifications = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {dataListCertificates?.data?.map((item: any) => {
               return (
-                <div
+                <CertificationItem
                   key={item?.id}
-                  className="rounded border-1 border-white-10 bg-white-10 p-4 flex items-center gap-3"
-                >
-                  <Image
-                    src={item?.certificate?.image}
-                    alt=""
-                    width={240}
-                    height={120}
-                    className="w-[240px] h-[120px] object-cover"
-                    onError={(e: any) => {
-                      e.target.srcset = '/images/img-certification.png';
-                    }}
-                  />
-
-                  <div className="flex flex-col gap-3">
-                    <Text
-                      type="font-18-600"
-                      className="text-white line-clamp-2"
-                    >
-                      {item?.certificate?.name}
-                    </Text>
-                    <Text type="font-16-400" className="text-black-7">
-                      {item?.certificate?.description}
-                    </Text>
-                    {!item?.tokenId && walletAddress && !tokenId && (
-                      <Button
-                        onPress={() =>
-                          runMintCertificate({
-                            to: walletAddress.toString(),
-                            certificateId: item.certificate.id,
-                          })
-                        }
-                        isLoading={isMinting}
-                      >
-                        <Text type="font-16-600" className="text-main">
-                          Mint
-                        </Text>
-                      </Button>
-                    )}
-
-                    {item.tokenId && (
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <Text type="font-16-400" className="text-white">
-                            {t('Token ID')}
-                          </Text>
-                          <Text type="font-16-400" className="text-white">
-                            {item.tokenId}
-                          </Text>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  item={item}
+                  handleMintCertificate={runMintCertificate}
+                  isMinting={isMinting}
+                />
               );
             })}
           </div>

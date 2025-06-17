@@ -31,7 +31,7 @@ const useStorageOrCookieChange = () => {
         setNotifications({});
         setTheme(initialTheme);
         deleteAuthCookies();
-        disconnect();
+        // disconnect();
 
         document.body.setAttribute('data-theme', '');
       }

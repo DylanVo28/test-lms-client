@@ -1,10 +1,10 @@
 /* eslint-disable indent */
 import { forwardRef, useImperativeHandle, useState } from 'react';
 
-import { Button, Input, ModalBody, Spinner, Textarea } from '@nextui-org/react';
-import Image from 'next/image';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
+import { Button, ModalBody } from '@nextui-org/react';
+import Image from 'next/image';
 import IconClose from '../Icons/IconClose';
 
 interface IModalSupport {}
@@ -53,14 +53,14 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
               <Image
                 src={dataCertifications?.certificate?.image}
                 alt=""
-                width={240}
+                width={120}
                 height={120}
-                className="w-auto h-[120px] rounded-lg"
+                className="w-[120px] h-[120px] rounded-lg"
                 onError={(e: any) => {
                   e.target.srcset = '/images/img-certification.png';
                 }}
               />
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 flex-1">
                 <Text type="font-16-600">
                   {dataCertifications?.certificate?.name}
                 </Text>

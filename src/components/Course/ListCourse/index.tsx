@@ -45,6 +45,8 @@ const ListCourse = () => {
       userId: profile?.id,
     });
 
+  console.log('dataCourses:::', dataCourses);
+
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
 

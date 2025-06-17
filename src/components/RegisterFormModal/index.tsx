@@ -19,7 +19,6 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
-import Loading from '../UI/Loading';
 
 const RegisterFormModal = () => {
   const { t } = useTranslation('common');

@@ -27,7 +27,6 @@ export const useGetListCourse = (initialParams: any) => {
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
         // console.log('lastData', lastData);
-
         const response = await getListCourse({
           ...initialParams,
           page: nextPage,

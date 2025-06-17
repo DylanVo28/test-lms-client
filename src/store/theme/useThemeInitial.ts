@@ -20,18 +20,6 @@ export const useThemeInitial = () => {
   const run = () => {
     const init = async () => {
       let res;
-      if (router.query?.code && router.query?.code !== 'platform') {
-        res = await privateRequest(
-          request.get,
-          API_PATH.THEMES + `/${router.query?.code}`
-        );
-        setTheme({
-          ...res?.data,
-          kolId: res?.data?.userId,
-        });
-        document.body.setAttribute('data-theme', res?.data?.color);
-        return;
-      }
 
       if (profile?.role === 'KOL' && token) {
         res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
@@ -40,6 +28,26 @@ export const useThemeInitial = () => {
         });
         document.body.setAttribute('data-theme', res?.data?.color);
         return;
+      } else {
+        if (router.query?.code) {
+          res = await privateRequest(
+            request.get,
+            API_PATH.THEMES + `/${router.query?.code}`
+          );
+
+          const adminRes = await privateRequest(
+            request.get,
+            API_PATH.THEMES + `/platform`
+          );
+
+          setTheme({
+            ...res?.data,
+            kolId: res?.data?.userId,
+            adminId: adminRes?.data?.userId,
+          });
+          document.body.setAttribute('data-theme', res?.data?.color);
+          return;
+        }
       }
     };
     init();

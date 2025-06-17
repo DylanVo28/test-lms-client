@@ -2,17 +2,19 @@ import { useGetListCourse } from '@/components/Course/ListCourse/service';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
   const { t } = useTranslation('common');
+  const { theme: dataThemeConfig } = useThemeInitial();
 
   const { dataCourses, reload } = useGetListCourse({
     pageSize: 50,
     order: 'createdAt asc',
-    // authors: dataThemeConfig?.kolId,
+    authors: dataThemeConfig?.adminId,
   });
 
   useEffect(() => {

@@ -14,6 +14,7 @@ export interface InitTheme {
   title: string;
   banner: string;
   description: string;
+  adminId: string;
 
   topics: string[];
 }
@@ -38,6 +39,7 @@ export const initialTheme: InitTheme = {
   banner: '',
   createdAt: '',
   updatedAt: '',
+  adminId: '',
 };
 
 export const themeAtom = atom({
