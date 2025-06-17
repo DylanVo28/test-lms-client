@@ -18,6 +18,7 @@ import SelectCustom from '../UI/SelectCustom';
 import Text from '../UI/Text';
 import NoData from './NoData';
 import { getAccessToken } from '@/store/auth';
+import Link from 'next/link';
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -189,29 +190,26 @@ const ListCourse = () => {
                       <Image
                         alt=""
                         src={item.image || '/img-course.png'}
-                        width={200}
+                        width={300}
                         height={200}
-                        className="h-[200px] w-full max-w-[300px] mx-auto md:mx-0 object-contain bg-black"
+                        className="h-[200px] w-[300px]  mx-auto md:mx-0 object-contain bg-black"
                       />
                     </div>
 
-                    <div className="p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
+                    <div className="flex-1 p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
                       {idHovered === item?.id && (
                         <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
                           <div className="flex flex-row items-center gap-4 justify-center h-full">
-                            <div
+                            <Link
                               className="flex gap-2 justify-center items-center z-[1000]"
-                              onClick={() =>
-                                navigate(
-                                  `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
-                                )
-                              }
+                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
+                              rel="noopener noreferrer"
                             >
                               <IconEdit />
                               <Text className="text-[20px] font-bold text-white">
                                 {t('Edit Course')}
                               </Text>
-                            </div>
+                            </Link>
                             <div
                               className="flex gap-2 justify-center items-center z-[1000]"
                               onClick={() => deleteCourse(item.id)}
@@ -221,6 +219,16 @@ const ListCourse = () => {
                                 {t('Delete Course')}
                               </Text>
                             </div>
+                            <Link
+                              className="flex gap-2 justify-center items-center z-[1000]"
+                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
+                              rel="noopener noreferrer"
+                            >
+                              <IconStatistic />
+                              <Text className="text-[20px] font-bold text-white">
+                                {t('View Statistics')}
+                              </Text>
+                            </Link>
                           </div>
                         </div>
                       )}
@@ -259,18 +267,12 @@ const ListCourse = () => {
                         </div>
                         {isMobile && (
                           <div className="flex items-center justify-end gap-3">
-                            <Button
-                              isIconOnly
-                              size="lg"
-                              onPress={() =>
-                                navigate(
-                                  `${ROUTE_PATH.CREATE_COURSE}/${item?.id}`
-                                )
-                              }
+                            <Link
+                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
                               className="bg-black-9 rounded-full"
                             >
                               <IconEdit />
-                            </Button>
+                            </Link>
                             <Button
                               isIconOnly
                               size="lg"
@@ -279,6 +281,14 @@ const ListCourse = () => {
                             >
                               <IconDelete />
                             </Button>
+                            <Link
+                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="bg-black-9 rounded-full"
+                            >
+                              <IconStatistic />
+                            </Link>
                           </div>
                         )}
                       </div>
@@ -333,6 +343,22 @@ const IconDelete = () => {
           <rect width="24" height="24" fill="var(--theme-white)" />
         </clipPath>
       </defs>
+    </svg>
+  );
+};
+const IconStatistic = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 3H21C21.2652 3 21.5196 3.10536 21.7071 3.29289C21.8946 3.48043 22 3.73478 22 4V20C22 20.2652 21.8946 20.5196 21.7071 20.7071C21.5196 20.8946 21.2652 21 21 21H3C2.73478 21 2.48043 20.8946 2.29289 20.7071C2.10536 20.5196 2 20.2652 2 20V4C2 3.73478 2.10536 3.48043 2.29289 3.29289C2.48043 3.10536 2.73478 3 3 3ZM4 5V19H20V5H4ZM8 11H10V17H8V11ZM12 7H14V17H12V7ZM16 13H18V17H16V13Z"
+        fill="var(--theme-white)"
+      />
     </svg>
   );
 };

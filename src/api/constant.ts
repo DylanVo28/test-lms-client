@@ -114,4 +114,9 @@ export const API_PATH = {
 
   CANCEL_TRANSACTION: (id: string) => `/api/users/${id}/cancel-transaction`,
   PRE_CHECK_ENROLL: (id: string) => `/api/courses/${id}/pre-check-enroll`,
+
+  // Course Statistics
+  COURSE_STATS: (id: string) => `/api/courses/${id}/stats`,
+  COURSE_STUDENTS: (id: string) => `/api/courses/${id}/students`,
+  COURSE_COMMENTS: (id: string) => `/api/courses/${id}/comments`,
 };

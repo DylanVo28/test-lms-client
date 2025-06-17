@@ -95,8 +95,8 @@ const SoldCourses = () => {
                       target="_blank"
                     >
                       <span className="text-sm text-main">
-                        {tx.txHash.slice(0, 4)}...
-                        {tx.txHash.slice(-4)}
+                        {tx?.txHash?.slice(0, 4)}...
+                        {tx?.txHash?.slice(-4)}
                       </span>
                     </Link>
                   </td>

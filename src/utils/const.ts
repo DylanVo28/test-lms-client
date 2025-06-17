@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   COURSE_SEARCH: '/course-search',
   CREATE_COURSE: '/create-course',
   MY_LEARNING: '/my-learning',
+  COURSE_STATISTIC: '/course/statistic',
 
   COURSE: '/course',
   LESSON: '/lesson',
@@ -11,6 +12,7 @@ export const ROUTE_PATH = {
   DETAIL_COURSE: (id: any) => `/course/${id}`,
 
   MY_PROFILE: '/my-profile',
+  DASHBOARD: '/dashboard',
 };
 
 export enum TYPE_COURSE {

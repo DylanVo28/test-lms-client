@@ -133,7 +133,7 @@ const Overview = ({
               </div>
             </div>
 
-            <div className="flex flex-col gap-[8px] py-[8px]">
+            {/* <div className="flex flex-col gap-[8px] py-[8px]">
               <div className="flex justify-between items-center">
                 <Text type="font-16-600">{t('Customers')}</Text>
                 <div className="px-[8px] py-[2px] bg-[#2F353B] w-fit rounded-full text-[12px] leading-normal font-semibold">
@@ -207,7 +207,7 @@ const Overview = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </>
         )}
       </div>
