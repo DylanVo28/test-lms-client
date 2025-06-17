@@ -190,8 +190,8 @@ const ListCourse = () => {
                         alt=""
                         src={item.image || '/img-course.png'}
                         width={200}
-                        height={202}
-                        className="w-[200px] h-[202px] mx-auto md:mx-0 object-contain"
+                        height={200}
+                        className="w-[200px] h-[200px] mx-auto md:mx-0 object-contai bg-black"
                       />
                     </div>
 

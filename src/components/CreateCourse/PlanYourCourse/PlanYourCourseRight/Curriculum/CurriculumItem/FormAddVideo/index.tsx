@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import Content from '../Content';
 import { useCurriculumContext } from '../../context';
 import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
+import useHandleFileChange from '@/hooks/useHandleFileChange';
 
 const FormAddVideo = ({
   handleSaveVideo,
@@ -33,53 +34,49 @@ const FormAddVideo = ({
 
   const { handleUpdateEditLessonId, handleUpdateShowBoundingBox } =
     useCurriculumContext();
-  const handleFileChange = async (event: any) => {
-    const file = event.target.files[0];
-    //   const file = fileRef.current?.files?.[0];
 
-    // const handle = async () => {
-    //   if (!file) return;
-    //   try {
-    //     await upload(file);
-    //     alert('Upload success');
-    //   } catch (err) {
-    //     console.error(err);
-    //     alert('Upload failed');
-    //   }
-    // };
-    if (file && file.type.startsWith('video/')) {
-      // Get video duration
-      const videoElement = document.createElement('video');
-      videoElement.src = URL.createObjectURL(file);
-      videoElement.onloadedmetadata = () => {
-        const duration = videoElement.duration; // Thời gian video tính bằng giây
-        const canvas = document.createElement('canvas');
-        const context: any = canvas.getContext('2d');
-        videoElement.currentTime = 1; // Chọn thời điểm 1s đầu tiên
+  const { handleFileChange } = useHandleFileChange({
+    callback: (data: any) => {
+      setFormData(data);
+    },
+  });
 
-        videoElement.onseeked = () => {
-          context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(async (blob: any) => {
-            if (blob) {
-              const thumbnailFile = new File([blob], 'thumbnail.jpg', {
-                type: 'image/jpeg',
-              });
+  // const handleFileChange = async (event: any) => {
+  //   const file = event.target.files[0];
 
-              const blobThumbnailUrl = URL.createObjectURL(thumbnailFile);
+  //   if (file && file.type.startsWith('video/')) {
+  //     // Get video duration
+  //     const videoElement = document.createElement('video');
+  //     videoElement.src = URL.createObjectURL(file);
+  //     videoElement.onloadedmetadata = () => {
+  //       const duration = videoElement.duration; // Thời gian video tính bằng giây
+  //       const canvas = document.createElement('canvas');
+  //       const context: any = canvas.getContext('2d');
+  //       videoElement.currentTime = 1; // Chọn thời điểm 1s đầu tiên
 
-              setFormData({
-                video: file,
-                thumbnail: thumbnailFile,
-                duration,
-                blobThumbnailUrl,
-                videoName: file?.name,
-              });
-            }
-          }, 'image/jpeg');
-        };
-      };
-    }
-  };
+  //       videoElement.onseeked = () => {
+  //         context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+  //         canvas.toBlob(async (blob: any) => {
+  //           if (blob) {
+  //             const thumbnailFile = new File([blob], 'thumbnail.jpg', {
+  //               type: 'image/jpeg',
+  //             });
+
+  //             const blobThumbnailUrl = URL.createObjectURL(thumbnailFile);
+
+  //             setFormData({
+  //               video: file,
+  //               thumbnail: thumbnailFile,
+  //               duration,
+  //               blobThumbnailUrl,
+  //               videoName: file?.name,
+  //             });
+  //           }
+  //         }, 'image/jpeg');
+  //       };
+  //     };
+  //   }
+  // };
 
   const handleClickUploadFile = () => {
     if (!fileRef.current) return;

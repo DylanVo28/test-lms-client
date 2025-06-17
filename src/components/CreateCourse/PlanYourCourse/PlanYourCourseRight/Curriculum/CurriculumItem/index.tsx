@@ -246,6 +246,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
     runEditLecture(body, id);
   };
+
   const handleSaveArticle = (value: string, id: string, index: number) => {
     const newData = indexContentAdd?.filter((item: any) => item !== index);
     setIndexAddContent(newData);

@@ -247,6 +247,7 @@ export const serviceUploadFileInBackground = async (file: any) => {
     }
   );
 };
+
 export const useUploadFile = (options?: IOptions) => {
   return useRequest(serviceUploadFile, {
     manual: true,

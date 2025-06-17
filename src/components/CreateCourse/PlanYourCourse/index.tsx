@@ -208,6 +208,10 @@ const PlanYourCourse = () => {
     },
   });
 
+  const fieldValue = watch();
+
+  console.log('fieldValue:::', fieldValue);
+
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);

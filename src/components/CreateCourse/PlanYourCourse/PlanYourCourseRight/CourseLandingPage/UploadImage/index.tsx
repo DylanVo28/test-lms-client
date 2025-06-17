@@ -87,14 +87,14 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
     // Trigger the image loading
     img.src = URL.createObjectURL(file);
   };
+
   const handleClickUploadFile = () => {
     if (valueProgress === 100 && value) {
       setValueProgress(0);
       fileInputRef.current.value = null;
       setInputKey(Date.now());
-    } else {
-      fileInputRef.current.click();
     }
+    fileInputRef.current.click();
   };
   const getCropData = () => {
     if (cropperRef.current) {
@@ -130,7 +130,7 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:max-w-[380px] w-full h-[200px] bg-default flex items-center justify-center">
+        <div className="relative md:w-[240px] w-full h-[180px] bg-default flex items-center justify-center">
           <CropperWrap
             imageSrc={imageSrc}
             value={value}
@@ -138,15 +138,15 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
             fallbackElement={
               <Image
                 src={value || '/img-default.png'}
-                className="w-full md:w-[380px] h-[200px] object-contain"
+                className="w-full md:w-[240px] h-[200px] object-contain"
                 alt=""
-                width={380}
-                height={270}
+                width={240}
+                height={180}
               />
             }
           />
         </div>
-        <div className="flex flex-col gap-3 md:gap-2">
+        <div className="flex flex-col gap-3 md:gap-2 flex-1">
           <Text type="font-16-600" className="text-white">
             Upload your course image here. It must be 302x200 pixels, in .jpg,
             .jpeg, .gif, or .png format, and contain no text.
