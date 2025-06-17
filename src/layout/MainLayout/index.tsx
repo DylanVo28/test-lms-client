@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
-import MainHeader from './MainHeader';
-import { useRouter } from 'next/router';
-import clsx from 'clsx';
-import { ROUTE_PATH } from '@/utils/const';
+import LandingPage from '@/components/Landingpage';
 import useStorageOrCookieChange from '@/hooks/useStorageOrCookieChange';
 import { getAccessToken } from '@/store/auth';
-import LandingPage from '@/components/Landingpage';
+import { ROUTE_PATH } from '@/utils/const';
+import clsx from 'clsx';
+import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
+import MainHeader from './MainHeader';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -15,9 +15,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   const accessToken = getAccessToken();
   const { address } = useAccount();
 
-  console.log(address, accessToken, 'address::::');
-
-  if (!accessToken || !address) {
+  if (!address || !accessToken) {
     return <LandingPage />;
   }
 

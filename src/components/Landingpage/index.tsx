@@ -10,12 +10,12 @@ import Text from '../UI/Text';
 const LandingPage = () => {
   const { disconnect } = useDisconnect();
 
-  useEffect(() => {
-    const accessToken = getAccessToken();
-    if (!accessToken) {
-      disconnect();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const accessToken = getAccessToken();
+  //   if (!accessToken) {
+  //     disconnect();
+  //   }
+  // }, []);
 
   return (
     <div

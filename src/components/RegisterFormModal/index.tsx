@@ -46,7 +46,6 @@ const RegisterFormModal = () => {
 
   const handleClose = () => {
     setShowRegisterForm(null);
-    disconnect();
   };
 
   const { signMessageAsync } = useSignMessage();
@@ -100,6 +99,10 @@ const RegisterFormModal = () => {
 
   const handleRegister = async () => {
     try {
+      if (!address) {
+        toast.error(t('Please connect your wallet'));
+        return;
+      }
       // Check if address already exists in the database
       if (referralCode) {
         const checkAddressRes = await verifyReferralCode(referralCode);
@@ -115,6 +118,11 @@ const RegisterFormModal = () => {
       const { signature, message } = await signRegistration({
         messageNonce: messageNonceRes?.data,
       });
+
+      if (!signature) {
+        window.location.reload();
+        return;
+      }
 
       const registerRes = await registerUser({
         referralCode,
@@ -197,7 +205,10 @@ const RegisterFormModal = () => {
           <div className="flex gap-x-2">
             <div
               className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#1d2329] w-fit mx-auto cursor-pointer text-lg font-semibold"
-              onClick={handleClose}
+              onClick={() => {
+                handleClose();
+                disconnect();
+              }}
             >
               Cancel
             </div>

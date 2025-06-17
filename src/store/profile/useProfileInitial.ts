@@ -2,18 +2,31 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import { useAtom } from 'jotai';
 
-import { profileAtom } from './profile';
+import { initialProfile, profileAtom } from './profile';
 import { API_PATH } from '@/api/constant';
 import { PREFIX_API, privateRequest } from '@/api/request';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getAccessToken } from '../auth';
+import { deleteAuthCookies, getAccessToken } from '../auth';
+import { useAccount, useDisconnect } from 'wagmi';
+import { notificationAtom } from '../notification/notification';
+import { useLogout } from '@/layout/MainLayout/MainHeader/service';
+import { initialTheme, themeAtom } from '../theme/theme';
 
 export const useProfileInitial = () => {
+  const { address } = useAccount();
   const [profile, setProfile] = useAtom(profileAtom);
   const [loading, setLoading] = useState(false);
+  const { disconnect } = useDisconnect();
+
+  const [, setNotifications] = useAtom(notificationAtom);
+  const [_, setTheme] = useAtom(themeAtom);
 
   const router = useRouter();
+
+  const { run: runLogout } = useLogout({
+    onSuccess(res) {},
+  });
 
   const getMe = async () => {
     try {
@@ -52,6 +65,25 @@ export const useProfileInitial = () => {
       }
     }
   }, [router, profile]);
+
+  useEffect(() => {
+    if (!profile.id || !address) return;
+
+    if (
+      profile.walletAddress &&
+      address &&
+      profile.walletAddress.toLocaleLowerCase() !== address.toLocaleLowerCase()
+    ) {
+      setNotifications({});
+      runLogout();
+      setTheme(initialTheme);
+      document.body.setAttribute('data-theme', '');
+
+      deleteAuthCookies();
+      setProfile(initialProfile);
+      disconnect();
+    }
+  }, [address, profile]);
 
   return {
     profile,

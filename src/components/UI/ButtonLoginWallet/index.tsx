@@ -39,11 +39,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
             {!profile.id ? (
               <Button
                 onPress={() => {
-                  disconnect();
-                  // sleep 0.5 seconds
-                  setTimeout(() => {
-                    openConnectModal();
-                  }, 500);
+                  openConnectModal();
                 }}
                 className="bg-main w-full min-h-[40px] rounded"
               >
