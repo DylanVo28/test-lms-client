@@ -191,7 +191,7 @@ const ListCourse = () => {
                         src={item.image || '/img-course.png'}
                         width={200}
                         height={200}
-                        className="h-[200px] w-full max-w-[300px] mx-auto md:mx-0 object-cover bg-black"
+                        className="h-[200px] w-full max-w-[300px] mx-auto md:mx-0 object-contain bg-black"
                       />
                     </div>
 

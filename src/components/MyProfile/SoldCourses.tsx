@@ -6,12 +6,14 @@ import { API_PATH } from '@/api/constant';
 import Pagination from './Pagination';
 import { formatDateTime } from './RewardHistory';
 import Loading from '@/components/UI/Loading';
+import Link from 'next/link';
 
 interface Transaction {
   walletAddress: string;
   courseTitle: string;
   purchaseDate: string;
   earnings: number;
+  txHash: string;
 }
 
 const SoldCourses = () => {
@@ -45,6 +47,8 @@ const SoldCourses = () => {
     currentPage * rowsPerPage
   );
 
+  console.log('transactions:::', transactions);
+
   return (
     <div className="rounded-lg overflow-hidden">
       {loading ? (
@@ -58,6 +62,9 @@ const SoldCourses = () => {
               <tr>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
                   Wallet Address
+                </th>
+                <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
+                  Tx Hash
                 </th>
                 <th className="px-6 py-4 text-left text-md font-medium text-[#777E90]">
                   Course Title
@@ -82,13 +89,24 @@ const SoldCourses = () => {
                       {tx.walletAddress.slice(-4)}
                     </span>
                   </td>
+                  <td className="px-6 py-4 text-main">
+                    <Link
+                      href={`https://explorer.testnet.fantom.network/transactions/${tx.txHash}`}
+                      target="_blank"
+                    >
+                      <span className="text-sm text-main">
+                        {tx.txHash.slice(0, 4)}...
+                        {tx.txHash.slice(-4)}
+                      </span>
+                    </Link>
+                  </td>
                   {/* rewrite log */}
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 max-w-[200px]">
                     <span className="text-sm text-gray-300 line-clamp-2">
                       {tx.courseTitle}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 ">
                     <span className="text-sm text-gray-300">
                       {formatDateTime(tx.purchaseDate)}
                     </span>
