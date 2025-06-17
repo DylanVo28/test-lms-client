@@ -88,6 +88,7 @@ export const API_PATH = {
 
   REFERRAL_SUMMARY: '/api/referral/summary',
   REFERRAL_PROFILE: '/api/referral/profile',
+  GET_REFERRAL_USERS: '/api/referral/users',
 
   WISH_LISH: '/api/courses/wishlist',
 

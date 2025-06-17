@@ -9,10 +9,12 @@ import useAccessToken from '@/store/auth/hook/useAccessToken';
 import Earnings from './Earnings';
 import { useProfile } from '@/store/profile/useProfile';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import ReferralUsers from './ReferralUsers';
 enum TAB {
   INFORMATION = 'information',
   AVATAR = 'avatar',
   EARNINGS = 'earnings',
+  REFERRAL_USERS = 'referral-users',
 }
 
 const tabs = [
@@ -27,6 +29,10 @@ const tabs = [
   {
     title: 'Earnings ',
     key: TAB.EARNINGS,
+  },
+  {
+    title: 'Referral Users',
+    key: TAB.REFERRAL_USERS,
   },
 ];
 
@@ -46,21 +52,21 @@ const MyProfile = () => {
   const { profile } = useProfile();
   const { requestGetProfile } = useProfileInitial();
 
-  const getReferral = async () => {
-    try {
-      const res = await referralRequest.getSummary();
+  // const getReferral = async () => {
+  //   try {
+  //     const res = await referralRequest.getSummary();
 
-      const data = {
-        totalNetwork: res.data.totalNetwork || 0,
-        f1: res.data.totalF1 || 0,
-        f2: res.data.totalF2 || 0,
-        f3: res.data.totalF3 || 0,
-      };
-      setSummary(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const data = {
+  //       totalNetwork: res.data.totalNetwork || 0,
+  //       f1: res.data.totalF1 || 0,
+  //       f2: res.data.totalF2 || 0,
+  //       f3: res.data.totalF3 || 0,
+  //     };
+  //     setSummary(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const reload = () => {
     requestGetProfile();
@@ -113,6 +119,7 @@ const MyProfile = () => {
           {tabSelected === TAB.INFORMATION && <Information reload={reload} />}
           {tabSelected === TAB.AVATAR && <Avatar reload={reload} />}
           {tabSelected === TAB.EARNINGS && <Earnings reload={reload} />}
+          {tabSelected === TAB.REFERRAL_USERS && <ReferralUsers />}
         </div>
       </div>
     </div>
