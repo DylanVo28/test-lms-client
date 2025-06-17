@@ -47,8 +47,9 @@ const ThemeConfiguration = ({}: {}) => {
 
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
   const { profile } = useProfileInitial();
-  const { theme: dataThemeConfig, requestGetTheme } = useThemeInitial();
-  const { theme } = useTheme();
+
+  const { requestGetTheme, myTheme: dataThemeConfig } = useThemeInitial();
+
   const { i18n } = useTranslation();
 
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
@@ -266,10 +267,10 @@ const ThemeConfiguration = ({}: {}) => {
                 <EditBanner value={banner} onChange={onChangeBanner} />
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
 
-                <ColorTheme
+                {/* <ColorTheme
                   valueColorTheme={valueColorTheme}
                   handleChangeValueColor={handleChangeValueColor}
-                />
+                /> */}
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
                   <ConnectButton.Custom>

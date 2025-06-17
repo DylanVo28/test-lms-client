@@ -72,7 +72,7 @@ const MainHeader = () => {
   useClickOutside(refNotification, () => setOpen(false));
 
   return (
-    <div className="w-full sticky z-[100] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
+    <div className="w-full sticky z-[49] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className="max-w-[1440px]  mx-auto flex justify-between items-center">
         <Image
           onClick={() => navigate(ROUTE_PATH.HOME)}

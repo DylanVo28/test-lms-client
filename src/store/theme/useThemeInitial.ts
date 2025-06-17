@@ -9,9 +9,11 @@ import { useRouter } from 'next/router';
 import { useProfile } from '../profile/useProfile';
 import useAccessToken from '../auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
+import { myThemeAtom } from './my-theme';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
+  const [myTheme, setMyTheme] = useAtom(myThemeAtom);
   const router = useRouter();
   const { profile } = useProfile();
   const { address } = useAccount();
@@ -21,11 +23,31 @@ export const useThemeInitial = () => {
     const init = async () => {
       let res;
 
+      const adminRes = await privateRequest(
+        request.get,
+        API_PATH.THEMES + `/platform`
+      );
       if (profile?.role === 'KOL' && token) {
-        res = await privateRequest(request.get, API_PATH.THEME_DETAIL);
+        res = await privateRequest(
+          request.get,
+          API_PATH.THEMES + `/${router.query?.code}`
+        );
+
         setTheme({
           ...res?.data,
+          kolId: adminRes?.data?.userId,
+          adminId: adminRes?.data?.userId,
         });
+
+        const myThemeRes = await privateRequest(
+          request.get,
+          API_PATH.THEME_DETAIL
+        );
+
+        setMyTheme({
+          ...myThemeRes?.data,
+        });
+
         document.body.setAttribute('data-theme', res?.data?.color);
         return;
       } else {
@@ -35,14 +57,9 @@ export const useThemeInitial = () => {
             API_PATH.THEMES + `/${router.query?.code}`
           );
 
-          const adminRes = await privateRequest(
-            request.get,
-            API_PATH.THEMES + `/platform`
-          );
-
           setTheme({
             ...res?.data,
-            kolId: res?.data?.userId,
+            kolId: adminRes?.data?.userId,
             adminId: adminRes?.data?.userId,
           });
           document.body.setAttribute('data-theme', res?.data?.color);
@@ -57,5 +74,7 @@ export const useThemeInitial = () => {
     theme,
     setTheme,
     requestGetTheme: run,
+    myTheme,
+    setMyTheme,
   };
 };
