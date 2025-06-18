@@ -35,7 +35,7 @@ export const useThemeInitial = () => {
 
         setTheme({
           ...res?.data,
-          kolId: adminRes?.data?.userId,
+          kolId: res?.data?.userId ?? adminRes?.data?.userId,
           adminId: adminRes?.data?.userId,
         });
 
@@ -59,7 +59,7 @@ export const useThemeInitial = () => {
 
           setTheme({
             ...res?.data,
-            kolId: adminRes?.data?.userId,
+            kolId: res?.data?.userId ?? adminRes?.data?.userId,
             adminId: adminRes?.data?.userId,
           });
           document.body.setAttribute('data-theme', res?.data?.color);

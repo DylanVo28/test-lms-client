@@ -95,7 +95,7 @@ const CardCourse = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[200px] rounded rounded-b-none bg-white-10"
+          className="w-full h-[200px] rounded rounded-b-none bg-white-10 object-cover"
           // objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
