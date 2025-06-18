@@ -12,10 +12,10 @@ export const useHasMinted = ({
 }) => {
   const contract = getMintNFTContract(MINT_NFT_ADDRESS);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['hasMinted', address, courseId],
     queryFn: () => contract?.hasMinted(address, courseId),
   });
 
-  return { data, isLoading };
+  return { data, isLoading, refetch };
 };

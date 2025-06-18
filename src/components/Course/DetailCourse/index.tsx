@@ -216,7 +216,7 @@ const DetailCourse = () => {
             />
           </div>
           <div className="col-span-3 hidden md:block">
-            <div className="sticky top-28 z-50">
+            <div className="sticky top-28 z-[40]">
               <CardEnrollNow
                 handleUnLike={handleUnLike}
                 handleLike={handleLike}

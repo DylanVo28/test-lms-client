@@ -129,7 +129,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 ) : (
                   <div className="px-1 py-2 flex flex-col gap-3">
                     <div className="text-lg font-bold text-white">
-                      46 of 65 completed{' '}
+                      {valueYourProgress?.value} of {valueYourProgress?.total}{' '}
+                      completed{' '}
                     </div>
                     <div className="text-sm ">
                       Finish course to get your certificate

@@ -20,26 +20,10 @@ const Certifications = () => {
   const { dataListCertificates, loading, run } = useGetMyCertificates();
   const account = useAccount();
   const { address: walletAddress } = account;
-  const [tokenId, setTokenId] = useState('');
 
   useEffect(() => {
     run();
   }, [profile]);
-
-  const { run: runMintCertificate, loading: isMinting } = useMintCertificate({
-    onSuccess(res) {
-      setTokenId(res?.data?.tokenId);
-      toast.success('Minted certificate successfully');
-    },
-    onError(e) {
-      toast.error(e.message);
-    },
-  });
-
-  const { data: hasMinted } = useHasMinted({
-    address: walletAddress,
-    courseId: dataListCertificates?.data?.[0]?.certificate?.courseId,
-  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -71,14 +55,7 @@ const Certifications = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {dataListCertificates?.data?.map((item: any) => {
-              return (
-                <CertificationItem
-                  key={item?.id}
-                  item={item}
-                  handleMintCertificate={runMintCertificate}
-                  isMinting={isMinting}
-                />
-              );
+              return <CertificationItem key={item?.id} item={item} />;
             })}
           </div>
           {dataListCertificates?.data?.length === 0 && <NoData />}

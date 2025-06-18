@@ -1,23 +1,48 @@
 import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
+import useCopy from '@/hooks/useCopy';
 import { MINT_NFT_ADDRESS, useHasMinted } from '@/hooks/useHasMinted';
+import CopyIcon from '@/icons/CopyIcon';
 import { Button, Skeleton, Tooltip } from '@nextui-org/react';
+import { Info } from '@phosphor-icons/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useAccount } from 'wagmi';
-import { Copy, Info } from '@phosphor-icons/react';
-import CopyIcon from '@/icons/CopyIcon';
-import useCopy from '@/hooks/useCopy';
+import { useMintCertificate } from '../service';
+import { useEffect } from 'react';
 
-const CertificationItem = ({ item, handleMintCertificate, isMinting }: any) => {
+const CertificationItem = ({ item }: any) => {
   const { t } = useTranslation('common');
+
+  const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
+    {
+      onSuccess(res) {
+        toast.success('Minted certificate successfully');
+      },
+      onError(e) {
+        toast.error(e.message);
+      },
+    }
+  );
 
   const account = useAccount();
   const { address: walletAddress } = account;
 
-  const { data: hasMinted, isLoading } = useHasMinted({
+  const {
+    data: hasMinted,
+    isLoading,
+    refetch,
+  } = useHasMinted({
     address: walletAddress,
     courseId: item?.certificate?.courseId,
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [item]);
 
   const { onCopy } = useCopy();
 
