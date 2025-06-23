@@ -467,7 +467,9 @@ const PlanYourCourse = () => {
 
       price: values?.price,
       originPrice: values?.originPrice,
-      promotionPeriod: values?.promotionPeriod,
+      // promotionPeriod: values?.promotionPeriod,
+      promotionPeriod: `100000000`,
+      unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast,
     };
     if (!values.topics) {
       delete body.topics;
@@ -481,7 +483,9 @@ const PlanYourCourse = () => {
         );
       })
     );
+
     setIsNextStepSubmit(false);
+
     requestEditCourse.run(filteredBody, router.query.id as string);
   };
 
