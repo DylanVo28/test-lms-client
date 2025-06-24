@@ -1,6 +1,7 @@
 import { useProfile } from '@/store/profile/useProfile';
-import { signAsync } from '@/utils/noble-ed25519';
+import { getPublicKeyAsync, signAsync } from '@/utils/noble-ed25519';
 import { useQuery } from '@tanstack/react-query';
+import { base58 } from 'ethers/lib/utils';
 
 export interface UserVolumeStats {
   perp_volume_ytd: number;
@@ -43,8 +44,17 @@ export const useAccountInfo = () => {
       .replace(/=/g, '');
     return orderlySignature;
   };
-  const getVolumeStatistics = async () => {
-    const { orderlyAccountId, orderlySecretKey, orderlyKey } = mock1;
+
+  const getOrderlyKey = async (privateKey: string) => {
+    const orderlyKey = `ed25519:${base58.encode(
+      await getPublicKeyAsync(privateKey)
+    )}`;
+    return orderlyKey;
+  };
+
+  const getVolumeStatistics = async (initData?: any) => {
+    const { orderlyAccountId, orderlySecretKey, orderlyKey } =
+      initData || profile;
 
     if (!orderlyAccountId || !orderlySecretKey || !orderlyKey) return;
 
@@ -52,6 +62,7 @@ export const useAccountInfo = () => {
       const timestamp = Date.now();
       const message = `${String(timestamp)}GET/v1/volume/user/stats`;
       const signature = await getSignature(message, orderlySecretKey);
+      const orderlyKey = await getOrderlyKey(orderlySecretKey);
 
       const res = await fetch(`${orderlyUrlNetwork}/v1/volume/user/stats`, {
         method: 'GET',
@@ -66,6 +77,7 @@ export const useAccountInfo = () => {
 
       return data;
     } catch (error) {
+      console.log('getVolumeStatistics:::ERROR', error);
       return {
         data: {
           perp_volume_ytd: 0,
@@ -91,5 +103,6 @@ export const useAccountInfo = () => {
   return {
     volumeData,
     volumeLoading,
+    getVolumeStatistics,
   };
 };

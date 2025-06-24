@@ -7,6 +7,7 @@ import Text from '../UI/Text';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
+import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -47,9 +48,7 @@ const Overview = ({
   //   // address: address as string,
   // });
 
-  const { volumeData } = useAccountInfo();
-
-  console.log('volumeData:::123', volumeData);
+  const { volumeData, getVolumeStatistics } = useAccountInfo();
 
   const getProfile = async () => {
     try {
@@ -73,6 +72,18 @@ const Overview = ({
   const onCopy = (text: string) => {
     window.navigator.clipboard.writeText(text);
     toast.success(t('Copied!'));
+  };
+
+  const handleGetOrderlyKey = useSignAddOrderlyKey();
+
+  const handleTest = async () => {
+    const res = await handleGetOrderlyKey();
+    getVolumeStatistics({
+      orderlyAccountId:
+        '0x4297fd6f7d52c971ddc6c080b9635d7458e801de1331416462ab1f3d3b9bc041',
+      orderlyKey: res?.orderlyKey,
+      orderlySecretKey: res?.privKey,
+    });
   };
 
   return (
@@ -135,6 +146,14 @@ const Overview = ({
             </div>
           </>
         )}
+      </div>
+
+      <div
+        onClick={() => {
+          handleTest();
+        }}
+      >
+        TEST
       </div>
 
       <div className="flex flex-col gap-[8px] py-[8px] bg-gray-70 rounded-[4px] w-full h-fit p-6">
