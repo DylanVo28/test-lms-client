@@ -27,6 +27,12 @@ export const registerUser = async (body: any) => {
   return privateRequest(request.post, API_PATH.REGISTER_USER, { data: body });
 };
 
+export const servicePrepareRegisterMetadata = async (body: any) => {
+  return privateRequest(request.post, API_PATH.PREPARE_REGISTER_METADATA, {
+    data: body,
+  });
+};
+
 // check if address is already in the database
 export const serviceCheckAddress = async (address: string) => {
   return privateRequest(request.get, API_PATH.CHECK_ADDRESS, {

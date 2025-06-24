@@ -1,4 +1,3 @@
-import 'cropperjs/dist/cropper.css';
 import React, { useEffect } from 'react';
 import { Cropper } from 'react-cropper';
 

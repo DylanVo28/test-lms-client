@@ -13,6 +13,9 @@ export interface InitProfile {
   withdrawable: number;
   refererCode: string;
   refererThemeCode: string;
+  orderlyAccountId: string;
+  orderlyKey: string;
+  orderlySecretKey: string;
 }
 
 export const initialProfile: InitProfile = {
@@ -28,6 +31,9 @@ export const initialProfile: InitProfile = {
   withdrawable: 0,
   refererCode: '',
   refererThemeCode: '',
+  orderlyAccountId: '',
+  orderlyKey: '',
+  orderlySecretKey: '',
 };
 
 export const profileAtom = atom({

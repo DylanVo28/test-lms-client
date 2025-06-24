@@ -1,12 +1,14 @@
-import { etc, getPublicKeyAsync, utils } from '@/utils/noble-ed25519';
+import { utils } from '@noble/ed25519';
+import { getPublicKey } from '@noble/ed25519';
+import { randomBytes } from 'crypto';
 import { useEthersSigner } from './useEthersSigner';
-import { useAccount } from 'wagmi';
+import { useAccount as useWagmiAccount } from 'wagmi';
 import bs58 from 'bs58';
 
 const generatePrivateKey = async () => {
   try {
     // Create a random array of bytes as seed
-    const seed = etc.randomBytes(32);
+    const seed = randomBytes(32);
     // Use the browser's crypto API to hash the seed with SHA-256
     const hashBuffer = await crypto.subtle.digest('SHA-256', seed);
     // Convert the hash to Uint8Array
@@ -20,7 +22,7 @@ const generatePrivateKey = async () => {
 
 const useSignAddOrderlyKey = () => {
   const signer = useEthersSigner();
-  const { chainId } = useAccount();
+  const { chainId } = useWagmiAccount();
   const handleSign = async () => {
     const OFF_CHAIN_DOMAIN = {
       name: 'Orderly',
@@ -33,14 +35,13 @@ const useSignAddOrderlyKey = () => {
 
     // Use SHA-256 to generate private key or fallback to random
     const privKey = await generatePrivateKey();
+
     // Convert private key to string for storage or transmission
     const privKeyString = Buffer.from(privKey).toString('hex');
 
     // You can convert it back to Uint8Array when needed
     // const backToUint8Array = new Uint8Array(Buffer.from(privKeyString, 'hex'));
-    const orderlyKey = `ed25519:${bs58.encode(
-      await getPublicKeyAsync(privKey)
-    )}`;
+    const orderlyKey = `ed25519:${bs58.encode(await getPublicKey(privKey))}`;
 
     const timestamp = Date.now();
 
@@ -50,7 +51,7 @@ const useSignAddOrderlyKey = () => {
       orderlyKey: orderlyKey,
       scope: 'read',
       timestamp,
-      expiration: timestamp + 1_000 * 60 * 60 * 24 * 365, //one year
+      expiration: timestamp + 1 * 60 * 60 * 24 * 365, //20 years
     };
 
     const signature = await signer?._signTypedData(

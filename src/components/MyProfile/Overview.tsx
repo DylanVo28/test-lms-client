@@ -1,15 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import CopyIcon from '@/icons/CopyIcon';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Text from '../UI/Text';
-import { Button } from '@nextui-org/react';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
-import { useTranslation } from 'next-i18next';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import WhatExchangeVolumnHistoryItem from './WhatExchangeVolumnHistoryItem';
-import { useVolumnData } from '@/hooks/useVolumnData';
-import { useAccount } from 'wagmi';
-import CopyIcon from '@/icons/CopyIcon';
+import { useAccountInfo } from '@/hooks/useAccountInfo';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -40,15 +37,19 @@ const Overview = ({
   const [refCode, setRefCode] = useState('');
   const { theme: dataThemeConfig } = useThemeInitial();
 
-  const { address } = useAccount();
-  const {
-    data: volumnData,
-    loading,
-    totalPoint,
-  } = useVolumnData({
-    // address: '0x73332479db4259f786b9bdac8dc4dcb3dc8259e8' as string,
-    address: address as string,
-  });
+  // const { address } = useAccount();
+  // const {
+  //   data: volumnData,
+  //   loading,
+  //   totalPoint,
+  // } = useVolumnData({
+  //   address: '0x73332479db4259f786b9bdac8dc4dcb3dc8259e8' as string,
+  //   // address: address as string,
+  // });
+
+  const { volumeData } = useAccountInfo();
+
+  console.log('volumeData:::123', volumeData);
 
   const getProfile = async () => {
     try {
@@ -132,118 +133,52 @@ const Overview = ({
                 </div>
               </div>
             </div>
-
-            {/* <div className="flex flex-col gap-[8px] py-[8px]">
-              <div className="flex justify-between items-center">
-                <Text type="font-16-600">{t('Customers')}</Text>
-                <div className="px-[8px] py-[2px] bg-[#2F353B] w-fit rounded-full text-[12px] leading-normal font-semibold">
-                  {data.customers.total}
-                </div>
-              </div>
-              <div className="flex gap-[2px] w-full ease-in-out duration-200">
-                <div
-                  className="flex flex-col gap-[8px]"
-                  style={{
-                    width: `${
-                      calculatePercentage(
-                        data.customers.f1,
-                        data.customers.total
-                      ) || 25
-                    }%`,
-                  }}
-                >
-                  <div className="h-[12px] w-full bg-[#02A6C2] rounded-l-full" />
-                  <div className="opacity-50">F1: {data.customers.f1}</div>
-                </div>
-                <div
-                  className="flex flex-col gap-[8px]"
-                  style={{
-                    width: `${
-                      calculatePercentage(
-                        data.customers.f2,
-                        data.customers.total
-                      ) || 25
-                    }%`,
-                  }}
-                >
-                  <div className="h-[12px] w-full bg-[#35B6CC]" />
-                  <div className="opacity-50">F2: {data.customers.f2}</div>
-                </div>
-                <div
-                  className="flex flex-col gap-[8px]"
-                  style={{
-                    width: `${
-                      calculatePercentage(
-                        data.customers.f3,
-                        data.customers.total
-                      ) || 25
-                    }%`,
-                  }}
-                >
-                  <div className="h-[12px] w-full bg-[#79BEB6]" />
-                  <div className="opacity-50">F3: {data.customers.f3}</div>
-                </div>
-                <div
-                  className="flex flex-col gap-[8px]"
-                  style={{
-                    width: `${
-                      calculatePercentage(
-                        data.customers.total -
-                          (data.customers.f1 +
-                            data.customers.f2 +
-                            data.customers.f3),
-                        data.customers.total
-                      ) || 25
-                    }%`,
-                  }}
-                >
-                  <div className="h-[12px] w-full bg-[#B4D4D9] rounded-r-full" />
-                  <div className="opacity-50">
-                    ø:{' '}
-                    {data.customers.total -
-                      (data.customers.f1 +
-                        data.customers.f2 +
-                        data.customers.f3)}
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </>
         )}
       </div>
 
-      <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit flex flex-col gap-[12px]">
-        <div className="text-[16px] font-semibold">
-          Total point:{' '}
-          <span className="text-[#02A6C2] text-[16px]">{totalPoint}</span>
+      <div className="flex flex-col gap-[8px] py-[8px] bg-gray-70 rounded-[4px] w-full h-fit p-6">
+        <div className="flex justify-between items-center">
+          <Text type="font-16-600">What Exchange Volumn Statistics</Text>
         </div>
 
-        <div className="text-[14px] opacity-70">Point = Perp Volume / 1000</div>
-        <Divided />
-
-        <div className="text-[16px] font-semibold">
-          What exchange volumn history
-        </div>
-
-        {loading ? (
-          <div className="text-center">Loading...</div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {volumnData?.data?.rows?.map((item, index) => (
-              <WhatExchangeVolumnHistoryItem
-                key={index}
-                item={item}
-                hasDivided={index < volumnData.data.rows.length - 1}
-              />
-            ))}
-
-            {volumnData?.data?.rows?.length === 0 && (
-              <div className="text-start opacity-50">
-                {t('You have not made any trades yet')}
-              </div>
-            )}
+        <div className="flex flex-col gap-[8px]">
+          <div className="flex justify-between">
+            <Text type="font-14-400" className="opacity-50">
+              Last 7 days
+            </Text>
+            <Text type="font-14-400">
+              ${volumeData?.data?.perp_volume_last_7_days || 0}
+            </Text>
           </div>
-        )}
+
+          <div className="flex justify-between">
+            <Text type="font-14-400" className="opacity-50">
+              Last 30 days
+            </Text>
+            <Text type="font-14-400">
+              ${volumeData?.data?.perp_volume_last_30_days || 0}
+            </Text>
+          </div>
+
+          <div className="flex justify-between">
+            <Text type="font-14-400" className="opacity-50">
+              Year to date
+            </Text>
+            <Text type="font-14-400">
+              ${volumeData?.data?.perp_volume_ytd || 0}
+            </Text>
+          </div>
+
+          <div className="flex justify-between">
+            <Text type="font-14-400" className="opacity-50">
+              Life time
+            </Text>
+            <Text type="font-14-400">
+              ${volumeData?.data?.perp_volume_ltd || 0}
+            </Text>
+          </div>
+        </div>
       </div>
     </div>
   );

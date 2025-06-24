@@ -1,10 +1,27 @@
 import type { NextConfig } from 'next';
+import withTM from 'next-transpile-modules';
 const { i18n } = require('./next-i18next.config');
 
+const withTranspile = withTM([
+  '@noble/ed25519',
+  '@orderly.network/default-evm-adapter',
+  '@orderly.network/default-solana-adapter',
+  '@orderly.network/hooks',
+  '@orderly.network/core',
+  '@orderly.network/net',
+  '@orderly.network/utils',
+  '@orderly.network/perp',
+  '@orderly.network/types',
+  '@orderly.network/web3-provider-ethers',
+  'bs58',
+]);
+
 const nextConfig: NextConfig = {
-  swcMinify: true,
   i18n,
   output: 'standalone',
+  experimental: {
+    esmExternals: false,
+  },
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
     APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,
@@ -27,57 +44,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/:code',
-  //       destination: '/',
-  //     },
-  //     {
-  //       source: '/',
-  //       destination: '/',
-  //     },
-  //     {
-  //       source: '/:code/lesson/:id',
-  //       destination: '/lesson/:id',
-  //     },
-  //     {
-  //       source: '/lesson/:id',
-  //       destination: '/lesson/:id',
-  //     },
-
-  //     {
-  //       source: '/:code/course/:id',
-  //       destination: '/course/:id',
-  //     },
-  //     {
-  //       source: '/course/:id',
-  //       destination: '/course/:id',
-  //     },
-  //     // {
-  //     //   source: '/:id/lesson/:lessonId',
-  //     //   destination: '/lesson/:id/:lessonId',
-  //     // },
-  //     // {
-  //     //   source: '/lesson/:lessonId',
-  //     //   destination: '/lesson/:lessonId',
-  //     // },
-  //     // {
-  //     //   source: '/:id/course/:courseId',
-  //     //   destination: '/course/:courseId',
-  //     // },
-  //   ];
-  // },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/platform',
-  //       permanent: false,
-  //     },
-  //   ];
-  // },
   async headers() {
     return [
       {
@@ -95,6 +61,44 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  reactStrictMode: true,
+  transpilePackages: [
+    '@noble/ed25519',
+    '@orderly.network/default-evm-adapter',
+    '@orderly.network/default-solana-adapter',
+    '@orderly.network/hooks',
+    '@orderly.network/core',
+    '@orderly.network/net',
+    '@orderly.network/utils',
+    '@orderly.network/perp',
+    '@orderly.network/types',
+    '@orderly.network/web3-provider-ethers',
+    'bs58',
+  ],
+  webpack: (config, { isServer }) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      crypto: require.resolve('crypto-browserify'),
+    };
+
+    // Force resolution to use ESM versions
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@orderly.network/hooks': require.resolve(
+        '@orderly.network/hooks/dist/index.mjs'
+      ),
+      '@noble/ed25519': require.resolve('@noble/ed25519'),
+    };
+
+    // Handle module resolution
+    config.resolve.extensionAlias = {
+      '.js': ['.js', '.ts', '.tsx'],
+      '.mjs': ['.mjs', '.mts'],
+      '.cjs': ['.cjs', '.cts'],
+    };
+
+    return config;
+  },
 };
 
-export default nextConfig;
+export default withTranspile(nextConfig);

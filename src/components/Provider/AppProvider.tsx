@@ -1,71 +1,34 @@
 import { ReactElement, ReactNode } from 'react';
 
-import type { NextPage } from 'next';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
-import { DefaultSeo, DefaultSeoProps } from 'next-seo';
 import AppLayout from '@/layout/AppLayout';
+import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  fantomTestnet,
-} from 'wagmi/chains';
-import {
-  getDefaultConfig,
-  RainbowKitProvider,
-  darkTheme,
-  getDefaultWallets,
-} from '@rainbow-me/rainbowkit';
+import type { NextPage } from 'next';
+import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
+import Head from 'next/head';
 import { Toaster } from 'sonner';
+import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
+import { fantomTestnet } from 'wagmi/chains';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
-};
 
-export const projectId = 'fc44d249918338bb571eab6da79776df';
-const chains = [mainnet, polygon, optimism, arbitrum, base];
-
-// Initialize RainbowKit with wallets
-export const { connectors } = getDefaultWallets({
-  appName: 'What Exchange',
-  projectId,
-});
-
-// Configure wagmi client
 const config = createConfig({
-  // chains: [mainnet, polygon, optimism, arbitrum, base],
   chains: [fantomTestnet],
-  connectors,
   transports: {
     [fantomTestnet.id]: http('https://rpc.testnet.fantom.network/'),
-    // [mainnet.id]: http(),
-    // [polygon.id]: http(),
-    // [optimism.id]: http(),
-    // [arbitrum.id]: http(),
-    // [base.id]: http(),
   },
   ssr: false,
-  // Enhanced storage handling for WalletConnect
   storage: createStorage({
     storage:
       typeof window !== 'undefined'
         ? {
             getItem: (key) => {
               const item = window.localStorage.getItem(key);
-              // Keep WalletConnect session active
               if (key.startsWith('wc@2:client:')) {
                 return item || window.localStorage.getItem('wagmi.wallet');
               }
-              // Handle returning from mobile wallet
               if (
                 window.location.href.includes('wc?') &&
                 key.includes('wagmi')
@@ -81,14 +44,12 @@ const config = createConfig({
   }),
 });
 
-// Handle WalletConnect session restoration and URL cleanup
 if (typeof window !== 'undefined') {
   const hasWalletConnectSession = Object.keys(window.localStorage).some((key) =>
     key.startsWith('wc@2:client:')
   );
 
   if (hasWalletConnectSession && window.location.href.includes('wc?')) {
-    // Clean URL immediately to avoid reconnection loops
     const cleanUrl = window.location.href.split('?')[0];
     window.history.replaceState({}, document.title, cleanUrl);
   }
@@ -129,7 +90,6 @@ function AppProvider({ children }: any) {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      {/* oke */}
       <main>
         <WagmiProvider config={config}>
           <AppLayout>

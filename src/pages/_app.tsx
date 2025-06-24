@@ -6,6 +6,7 @@ import 'react-rater/lib/react-rater.css';
 import 'video.js/dist/video-js.css';
 import 'videojs-hls-quality-selector';
 import 'videojs-contrib-quality-levels';
+import 'cropperjs/dist/cropper.css';
 
 import { ReactElement, ReactNode } from 'react';
 

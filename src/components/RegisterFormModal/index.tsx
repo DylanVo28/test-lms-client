@@ -8,6 +8,7 @@ import {
   serviceAddOrderlyKey,
   serviceCheckAddress,
   serviceGetUserNonce,
+  servicePrepareRegisterMetadata,
   useLoginWeb3,
   verifyReferralCode,
 } from '@/layout/MainLayout/MainHeader/service';
@@ -123,40 +124,55 @@ const RegisterFormModal = () => {
         return;
       }
 
-      const registerRes = await registerUser({
-        referralCode,
+      const prepareRegisterMetadataRes = await servicePrepareRegisterMetadata({
         signature,
+        message,
         address,
         themeCode: router.query.code as any,
-        message,
       });
 
-      const parentCode = registerRes?.data?.parentCode;
-      const orderlyAccountId = registerRes?.data?.orderlyAccountId;
+      const parentCode = prepareRegisterMetadataRes?.data?.parentCode;
+      const orderlyAccountId =
+        prepareRegisterMetadataRes?.data?.orderlyAccountId;
+
+      const {
+        message: addOrderlyKeyMessage,
+        signature: addOrderlyKeySignature,
+        orderlyKey,
+        privKey,
+      } = await signAddOrderlyKey();
 
       if (parentCode && orderlyAccountId) {
-        const {
-          message: addOrderlyKeyMessage,
-          signature: addOrderlyKeySignature,
-          orderlyKey,
-          privKey,
-        } = await signAddOrderlyKey();
-
         // call api add orderly key
-        const addOrderlyKeyRes = await serviceAddOrderlyKey({
+        await serviceAddOrderlyKey({
           message: addOrderlyKeyMessage,
           signature: addOrderlyKeySignature,
           userAddress: address,
         });
 
         // bind orderly key to user
-        const bindReferralCodeRes = await bindReferralCode({
+        await bindReferralCode({
           orderlyAccountId,
           referralCode: parentCode,
           orderlyKey,
           privKey,
         });
       }
+
+      const orderlyMetadata = {
+        accountId: orderlyAccountId,
+        orderlyKey: orderlyKey,
+        orderlySecretKey: privKey,
+      };
+
+      await registerUser({
+        referralCode,
+        signature,
+        address,
+        themeCode: router.query.code as any,
+        message,
+        orderlyMetadata,
+      });
 
       runLoginWeb3({
         address: address,
