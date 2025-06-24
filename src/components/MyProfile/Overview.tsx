@@ -74,18 +74,6 @@ const Overview = ({
     toast.success(t('Copied!'));
   };
 
-  const handleGetOrderlyKey = useSignAddOrderlyKey();
-
-  const handleTest = async () => {
-    const res = await handleGetOrderlyKey();
-    getVolumeStatistics({
-      orderlyAccountId:
-        '0x4297fd6f7d52c971ddc6c080b9635d7458e801de1331416462ab1f3d3b9bc041',
-      orderlyKey: res?.orderlyKey,
-      orderlySecretKey: res?.privKey,
-    });
-  };
-
   return (
     <div className="w-full h-fit max-w-[460px] flex flex-col gap-[20px]">
       <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit flex flex-col gap-[12px]">
@@ -146,14 +134,6 @@ const Overview = ({
             </div>
           </>
         )}
-      </div>
-
-      <div
-        onClick={() => {
-          handleTest();
-        }}
-      >
-        TEST
       </div>
 
       <div className="flex flex-col gap-[8px] py-[8px] bg-gray-70 rounded-[4px] w-full h-fit p-6">
