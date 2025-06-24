@@ -2,19 +2,7 @@ import type { NextConfig } from 'next';
 import withTM from 'next-transpile-modules';
 const { i18n } = require('./next-i18next.config');
 
-const withTranspile = withTM([
-  '@noble/ed25519',
-  '@orderly.network/default-evm-adapter',
-  '@orderly.network/default-solana-adapter',
-  '@orderly.network/hooks',
-  '@orderly.network/core',
-  '@orderly.network/net',
-  '@orderly.network/utils',
-  '@orderly.network/perp',
-  '@orderly.network/types',
-  '@orderly.network/web3-provider-ethers',
-  'bs58',
-]);
+const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
   i18n,
@@ -62,19 +50,7 @@ const nextConfig: NextConfig = {
     ];
   },
   reactStrictMode: true,
-  transpilePackages: [
-    '@noble/ed25519',
-    '@orderly.network/default-evm-adapter',
-    '@orderly.network/default-solana-adapter',
-    '@orderly.network/hooks',
-    '@orderly.network/core',
-    '@orderly.network/net',
-    '@orderly.network/utils',
-    '@orderly.network/perp',
-    '@orderly.network/types',
-    '@orderly.network/web3-provider-ethers',
-    'bs58',
-  ],
+  transpilePackages: ['@noble/ed25519', 'bs58'],
   webpack: (config, { isServer }) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -84,9 +60,6 @@ const nextConfig: NextConfig = {
     // Force resolution to use ESM versions
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@orderly.network/hooks': require.resolve(
-        '@orderly.network/hooks/dist/index.mjs'
-      ),
       '@noble/ed25519': require.resolve('@noble/ed25519'),
     };
 
