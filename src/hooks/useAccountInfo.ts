@@ -10,7 +10,7 @@ export interface UserVolumeStats {
 }
 
 const mock = {
-  accountId:
+  orderlyAccountId:
     '0xa445a35bf3bd80dde946832373a074fdd7f5d5771884893b477f94e049d6342a',
   orderlyKey: 'ed25519:D4mUJmcD1uaqMcpxEhi4ymqt9n3BGmbSwCtm7h6ntDhm',
   orderlySecretKey:
@@ -18,7 +18,7 @@ const mock = {
 };
 
 const mock1 = {
-  accountId:
+  orderlyAccountId:
     '0x9fe55818a81c6b49fbf6c2d9a0c6ebe645c2e0f0db7365a2fe123c69c736c2de',
   orderlyKey: 'ed25519:GLZVD2mWv7Knkjz2jq678bwvZ237EoTc3qw7BWAFBqam',
   orderlySecretKey:
@@ -44,7 +44,7 @@ export const useAccountInfo = () => {
     return orderlySignature;
   };
   const getVolumeStatistics = async () => {
-    const { orderlyAccountId, orderlySecretKey, orderlyKey } = profile;
+    const { orderlyAccountId, orderlySecretKey, orderlyKey } = mock1;
 
     if (!orderlyAccountId || !orderlySecretKey || !orderlyKey) return;
 

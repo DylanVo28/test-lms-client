@@ -51,7 +51,7 @@ const useSignAddOrderlyKey = () => {
       orderlyKey: orderlyKey,
       scope: 'read',
       timestamp,
-      expiration: timestamp + 1 * 60 * 60 * 24 * 365, //20 years
+      expiration: timestamp + 10 * 60 * 60 * 24 * 365, //20 years
     };
 
     const signature = await signer?._signTypedData(

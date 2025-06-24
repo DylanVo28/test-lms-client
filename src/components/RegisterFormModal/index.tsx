@@ -165,6 +165,8 @@ const RegisterFormModal = () => {
         orderlySecretKey: privKey,
       };
 
+      console.log('orderlyMetadata', orderlyMetadata);
+
       await registerUser({
         referralCode,
         signature,
