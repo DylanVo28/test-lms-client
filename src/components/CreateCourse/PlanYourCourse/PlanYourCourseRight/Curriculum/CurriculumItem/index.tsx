@@ -60,12 +60,8 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const [indexAddQuestion, setIndexAddQuestion] = useState<any>([]);
   const [idAddQuestionQuizz, setIdAddQuestionQuizz] = useState<string>('');
 
-  const {
-    editLessonId,
-    handleUpdateEditLessonId,
-    handleUpdateShowBoundingBox,
-    showBoundingBox,
-  } = useCurriculumContext();
+  const { handleUpdateEditLessonId, handleUpdateShowBoundingBox } =
+    useCurriculumContext();
 
   useEffect(() => {
     if (item?.id) {
@@ -311,13 +307,15 @@ const CurriculumItem = ({ item }: { item: any }) => {
   const handleClickAddContent = (item: any, index: number) => {
     const type = item?.type as TYPE_COURSE;
 
-    if (editLessonId) {
-      handleUpdateShowBoundingBox(true);
-      toast.error(t('Please save the lesson before adding a new item'));
-      return;
-    } else {
-      handleUpdateEditLessonId(item?.id);
-    }
+    // if (editLessonId) {
+    //   handleUpdateShowBoundingBox(true);
+    //   toast.error(t('Please save the lesson before adding a new item'));
+    //   return;
+    // } else {
+    //   handleUpdateEditLessonId(item?.id);
+    // }
+
+    handleUpdateEditLessonId(item?.id);
 
     if (type === TYPE_COURSE.LECTURE) {
       setIndexAddContent((prev: any) =>
@@ -431,13 +429,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
     >
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
         return (
-          <div
-            className={classNames('w-full', {
-              'border-1 border-red-500':
-                item?.id === editLessonId && showBoundingBox,
-            })}
-            key={item?.id}
-          >
+          <div className={classNames('w-full', {})} key={item?.id}>
             <div
               className={clsx(
                 'rounded flex cursor-pointer justify-between group items-center w-full py-2 px-3 bg-transparent border-1 border-white-15',
@@ -549,11 +541,6 @@ const CurriculumItem = ({ item }: { item: any }) => {
                   </Text>
                   <Button
                     onPress={() => {
-                      if (editLessonId) {
-                        handleUpdateEditLessonId(null);
-                        handleUpdateShowBoundingBox(false);
-                      }
-
                       const newData = indexContentAdd?.filter(
                         (item: any) => item !== indexCurriculum
                       );
