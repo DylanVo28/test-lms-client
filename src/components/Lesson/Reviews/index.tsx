@@ -13,7 +13,6 @@ import { Progress, Spinner } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
-import 'react-rater/lib/react-rater.css';
 
 const Reviews = ({
   courseId,

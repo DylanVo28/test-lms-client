@@ -12,3 +12,11 @@ const enrollCourse = async (id: string, txHash: string) => {
 export const useEnrollCourse = (options?: IOptions) => {
   return useRequest(enrollCourse, { manual: true, ...options });
 };
+
+const enrollCourseFree = async (id: string) => {
+  return privateRequest(request.post, `${API_PATH.ENROLL_COURSE_FREE(id)}`);
+};
+
+export const useEnrollCourseFree = (options?: IOptions) => {
+  return useRequest(enrollCourseFree, { manual: true, ...options });
+};

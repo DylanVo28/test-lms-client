@@ -469,7 +469,9 @@ const PlanYourCourse = () => {
       originPrice: values?.originPrice,
       // promotionPeriod: values?.promotionPeriod,
       promotionPeriod: `100000000`,
-      unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast,
+      unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast
+        ? +values?.unlockIfUserTradesAtLeast
+        : null,
     };
     if (!values.topics) {
       delete body.topics;

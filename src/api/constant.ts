@@ -7,6 +7,7 @@ export const API_PATH = {
   BIND_REFERRAL_CODE: '/api/auth/bind-referral-code',
   GET_USER_VOLUMN: '/api/referral/get-user-volumn',
   PREPARE_REGISTER_METADATA: '/api/auth/prepare-register-metadata',
+  ENROLL_COURSE_FREE: (id: string) => `/api/courses/${id}/enroll-course-free`,
 
   CHECK_ADDRESS: '/api/auth/check-address',
 

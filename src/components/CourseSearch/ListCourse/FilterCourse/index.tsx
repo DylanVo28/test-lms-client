@@ -14,7 +14,6 @@ import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Rater from 'react-rater';
-import 'react-rater/lib/react-rater.css';
 import { useTranslation } from 'next-i18next';
 
 const DATA_LANGUAGE = [

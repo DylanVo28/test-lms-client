@@ -1,40 +1,33 @@
 /* eslint-disable react/no-unknown-property */
+import '@rainbow-me/rainbowkit/styles.css';
+import 'cropperjs/dist/cropper.css';
+import 'quill/dist/quill.snow.css';
+import 'react-rater/lib/react-rater.css';
 import '../styles/globals.scss';
 import '../styles/tailwind.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import 'react-rater/lib/react-rater.css';
-import 'video.js/dist/video-js.css';
-import 'videojs-hls-quality-selector';
 import 'videojs-contrib-quality-levels';
-import 'cropperjs/dist/cropper.css';
+import 'videojs-hls-quality-selector';
+import 'video.js/dist/video-js.css';
 
 import { ReactElement, ReactNode } from 'react';
 
+import { getDefaultWallets } from '@rainbow-me/rainbowkit';
+import { QueryClient } from '@tanstack/react-query';
 import type { NextPage } from 'next';
+import { appWithTranslation } from 'next-i18next';
+import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
-import { DefaultSeo, DefaultSeoProps } from 'next-seo';
-import AppLayout from '@/layout/AppLayout';
-import { appWithTranslation } from 'next-i18next';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
+import { createConfig, createStorage, http } from 'wagmi';
 import {
-  mainnet,
-  polygon,
-  optimism,
   arbitrum,
   base,
   fantomTestnet,
+  mainnet,
+  optimism,
+  polygon,
 } from 'wagmi/chains';
-import {
-  getDefaultConfig,
-  RainbowKitProvider,
-  darkTheme,
-  getDefaultWallets,
-} from '@rainbow-me/rainbowkit';
 import nextI18nConfig from '../../next-i18next.config';
-import { Toaster } from 'sonner';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

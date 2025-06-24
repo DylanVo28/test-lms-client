@@ -1,8 +1,5 @@
 import { useProfile } from '@/store/profile/useProfile';
 import { signAsync } from '@/utils/noble-ed25519';
-import { ethers } from 'ethers';
-import bs58 from 'bs58';
-import { getPublicKey } from '@noble/ed25519';
 import { useQuery } from '@tanstack/react-query';
 
 export interface UserVolumeStats {

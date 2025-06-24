@@ -3,23 +3,39 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
 import { useTranslation } from 'next-i18next';
 import { useTokenInfo } from '@/hooks/useTokenInfo';
+import { useMemo } from 'react';
+import { useAccountInfo } from '@/hooks/useAccountInfo';
 
 const CustomButtonEnroll = ({
   course,
   loading,
   token,
   handleClickButton,
+  handleEnrollCourseFree,
 }: {
   course: any;
   handleClickButton: VoidFunction;
   loading: boolean;
   token: any;
+  handleEnrollCourseFree: () => void;
 }) => {
   const { t } = useTranslation('common');
   const { balance, symbol, decimals } = useTokenInfo();
   const amount = +(course?.price ?? 10000000);
 
   const isInsufficientBalance = +balance < +amount;
+
+  const { volumeData } = useAccountInfo();
+
+  const isEnableEnrollCourseFree = useMemo(() => {
+    if (course?.unlockIfUserTradesAtLeast == 0) return true;
+
+    if (!volumeData) return false;
+
+    return (
+      +volumeData?.data?.perp_volume_ltd >= +course?.unlockIfUserTradesAtLeast
+    );
+  }, [course?.unlockIfUserTradesAtLeast, volumeData]);
 
   return (
     <ConnectButton.Custom>
@@ -48,32 +64,65 @@ const CustomButtonEnroll = ({
                 </Text>
               </Button>
             ) : (
-              <Button
-                isLoading={loading}
-                onPress={() => {
-                  if (course?.enroll === 'pending' || isInsufficientBalance) {
-                    return;
-                  }
-                  handleClickButton();
-                }}
-                className="bg-main w-full min-h-[40px] rounded"
-                disabled={isInsufficientBalance}
-              >
-                {isInsufficientBalance && (
-                  <Text className="text-text-white" type="font-16-600">
-                    {t('Insufficient balance')}
-                  </Text>
+              <>
+                {isEnableEnrollCourseFree && (
+                  <Button
+                    isLoading={loading}
+                    onPress={() => {
+                      if (course?.enroll === 'verified') {
+                        handleClickButton();
+                        return;
+                      }
+
+                      handleEnrollCourseFree();
+                    }}
+                    className="bg-main w-full min-h-[40px] rounded"
+                    disabled={isInsufficientBalance}
+                  >
+                    {course?.enroll === 'verified' ? (
+                      <Text className="text-text-white" type="font-16-600">
+                        {t('Go to course')}
+                      </Text>
+                    ) : (
+                      <Text className="text-text-white" type="font-16-600">
+                        {t('Enroll Now for Free')}
+                      </Text>
+                    )}
+                  </Button>
                 )}
-                {!isInsufficientBalance && (
-                  <Text className="text-text-white" type="font-16-600">
-                    {course?.enroll === 'verified'
-                      ? t('Go to course')
-                      : course?.enroll === 'pending'
-                      ? t('Verifying...')
-                      : t('Enroll Now')}
-                  </Text>
+
+                {!isEnableEnrollCourseFree && (
+                  <Button
+                    isLoading={loading}
+                    onPress={() => {
+                      if (
+                        course?.enroll === 'pending' ||
+                        isInsufficientBalance
+                      ) {
+                        return;
+                      }
+                      handleClickButton();
+                    }}
+                    className="bg-main w-full min-h-[40px] rounded"
+                    disabled={isInsufficientBalance}
+                  >
+                    {isInsufficientBalance && (
+                      <Text className="text-text-white" type="font-16-600">
+                        {t('Insufficient balance')}
+                      </Text>
+                    )}
+                    {!isInsufficientBalance && (
+                      <Text className="text-text-white" type="font-16-600">
+                        {course?.enroll === 'verified'
+                          ? t('Go to course')
+                          : course?.enroll === 'pending'
+                          ? t('Verifying...')
+                          : t('Enroll Now')}
+                      </Text>
+                    )}
+                  </Button>
                 )}
-              </Button>
+              </>
             )}
           </div>
         );

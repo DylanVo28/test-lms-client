@@ -1,9 +1,7 @@
 import LoadingContainer from '@/components/UI/LoadingContainer';
 import { useEffect, useRef, useState } from 'react';
 import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
-import 'videojs-hls-quality-selector';
-import 'videojs-contrib-quality-levels';
+
 import NextVideo from './NextVideo';
 import { Button, Tooltip } from '@nextui-org/react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';

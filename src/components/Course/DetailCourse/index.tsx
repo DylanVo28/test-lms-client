@@ -33,7 +33,7 @@ const DetailCourse = () => {
   const {
     run: getDetailCourse,
     data: dataDetail,
-    // loading,
+    loading,
     mutate,
   } = useGetDetailCourse({
     pollingInterval: 5000,
@@ -41,6 +41,8 @@ const DetailCourse = () => {
       // handleScrollTop();
     },
   });
+
+  console.log('dataDetail::::', dataDetail);
 
   useEffect(() => {
     if (router.query.id) {
@@ -123,7 +125,7 @@ const DetailCourse = () => {
         <BreadCrumbs />
         <div className="md:grid md:grid-cols-10 gap-[70px]">
           <div className="block mb-4 md:hidden">
-            <CardEnrollNow course={dataDetail?.data} />
+            <CardEnrollNow course={dataDetail?.data} isLoading={loading} />
           </div>
           <div className="col-span-7 flex flex-col gap-5">
             <div className="flex flex-col border-b-1 border-b-black-10 pb-5 gap-5">
@@ -221,6 +223,7 @@ const DetailCourse = () => {
                 handleUnLike={handleUnLike}
                 handleLike={handleLike}
                 course={dataDetail?.data}
+                isLoading={loading}
               />
             </div>
           </div>
