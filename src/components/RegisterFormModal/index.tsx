@@ -142,6 +142,23 @@ const RegisterFormModal = () => {
         privKey,
       } = await signAddOrderlyKey();
 
+      const res = await fetch('https://api.orderly.org/v1/orderly_key', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userAddress: address,
+          message: addOrderlyKeyMessage,
+          signature: addOrderlyKeySignature,
+        }),
+      });
+
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(`Đăng ký key thất bại: ${error}`);
+      }
+
       if (parentCode && orderlyAccountId) {
         // call api add orderly key
         await serviceAddOrderlyKey({
@@ -165,7 +182,7 @@ const RegisterFormModal = () => {
         orderlySecretKey: privKey,
       };
 
-      console.log('orderlyMetadata', orderlyMetadata);
+      console.log('orderlyMetadata', signature, orderlyMetadata);
 
       await registerUser({
         referralCode,

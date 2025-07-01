@@ -7,7 +7,6 @@ import Text from '../UI/Text';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
-import useSignAddOrderlyKey from '@/hooks/useSignAddOrderlyKey';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
