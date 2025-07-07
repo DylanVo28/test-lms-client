@@ -43,18 +43,20 @@ const inputFields = [
     },
   },
   {
-    name: 'headline',
-    label: 'Headline',
+    name: 'biography',
+    label: 'Biography (Max character 1,500)',
     placeholder: 'Type',
     type: 'textarea',
     atRow: 1,
+    max: 1500,
   },
   {
-    name: 'biography',
-    label: 'Biography',
+    name: 'headline',
+    label: 'Headline (Max character 250)',
     placeholder: 'Type',
     type: 'text',
     atRow: 1,
+    max: 250,
   },
   {
     name: 'websiteUrl',
@@ -191,6 +193,7 @@ const Field = ({
     placeholder: string;
     type: string;
     atRow: number;
+    max?: number;
   };
   control: any;
   rules: any;
@@ -230,26 +233,48 @@ const Field = ({
         <Controller
           name={fieldItem.name}
           control={control}
-          render={({ field }) => {
+          rules={{
+            ...(fieldItem.max && {
+              maxLength: {
+                value: fieldItem.max,
+                message: `Max ${fieldItem.max} character`,
+              },
+            }),
+          }}
+          render={({ field, fieldState }) => {
             if (fieldItem.type === 'textarea') {
               return (
-                <InputTextArena
-                  placeholder={t(fieldItem.placeholder)}
-                  value={field.value}
-                  minRows={5}
-                  inputDefault
-                  onChange={field.onChange}
-                />
+                <>
+                  <InputTextArena
+                    placeholder={t(fieldItem.placeholder)}
+                    value={field.value}
+                    minRows={5}
+                    inputDefault
+                    onChange={field.onChange}
+                  />
+                  {fieldState.error && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {fieldState.error.message}
+                    </p>
+                  )}
+                </>
               );
             }
 
             return (
-              <InputText
-                className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
-                placeholder={t(fieldItem.placeholder)}
-                value={field.value || ''}
-                onChange={field.onChange}
-              />
+              <>
+                <InputText
+                  className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
+                  placeholder={t(fieldItem.placeholder)}
+                  value={field.value || ''}
+                  onChange={field.onChange}
+                />
+                {fieldState.error && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {fieldState.error.message}
+                  </p>
+                )}
+              </>
             );
           }}
         />

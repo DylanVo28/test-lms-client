@@ -12,6 +12,12 @@ import { toast } from '../UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
 import ContenStepDuplicateCourse from './ContenStepDuplicateCourse';
 import useNavigate from '@/hooks/useNavigate';
+import { useProfile } from '@/store/profile/useProfile';
+import AuthLayout from '@/layout/AuthLayout';
+import MainLayout from '@/layout/MainLayout';
+import { useAccount } from 'wagmi';
+import LandingPage from '../Landingpage';
+import { getAccessToken } from '@/store/auth';
 
 const CreateCourse = () => {
   const { t } = useTranslation('common');
@@ -85,6 +91,13 @@ const CreateCourse = () => {
   const typeWatch = watch('type');
 
   console.log(step, 'step');
+
+  const { address } = useAccount();
+  const accessToken = getAccessToken();
+
+  if (!address || !accessToken) {
+    return <LandingPage />;
+  }
 
   return (
     <form>
