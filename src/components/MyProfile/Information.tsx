@@ -9,13 +9,6 @@ import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
 
 const inputFields = [
-  // {
-  //   name: 'code',
-  //   label: 'Full Name',
-  //   placeholder: 'Full Name',
-  //   type: 'text',
-  //   atRow: 1,
-  // },
   {
     name: 'fullName',
     label: 'Full Name',
@@ -23,13 +16,7 @@ const inputFields = [
     type: 'text',
     atRow: 1,
   },
-  // {
-  //   name: 'lastName',
-  //   label: 'Last Name',
-  //   placeholder: 'Type',
-  //   type: 'text',
-  //   atRow: 1,
-  // },
+
   {
     name: 'email',
     label: 'Email',
@@ -44,7 +31,7 @@ const inputFields = [
   },
   {
     name: 'biography',
-    label: 'Biography (Max character 1,500)',
+    label: 'Biography',
     placeholder: 'Type',
     type: 'textarea',
     atRow: 1,
@@ -52,7 +39,7 @@ const inputFields = [
   },
   {
     name: 'headline',
-    label: 'Headline (Max character 250)',
+    label: 'Headline',
     placeholder: 'Type',
     type: 'text',
     atRow: 1,
@@ -199,13 +186,27 @@ const Field = ({
   rules: any;
 }) => {
   const { t } = useTranslation('common');
-  console.log(fieldItem, 'fieldItem');
 
   return (
     <div className="w-full">
-      <label className="block text-base font-semibold mb-1">
-        {t(fieldItem.label)}
-      </label>
+      <div className="flex justify-between items-center mb-1">
+        <label className="block text-base font-semibold">
+          {t(fieldItem.label)}
+        </label>
+        {fieldItem.max && (
+          <Controller
+            name={fieldItem.name}
+            control={control}
+            render={({ field }) => {
+              const currentLength = field.value?.length || 0;
+              const remaining = fieldItem.max! - currentLength;
+              return (
+                <div className="text-sm text-[#cccccc96]">{remaining}</div>
+              );
+            }}
+          />
+        )}
+      </div>
 
       {fieldItem?.name === 'email' ? (
         <Controller
