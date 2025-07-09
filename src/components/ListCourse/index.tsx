@@ -87,14 +87,16 @@ const ListCourse = () => {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-5 w-full">
-            <InputText
-              startContent={<IconSearch />}
-              className="min-w-[240px] md:min-w-[302px]"
-              isInputSubmit
-              placeholder={t('Search')}
-              value={search}
-              onChange={handleChange}
-            />
+            <div>
+              <InputText
+                startContent={<IconSearch />}
+                className="min-w-[240px] md:min-w-[302px]"
+                isInputSubmit
+                placeholder={t('Search')}
+                value={search}
+                onChange={handleChange}
+              />
+            </div>
             <SelectCustom
               placeholder={t('Sort by type')}
               isSelectSubmit

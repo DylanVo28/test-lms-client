@@ -18,7 +18,6 @@ import useNavigate from '@/hooks/useNavigate';
 import { set } from 'video.js/dist/types/tech/middleware';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
-
 const PlanYourCourse = () => {
   const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
@@ -183,6 +182,7 @@ const PlanYourCourse = () => {
         subCategoryId: courseDetail?.subCategoryId,
         price: courseDetail?.price,
         originPrice: courseDetail?.originPrice,
+        unlockIfUserTradesAtLeast: courseDetail?.unlockIfUserTradesAtLeast ?? 0,
         promotionPeriod: courseDetail?.promotionPeriod,
         categoryId: courseDetail?.categoryId,
       });
@@ -210,8 +210,6 @@ const PlanYourCourse = () => {
 
   const fieldValue = watch();
 
-  console.log('fieldValue:::', fieldValue);
-
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
@@ -221,69 +219,6 @@ const PlanYourCourse = () => {
 
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
-      const resData = await fetchDetailSection();
-
-      const allLessonsHaveContent =
-        Array.isArray(resData?.data) &&
-        resData?.data.length > 0 &&
-        resData?.data.every((section: any) => {
-          if (section.lessons.length === 0) {
-            return section.quizzes.length > 0;
-          }
-
-          return section.lessons.every(
-            (lesson: any) =>
-              (lesson.id &&
-                (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
-              !lesson.id
-          );
-        });
-
-      const allQuizzesHaveQuestions =
-        Array.isArray(resData?.data) &&
-        resData?.data.length > 0 &&
-        resData?.data.every((section: any) => {
-          if (section.quizzes.length === 0) {
-            return section.lessons.length > 0;
-          }
-
-          return section.quizzes.every(
-            (quizz: any) =>
-              (quizz.id &&
-                Array.isArray(quizz.questions) &&
-                quizz.questions.length > 0) ||
-              !quizz.id
-          );
-        });
-
-      const isEnoughIntendedLearners =
-        res?.data?.objectives?.length > 0 &&
-        res?.data?.intenedLeaners?.length > 0 &&
-        res?.data?.requirements?.length > 0;
-      const isEnoughCourseLangdingePage =
-        res?.data?.title &&
-        res?.data?.categoryId &&
-        res?.data?.level &&
-        res?.data?.lang;
-      if (isEnoughIntendedLearners && activePlan === 1 && !isNextStepSubmit) {
-        setActivePlan(activePlan + 1);
-      }
-      if (
-        allLessonsHaveContent &&
-        allQuizzesHaveQuestions &&
-        activePlan === 2 &&
-        !isNextStepSubmit
-      ) {
-        setActivePlan(activePlan + 1);
-      }
-      if (
-        isEnoughCourseLangdingePage &&
-        activePlan === 3 &&
-        !isNextStepSubmit
-      ) {
-        setActivePlan(activePlan + 1);
-      }
-
       getDetailCourse(router.query.id as string);
       setIsSubmit(true);
     },
@@ -294,7 +229,9 @@ const PlanYourCourse = () => {
 
   const requestEditPublishCourse = useEditCourse({
     onSuccess: (res: any) => {
-      toast.success(res?.message);
+      toast.success('Course has been published successfully', {
+        duration: 5000,
+      });
       navigate(ROUTE_PATH.LIST_COURSE);
     },
     onError: (error: any) => {
@@ -373,28 +310,44 @@ const PlanYourCourse = () => {
       values?.requirements?.length > 0;
     const isEnoughCourseLangdingePage =
       values?.title && values?.categoryId && values?.level && values?.lang;
-    if (isEnoughIntendedLearners && activePlan === 1) {
-      setActivePlan(activePlan + 1);
-    }
-    if (allLessonsHaveContent && allQuizzesHaveQuestions && activePlan === 2) {
-      setActivePlan(activePlan + 1);
-    }
-    if (isEnoughCourseLangdingePage && activePlan === 3) {
-      setActivePlan(activePlan + 1);
-    }
-    if (
-      (!allLessonsHaveContent && !allQuizzesHaveQuestions) ||
-      !isEnoughtSetPrice ||
-      !isEnoughIntendedLearners ||
-      !isEnoughCourseLangdingePage
-    ) {
-      const dataError = {
-        dataCurriculum: resData?.data,
-        ...values,
-      };
-      refModalSubmitError.current.onOpen(dataError);
+
+    if (!isEnoughIntendedLearners) {
+      setActivePlan(1);
+      toast.error(
+        t('Please fill in all information for the intended learners section.'),
+        { duration: 5000 }
+      );
+
       return;
     }
+    if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
+      setActivePlan(2);
+      toast.error(
+        t(
+          'There is no course content yet. Please create it before publishing.'
+        ),
+        {
+          duration: 5000,
+        }
+      );
+      return;
+    }
+    if (!isEnoughCourseLangdingePage) {
+      setActivePlan(3);
+      toast.error(
+        t('Please fill in all information for the landing page section.'),
+        { duration: 5000 }
+      );
+      return;
+    }
+    if (!isEnoughtSetPrice) {
+      setActivePlan(4);
+      toast.error(t('Please fill in all information for the price section.'), {
+        duration: 5000,
+      });
+      return;
+    }
+
     const body: any = {
       isPublish: true,
       objectives: values?.objectives
@@ -436,7 +389,7 @@ const PlanYourCourse = () => {
 
     requestEditPublishCourse.run(filteredBody, router.query.id as string);
   };
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
     const image = localStorage.getItem('cropper-image');
 
     if (image) {
@@ -486,9 +439,10 @@ const PlanYourCourse = () => {
       })
     );
 
-    setIsNextStepSubmit(false);
-
-    requestEditCourse.run(filteredBody, router.query.id as string);
+    if (values.plan) {
+      setActivePlan(values.plan);
+    }
+    await requestEditCourse.run(filteredBody, router.query.id as string);
   };
 
   const dataDetail = dataDetailRes?.data;
@@ -539,52 +493,13 @@ const PlanYourCourse = () => {
 
   const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
-  const handleChangeTab = (plan: number) => {
-    setActivePlan(plan);
-
-    if (activePlan < plan) {
-      setIsNextStepSubmit(true);
-      const values = getValues();
-
-      const body: any = {
-        objectives: values?.objectives
-          ?.filter((v: any) => !!v?.name)
-          ?.map((item: any) => item?.name),
-        requirements: values?.requirements
-          ?.filter((v: any) => !!v?.name)
-          ?.map((item: any) => item?.name),
-        intenedLeaners: values?.intenedLeaners
-          ?.filter((v: any) => !!v?.name)
-          ?.map((item: any) => item?.name),
-        description: values?.description,
-        image: values?.image,
-        video: values?.video,
-        subtitle: values?.subtitle,
-        title: values?.title,
-        subCategoryId: values?.subCategoryId,
-        categoryId: values?.categoryId,
-        topics: [values.topics],
-        lang: values.lang,
-        level: values.level,
-
-        price: values?.price,
-        originPrice: values?.originPrice,
-        promotionPeriod: values?.promotionPeriod,
-      };
-      if (!values.topics) {
-        delete body.topics;
-      }
-      const filteredBody = Object.fromEntries(
-        Object.entries(body).filter(([_, value]) => {
-          return (
-            value !== undefined &&
-            value !== null &&
-            (Array.isArray(value) ? value.length > 0 : value !== '')
-          );
-        })
-      );
-      requestEditCourse.run(filteredBody, router.query.id as string);
-    }
+  const handleChangeTab = async (plan: number) => {
+    await handleSubmit((value) =>
+      onSubmit({
+        ...value,
+        plan,
+      })
+    )();
   };
 
   return (
@@ -627,7 +542,6 @@ const PlanYourCourse = () => {
           </div>
         </div>
       </form>
-      <ModalSubmitError ref={refModalSubmitError} />
     </div>
   );
 };

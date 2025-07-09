@@ -99,7 +99,7 @@ const InputText = (props: InputTextProps) => {
     }
   };
   return (
-    <div className="flex flex-1 flex-col gap-2 relative justify-center">
+    <div className="flex flex-1  flex-col gap-2 relative justify-center">
       {label && (
         <div className="flex items-center gap-1">
           <Text type="font-14-400" className="text-white">

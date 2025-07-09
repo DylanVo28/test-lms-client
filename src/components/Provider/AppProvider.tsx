@@ -101,7 +101,7 @@ function AppProvider({ children }: any) {
                 })}
                 initialChain={fantomTestnet}
               >
-                <Toaster position="top-center" />
+                <Toaster position="top-center" richColors />
                 {children}
               </RainbowKitProvider>
             </QueryClientProvider>

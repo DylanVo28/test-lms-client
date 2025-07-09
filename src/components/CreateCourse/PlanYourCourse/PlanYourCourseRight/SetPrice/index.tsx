@@ -10,18 +10,6 @@ const SetPrice = ({ control }: { control: Control }) => {
   const { t } = useTranslation('common');
   const { setError, clearErrors, formState } = useForm({}); // Lấy các hàm hỗ trợ từ react-hook-form
   const originPrice = useWatch({ control, name: 'originPrice' });
-  const finalPrice = useWatch({ control, name: 'price' });
-
-  useEffect(() => {
-    if (Number(finalPrice) > Number(originPrice)) {
-      setError('price', {
-        type: 'validate',
-        message: t('Final Price cannot be greater than Origin Price'),
-      });
-    } else {
-      clearErrors('price');
-    }
-  }, [originPrice, finalPrice, setError, clearErrors, t]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -79,6 +67,12 @@ const SetPrice = ({ control }: { control: Control }) => {
               control={control}
               rules={{
                 required: t('Final Price is required'),
+                validate: (value) => {
+                  if (Number(value) > Number(originPrice)) {
+                    return t('Final Price cannot be greater than Origin Price');
+                  }
+                  return true;
+                },
               }}
               render={({ field, fieldState }) => {
                 return (
@@ -88,7 +82,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                         USD
                       </Text>
                     }
-                    error={formState.errors.price?.message as string}
+                    error={fieldState?.error?.message}
                     type="number"
                     onChange={field.onChange}
                     value={field.value}
