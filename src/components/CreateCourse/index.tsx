@@ -1,23 +1,20 @@
+import useNavigate from '@/hooks/useNavigate';
+import { getAccessToken } from '@/store/auth';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import HeaderCourse from './HeaderCourse';
-import Footer from './Footer';
+import { useForm } from 'react-hook-form';
+import { useAccount } from 'wagmi';
+import LandingPage from '../Landingpage';
+import { toast } from '../UI/Toast/toast';
 import ContenStep1, { TYPE_CREATE_COURSE } from './ContenStep1';
 import ContenStep2 from './ContenStep2';
 import ContenStep3 from './ContenStep3';
 import ContenStep4 from './ContenStep4';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useCreateCourse, useDuplicateCourse } from './service';
-import { toast } from '../UI/Toast/toast';
-import { useTranslation } from 'next-i18next';
 import ContenStepDuplicateCourse from './ContenStepDuplicateCourse';
-import useNavigate from '@/hooks/useNavigate';
-import { useProfile } from '@/store/profile/useProfile';
-import AuthLayout from '@/layout/AuthLayout';
-import MainLayout from '@/layout/MainLayout';
-import { useAccount } from 'wagmi';
-import LandingPage from '../Landingpage';
-import { getAccessToken } from '@/store/auth';
+import Footer from './Footer';
+import HeaderCourse from './HeaderCourse';
+import { useCreateCourse, useDuplicateCourse } from './service';
 
 const CreateCourse = () => {
   const { t } = useTranslation('common');

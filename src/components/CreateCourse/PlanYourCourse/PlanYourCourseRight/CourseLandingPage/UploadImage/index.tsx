@@ -12,7 +12,15 @@ import React from 'react';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 import useClickOutside from '@/hooks/useClickOutside';
 
-const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
+const UploadImage = ({
+  value,
+  onChange,
+  error,
+}: {
+  value: any;
+  onChange: any;
+  error: any;
+}) => {
   const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
@@ -190,6 +198,12 @@ const UploadImage = ({ value, onChange }: { value: any; onChange: any }) => {
               </Button>
             )}
           </div>
+
+          {error && (
+            <Text type="font-14-400" className="text-danger-300">
+              {error}
+            </Text>
+          )}
         </div>
       </div>
     </div>

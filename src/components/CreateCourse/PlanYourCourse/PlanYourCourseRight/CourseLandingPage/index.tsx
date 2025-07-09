@@ -69,17 +69,20 @@ const CourseLandingPage = ({
             />
           )}
         />
-        <Text type="font-12-400" className="text-black-7">
+        {/* <Text type="font-12-400" className="text-black-7">
           {t(
             'Your title should be a mix of attention-grabbing, informative, and optimized for search.'
           )}
-        </Text>
+        </Text> */}
       </div>
       <div className="flex flex-col gap-1">
         <Controller
           name="subtitle"
           control={control}
-          render={({ field }) => (
+          rules={{
+            required: t('Field course subtitle is required'),
+          }}
+          render={({ field, fieldState }) => (
             <InputText
               value={field.value}
               onChange={field.onChange}
@@ -87,20 +90,30 @@ const CourseLandingPage = ({
               label={t('Course subtitle')}
               placeholder={t('Everything You Need to Know to Get Started')}
               inputDefault
+              error={fieldState?.error?.message}
             />
           )}
         />
-        <Text type="font-12-400" className="text-black-7">
+        {/* <Text type="font-12-400" className="text-black-7">
           {t(
             'Use 1 or 2 related keywords, and mention 3-4 of the most important areas that you have covered during your course.'
           )}
-        </Text>
+        </Text> */}
       </div>
       <div className="flex flex-col gap-1">
         <Controller
           name="description"
           control={control}
-          render={({ field }) => (
+          rules={{
+            required: t('Field course description is required'),
+            minLength: {
+              value: 200,
+              message: t(
+                'Field course description must be at least 200 characters'
+              ),
+            },
+          }}
+          render={({ field, fieldState }) => (
             <QuillEditor
               placeholder={t(
                 'Are you ready to master [Topic]? This comprehensive course will take you from beginner to expert, covering everything you need to know step by step...'
@@ -109,12 +122,13 @@ const CourseLandingPage = ({
               value={field.value}
               label={t('Course description')}
               inputDefault
+              error={fieldState?.error?.message}
             />
           )}
         />
-        <Text type="font-12-400" className="text-black-7">
+        {/* <Text type="font-12-400" className="text-black-7">
           {t('Description should have minimum 200 words.')}
-        </Text>
+        </Text> */}
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-white">
@@ -124,13 +138,17 @@ const CourseLandingPage = ({
           <Controller
             name="lang"
             control={control}
-            render={({ field }) => (
+            rules={{
+              required: t('Field language is required'),
+            }}
+            render={({ field, fieldState }) => (
               <SelectCustom
                 placeholder={t('Select language')}
                 className="min-w-[120px]"
                 onChange={field.onChange}
                 value={field.value}
                 inputDefault
+                error={fieldState?.error?.message}
                 options={
                   languages?.data?.map((item: any) => {
                     return {
@@ -142,10 +160,14 @@ const CourseLandingPage = ({
               />
             )}
           />
+
           <Controller
             name="level"
             control={control}
-            render={({ field }) => (
+            rules={{
+              required: t('Field level is required'),
+            }}
+            render={({ field, fieldState }) => (
               <SelectCustom
                 placeholder={t('-- Select level --')}
                 className="min-w-[120px]"
@@ -160,6 +182,7 @@ const CourseLandingPage = ({
                     };
                   }) || []
                 }
+                error={fieldState?.error?.message}
               />
             )}
           />
@@ -168,13 +191,17 @@ const CourseLandingPage = ({
           <Controller
             name="categoryId"
             control={control}
-            render={({ field }) => (
+            rules={{
+              required: t('Field category is required'),
+            }}
+            render={({ field, fieldState }) => (
               <SelectCustom
                 placeholder={t('Developer')}
                 inputDefault
                 onChange={field.onChange}
                 value={field.value}
                 className="min-w-[120px]"
+                error={fieldState?.error?.message}
                 options={
                   data?.data?.map((item: any) => {
                     return {
@@ -186,27 +213,6 @@ const CourseLandingPage = ({
               />
             )}
           />
-          {/* <Controller
-            name="subCategoryId"
-            control={control}
-            render={({ field }) => (
-              <SelectCustom
-                placeholder={t('-- Select Subcategory --')}
-                className="min-w-[120px]"
-                onChange={field.onChange}
-                value={field.value}
-                inputDefault
-                options={
-                  dataSubCategories?.data?.map((item: any) => {
-                    return {
-                      key: item?.id,
-                      label: item?.name,
-                    };
-                  }) || []
-                }
-              />
-            )}
-          /> */}
         </div>
         <Text type="font-12-400" className="text-black-7">
           {t(
@@ -219,7 +225,10 @@ const CourseLandingPage = ({
           <Controller
             name="topics"
             control={control}
-            render={({ field }) => (
+            rules={{
+              required: t('Field topics is required'),
+            }}
+            render={({ field, fieldState }) => (
               <>
                 <Text type="font-16-600" className="text-white mb-3">
                   {t('What is primarily taught in your course?')}
@@ -230,6 +239,7 @@ const CourseLandingPage = ({
                   onChange={field.onChange}
                   value={field.value}
                   inputDefault
+                  error={fieldState?.error?.message}
                   options={
                     topics?.data?.map((item: any) => {
                       return {
@@ -247,15 +257,33 @@ const CourseLandingPage = ({
       <Controller
         name="image"
         control={control}
-        render={({ field }) => (
-          <UploadImage onChange={field.onChange} value={field.value} />
+        rules={{
+          required: t(
+            'Please upload an image, this helps your course stand out'
+          ),
+        }}
+        render={({ field, fieldState }) => (
+          <UploadImage
+            onChange={field.onChange}
+            value={field.value}
+            error={fieldState?.error?.message}
+          />
         )}
       />
       <Controller
         name="video"
         control={control}
-        render={({ field }) => (
-          <PromotionalVideo onChange={field.onChange} value={field.value} />
+        rules={{
+          required: t(
+            'Please upload a video, this helps your course stand out'
+          ),
+        }}
+        render={({ field, fieldState }) => (
+          <PromotionalVideo
+            onChange={field.onChange}
+            value={field.value}
+            error={fieldState?.error?.message}
+          />
         )}
       />
     </div>

@@ -16,9 +16,11 @@ import CloseIcon from '@/layout/MainLayout/MainHeader/ThemeConfiguration/Icons/C
 const PromotionalVideo = ({
   value,
   onChange,
+  error,
 }: {
   value: any;
   onChange: any;
+  error: any;
 }) => {
   const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
@@ -195,6 +197,11 @@ const PromotionalVideo = ({
               </Button>
             )}
           </div>
+          {error && (
+            <Text type="font-14-400" className="text-danger-300">
+              {error}
+            </Text>
+          )}
         </div>
       </div>
     </div>

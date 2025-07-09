@@ -165,7 +165,7 @@ const QuillEditor = ({
         className={clsx('w-full', {
           ['custom-quill-editor']: inputDefault,
           ['custom-quill-editor-quizz']: inputQuizz,
-          ['quill-error']: error,
+          // ['quill-error']: error,
         })}
       >
         <div ref={editorRef}></div>

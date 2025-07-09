@@ -99,7 +99,7 @@ const InputText = (props: InputTextProps) => {
     }
   };
   return (
-    <div className="flex flex-col gap-2 relative justify-center">
+    <div className="flex flex-1 flex-col gap-2 relative justify-center">
       {label && (
         <div className="flex items-center gap-1">
           <Text type="font-14-400" className="text-white">
@@ -171,7 +171,7 @@ const InputText = (props: InputTextProps) => {
                 isBlack,
               '!bg-[#F0F0F0] border-1 !border-white !py-[12px] !px-[16px] data-[hover=true]:!border-white group-data-[focus=true]:!border-white':
                 inputShare,
-              '!border-danger-300 data-[hover=true]:!border-danger-300': error,
+              // '!border-danger-300 data-[hover=true]:!border-danger-300': error,
             }
           ),
         }}

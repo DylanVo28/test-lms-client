@@ -1,6 +1,7 @@
 import { Select, SelectItem, SelectProps } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useState } from 'react';
+import Text from '../Text';
 
 interface IOptions {
   label: string;
@@ -17,6 +18,7 @@ interface SelectCustomProps {
   inputDefault?: boolean;
   onChange?: any;
   value?: any;
+  error?: string;
 }
 const SelectCustom = (props: SelectCustomProps) => {
   const [openSelect, setOpenSelect] = useState(false);
@@ -30,6 +32,7 @@ const SelectCustom = (props: SelectCustomProps) => {
     onChange,
     value,
     rest,
+    error,
   } = props;
   const renderSelectorIcon = (open: boolean) => {
     if (isLesson) {
@@ -41,44 +44,52 @@ const SelectCustom = (props: SelectCustomProps) => {
     return <IconSelector openSelect={open} />;
   };
   return (
-    <Select
-      className={clsx('', {
-        [className]: !!className,
-      })}
-      label=""
-      labelPlacement="outside"
-      radius="sm"
-      onChange={onChange}
-      value={value}
-      selectedKeys={[value]}
-      showScrollIndicators={false}
-      onOpenChange={(open: boolean) => {
-        setOpenSelect(!open);
-      }}
-      placeholder={placeholder}
-      classNames={{
-        value: '!text-[14px] text-black-6 font-medium capitalize',
-        trigger: clsx(
-          '!bg-white-10 rounded min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-black-30',
-          {
-            '!bg-transparent border-white min-h-[40px] hover:!border-main transition-all bg-black-30':
-              isLesson,
-            '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-black-30 group-data-[focus=true]:!border-main':
-              isSelectSubmit,
-            '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-black-30 group-data-[focus=true]:!border-main':
-              inputDefault,
-          }
-        ),
-      }}
-      {...rest}
-      selectorIcon={renderSelectorIcon(openSelect)}
-    >
-      {options.map((item) => (
-        <SelectItem key={item.key} className="capitalize">
-          {item.label}
-        </SelectItem>
-      ))}
-    </Select>
+    <div>
+      <Select
+        className={clsx('', {
+          [className]: !!className,
+        })}
+        label=""
+        labelPlacement="outside"
+        radius="sm"
+        onChange={onChange}
+        value={value}
+        selectedKeys={[value]}
+        showScrollIndicators={false}
+        onOpenChange={(open: boolean) => {
+          setOpenSelect(!open);
+        }}
+        placeholder={placeholder}
+        classNames={{
+          value: '!text-[14px] text-black-6 font-medium capitalize',
+          trigger: clsx(
+            '!bg-white-10 rounded min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-black-30',
+            {
+              '!bg-transparent border-white min-h-[40px] hover:!border-main transition-all bg-black-30':
+                isLesson,
+              '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-black-30 group-data-[focus=true]:!border-main':
+                isSelectSubmit,
+              '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-black-30 group-data-[focus=true]:!border-main':
+                inputDefault,
+            }
+          ),
+        }}
+        {...rest}
+        selectorIcon={renderSelectorIcon(openSelect)}
+      >
+        {options.map((item) => (
+          <SelectItem key={item.key} className="capitalize">
+            {item.label}
+          </SelectItem>
+        ))}
+      </Select>
+
+      {error && (
+        <Text type="font-14-400" className="text-danger-300 mt-1">
+          {error}
+        </Text>
+      )}
+    </div>
   );
 };
 export default SelectCustom;

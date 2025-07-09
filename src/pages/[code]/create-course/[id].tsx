@@ -1,10 +1,10 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import PlanYourCourse from '@/components/CreateCourse/PlanYourCourse';
-import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
+import AuthLayout from '@/layout/MainLayout/AuthLayout';
 import { DefaultData } from '@/utils/const';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const PlanYourCoursePage = () => {
   return (
@@ -15,7 +15,9 @@ const PlanYourCoursePage = () => {
         imageUrl={DefaultData.DefaultCourseImage}
       />
       <AppProvider>
-        <PlanYourCourse />
+        <AuthLayout roles={['ADMIN', 'KOL']}>
+          <PlanYourCourse />
+        </AuthLayout>
       </AppProvider>
     </>
   );

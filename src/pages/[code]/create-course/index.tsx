@@ -5,6 +5,7 @@ import Head from 'next/head';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
+import AuthLayout from '@/layout/MainLayout/AuthLayout';
 
 const CreateCoursePage = () => {
   return (
@@ -15,7 +16,9 @@ const CreateCoursePage = () => {
         imageUrl={DefaultData.DefaultCourseImage}
       />
       <AppProvider>
-        <CreateCourse />
+        <AuthLayout roles={['ADMIN', 'KOL']}>
+          <CreateCourse />
+        </AuthLayout>
       </AppProvider>
     </>
   );

@@ -42,6 +42,8 @@ const IntendedLearners = ({
     name: 'intenedLeaners',
   });
 
+  console.log(errors, 'errors');
+
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
@@ -69,10 +71,16 @@ const IntendedLearners = ({
         </div>
         {fields?.map((item: any, index) => {
           return (
-            <div key={item?.id} className="flex items-center gap-3">
-              <div className="w-full">
+            <div key={item?.id} className="flex items-start gap-3">
+              <div className="flex-1 flex items-center gap-1">
                 <Controller
                   name={`objectives.${index}.name`}
+                  rules={{
+                    validate: (value) => {
+                      if (!value || !value.trim())
+                        return 'Please enter a value or remove this field';
+                    },
+                  }}
                   control={control}
                   render={({ field }) => {
                     return (
@@ -89,18 +97,20 @@ const IntendedLearners = ({
                               )
                         }
                         inputDefault
+                        error={errors?.objectives?.[index]?.name?.message}
                       />
                     );
                   }}
                 />
               </div>
 
-              {index > 3 && (
+              {index > 0 && (
                 <Button
                   onPress={() => remove(index)}
                   variant="light"
                   isIconOnly
                   radius="full"
+                  className="mt-1.5"
                 >
                   <Trash size={20} weight="light" />
                 </Button>
@@ -134,17 +144,23 @@ const IntendedLearners = ({
 
         {fieldsRequirements?.map((item: any, index) => {
           return (
-            <div key={item?.id} className="flex items-center gap-3">
-              <div className="w-full">
+            <div key={item?.id} className="flex items-start gap-3">
+              <div className="flex-1 flex items-center gap-1">
                 <Controller
                   name={`requirements.${index}.name`}
                   control={control}
+                  rules={{
+                    validate: (value) => {
+                      if (!value || !value.trim())
+                        return 'Please enter a value or remove this field';
+                    },
+                  }}
                   render={({ field }) => (
                     <InputText
                       {...field}
                       maxLength={160}
                       endContent
-                      className="md:min-w-[500px]"
+                      className="md:min-w-[500px] flex-1"
                       placeholder={
                         item?.pladholder
                           ? item?.pladholder
@@ -153,6 +169,7 @@ const IntendedLearners = ({
                             )
                       }
                       inputDefault
+                      error={errors?.requirements?.[index]?.name?.message}
                     />
                   )}
                 />
@@ -163,6 +180,7 @@ const IntendedLearners = ({
                   variant="light"
                   isIconOnly
                   radius="full"
+                  className="mt-1.5"
                 >
                   <Trash size={20} weight="light" />
                 </Button>
@@ -194,17 +212,23 @@ const IntendedLearners = ({
 
         {fieldsIntenedLeaners?.map((item: any, index) => {
           return (
-            <div key={item?.id} className="flex items-center gap-3">
-              <div className="w-full">
+            <div key={item?.id} className="flex items-start gap-3">
+              <div className="flex-1 flex items-center gap-1">
                 <Controller
                   name={`intenedLeaners.${index}.name`}
                   control={control}
+                  rules={{
+                    validate: (value) => {
+                      if (!value || !value.trim())
+                        return 'Please enter a value or remove this field';
+                    },
+                  }}
                   render={({ field }) => (
                     <InputText
                       {...field}
                       maxLength={160}
                       endContent
-                      className="md:min-w-[500px]"
+                      className="md:min-w-[500px] flex-1"
                       placeholder={
                         item?.pladholder
                           ? item?.pladholder
@@ -213,6 +237,7 @@ const IntendedLearners = ({
                             )
                       }
                       inputDefault
+                      error={errors?.intenedLeaners?.[index]?.name?.message}
                     />
                   )}
                 />
@@ -223,6 +248,7 @@ const IntendedLearners = ({
                   variant="light"
                   isIconOnly
                   radius="full"
+                  className="mt-1.5"
                 >
                   <Trash size={20} weight="light" />
                 </Button>
