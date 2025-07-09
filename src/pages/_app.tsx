@@ -5,28 +5,15 @@ import 'quill/dist/quill.snow.css';
 import 'react-rater/lib/react-rater.css';
 import '../styles/globals.scss';
 import '../styles/tailwind.css';
-import 'videojs-contrib-quality-levels';
-import 'videojs-hls-quality-selector';
 import 'video.js/dist/video-js.css';
 
 import { ReactElement, ReactNode } from 'react';
 
-import { getDefaultWallets } from '@rainbow-me/rainbowkit';
-import { QueryClient } from '@tanstack/react-query';
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { createConfig, createStorage, http } from 'wagmi';
-import {
-  arbitrum,
-  base,
-  fantomTestnet,
-  mainnet,
-  optimism,
-  polygon,
-} from 'wagmi/chains';
 import nextI18nConfig from '../../next-i18next.config';
 
 export type NextPageWithLayout = NextPage & {
@@ -35,71 +22,6 @@ export type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
-
-export const projectId = 'fc44d249918338bb571eab6da79776df';
-const chains = [mainnet, polygon, optimism, arbitrum, base];
-
-// Initialize RainbowKit with wallets
-export const { connectors } = getDefaultWallets({
-  appName: 'What Exchange',
-  projectId,
-});
-
-// Configure wagmi client
-const config = createConfig({
-  // chains: [mainnet, polygon, optimism, arbitrum, base],
-  chains: [fantomTestnet],
-  connectors,
-  transports: {
-    [fantomTestnet.id]: http('https://rpc.testnet.fantom.network/'),
-    // [mainnet.id]: http(),
-    // [polygon.id]: http(),
-    // [optimism.id]: http(),
-    // [arbitrum.id]: http(),
-    // [base.id]: http(),
-  },
-  ssr: false,
-  // Enhanced storage handling for WalletConnect
-  storage: createStorage({
-    storage:
-      typeof window !== 'undefined'
-        ? {
-            getItem: (key) => {
-              const item = window.localStorage.getItem(key);
-              // Keep WalletConnect session active
-              if (key.startsWith('wc@2:client:')) {
-                return item || window.localStorage.getItem('wagmi.wallet');
-              }
-              // Handle returning from mobile wallet
-              if (
-                window.location.href.includes('wc?') &&
-                key.includes('wagmi')
-              ) {
-                return item || 'true';
-              }
-              return item;
-            },
-            setItem: (key, value) => window.localStorage.setItem(key, value),
-            removeItem: (key) => window.localStorage.removeItem(key),
-          }
-        : undefined,
-  }),
-});
-
-// Handle WalletConnect session restoration and URL cleanup
-if (typeof window !== 'undefined') {
-  const hasWalletConnectSession = Object.keys(window.localStorage).some((key) =>
-    key.startsWith('wc@2:client:')
-  );
-
-  if (hasWalletConnectSession && window.location.href.includes('wc?')) {
-    // Clean URL immediately to avoid reconnection loops
-    const cleanUrl = window.location.href.split('?')[0];
-    window.history.replaceState({}, document.title, cleanUrl);
-  }
-}
-
-const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
@@ -118,12 +40,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="title" content="What Exchange" />
         <meta name="description" content="What Exchange" />
         <link rel="shortcut icon" href="/favicon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
-          rel="stylesheet"
-        ></link>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1,maximum-scale=2,shrink-to-fit=no"
@@ -136,26 +52,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      {/* oke */}
-      <main>
-        {/* <WagmiProvider config={config}>
-          <AppLayout>
-            <QueryClientProvider client={queryClient}>
-              <RainbowKitProvider
-                theme={darkTheme({
-                  accentColor: '#02A6C2',
-                  borderRadius: 'small',
-                })}
-                initialChain={fantomTestnet}
-              >
-                <Toaster position="top-center" />
-                {getLayout(<Component {...pageProps} />)}
-              </RainbowKitProvider>
-            </QueryClientProvider>
-          </AppLayout>
-        </WagmiProvider> */}
-        {getLayout(<Component {...pageProps} />)}
-      </main>
+      <main>{getLayout(<Component {...pageProps} />)}</main>
     </>
   );
 }

@@ -12,6 +12,7 @@ import Text from '@/components/UI/Text';
 import { Button, ModalBody } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import videojs from 'video.js';
+import { loadVideoJSPlugins } from '@/utils/videojs-plugins';
 
 interface IModalViewVideo {}
 
@@ -43,77 +44,90 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
   };
 
   useEffect(() => {
-    // Initialize player if it doesn't exist
-    if (!playerRef.current) {
-      const videoElement = document.createElement('video');
-      videoElement.className = 'video-js vjs-big-play-centered';
-      videoElement.controls = true;
-      videoElement.preload = 'auto';
-      videoElement.crossOrigin = 'anonymous';
+    if (!visible || !dataVideo?.video) {
+      return;
+    }
 
-      // Replace old video element with new one
-      if (videoRef.current) {
+    const initializePlayer = async () => {
+      // Load VideoJS plugins before initializing player
+      await loadVideoJSPlugins();
+
+      // Initialize player if it doesn't exist
+      if (!playerRef.current && videoRef.current) {
+        // Clear existing content
+        videoRef.current.innerHTML = '';
+
+        const videoElement = document.createElement('video');
+        videoElement.className = 'video-js vjs-big-play-centered';
+        videoElement.controls = true;
+        videoElement.preload = 'auto';
+        videoElement.crossOrigin = 'anonymous';
+
+        // Add video element to container
         videoRef.current.appendChild(videoElement);
-      }
 
-      const handleFullscreenChange = () => {
-        if (playerRef.current.isFullscreen()) {
-          videoElement.className = 'fullscreen-mode';
-        } else {
-          videoElement.className = 'exit-fullscreen';
-        }
-      };
-
-      const options = {
-        controls: true,
-        responsive: true,
-        fluid: true,
-        autoplay: false,
-        preload: 'auto',
-
-        html5: {
-          hls: {
-            enableLowInitialPlaylist: true,
-            smoothQualityChange: true,
-            overrideNative: true,
-          },
-          nativeVideoTracks: false,
-          nativeAudioTracks: false,
-          nativeTextTracks: false,
-        },
-      };
-
-      try {
-        playerRef.current = videojs(
-          videoElement,
-          options,
-          function onPlayerReady() {
-            playerRef.current.hlsQualitySelector();
-            console.log(t('Player is ready'));
+        const handleFullscreenChange = () => {
+          if (playerRef.current && playerRef.current.isFullscreen()) {
+            videoElement.className = 'fullscreen-mode';
+          } else {
+            videoElement.className = 'exit-fullscreen';
           }
-        );
+        };
 
-        playerRef.current.on('fullscreenchange', handleFullscreenChange);
+        const options = {
+          controls: true,
+          responsive: true,
+          fluid: true,
+          autoplay: false,
+          preload: 'auto',
+          html5: {
+            hls: {
+              enableLowInitialPlaylist: true,
+              smoothQualityChange: true,
+              overrideNative: true,
+            },
+            nativeVideoTracks: false,
+            nativeAudioTracks: false,
+            nativeTextTracks: false,
+          },
+        };
 
-        playerRef.current.on('error', function (error: any) {
-          console.error(t('Video player error') + ':', error);
-        });
-      } catch (error) {
-        console.error(t('Player initialization error') + ':', error);
+        try {
+          playerRef.current = videojs(
+            videoElement,
+            options,
+            function onPlayerReady() {
+              if ((this as any).hlsQualitySelector) {
+                (this as any).hlsQualitySelector();
+              }
+              console.log(t('Player is ready'));
+            }
+          );
+
+          playerRef.current.on('fullscreenchange', handleFullscreenChange);
+
+          playerRef.current.on('error', function (error: any) {
+            console.error(t('Video player error') + ':', error);
+          });
+        } catch (error) {
+          console.error(t('Player initialization error') + ':', error);
+        }
       }
-    }
 
-    // Update source when URL changes
-    if (playerRef.current && dataVideo?.video) {
-      try {
-        playerRef.current.src({
-          src: dataVideo?.video,
-          type: determineVideoType(dataVideo?.video),
-        });
-      } catch (error) {
-        console.error(t('Error updating video source') + ':', error);
+      // Update source when URL changes
+      if (playerRef.current && dataVideo?.video) {
+        try {
+          playerRef.current.src({
+            src: dataVideo.video,
+            type: determineVideoType(dataVideo.video),
+          });
+        } catch (error) {
+          console.error(t('Error updating video source') + ':', error);
+        }
       }
-    }
+    };
+
+    initializePlayer();
 
     return () => {
       if (playerRef.current) {
@@ -125,7 +139,7 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
         }
       }
     };
-  }, [dataVideo?.video, visible]);
+  }, [dataVideo?.video, visible, t]);
 
   return (
     <CustomModal

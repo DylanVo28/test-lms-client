@@ -1,6 +1,7 @@
 import LoadingContainer from '@/components/UI/LoadingContainer';
 import { useEffect, useRef, useState } from 'react';
 import videojs from 'video.js';
+import { loadVideoJSPlugins } from '@/utils/videojs-plugins';
 
 import NextVideo from './NextVideo';
 import { Button, Tooltip } from '@nextui-org/react';
@@ -62,111 +63,119 @@ const VideoSection = ({
   };
 
   useEffect(() => {
-    // Initialize player if it doesn't exist
-    if (!playerRef.current) {
-      const videoElement = document.createElement('video');
-      videoElement.className = 'video-js vjs-big-play-centered';
-      videoElement.controls = true;
-      videoElement.preload = 'auto';
-      videoElement.crossOrigin = 'anonymous';
+    const initializePlayer = async () => {
+      // Load VideoJS plugins before initializing player
+      await loadVideoJSPlugins();
 
-      videoElement.addEventListener('ended', () => {
-        setEndVideo(true);
-      });
+      // Initialize player if it doesn't exist
+      if (!playerRef.current && videoRef.current) {
+        const videoElement = document.createElement('video');
+        videoElement.className = 'video-js vjs-big-play-centered';
+        videoElement.controls = true;
+        videoElement.preload = 'auto';
+        videoElement.crossOrigin = 'anonymous';
 
-      // Replace old video element with new one
-      if (videoRef.current) {
+        videoElement.addEventListener('ended', () => {
+          setEndVideo(true);
+        });
+
+        // Clear existing content and add video element
+        videoRef.current.innerHTML = '';
         videoRef.current.appendChild(videoElement);
-      }
 
-      const handleFullscreenChange = () => {
-        if (playerRef.current.isFullscreen()) {
-          videoElement.className = 'fullscreen-mode';
-        } else {
-          videoElement.className = 'exit-fullscreen';
-        }
-      };
+        const handleFullscreenChange = () => {
+          if (playerRef.current.isFullscreen()) {
+            videoElement.className = 'fullscreen-mode';
+          } else {
+            videoElement.className = 'exit-fullscreen';
+          }
+        };
 
-      const options = {
-        controls: true,
-        responsive: true,
-        fluid: true,
-        autoplay: false,
-        preload: 'auto',
+        const options = {
+          controls: true,
+          responsive: true,
+          fluid: true,
+          autoplay: false,
+          preload: 'auto',
 
-        html5: {
-          hls: {
-            enableLowInitialPlaylist: true,
-            smoothQualityChange: true,
-            overrideNative: true,
+          html5: {
+            hls: {
+              enableLowInitialPlaylist: true,
+              smoothQualityChange: true,
+              overrideNative: true,
+            },
+            nativeVideoTracks: false,
+            nativeAudioTracks: false,
+            nativeTextTracks: false,
           },
-          nativeVideoTracks: false,
-          nativeAudioTracks: false,
-          nativeTextTracks: false,
-        },
-      };
+        };
 
-      try {
-        playerRef.current = videojs(
-          videoElement,
-          options,
-          function onPlayerReady() {
-            playerRef.current.hlsQualitySelector();
-            console.log(t('Player is ready'));
-          }
-        );
-
-        playerRef.current.on('fullscreenchange', handleFullscreenChange);
-
-        playerRef.current.on('error', function (error: any) {
-          console.error(t('Video player error') + ':', error);
-        });
-      } catch (error) {
-        console.error(t('Player initialization error') + ':', error);
-      }
-    }
-
-    // Update source when URL changes
-    if (playerRef.current && info?.urlVideo) {
-      const handleTimeUpdate = () => {
-        const currentTime = playerRef.current.currentTime();
-        const duration = playerRef.current.duration();
-        const progress = (currentTime / duration) * 100;
-
-        if (progress >= 90) {
-          // setProgressVideo(progress);
-          if (lastIndex === allItems?.length - 1 && !reviewed) {
-            handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
-            return;
-          }
-          playerRef.current.off('timeupdate', handleTimeUpdate);
-          if (isMobile) {
-            setEndVideo(true);
-          }
-        }
-      };
-
-      try {
-        playerRef.current.src({
-          src: info.urlVideo,
-          type: determineVideoType(info.urlVideo),
-        });
-        playerRef.current.on('timeupdate', handleTimeUpdate);
-      } catch (error) {
-        console.error(t('Error updating video source') + ':', error);
-      }
-    }
-
-    return () => {
-      if (playerRef.current) {
         try {
-          playerRef.current.dispose();
-          playerRef.current = null;
+          playerRef.current = videojs(
+            videoElement,
+            options,
+            function onPlayerReady() {
+              if ((this as any).hlsQualitySelector) {
+                (this as any).hlsQualitySelector();
+              }
+              console.log(t('Player is ready'));
+            }
+          );
+
+          playerRef.current.on('fullscreenchange', handleFullscreenChange);
+
+          playerRef.current.on('error', function (error: any) {
+            console.error(t('Video player error') + ':', error);
+          });
         } catch (error) {
-          console.error(t('Error disposing player') + ':', error);
+          console.error(t('Player initialization error') + ':', error);
         }
       }
+
+      // Update source when URL changes
+      if (playerRef.current && info?.urlVideo) {
+        const handleTimeUpdate = () => {
+          const currentTime = playerRef.current.currentTime();
+          const duration = playerRef.current.duration();
+          const progress = (currentTime / duration) * 100;
+
+          if (progress >= 90) {
+            // setProgressVideo(progress);
+            if (lastIndex === allItems?.length - 1 && !reviewed) {
+              handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
+              return;
+            }
+            playerRef.current.off('timeupdate', handleTimeUpdate);
+            if (isMobile) {
+              setEndVideo(true);
+            }
+          }
+        };
+
+        try {
+          playerRef.current.src({
+            src: info.urlVideo,
+            type: determineVideoType(info.urlVideo),
+          });
+          playerRef.current.on('timeupdate', handleTimeUpdate);
+        } catch (error) {
+          console.error(t('Error updating video source') + ':', error);
+        }
+      }
+
+      return () => {
+        if (playerRef.current) {
+          try {
+            playerRef.current.dispose();
+            playerRef.current = null;
+          } catch (error) {
+            console.error(t('Error disposing player') + ':', error);
+          }
+        }
+      };
     };
+
+    initializePlayer();
   }, [info?.urlVideo]);
 
   const determineVideoType = (url: string): string => {

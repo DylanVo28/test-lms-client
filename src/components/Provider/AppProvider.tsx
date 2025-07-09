@@ -72,12 +72,6 @@ function AppProvider({ children }: any) {
         <meta name="title" content="What Exchange" />
         <meta name="description" content="What Exchange" />
         <link rel="shortcut icon" href="/favicon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
-          rel="stylesheet"
-        ></link>
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1,maximum-scale=2,shrink-to-fit=no"
