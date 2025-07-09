@@ -78,7 +78,8 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
           controls: true,
           responsive: true,
           fluid: true,
-          autoplay: false,
+          autoplay: true,
+          muted: false,
           preload: 'auto',
           html5: {
             hls: {

@@ -95,7 +95,8 @@ const VideoSection = ({
           controls: true,
           responsive: true,
           fluid: true,
-          autoplay: false,
+          autoplay: true,
+          muted: false,
           preload: 'auto',
 
           html5: {
