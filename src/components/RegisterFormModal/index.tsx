@@ -27,6 +27,7 @@ const RegisterFormModal = () => {
   const { address, isConnected } = useAccount();
   const { requestGetProfile, loading } = useProfileInitial();
   const [showRegisterForm, setShowRegisterForm] = useState<any>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
   const { disconnect } = useDisconnect();
 
@@ -99,8 +100,10 @@ const RegisterFormModal = () => {
 
   const handleRegister = async () => {
     try {
+      setIsRegistering(true);
       if (!address) {
         toast.error(t('Please connect your wallet'));
+        setIsRegistering(false);
         return;
       }
       // Check if address already exists in the database
@@ -109,6 +112,7 @@ const RegisterFormModal = () => {
 
         if (!checkAddressRes?.data?.exist) {
           toast.error(t('Referral code is invalid'));
+          setIsRegistering(false);
           return;
         }
       }
@@ -120,6 +124,7 @@ const RegisterFormModal = () => {
       });
 
       if (!signature) {
+        setIsRegistering(false);
         window.location.reload();
         return;
       }
@@ -201,6 +206,8 @@ const RegisterFormModal = () => {
       handleClose();
     } catch (error: any) {
       toast.error(t(error?.message));
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -248,9 +255,16 @@ const RegisterFormModal = () => {
             </div>
 
             <div
-              className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#02a6c2] w-fit mx-auto cursor-pointer text-lg font-semibold"
-              onClick={handleRegister}
+              className={`min-w-[200px] h-[40px] flex justify-center items-center gap-2 w-fit mx-auto text-lg font-semibold ${
+                isRegistering
+                  ? 'bg-[#02a6c2]/50 cursor-not-allowed'
+                  : 'bg-[#02a6c2] cursor-pointer'
+              }`}
+              onClick={isRegistering ? undefined : handleRegister}
             >
+              {isRegistering && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
               Sign in
             </div>
           </div>

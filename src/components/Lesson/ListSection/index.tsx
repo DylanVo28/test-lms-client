@@ -30,9 +30,8 @@ const ListSection = ({
 }) => {
   const { t } = useTranslation('common');
 
-  console.log('sections', sections);
   return (
-    <div className="flex flex-col bg-black-70 overflow-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
+    <div className="flex flex-col bg-black-70 overflow-y-auto max-h-[calc(100vh-71px)] overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
       <LoadingContainer loading={loading} />
 
       <div className="mx-[-8px]">

@@ -64,12 +64,15 @@ const NoDataContent = ({
       >
         <CaretRight size={24} className="fill-text-white" />
       </Button>
-      <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
-        <IconNodata />
-        <Text type="font-12-400" className="text-neutral">
-          {t('No content')}
-        </Text>
-      </div>
+
+      {!loading && (
+        <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
+          <IconNodata />
+          <Text type="font-12-400" className="text-neutral">
+            {t('No content')}
+          </Text>
+        </div>
+      )}
     </div>
   );
 };

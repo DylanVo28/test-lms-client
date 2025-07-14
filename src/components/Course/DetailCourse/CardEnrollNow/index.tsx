@@ -22,6 +22,7 @@ import { useEffect, useRef, useState } from 'react';
 import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse, useEnrollCourseFree } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
+import FormatNumberDecimal from '@/components/Commons/FormatNumberDecimal';
 
 const CardEnrollNow = ({
   course,
@@ -40,14 +41,66 @@ const CardEnrollNow = ({
 
   const isLoading = _isLoading && !course?.id;
 
-  const DATA_NOTE = [
-    t('12 hours of on-demand video'),
-    t('Exercises'),
-    t('1 downloadable resource'),
-    t('Mobile and TV access'),
-    t('Timed access'),
-    t('Certificate of completion'),
-  ];
+  const getCourseIncludes = (metadata: any) => {
+    if (!metadata) return [];
+
+    const includes = [];
+
+    if (metadata.videoDuration?.formatted > 0) {
+      includes.push(
+        `${metadata.videoDuration.formatted} ${t('of on-demand video')}`
+      );
+    }
+
+    if (metadata.totalLessons > 0) {
+      includes.push(
+        `${metadata.totalLessons} ${
+          metadata.totalLessons === 1 ? t('lesson') : t('lessons')
+        }`
+      );
+    }
+
+    if (metadata.hasExercises) {
+      includes.push(t('Exercises'));
+    }
+
+    if (metadata.downloadableResources > 0) {
+      includes.push(
+        `${metadata.downloadableResources} ${
+          metadata.downloadableResources === 1
+            ? t('downloadable resource')
+            : t('downloadable resources')
+        }`
+      );
+    }
+
+    if (metadata.hasMobileAccess) {
+      includes.push(t('Mobile and TV access'));
+    }
+
+    if (metadata.hasQuizzes && metadata.totalQuizzes > 0) {
+      includes.push(
+        `${metadata.totalQuizzes} ${
+          metadata.totalQuizzes === 1 ? t('quiz') : t('quizzes')
+        }`
+      );
+    }
+    if (metadata.totalQuizzes > 0) {
+      includes.push(`${metadata.totalQuizzes} ${t('Exercises')}`);
+    }
+
+    if (metadata.hasLifetimeAccess) {
+      includes.push(t('Lifetime access'));
+    }
+
+    if (metadata.hasCertificate) {
+      includes.push(t('Certificate of completion'));
+    }
+
+    return includes;
+  };
+
+  const courseIncludes = getCourseIncludes(course?.metadata);
 
   const accessToken = useAccessToken();
   const { profile } = useProfile();
@@ -283,12 +336,12 @@ const CardEnrollNow = ({
               </Text>
 
               <div className="flex flex-col gap-1">
-                {DATA_NOTE?.map((item) => {
+                {courseIncludes?.map((item: string, index: number) => {
                   return (
-                    <div className="flex items-center gap-1">
+                    <div key={index} className="flex items-center gap-1">
                       <div className="w-1 h-1 bg-black-6 rounded-full" />
                       <Text className="text-black-6" type="font-16-400">
-                        {t(item)}
+                        {item}
                       </Text>
                     </div>
                   );
@@ -305,16 +358,24 @@ const CardEnrollNow = ({
                     <Text type="font-14-400" className="text-black-6">
                       {t('Reach')}{' '}
                       <span className="text-main font-bold">
-                        ${course?.unlockIfUserTradesAtLeast}
+                        ${formatNumber(course?.unlockIfUserTradesAtLeast)}
                       </span>{' '}
                       {t(
                         'in lifetime trading volume to unlock this course for free'
                       )}
                     </Text>
-                    <Text type="font-14-400" className="text-black-6">
-                      {t('Your current trading volume')}: $
-                      {volumeData?.data?.perp_volume_ltd || 0}
-                    </Text>
+                    <div className="flex items-center gap-1">
+                      <Text type="font-14-400" className="text-black-6">
+                        {t('Your current trading volume')}:
+                      </Text>
+                      <FormatNumberDecimal
+                        value={volumeData?.data?.perp_volume_ltd || 0}
+                        decimalPlaces={6}
+                        fractionDigits={6}
+                        abbreviate={true}
+                        prefix="$"
+                      />
+                    </div>
                   </div>
                 </div>
               )}

@@ -533,7 +533,12 @@ const Lesson = () => {
               handleFindIdPrevChildSection={handleFindIdPrevChildSection}
               data={dataLesson?.data}
               allItems={allItems}
-              loading={loadingNoData || loadingListSession}
+              loading={
+                loadingNoData ||
+                loadingListSession ||
+                loadingLesson ||
+                isFirstLoad
+              }
             />
           )}
         {endCourse && !typeLoadContent && (
@@ -613,9 +618,9 @@ const Lesson = () => {
         </div>
       </div>
       {!isHideSidebar && (
-        <div className="md:col-span-3 px-4 md:px-0">
-          <div className="w-full sticky top-0 right-0 z-[10] h-full bg-[#0F141A]">
-            <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-black-9 border-l-black-9 sticky top-0 z-[1000] bg-gray">
+        <div className="md:col-span-3 px-4 md:px-0 sticky top-0 h-screen">
+          <div className="w-full bg-[#0F141A] h-full">
+            <div className="flex justify-between py-6 px-4 items-center border-l-1 border-b-1 border-b-black-9 border-l-black-9  bg-gray">
               <div className="flex items-center gap-2">
                 {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
                 <div className="flex flex-col gap-[2px]">

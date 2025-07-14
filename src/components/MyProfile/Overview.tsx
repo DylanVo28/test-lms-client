@@ -7,6 +7,7 @@ import Text from '../UI/Text';
 import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
+import FormatNumberDecimal from '../Commons/FormatNumberDecimal';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -145,36 +146,57 @@ const Overview = ({
             <Text type="font-14-400" className="opacity-50">
               Last 7 days
             </Text>
-            <Text type="font-14-400">
-              ${volumeData?.data?.perp_volume_last_7_days || 0}
-            </Text>
+
+            <FormatNumberDecimal
+              value={volumeData?.data?.perp_volume_last_7_days}
+              decimalPlaces={6}
+              fractionDigits={6}
+              abbreviate={true}
+              className="text-white"
+              prefix="$"
+            />
           </div>
 
           <div className="flex justify-between">
             <Text type="font-14-400" className="opacity-50">
               Last 30 days
             </Text>
-            <Text type="font-14-400">
-              ${volumeData?.data?.perp_volume_last_30_days || 0}
-            </Text>
+            <FormatNumberDecimal
+              value={volumeData?.data?.perp_volume_last_30_days}
+              decimalPlaces={6}
+              fractionDigits={6}
+              abbreviate={true}
+              className="text-white"
+              prefix="$"
+            />
           </div>
 
           <div className="flex justify-between">
             <Text type="font-14-400" className="opacity-50">
               Year to date
             </Text>
-            <Text type="font-14-400">
-              ${volumeData?.data?.perp_volume_ytd || 0}
-            </Text>
+            <FormatNumberDecimal
+              value={volumeData?.data?.perp_volume_ytd}
+              decimalPlaces={6}
+              fractionDigits={6}
+              abbreviate={true}
+              className="text-white"
+              prefix="$"
+            />
           </div>
 
           <div className="flex justify-between">
             <Text type="font-14-400" className="opacity-50">
               Life time
             </Text>
-            <Text type="font-14-400">
-              ${volumeData?.data?.perp_volume_ltd || 0}
-            </Text>
+            <FormatNumberDecimal
+              value={volumeData?.data?.perp_volume_ltd}
+              decimalPlaces={6}
+              fractionDigits={6}
+              abbreviate={true}
+              className="text-white"
+              prefix="$"
+            />
           </div>
         </div>
       </div>

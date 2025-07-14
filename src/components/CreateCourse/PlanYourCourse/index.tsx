@@ -220,7 +220,7 @@ const PlanYourCourse = () => {
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
       getDetailCourse(router.query.id as string);
-      setIsSubmit(true);
+      // setIsSubmit(true);
     },
     onError: (error: any) => {
       toast.error(error.message);
