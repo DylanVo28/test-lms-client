@@ -119,11 +119,11 @@ const Comment = ({
             )} */}
             <ThumbsUp
               size={18}
-              className={clsx(
+              color={
                 meLiked && meReaction?.name === TypeReactions?.LIKE
                   ? '#02A6C2'
                   : '#ffffff'
-              )}
+              }
             />
           </Button>
           <Text type="font-14-500" className="text-black-7">

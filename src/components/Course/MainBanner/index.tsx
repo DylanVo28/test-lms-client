@@ -1,12 +1,11 @@
+import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
 import Text from '@/components/UI/Text';
+import { useTheme } from '@/store/theme/useTheme';
 import { Button } from '@nextui-org/react';
-import clsx from 'clsx';
+import { House } from '@phosphor-icons/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
-import IconHome from '@/components/UI/Icons/IconHome';
-import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
-import { useTheme } from '@/store/theme/useTheme';
 
 const DATA_SKILL = [
   'Design',
@@ -46,7 +45,7 @@ const MainBanner = () => {
         <div className="flex flex-col gap-10 md:gap-[50px] w-full md:w-6/12">
           <div className="flex items-center gap-1">
             <Button isIconOnly variant="light" size="md">
-              <IconHome />
+              <House size={20} />
             </Button>
             <IconArrowRight />
             <Text type="font-14-500" className="text-white">

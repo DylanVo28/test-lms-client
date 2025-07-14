@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import FormAddSection from './CurriculumItem/FormAddSection';
-import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
+import { FileText, PencilSimpleLine, Trash } from '@phosphor-icons/react';
 import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
 import { useTranslation } from 'next-i18next';
 import CurriculumProvider from './context';
@@ -187,7 +187,7 @@ const Curriculum = ({ setValue }: any) => {
                           index + 1
                         }:`}</Text>
                         <div className="flex items-center gap-1">
-                          <IconFile />
+                          <FileText size={20} weight="light" />
                           <Text type="font-16-400" className="text-black-7">
                             {field.title}
                           </Text>

@@ -63,48 +63,34 @@ const SelectCustom = (props: SelectCustomProps) => {
         classNames={{
           value: '!text-[14px] text-black-6 font-medium capitalize',
           trigger: clsx(
-            '!bg-white-10 rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-black-30',
+            '!bg-white-10 rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30',
             {
-              '!bg-white-10 border-white min-h-[40px] hover:!border-main transition-all bg-black-30':
+              '!bg-white-10 border-white min-h-[40px] hover:!border-main transition-all bg-[#21252b]-30':
                 isLesson,
-              '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-black-30 group-data-[focus=true]:!border-main':
+              '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-[#21252b]-30 group-data-[focus=true]:!border-main':
                 isSelectSubmit,
-              '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-black-30 group-data-[focus=true]:!border-main':
+              '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-[#21252b]-30 group-data-[focus=true]:!border-main':
                 inputDefault,
             }
           ),
           listboxWrapper: clsx(
-            'max-h-[200px] rounded-md border-1 !bg-opacity-100 z-50',
-            {
-              '!bg-white-10 border-white-10':
-                !isLesson && !isSelectSubmit && !inputDefault,
-              '!bg-white-10 border-white': isLesson,
-              '!bg-back-30 border-black-10': isSelectSubmit,
-              '!bg-gray-80 border-black-10': inputDefault,
-            }
+            'max-h-[200px] rounded-md border z-50',
+            '!bg-[#21252b] !border-[#f0f0f01a]'
           ),
-          listbox: clsx('rounded-md p-1 !bg-opacity-100', {
-            '!bg-white-10':
-              (!isLesson && !isSelectSubmit && !inputDefault) || isLesson,
-            '!bg-back-30': isSelectSubmit,
-            '!bg-gray-80': inputDefault,
-          }),
+          listbox: clsx('rounded-md p-1 !bg-[#21252b]'),
           popoverContent: clsx(
-            'rounded-md shadow-xl border-1 p-0 !bg-opacity-100 z-50 backdrop-blur-sm',
-            {
-              '!bg-white-10 border-white-10':
-                !isLesson && !isSelectSubmit && !inputDefault,
-              '!bg-white-10 border-white': isLesson,
-              '!bg-back-30 border-black-10': isSelectSubmit,
-              '!bg-gray-80 border-black-10': inputDefault,
-            }
+            'rounded-md shadow-xl border-0.5 p-0 z-50',
+            '!bg-[#21252b] !border-[#f0f0f01a]'
           ),
         }}
         {...rest}
         selectorIcon={renderSelectorIcon(openSelect)}
       >
         {options.map((item) => (
-          <SelectItem key={item.key} className="capitalize">
+          <SelectItem
+            key={item.key}
+            className="capitalize text-white hover:!bg-gray-800 data-[hover=true]:!bg-gray-800 data-[selectable=true]:focus:!bg-gray-800"
+          >
             {item.label}
           </SelectItem>
         ))}

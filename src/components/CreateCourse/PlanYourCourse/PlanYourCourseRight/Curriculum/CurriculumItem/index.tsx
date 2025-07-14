@@ -13,25 +13,30 @@ import IconPlusMain from '@/components/UI/Icons/IconPlusMain';
 import Text from '@/components/UI/Text';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import { PencilSimpleLine, Question, Trash } from '@phosphor-icons/react';
+import {
+  FileText,
+  MonitorPlay,
+  PencilSimpleLine,
+  Question,
+  Trash,
+} from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
-import { IconClose, IconFile } from '..';
+import { IconClose } from '..';
 import FormSelectItem from './FomSelectItem';
 import FormAddLecture from './FormAddLecture';
 import FormAddQuizz from './FormAddQuizz';
 import FormLecture from './FormLecture';
 import FormQuiz from './FormQuiz';
-import { toast } from '@/components/UI/Toast/toast';
 
 import InputText from '@/components/UI/InputText';
+import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
+import { useCurriculumContext } from '../context';
 import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import Content from './Content';
 import ContentQuestions from './ContentQuestions';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
-import { useCurriculumContext } from '../context';
-import classNames from 'classnames';
 
 const CurriculumItem = ({ item }: { item: any }) => {
   const { t } = useTranslation('common');
@@ -474,7 +479,13 @@ const CurriculumItem = ({ item }: { item: any }) => {
                   ) : (
                     <div className="flex items-center gap-1">
                       {item?.type === TYPE_COURSE.LECTURE ? (
-                        <IconFile />
+                        <>
+                          {item?.contentType === LessonContentType?.VIDEO ? (
+                            <MonitorPlay size={20} weight="light" />
+                          ) : (
+                            <FileText size={20} weight="light" />
+                          )}
+                        </>
                       ) : (
                         <Question color="#8C8C8C" weight="bold" size={20} />
                       )}

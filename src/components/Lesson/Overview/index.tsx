@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
 import { useTranslation } from 'next-i18next';
+import { Clock, Student } from '@phosphor-icons/react';
 
 const Overview = ({ dataListSection, dataDetail }: any) => {
   const { t } = useTranslation('common');
@@ -66,18 +67,24 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
-              <Text className="text-white" type="font-14-700">
-                {dataDetail?.data?.userCourses?.length ||
-                  dataDetail?.data?.countStudents}
-              </Text>
+              <div className="flex items-center gap-1">
+                <Text className="text-white" type="font-14-700">
+                  {dataDetail?.data?.userCourses?.length ||
+                    dataDetail?.data?.countStudents}
+                </Text>
+                <Student size={18} />
+              </div>
               <Text className="text-black-7" type="font-14-400">
                 {t('Students')}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
-              <Text className="text-white" type="font-14-700">
-                {formatTimeDuration(formattedTime)}
-              </Text>
+              <div className="flex items-center gap-1">
+                <Text className="text-white" type="font-14-700">
+                  {formatTimeDuration(formattedTime)}
+                </Text>
+                <Clock size={18} />
+              </div>
               <Text className="text-black-7" type="font-14-400">
                 {t('Total')}
               </Text>

@@ -1,6 +1,6 @@
 import Text from '@/components/UI/Text';
 import { LessonContentType } from '@/utils/const';
-import { File } from '@phosphor-icons/react';
+import { File, FileText } from '@phosphor-icons/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useMemo } from 'react';
@@ -39,7 +39,7 @@ const Content = ({
           />
         ) : (
           <div className="w-[116px] h-[65px] bg-black-10 flex justify-center items-center">
-            <File size={32} weight="light" />
+            <FileText size={30} weight="light" />
           </div>
         )}
 

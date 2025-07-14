@@ -1,13 +1,10 @@
-import IconArrowLeft from '@/components/UI/Icons/IconArrowLeft';
 import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
-import IconHome from '@/components/UI/Icons/IconHome';
 import Text from '@/components/UI/Text';
 import useNavigate from '@/hooks/useNavigate';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { House } from '@phosphor-icons/react';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 const BreadCrumbs = () => {

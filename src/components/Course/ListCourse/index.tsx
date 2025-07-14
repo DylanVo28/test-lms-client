@@ -1,22 +1,22 @@
+import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
+import NoData from '@/components/ListCourse/NoData';
 import IconFilter from '@/components/UI/Icons/IconFilter';
+import InputText from '@/components/UI/InputText';
+import Loading from '@/components/UI/Loading';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
+import useNavigate from '@/hooks/useNavigate';
+import { useGetCategories, useGetPrices } from '@/services/filter.service';
+import { useProfile } from '@/store/profile/useProfile';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import Image from 'next/image';
 import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetListCourse } from './service';
-import { useGetCategories, useGetPrices } from '@/services/filter.service';
-import NoData from '@/components/ListCourse/NoData';
-import InputText from '@/components/UI/InputText';
-import { ROUTE_PATH } from '@/utils/const';
-import { useRouter } from 'next/router';
-import Loading from '@/components/UI/Loading';
-import { useTranslation } from 'next-i18next';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import useNavigate from '@/hooks/useNavigate';
-import { useProfile } from '@/store/profile/useProfile';
-import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 
 const ListCourse = () => {
   const { t } = useTranslation('common');
