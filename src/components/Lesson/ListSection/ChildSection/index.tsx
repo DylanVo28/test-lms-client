@@ -41,6 +41,7 @@ const ChildSection = ({
           const formattedTime = `${minutes
             .toString()
             .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
           return (
             <div
               key={item?.id}

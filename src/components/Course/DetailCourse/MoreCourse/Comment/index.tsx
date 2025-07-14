@@ -14,9 +14,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import IconLikeReview from '@/components/UI/Icons/IconLikeReview';
 import IconUnLikeReview from '@/components/UI/Icons/IconUnLikeReview';
 import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
-import { getAvatar, TypeReactions } from '@/utils/common';
+import { formatWalletAddress, getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
+import { ThumbsDown, ThumbsUp } from '@phosphor-icons/react';
+import clsx from 'clsx';
 
 dayjs.extend(relativeTime);
 
@@ -64,7 +66,7 @@ const Comment = ({
         />
 
         <Text type="font-16-600" className="text-white">
-          {item?.user?.fullName || address}
+          {item?.user?.fullName || formatWalletAddress(address ?? '')}
         </Text>
       </div>
       <div className="flex items-center gap-2">
@@ -89,7 +91,7 @@ const Comment = ({
         {item?.review}
       </Text>
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
           <Button
             isDisabled={!accessToken}
             onPress={() => {
@@ -108,13 +110,21 @@ const Comment = ({
             isIconOnly
             variant="light"
           >
-            {meLiked &&
+            {/* {meLiked &&
             (meReaction?.name === TypeReactions?.LIKE ||
               meReaction?.name === 'like') ? (
               <IconLikedReview />
             ) : (
               <IconLikeReview />
-            )}
+            )} */}
+            <ThumbsUp
+              size={18}
+              className={clsx(
+                meLiked && meReaction?.name === TypeReactions?.LIKE
+                  ? '#02A6C2'
+                  : '#ffffff'
+              )}
+            />
           </Button>
           <Text type="font-14-500" className="text-black-7">
             {
@@ -125,7 +135,7 @@ const Comment = ({
             }
           </Text>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
           <Button
             isDisabled={!accessToken}
             onPress={() => {
@@ -145,11 +155,19 @@ const Comment = ({
             isIconOnly
             variant="light"
           >
-            {meLiked && meReaction?.name === TypeReactions?.DISLIKE ? (
-              <IconUnLikedReview />
+            <ThumbsDown
+              size={18}
+              color={
+                meLiked && meReaction?.name === TypeReactions?.DISLIKE
+                  ? '#02A6C2'
+                  : '#ffffff'
+              }
+            />
+
+            {/* {meLiked && meReaction?.name === TypeReactions?.DISLIKE ? (
             ) : (
               <IconUnLikeReview />
-            )}
+            )} */}
           </Button>
           <Text type="font-14-500" className="text-black-7">
             {

@@ -61,7 +61,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                   edit={false}
                 />
               </div>
-              <Text className="text-black-7" type="font-12-400">
+              <Text className="text-black-7" type="font-14-400">
                 {`${dataDetail?.data?.countReviews} ${t('rating')}`}
               </Text>
             </div>
@@ -70,7 +70,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 {dataDetail?.data?.userCourses?.length ||
                   dataDetail?.data?.countStudents}
               </Text>
-              <Text className="text-black-7" type="font-12-400">
+              <Text className="text-black-7" type="font-14-400">
                 {t('Students')}
               </Text>
             </div>
@@ -78,7 +78,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
               <Text className="text-white" type="font-14-700">
                 {formatTimeDuration(formattedTime)}
               </Text>
-              <Text className="text-black-7" type="font-12-400">
+              <Text className="text-black-7" type="font-14-400">
                 {t('Total')}
               </Text>
             </div>
@@ -116,20 +116,3 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
   );
 };
 export default Overview;
-
-const IconStar = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="15"
-      viewBox="0 0 16 15"
-      fill="none"
-    >
-      <path
-        d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z"
-        fill="#F2B021"
-      />
-    </svg>
-  );
-};

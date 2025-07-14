@@ -5,6 +5,7 @@ import Text from '@/components/UI/Text';
 import useNavigate from '@/hooks/useNavigate';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
+import { House } from '@phosphor-icons/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -22,7 +23,7 @@ const BreadCrumbs = () => {
         variant="light"
         size="md"
       >
-        <IconHome />
+        <House size={20} />
       </Button>
       <IconArrowRight />
       <Text

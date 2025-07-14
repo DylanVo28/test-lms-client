@@ -13,6 +13,7 @@ import { Progress, Spinner } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
+import ReactStars from 'react-stars';
 
 const Reviews = ({
   courseId,
@@ -187,46 +188,35 @@ const Reviews = ({
   };
 
   return (
-    <div className="md:pt-[14px] py-[40px] md:py-0 flex flex-col gap-8 md:px-[80px]">
+    <div className="md:pt-[14px] py-[40px] md:py-0 flex flex-col gap-2 md:px-[80px]">
       <Text type="font-20-600">{t('Student feedbacks')}</Text>
-      <div className="flex gap-3 items-start">
-        <div className="w-[100px]">
-          <Text type="font-20-600">
-            {dataListReviewSummary?.data?.avgRate?.toFixed(1) || 0}
-          </Text>
-          <Rater
-            total={5}
-            rating={+(dataListReviewSummary?.data?.avgRate || 5)}
+      <div className="flex gap-2 items-start mb-8">
+        <div className="">
+          <div className="flex items-center gap-2">
+            <Text type="font-20-600">
+              {dataListReviewSummary?.data?.avgRate?.toFixed(1) || 0}
+            </Text>
+            <div className="text-black-5 text-md">
+              (base on {dataListReviewSummary?.data?.total} reviews)
+            </div>
+          </div>
+
+          <ReactStars
+            count={5}
+            color1="#D9D9D9"
+            edit={false}
+            color2="#F2B021"
+            value={dataListReviewSummary?.data?.avgRate || 5}
+            size={14}
+            className="flex items-center gap-1"
           />
         </div>
-        <div className="flex flex-col gap-2 w-full">
-          {DATA_REVIEWS?.map((item) => {
-            return (
-              <div key={item?.id} className="flex items-center gap-2 w-full">
-                <Progress
-                  className="max-w-[400px]"
-                  classNames={{
-                    indicator: 'bg-main',
-                    track: 'max-h-[8px]',
-                  }}
-                  maxValue={dataListReviewSummary?.data?.total}
-                  value={item?.value}
-                />
-                <Rater total={5} rating={item?.rate} />
-                <div className="flex justify-end items-end w-[50px]">
-                  <Text type="font-16-500" className="text-white">
-                    {item?.value}
-                  </Text>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
-      <Text type="font-20-600">{t('Reviews')}</Text>
 
-      <div className="flex items-center gap-4">
-        <InputText
+      <div className="flex items-center gap-4 mb-4">
+        <Text type="font-20-600">{t('Reviews')}</Text>
+
+        {/* <InputText
           className="max-w-[470px]"
           placeholder={t('Search')}
           isLesson
@@ -234,7 +224,7 @@ const Reviews = ({
             setValueSearch(e.target.value);
           }}
           startContent={<IconSearch />}
-        />
+        /> */}
         <SelectCustom
           isLesson
           value={valueLevel}

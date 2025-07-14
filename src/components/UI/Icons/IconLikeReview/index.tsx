@@ -2,9 +2,9 @@ const IconLikeReview = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="22"
-      height="21"
-      viewBox="0 0 22 21"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
       fill="none"
     >
       <path

@@ -124,7 +124,7 @@ const ListCourse = () => {
           </Text>
           <SelectCustom
             placeholder={t('Default')}
-            className="min-w-[40px] max-w-[100px]"
+            className="min-w-[40px] max-w-[200px]"
             options={SORT_BY}
             value={sort}
             onChange={(value: any) => {
