@@ -1,8 +1,8 @@
 import Text from '@/components/UI/Text';
 import { UserCourseProgressStatus } from '@/utils/common';
-import { TYPE_COURSE } from '@/utils/const';
+import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Checkbox } from '@nextui-org/react';
-import { File, MonitorPlay } from '@phosphor-icons/react';
+import { File, FileText, MonitorPlay, Question } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';
@@ -30,14 +30,12 @@ const ChildSection = ({
     activeItemSectionAtom
   );
 
-  console.log(activeItemSection, 'activeItemSection');
+  console.log(items, 'activeItemSection');
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col">
         {items?.map((item: any, index: number) => {
-          console.log(item, 'item');
-
           const minutes = Math.floor(item?.info?.duration / 60);
           const seconds = Math.floor(item?.info?.duration % 60);
           const formattedTime = `${minutes
@@ -97,16 +95,52 @@ const ChildSection = ({
                   </>
                 )}
               </div>
+
               {item?.type === TYPE_COURSE.LECTURE && (
-                <div className="flex items-center gap-2">
-                  {item?.info?.duration && (
-                    <>
-                      <MonitorPlay size={20} className="text-black-5" />
-                      <Text type="font-14-400" className="text-black-5">
-                        {formattedTime}
-                      </Text>
-                    </>
+                <>
+                  {item.contentType === LessonContentType.VIDEO && (
+                    <div className="flex items-center gap-2">
+                      <>
+                        <MonitorPlay size={20} className="text-black-5" />
+                        <Text type="font-14-400" className="text-black-5">
+                          {formattedTime}
+                        </Text>
+                      </>
+                    </div>
                   )}
+
+                  {item.contentType === LessonContentType.ARTICLE && (
+                    <div className="flex items-center gap-2">
+                      <>
+                        <FileText size={20} className="text-black-5" />
+                        <Text type="font-14-400" className="text-black-5">
+                          {item?.content && (
+                            <>
+                              {Math.ceil(
+                                item.content
+                                  .replace(/<[^>]*>/g, '')
+                                  .replace(/data:image\/[^;]+;base64[^"]+/g, '')
+                                  .trim()
+                                  .split(/\s+/).length / 200
+                              )}
+                              min
+                            </>
+                          )}
+                        </Text>
+                      </>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {item.type === LessonContentType.QUIZ && (
+                <div className="flex items-center gap-2">
+                  <>
+                    <Question size={20} className="text-black-5" />
+                    <Text type="font-14-400" className="text-black-5">
+                      Quizz
+                    </Text>
+                  </>
                 </div>
               )}
             </div>

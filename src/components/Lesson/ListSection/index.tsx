@@ -95,9 +95,11 @@ const ListSection = ({
                     <Text type="font-14-400" className="opacity-50">
                       {`${completedCount}/${countChildrendSection}`}
                     </Text>
-                    <Text type="font-14-400" className="opacity-50">
-                      {formatTimeDuration(formattedTime)}
-                    </Text>
+                    {formattedTime !== '00:00' && (
+                      <Text type="font-14-400" className="opacity-50">
+                        {formatTimeDuration(formattedTime)}
+                      </Text>
+                    )}
                   </div>
                 </div>
               }
