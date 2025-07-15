@@ -30,7 +30,9 @@ const Referral = ({ control }: { control: Control }) => {
           </Text>
 
           <Text type="font-16-600" className="text-black-6">
-            {'You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.'}
+            {
+              'You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.'
+            }
           </Text>
         </div>
         {fields?.map((field: any, index) => {
@@ -40,7 +42,7 @@ const Referral = ({ control }: { control: Control }) => {
                 maxLength={160}
                 endContent
                 className="min-w-[500px]"
-                placeholder={t(field.type)}
+                placeholder={field.type}
                 inputDefault
               />
             </div>
@@ -62,11 +64,15 @@ const Referral = ({ control }: { control: Control }) => {
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-white">
-            {'What are the requirements or prerequisites for unlocking free course?'}
+            {
+              'What are the requirements or prerequisites for unlocking free course?'
+            }
           </Text>
 
           <Text type="font-16-600" className="text-black-6">
-            {'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'}
+            {
+              'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
+            }
           </Text>
         </div>
         {fields1?.map((field: any, index) => {
@@ -76,7 +82,7 @@ const Referral = ({ control }: { control: Control }) => {
                 maxLength={160}
                 endContent
                 className="min-w-[500px]"
-                placeholder={t(field.type)}
+                placeholder={field.type}
                 inputDefault
               />
             </div>

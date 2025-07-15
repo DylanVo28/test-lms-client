@@ -219,7 +219,7 @@ const Field = ({
               <InputText
                 error={fieldState?.error?.message}
                 className="bg-[#242A30] w-full rounded-[4px] active:outline-hidden"
-                placeholder={t(fieldItem.placeholder)}
+                placeholder={fieldItem.placeholder}
                 value={field.value || ''}
                 onChange={field.onChange}
               />
@@ -243,7 +243,7 @@ const Field = ({
               return (
                 <>
                   <InputTextArena
-                    placeholder={t(fieldItem.placeholder)}
+                    placeholder={fieldItem.placeholder}
                     value={field.value}
                     minRows={5}
                     inputDefault
@@ -262,7 +262,7 @@ const Field = ({
               <>
                 <InputText
                   className="bg-gray-50 w-full rounded-[4px] active:outline-hidden"
-                  placeholder={t(fieldItem.placeholder)}
+                  placeholder={fieldItem.placeholder}
                   value={field.value || ''}
                   onChange={field.onChange}
                 />

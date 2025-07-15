@@ -129,7 +129,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
 
   const { run: runEditLecture, loading: loadingEditLecture } = useEditLecture({
     onSuccess(res) {
-      setTypeAddConten'';
+      setTypeAddContent('');
       setValueEditCotentLesson({});
       setValueTitleLecture('');
       const index = dataCurriculum.findIndex(
@@ -558,7 +558,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       );
                       setIndexAddContent(newData);
                       setIndexAddQuestion(newDataQuestion);
-                      setValueConten'';
+                      setValueContent('');
                       setValueInfo({});
                       setValueQuestion({});
                     }}
