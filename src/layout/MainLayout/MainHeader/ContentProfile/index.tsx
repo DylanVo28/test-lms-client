@@ -26,11 +26,11 @@ const MENUS = [
     label: 'My Learning',
     href: ROUTE_PATH.MY_LEARNING,
   },
-  {
-    id: 3,
-    label: 'English',
-    href: '',
-  },
+  // {
+  //   id: 3,
+  //   label: 'English',
+  //   href: '',
+  // },
 ];
 
 const ContentProfile = ({
