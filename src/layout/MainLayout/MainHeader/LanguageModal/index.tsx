@@ -16,16 +16,6 @@ import { useMemo, useState, useEffect } from 'react';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
-import {
-  setupGoogleTranslate,
-  translatePage,
-  hideGoogleTranslateElements,
-  getTranslateStatus,
-} from '@/utils/googleTranslate';
-import {
-  debugTranslation,
-  testVietnameseTranslation,
-} from '@/utils/debugTranslate';
 
 interface IProps {
   onClosePopover: VoidFunction;
@@ -49,73 +39,12 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     }
   }, [dataThemeConfig]);
 
-  useEffect(() => {
-    const initializeTranslate = async () => {
-      try {
-        console.log('Starting Google Translate initialization...');
-        await setupGoogleTranslate();
-
-        const checkReady = () => {
-          const status = getTranslateStatus();
-          console.log('Google Translate status:', status);
-
-          if (status.isReady) {
-            setIsTranslateReady(true);
-            console.log('Google Translate is ready!');
-
-            const savedLanguage = localStorage.getItem('selectedLanguage');
-            if (savedLanguage && savedLanguage !== 'en') {
-              console.log('Auto-translating to saved language:', savedLanguage);
-              setTimeout(() => {
-                translatePage(savedLanguage);
-              }, 2000);
-            }
-          } else {
-            console.log('Google Translate not ready yet, checking again...');
-            setTimeout(checkReady, 1000);
-          }
-        };
-
-        setTimeout(checkReady, 1500);
-      } catch (error) {
-        console.error('Failed to initialize Google Translate:', error);
-      }
-    };
-
-    initializeTranslate();
-  }, []);
-
   const onChangeRadioGroup = (e: any) => {
     const value = e.target.value;
     console.log('Language selected:', value);
 
     setSelectedLanguage(value);
     localStorage.setItem('selectedLanguage', value);
-
-    if (value === 'vi') {
-      console.log('Vietnamese selected - running debug test');
-      debugTranslation();
-    }
-
-    if (isTranslateReady) {
-      console.log('Triggering translation to:', value);
-      setTimeout(() => {
-        translatePage(value);
-        if (value === 'vi') {
-          setTimeout(() => {
-            console.log('After Vietnamese translation attempt:');
-            debugTranslation();
-          }, 2000);
-        }
-      }, 100);
-    } else {
-      console.log('Google Translate not ready, waiting...');
-      setTimeout(() => {
-        if (getTranslateStatus().isReady) {
-          translatePage(value);
-        }
-      }, 2000);
-    }
 
     onClose();
     onClosePopover();
@@ -141,6 +70,8 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     }
     return [languages[0]];
   }, [dataThemeConfig]);
+
+  console.log('showLangs:::', showLangs);
 
   return (
     <>
