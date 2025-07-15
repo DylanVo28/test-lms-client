@@ -135,7 +135,6 @@ const Lesson = () => {
     },
   });
 
-  console.log('dataLesson', dataLesson);
   const {
     dataQuizz,
     run: runGetQuizz,
@@ -147,7 +146,6 @@ const Lesson = () => {
   });
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: (res) => {
-      console.log(res, 'res234');
       setReviewed(res?.data?.reviewed);
     },
   });
@@ -368,7 +366,6 @@ const Lesson = () => {
 
     if (currentIndex !== -1 && currentIndex + 1 < allItems?.length) {
       const nextItem = allItems?.[currentIndex + 1];
-      console.log(nextItem, 'nextItem');
 
       handleClickChildLesson(nextItem?.id, nextItem?.type);
 
@@ -377,7 +374,7 @@ const Lesson = () => {
       setActiveItemSection(nextItem?.id);
     } else {
       setEndCourse(true);
-      setTypeLoadConten'';
+      setTypeLoadContent('');
     }
   };
 
@@ -499,7 +496,7 @@ const Lesson = () => {
       requestProgressStatusQuizz.run(body, id);
     }
     setEndCourse(true);
-    setTypeLoadConten'';
+    setTypeLoadContent('');
   };
 
   const handleToggleSidebar = () => {

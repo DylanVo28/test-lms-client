@@ -99,7 +99,6 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
               if ((this as any).hlsQualitySelector) {
                 (this as any).hlsQualitySelector();
               }
-              console.log('Player is ready');
             }
           );
 

@@ -38,7 +38,6 @@ const firebaseCloudMessaging = {
   onMessage: async (onCallback: any) => {
     try {
       const messaging = getMessaging(app); // Pass app to getMessaging
-      console.log(messaging, 'messaging');
       onMessage(messaging, onCallback); // Set up onMessage handler
     } catch (error) {
       console.error(translate('Error handling message') + ':', error);
@@ -59,7 +58,6 @@ const firebaseCloudMessaging = {
       }
 
       let fcmToken = await this.tokenInLocalForage();
-      console.log(fcmToken, 'fcmToken');
 
       if (fcmToken !== null) {
         return fcmToken;
@@ -80,13 +78,9 @@ const firebaseCloudMessaging = {
       if (fcmToken) {
         // Save token in local storage (localforage)
         localforage.setItem('fcm_token_client', fcmToken);
-        console.log('fcm_token_client', fcmToken);
         return fcmToken;
       } else {
         // Handle case where the token is not available
-        console.log(
-          'NOTIFICACION, No registration token available. Request permission to generate one.'
-        );
       }
     } catch (error) {
       console.error(

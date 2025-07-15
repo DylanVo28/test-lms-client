@@ -47,8 +47,6 @@ const SoldCourses = () => {
     currentPage * rowsPerPage
   );
 
-  console.log('transactions:::', transactions);
-
   return (
     <div className="rounded-lg overflow-hidden">
       {loading ? (

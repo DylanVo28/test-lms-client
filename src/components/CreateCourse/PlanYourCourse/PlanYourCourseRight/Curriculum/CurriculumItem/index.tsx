@@ -45,7 +45,6 @@ const CurriculumItem = ({ item }: { item: any }) => {
     {}
   );
 
-  console.log({ item });
   const refModalConfirmDeleteSection: any = useRef(null);
   const refModalConfirmDeleteQuestion: any = useRef(null);
 
@@ -241,7 +240,6 @@ const CurriculumItem = ({ item }: { item: any }) => {
       info: values,
       contentType: LessonContentType?.VIDEO,
     };
-    console.log(body, values, 'body:::');
 
     runEditLecture(body, id);
   };

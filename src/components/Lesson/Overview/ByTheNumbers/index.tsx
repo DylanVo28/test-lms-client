@@ -4,8 +4,6 @@ import { useMemo } from 'react';
 import { isMobile } from 'react-device-detect';
 
 const ByTheNumbers = ({ course }: { course: any }) => {
-  console.log(course, 'course');
-
   const lessonCount = course?.sections?.reduce(
     (total: number, section: any) => {
       return (

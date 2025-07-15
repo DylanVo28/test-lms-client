@@ -85,8 +85,6 @@ const CreateCourse = () => {
 
   const typeWatch = watch('type');
 
-  console.log(step, 'step');
-
   const { address } = useAccount();
   const accessToken = getAccessToken();
 

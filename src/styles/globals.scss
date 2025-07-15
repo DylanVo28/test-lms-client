@@ -1323,3 +1323,27 @@ input[type='number'] {
     display: none !important;
   }
 }
+
+/* Google Translate Styles */
+.goog-te-banner-frame,
+.goog-te-gadget,
+.goog-te-combo,
+.skiptranslate,
+.goog-te-spinner-pos,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+#google_translate_element {
+  display: none !important;
+}

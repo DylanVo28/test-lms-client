@@ -50,22 +50,6 @@ const MyProfile = () => {
   const { profile } = useProfile();
   const { requestGetProfile } = useProfileInitial();
 
-  // const getReferral = async () => {
-  //   try {
-  //     const res = await referralRequest.getSummary();
-
-  //     const data = {
-  //       totalNetwork: res.data.totalNetwork || 0,
-  //       f1: res.data.totalF1 || 0,
-  //       f2: res.data.totalF2 || 0,
-  //       f3: res.data.totalF3 || 0,
-  //     };
-  //     setSummary(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const reload = () => {
     requestGetProfile();
   };

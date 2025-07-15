@@ -26,13 +26,11 @@ export const useGetListCourse = (initialParams: any) => {
 
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
-        // console.log('lastData', lastData);
         const response = await getListCourse({
           ...initialParams,
           page: nextPage,
           userId: profile?.id,
         });
-        // console.log('lastData', lastData, response);
 
         return {
           list: [...(response.data || [])],
@@ -71,13 +69,11 @@ export const useGetListMyCourse = (initialParams: any) => {
       async (lastData) => {
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
-        // console.log('lastData', lastData);
 
         const response = await getListMyCourse({
           ...memoizedParams,
           page: nextPage,
         });
-        // console.log('lastData', lastData, response);
 
         return {
           list: [...(response.data || [])],

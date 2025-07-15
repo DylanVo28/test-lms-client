@@ -49,8 +49,6 @@ const Curriculum = ({ setValue }: any) => {
 
   const router = useRouter();
 
-  console.log(fields, 'fields');
-
   const {
     run: runGetListSession,
     data: dataListSession,

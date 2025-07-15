@@ -19,9 +19,7 @@ const useStorageOrCookieChange = () => {
   const { disconnect } = useDisconnect();
 
   useEffect(() => {
-    const handleStorage = () => {
-      console.log('remove storage');
-    };
+    const handleStorage = () => {};
 
     const handleCookie = () => {
       const accessToken = getAccessToken();

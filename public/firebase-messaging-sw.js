@@ -57,42 +57,6 @@ if (typeof window === 'undefined') {
     self.addEventListener('notificationclick', function (event) {
       console.log(event, 'event');
       event.notification.close();
-      // const project_id =  Number(event?.notification.data?.project_id);
-      // let URL = ''
-      // if (
-      //   [
-      //     TYPE_NOTIFICATION.NEW_PROJECT,
-      //     TYPE_NOTIFICATION.LEAVE_GROUP,
-      //     TYPE_NOTIFICATION.INVITE_GROUP,
-      //     TYPE_NOTIFICATION.REMOVE_GROUP,
-      //     TYPE_NOTIFICATION?.OVERDUE_PROJECT,
-      //     TYPE_NOTIFICATION.EDIT_PROJECT,
-      //     TYPE_NOTIFICATION.CLOSE_PROJECT,
-
-      //   ].includes(event?.notification?.data?.type)
-      // ) {
-      //   URL = `/browser_project/${event?.notification?.data?.project_id}`
-      // }
-      // if (
-      //   [
-      //     TYPE_NOTIFICATION.AVAILABLE_PROJECT,
-      //     TYPE_NOTIFICATION.UNAVAILABLE_PROJECT,
-      //     TYPE_NOTIFICATION.JOIN_GROUP,
-      //   ].includes(event?.notification?.data?.type)
-      // ) {
-      //   URL = `/my_project_post/${event?.notification?.data?.project_id}`
-      // }
-
-      // if (
-      //   [TYPE_NOTIFICATION.NEW_PROPOSAL,
-      //     TYPE_NOTIFICATION.EDIT_PROPOSAL].includes(event?.notification?.data?.type)
-      // ) {
-      //   URL = `/detail_proposal_project/${event?.notification?.data?.proposal_id}?project_id=${event?.notification?.data?.project_id}`
-      // }
-      // if(TYPE_NOTIFICATION?.OVERDUE_PROJECT) {
-      //   console.log('r');
-      //   URL = `/browser_project/${event?.notification?.data?.project_id}`
-      // }
 
       let clickResponsePromise = Promise.resolve();
       clickResponsePromise = clients.openWindow(URL);

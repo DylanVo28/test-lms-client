@@ -41,15 +41,12 @@ const FollowMentors = () => {
   }, [debounceVal, rating, profile]);
 
   useEffect(() => {
-    console.log('Debounced:', valueSearch);
     setDebounceVal(valueSearch);
   }, [debounceValue]);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
   };
-
-  console.log(list, 'list');
 
   return (
     <div className="flex flex-col gap-[26px]">

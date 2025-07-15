@@ -51,8 +51,6 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [router.query.id, profile?.id]);
 
-  console.log(router, 'valueYourProgress:::');
-
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
       {isMobile ? (

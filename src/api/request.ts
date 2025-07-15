@@ -48,7 +48,6 @@ const privateRequest = async (
   configs?: any
 ) => {
   const accessToken = getAccessToken();
-  console.log('accessToken', accessToken);
   const token: string = configs?.token ?? (accessToken as string);
 
   return request(suffixUrl, injectBearer(token, configs));

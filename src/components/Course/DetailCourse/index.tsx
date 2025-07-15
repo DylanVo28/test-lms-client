@@ -40,8 +40,6 @@ const DetailCourse = () => {
     },
   });
 
-  console.log('dataDetail::::', dataDetail);
-
   useEffect(() => {
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
@@ -195,7 +193,7 @@ const DetailCourse = () => {
                 )}
 
                 <Text type="font-15-500" className="text-main">
-                  "By"
+                  By
                 </Text>
                 <Text
                   element="span"

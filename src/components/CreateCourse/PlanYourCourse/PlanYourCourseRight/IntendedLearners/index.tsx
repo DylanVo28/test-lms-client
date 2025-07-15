@@ -14,8 +14,6 @@ const IntendedLearners = ({
   handleSubmit: any;
   errors: any;
 }) => {
-  console.log(errors, 'errors');
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'objectives',
@@ -38,8 +36,6 @@ const IntendedLearners = ({
     control,
     name: 'intenedLeaners',
   });
-
-  console.log(errors, 'errors');
 
   return (
     <div className="flex flex-col gap-8">

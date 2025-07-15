@@ -76,8 +76,6 @@ const PromotionalVideo = ({
   //   }
   // };
 
-  console.log('fileData:::', fileData);
-
   const handleClickUploadFile = () => {
     setFileData({});
     fileInputRef.current.click();

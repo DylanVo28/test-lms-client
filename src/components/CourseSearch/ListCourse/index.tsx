@@ -41,14 +41,12 @@ const ListCourse = () => {
     { key: 'createdAt asc', label: 'Oldest' },
   ];
 
-  console.log(router, 'router');
-
   const refDrawerFilter: any = useRef(null);
 
   const [params, setParams] = useState(initParams);
   const { theme: dataThemeConfig } = useThemeInitial();
 
-  const search = searchParams.ge'keySearch';
+  const search = searchParams.get('keySearch');
 
   const {
     dataCourses,
@@ -134,7 +132,6 @@ const ListCourse = () => {
                 options={SORT_BY}
                 value={sort}
                 onChange={(value: any) => {
-                  console.log('valueeee', value.target.value);
                   setSort(value.target.value);
                 }}
               />
@@ -168,7 +165,6 @@ const ListCourse = () => {
                       options={SORT_BY}
                       value={sort}
                       onChange={(value: any) => {
-                        console.log('valueeee', value.target.value);
                         setSort(value.target.value);
                       }}
                     />

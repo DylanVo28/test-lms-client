@@ -101,7 +101,6 @@ const ListCourse = () => {
               options={SORT_BY}
               value={sort}
               onChange={(value: any) => {
-                console.log('valueeee', value.target.value);
                 setSort(value.target.value);
               }}
             />
@@ -120,8 +119,6 @@ const ListCourse = () => {
         <>
           {dataCourses?.length > 0 &&
             dataCourses?.map((item: any) => {
-              console.log(item, 'item');
-
               const isEnoughIntendedLearners =
                 item?.objectives?.length > 0 &&
                 item?.intenedLeaners?.length > 0 &&

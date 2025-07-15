@@ -58,7 +58,6 @@ const ContenStep4 = ({
                       key={item.id}
                       value={item.id}
                       onChange={(e: any) => {
-                        console.log('eeeeee', e.target.value);
                         setValue(e.target.value);
                       }}
                     >

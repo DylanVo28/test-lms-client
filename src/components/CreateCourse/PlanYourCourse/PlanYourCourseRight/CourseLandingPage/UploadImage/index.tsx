@@ -27,8 +27,6 @@ const UploadImage = ({
 
   const [imageSrc, setImageSrc] = useState<string>('');
 
-  console.log(value, 'value23');
-
   useEffect(() => {
     if (!value) {
       const interval = setInterval(() => {
@@ -54,7 +52,6 @@ const UploadImage = ({
   });
 
   const handleFileChange = (event: any) => {
-    console.log('event:::', event);
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -62,9 +59,7 @@ const UploadImage = ({
     const file = files[0];
 
     if (!allowedTypes.includes(file.type)) {
-      toast.error(
-        'Can only upload files in .jpg, .jpeg, .gif or .png format'
-      );
+      toast.error('Can only upload files in .jpg, .jpeg, .gif or .png format');
       return;
     }
 
@@ -73,7 +68,6 @@ const UploadImage = ({
     img.onload = () => {
       const minWidth = 200;
       const minHeight = 150;
-      console.log(img.width, 'width');
 
       if (img.width < minWidth || img.height < minHeight) {
         toast.error(

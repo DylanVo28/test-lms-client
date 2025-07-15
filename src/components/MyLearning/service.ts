@@ -27,13 +27,11 @@ export const useGetListUserCourse = (initialParams: any) => {
       async (lastData) => {
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
-        // console.log('lastData', lastData);
 
         const response = await getListUserCourse({
           ...memoizedParams,
           page: nextPage,
         });
-        // console.log('lastData', lastData, response);
 
         return {
           list: [...(response.data || [])],
@@ -70,13 +68,11 @@ export const useGetListWishList = (initialParams: any) => {
       async (lastData) => {
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
-        // console.log('lastData', lastData);
 
         const response = await getListWishList({
           ...memoizedParams,
           page: nextPage,
         });
-        // console.log('lastData', lastData, response);
 
         return {
           list: [...(response.data || [])],
@@ -140,13 +136,11 @@ export const useGetListFollowers = (initialParams: any) => {
       async (lastData) => {
         const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
         const nextPage = currentPage + 1;
-        // console.log('lastData', lastData);
 
         const response = await getListFollower({
           ...memoizedParams,
           page: nextPage,
         });
-        // console.log('lastData', lastData, response);
 
         return {
           list: [...(response.data || [])],

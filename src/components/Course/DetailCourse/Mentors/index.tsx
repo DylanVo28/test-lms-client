@@ -52,14 +52,6 @@ const Mentors = ({ mentor }: any) => {
     },
     onError: (error: any) => {
       toast.error(error.message);
-
-      // const newData = {
-      //   ...mentorProfile,
-      //   isFollowing: true,
-      // };
-      // console.log(newData, 'newData');
-
-      // setMentorProfile(newData);
     },
   });
 
@@ -147,8 +139,7 @@ const Mentors = ({ mentor }: any) => {
                   />
                 </div>
                 <Text type="font-14-400" className="text-white">
-                  {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
-                  {'Reviews'}
+                  {mentorProfile?.instructorInfo?.countReviews || 0} {'Reviews'}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">

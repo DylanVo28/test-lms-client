@@ -77,7 +77,6 @@ export const useAccountInfo = () => {
 
       return data;
     } catch (error) {
-      console.log('getVolumeStatistics:::ERROR', error);
       return {
         data: {
           perp_volume_ytd: 0,

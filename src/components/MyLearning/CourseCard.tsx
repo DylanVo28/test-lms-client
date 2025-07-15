@@ -38,8 +38,6 @@ export default function CourseCard({
     return formatWalletAddress(author?.walletAddress);
   };
 
-  console.log('progress', router);
-
   return (
     <Link
       className="w-full bg-black-20 rounded overflow-hidden cursor-pointer"

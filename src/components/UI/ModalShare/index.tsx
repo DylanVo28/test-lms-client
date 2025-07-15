@@ -24,8 +24,6 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
   const [visible, setVisible] = useState(false);
   const router = useRouter();
 
-  console.log(courseSlug, 'router::::');
-
   useImperativeHandle(ref, () => {
     return {
       onOpen: (id: string) => {

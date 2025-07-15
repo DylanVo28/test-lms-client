@@ -10,8 +10,6 @@ const IsResult = ({
   title: string;
   totalQuizz: number;
 }) => {
-  console.log(questions, 'questions');
-
   return (
     <div className="flex flex-col h-full flex-1">
       <div className="bg-green-50 md:p-8 p-4 min-h-[140px] md:min-h-[240px]">
