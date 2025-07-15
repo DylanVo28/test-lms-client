@@ -25,13 +25,13 @@ const CardComment = ({
   const [valueRating, setValueRating] = useState<any>();
   const { run: runReviewCours, loading: loadingComment } = useReviewCours({
     onSuccess() {
-      setValueCommen'';
+      setValueComment('');
       setValueRating(0);
       toast.success('Review successfully');
       reloadListReview();
     },
     onError(err) {
-      setValueCommen'';
+      setValueComment('');
       setValueRating(0);
       toast.error(err?.message);
     },

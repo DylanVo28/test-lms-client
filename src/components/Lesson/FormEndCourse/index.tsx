@@ -29,14 +29,14 @@ const FormEndCourse = ({
 
   const { run: runReviewCours, loading: loadingComment } = useReviewCours({
     onSuccess() {
-      setValueCommen'';
+      setValueComment('');
       setValueRating(0);
       setSubmitReviewSuccess(true);
       handleGetReviews();
       setReviewed(true);
     },
     onError(err) {
-      setValueCommen'';
+      setValueComment('');
       setValueRating(0);
       toast.error(err?.message);
     },
@@ -94,7 +94,9 @@ const FormEndCourse = ({
             <InputTextArena
               className="w-full mt-4"
               minRows={6}
-              placeholder={'Tell us about your own personal experience taking this course. Was it right for you?'}
+              placeholder={
+                'Tell us about your own personal experience taking this course. Was it right for you?'
+              }
               value={valueComment}
               onChange={(e: any) => setValueComment(e.target.value)}
               isBlack

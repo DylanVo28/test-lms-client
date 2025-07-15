@@ -47,7 +47,7 @@ export function useS3MultipartUpload() {
 
       const res = await fetch(url, { method: 'PUT', body: blob });
       if (!res.ok) throw new Error(`Part ${partNumber} failed`);
-      const ETag = res.headers.ge'ETag'!.replaceAll('"', '');
+      const ETag = res.headers.get('ETag')!.replaceAll('"', '');
       parts.push({ ETag, PartNumber: partNumber });
 
       setProgress(Math.round(((i + 1) / chunks.length) * 100));
