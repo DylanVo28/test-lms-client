@@ -3,7 +3,6 @@ import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 
@@ -20,7 +19,6 @@ const EditLogo = ({
   onChangeLogo: (value: string) => void;
   logo: string;
 }) => {
-  const { t } = useTranslation('common');
   const [imageSrc, setImageSrc] = useState<string>('');
   const cropperRef: any = useRef(null);
   const fileInputRef: any = useRef(null);
@@ -30,19 +28,19 @@ const EditLogo = ({
     onSuccess(response) {
       const data = response.data;
       onChangeLogo(data.url as string);
-      toast.success(t('File uploaded successfully!'));
+      toast.success('File uploaded successfully!');
       setImageSrc('');
       // fileInputRef.current.value = null;
     },
     onError(error) {
-      toast.error(t('File uploaded failed!'));
+      toast.error('File uploaded failed!');
     },
   });
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
       toast.error(
-        t('There are some images not cropped, please crop image first')
+        'There are some images not cropped, please crop image first'
       );
       return;
     }
@@ -59,13 +57,13 @@ const EditLogo = ({
 
       if (!allowedTypes.includes(file.type)) {
         toast.error(
-          t('Invalid file type. Only JPEG, PNG, or JPG are allowed.')
+          'Invalid file type. Only JPEG, PNG, or JPG are allowed.'
         );
         return;
       }
 
       if (file.size > maxSize) {
-        toast.error(t('File size exceeds 10 MB limit.'));
+        toast.error('File size exceeds 10 MB limit.');
         return;
       }
 
@@ -80,9 +78,7 @@ const EditLogo = ({
           img.height > maxHeight
         ) {
           toast.error(
-            t(
-              `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
-            )
+            `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
           );
           return;
         }
@@ -119,7 +115,7 @@ const EditLogo = ({
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
       toast.error(
-        t('There are some images not cropped, please crop image first')
+        'There are some images not cropped, please crop image first'
       );
       return;
     }
@@ -136,10 +132,10 @@ const EditLogo = ({
         accept="image/jpeg, image/png, image/jpg"
       />
       <Text className="text-[18px] text-white font-semibold mb-[16px]">
-        {t('Edit logo')}
+        {'Edit logo'}
       </Text>
       {/* <p className="text-md text-white mb-[8px]">
-        {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
+        {'Minimum 124x46 pixels, Maximum 3000x3000 pixels'}
       </p> */}
       <div className="flex flex-col gap-4">
         <div className="">
@@ -155,14 +151,14 @@ const EditLogo = ({
                   </div>
                 ) : (
                   <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                    <div className="text-white">{t('JPEG, PNG or JPG.')}</div>
+                    <div className="text-white">{'JPEG, PNG or JPG.'}</div>
                     <div className="relative">
                       <Button
                         onClick={handleClickUploadFile}
                         isLoading={loadingFile}
                         className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
                       >
-                        {t('Choose file')}
+                        {'Choose file'}
                       </Button>
                     </div>
                   </div>
@@ -183,7 +179,7 @@ const EditLogo = ({
             onClick={handleClickUploadFile}
             className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
           >
-            {t('Change')}
+            {'Change'}
           </Button>
         )}
       </div>

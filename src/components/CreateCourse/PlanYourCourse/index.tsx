@@ -13,13 +13,11 @@ import ModalSubmitError from './ModalSubmitError';
 import { API_PATH } from '@/api/constant';
 import { PREFIX_API } from '@/api/request';
 import Text from '@/components/UI/Text';
-import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import { set } from 'video.js/dist/types/tech/middleware';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
 const PlanYourCourse = () => {
-  const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
@@ -33,41 +31,37 @@ const PlanYourCourse = () => {
   const dataObjectivesDefault = [
     {
       name: '',
-      pladholder: t(
-        'Example: Identifying the roles and responsibilities of a project manager'
-      ),
+      pladholder:
+        'Example: Identifying the roles and responsibilities of a project manager',
     },
     {
       name: '',
-      pladholder: t('Example: Project schedule and budget estimates'),
+      pladholder: 'Example: Project schedule and budget estimates',
     },
     {
       name: '',
-      pladholder: t('Example: Identifying and Managing Project Risks'),
+      pladholder: 'Example: Identifying and Managing Project Risks',
     },
     {
       name: '',
-      pladholder: t(
-        'Example: Complete a case study for managing a project from concept to completion'
-      ),
+      pladholder:
+        'Example: Complete a case study for managing a project from concept to completion',
     },
   ];
 
   const dataRequirementsDefault = [
     {
       name: '',
-      pladholder: t(
-        'For example: No programming experience required. You will learn everything you need to know.'
-      ),
+      pladholder:
+        'For example: No programming experience required. You will learn everything you need to know.',
     },
   ];
 
   const dataIntenedLeanersDefault = [
     {
       name: '',
-      pladholder: t(
-        'Example: Entry-level Python developers who want to learn data science'
-      ),
+      pladholder:
+        'Example: Entry-level Python developers who want to learn data science',
     },
   ];
 
@@ -267,7 +261,7 @@ const PlanYourCourse = () => {
     const image = localStorage.getItem('cropper-image');
 
     if (image) {
-      toast.error(t('There are some images not cropped'));
+      toast.error('There are some images not cropped');
       return;
     }
     const resData = await fetchDetailSection();
@@ -314,7 +308,7 @@ const PlanYourCourse = () => {
     if (!isEnoughIntendedLearners) {
       setActivePlan(1);
       toast.error(
-        t('Please fill in all information for the intended learners section.'),
+        'Please fill in all information for the intended learners section.',
         { duration: 5000 }
       );
 
@@ -323,9 +317,7 @@ const PlanYourCourse = () => {
     if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
       setActivePlan(2);
       toast.error(
-        t(
-          'There is no course content yet. Please create it before publishing.'
-        ),
+        'There is no course content yet. Please create it before publishing.',
         {
           duration: 5000,
         }
@@ -335,14 +327,14 @@ const PlanYourCourse = () => {
     if (!isEnoughCourseLangdingePage) {
       setActivePlan(3);
       toast.error(
-        t('Please fill in all information for the landing page section.'),
+        'Please fill in all information for the landing page section.',
         { duration: 5000 }
       );
       return;
     }
     if (!isEnoughtSetPrice) {
       setActivePlan(4);
-      toast.error(t('Please fill in all information for the price section.'), {
+      toast.error('Please fill in all information for the price section.', {
         duration: 5000,
       });
       return;
@@ -393,7 +385,7 @@ const PlanYourCourse = () => {
     const image = localStorage.getItem('cropper-image');
 
     if (image) {
-      toast.error(t('There are some images not cropped'));
+      toast.error('There are some images not cropped');
       return;
     }
 
@@ -513,7 +505,7 @@ const PlanYourCourse = () => {
             <div className="grid grid-cols-10 gap-10 md:gap-12">
               <div className="col-span-10 md:col-span-2">
                 <div className="flex flex-col gap-4">
-                  <Text type="font-18-600">{t('Plan your course')}</Text>
+                  <Text type="font-18-600">{'Plan your course'}</Text>
                   <PlanYourCourseLeft
                     isEnoughtSetPrice={isEnoughtSetPrice}
                     isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}

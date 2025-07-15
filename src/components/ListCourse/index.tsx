@@ -4,7 +4,6 @@ import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, Progress } from '@nextui-org/react';
 import { useDebounce } from 'ahooks';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -21,11 +20,9 @@ import { getAccessToken } from '@/store/auth';
 import Link from 'next/link';
 const ListCourse = () => {
   const router = useRouter();
-  const { t } = useTranslation('common');
-
   const SORT_BY = [
-    { key: 'createdAt desc', label: t('Newest') },
-    { key: 'createdAt asc', label: t('Oldest') },
+    { key: 'createdAt desc', label: 'Newest' },
+    { key: 'createdAt asc', label: 'Oldest' },
   ];
 
   const [sort, setSort] = useState('createdAt desc');
@@ -74,7 +71,7 @@ const ListCourse = () => {
       <div className="flex flex-col gap-[30px]">
         <div className="flex items-center justify-between">
           <div className="pl-5 border-l-4 border-l-main">
-            <Text type="font-28-700">{t('Courses')}</Text>
+            <Text type="font-28-700">{'Courses'}</Text>
           </div>
           {isMobile && (
             <CustomButtonNewCourse
@@ -92,13 +89,13 @@ const ListCourse = () => {
                 startContent={<IconSearch />}
                 className="min-w-[240px] md:min-w-[302px]"
                 isInputSubmit
-                placeholder={t('Search')}
+                placeholder={'Search'}
                 value={search}
                 onChange={handleChange}
               />
             </div>
             <SelectCustom
-              placeholder={t('Sort by type')}
+              placeholder={'Sort by type'}
               isSelectSubmit
               className="w-full md:min-w-[120px] md:max-w-[140px] min-h-[44px] !bg-black-30"
               options={SORT_BY}
@@ -209,7 +206,7 @@ const ListCourse = () => {
                             >
                               <IconEdit />
                               <Text className="text-[20px] font-bold text-white">
-                                {t('Edit Course')}
+                                {'Edit Course'}
                               </Text>
                             </Link>
                             <div
@@ -218,7 +215,7 @@ const ListCourse = () => {
                             >
                               <IconDelete />
                               <Text className="text-[20px] font-bold text-white">
-                                {t('Delete Course')}
+                                {'Delete Course'}
                               </Text>
                             </div>
                             <Link
@@ -228,7 +225,7 @@ const ListCourse = () => {
                             >
                               <IconStatistic />
                               <Text className="text-[20px] font-bold text-white">
-                                {t('View Statistics')}
+                                {'View Statistics'}
                               </Text>
                             </Link>
                           </div>
@@ -240,7 +237,7 @@ const ListCourse = () => {
                       <div className="flex md:justify-end md:items-end">
                         <div className="flex items-center w-full md:w-8/12 gap-4">
                           <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px] whitespace-nowrap">
-                            {t('Finish your courses')}
+                            {'Finish your courses'}
                           </Text>
                           <Progress
                             maxValue={4}
@@ -257,13 +254,13 @@ const ListCourse = () => {
                         <div className="flex items-center gap-[30px]">
                           {!item?.isPublish && (
                             <Text type={'font-16-700'} className="text-white">
-                              {t('Draft')}
+                              {'Draft'}
                             </Text>
                           )}
 
                           {item?.isPublish && (
                             <Text type={'font-16-700'} className="text-white">
-                              {t('Public')}
+                              {'Public'}
                             </Text>
                           )}
                         </div>

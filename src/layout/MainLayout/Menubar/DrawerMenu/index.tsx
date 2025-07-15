@@ -13,7 +13,6 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import ThemeConfiguration from '../../MainHeader/ThemeConfiguration';
 import Notification from '@/components/Notification';
@@ -25,7 +24,6 @@ import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const DrawerMenu = (props: any, ref: any) => {
-  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
@@ -154,7 +152,7 @@ const DrawerMenu = (props: any, ref: any) => {
                         )}
                         type="font-16-600"
                       >
-                        {t(item?.label)}
+                        {item?.label}
                       </Text>
                     );
                   })}

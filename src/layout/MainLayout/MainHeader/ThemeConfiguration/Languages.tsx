@@ -3,8 +3,6 @@ import Text from '@/components/UI/Text';
 import { Checkbox, CheckboxGroup } from '@nextui-org/react';
 import React, { useState } from 'react';
 import languages from './data/languages.json';
-import { useTranslation } from 'next-i18next';
-
 const Languages = ({
   onChangeLangs,
   dataLangs,
@@ -12,7 +10,6 @@ const Languages = ({
   onChangeLangs: (value: string[]) => void;
   dataLangs: string[];
 }) => {
-  const { t } = useTranslation('common');
   const [langues, setLangues] = useState(languages);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +28,7 @@ const Languages = ({
     <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
       <div className="flex justify-between">
         <Text className="text-[18px] text-white font-semibold mb-[16px]">
-          {t('Language')}{' '}
+          {'Language'}{' '}
           <span className="bg-[#E55151] rounded-full py-[2px] px-[6px] leading-[16px] text-[12px]">
             {dataLangs.length}
           </span>
@@ -44,7 +41,7 @@ const Languages = ({
         <InputText
           inputDefault
           className="w-full text-[12px]"
-          placeholder={t('Search...')}
+          placeholder={'Search...'}
           onChange={onSearch}
         />
       </div>

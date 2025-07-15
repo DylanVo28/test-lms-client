@@ -5,15 +5,12 @@ import { MINT_NFT_ADDRESS, useHasMinted } from '@/hooks/useHasMinted';
 import CopyIcon from '@/icons/CopyIcon';
 import { Button, Skeleton, Tooltip } from '@nextui-org/react';
 import { Info } from '@phosphor-icons/react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
 import { useEffect } from 'react';
 
 const CertificationItem = ({ item }: any) => {
-  const { t } = useTranslation('common');
-
   const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
     {
       onSuccess(res) {

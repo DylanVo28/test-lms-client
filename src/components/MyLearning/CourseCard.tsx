@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { ROUTE_PATH } from '@/utils/const';
 import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
-import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import Link from 'next/link';
@@ -30,7 +29,6 @@ export default function CourseCard({
   countReviews,
 }: IProps) {
   const router = useRouter();
-  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
   const generateMentors = () => {
@@ -75,13 +73,7 @@ export default function CourseCard({
         </div>
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />
         <div className="flex items-center justify-between">
-          <Text type="font-14-500">
-            {t('{{progress}}% complete', {
-              progress: (progress * 100 > 100 ? 100 : progress * 100).toFixed(
-                0
-              ),
-            })}
-          </Text>
+          <Text type="font-14-500">{`${progress}% complete`}</Text>
           <div className="flex items-center gap-2">
             <ReactStars
               count={5}

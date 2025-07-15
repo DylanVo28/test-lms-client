@@ -7,7 +7,6 @@ import Text from '@/components/UI/Text';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
@@ -32,15 +31,14 @@ const initParams = {
 };
 const ListCourse = () => {
   const router = useRouter();
-  const { t } = useTranslation('common');
   const [tab, setTab] = useState(TAB_VIEW?.GRID);
   const [pageSize, setPageSize] = useState(3);
   const [sort, setSort] = useState<any>();
   const searchParams = useSearchParams();
 
   const SORT_BY = [
-    { key: 'createdAt desc', label: t('Newest') },
-    { key: 'createdAt asc', label: t('Oldest') },
+    { key: 'createdAt desc', label: 'Newest' },
+    { key: 'createdAt asc', label: 'Oldest' },
   ];
 
   console.log(router, 'router');
@@ -50,7 +48,7 @@ const ListCourse = () => {
   const [params, setParams] = useState(initParams);
   const { theme: dataThemeConfig } = useThemeInitial();
 
-  const search = searchParams.get('keySearch');
+  const search = searchParams.ge'keySearch';
 
   const {
     dataCourses,
@@ -118,7 +116,7 @@ const ListCourse = () => {
       <div className="flex flex-col gap-8 mb-4 md:mb-0 pt-[36px] md:px-10">
         <Text type="font-28-700" className="text-white">{`${
           dataCourses?.length
-        } ${t('results for')} “${router.query.keySearch}”`}</Text>
+        } ${'results for'} “${router.query.keySearch}”`}</Text>
         <div className={clsx('grid grid-cols-8 gap-6', {})}>
           <div className="col-span-2  flex-col hidden md:flex gap-5">
             <div className="flex items-center gap-4">
@@ -126,12 +124,12 @@ const ListCourse = () => {
                 <div className="flex items-center gap-1">
                   <IconShowFilter />
                   <Text type="font-14-500" className="text-black-6">
-                    {t('Filters')}
+                    {'Filters'}
                   </Text>
                 </div>
               </Button>
               <SelectCustom
-                placeholder={t('Sort by type')}
+                placeholder={'Sort by type'}
                 className="w-full"
                 options={SORT_BY}
                 value={sort}
@@ -160,12 +158,12 @@ const ListCourse = () => {
                       <div className="flex items-center gap-1">
                         <IconShowFilter />
                         <Text type="font-14-500" className="text-black-6">
-                          {t('Show Filters')}
+                          {'Show Filters'}
                         </Text>
                       </div>
                     </button>
                     <SelectCustom
-                      placeholder={t('Sort by type')}
+                      placeholder={'Sort by type'}
                       className="w-full"
                       options={SORT_BY}
                       value={sort}
@@ -185,7 +183,7 @@ const ListCourse = () => {
                     <div className="flex items-center gap-2">
                       <IconDeleteMain />
                       <Text type="font-16-700" className="text-main">
-                        {t('Clear filter')}
+                        {'Clear filter'}
                       </Text>
                     </div>
                   </Button>
@@ -194,7 +192,7 @@ const ListCourse = () => {
                 <div className="flex items-center gap-4">
                   {dataCourses?.length > 0 && (
                     <Text type="font-20-600" className="text-white">
-                      {dataCourses?.length} {t('results')}
+                      {dataCourses?.length} {'results'}
                     </Text>
                   )}
                   {/* <Tabs
@@ -242,7 +240,7 @@ const ListCourse = () => {
               >
                 <div className="flex items-center gap-[2px]">
                   <Text type="font-14-500" className="text-main">
-                    {t('See More')}
+                    {'See More'}
                   </Text>
                   <Image
                     src={'/icons/ic-arrow-drop-right-line.svg'}

@@ -1,6 +1,5 @@
 import Text from '@/components/UI/Text';
 import React from 'react';
-import { useTranslation } from 'next-i18next';
 import { useTheme } from '@/store/theme/useTheme';
 import { set } from 'video.js/dist/types/tech/middleware';
 import { ImodeTheme } from '@/store/theme/theme';
@@ -85,8 +84,6 @@ const ColorTheme = ({
   handleChangeValueColor: any;
   valueColorTheme: any;
 }) => {
-  const { t } = useTranslation('common');
-
   const handleChangeThemeColor = (item: any, modeTheme: ImodeTheme) => {
     handleChangeValueColor(item, modeTheme);
     // setTheme({
@@ -99,17 +96,17 @@ const ColorTheme = ({
   return (
     <div>
       <Text className="text-[18px] text-white font-semibold mb-[16px]">
-        {t('Color theme')}
+        {'Color theme'}
       </Text>
       <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
         <div className="flex flex-col gap-3">
           <Text type="font-18-600" className="text-white">
-            {t('Background')}
+            {'Background'}
           </Text>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-4">
               <Text type="font-16-700" className="text-white">
-                {t('Light color')}
+                {'Light color'}
               </Text>
               <div className="flex items-center gap-4">
                 {DATA_COLOR_LIGHT?.map((item) => {
@@ -135,7 +132,7 @@ const ColorTheme = ({
 
             <div className="flex flex-col gap-4">
               <Text type="font-16-700" className="text-white">
-                {t('Dark color')}
+                {'Dark color'}
               </Text>
               <div className="flex items-center gap-4">
                 {DATA_COLOR_DARK?.map((item) => {

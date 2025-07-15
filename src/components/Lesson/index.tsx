@@ -5,7 +5,6 @@ import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Button, Tab, Tabs } from '@nextui-org/react';
 import { X } from '@phosphor-icons/react';
 import { atom, useAtom } from 'jotai';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -38,7 +37,6 @@ export const valueProgressAtom = atom<any>({});
 export const reviewedAtom = atom<boolean>(false);
 
 const Lesson = () => {
-  const { t } = useTranslation('common');
   const router = useRouter();
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
@@ -183,7 +181,7 @@ const Lesson = () => {
     // },
     {
       key: '2',
-      label: t('Overview'),
+      label: 'Overview',
       children: (
         <Overview
           dataDetail={dataDetail}
@@ -208,7 +206,7 @@ const Lesson = () => {
     // },
     {
       key: '6',
-      label: t('Reviews'),
+      label: 'Reviews',
       children: (
         <Reviews
           dataListReviewSummary={dataListReviewSummary}
@@ -379,7 +377,7 @@ const Lesson = () => {
       setActiveItemSection(nextItem?.id);
     } else {
       setEndCourse(true);
-      setTypeLoadContent('');
+      setTypeLoadConten'';
     }
   };
 
@@ -501,7 +499,7 @@ const Lesson = () => {
       requestProgressStatusQuizz.run(body, id);
     }
     setEndCourse(true);
-    setTypeLoadContent('');
+    setTypeLoadConten'';
   };
 
   const handleToggleSidebar = () => {
@@ -625,7 +623,7 @@ const Lesson = () => {
                 {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
                 <div className="flex flex-col gap-[2px]">
                   <Text type="text-18-600" className="text-white">
-                    {t('Course content')}
+                    {'Course content'}
                   </Text>
                   {/* <Text type="font-14-400" className="text-white">
                   Set certificate expiration date

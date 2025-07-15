@@ -6,8 +6,6 @@ import Wishlist from './Wishlist';
 import { useRouter } from 'next/router';
 import Certifications from './Certifications';
 import FollowMentors from './FollowMentors';
-import { useTranslation } from 'next-i18next';
-
 export const enum TabMyLearning {
   COURSE_PROGRESS = 'COURSE_PROGRESS',
   WISHLIST = 'WISHLIST',
@@ -17,27 +15,26 @@ export const enum TabMyLearning {
 
 export default function MyLearning() {
   const router = useRouter();
-  const { t } = useTranslation('common');
   const [activeTab, setActiveTab] = useState(TabMyLearning.COURSE_PROGRESS);
   const itemsTab = [
     {
       key: TabMyLearning.COURSE_PROGRESS,
-      label: t('Course Progress'),
+      label: 'Course Progress',
       children: <ListCourses />,
     },
     {
       key: TabMyLearning.CERTIFICATIONS,
-      label: t('Certifications'),
+      label: 'Certifications',
       children: <Certifications />,
     },
     {
       key: TabMyLearning.WISHLIST,
-      label: t('Wishlist'),
+      label: 'Wishlist',
       children: <Wishlist />,
     },
     {
       key: TabMyLearning.FOLLOW_MENTORS,
-      label: t('Follow Mentors'),
+      label: 'Follow Mentors',
       children: <FollowMentors />,
     },
   ];
@@ -57,7 +54,7 @@ export default function MyLearning() {
     <div className="flex flex-col gap-[40px]">
       <div className="pl-5 border-l-4 border-l-main">
         <Text type="font-28-700" className="text-white">
-          {t('My Learning')}
+          {'My Learning'}
         </Text>
       </div>
 

@@ -4,8 +4,6 @@ import { File, PlayCircle } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 import FormAddArticle from '../FormAddArticle';
 import FormAddVideo from '../FormAddVideo';
-import { useTranslation } from 'next-i18next';
-
 const FormAddLecture = ({
   handleSaveArticle,
   loading,
@@ -23,7 +21,6 @@ const FormAddLecture = ({
   valueInfo: any;
   lectureItem: any;
 }) => {
-  const { t } = useTranslation('common');
   const [typeAddAction, setTypeAddAction] = useState<string>('');
 
   const handleClickArticle = () => {
@@ -67,9 +64,8 @@ const FormAddLecture = ({
       ) : (
         <div className="flex text-center justify-center py-3 flex-col border-1 border-t-0 border-white-15 items-center gap-3">
           <Text className="text-black-7 px-20" type="font-14-400">
-            {t(
-              'Select the primary content type. Files and links can be added as resources. Learn about content types.'
-            )}
+            Select the primary content type. Files and links can be added as
+            resources. Learn about content types.
           </Text>
           <div className="flex items-center gap-6">
             <div
@@ -81,7 +77,7 @@ const FormAddLecture = ({
               </div>
 
               <div className="p-2 bg-slate-600 w-full text-center">
-                <Text>{t('Video')}</Text>
+                <Text>{'Video'}</Text>
               </div>
             </div>
             <div
@@ -93,7 +89,7 @@ const FormAddLecture = ({
               </div>
 
               <div className="p-2 bg-slate-600 w-full text-center">
-                <Text>{t('Article')}</Text>
+                <Text>{'Article'}</Text>
               </div>
             </div>
           </div>

@@ -2,14 +2,12 @@ import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, Progress } from '@nextui-org/react';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
 import { atom, useAtom } from 'jotai';
 import useNavigate from '@/hooks/useNavigate';
 
 export const totalStepAtom = atom<number>(4);
 
 const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
-  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
   const [totalStep] = useAtom(totalStepAtom);
@@ -25,7 +23,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           src={'/logo.png'}
         />
         <Text type="font-16-500" className="text-white">
-          {`${t('Step')} ${currentStep} Of ${totalStep}`}
+          {`${'Step'} ${currentStep} Of ${totalStep}`}
         </Text>
 
         <Button
@@ -33,7 +31,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           onPress={() => navigate(ROUTE_PATH.LIST_COURSE)}
         >
           <Text type="font-16-500" className="text-white">
-            {t('Exit')}
+            {'Exit'}
           </Text>
         </Button>
       </div>

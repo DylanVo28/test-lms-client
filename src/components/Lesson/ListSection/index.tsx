@@ -9,8 +9,6 @@ import {
   generateRandomId,
   UserCourseProgressStatus,
 } from '@/utils/common';
-import { useTranslation } from 'next-i18next';
-
 const ListSection = ({
   sections,
   handleClickChildLesson,
@@ -28,8 +26,6 @@ const ListSection = ({
   loading: boolean;
   // activeIdChildSection: any
 }) => {
-  const { t } = useTranslation('common');
-
   return (
     <div className="flex flex-col bg-black-70 overflow-y-auto max-h-[calc(100vh-71px)] overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative">
       <LoadingContainer loading={loading} />
@@ -86,10 +82,7 @@ const ListSection = ({
               title={
                 <div className="flex flex-col gap-2">
                   <Text type="font-16-600" className="text-white">
-                    {t('Section {{index}}: {{title}}', {
-                      index: index + 1,
-                      title: item?.title,
-                    })}
+                    {`Section ${index + 1}: ${item?.title}`}
                   </Text>
                   <div className="flex items-center gap-3">
                     <Text type="font-14-400" className="opacity-50">

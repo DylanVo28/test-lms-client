@@ -2,8 +2,6 @@ import Text from '@/components/UI/Text';
 import { File, PlayCircle, QuestionMark } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 import FormAddQuestion from './FormAddQuestion';
-import { useTranslation } from 'next-i18next';
-
 const FormAddQuizz = ({
   handleSaveAddQuestion,
   loading,
@@ -13,7 +11,6 @@ const FormAddQuizz = ({
   loading: boolean;
   valueQuestion: any;
 }) => {
-  const { t } = useTranslation('common');
   const [isAddFormQuestion, setIsAddFormQuestion] = useState(false);
 
   const handleClickAddQuestion = () => {
@@ -47,7 +44,7 @@ const FormAddQuizz = ({
               </div>
 
               <div className="p-2 bg-slate-600 w-full text-center">
-                <Text>{t('Multiple choice')}</Text>
+                <Text>{'Multiple choice'}</Text>
               </div>
             </div>
           </div>

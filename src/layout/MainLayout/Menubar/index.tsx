@@ -6,13 +6,11 @@ import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import clsx from 'clsx';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 
 const Menubar = () => {
-  const { t } = useTranslation('common');
   const router = useRouter();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
@@ -89,7 +87,7 @@ const Menubar = () => {
             )}
             type="font-16-500"
           >
-            {t(item?.label)}
+            {item?.label}
           </Text>
         );
       })}

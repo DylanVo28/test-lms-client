@@ -3,7 +3,6 @@ import { Button } from '@nextui-org/react';
 import { useUploadFile } from '../CreateCourse/service';
 import { toast } from '../UI/Toast/toast';
 import { userRequest, TUser } from './service';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useProfile } from '@/store/profile/useProfile';
 
@@ -14,7 +13,6 @@ interface UploadedFile {
 }
 
 const Avatar = ({ reload }: { reload: VoidFunction }) => {
-  const { t } = useTranslation('common');
   const [valueFile, setValueFile] = useState<UploadedFile>();
   const [loading, setLoading] = useState(false);
   const { profile } = useProfile();
@@ -22,10 +20,10 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
     onSuccess(response) {
       const data = response.data;
       setValueFile(data);
-      toast.success(t('File uploaded successfully!'));
+      toast.success('File uploaded successfully!');
     },
     onError(error) {
-      toast.error(t('File uploaded failed!'));
+      toast.error('File uploaded failed!');
     },
   });
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,13 +39,13 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
 
       if (!allowedTypes.includes(file.type)) {
         toast.error(
-          t('Invalid file type. Only JPEG, PNG, or JPG are allowed.')
+          'Invalid file type. Only JPEG, PNG, or JPG are allowed.'
         );
         return;
       }
 
       if (file.size > maxSize) {
-        toast.error(t('File size exceeds 10 MB limit.'));
+        toast.error('File size exceeds 10 MB limit.');
         return;
       }
 
@@ -61,9 +59,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
           img.height > maxHeight
         ) {
           toast.error(
-            t(
-              `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
-            )
+            `Image dimensions must be between ${minWidth}x${minHeight} and ${maxWidth}x${maxHeight} pixels.`
           );
           return;
         }
@@ -81,9 +77,9 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
       await userRequest.update({ ...profile, avatar: valueFile.url });
       reload();
       setValueFile(undefined);
-      toast.success(t('Avatar uploaded successfully!'));
+      toast.success('Avatar uploaded successfully!');
     } catch (error) {
-      toast.error(t('Avatar uploaded failed!'));
+      toast.error('Avatar uploaded failed!');
     } finally {
       setLoading(false);
     }
@@ -92,11 +88,11 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
   return (
     <div className="flex flex-col gap-[12px]">
       <div className="text-[18px] font-bold">
-        <sup className="text-[#FF3132]">*</sup> {t('Upload File')}
+        <sup className="text-[#FF3132]">*</sup> {'Upload File'}
       </div>
 
       {/* <div className="text-white">
-        {t('Minimum 124x46 pixels, Maximum 3000x3000 pixels')}
+        {'Minimum 124x46 pixels, Maximum 3000x3000 pixels'}
       </div> */}
 
       <div className="p-[20px] h-[180px] w-fit bg-gray-50 rounded-[4px]">
@@ -114,7 +110,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
             isLoading={loadingFile}
             className="px-[20px] py-[10px] bg-[#ffffff19] rounded-[4px] text-main border border-[var(--main-color)]"
           >
-            {t('Choose File')}
+            {'Choose File'}
           </Button>
           {!loading && (
             <input
@@ -133,7 +129,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
         type="button"
         className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
       >
-        {t('Save Profile')}
+        {'Save Profile'}
       </Button>
     </div>
   );

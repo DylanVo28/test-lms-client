@@ -2,26 +2,24 @@ import { useEffect } from 'react';
 import { Control, Controller, useWatch, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
-import { useTranslation } from 'next-i18next';
 import { Tooltip } from '@nextui-org/react';
 import { Info } from '@phosphor-icons/react';
 
 const SetPrice = ({ control }: { control: Control }) => {
-  const { t } = useTranslation('common');
   const { setError, clearErrors, formState } = useForm({}); // Lấy các hàm hỗ trợ từ react-hook-form
   const originPrice = useWatch({ control, name: 'originPrice' });
 
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
-        {t('Set Price')}
+        {'Set Price'}
       </Text>
       <div className="flex flex-col gap-6">
         {/* Origin Price */}
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="w-[150px] flex items-center gap-1">
             <Text type="font-16-600" className="text-white">
-              {t('Origin Price')}
+              {'Origin Price'}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -30,8 +28,8 @@ const SetPrice = ({ control }: { control: Control }) => {
               name="originPrice"
               control={control}
               rules={{
-                required: t('Origin Price is required'),
-                min: { value: 0, message: t('Price must be at least 0') },
+                required: 'Origin Price is required',
+                min: { value: 0, message: 'Price must be at least 0' },
               }}
               render={({ field, fieldState }) => (
                 <InputText
@@ -45,7 +43,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                   onChange={field.onChange}
                   value={field.value}
                   className="md:min-w-[600px]"
-                  placeholder={t('0')}
+                  placeholder={'0'}
                   inputDefault
                 />
               )}
@@ -57,7 +55,7 @@ const SetPrice = ({ control }: { control: Control }) => {
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="flex items-center gap-1 w-[150px]">
             <Text type="font-16-600" className="text-white">
-              {t('Final Price')}
+              {'Final Price'}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -66,10 +64,10 @@ const SetPrice = ({ control }: { control: Control }) => {
               name="price"
               control={control}
               rules={{
-                required: t('Final Price is required'),
+                required: 'Final Price is required',
                 validate: (value) => {
                   if (Number(value) > Number(originPrice)) {
-                    return t('Final Price cannot be greater than Origin Price');
+                    return 'Final Price cannot be greater than Origin Price';
                   }
                   return true;
                 },
@@ -87,7 +85,7 @@ const SetPrice = ({ control }: { control: Control }) => {
                     onChange={field.onChange}
                     value={field.value}
                     className="md:min-w-[600px]"
-                    placeholder={t('0')}
+                    placeholder={'0'}
                     inputDefault
                   />
                 );

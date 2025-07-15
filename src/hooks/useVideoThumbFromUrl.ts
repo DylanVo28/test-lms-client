@@ -6,13 +6,13 @@ export function useVideoThumbFromUrl(videoUrl: string): string | null {
   useEffect(() => {
     if (!videoUrl) return;
 
-    const video = document.createElement('video');
+    const video = document.createElement('video') as any;
     video.src = videoUrl;
     video.crossOrigin = 'anonymous';
     video.preload = 'auto';
 
     const handleSeeked = () => {
-      const canvas = document.createElement('canvas');
+      const canvas = document.createElement('canvas') as any;
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       const ctx = canvas.getContext('2d');
@@ -20,7 +20,7 @@ export function useVideoThumbFromUrl(videoUrl: string): string | null {
 
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       canvas.toBlob(
-        (blob) => {
+        (blob: any) => {
           if (blob) {
             const url = URL.createObjectURL(blob);
             setBlobUrl(url);

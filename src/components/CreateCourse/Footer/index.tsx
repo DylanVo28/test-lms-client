@@ -1,6 +1,5 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import { TYPE_CREATE_COURSE } from '../ContenStep1';
 
 const Footer = ({
@@ -17,7 +16,6 @@ const Footer = ({
 
   currentStep: number;
 }) => {
-  const { t } = useTranslation('common');
   const typeWatch = watch('type');
   const courseIdWatch = watch('courseId');
   const titleWatch = watch('title');
@@ -35,7 +33,7 @@ const Footer = ({
             className="bg-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-text-white">
-              {t('Continue')}
+              {'Continue'}
             </Text>
           </Button>
         </div>
@@ -47,7 +45,7 @@ const Footer = ({
             className="bg-transparent border-1 border-main rounded py-[10px] px-6"
           >
             <Text type="font-16-700" className="text-white">
-              {t('Previous')}
+              {'Previous'}
             </Text>
           </Button>
           {typeWatch === TYPE_CREATE_COURSE?.PREMADE_CONTENT ? (
@@ -58,7 +56,7 @@ const Footer = ({
               className="bg-main rounded py-[10px] px-6"
             >
               <Text type="font-16-700" className="text-white">
-                {t('Duplicate')}
+                {'Duplicate'}
               </Text>
             </Button>
           ) : (
@@ -75,7 +73,7 @@ const Footer = ({
               className="bg-main rounded py-[10px] px-6"
             >
               <Text type="font-16-700" className="text-white">
-                {t('Continue')}
+                {'Continue'}
               </Text>
             </Button>
           )}

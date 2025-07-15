@@ -13,7 +13,6 @@ import {
 
 import languages from '../ThemeConfiguration/data/languages.json';
 import { useMemo } from 'react';
-import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
@@ -23,13 +22,11 @@ interface IProps {
 }
 
 export default function LanguageModal({ onClosePopover }: IProps) {
-  const { t, i18n } = useTranslation('common');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const onChangeRadioGroup = (e: any) => {
     const value = e.target.value;
-    i18n.changeLanguage(value);
     onClose();
     onClosePopover();
   };
@@ -62,14 +59,14 @@ export default function LanguageModal({ onClosePopover }: IProps) {
         className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
       >
         <Text type="font-14-500" className="text-white">
-          {findLang(i18n.language)}
+          Language
         </Text>
 
         <IconArrowRight />
       </div>
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <ModalHeader className="flex justify-between items-center gap-1">
-          {t('Select Language')}
+          {'Select Language'}
         </ModalHeader>
         <ModalBody>
           <RadioGroup
@@ -77,7 +74,7 @@ export default function LanguageModal({ onClosePopover }: IProps) {
               wrapper: 'gap-3',
             }}
             onChange={onChangeRadioGroup}
-            value={i18n.language}
+            value={''}
           >
             {showLangs.map((lang) => {
               return (
@@ -102,7 +99,7 @@ export default function LanguageModal({ onClosePopover }: IProps) {
             className="min-h-[40px] bg-main rounded mt-2"
           >
             <Text className="text-white" type="font-16-600">
-              {t('Close')}
+              {'Close'}
             </Text>
           </Button>
         </ModalFooter>

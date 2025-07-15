@@ -1,6 +1,5 @@
 import CopyIcon from '@/icons/CopyIcon';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Text from '../UI/Text';
@@ -33,7 +32,6 @@ const Overview = ({
     };
   };
 }) => {
-  const { t } = useTranslation('common');
   const [origin, setOrigin] = useState('');
   const [refCode, setRefCode] = useState('');
   const { theme: dataThemeConfig } = useThemeInitial();
@@ -71,7 +69,7 @@ const Overview = ({
 
   const onCopy = (text: string) => {
     window.navigator.clipboard.writeText(text);
-    toast.success(t('Copied!'));
+    toast.success('Copied!');
   };
 
   return (
@@ -93,7 +91,7 @@ const Overview = ({
         <Divided />
 
         <div className="flex justify-between items-center py-[8px]">
-          <Text type="font-16-700">{t('Verified Account')}</Text>
+          <Text type="font-16-700">{'Verified Account'}</Text>
           <Image src={'/icons/ic-kyc.svg'} alt="kyc" width={24} height={24} />
         </div>
 

@@ -2,10 +2,7 @@ import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { Control, useFieldArray } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
-
 const Referral = ({ control }: { control: Control }) => {
-  const { t } = useTranslation('common');
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'referrals',
@@ -23,19 +20,17 @@ const Referral = ({ control }: { control: Control }) => {
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
-        {t('Referral')}
+        {'Referral'}
       </Text>
 
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-white">
-            {t('Choose Exchange')}
+            {'Choose Exchange'}
           </Text>
 
           <Text type="font-16-600" className="text-black-6">
-            {t(
-              'You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.'
-            )}
+            {'You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.'}
           </Text>
         </div>
         {fields?.map((field: any, index) => {
@@ -59,7 +54,7 @@ const Referral = ({ control }: { control: Control }) => {
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {t('+ Add more to your answer')}
+            {'+ Add more to your answer'}
           </Text>
         </Button>
       </div>
@@ -67,15 +62,11 @@ const Referral = ({ control }: { control: Control }) => {
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-white">
-            {t(
-              'What are the requirements or prerequisites for unlocking free course?'
-            )}
+            {'What are the requirements or prerequisites for unlocking free course?'}
           </Text>
 
           <Text type="font-16-600" className="text-black-6">
-            {t(
-              'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
-            )}
+            {'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'}
           </Text>
         </div>
         {fields1?.map((field: any, index) => {
@@ -99,7 +90,7 @@ const Referral = ({ control }: { control: Control }) => {
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {t('+ Add more to your answer')}
+            {'+ Add more to your answer'}
           </Text>
         </Button>
       </div>

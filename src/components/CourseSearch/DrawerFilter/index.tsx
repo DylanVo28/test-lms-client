@@ -8,13 +8,9 @@ import {
 import Image from 'next/image';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import FilterCourse from '../ListCourse/FilterCourse';
-import { useTranslation } from 'next-i18next';
-
 const DrawerFilter = (props: any, ref: any) => {
   const { setParams, params } = props;
   const [visible, setVisible] = useState(false);
-  const { t } = useTranslation('common');
-
   const onVisible = () => {
     setVisible(!visible);
   };

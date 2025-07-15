@@ -14,7 +14,6 @@ import IconVideo from '@/components/UI/Icons/IconVideo';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
 import { Button } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
@@ -26,14 +25,13 @@ import { useAccount } from 'wagmi';
 
 const Mentors = ({ mentor }: any) => {
   const { profile } = useProfile();
-  const { t } = useTranslation('common');
   const accessToken = useAccessToken();
 
   const [mentorProfile, setMentorProfile] = useState<any>();
 
   const requestFollowMentor = useFollowMentor({
     onSuccess: async (res: any) => {
-      toast.success(t('Follow successfully'));
+      toast.success('Follow successfully');
       const newData = {
         ...mentorProfile,
         isFollowing: true,
@@ -45,7 +43,7 @@ const Mentors = ({ mentor }: any) => {
 
   const requestUnFollowMentor = useUnFollowMentor({
     onSuccess: async (res: any) => {
-      toast.success(t('Unfollow successfully'));
+      toast.success('Unfollow successfully');
       const newData = {
         ...mentorProfile,
         isFollowing: false,
@@ -114,7 +112,7 @@ const Mentors = ({ mentor }: any) => {
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-white" type="font-20-600">
-        {t('Mentors (KOLs)')}
+        {'Mentors (KOLs)'}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
@@ -150,14 +148,14 @@ const Mentors = ({ mentor }: any) => {
                 </div>
                 <Text type="font-14-400" className="text-white">
                   {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
-                  {t('Reviews')}
+                  {'Reviews'}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
                   <Text type="font-14-400" className="text-white">
                     {mentorProfile?.instructorInfo?.countStudents || 0}{' '}
-                    {t('Students')}
+                    {'Students'}
                   </Text>
                 </div>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
@@ -165,7 +163,7 @@ const Mentors = ({ mentor }: any) => {
                   <IconVideo />
                   <Text type="font-14-400" className="text-white">
                     {mentorProfile?.instructorInfo?.countCourses || 0}{' '}
-                    {t('Courses')}
+                    {'Courses'}
                   </Text>
                 </div>
               </div>
@@ -237,7 +235,7 @@ const Mentors = ({ mentor }: any) => {
               onPress={followMentor}
               isDisabled={!accessToken}
             >
-              {!mentorProfile?.isFollowing ? t('Follow') : t('Unfollow')}
+              {!mentorProfile?.isFollowing ? 'Follow' : 'Unfollow'}
             </Button>
           )}
         </div>

@@ -10,7 +10,6 @@ import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { TypeReactions } from '@/utils/common';
 import { Progress, Spinner } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 import ReactStars from 'react-stars';
@@ -31,7 +30,6 @@ const Reviews = ({
 
   courseId: string;
 }) => {
-  const { t } = useTranslation('common');
   const [valueSearch, setValueSearch] = useState('');
   const [valueLevel, setValueLevel] = useState<any>();
 
@@ -189,7 +187,7 @@ const Reviews = ({
 
   return (
     <div className="md:pt-[14px] py-[40px] md:py-0 flex flex-col gap-2 md:px-[80px]">
-      <Text type="font-20-600">{t('Student feedbacks')}</Text>
+      <Text type="font-20-600">{'Student feedbacks'}</Text>
       <div className="flex gap-2 items-start mb-8">
         <div className="">
           <div className="flex items-center gap-2">
@@ -214,11 +212,11 @@ const Reviews = ({
       </div>
 
       <div className="flex items-center gap-4 mb-4">
-        <Text type="font-20-600">{t('Reviews')}</Text>
+        <Text type="font-20-600">{'Reviews'}</Text>
 
         {/* <InputText
           className="max-w-[470px]"
-          placeholder={t('Search')}
+          placeholder={'Search'}
           isLesson
           onChange={(e: any) => {
             setValueSearch(e.target.value);
@@ -234,27 +232,27 @@ const Reviews = ({
           options={[
             {
               key: 5,
-              label: t('5 star'),
+              label: '5 star',
             },
             {
               key: 4,
-              label: t('4 star'),
+              label: '4 star',
             },
             {
               key: 3,
-              label: t('3 star'),
+              label: '3 star',
             },
             {
               key: 2,
-              label: t('2 star'),
+              label: '2 star',
             },
             {
               key: 1,
-              label: t('1 star'),
+              label: '1 star',
             },
           ]}
           className="max-w-[117px]"
-          placeholder={t('All Ratings')}
+          placeholder={'All Ratings'}
         />
       </div>
       <div className="flex flex-col gap-6">
@@ -275,7 +273,7 @@ const Reviews = ({
               })}
 
             {dataListReview?.data?.length === 0 && (
-              <NoData text={t('No reviews')} />
+              <NoData text={'No reviews'} />
             )}
           </>
         )}
@@ -294,7 +292,7 @@ const Reviews = ({
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
-              {t('See More')}
+              {'See More'}
             </Text>
             <Image
               src={'/icons/ic-arrow-drop-right-line.svg'}

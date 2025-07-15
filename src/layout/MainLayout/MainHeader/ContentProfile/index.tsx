@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
 import LanguageModal from '../LanguageModal';
-import { useTranslation } from 'next-i18next';
 import { notificationAtom } from '@/store/notification/notification';
 import { useAtom } from 'jotai';
 import { formatWalletAddress } from '@/utils/common';
@@ -41,7 +40,6 @@ const ContentProfile = ({
   disconnect: any;
   onClosePopover: VoidFunction;
 }) => {
-  const { t } = useTranslation('common');
   const { profile, setProfile } = useProfile();
   const router = useRouter();
   const [, setNotifications] = useAtom(notificationAtom);
@@ -65,7 +63,7 @@ const ContentProfile = ({
     setProfile(initialProfile);
     disconnect();
 
-    // toast.success(t('Logout successfully'));
+    // toast.success('Logout successfully');
   };
 
   const generateName = (): any => {
@@ -88,7 +86,7 @@ const ContentProfile = ({
         </div>
         <div className="py-[2px] px-2 rounded-[50px] bg-green/10 flex justify-center items-center">
           <Text type="font-12-500" className="text-green">
-            {t('Verified')}
+            {'Verified'}
           </Text>
         </div>
       </div>
@@ -104,7 +102,7 @@ const ContentProfile = ({
               className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
             >
               <Text type="font-14-500" className="text-white">
-                {t(item?.label)}
+                {item?.label}
               </Text>
             </div>
           );
@@ -116,7 +114,7 @@ const ContentProfile = ({
       >
         <Image src={'/images/ig-logout.png'} width={24} height={24} alt="" />
         <Text type="font-14-500" className="text-error">
-          {t('Logout')}
+          {'Logout'}
         </Text>
       </div>
     </div>

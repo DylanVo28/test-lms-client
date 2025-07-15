@@ -15,7 +15,6 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -25,7 +24,6 @@ import ThemeConfiguration from './ThemeConfiguration';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const MainHeader = () => {
-  const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
   const token = useAccessToken();
@@ -103,7 +101,7 @@ const MainHeader = () => {
               startContent={<IconSearch />}
               className="xl:min-w-[470px] lg:min-w-[320px]"
               radius="sm"
-              placeholder={t('Search')}
+              placeholder={'Search'}
             />
             <div className="border-1 border-gray-20 h-8" />
 

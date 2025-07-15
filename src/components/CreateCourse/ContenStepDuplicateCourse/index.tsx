@@ -3,12 +3,10 @@ import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { useProfile } from '@/store/profile/useProfile';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
-  const { t } = useTranslation('common');
   const { theme: dataThemeConfig } = useThemeInitial();
 
   const { dataCourses, reload } = useGetListCourse({
@@ -25,7 +23,7 @@ const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
         <Text type="font-28-700" className="text-white">
-          {t('Courses')}
+          {'Courses'}
         </Text>
       </div>
       <div className="w-full">
@@ -34,7 +32,7 @@ const ContenStepDuplicateCourse = ({ control }: { control: Control }) => {
           control={control}
           render={({ field }) => (
             <SelectCustom
-              placeholder={t('Choose courses')}
+              placeholder={'Choose courses'}
               className="md:min-w-[620px]"
               isSelectSubmit
               onChange={field.onChange}

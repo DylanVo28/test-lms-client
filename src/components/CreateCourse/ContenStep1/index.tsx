@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
 import IconCourse from '@/components/UI/Icons/IconCourse';
 import { useAtom } from 'jotai';
 import { totalStepAtom } from '../HeaderCourse';
@@ -14,7 +13,6 @@ export const enum TYPE_CREATE_COURSE {
 }
 
 const ContenStep1 = ({ control }: { control: Control }) => {
-  const { t } = useTranslation('common');
   const [, setTotalStep] = useAtom(totalStepAtom);
 
   const DATA_CONTENT = [
@@ -22,24 +20,22 @@ const ContenStep1 = ({ control }: { control: Control }) => {
       id: 'COURSE',
       label: 'Courses',
       img: '/images/img-courses.png',
-      description: t(
-        'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.'
-      ),
+      description:
+        'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.',
     },
     {
       id: 'PREMADE_CONTENT',
       label: 'Premade Content',
       img: '/images/img-practice.png',
-      description: t(
-        'Allows the content creator to just duplicate from our white label database'
-      ),
+      description:
+        'Allows the content creator to just duplicate from our white label database',
     },
   ];
 
   return (
     <div className="flex items-center flex-col gap-10">
       <Text className="text-white text-center" type="font-28-700">
-        {t("First, let's find out what type of course you're making.")}
+        {"First, let's find out what type of course you're making."}
       </Text>
       <Controller
         name="type"
@@ -70,10 +66,10 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                   <IconCourse />
                   {/* <Image alt="" width={48} height={48} src={item?.img} /> */}
                   <Text type="font-20-700" className="text-white">
-                    {t(item?.label)}
+                    {item?.label}
                   </Text>
                   <Text type="font-16-400" className="text-black-6">
-                    {t(item?.description)}
+                    {item?.description}
                   </Text>
                 </div>
               );

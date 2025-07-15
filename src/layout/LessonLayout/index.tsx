@@ -21,7 +21,6 @@ import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import MainHeader from '../MainLayout/MainHeader';
-import { useTranslation } from 'next-i18next';
 import IconCup from '@/components/UI/Icons/IconCup';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
@@ -30,7 +29,6 @@ import Link from 'next/link';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const { t } = useTranslation('common');
   const [valueYourProgress] = useAtom(valueProgressAtom);
   const { profile } = useProfile();
   const refModalShare: any = useRef(null);
@@ -76,7 +74,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                   <IconArrowLeft />
 
                   <Text type="font-16-500" className="text-white">
-                    {t('Home')}
+                    {'Home'}
                   </Text>
                 </div>
               </Button>
@@ -106,7 +104,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                   <div className="flex gap-x-1 items-center">
                     <Text type="font-16-500" className="text-white">
-                      {t('Your Progress')}
+                      {'Your Progress'}
                     </Text>
                     <IconArrowDown />
                   </div>
@@ -146,7 +144,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             >
               <div className="flex items-center gap-1">
                 <Text type="font-16-500" className="text-white">
-                  {t('Share')}
+                  {'Share'}
                 </Text>
                 <IconShare />
               </div>

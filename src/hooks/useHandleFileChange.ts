@@ -10,11 +10,11 @@ const useHandleFileChange = ({
 
     if (file && file.type.startsWith('video/')) {
       // Get video duration
-      const videoElement = document.createElement('video');
+      const videoElement = document.createElement('video') as any;
       videoElement.src = URL.createObjectURL(file);
       videoElement.onloadedmetadata = () => {
         const duration = videoElement.duration; // Thời gian video tính bằng giây
-        const canvas = document.createElement('canvas');
+        const canvas = document.createElement('canvas') as any;
         const context: any = canvas.getContext('2d');
         videoElement.currentTime = 1; // Chọn thời điểm 1s đầu tiên
 

@@ -7,7 +7,6 @@ import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
-import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import { reviewedAtom } from '..';
 import { useAtom } from 'jotai';
@@ -19,7 +18,6 @@ const FormEndCourse = ({
   handleGetReviews: VoidFunction;
   courseId: string;
 }) => {
-  const { t } = useTranslation('common');
   const [valueRating, setValueRating] = useState<any>();
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
@@ -31,14 +29,14 @@ const FormEndCourse = ({
 
   const { run: runReviewCours, loading: loadingComment } = useReviewCours({
     onSuccess() {
-      setValueComment('');
+      setValueCommen'';
       setValueRating(0);
       setSubmitReviewSuccess(true);
       handleGetReviews();
       setReviewed(true);
     },
     onError(err) {
-      setValueComment('');
+      setValueCommen'';
       setValueRating(0);
       toast.error(err?.message);
     },
@@ -60,7 +58,7 @@ const FormEndCourse = ({
       {submitReviewSuccess ? (
         <div className="flex flex-col pt-20 items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
-            🙌 {t('Congratulations on completing the course!')}
+            🙌 {'Congratulations on completing the course!'}
           </Text>
 
           <Button
@@ -69,19 +67,19 @@ const FormEndCourse = ({
             className=" bg-transparent border-1 border-main min-w-[162px] w-max min-h-[50px] rounded"
           >
             <Text type="font-16-500" className="text-main">
-              {t('Find more courses')}
+              {'Find more courses'}
             </Text>
           </Button>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-6 md:w-5/12">
           <Text type="font-20-600" className="text-center">
-            🙌 {t('Congratulations on completing the course!')}
-            <br /> {t('Would you like to leave a review?')}
+            🙌 {'Congratulations on completing the course!'}
+            <br /> {'Would you like to leave a review?'}
           </Text>
           <div className="flex flex-col gap-2 w-full">
             <Text className="text-center text-[16px] font-semibold">
-              {t('Select rating')}
+              {'Select rating'}
             </Text>
 
             <ReactStars
@@ -96,9 +94,7 @@ const FormEndCourse = ({
             <InputTextArena
               className="w-full mt-4"
               minRows={6}
-              placeholder={t(
-                'Tell us about your own personal experience taking this course. Was it right for you?'
-              )}
+              placeholder={'Tell us about your own personal experience taking this course. Was it right for you?'}
               value={valueComment}
               onChange={(e: any) => setValueComment(e.target.value)}
               isBlack
@@ -112,7 +108,7 @@ const FormEndCourse = ({
                 className=" bg-main min-w-[142px] w-max min-h-[40px] rounded"
               >
                 <Text type="font-16-500" className="text-white">
-                  {t('Save and continue')}
+                  {'Save and continue'}
                 </Text>
               </Button>
             </div>

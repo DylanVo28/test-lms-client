@@ -4,7 +4,6 @@ import Overview from './Overview';
 import Information from './Information';
 import Avatar from './Avatar';
 import { referralRequest, userRequest } from './service';
-import { useTranslation } from 'next-i18next';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import Earnings from './Earnings';
 import { useProfile } from '@/store/profile/useProfile';
@@ -44,7 +43,6 @@ interface Summary {
 }
 
 const MyProfile = () => {
-  const { t } = useTranslation('common');
   const [tabSelected, setTabSelected] = useState<TAB>(TAB.INFORMATION);
   // const [user, setUser] = useState<any>({});
   const [summary, setSummary] = useState<Summary>();
@@ -75,7 +73,7 @@ const MyProfile = () => {
   return (
     <div className="flex flex-col gap-[50px]">
       <div className="pl-5 border-l-4 border-l-main">
-        <Text type="font-28-700">{t('My Profile')}</Text>
+        <Text type="font-28-700">{'My Profile'}</Text>
       </div>
 
       <div className="flex flex-col md:flex-row gap-[24px] box-border">
@@ -111,7 +109,7 @@ const MyProfile = () => {
                 <span
                   className={`${tabSelected === item.key ? '' : 'opacity-50'}`}
                 >
-                  {t(item.title)}
+                  {item.title}
                 </span>
               </div>
             ))}

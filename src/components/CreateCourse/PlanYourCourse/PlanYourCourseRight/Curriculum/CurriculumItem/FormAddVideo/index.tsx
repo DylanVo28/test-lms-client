@@ -4,7 +4,6 @@ import { LessonContentType } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import classNames from 'classnames';
 import clsx from 'clsx';
-import { useTranslation } from 'next-i18next';
 import { useEffect, useRef, useState } from 'react';
 import Content from '../Content';
 import { useCurriculumContext } from '../../context';
@@ -23,7 +22,6 @@ const FormAddVideo = ({
   const fileRef = useRef<HTMLInputElement>(null);
   const { upload, progress, uploading } = useS3MultipartUpload();
 
-  const { t } = useTranslation('common');
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
   const [uploadFileLoading, setUploadFileLoading] = useState(false);
@@ -40,43 +38,6 @@ const FormAddVideo = ({
       setFormData(data);
     },
   });
-
-  // const handleFileChange = async (event: any) => {
-  //   const file = event.target.files[0];
-
-  //   if (file && file.type.startsWith('video/')) {
-  //     // Get video duration
-  //     const videoElement = document.createElement('video');
-  //     videoElement.src = URL.createObjectURL(file);
-  //     videoElement.onloadedmetadata = () => {
-  //       const duration = videoElement.duration; // Thời gian video tính bằng giây
-  //       const canvas = document.createElement('canvas');
-  //       const context: any = canvas.getContext('2d');
-  //       videoElement.currentTime = 1; // Chọn thời điểm 1s đầu tiên
-
-  //       videoElement.onseeked = () => {
-  //         context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-  //         canvas.toBlob(async (blob: any) => {
-  //           if (blob) {
-  //             const thumbnailFile = new File([blob], 'thumbnail.jpg', {
-  //               type: 'image/jpeg',
-  //             });
-
-  //             const blobThumbnailUrl = URL.createObjectURL(thumbnailFile);
-
-  //             setFormData({
-  //               video: file,
-  //               thumbnail: thumbnailFile,
-  //               duration,
-  //               blobThumbnailUrl,
-  //               videoName: file?.name,
-  //             });
-  //           }
-  //         }, 'image/jpeg');
-  //       };
-  //     };
-  //   }
-  // };
 
   const handleClickUploadFile = () => {
     if (!fileRef.current) return;
@@ -155,7 +116,7 @@ const FormAddVideo = ({
               )}
             >
               <Text type="font-14-400" className="text-white/40">
-                {t('No files selected')}
+                {'No files selected'}
               </Text>
             </div>
           )}
@@ -177,7 +138,7 @@ const FormAddVideo = ({
 
           {isError && (
             <Text type="font-14-400" className="text-danger-300 px-2">
-              {t('Please upload the file')}
+              {'Please upload the file'}
             </Text>
           )}
         </div>
@@ -198,7 +159,7 @@ const FormAddVideo = ({
             className="bg-transparent min-h-[43px] min-w-[120px] border-1 border-main rounded"
           >
             <Text type="font-14-400" className="text-main">
-              {t('Select video')}
+              {'Select video'}
             </Text>
           </Button>
         )}
@@ -211,7 +172,7 @@ const FormAddVideo = ({
           isHasVideo ? 'px-2' : 'px-0'
         )}
       >
-        {t('Note: All files must be at least 720p and less than 100MB.')}
+        {'Note: All files must be at least 720p and less than 100MB.'}
       </Text>
 
       <div
@@ -225,7 +186,7 @@ const FormAddVideo = ({
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
           <Text type="font-16-400" className="text-white">
-            {uploading ? <div>Progress: {progress}%</div> : t('Save')}
+            {uploading ? <div>Progress: {progress}%</div> : 'Save'}
           </Text>
         </Button>
       </div>

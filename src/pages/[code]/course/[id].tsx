@@ -66,7 +66,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
-      courseMedadata,},
+      courseMedadata,
+    },
   };
 };
 export default DetailCoursePage;

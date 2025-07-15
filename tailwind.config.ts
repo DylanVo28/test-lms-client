@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-/** @type {import('tailwindcss').Config} */
+/** @type {impor'tailwindcss'.Config} */
 import { nextui } from '@nextui-org/react';
 
 module.exports = {

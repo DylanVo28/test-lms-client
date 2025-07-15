@@ -11,13 +11,10 @@ import Image from 'next/image';
 import NoData from '../ListCourse/NoData';
 import { useProfile } from '@/store/profile/useProfile';
 import Loading from '../UI/Loading';
-import { useTranslation } from 'next-i18next';
-
 export default function ListCourses() {
-  const { t } = useTranslation('common');
   const SORT_BY = [
-    { key: 'createdAt desc', label: t('Newest') },
-    { key: 'createdAt asc', label: t('Oldest') },
+    { key: 'createdAt desc', label: 'Newest' },
+    { key: 'createdAt asc', label: 'Oldest' },
   ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
@@ -67,11 +64,11 @@ export default function ListCourses() {
                 <IconFilter />
               </div>
               <Text className="text-main w-max" type="font-14-500">
-                {t('All Filter')}
+                {'All Filter'}
               </Text>
             </div>
             <SelectCustom
-              placeholder={t('Categories')}
+              placeholder={'Categories'}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
@@ -80,7 +77,7 @@ export default function ListCourses() {
               }}
             />
             <SelectCustom
-              placeholder={t('Price')}
+              placeholder={'Price'}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
@@ -91,10 +88,10 @@ export default function ListCourses() {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              {t('Sort by')}
+              {'Sort by'}
             </Text>
             <SelectCustom
-              placeholder={t('Default')}
+              placeholder={'Default'}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
@@ -109,10 +106,10 @@ export default function ListCourses() {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            {t('Sort by')}
+            {'Sort by'}
           </Text>
           <SelectCustom
-            placeholder={t('Default')}
+            placeholder={'Default'}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}
@@ -154,7 +151,7 @@ export default function ListCourses() {
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
-              {t('See More')}
+              {'See More'}
             </Text>
             <Image
               src={'/icons/ic-arrow-drop-right-line.svg'}

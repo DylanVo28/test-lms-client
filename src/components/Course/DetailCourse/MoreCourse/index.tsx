@@ -1,7 +1,6 @@
 import NoData from '@/components/ListCourse/NoData';
 import Text from '@/components/UI/Text';
 import { TypeReactions, formatWalletAddress } from '@/utils/common';
-import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import {
   useGetListCourse,
@@ -15,8 +14,6 @@ import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
-
-  const { t } = useTranslation('common');
 
   const { dataCourses, loadMore, noMore, reload } = useGetListCourse({
     pageSize: 3,
@@ -168,7 +165,7 @@ const MoreCourse = (props: any) => {
       {dataCourses?.length > 0 && (
         <div className="flex flex-col gap-6">
           <Text className="text-white truncate w-full" type="font-20-600">
-            {t('More Course By')} {generateMentors()}
+            {'More Course By'} {generateMentors()}
           </Text>
           <div className="lg:grid lg:grid-cols-3 flex h-full items-center lg:overflow-hidden overflow-auto gap-6">
             {dataCourses?.length > 0 &&
@@ -186,7 +183,7 @@ const MoreCourse = (props: any) => {
           <div className="flex flex-col gap-4">
             return (
             <Text className="text-white" type="font-20-600">
-              {t('Reviews')}
+              {'Reviews'}
             </Text>
             <Comment
               handleUnDisLikeReview={handleUnDisLikeReview}

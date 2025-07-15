@@ -10,14 +10,12 @@ import {
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { Button, ModalBody } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import videojs from 'video.js';
 import { loadVideoJSPlugins } from '@/utils/videojs-plugins';
 
 interface IModalViewVideo {}
 
 const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
-  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [dataVideo, setDataVideo] = useState<any>();
   const videoRef: any = useRef(null);
@@ -101,17 +99,17 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
               if ((this as any).hlsQualitySelector) {
                 (this as any).hlsQualitySelector();
               }
-              console.log(t('Player is ready'));
+              console.log('Player is ready');
             }
           );
 
           playerRef.current.on('fullscreenchange', handleFullscreenChange);
 
           playerRef.current.on('error', function (error: any) {
-            console.error(t('Video player error') + ':', error);
+            console.error('Video player error' + ':', error);
           });
         } catch (error) {
-          console.error(t('Player initialization error') + ':', error);
+          console.error('Player initialization error' + ':', error);
         }
       }
 
@@ -123,7 +121,7 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
             type: determineVideoType(dataVideo.video),
           });
         } catch (error) {
-          console.error(t('Error updating video source') + ':', error);
+          console.error('Error updating video source' + ':', error);
         }
       }
     };
@@ -136,11 +134,11 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
           playerRef.current.dispose();
           playerRef.current = null;
         } catch (error) {
-          console.error(t('Error disposing player') + ':', error);
+          console.error('Error disposing player' + ':', error);
         }
       }
     };
-  }, [dataVideo?.video, visible, t]);
+  }, [dataVideo?.video, visible]);
 
   return (
     <CustomModal

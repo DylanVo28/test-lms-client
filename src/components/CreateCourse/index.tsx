@@ -1,6 +1,5 @@
 import useNavigate from '@/hooks/useNavigate';
 import { getAccessToken } from '@/store/auth';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,7 +16,6 @@ import HeaderCourse from './HeaderCourse';
 import { useCreateCourse, useDuplicateCourse } from './service';
 
 const CreateCourse = () => {
-  const { t } = useTranslation('common');
   const [step, setStep] = useState(1);
   const router = useRouter();
   const { navigate } = useNavigate();

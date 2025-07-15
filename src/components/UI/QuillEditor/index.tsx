@@ -132,7 +132,7 @@ const QuillEditor = ({
   }, [editor, value]);
 
   const handleImageUpload = (quill: Quill) => {
-    const input = document.createElement('input');
+    const input = document.createElement('input') as any;
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();

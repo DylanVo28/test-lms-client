@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import InputText from '../UI/InputText';
 import InputTextArena from '../UI/InputTextArena';
 import { toast } from '../UI/Toast/toast';
-import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
 
 const inputFields = [
@@ -83,7 +82,6 @@ const inputFields = [
 ];
 
 export default function Information({ reload }: { reload: VoidFunction }) {
-  const { t } = useTranslation('common');
   const { handleSubmit, setValue, control, getValues, reset } = useForm({
     mode: 'onChange', // Triggers validation on each change
   });
@@ -107,7 +105,7 @@ export default function Information({ reload }: { reload: VoidFunction }) {
 
   const onSubmit = async (data: any) => {
     if (JSON.stringify(data) === JSON.stringify(initialData)) {
-      toast.error(t('No changes detected!'));
+      toast.error('No changes detected!');
       return;
     }
 
@@ -117,10 +115,10 @@ export default function Information({ reload }: { reload: VoidFunction }) {
         ...data,
       });
       reload();
-      toast.success(t('Update Successful!'));
+      toast.success('Update Successful!');
     } catch (error) {
       console.log(error);
-      toast.error(t('Update failed!'));
+      toast.error('Update failed!');
     } finally {
       setLoading(false);
     }
@@ -161,7 +159,7 @@ export default function Information({ reload }: { reload: VoidFunction }) {
             type="submit"
             className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
           >
-            {t('Save Profile')}
+            {'Save Profile'}
           </Button>
         </div>
       </form>
@@ -185,13 +183,11 @@ const Field = ({
   control: any;
   rules: any;
 }) => {
-  const { t } = useTranslation('common');
-
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-1">
         <label className="block text-base font-semibold">
-          {t(fieldItem.label)}
+          {fieldItem.label}
         </label>
         {fieldItem.max && (
           <Controller
@@ -215,7 +211,7 @@ const Field = ({
           rules={{
             pattern: {
               value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-              message: t('message_email'),
+              message: 'message_email',
             },
           }}
           render={({ field, fieldState }) => {

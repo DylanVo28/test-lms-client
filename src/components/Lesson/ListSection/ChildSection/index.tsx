@@ -6,8 +6,6 @@ import { File, FileText, MonitorPlay, Question } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
-
 export const activeItemSectionAtom = atom<string>('');
 
 const ChildSection = ({
@@ -23,7 +21,6 @@ const ChildSection = ({
   ) => void;
   onChangeCheckBox: (values: any) => void;
 }) => {
-  const { t } = useTranslation('common');
   const router = useRouter();
 
   const [activeItemSection, setActiveItemSection] = useAtom(
@@ -77,16 +74,13 @@ const ChildSection = ({
                 />
                 {item?.type === TYPE_COURSE.QUIZ ? (
                   <Text type="font-16-600" className="text-white mt-[-4px]">
-                    {t('Quizz {{sttQuizz}}. {{title}}', {
-                      sttQuizz: item?.sttQuizz,
-                      title: item?.title,
-                    })}
+                    {`Quizz ${item?.sttQuizz}. ${item?.title}`}
                   </Text>
                 ) : (
                   <>
                     {item?.type === TYPE_COURSE?.END_COURSE ? (
                       <Text type="font-16-600" className="text-white mt-[-4px]">
-                        {t('End of course')}
+                        {'End of course'}
                       </Text>
                     ) : (
                       <Text type="font-16-600" className="text-white mt-[-4px]">

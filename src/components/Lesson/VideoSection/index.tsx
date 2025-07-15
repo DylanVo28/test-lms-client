@@ -9,7 +9,6 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import clsx from 'clsx';
-import { useTranslation } from 'next-i18next';
 import { reviewedAtom } from '..';
 import { useAtom } from 'jotai';
 
@@ -46,7 +45,6 @@ const VideoSection = ({
   loading: boolean;
   info: any;
 }) => {
-  const { t } = useTranslation('common');
   const videoRef: any = useRef(null);
   const playerRef: any = useRef(null);
   const [reviewed, setReviewed] = useAtom(reviewedAtom);
@@ -69,7 +67,7 @@ const VideoSection = ({
 
       // Initialize player if it doesn't exist
       if (!playerRef.current && videoRef.current) {
-        const videoElement = document.createElement('video');
+        const videoElement = document.createElement('video') as any;
         videoElement.className = 'video-js vjs-big-play-centered';
         videoElement.controls = true;
         videoElement.preload = 'auto';
@@ -119,17 +117,17 @@ const VideoSection = ({
               if ((this as any).hlsQualitySelector) {
                 (this as any).hlsQualitySelector();
               }
-              console.log(t('Player is ready'));
+              console.log('Player is ready');
             }
           );
 
           playerRef.current.on('fullscreenchange', handleFullscreenChange);
 
           playerRef.current.on('error', function (error: any) {
-            console.error(t('Video player error') + ':', error);
+            console.error('Video player error' + ':', error);
           });
         } catch (error) {
-          console.error(t('Player initialization error') + ':', error);
+          console.error('Player initialization error' + ':', error);
         }
       }
 
@@ -160,7 +158,7 @@ const VideoSection = ({
           });
           playerRef.current.on('timeupdate', handleTimeUpdate);
         } catch (error) {
-          console.error(t('Error updating video source') + ':', error);
+          console.error('Error updating video source' + ':', error);
         }
       }
 
@@ -170,7 +168,7 @@ const VideoSection = ({
             playerRef.current.dispose();
             playerRef.current = null;
           } catch (error) {
-            console.error(t('Error disposing player') + ':', error);
+            console.error('Error disposing player' + ':', error);
           }
         }
       };

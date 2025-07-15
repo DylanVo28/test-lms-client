@@ -14,8 +14,6 @@ import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Rater from 'react-rater';
-import { useTranslation } from 'next-i18next';
-
 const DATA_LANGUAGE = [
   {
     id: '1',
@@ -83,8 +81,6 @@ const FilterCourse = (props: any) => {
     },
   });
   const [ratings, setRatings] = useState([]);
-  const { t } = useTranslation('common');
-
   useEffect(() => {
     if (ratingsData?.data) {
       const items = ratingsData.data.map((r: any) => {
@@ -146,7 +142,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            {t('Rating')}
+            {'Rating'}
           </Text>
         }
       >
@@ -194,7 +190,7 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
-              {t('Language')}
+              {'Language'}
             </Text>
             {/* <TagCount count={2} /> */}
           </div>
@@ -204,7 +200,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchLanguages}
             isFilter
-            placeholder={t('Search...')}
+            placeholder={'Search...'}
           />
           <div className="flex flex-col gap-2">
             <CheckboxGroup size="lg" radius="sm" value={params.langs}>
@@ -316,7 +312,7 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-white">
-              {t('Hands-on Practice')}
+              {'Hands-on Practice'}
             </Text>
             {/* <TagCount count={1} /> */}
           </div>
@@ -326,7 +322,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchFeatures}
             isFilter
-            placeholder={t('Search...')}
+            placeholder={'Search...'}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.features}>
             {features?.map((item: any) => {
@@ -374,7 +370,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            {t('Topic')}
+            {'Topic'}
           </Text>
         }
       >
@@ -382,7 +378,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchTopic}
             isFilter
-            placeholder={t('Search...')}
+            placeholder={'Search...'}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.topics}>
             {topics?.map((item: any) => {
@@ -428,7 +424,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            {t('Level')}
+            {'Level'}
           </Text>
         }
       >
@@ -436,7 +432,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchLevel}
             isFilter
-            placeholder={t('Search...')}
+            placeholder={'Search...'}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.levels}>
             {levels?.map((item: any) => {
@@ -482,7 +478,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-white">
-            {t('Price')}
+            {'Price'}
           </Text>
         }
       >
@@ -490,7 +486,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchPrice}
             isFilter
-            placeholder={t('Search...')}
+            placeholder={'Search...'}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.prices}>
             {pricesData?.map((item: any) => {
@@ -546,7 +542,7 @@ const FilterCourse = (props: any) => {
             }}
           >
             <Text type="font-14-500" className="text-white">
-              {t('Clear filter')}
+              {'Clear filter'}
             </Text>
           </button>
         </div>

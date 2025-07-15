@@ -4,8 +4,6 @@ import Text from '@/components/UI/Text';
 import { TYPE_COURSE } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { useTranslation } from 'next-i18next';
-
 const NoDataContent = ({
   handleNextChildSection,
   handlePrevChildSection,
@@ -16,7 +14,6 @@ const NoDataContent = ({
   data,
   loading,
 }: any) => {
-  const { t } = useTranslation('common');
   const dataItemNext = handleFindIdNextChildSection(data?.id);
   const dataItemPrev = handleFindIdPrevChildSection(data?.id);
   const lastIndex = allItems?.findIndex((item: any) => item?.id === data?.id);
@@ -69,7 +66,7 @@ const NoDataContent = ({
         <div className="flex flex-col gap-3 justify-center items-center text-center mt-10">
           <IconNodata />
           <Text type="font-12-400" className="text-neutral">
-            {t('No content')}
+            {'No content'}
           </Text>
         </div>
       )}

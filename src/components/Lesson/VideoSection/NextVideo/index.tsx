@@ -2,8 +2,6 @@ import Text from '@/components/UI/Text';
 import { Button, CircularProgress } from '@nextui-org/react';
 import { Play } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'next-i18next';
-
 const NextVideo = ({
   dataItemNext,
   handleNextChildSection,
@@ -13,7 +11,6 @@ const NextVideo = ({
   handleCancelNextChilSection: any;
   handleNextChildSection: (type: string, idNext: string) => void;
 }) => {
-  const { t } = useTranslation('common');
   const [valueProgress, setValueProgress] = useState(0);
 
   useEffect(() => {
@@ -47,7 +44,7 @@ const NextVideo = ({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col text-center gap-3 mb-2">
           <Text type="font-18-600" className="text-white">
-            {t('Next')}
+            {'Next'}
           </Text>
           <Text type="font-24-700" className="text-black-5">
             {dataItemNext?.title}
@@ -79,7 +76,7 @@ const NextVideo = ({
           variant="light"
         >
           <Text type="font-14-400" className="text-white ">
-            {t('Cancel')}
+            {'Cancel'}
           </Text>
         </Button>
       </div>

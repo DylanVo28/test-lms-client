@@ -7,8 +7,6 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
-import { useTranslation } from 'next-i18next';
-
 interface IModalModalConfirmDeleteSection {
   handleSubmitDelete: (index: number, id: string, type?: string) => void;
   loading?: boolean;
@@ -19,7 +17,6 @@ const ModalConfirmDeleteSection = (
   ref?: any
 ) => {
   const { handleSubmitDelete, loading } = props;
-  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [dataDelete, setDataDelete] = useState<any>({});
 
@@ -58,11 +55,10 @@ const ModalConfirmDeleteSection = (
                 height={120}
                 className="w-[120px] h-full mx-auto md:mx-0"
               />
-              <div className="font-bold text-[20px]">{t('Please confirm')}</div>
+              <div className="font-bold text-[20px]">{'Please confirm'}</div>
               <div className="font-normal text-base text-[#BFBFBF] text-center">
-                {t(
-                  "You're about to delete a curriculum. Are you sure you want to continue?"
-                )}
+                You're about to delete a curriculum. Are you sure you want to
+                continue?
               </div>
             </div>
             <div className="flex items-end gap-3 justify-end mt-4">
@@ -79,7 +75,7 @@ const ModalConfirmDeleteSection = (
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  {t('Ok')}
+                  {'Ok'}
                 </Text>
               </Button>
               <Button
@@ -87,7 +83,7 @@ const ModalConfirmDeleteSection = (
                 className="bg-[#383d41] w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  {t('Cancel')}
+                  {'Cancel'}
                 </Text>
               </Button>
             </div>

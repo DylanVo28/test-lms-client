@@ -3,7 +3,6 @@ import Text from '@/components/UI/Text';
 import Image from 'next/image';
 
 import Rater from 'react-rater';
-import { useTranslation } from 'next-i18next';
 import { formatWalletAddress } from '@/utils/common';
 
 interface IProps {
@@ -11,8 +10,6 @@ interface IProps {
 }
 
 export default function CardMentor({ mentor }: IProps) {
-  const { t } = useTranslation('common');
-
   const generateMentors = () => {
     if (mentor?.fullName) {
       return mentor?.fullName;
@@ -55,14 +52,14 @@ export default function CardMentor({ mentor }: IProps) {
           <Text type="font-14-700">
             {mentor?.instructorInfo?.countStudents || 0}
           </Text>
-          <Text type="font-14-400">{t('students')}</Text>
+          <Text type="font-14-400">{'students'}</Text>
         </div>
         <div className="flex flex-row items-center gap-1">
           <Text type="font-14-700">
             {mentor?.instructorInfo?.countCourses || 0}
           </Text>
 
-          <Text type="font-14-400">{t('courses')}</Text>
+          <Text type="font-14-400">{'courses'}</Text>
         </div>
       </div>
     </div>

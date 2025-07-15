@@ -11,7 +11,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactStars from 'react-stars';
-import { useTranslation } from 'next-i18next';
 import IconArrowUp from '@/components/UI/Icons/IconArrowUp';
 import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
@@ -33,7 +32,6 @@ const CardCourseMore = ({
   item: any;
   noLike?: boolean;
 }) => {
-  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
   const accessToken = useAccessToken();
 
@@ -57,7 +55,7 @@ const CardCourseMore = ({
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-white">
-          {t('Best seller')}
+          {'Best seller'}
         </Text>
       </div>
       {!noLike && (
@@ -109,7 +107,7 @@ const CardCourseMore = ({
             <div className="flex items-center gap-1">
               <IconDate />
               <Text type="font-12-500">
-                {lessonCount} {t('Lessons')}
+                {lessonCount} {'Lessons'}
               </Text>
             </div>
 
@@ -142,7 +140,7 @@ const CardCourseMore = ({
             {item?.author?.walletAddress && (
               <div className="flex gap-0.5 break-words">
                 <Text type="font-14-400" className="text-main break-words">
-                  {t('By')}:
+                  {'By'}:
                 </Text>
                 <Text
                   type="font-14-400"
@@ -159,7 +157,7 @@ const CardCourseMore = ({
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
               <Text type="font-16-600" className="text-orange">
-                {item?.price ? `$ ${formatNumber(item?.price)}` : t('Free')}
+                {item?.price ? `$ ${formatNumber(item?.price)}` : 'Free'}
               </Text>
             </div>
             {item?.originPrice && (
@@ -174,7 +172,7 @@ const CardCourseMore = ({
           <Button variant="light" radius="full" onPress={handleClickCardCourse}>
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-white">
-                {t('Enroll Course')}
+                {'Enroll Course'}
               </Text>
               <IconArrowUp />
             </div>

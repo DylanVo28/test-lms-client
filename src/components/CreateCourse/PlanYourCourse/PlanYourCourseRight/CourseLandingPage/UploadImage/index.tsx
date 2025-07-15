@@ -6,8 +6,6 @@ import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
-
 import React from 'react';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 import useClickOutside from '@/hooks/useClickOutside';
@@ -21,7 +19,6 @@ const UploadImage = ({
   onChange: any;
   error: any;
 }) => {
-  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
@@ -66,7 +63,7 @@ const UploadImage = ({
 
     if (!allowedTypes.includes(file.type)) {
       toast.error(
-        t('Can only upload files in .jpg, .jpeg, .gif or .png format')
+        'Can only upload files in .jpg, .jpeg, .gif or .png format'
       );
       return;
     }
@@ -80,9 +77,7 @@ const UploadImage = ({
 
       if (img.width < minWidth || img.height < minHeight) {
         toast.error(
-          t(
-            `The uploaded image is too small. Minimum image size is 302x200px. Please upload a larger image.`
-          )
+          `The uploaded image is too small. Minimum image size is 302x200px. Please upload a larger image.`
         );
         return;
       }
@@ -124,7 +119,7 @@ const UploadImage = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-white">
-        {t('Course image')}
+        {'Course image'}
       </Text>
       <input
         key={inputKey}
@@ -170,7 +165,7 @@ const UploadImage = ({
                 ) : (
                   <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bg-default border-black-10">
                     <Text type="font-16-400" className="text-black-8">
-                      {t('No file selected')}
+                      {'No file selected'}
                     </Text>
                   </div>
                 )}
@@ -193,7 +188,7 @@ const UploadImage = ({
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
-                  {valueProgress > 10 && value ? t('Change') : t('Upload File')}
+                  {valueProgress > 10 && value ? 'Change' : 'Upload File'}
                 </Text>
               </Button>
             )}

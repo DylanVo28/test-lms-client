@@ -14,7 +14,6 @@ import Image from 'next/image';
 import CardMentor from '../CardMentor';
 import { useDebounce } from 'ahooks';
 import { useGetListFollowers } from '../service';
-import { useTranslation } from 'next-i18next';
 import IconSearch from '@/components/UI/Icons/IconSearch';
 import { useProfile } from '@/store/profile/useProfile';
 const RATINGS = [
@@ -27,7 +26,6 @@ const RATINGS = [
 const FollowMentors = () => {
   const [rating, setRating] = useState();
   const [valueSearch, setValueSearch] = useState('');
-  const { t } = useTranslation('common');
   const { profile } = useProfile();
   const [debounceVal, setDebounceVal] = useState('');
   const debounceValue = useDebounce(valueSearch, { wait: 500 });
@@ -68,7 +66,7 @@ const FollowMentors = () => {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              {t('Sort by')}
+              {'Sort by'}
             </Text>
             <SelectCustom
               placeholder="Ratings"
@@ -86,7 +84,7 @@ const FollowMentors = () => {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            {t('Sort by')}
+            {'Sort by'}
           </Text>
           <SelectCustom
             placeholder="Default"

@@ -5,8 +5,6 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import { Trash } from '@phosphor-icons/react';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
-
 const IntendedLearners = ({
   control,
   errors,
@@ -16,7 +14,6 @@ const IntendedLearners = ({
   handleSubmit: any;
   errors: any;
 }) => {
-  const { t } = useTranslation('common');
   console.log(errors, 'errors');
 
   const { fields, append, remove } = useFieldArray({
@@ -47,26 +44,25 @@ const IntendedLearners = ({
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-white">
-        {t('Intended learners')}
+        {'Intended learners'}
       </Text>
       <Text type="font-16-400" className="text-black-6">
-        {t(
-          'The following descriptions will be publicly visible on your Course Landing Page and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.'
-        )}
+        The following descriptions will be publicly visible on your Course
+        Landing Page and will have a direct impact on your course performance.
+        These descriptions will help learners decide if your course is right for
+        them.
       </Text>
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-white">
-            {t('What will students learn in your course?')}
+            What will students learn in your course?
           </Text>
           <Text type="font-16-400" className="text-black-6">
-            {t('You must enter at least 4')}
+            You must enter at least 4
             <Text className="underline mx-1" element="span">
-              {t('learning objectives or outcomes')}
+              learning objectives or outcomes
             </Text>
-            {t(
-              'that learners can expect to achieve after completing your course.'
-            )}
+            that learners can expect to achieve after completing your course.
           </Text>
         </div>
         {fields?.map((item: any, index) => {
@@ -92,9 +88,7 @@ const IntendedLearners = ({
                         placeholder={
                           item?.pladholder
                             ? item?.pladholder
-                            : t(
-                                'Understand the fundamentals of [Topic] and its real-world applications'
-                              )
+                            : 'Understand the fundamentals of [Topic] and its real-world applications'
                         }
                         inputDefault
                         error={errors?.objectives?.[index]?.name?.message}
@@ -126,20 +120,18 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {t('+ Add more to your answer')}
+            {'+ Add more to your answer'}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-white">
-          {t(
-            'What are the requirements or prerequisites for taking your course?'
-          )}
+          What are the requirements or prerequisites for taking your course?
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          {t(
-            'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
-          )}
+          List the required skills, experience, tools or equipment learners
+          should have prior to taking your course. If there are no requirements,
+          use this space as an opportunity to lower the barrier for beginners.
         </Text>
 
         {fieldsRequirements?.map((item: any, index) => {
@@ -164,9 +156,7 @@ const IntendedLearners = ({
                       placeholder={
                         item?.pladholder
                           ? item?.pladholder
-                          : t(
-                              'No prior experience needed – this course is beginner-friendly!'
-                            )
+                          : 'No prior experience needed – this course is beginner-friendly!'
                       }
                       inputDefault
                       error={errors?.requirements?.[index]?.name?.message}
@@ -196,18 +186,18 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {t('+ Add more to your answer')}
+            {'+ Add more to your answer'}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-white">
-          {t('Who is this course for?')}
+          {'Who is this course for?'}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          {t(
-            'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
-          )}
+          List the required skills, experience, tools or equipment learners
+          should have prior to taking your course. If there are no requirements,
+          use this space as an opportunity to lower the barrier for beginners.
         </Text>
 
         {fieldsIntenedLeaners?.map((item: any, index) => {
@@ -232,9 +222,7 @@ const IntendedLearners = ({
                       placeholder={
                         item?.pladholder
                           ? item?.pladholder
-                          : t(
-                              'Beginners who want to learn [Topic] from scratch'
-                            )
+                          : 'Beginners who want to learn [Topic] from scratch'
                       }
                       inputDefault
                       error={errors?.intenedLeaners?.[index]?.name?.message}
@@ -264,7 +252,7 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {t('+ Add more to your answer')}
+            {'+ Add more to your answer'}
           </Text>
         </Button>
       </div>

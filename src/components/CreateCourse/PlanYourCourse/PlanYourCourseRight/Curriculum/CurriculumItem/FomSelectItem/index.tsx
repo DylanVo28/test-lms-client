@@ -1,15 +1,11 @@
 import Text from '@/components/UI/Text';
 import { TYPE_COURSE } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
-
 const FormSelectItem = ({
   handleClickItemAdd,
 }: {
   handleClickItemAdd: (type: TYPE_COURSE) => void;
 }) => {
-  const { t } = useTranslation('common');
-
   return (
     <div className="rounded-sm py-2 min-h-[36px] px-3 border-2 md:border-1 border-dashed border-white w-full flex items-center gap-2">
       <Button
@@ -21,7 +17,7 @@ const FormSelectItem = ({
         <div className="flex items-center gap-1">
           <IconPlusBlue />
           <Text type="font-14-500" className="text-[#0059FF]">
-            {t('Lecture')}
+            {'Lecture'}
           </Text>
         </div>
       </Button>
@@ -34,7 +30,7 @@ const FormSelectItem = ({
         <div className="flex items-center gap-1">
           <IconPlusBlue />
           <Text type="font-14-500" className="text-[#0059FF]">
-            {t('Quiz')}
+            {'Quiz'}
           </Text>
         </div>
       </Button>

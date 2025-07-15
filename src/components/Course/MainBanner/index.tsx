@@ -3,7 +3,6 @@ import Text from '@/components/UI/Text';
 import { useTheme } from '@/store/theme/useTheme';
 import { Button } from '@nextui-org/react';
 import { House } from '@phosphor-icons/react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
 
@@ -18,7 +17,6 @@ const DATA_SKILL = [
 ];
 
 const MainBanner = () => {
-  const { t } = useTranslation('common');
   const { theme } = useTheme();
 
   const bgImageSrc = isMobile
@@ -49,25 +47,23 @@ const MainBanner = () => {
             </Button>
             <IconArrowRight />
             <Text type="font-14-500" className="text-white">
-              {t('Course')}
+              {'Course'}
             </Text>
           </div>
           <div className="flex flex-col gap-[40px]">
             <div className="flex flex-col gap-2">
               <Text type="font-28-700" className="text-white">
-                {theme?.title ? theme?.title : t('Web Development Courses')}
+                {theme?.title ? theme?.title : 'Web Development Courses'}
               </Text>
               <Text type="font-16-400" className="text-white">
                 {theme?.description
                   ? theme?.description
-                  : t(
-                      'With one of our online web development courses, you can explore different areas of this in-demand field.'
-                    )}
+                  : 'With one of our online web development courses, you can explore different areas of this in-demand field.'}
               </Text>
             </div>
             <div className="flex flex-col gap-3">
               <Text type="font-16-400" className="text-white">
-                {t('Topics related to Web Development')}
+                {'Topics related to Web Development'}
               </Text>
               {theme?.topics?.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-3">

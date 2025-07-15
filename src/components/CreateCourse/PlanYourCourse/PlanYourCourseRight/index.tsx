@@ -4,11 +4,15 @@ import Curriculum from './Curriculum';
 import dynamic from 'next/dynamic';
 import Referral from './Referral';
 import SetPrice from './SetPrice';
-import { useTranslation } from 'next-i18next';
-
-const CourseLandingPage = dynamic(() => import('./CourseLandingPage'), {
-  ssr: false,
-});
+const CourseLandingPage = dynamic(
+  () =>
+    import(
+      '@/components/CreateCourse/PlanYourCourse/PlanYourCourseRight/CourseLandingPage'
+    ),
+  {
+    ssr: false,
+  }
+);
 
 const PlanYourCourseRight = ({
   activePlan,
@@ -27,8 +31,6 @@ const PlanYourCourseRight = ({
   watch?: any;
   setValue: any;
 }) => {
-  const { t } = useTranslation('common');
-
   return (
     <div className="bg-gray-70 p-4 md:py-6 md:px-8 flex flex-col rounded shadow-lg w-full gap-8">
       {activePlan === 1 && (

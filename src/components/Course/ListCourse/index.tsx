@@ -12,18 +12,15 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetListCourse } from './service';
 
 const ListCourse = () => {
-  const { t } = useTranslation('common');
-
   const SORT_BY = [
-    { key: 'createdAt desc', label: t('Newest') },
-    { key: 'createdAt asc', label: t('Oldest') },
+    { key: 'createdAt desc', label: 'Newest' },
+    { key: 'createdAt asc', label: 'Oldest' },
   ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
@@ -93,11 +90,11 @@ const ListCourse = () => {
               <IconFilter />
             </div>
             <Text className="text-main w-max" type="font-14-500">
-              {t('All Filter')}
+              {'All Filter'}
             </Text>
           </div>
           <SelectCustom
-            placeholder={t('Categories')}
+            placeholder={'Categories'}
             className="min-w-[120px]"
             options={mapCategories()}
             value={category}
@@ -106,7 +103,7 @@ const ListCourse = () => {
             }}
           />
           <SelectCustom
-            placeholder={t('Price')}
+            placeholder={'Price'}
             className="min-w-[80px]"
             options={mapPrices()}
             value={price}
@@ -120,10 +117,10 @@ const ListCourse = () => {
             type="font-14-500"
             className="text-black-7 w-[70px] md:w-[100px]"
           >
-            {t('Sort by')}
+            {'Sort by'}
           </Text>
           <SelectCustom
-            placeholder={t('Default')}
+            placeholder={'Default'}
             className="min-w-[40px] max-w-[200px]"
             options={SORT_BY}
             value={sort}
@@ -144,7 +141,7 @@ const ListCourse = () => {
             }
             className="block md:hidden"
             radius="sm"
-            placeholder={t('Search')}
+            placeholder={'Search'}
           />
         </div>
       </div>
@@ -165,7 +162,7 @@ const ListCourse = () => {
               </div>
               {dataCourses?.length === 0 && (
                 <div className="flex justify-center items-center">
-                  <NoData text={t('No data')} />
+                  <NoData text={'No data'} />
                 </div>
               )}
             </>
@@ -186,7 +183,7 @@ const ListCourse = () => {
             >
               <div className="flex items-center gap-[2px]">
                 <Text type="font-14-500" className="text-main">
-                  {t('See More')}
+                  {'See More'}
                 </Text>
                 <Image
                   src={'/icons/ic-arrow-drop-right-line.svg'}

@@ -14,7 +14,6 @@ import EditLogo from './EditLogo';
 import Languages from './Languages';
 import { useCreateTheme, useUpdateTheme } from './service';
 import { toast } from '@/components/UI/Toast/toast';
-import { useTranslation } from 'next-i18next';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
@@ -32,7 +31,6 @@ const DEFAULT_SELECT_LANG = 'en';
 const DEFAULT_COLOR = '#02A6C2';
 
 const ThemeConfiguration = ({}: {}) => {
-  const { t } = useTranslation('common');
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [color, setColor] = useState<string>('');
   const [langs, setLangs] = useState<string[]>(['en']);
@@ -50,26 +48,24 @@ const ThemeConfiguration = ({}: {}) => {
 
   const { requestGetTheme, myTheme: dataThemeConfig } = useThemeInitial();
 
-  const { i18n } = useTranslation();
-
   const { run: createTheme, loading: createThemeLoading } = useCreateTheme({
     onSuccess() {
-      toast.success(t('Saved White Labeling'));
+      toast.success('Saved White Labeling');
       requestGetTheme();
       onClose();
     },
     onError() {
-      toast.error(t('Failed White Labeling'));
+      toast.error('Failed White Labeling');
     },
   });
   const { run: updateTheme, loading: updateThemeLoading } = useUpdateTheme({
     onSuccess() {
-      toast.success(t('Saved White Labeling'));
+      toast.success('Saved White Labeling');
       onClose();
       requestGetTheme();
     },
     onError() {
-      toast.error(t('Failed White Labeling'));
+      toast.error('Failed White Labeling');
     },
   });
 
@@ -128,11 +124,10 @@ const ThemeConfiguration = ({}: {}) => {
       modeTheme: dataThemeConfig?.modeTheme,
     });
 
+    // todo: set langs
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
-      i18n.changeLanguage(dataThemeConfig.langs[0]);
     } else {
-      i18n.changeLanguage('en');
     }
     if (dataThemeConfig.color) {
       //   console.log(dataThemeConfig, 'dataThemeConfig');
@@ -159,7 +154,7 @@ const ThemeConfiguration = ({}: {}) => {
     window.navigator.clipboard.writeText(
       `${process.env.NEXT_PUBLIC_APP_URL}/${code}`
     );
-    toast.success(t('Copied!'));
+    toast.success('Copied!');
   };
 
   const onChangeBanner = (urlImg: string) => {
@@ -194,7 +189,7 @@ const ThemeConfiguration = ({}: {}) => {
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
                 <span className="text-[28px] font-bold leading-[150%] text-white">
-                  {t('Theme Configuration')}
+                  {'Theme Configuration'}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
               </DrawerHeader>
@@ -202,9 +197,7 @@ const ThemeConfiguration = ({}: {}) => {
               <Divided />
               <div className="flex flex-col gap-[32px] p-0">
                 <div className="flex flex-col gap-4">
-                  <Text className="text-[18px] font-semibold">
-                    {t('Domain')}
-                  </Text>
+                  <Text className="text-[18px] font-semibold">{'Domain'}</Text>
                   <InputText
                     inputDefault
                     onChange={onChangeCode}
@@ -218,20 +211,18 @@ const ThemeConfiguration = ({}: {}) => {
                     value={code}
                     className="w-full rounded-[4px] active:outline-hidden"
                     // radius="sm"
-                    placeholder={t('slug')}
+                    placeholder={'slug'}
                   />
                   <Button
                     onPress={onCopy}
                     className="rounded-[4px] font-bold text-base text-main bg-[#16343B] h-[44px]"
                   >
-                    {t('Copy Address')}
+                    {'Copy Address'}
                   </Button>
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <Text className="text-[18px] font-semibold">
-                    {t('Title')}
-                  </Text>
+                  <Text className="text-[18px] font-semibold">{'Title'}</Text>
                   <InputText
                     inputDefault
                     onChange={onChangeTitle}
@@ -243,7 +234,7 @@ const ThemeConfiguration = ({}: {}) => {
                 </div>
                 <div className="flex flex-col gap-4">
                   <Text className="text-[18px] font-semibold">
-                    {t('Description')}
+                    {'Description'}
                   </Text>
                   <InputTextArena
                     inputDefault
@@ -259,9 +250,7 @@ const ThemeConfiguration = ({}: {}) => {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <Text className="text-[18px] font-semibold">
-                    {t('Topics')}
-                  </Text>
+                  <Text className="text-[18px] font-semibold">{'Topics'}</Text>
                   <TagInput />
                 </div>
                 <EditBanner value={banner} onChange={onChangeBanner} />
@@ -282,7 +271,7 @@ const ThemeConfiguration = ({}: {}) => {
                         const cropperImage =
                           localStorage.getItem('cropper-image');
                         if (cropperImage) {
-                          toast.error(t('There are some images not cropped'));
+                          toast.error('There are some images not cropped');
                           return;
                         }
 

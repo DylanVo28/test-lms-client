@@ -5,13 +5,11 @@ import { Button, Input, ModalBody, Spinner, Textarea } from '@nextui-org/react';
 import Image from 'next/image';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
-import { useTranslation } from 'next-i18next';
 import { values } from 'video.js/dist/types/utils/obj';
 
 interface IModalSubmitError {}
 
 const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
-  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [valuesError, setValuesError] = useState<any>({});
 
@@ -87,10 +85,10 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               className="w-[120px] h-full mx-auto md:mx-0"
             />
             <Text type="font-20-700" className="text-white">
-              {t('Publish course')}
+              {'Publish course'}
             </Text>
             <Text type="font-16-400" className="text-black-6 text-start">
-              {t('Please enter the required fields')}
+              {'Please enter the required fields'}
             </Text>
             <div className="flex flex-col gap-3 items-start my-3">
               {(!isValidObjectives ||
@@ -131,7 +129,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-white" type="font-16-600">
-                {t('Ok')}
+                {'Ok'}
               </Text>
             </Button>
           </div>

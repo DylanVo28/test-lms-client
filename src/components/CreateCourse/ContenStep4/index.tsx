@@ -3,8 +3,6 @@ import Text from '@/components/UI/Text';
 import { Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { Control, Controller } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
-
 const ContenStep4 = ({
   control,
   setValue,
@@ -12,24 +10,22 @@ const ContenStep4 = ({
   control: Control;
   setValue: any;
 }) => {
-  const { t } = useTranslation('common');
-
   const DATA_CONTENT = [
     {
       id: '0-2',
-      content: t('I’m very busy right now (0-2 hours)'),
+      content: 'I’m very busy right now (0-2 hours)',
     },
     {
       id: '2-4',
-      content: t('I’ll work on this on the side (2-4 hours)'),
+      content: 'I’ll work on this on the side (2-4 hours)',
     },
     {
       id: '5+',
-      content: t('I have lots of flexibility (5+ hours)'),
+      content: 'I have lots of flexibility (5+ hours)',
     },
     {
       id: 'no-time',
-      content: t('I haven’t yet decided if I have time'),
+      content: 'I haven’t yet decided if I have time',
     },
   ];
 
@@ -37,12 +33,11 @@ const ContenStep4 = ({
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
         <Text type="font-28-700" className="text-white">
-          {t('How much time can you spend creating your course per week?')}
+          {'How much time can you spend creating your course per week?'}
         </Text>
         <Text type="font-16-400" className="text-black-6">
-          {t(
-            "There's no wrong answer. We can help you achieve your goals even if you don't have much time."
-          )}
+          There's no wrong answer. We can help you achieve your goals even if
+          you don't have much time.
         </Text>
       </div>
       <div className="w-full mx-auto">
@@ -71,7 +66,7 @@ const ContenStep4 = ({
                         type="font-16-400"
                         className="text-white max-w-[760px]"
                       >
-                        {t(item?.content)}
+                        {item?.content}
                       </Text>
                     </CustomRadio>
                   );

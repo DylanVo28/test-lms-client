@@ -8,15 +8,13 @@ import { useEffect, useState } from 'react';
 import { useGetListWishList } from '../service';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
-import { useTranslation } from 'next-i18next';
 import { useProfile } from '@/store/profile/useProfile';
 import Link from 'next/link';
 
 const Wishlist = () => {
-  const { t } = useTranslation('common');
   const SORT_BY = [
-    { key: 'createdAt desc', label: t('Newest') },
-    { key: 'createdAt asc', label: t('Oldest') },
+    { key: 'createdAt desc', label: 'Newest' },
+    { key: 'createdAt asc', label: 'Oldest' },
   ];
   const { dataCategories: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
@@ -62,11 +60,11 @@ const Wishlist = () => {
             <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
               <IconFilter />
               <Text className="text-main" type="font-14-500">
-                {t('All Filter')}
+                {'All Filter'}
               </Text>
             </div>
             <SelectCustom
-              placeholder={t('Categories')}
+              placeholder={'Categories'}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
@@ -75,7 +73,7 @@ const Wishlist = () => {
               }}
             />
             <SelectCustom
-              placeholder={t('Price')}
+              placeholder={'Price'}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
@@ -86,10 +84,10 @@ const Wishlist = () => {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-black-7 w-[100px]">
-              {t('Sort by')}
+              {'Sort by'}
             </Text>
             <SelectCustom
-              placeholder={t('Default')}
+              placeholder={'Default'}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
@@ -104,10 +102,10 @@ const Wishlist = () => {
             type="font-14-500"
             className="text-black-7 w-[60px] md:w-[100px]"
           >
-            {t('Sort by')}
+            {'Sort by'}
           </Text>
           <SelectCustom
-            placeholder={t('Default')}
+            placeholder={'Default'}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}

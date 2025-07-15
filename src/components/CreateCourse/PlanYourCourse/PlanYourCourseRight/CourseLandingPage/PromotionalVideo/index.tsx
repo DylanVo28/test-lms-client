@@ -7,7 +7,6 @@ import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import useHandleFileChange from '@/hooks/useHandleFileChange';
 import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
 import useVideoThumbFromUrl from '@/hooks/useVideoThumbFromUrl';
@@ -22,7 +21,6 @@ const PromotionalVideo = ({
   onChange: any;
   error: any;
 }) => {
-  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [inputKey, setInputKey] = useState(Date.now());
   const [fileData, setFileData] = useState<any>({});
@@ -72,7 +70,7 @@ const PromotionalVideo = ({
   //   const file = files[0];
 
   //   if (!allowedMimeTypes.includes(file.type)) {
-  //     toast.error(t('Can only upload video in .mp4, .mov, .avi'));
+  //     toast.error('Can only upload video in .mp4, .mov, .avi');
 
   //     return;
   //   }
@@ -101,7 +99,7 @@ const PromotionalVideo = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-white">
-        {t('Promotional video')}
+        {'Promotional video'}
       </Text>
       <input
         key={inputKey}
@@ -169,7 +167,7 @@ const PromotionalVideo = ({
             ) : (
               <div className="py-3 px-[10px] w-full min-h-[48px] rounded border-1 bg-default border-black-10">
                 <Text type="font-16-400" className="text-black-8">
-                  {isHasVideo ? fileData?.videoName : t('No file selected')}
+                  {isHasVideo ? fileData?.videoName : 'No file selected'}
                 </Text>
               </div>
             )}
@@ -180,7 +178,7 @@ const PromotionalVideo = ({
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
-                  {value ? t('Change') : t('Upload File')}
+                  {value ? 'Change' : 'Upload File'}
                 </Text>
               </Button>
             )}

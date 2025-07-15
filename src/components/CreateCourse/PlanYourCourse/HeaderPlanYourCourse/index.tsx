@@ -4,7 +4,6 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
 import useNavigate from '@/hooks/useNavigate';
 import Image from 'next/image';
 
@@ -20,7 +19,6 @@ const HeaderPlanYourCourse = ({
   loadingPublish?: boolean;
 }) => {
   const router = useRouter();
-  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
   return (
@@ -41,7 +39,7 @@ const HeaderPlanYourCourse = ({
             />
 
             <Text type="font-16-500" className="text-white">
-              {t('Back to courses')}
+              {'Back to courses'}
             </Text>
           </div>
         </Button>
@@ -57,7 +55,7 @@ const HeaderPlanYourCourse = ({
           className="bg-transparent border-1 border-main min-w-[96px] !min-h-[40px] rounded"
         >
           <Text type="font-16-600" className="text-main">
-            {t('Save')}
+            {'Save'}
           </Text>
         </Button>
         <Button
@@ -66,7 +64,7 @@ const HeaderPlanYourCourse = ({
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
           <Text type="font-16-600" className="text-text-white">
-            {t('Publish')}
+            {'Publish'}
           </Text>
         </Button>
         {/* <SelectCustom

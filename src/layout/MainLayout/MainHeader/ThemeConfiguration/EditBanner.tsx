@@ -1,7 +1,6 @@
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { Fragment, useRef, useState } from 'react';
 
@@ -9,7 +8,6 @@ import { useUploadFile } from '@/components/CreateCourse/service';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 
 const EditBanner = ({ onChange, value }: any) => {
-  const { t } = useTranslation('common');
   const [inputKey, setInputKey] = useState(Date.now());
   const fileInputRef: any = useRef(null);
   const cropperRef: any = useRef(null);
@@ -27,7 +25,7 @@ const EditBanner = ({ onChange, value }: any) => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
       toast.error(
-        t('There are some images not cropped, please crop image first')
+        'There are some images not cropped, please crop image first'
       );
       return;
     }
@@ -40,7 +38,7 @@ const EditBanner = ({ onChange, value }: any) => {
 
     if (!allowedTypes.includes(file.type)) {
       toast.error(
-        t('Can only upload files in .jpg, .jpeg, .gif or .png format')
+        'Can only upload files in .jpg, .jpeg, .gif or .png format'
       );
       return;
     }
@@ -65,7 +63,7 @@ const EditBanner = ({ onChange, value }: any) => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
       toast.error(
-        t('There are some images not cropped, please crop image first')
+        'There are some images not cropped, please crop image first'
       );
       return;
     }
@@ -95,7 +93,7 @@ const EditBanner = ({ onChange, value }: any) => {
   return (
     <div className="flex flex-col gap-4">
       <Text className="text-[18px] text-white font-semibold mb-[4px]">
-        {t('Edit banner')}
+        {'Edit banner'}
       </Text>
       <input
         key={inputKey}
@@ -115,13 +113,13 @@ const EditBanner = ({ onChange, value }: any) => {
               <div>
                 {!value && (
                   <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                    <div className="text-white">{t('JPEG, PNG or JPG')}</div>
+                    <div className="text-white">{'JPEG, PNG or JPG'}</div>
                     <div className="relative">
                       <Button
                         onClick={handleClickUploadFile}
                         className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
                       >
-                        {t('Choose file')}
+                        {'Choose file'}
                       </Button>
                     </div>
                   </div>
@@ -159,7 +157,7 @@ const EditBanner = ({ onChange, value }: any) => {
                   className="bg-[#16343B] w-full min-w-[133px] min-h-[44px] rounded"
                 >
                   <Text type="font-16-700" className="text-main">
-                    {t('Change')}
+                    {'Change'}
                   </Text>
                 </Button>
               )}

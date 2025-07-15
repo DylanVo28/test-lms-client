@@ -31,7 +31,7 @@ const RegisterFormModal = () => {
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
-      // toast.success(t('Login successfully'));
+      // toast.success('Login successfully');
       setAuthCookies({
         token: res?.data?.accessToken,
       });

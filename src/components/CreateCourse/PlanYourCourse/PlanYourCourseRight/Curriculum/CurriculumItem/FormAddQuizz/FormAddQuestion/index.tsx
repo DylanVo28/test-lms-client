@@ -8,8 +8,6 @@ import { Button, Radio } from '@nextui-org/react';
 import { Trash } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
-
 const FormAddQuestion = ({
   handleSaveAddQuestion,
   loading,
@@ -19,7 +17,6 @@ const FormAddQuestion = ({
   loading: boolean;
   valueQuestion?: any;
 }) => {
-  const { t } = useTranslation('common');
   const { control, handleSubmit, setValue, watch, reset } = useForm<any>({
     defaultValues: {
       answers: [
@@ -70,7 +67,7 @@ const FormAddQuestion = ({
 
     let errors = '';
 
-    if (!hasAnswer) errors = t('Please add your answer');
+    if (!hasAnswer) errors = 'Please add your answer';
 
     return errors;
   };
@@ -80,7 +77,7 @@ const FormAddQuestion = ({
     );
 
     let errors = '';
-    if (!hasCorrect) errors = t('Please choose the correct answer');
+    if (!hasCorrect) errors = 'Please choose the correct answer';
 
     return errors;
   };
@@ -90,7 +87,7 @@ const FormAddQuestion = ({
     const isVadidateCorrect = validateIsCorrect(values?.answers);
 
     if (!values?.question) {
-      toast.error(t('Please write down a question'));
+      toast.error('Please write down a question');
       return;
     }
 
@@ -129,8 +126,8 @@ const FormAddQuestion = ({
               onChange={field.onChange}
               value={field.value}
               inputQuizz
-              label={t('Ask a question')}
-              placeholder={t('Question')}
+              label={'Ask a question'}
+              placeholder={'Question'}
             />
           )}
         />
@@ -158,7 +155,7 @@ const FormAddQuestion = ({
                     render={({ field }) => (
                       <QuillEditor
                         inputQuizz
-                        placeholder={t('Add answer')}
+                        placeholder={'Add answer'}
                         value={field.value}
                         onChange={field.onChange}
                       />
@@ -173,9 +170,7 @@ const FormAddQuestion = ({
                         maxLength={600}
                         onChange={field.onChange}
                         value={field.value}
-                        placeholder={t(
-                          'Explain why this is or is not the best answer.'
-                        )}
+                        placeholder={'Explain why this is or is not the best answer.'}
                       />
                     )}
                   />
@@ -204,7 +199,7 @@ const FormAddQuestion = ({
             className="bg-main rounded min-h-[34px] min-w-[100px]"
           >
             <Text type="font-14-400" className="text-white">
-              {t('Save')}
+              {'Save'}
             </Text>
           </button>
         </div>
