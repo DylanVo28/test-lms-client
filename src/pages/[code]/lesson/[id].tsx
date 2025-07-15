@@ -1,4 +1,3 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Lesson from '@/components/Lesson';
 import LessonLayout from '@/layout/LessonLayout';
 import { ReactElement, useEffect } from 'react';
@@ -45,7 +44,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

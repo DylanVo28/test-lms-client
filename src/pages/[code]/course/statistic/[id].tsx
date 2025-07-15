@@ -5,7 +5,6 @@ import SEO from '@/components/SEO';
 import MainLayout from '@/layout/MainLayout';
 import { DefaultData } from '@/utils/const';
 import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {
   Card,
   CardBody,
@@ -289,7 +288,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       code: params.code as string,
       courseId: params.id as string,
       courseMedadata,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

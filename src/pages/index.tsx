@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LandingPage from '@/components/Landingpage';
 import { NextSeo } from 'next-seo';
 import AppProvider from '@/components/Provider/AppProvider';
@@ -42,7 +41,6 @@ HomePage.getLayout = getLayout;
 export async function getStaticProps({ locale }: any) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
       // Will be passed to the page component as props
     },
   };

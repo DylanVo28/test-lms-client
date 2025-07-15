@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import Head from 'next/head';
 
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Lesson from '@/components/Lesson';
 import LessonLayout from '@/layout/LessonLayout';
 import { GetServerSideProps } from 'next';
@@ -45,7 +44,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

@@ -1,7 +1,6 @@
 import MyProfile from '@/components/MyProfile';
 import MainLayout from '@/layout/MainLayout';
 import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React, { ReactElement } from 'react';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
@@ -41,7 +40,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

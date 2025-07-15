@@ -4,8 +4,6 @@ import SEO from '@/components/SEO';
 import AuthLayout from '@/layout/MainLayout/AuthLayout';
 import { DefaultData } from '@/utils/const';
 import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
 const PlanYourCoursePage = () => {
   return (
     <>
@@ -34,7 +32,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };
