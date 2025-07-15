@@ -1,7 +1,6 @@
 import { Button } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
-import { useTranslation } from 'next-i18next';
 import { useTokenInfo } from '@/hooks/useTokenInfo';
 import { useMemo } from 'react';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
@@ -19,7 +18,6 @@ const CustomButtonEnroll = ({
   token: any;
   handleEnrollCourseFree: () => void;
 }) => {
-  const { t } = useTranslation('common');
   const { balance, symbol, decimals } = useTokenInfo();
   const amount = +(course?.price ?? 10000000);
 
@@ -60,7 +58,7 @@ const CustomButtonEnroll = ({
                 disabled={isInsufficientBalance}
               >
                 <Text className="text-white" type="font-16-600">
-                  {t('Connect Wallet')}
+                  Connect Wallet
                 </Text>
               </Button>
             ) : (
@@ -81,11 +79,11 @@ const CustomButtonEnroll = ({
                   >
                     {course?.enroll === 'verified' ? (
                       <Text className="text-text-white" type="font-16-600">
-                        {t('Go to course')}
+                        Go to course
                       </Text>
                     ) : (
                       <Text className="text-text-white" type="font-16-600">
-                        {t('Enroll Now for Free')}
+                        Enroll Now for Free
                       </Text>
                     )}
                   </Button>
@@ -108,16 +106,16 @@ const CustomButtonEnroll = ({
                   >
                     {isInsufficientBalance && (
                       <Text className="text-text-white" type="font-16-600">
-                        {t('Insufficient balance')}
+                        Insufficient balance
                       </Text>
                     )}
                     {!isInsufficientBalance && (
                       <Text className="text-text-white" type="font-16-600">
                         {course?.enroll === 'verified'
-                          ? t('Go to course')
+                          ? 'Go to course'
                           : course?.enroll === 'pending'
-                          ? t('Verifying...')
-                          : t('Enroll Now')}
+                          ? 'Verifying...'
+                          : 'Enroll Now'}
                       </Text>
                     )}
                   </Button>

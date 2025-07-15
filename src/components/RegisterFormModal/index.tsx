@@ -15,14 +15,12 @@ import {
 import { setAuthCookies } from '@/store/auth';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 
 const RegisterFormModal = () => {
-  const { t } = useTranslation('common');
   const [referralCode, setReferralCode] = useState('');
   const { address, isConnected } = useAccount();
   const { requestGetProfile, loading } = useProfileInitial();
@@ -102,7 +100,7 @@ const RegisterFormModal = () => {
     try {
       setIsRegistering(true);
       if (!address) {
-        toast.error(t('Please connect your wallet'));
+        toast.error('Please connect your wallet');
         setIsRegistering(false);
         return;
       }
@@ -111,7 +109,7 @@ const RegisterFormModal = () => {
         const checkAddressRes = await verifyReferralCode(referralCode);
 
         if (!checkAddressRes?.data?.exist) {
-          toast.error(t('Referral code is invalid'));
+          toast.error('Referral code is invalid');
           setIsRegistering(false);
           return;
         }
@@ -205,7 +203,7 @@ const RegisterFormModal = () => {
 
       handleClose();
     } catch (error: any) {
-      toast.error(t(error?.message));
+      toast.error(error?.message);
     } finally {
       setIsRegistering(false);
     }

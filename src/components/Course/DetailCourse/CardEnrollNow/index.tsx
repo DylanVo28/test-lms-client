@@ -16,7 +16,6 @@ import { useProfile } from '@/store/profile/useProfile';
 import { formatNumber } from '@/utils/common';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import ModalViewVideo from './ModalViewVideo';
@@ -37,8 +36,6 @@ const CardEnrollNow = ({
   getDetailCourse?: (id: string, userId?: string | undefined) => void;
   isLoading: boolean;
 }) => {
-  const { t } = useTranslation('common');
-
   const isLoading = _isLoading && !course?.id;
 
   const getCourseIncludes = (metadata: any) => {
@@ -47,54 +44,52 @@ const CardEnrollNow = ({
     const includes = [];
 
     if (metadata.videoDuration?.formatted > 0) {
-      includes.push(
-        `${metadata.videoDuration.formatted} ${t('of on-demand video')}`
-      );
+      includes.push(`${metadata.videoDuration.formatted} of on-demand video`);
     }
 
     if (metadata.totalLessons > 0) {
       includes.push(
         `${metadata.totalLessons} ${
-          metadata.totalLessons === 1 ? t('lesson') : t('lessons')
+          metadata.totalLessons === 1 ? 'lesson' : 'lessons'
         }`
       );
     }
 
     if (metadata.hasExercises) {
-      includes.push(t('Exercises'));
+      includes.push('Exercises');
     }
 
     if (metadata.downloadableResources > 0) {
       includes.push(
         `${metadata.downloadableResources} ${
           metadata.downloadableResources === 1
-            ? t('downloadable resource')
-            : t('downloadable resources')
+            ? 'downloadable resource'
+            : 'downloadable resources'
         }`
       );
     }
 
     if (metadata.hasMobileAccess) {
-      includes.push(t('Mobile and TV access'));
+      includes.push('Mobile and TV access');
     }
 
     if (metadata.hasQuizzes && metadata.totalQuizzes > 0) {
       includes.push(
         `${metadata.totalQuizzes} ${
-          metadata.totalQuizzes === 1 ? t('quiz') : t('quizzes')
+          metadata.totalQuizzes === 1 ? 'quiz' : 'quizzes'
         }`
       );
     }
     if (metadata.totalQuizzes > 0) {
-      includes.push(`${metadata.totalQuizzes} ${t('Exercises')}`);
+      includes.push(`${metadata.totalQuizzes} Exercises`);
     }
 
     if (metadata.hasLifetimeAccess) {
-      includes.push(t('Lifetime access'));
+      includes.push('Lifetime access');
     }
 
     if (metadata.hasCertificate) {
-      includes.push(t('Certificate of completion'));
+      includes.push('Certificate of completion');
     }
 
     return includes;
@@ -171,13 +166,13 @@ const CardEnrollNow = ({
         }
       } else {
         toast.error(
-          res?.message || t('You are not eligible to enroll in this course.')
+          res?.message || 'You are not eligible to enroll in this course.'
         );
       }
     } catch (error: any) {
       const message = error?.message?.includes('User rejected transaction')
         ? 'user rejected transaction'
-        : t('Failed to enroll in the course. Please try again.');
+        : 'Failed to enroll in the course. Please try again.';
 
       toast.error(message);
     }
@@ -281,9 +276,7 @@ const CardEnrollNow = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Text type="font-20-400" className="text-orange">
-                  {course?.price
-                    ? `$ ${formatNumber(course?.price)}`
-                    : t('Free')}
+                  {course?.price ? `$ ${formatNumber(course?.price)}` : 'Free'}
                 </Text>
                 {course?.originPrice && (
                   <Text
@@ -300,7 +293,7 @@ const CardEnrollNow = ({
                     {discountCalculator(course?.originPrice, course?.price)}
                   </Text>
                   <Text type="font-14-500" className="text-[#F26F21]">
-                    {t('OFF')}
+                    OFF
                   </Text>
                 </div>
               )}
@@ -332,7 +325,7 @@ const CardEnrollNow = ({
             )}
             <div className="flex flex-col gap-2">
               <Text className="text-white" type="font-18-600">
-                {t('This course includes')}
+                This course includes
               </Text>
 
               <div className="flex flex-col gap-1">
@@ -353,20 +346,18 @@ const CardEnrollNow = ({
                   <IconGift />
                   <div>
                     <Text type="font-16-600" className="text-main">
-                      {t('Free Course Unlock Available!')}
+                      Free Course Unlock Available!
                     </Text>
                     <Text type="font-14-400" className="text-black-6">
-                      {t('Reach')}{' '}
+                      Reach{' '}
                       <span className="text-main font-bold">
                         ${formatNumber(course?.unlockIfUserTradesAtLeast)}
                       </span>{' '}
-                      {t(
-                        'in lifetime trading volume to unlock this course for free'
-                      )}
+                      in lifetime trading volume to unlock this course for free
                     </Text>
                     <div className="flex items-center gap-1">
                       <Text type="font-14-400" className="text-black-6">
-                        {t('Your current trading volume')}:
+                        Your current trading volume:
                       </Text>
                       <FormatNumberDecimal
                         value={volumeData?.data?.perp_volume_ltd || 0}
@@ -385,10 +376,10 @@ const CardEnrollNow = ({
                   <IconGift />
                   <div>
                     <Text type="font-16-600" className="text-main">
-                      {t('Free Course Unlock Available!')}
+                      Free Course Unlock Available!
                     </Text>
                     <Text type="font-14-400" className="text-black-6">
-                      {t('This course is free to enroll')}
+                      This course is free to enroll
                     </Text>
                   </div>
                 </div>

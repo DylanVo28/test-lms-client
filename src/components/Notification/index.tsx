@@ -1,14 +1,10 @@
-import { useTranslation } from 'next-i18next';
-import Text from '../UI/Text';
-import { Tab, Tabs } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
-import ListNotification from './ListNotification';
-import { useNotifications } from '@/store/notification/useNotification';
-import { useMount } from 'ahooks';
-import clsx from 'clsx';
-import { useTheme } from '@/store/theme/useTheme';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useAccount } from 'wagmi';
+import { useNotifications } from '@/store/notification/useNotification';
+import { Tab, Tabs } from '@nextui-org/react';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import Text from '../UI/Text';
+import ListNotification from './ListNotification';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -17,7 +13,6 @@ export enum TAB_NOTIFICATION {
 }
 
 const Notification = ({ isOpen }: { isOpen: boolean }) => {
-  const { t, i18n } = useTranslation('common');
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
   const token = useAccessToken();
 
@@ -30,7 +25,6 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
       page: 1,
       pageSize: 50,
       userType: tab === TAB_NOTIFICATION?.VIEW_ALL ? '' : tab,
-      lang: i18n.language,
     };
     requestGetNotification.run(params);
 
@@ -50,7 +44,6 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
       const params = {
         page: 1,
         pageSize: 50,
-        lang: i18n.language,
       };
       requestCheckHasNotification?.run();
       requestGetNotification.run(params);
@@ -60,15 +53,15 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
   const DATA_TAB_NOTIFICATION = [
     {
       id: TAB_NOTIFICATION.VIEW_ALL,
-      lable: t('View All'),
+      lable: 'View All',
     },
     {
       id: TAB_NOTIFICATION.INSTRUCTOR,
-      lable: t('Instructor'),
+      lable: 'Instructor',
     },
     {
       id: TAB_NOTIFICATION.STUDENT,
-      lable: t('Student'),
+      lable: 'Student',
     },
   ];
 
@@ -83,7 +76,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
     <div className="flex p-4 w-full md:min-w-[552px] flex-col gap-5">
       <div className="flex items-center gap-2">
         <Text type="font-18-600" className="text-white">
-          {t('Notification')}
+          Notification
         </Text>
         {notifications?.totalCount > 0 && (
           <div

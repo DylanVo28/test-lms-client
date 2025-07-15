@@ -14,7 +14,6 @@ import { appWithTranslation } from 'next-i18next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import nextI18nConfig from '../../next-i18next.config';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -57,4 +56,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 // @ts-ignore
-export default appWithTranslation(MyApp, nextI18nConfig);
+export default MyApp;

@@ -19,7 +19,6 @@ import dayjs from 'dayjs';
 import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
-import { useTranslation } from 'next-i18next';
 import { User } from '@phosphor-icons/react';
 import {
   useLikeCourse,
@@ -29,7 +28,6 @@ import {
 const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
-  const { t } = useTranslation('common');
   const {
     run: getDetailCourse,
     data: dataDetail,
@@ -133,7 +131,7 @@ const DetailCourse = () => {
                 {dataDetail?.data?.title}
               </Text>
               <Text type="font-14-400" className="text-white">
-                {t('Learn')}: {mapCategoryCourse()}
+                Learn: {mapCategoryCourse()}
               </Text>
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
@@ -149,7 +147,7 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconBookMark />
                       <Text type="font-14-400" className="text-white">
-                        {lessonCount || 0} {t('Lessons')}
+                        {lessonCount || 0} Lessons
                       </Text>
                     </div>
                     <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -160,7 +158,7 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconStudent />
                       <Text type="font-14-400" className="text-white">
-                        {dataDetail?.data?.userCourses.length} {t('Students')}
+                        {dataDetail?.data?.userCourses.length} Students
                       </Text>
                     </div>
                     <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
@@ -170,9 +168,9 @@ const DetailCourse = () => {
                 <div className="flex items-center gap-1">
                   <IconTimeNew />
                   <Text type="font-14-400" className="text-white">
-                    {`${t('Last updated')} ${dayjs(
-                      dataDetail?.data?.updatedAt
-                    ).format('MM/YYYY')}`}
+                    {`Last updated ${dayjs(dataDetail?.data?.updatedAt).format(
+                      'MM/YYYY'
+                    )}`}
                   </Text>
                 </div>
               </div>
@@ -197,7 +195,7 @@ const DetailCourse = () => {
                 )}
 
                 <Text type="font-15-500" className="text-main">
-                  {t('By')}
+                  "By"
                 </Text>
                 <Text
                   element="span"

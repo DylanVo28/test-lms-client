@@ -4,12 +4,8 @@ import useNavigate from '@/hooks/useNavigate';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import { House } from '@phosphor-icons/react';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 const BreadCrumbs = () => {
-  const router = useRouter();
-  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
   return (
@@ -28,13 +24,13 @@ const BreadCrumbs = () => {
         onClick={() => navigate(ROUTE_PATH.COURSE)}
         className="text-white hover:opacity-80 cursor-pointer"
       >
-        {t(`Course`)}
+        Course
       </Text>
 
       <IconArrowRight />
 
       <Text type="font-16-500" className="text-main">
-        {t('Course details')}
+        Course details
       </Text>
     </div>
   );

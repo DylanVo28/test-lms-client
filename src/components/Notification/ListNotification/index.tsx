@@ -4,7 +4,6 @@ import Text from '@/components/UI/Text';
 import { Avatar, Tooltip } from '@nextui-org/react';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -13,7 +12,6 @@ const ListNotification = ({
   handleReadNotification,
   loading,
 }: any) => {
-  const { t } = useTranslation('common');
   const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
@@ -99,7 +97,7 @@ const ListNotification = ({
 
       {listNotification?.length === 0 && !loading && isInit && (
         <div className="pb-10">
-          <NoData text={t('No notification')} />
+          <NoData text="No notification" />
         </div>
       )}
     </div>

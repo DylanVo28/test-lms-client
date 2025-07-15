@@ -7,7 +7,6 @@ import {
   PopoverTrigger,
 } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 import { useDisconnect } from 'wagmi';
 import IconUser from '../Icons/IconUser';
@@ -15,7 +14,6 @@ import Text from '../Text';
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
-  const { t } = useTranslation('common');
   const { profile } = useProfile();
 
   const [isOpen, setOpen] = useState(false);
@@ -44,7 +42,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
                 className="bg-main w-full min-h-[40px] rounded"
               >
                 <Text className="text-white" type="font-16-600">
-                  {t('Connect Wallet')}
+                  Connect Wallet
                 </Text>
               </Button>
             ) : (
