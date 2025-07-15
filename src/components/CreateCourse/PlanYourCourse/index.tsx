@@ -439,9 +439,6 @@ const PlanYourCourse = () => {
       })
     );
 
-    if (values.plan) {
-      setActivePlan(values.plan);
-    }
     await requestEditCourse.run(filteredBody, router.query.id as string);
   };
 

@@ -22,8 +22,8 @@ const LandingPage = () => {
           alt="logo"
           className="cursor-pointer max-h-[50px] w-auto"
           src={'/logo.png'}
-          width={125}
-          height={46}
+          width={150}
+          height={56}
         />
       </div>
 
