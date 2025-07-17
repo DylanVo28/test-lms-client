@@ -180,9 +180,9 @@ const CardEnrollNow = ({
 
   const { volumeData } = useAccountInfo();
 
-  const handleEnrollCourseFree = () => {
+  const handleEnrollCourseFree = async () => {
     if (!course?.id || loadingEnrollCourseFree) return;
-    runEnrollCourseFree(course?.id);
+    await runEnrollCourseFree(course?.id);
   };
 
   return (
@@ -315,9 +315,9 @@ const CardEnrollNow = ({
                     handleEnroll();
                   }
                 }}
-                handleEnrollCourseFree={() => {
+                handleEnrollCourseFree={async () => {
                   if (!course?.id) return;
-                  handleEnrollCourseFree();
+                  await handleEnrollCourseFree();
                 }}
                 loading={loadingBuy || loadingEnrollCourseFree || loading}
                 token={accessToken}
