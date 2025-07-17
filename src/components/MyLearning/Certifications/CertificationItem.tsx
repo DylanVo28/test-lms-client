@@ -8,16 +8,41 @@ import { Info } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const CertificationItem = ({ item }: any) => {
+const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+const CertificationItem = ({ item, refetchCertificates }: any) => {
+  const [isMintingInProgress, setIsMintingInProgress] = useState(false);
+
+  const checkMintingStatus = () => {
+    const mintingRecord = localStorage.getItem(`minting_${item.id}`);
+    if (mintingRecord) {
+      const mintingTime = parseInt(mintingRecord);
+      if (Date.now() - mintingTime > MINTING_TIMEOUT) {
+        localStorage.removeItem(`minting_${item.id}`);
+        return false;
+      }
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setIsMintingInProgress(checkMintingStatus());
+  }, [item.id]);
+
   const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
     {
       onSuccess(res) {
         toast.success('Minted certificate successfully');
+        localStorage.removeItem(`minting_${item.id}`);
+        setIsMintingInProgress(false);
       },
       onError(e) {
         toast.error(e.message);
+        localStorage.removeItem(`minting_${item.id}`);
+        setIsMintingInProgress(false);
       },
     }
   );
@@ -41,7 +66,27 @@ const CertificationItem = ({ item }: any) => {
     return () => clearInterval(interval);
   }, [item]);
 
+  const handleMint = () => {
+    if (!walletAddress) {
+      toast.error('Please connect your wallet');
+      return;
+    }
+
+    localStorage.setItem(`minting_${item.id}`, Date.now().toString());
+    setIsMintingInProgress(true);
+    handleMintCertificate({
+      to: walletAddress?.toString(),
+      certificateId: item.certificate.id,
+    });
+  };
+
   const { onCopy } = useCopy();
+
+  useEffect(() => {
+    if (hasMinted && !item.tokenId) {
+      refetchCertificates();
+    }
+  }, [hasMinted]);
 
   return (
     <div
@@ -67,19 +112,22 @@ const CertificationItem = ({ item }: any) => {
           {item?.certificate?.description}
         </Text>
         {!hasMinted && !isLoading && walletAddress && (
-          <Button
-            onPress={() =>
-              handleMintCertificate({
-                to: walletAddress.toString(),
-                certificateId: item.certificate.id,
-              })
-            }
-            isLoading={isMinting}
-          >
-            <Text type="font-16-600" className="text-main">
-              Mint
-            </Text>
-          </Button>
+          <>
+            <Button
+              onPress={handleMint}
+              isLoading={isMinting}
+              isDisabled={isMintingInProgress}
+            >
+              <Text type="font-16-600" className="text-main">
+                Mint
+              </Text>
+            </Button>
+            {isMintingInProgress && !isMinting && (
+              <Text type="font-14-400" className="text-main">
+                Your certificate is minting. Please wait a moment...
+              </Text>
+            )}
+          </>
         )}
 
         {hasMinted && (

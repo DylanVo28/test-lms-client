@@ -34,7 +34,9 @@ const Certifications = () => {
             <Text type="font-16-400" className="text-white">
               {'You are preparing for'}{' '}
               <Text element="span" type="font-16-700" className="text-white">
-                {`${dataListCertificates?.data?.length || 0} ${'certifications'}`}
+                {`${
+                  dataListCertificates?.data?.length || 0
+                } ${'certifications'}`}
               </Text>
             </Text>
             <Info className="text-white" size={18} />
@@ -51,7 +53,13 @@ const Certifications = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {dataListCertificates?.data?.map((item: any) => {
-              return <CertificationItem key={item?.id} item={item} />;
+              return (
+                <CertificationItem
+                  key={item?.id}
+                  item={item}
+                  refetchCertificates={run}
+                />
+              );
             })}
           </div>
           {dataListCertificates?.data?.length === 0 && <NoData />}
