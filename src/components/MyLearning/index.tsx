@@ -32,11 +32,11 @@ export default function MyLearning() {
       label: 'Wishlist',
       children: <Wishlist />,
     },
-    {
-      key: TabMyLearning.FOLLOW_MENTORS,
-      label: 'Follow Mentors',
-      children: <FollowMentors />,
-    },
+    // {
+    //   key: TabMyLearning.FOLLOW_MENTORS,
+    //   label: 'Follow Mentors',
+    //   children: <FollowMentors />,
+    // },
   ];
   const handleChangeTab = (tab: any) => {
     setActiveTab(tab);

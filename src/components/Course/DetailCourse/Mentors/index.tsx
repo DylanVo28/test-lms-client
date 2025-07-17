@@ -219,7 +219,7 @@ const Mentors = ({ mentor }: any) => {
             </div>
           </div>
 
-          {isNotMentor && (
+          {/* {isNotMentor && (
             <Button
               isLoading={requestFollowMentor?.loading}
               className="border min-w-[80px] bg-main-20 rounded-[99px] bgFollow border-main font-semibold text-base w-max text-main"
@@ -228,7 +228,7 @@ const Mentors = ({ mentor }: any) => {
             >
               {!mentorProfile?.isFollowing ? 'Follow' : 'Unfollow'}
             </Button>
-          )}
+          )} */}
         </div>
       </div>
     </div>
