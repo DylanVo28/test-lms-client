@@ -2,8 +2,9 @@ import { Button } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
 import { useTokenInfo } from '@/hooks/useTokenInfo';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
+import { toast } from '../Toast/toast';
 
 const CustomButtonEnroll = ({
   course,
@@ -16,8 +17,10 @@ const CustomButtonEnroll = ({
   handleClickButton: VoidFunction;
   loading: boolean;
   token: any;
-  handleEnrollCourseFree: () => void;
+  handleEnrollCourseFree: () => Promise<void>;
 }) => {
+  const [isLoadingEnrollCourseFree, setIsLoadingEnrollCourseFree] =
+    useState(false);
   const { balance, symbol, decimals } = useTokenInfo();
   const amount = +(course?.price ?? 10000000);
 
@@ -66,13 +69,21 @@ const CustomButtonEnroll = ({
                 {isEnableEnrollCourseFree && (
                   <Button
                     isLoading={loading}
-                    onPress={() => {
+                    onPress={async () => {
                       if (course?.enroll === 'verified') {
                         handleClickButton();
                         return;
                       }
 
-                      handleEnrollCourseFree();
+                      if (isLoadingEnrollCourseFree) {
+                        toast.info('Please wait a moment');
+                        return;
+                      }
+                      setIsLoadingEnrollCourseFree(true);
+                      await handleEnrollCourseFree();
+                      setTimeout(() => {
+                        setIsLoadingEnrollCourseFree(false);
+                      }, 5000);
                     }}
                     className="bg-main w-full min-h-[40px] rounded"
                     disabled={isInsufficientBalance}

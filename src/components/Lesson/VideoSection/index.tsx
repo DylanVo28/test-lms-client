@@ -56,6 +56,9 @@ const VideoSection = ({
   const dataItemNext = handleFindIdNextChildSection(data?.id);
   const dataItemPrev = handleFindIdPrevChildSection(data?.id);
 
+  const isFirstLesson = lastIndex === 0;
+  const isLastLesson = lastIndex === allItems?.length - 1;
+
   const handleCancelNextChilSection = () => {
     setEndVideo(false);
   };
@@ -196,7 +199,7 @@ const VideoSection = ({
         ['max-h-[400px]']: isMobile,
       })}
     >
-      {dataItemPrev?.id && (
+      {dataItemPrev?.id && !isFirstLesson && (
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
@@ -238,7 +241,7 @@ const VideoSection = ({
           dataItemNext={dataItemNext}
         />
       )}
-      {!reviewed && (
+      {!reviewed && !isLastLesson && (
         <Button
           className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly

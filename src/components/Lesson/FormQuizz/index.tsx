@@ -8,6 +8,7 @@ import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import { reviewedAtom } from '..';
 import { useAtom } from 'jotai';
+import { useShouldVideoReviewModal } from '@/hooks/useShouldVideoReviewModal';
 
 const FormQuizz = ({
   startTakingTest,
@@ -58,9 +59,12 @@ const FormQuizz = ({
   );
   const [reviewed] = useAtom(reviewedAtom);
 
+  const isFirstLesson = lastIndex === 0;
+  const isLastLesson = lastIndex === allItems?.length - 1;
+
   return (
     <div className="relative group">
-      {dataItemPrev?.id && !isMobile && (
+      {dataItemPrev?.id && !isMobile && !isFirstLesson && (
         <Button
           className="absolute group-hover:opacity-100 opacity-0 left-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly
@@ -144,7 +148,7 @@ const FormQuizz = ({
           </div>
         </div>
       )}
-      {!isMobile && !reviewed && (
+      {!isMobile && !reviewed && !isLastLesson && (
         <Button
           className="absolute right-0 group-hover:opacity-100 opacity-0 bg-main border-1 border-white-50 min-h-[50px] z-[1000] top-1/2 -translate-y-1/2"
           isIconOnly

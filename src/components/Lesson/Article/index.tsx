@@ -19,6 +19,8 @@ const Article = ({
   const lastIndex = allItems.findIndex((item: any) => item?.id === data?.id);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerBounds, setContainerBounds] = useState<DOMRect | null>(null);
+  const isFirstLesson = lastIndex === 0;
+  const isLastLesson = lastIndex === allItems?.length - 1;
 
   useEffect(() => {
     const updateBounds = () => {
@@ -63,7 +65,7 @@ const Article = ({
       {containerBounds && (
         <>
           {/* Left button */}
-          {dataItemPrev?.id && (
+          {dataItemPrev?.id && !isFirstLesson && (
             <Button
               className="fixed bg-main border-1 border-white-50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
               style={{
@@ -88,32 +90,34 @@ const Article = ({
           )}
 
           {/* Right button */}
-          <Button
-            className="fixed bg-main border-1 border-white-50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-            style={{
-              right: window.innerWidth - containerBounds.right,
-              top: containerBounds.top + containerBounds.height / 2,
-              transform: 'translateY(-50%)',
-            }}
-            isIconOnly
-            size="sm"
-            onPress={() => {
-              if (lastIndex === allItems?.length - 1) {
-                handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
-              } else {
-                handleNextChildSection(
-                  dataItemNext?.type,
-                  dataItemNext?.id,
-                  data?.id,
-                  TYPE_COURSE.LECTURE,
-                  dataItemNext?.contentType
-                );
-              }
-            }}
-            radius="sm"
-          >
-            <CaretRight size={24} className="fill-text-white" />
-          </Button>
+          {!isLastLesson && (
+            <Button
+              className="fixed bg-main border-1 border-white-50 min-h-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              style={{
+                right: window.innerWidth - containerBounds.right,
+                top: containerBounds.top + containerBounds.height / 2,
+                transform: 'translateY(-50%)',
+              }}
+              isIconOnly
+              size="sm"
+              onPress={() => {
+                if (lastIndex === allItems?.length - 1) {
+                  handleNextLastSection(data?.id, TYPE_COURSE.LECTURE);
+                } else {
+                  handleNextChildSection(
+                    dataItemNext?.type,
+                    dataItemNext?.id,
+                    data?.id,
+                    TYPE_COURSE.LECTURE,
+                    dataItemNext?.contentType
+                  );
+                }
+              }}
+              radius="sm"
+            >
+              <CaretRight size={24} className="fill-text-white" />
+            </Button>
+          )}
         </>
       )}
       <div className="flex flex-col gap-8 w-8/12 mx-auto">

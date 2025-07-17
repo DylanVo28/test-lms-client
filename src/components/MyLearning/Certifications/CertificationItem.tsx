@@ -4,7 +4,7 @@ import useCopy from '@/hooks/useCopy';
 import { MINT_NFT_ADDRESS, useHasMinted } from '@/hooks/useHasMinted';
 import CopyIcon from '@/icons/CopyIcon';
 import { Button, Skeleton, Tooltip } from '@nextui-org/react';
-import { Info } from '@phosphor-icons/react';
+import { Info, ArrowClockwise } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
@@ -14,6 +14,7 @@ const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
 
 const CertificationItem = ({ item, refetchCertificates }: any) => {
   const [isMintingInProgress, setIsMintingInProgress] = useState(false);
+  const [isRefetching, setIsRefetching] = useState(false);
 
   const checkMintingStatus = () => {
     const mintingRecord = localStorage.getItem(`minting_${item.id}`);
@@ -37,12 +38,10 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       onSuccess(res) {
         toast.success('Minted certificate successfully');
         localStorage.removeItem(`minting_${item.id}`);
-        setIsMintingInProgress(false);
       },
       onError(e) {
         toast.error(e.message);
         localStorage.removeItem(`minting_${item.id}`);
-        setIsMintingInProgress(false);
       },
     }
   );
@@ -80,13 +79,11 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
     });
   };
 
-  const { onCopy } = useCopy();
+  const handleManualRefetch = async () => {
+    refetchCertificates();
+  };
 
-  useEffect(() => {
-    if (hasMinted && !item.tokenId) {
-      refetchCertificates();
-    }
-  }, [hasMinted]);
+  const { onCopy } = useCopy();
 
   return (
     <div
@@ -122,12 +119,15 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                 Mint
               </Text>
             </Button>
-            {isMintingInProgress && !isMinting && (
-              <Text type="font-14-400" className="text-main">
-                Your certificate is minting. Please wait a moment...
-              </Text>
-            )}
           </>
+        )}
+
+        {isMintingInProgress && (
+          <div className="flex items-center gap-2">
+            <Text type="font-14-400" className="text-main">
+              Your certificate is minting. Please wait a moment...
+            </Text>
+          </div>
         )}
 
         {hasMinted && (
@@ -136,6 +136,17 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
               You have already minted this certificate
             </div>
             <div>
+              {!item.tokenId && (
+                <Button
+                  isIconOnly
+                  size="sm"
+                  variant="light"
+                  onPress={handleManualRefetch}
+                  isLoading={isRefetching}
+                >
+                  <ArrowClockwise size={20} className="text-main" />
+                </Button>
+              )}
               {item.tokenId && (
                 <div>
                   <Tooltip

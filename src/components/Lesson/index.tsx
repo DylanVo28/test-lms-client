@@ -32,12 +32,15 @@ import {
 import VideoSection from './VideoSection';
 import classNames from 'classnames';
 import Image from 'next/image';
+import { useShouldVideoReviewModal } from '@/hooks/useShouldVideoReviewModal';
 
 export const valueProgressAtom = atom<any>({});
 export const reviewedAtom = atom<boolean>(false);
+export const lastModalShowTimeAtom = atom<Record<string, number>>({});
 
 const Lesson = () => {
   const router = useRouter();
+  const courseId = router.query.id as string;
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
   const [startTakingTest, setStartTakingTest] = useState(false);
   const [endCourse, setEndCourse] = useState(false);
@@ -48,6 +51,13 @@ const Lesson = () => {
   const [, setActiveItemSection] = useAtom(activeItemSectionAtom);
   const [valueYourProgress, setValueYourProgress] = useAtom(valueProgressAtom);
   const [reviewed, setReviewed] = useAtom(reviewedAtom);
+
+  const { isOpenReviewModal, handleCloseReviewModal } =
+    useShouldVideoReviewModal({
+      courseId,
+      progressValue: valueYourProgress.value || 0,
+      progressTotal: valueYourProgress.total || 0,
+    });
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
@@ -536,12 +546,12 @@ const Lesson = () => {
               }
             />
           )}
-        {endCourse && !typeLoadContent && (
-          <FormEndCourse
-            handleGetReviews={handleGetReviews}
-            courseId={router.query.id as string}
-          />
-        )}
+        <FormEndCourse
+          handleGetReviews={handleGetReviews}
+          courseId={courseId}
+          visible={isOpenReviewModal}
+          onVisible={handleCloseReviewModal}
+        />
         {typeLoadContent === TYPE_COURSE.QUIZ && (
           <FormQuizz
             handleStartTakingTheTest={() => setStartTakingTest(true)}
