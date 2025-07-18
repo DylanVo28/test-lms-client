@@ -492,6 +492,7 @@ const CurriculumItem = ({
                         }
                         placeholder={'Enter title'}
                         inputDefault
+                        value={valueTitleLecture}
                       />
                     </div>
                   ) : (

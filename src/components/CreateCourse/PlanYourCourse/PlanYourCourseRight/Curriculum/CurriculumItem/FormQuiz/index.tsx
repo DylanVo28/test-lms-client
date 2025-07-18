@@ -60,7 +60,7 @@ const FormQuiz = ({
             className="rounded bg-main"
           >
             <Text type="font-16-400" className="text-text-white">
-              {'Add quizz'}
+              {'Add quiz'}
             </Text>
           </Button>
         </div>
