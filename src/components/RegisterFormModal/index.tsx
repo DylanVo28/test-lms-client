@@ -132,6 +132,7 @@ const RegisterFormModal = () => {
         message,
         address,
         themeCode: router.query.code as any,
+        referralCode: referralCode,
       });
 
       const parentCode = prepareRegisterMetadataRes?.data?.parentCode;
