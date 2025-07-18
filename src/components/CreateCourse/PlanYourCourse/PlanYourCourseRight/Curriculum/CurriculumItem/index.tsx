@@ -37,7 +37,13 @@ import Content from './Content';
 import ContentQuestions from './ContentQuestions';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
 
-const CurriculumItem = ({ item }: { item: any }) => {
+const CurriculumItem = ({
+  item,
+  validationErrors,
+}: {
+  item: any;
+  validationErrors?: any;
+}) => {
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
   const [isAddCurriculum, setIsAddCurriculum] = useState<boolean>(false);
   const [formAdd, setFormAdd] = useState<string>('');
@@ -429,6 +435,21 @@ const CurriculumItem = ({ item }: { item: any }) => {
       )}
     >
       {dataCurriculum?.map((item: any, indexCurriculum: number) => {
+        const hasContent =
+          item?.type === TYPE_COURSE.LECTURE
+            ? item?.content || item?.info?.thumbnailUrl
+            : item?.type === TYPE_COURSE.QUIZ &&
+              Array.isArray(item?.questions) &&
+              item?.questions.length > 0;
+
+        const isIncomplete =
+          validationErrors?.curriculum &&
+          !hasContent &&
+          ((item?.type === TYPE_COURSE.LECTURE &&
+            validationErrors?.incompleteItems?.lessons?.includes(item?.id)) ||
+            (item?.type === TYPE_COURSE.QUIZ &&
+              validationErrors?.incompleteItems?.quizzes?.includes(item?.id)));
+
         return (
           <div className={classNames('w-full', {})} key={item?.id}>
             <div
@@ -439,6 +460,7 @@ const CurriculumItem = ({ item }: { item: any }) => {
                     TYPE_COURSE.LECTURE,
                     TYPE_COURSE.QUIZ,
                   ].includes(item?.type),
+                  ['!border-red-500']: isIncomplete,
                 }
               )}
             >

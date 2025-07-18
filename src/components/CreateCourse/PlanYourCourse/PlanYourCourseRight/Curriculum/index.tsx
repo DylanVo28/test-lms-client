@@ -18,6 +18,7 @@ import FormAddSection from './CurriculumItem/FormAddSection';
 import { FileText, PencilSimpleLine, Trash } from '@phosphor-icons/react';
 import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
 import CurriculumProvider from './context';
+import clsx from 'clsx';
 
 const CurriculumItem = dynamic(
   () =>
@@ -29,7 +30,7 @@ const CurriculumItem = dynamic(
   }
 );
 
-const Curriculum = ({ setValue }: any) => {
+const Curriculum = ({ setValue, validationErrors }: any) => {
   const {
     control,
     reset,
@@ -153,6 +154,20 @@ const Curriculum = ({ setValue }: any) => {
             2 hours.
           </Text>
           {fields?.map((field: any, index: number) => {
+            const sectionHasContent =
+              field?.lessons?.some(
+                (lesson: any) => lesson?.content || lesson?.info?.thumbnailUrl
+              ) ||
+              field?.quizzes?.some(
+                (quiz: any) =>
+                  Array.isArray(quiz?.questions) && quiz?.questions.length > 0
+              );
+
+            const isSectionIncomplete =
+              validationErrors?.curriculum &&
+              !sectionHasContent &&
+              validationErrors?.incompleteItems?.sections?.includes(field?.id);
+
             return (
               <div className="flex flex-col gap-1 overflow-auto">
                 {index !== 0 && (
@@ -168,7 +183,14 @@ const Curriculum = ({ setValue }: any) => {
                 )}
 
                 {field?.title ? (
-                  <div className="border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6">
+                  <div
+                    className={clsx(
+                      'border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
+                      {
+                        '!border-red-500': isSectionIncomplete,
+                      }
+                    )}
+                  >
                     {valueLesson?.id === field?.id ? (
                       <FormAddSection
                         handleSaveAddSection={(values: any) => {
@@ -227,7 +249,10 @@ const Curriculum = ({ setValue }: any) => {
                       </div>
                     )}
 
-                    <CurriculumItem item={field} />
+                    <CurriculumItem
+                      item={field}
+                      validationErrors={validationErrors}
+                    />
                   </div>
                 ) : (
                   <FormAddSection

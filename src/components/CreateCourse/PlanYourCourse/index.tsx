@@ -23,6 +23,7 @@ const PlanYourCourse = () => {
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<any>({});
 
   const [isNextStepSubmit, setIsNextStepSubmit] = useState(false);
 
@@ -214,7 +215,6 @@ const PlanYourCourse = () => {
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
       getDetailCourse(router.query.id as string);
-      // setIsSubmit(true);
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -255,6 +255,56 @@ const PlanYourCourse = () => {
 
       return data;
     } catch (error) {}
+  };
+
+  const getIncompleteItems = (sections: any[]) => {
+    const incompleteItems = {
+      sections: [] as string[],
+      lessons: [] as string[],
+      quizzes: [] as string[],
+    };
+
+    if (Array.isArray(sections)) {
+      sections.forEach((section: any, sectionIndex: number) => {
+        let sectionHasContent = false;
+
+        if (section.lessons.length === 0 && section.quizzes.length === 0) {
+          incompleteItems.sections.push(section.id);
+        } else {
+          section.lessons.forEach((lesson: any, lessonIndex: number) => {
+            if (lesson.id && !lesson.content && !lesson.info?.thumbnailUrl) {
+              incompleteItems.lessons.push(lesson.id);
+            } else if (
+              lesson.id &&
+              (lesson.content || lesson.info?.thumbnailUrl)
+            ) {
+              sectionHasContent = true;
+            }
+          });
+
+          section.quizzes.forEach((quiz: any, quizIndex: number) => {
+            if (
+              quiz.id &&
+              (!Array.isArray(quiz.questions) || quiz.questions.length === 0)
+            ) {
+              incompleteItems.quizzes.push(quiz.id);
+            } else if (
+              quiz.id &&
+              Array.isArray(quiz.questions) &&
+              quiz.questions.length > 0
+            ) {
+              sectionHasContent = true;
+            }
+          });
+
+          if (!sectionHasContent) {
+            incompleteItems.sections.push(section.id);
+          }
+        }
+      });
+    }
+
+    return incompleteItems;
   };
 
   const onPublish = async (values: any) => {
@@ -307,6 +357,9 @@ const PlanYourCourse = () => {
 
     if (!isEnoughIntendedLearners) {
       setActivePlan(1);
+      setValidationErrors({
+        intendedLearners: true,
+      });
       toast.error(
         'Please fill in all information for the intended learners section.',
         { duration: 5000 }
@@ -316,6 +369,11 @@ const PlanYourCourse = () => {
     }
     if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
       setActivePlan(2);
+      const incompleteItems = getIncompleteItems(resData?.data || []);
+      setValidationErrors({
+        curriculum: true,
+        incompleteItems,
+      });
       toast.error(
         'There is no course content yet. Please create it before publishing.',
         {
@@ -326,6 +384,9 @@ const PlanYourCourse = () => {
     }
     if (!isEnoughCourseLangdingePage) {
       setActivePlan(3);
+      setValidationErrors({
+        courseLandingPage: true,
+      });
       toast.error(
         'Please fill in all information for the landing page section.',
         { duration: 5000 }
@@ -334,11 +395,16 @@ const PlanYourCourse = () => {
     }
     if (!isEnoughtSetPrice) {
       setActivePlan(4);
+      setValidationErrors({
+        setPrice: true,
+      });
       toast.error('Please fill in all information for the price section.', {
         duration: 5000,
       });
       return;
     }
+
+    setValidationErrors({});
 
     const body: any = {
       isPublish: true,
@@ -415,7 +481,6 @@ const PlanYourCourse = () => {
 
       price: values?.price,
       originPrice: values?.originPrice,
-      // promotionPeriod: values?.promotionPeriod,
       promotionPeriod: `100000000`,
       unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast
         ? +values?.unlockIfUserTradesAtLeast
@@ -490,6 +555,7 @@ const PlanYourCourse = () => {
   const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
   const handleChangeTab = async (plan: number) => {
+    setValidationErrors({});
     await handleSubmit((value) =>
       onSubmit({
         ...value,
@@ -532,6 +598,7 @@ const PlanYourCourse = () => {
                   idDetail={router.query.id as string}
                   control={control}
                   activePlan={activePlan}
+                  validationErrors={validationErrors}
                 />
               </div>
             </div>

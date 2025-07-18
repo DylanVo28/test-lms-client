@@ -22,6 +22,7 @@ const PlanYourCourseRight = ({
   idDetail,
   handleSubmit,
   setValue,
+  validationErrors,
 }: {
   control: Control;
   activePlan: number;
@@ -30,6 +31,7 @@ const PlanYourCourseRight = ({
   handleSubmit: any;
   watch?: any;
   setValue: any;
+  validationErrors?: any;
 }) => {
   return (
     <div className="bg-gray-70 p-4 md:py-6 md:px-8 flex flex-col rounded shadow-lg w-full gap-8">
@@ -39,14 +41,22 @@ const PlanYourCourseRight = ({
           errors={errors}
           control={control}
           idDetail={idDetail}
+          validationErrors={validationErrors}
         />
       )}
-      {activePlan === 2 && <Curriculum setValue={setValue} />}
-      {activePlan === 3 && (
-        <CourseLandingPage watch={watch} control={control} />
+      {activePlan === 2 && (
+        <Curriculum setValue={setValue} validationErrors={validationErrors} />
       )}
-      {/* {activePlan === 4 && <Referral control={control} />} */}
-      {activePlan === 4 && <SetPrice control={control} />}
+      {activePlan === 3 && (
+        <CourseLandingPage
+          watch={watch}
+          control={control}
+          validationErrors={validationErrors}
+        />
+      )}
+      {activePlan === 4 && (
+        <SetPrice control={control} validationErrors={validationErrors} />
+      )}
     </div>
   );
 };
