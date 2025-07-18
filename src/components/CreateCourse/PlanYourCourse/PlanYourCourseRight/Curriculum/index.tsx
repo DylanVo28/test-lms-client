@@ -188,12 +188,15 @@ const Curriculum = ({ setValue }: any) => {
                       />
                     ) : (
                       <div className="flex items-center gap-2">
-                        <Text type="font-16-700">{`${'Part'} ${
-                          index + 1
-                        }:`}</Text>
+                        <Text type="font-16-700" className="whitespace-nowrap">
+                          {`${'Part'} ${index + 1}:`}
+                        </Text>
                         <div className="flex items-center gap-1">
                           <FileText size={20} weight="light" />
-                          <Text type="font-16-400" className="text-black-7">
+                          <Text
+                            type="font-16-400"
+                            className="text-black-7 max-w-[800px] truncate"
+                          >
                             {field.title}
                           </Text>
                           <Button

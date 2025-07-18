@@ -36,7 +36,7 @@ const FormAddSection = ({
             render={({ field, fieldState }) => {
               return (
                 <InputText
-                  maxLength={160}
+                  maxLength={100}
                   endContent
                   error={fieldState?.error?.message}
                   onChange={field.onChange}
@@ -59,7 +59,7 @@ const FormAddSection = ({
               render={({ field }) => {
                 return (
                   <InputText
-                    maxLength={160}
+                    maxLength={100}
                     defaultValue={valueLesson?.learningObjective}
                     endContent
                     onChange={field.onChange}

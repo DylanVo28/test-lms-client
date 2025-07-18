@@ -23,7 +23,7 @@ const FormLecture = ({
         </div>
         <div className="w-full">
           <InputText
-            maxLength={160}
+            maxLength={100}
             endContent
             error={isError && !valueTitle ? 'Field title is required' : ''}
             classInputWrapper="!min-h-[34px]"
@@ -31,6 +31,7 @@ const FormLecture = ({
             className="min-w-full"
             placeholder={'Introduction to JavaScript Functions'}
             inputDefault
+            value={valueTitle}
           />
         </div>
       </div>

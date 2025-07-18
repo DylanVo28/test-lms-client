@@ -364,6 +364,9 @@ const PlanYourCourse = () => {
       price: values?.price,
       originPrice: values?.originPrice,
       promotionPeriod: values?.promotionPeriod,
+      unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast
+        ? +values?.unlockIfUserTradesAtLeast
+        : null,
     };
     if (!values.topics) {
       delete body.topics;

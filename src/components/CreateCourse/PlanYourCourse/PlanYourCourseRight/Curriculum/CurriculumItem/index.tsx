@@ -485,7 +485,10 @@ const CurriculumItem = ({ item }: { item: any }) => {
                       ) : (
                         <Question color="#8C8C8C" weight="bold" size={20} />
                       )}
-                      <Text type="font-16-500" className="text-black-7">
+                      <Text
+                        type="font-16-500"
+                        className="text-black-7 max-w-[600px] truncate"
+                      >
                         {item.title}
                       </Text>
 

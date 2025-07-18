@@ -115,8 +115,8 @@ const InputText = (props: InputTextProps) => {
         endContent={
           <>
             {maxLength ? (
-              <div className="absolute right-3 bg-black-30 px-2 rounded-sm">
-                <Text type="font-16-400" className="text-white-20">
+              <div className="absolute right-[-4px] bottom-[0px] px-2 rounded-sm">
+                <Text type="font-12-400" className="text-white-50">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -146,7 +146,7 @@ const InputText = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5  placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
+            'text-black-5 placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
             {
               'placeholder:text-white-20': isInputSubmit,
               'placeholder:!text-white-20': inputDefault,
