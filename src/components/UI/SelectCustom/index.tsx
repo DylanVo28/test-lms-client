@@ -19,6 +19,7 @@ interface SelectCustomProps {
   onChange?: any;
   value?: any;
   error?: string;
+  hasError?: boolean;
 }
 const SelectCustom = (props: SelectCustomProps) => {
   const [openSelect, setOpenSelect] = useState(false);
@@ -28,6 +29,7 @@ const SelectCustom = (props: SelectCustomProps) => {
     isLesson = false,
     placeholder,
     isSelectSubmit,
+    hasError = false,
     inputDefault,
     onChange,
     value,
@@ -71,6 +73,7 @@ const SelectCustom = (props: SelectCustomProps) => {
                 isSelectSubmit,
               '!bg-gray-80 data-[hover=true]:!border-main  min-h-[48px] border-black-10 bg-[#21252b]-30 group-data-[focus=true]:!border-main':
                 inputDefault,
+              '!border-red-500': hasError,
             }
           ),
           listboxWrapper: clsx(

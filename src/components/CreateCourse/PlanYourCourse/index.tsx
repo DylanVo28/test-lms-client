@@ -374,12 +374,9 @@ const PlanYourCourse = () => {
         curriculum: true,
         incompleteItems,
       });
-      toast.error(
-        'There is no course content yet. Please create it before publishing.',
-        {
-          duration: 5000,
-        }
-      );
+      toast.error('Please fill in all information before submitting.', {
+        duration: 5000,
+      });
       return;
     }
     if (!isEnoughCourseLangdingePage) {
@@ -456,6 +453,80 @@ const PlanYourCourse = () => {
     if (image) {
       toast.error('There are some images not cropped');
       return;
+    }
+
+    // Validate all sections similar to publish
+    const resData = await fetchDetailSection();
+
+    const allLessonsHaveContent =
+      Array.isArray(resData?.data) &&
+      resData?.data.length > 0 &&
+      resData?.data.every((section: any) => {
+        if (section.lessons.length === 0) {
+          return section.quizzes.length > 0;
+        }
+
+        return section.lessons.every(
+          (lesson: any) =>
+            (lesson.id && (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+            !lesson.id
+        );
+      });
+    const allQuizzesHaveQuestions =
+      Array.isArray(resData?.data) &&
+      resData?.data.length > 0 &&
+      resData?.data.every((section: any) => {
+        if (section.quizzes.length === 0) {
+          return section.lessons.length > 0;
+        }
+
+        return section.quizzes.every(
+          (quizz: any) =>
+            (quizz.id &&
+              Array.isArray(quizz.questions) &&
+              quizz.questions.length > 0) ||
+            !quizz.id
+        );
+      });
+
+    const isEnoughtSetPrice = values?.price && values?.originPrice;
+    const isEnoughIntendedLearners =
+      values?.objectives?.length > 0 &&
+      values?.intenedLeaners?.length > 0 &&
+      values?.requirements?.length > 0;
+    const isEnoughCourseLangdingePage =
+      values?.title && values?.categoryId && values?.level && values?.lang;
+
+    // Set validation errors for incomplete sections
+    const validationErrorsToSet: any = {};
+
+    if (!isEnoughIntendedLearners) {
+      validationErrorsToSet.intendedLearners = true;
+    }
+
+    if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
+      const incompleteItems = getIncompleteItems(resData?.data || []);
+      validationErrorsToSet.curriculum = true;
+      validationErrorsToSet.incompleteItems = incompleteItems;
+    }
+
+    if (!isEnoughCourseLangdingePage) {
+      validationErrorsToSet.courseLandingPage = true;
+    }
+
+    if (!isEnoughtSetPrice) {
+      validationErrorsToSet.setPrice = true;
+    }
+
+    // Set validation errors if any exist
+    if (Object.keys(validationErrorsToSet).length > 0) {
+      setValidationErrors(validationErrorsToSet);
+      toast.error('Please fill in all information before submitting.', {
+        duration: 5000,
+      });
+      return;
+    } else {
+      setValidationErrors({});
     }
 
     const body: any = {
@@ -555,7 +626,6 @@ const PlanYourCourse = () => {
   const isEnoughCurruclum = allLessonsHaveContent && allQuizzesHaveQuestions;
 
   const handleChangeTab = async (plan: number) => {
-    setValidationErrors({});
     await handleSubmit((value) =>
       onSubmit({
         ...value,

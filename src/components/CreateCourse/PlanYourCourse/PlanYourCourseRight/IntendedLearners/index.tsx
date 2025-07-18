@@ -8,11 +8,13 @@ import { Control, Controller, useFieldArray } from 'react-hook-form';
 const IntendedLearners = ({
   control,
   errors,
+  validationErrors,
 }: {
   control: Control;
   idDetail: string;
   handleSubmit: any;
   errors: any;
+  validationErrors?: any;
 }) => {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -88,6 +90,12 @@ const IntendedLearners = ({
                         }
                         inputDefault
                         error={errors?.objectives?.[index]?.name?.message}
+                        classInputWrapper={
+                          validationErrors?.intendedLearners &&
+                          (!field.value || !field.value.trim())
+                            ? '!border-red-500'
+                            : ''
+                        }
                       />
                     );
                   }}
@@ -156,6 +164,12 @@ const IntendedLearners = ({
                       }
                       inputDefault
                       error={errors?.requirements?.[index]?.name?.message}
+                      classInputWrapper={
+                        validationErrors?.intendedLearners &&
+                        (!field.value || !field.value.trim())
+                          ? '!border-red-500'
+                          : ''
+                      }
                     />
                   )}
                 />
@@ -221,6 +235,12 @@ const IntendedLearners = ({
                           : 'Beginners who want to learn [Topic] from scratch'
                       }
                       inputDefault
+                      classInputWrapper={
+                        validationErrors?.intendedLearners &&
+                        (!field.value || !field.value.trim())
+                          ? '!border-red-500'
+                          : ''
+                      }
                       error={errors?.intenedLeaners?.[index]?.name?.message}
                     />
                   )}

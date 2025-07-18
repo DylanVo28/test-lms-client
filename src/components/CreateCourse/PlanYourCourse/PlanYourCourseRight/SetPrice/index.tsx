@@ -5,7 +5,13 @@ import Text from '@/components/UI/Text';
 import { Tooltip } from '@nextui-org/react';
 import { Info } from '@phosphor-icons/react';
 
-const SetPrice = ({ control }: { control: Control }) => {
+const SetPrice = ({
+  control,
+  validationErrors,
+}: {
+  control: Control;
+  validationErrors?: any;
+}) => {
   const { setError, clearErrors, formState } = useForm({}); // Lấy các hàm hỗ trợ từ react-hook-form
   const originPrice = useWatch({ control, name: 'originPrice' });
 
@@ -45,6 +51,12 @@ const SetPrice = ({ control }: { control: Control }) => {
                   className="md:min-w-[600px]"
                   placeholder={'0'}
                   inputDefault
+                  classInputWrapper={
+                    validationErrors?.setPrice &&
+                    (!field.value || field.value <= 0)
+                      ? '!border-red-500'
+                      : ''
+                  }
                 />
               )}
             />
@@ -87,6 +99,12 @@ const SetPrice = ({ control }: { control: Control }) => {
                     className="md:min-w-[600px]"
                     placeholder={'0'}
                     inputDefault
+                    classInputWrapper={
+                      validationErrors?.setPrice &&
+                      (!field.value || field.value <= 0)
+                        ? '!border-red-500'
+                        : ''
+                    }
                   />
                 );
               }}

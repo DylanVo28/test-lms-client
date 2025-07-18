@@ -17,9 +17,11 @@ import { useEffect } from 'react';
 const CourseLandingPage = ({
   control,
   watch,
+  validationErrors,
 }: {
   control: Control;
   watch: any;
+  validationErrors?: any;
 }) => {
   const { data } = useGetCategories({ order: 'createdAt asc' });
   const { data: levels } = useGetLevels();
@@ -66,6 +68,12 @@ const CourseLandingPage = ({
               label={'Course title'}
               placeholder={'From Beginner to Expert'}
               inputDefault
+              classInputWrapper={
+                validationErrors?.courseLandingPage &&
+                (!field.value || !field.value.trim())
+                  ? '!border-red-500'
+                  : ''
+              }
             />
           )}
         />
@@ -86,6 +94,12 @@ const CourseLandingPage = ({
               placeholder={'Everything You Need to Know to Get Started'}
               inputDefault
               error={fieldState?.error?.message}
+              classInputWrapper={
+                validationErrors?.courseLandingPage &&
+                (!field.value || !field.value.trim())
+                  ? '!border-red-500'
+                  : ''
+              }
             />
           )}
         />
@@ -136,6 +150,7 @@ const CourseLandingPage = ({
                 value={field.value}
                 inputDefault
                 error={fieldState?.error?.message}
+                hasError={validationErrors?.courseLandingPage && !field.value}
                 options={
                   languages?.data?.map((item: any) => {
                     return {
@@ -161,6 +176,7 @@ const CourseLandingPage = ({
                 onChange={field.onChange}
                 value={field.value}
                 inputDefault
+                hasError={validationErrors?.courseLandingPage && !field.value}
                 options={
                   levels?.data?.map((item: any) => {
                     return {
@@ -189,6 +205,7 @@ const CourseLandingPage = ({
                 value={field.value}
                 className="min-w-[120px]"
                 error={fieldState?.error?.message}
+                hasError={validationErrors?.courseLandingPage && !field.value}
                 options={
                   data?.data?.map((item: any) => {
                     return {
