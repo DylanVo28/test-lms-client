@@ -105,8 +105,7 @@ const ThemeConfiguration = ({}: {}) => {
 
   const onSave = () => {
     const body = {
-      color: valueColorTheme?.color,
-      customColors,
+      color: JSON.stringify(customColors || {}),
       code,
       logo,
       langs,
@@ -134,8 +133,8 @@ const ThemeConfiguration = ({}: {}) => {
       modeTheme: dataThemeConfig?.modeTheme,
     });
 
-    if (dataThemeConfig?.customColors) {
-      setCustomColors(dataThemeConfig.customColors);
+    if (dataThemeConfig?.color) {
+      setCustomColors(JSON.parse(dataThemeConfig.color) || {});
     }
 
     // todo: set langs

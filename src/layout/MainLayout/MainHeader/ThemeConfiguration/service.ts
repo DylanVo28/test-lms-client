@@ -7,7 +7,6 @@ import { CustomColors } from '@/store/theme/theme';
 export interface Config {
   logo: string;
   color: string;
-  customColors: CustomColors;
   langs: string[];
   code: string;
   title: string;
@@ -20,7 +19,6 @@ export interface DataConfig {
   id: string;
   logo: string;
   color: string;
-  customColors: CustomColors;
   modeTheme: string;
   langs: string[];
   code: string;
