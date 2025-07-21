@@ -86,7 +86,7 @@ const CardCourse = ({
         </div>
       )}
 
-      <div className="bg-white-10 w-full rounded rounded-b-none">
+      <div className="bg-card w-full rounded rounded-b-none">
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
@@ -154,8 +154,8 @@ const CardCourse = ({
 
         <div className="flex-wrap md:flex-nowrap flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-orange-50 bg-orange-10 rounded-full">
-              <Text type="font-16-600" className="text-orange">
+            <div className="py-[2px] px-2 flex justify-center items-center border-1 border-secondary-50 bg-secondary-10 rounded-full">
+              <Text type="font-16-600" className="text-secondary">
                 {item?.price ? `$ ${formatNumber(item?.price)}` : 'Free'}
               </Text>
             </div>

@@ -70,11 +70,15 @@ module.exports = {
 
         gray: 'var(--theme-gray)',
         'secondary-500': 'var(--theme-secondary-500)',
-        secondary: 'var(--theme-main)',
+        secondary: 'var(--theme-secondary)',
+        'secondary-10': 'var(--theme-secondary-10)',
+        'secondary-50': 'var(--theme-secondary-50)',
         main: 'var(--theme-main)',
         'main-60': 'var(--theme-main-60)',
         'main-20': 'var(--theme-main-20)',
         'main-10': 'var(--theme-main-10)',
+        card: 'var(--theme-card)',
+        background: 'var(--theme-background)',
 
         green: 'var(--theme-green)',
         'green-10': 'var(--theme-green-10)',

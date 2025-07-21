@@ -10,6 +10,10 @@ import { useProfile } from '../profile/useProfile';
 import useAccessToken from '../auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
 import { myThemeAtom } from './my-theme';
+import {
+  applyCustomColors,
+  getCustomColorsFromTheme,
+} from '@/utils/themeColors';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
@@ -35,13 +39,15 @@ export const useThemeInitial = () => {
           API_PATH.THEMES + `/${router.query?.code}`
         );
 
+        const themeColors = JSON.parse(
+          res?.data?.color || JSON.stringify(DefaultThemeColor)
+        );
+
         setTheme({
           ...res?.data,
           kolId: res?.data?.userId ?? adminRes?.data?.userId,
           adminId: adminRes?.data?.userId,
-          color: JSON.parse(
-            res?.data?.color || JSON.stringify(DefaultThemeColor)
-          ),
+          color: themeColors,
         });
 
         const myThemeRes = await privateRequest(
@@ -49,12 +55,17 @@ export const useThemeInitial = () => {
           API_PATH.THEME_DETAIL
         );
 
+        const myThemeColors = JSON.parse(
+          myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
+        );
+
         setMyTheme({
           ...myThemeRes?.data,
-          color: JSON.parse(
-            myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
-          ),
+          color: myThemeColors,
         });
+
+        // Apply custom colors to CSS variables
+        applyCustomColors(getCustomColorsFromTheme(themeColors));
 
         document.body.setAttribute('data-theme', res?.data?.color);
         return;
@@ -65,14 +76,20 @@ export const useThemeInitial = () => {
             API_PATH.THEMES + `/${router.query?.code}`
           );
 
+          const themeColors = JSON.parse(
+            res?.data?.color || JSON.stringify(DefaultThemeColor)
+          );
+
           setTheme({
             ...res?.data,
             kolId: res?.data?.userId ?? adminRes?.data?.userId,
             adminId: adminRes?.data?.userId,
-            color: JSON.parse(
-              res?.data?.color || JSON.stringify(DefaultThemeColor)
-            ),
+            color: themeColors,
           });
+
+          // Apply custom colors to CSS variables
+          applyCustomColors(getCustomColorsFromTheme(themeColors));
+
           document.body.setAttribute('data-theme', res?.data?.color);
           return;
         }

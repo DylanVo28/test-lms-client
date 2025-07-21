@@ -23,6 +23,7 @@ import {
   CustomColors as CustomColorsType,
   DefaultThemeColor,
 } from '@/store/theme/theme';
+import { applyCustomColors } from '@/utils/themeColors';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
 import InputText from '@/components/UI/InputText';
@@ -137,6 +138,11 @@ const ThemeConfiguration = ({}: {}) => {
       setIsNonUserSave(false);
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
+
+  // Apply custom colors in real-time when they change
+  useEffect(() => {
+    applyCustomColors(customColors);
+  }, [customColors]);
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(`${window.location.origin}/${code}`);
