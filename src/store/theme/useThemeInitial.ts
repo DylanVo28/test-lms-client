@@ -39,7 +39,9 @@ export const useThemeInitial = () => {
           ...res?.data,
           kolId: res?.data?.userId ?? adminRes?.data?.userId,
           adminId: adminRes?.data?.userId,
-          color: JSON.parse(res?.data?.color || DefaultThemeColor),
+          color: JSON.parse(
+            res?.data?.color || JSON.stringify(DefaultThemeColor)
+          ),
         });
 
         const myThemeRes = await privateRequest(
@@ -49,7 +51,9 @@ export const useThemeInitial = () => {
 
         setMyTheme({
           ...myThemeRes?.data,
-          color: JSON.parse(myThemeRes?.data?.color || DefaultThemeColor),
+          color: JSON.parse(
+            myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
+          ),
         });
 
         document.body.setAttribute('data-theme', res?.data?.color);
@@ -65,7 +69,9 @@ export const useThemeInitial = () => {
             ...res?.data,
             kolId: res?.data?.userId ?? adminRes?.data?.userId,
             adminId: adminRes?.data?.userId,
-            color: JSON.parse(res?.data?.color || DefaultThemeColor),
+            color: JSON.parse(
+              res?.data?.color || JSON.stringify(DefaultThemeColor)
+            ),
           });
           document.body.setAttribute('data-theme', res?.data?.color);
           return;
