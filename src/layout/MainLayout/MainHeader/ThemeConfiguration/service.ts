@@ -2,20 +2,32 @@ import { API_PATH } from '@/api/constant';
 import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useRequest } from 'ahooks';
+import { CustomColors } from '@/store/theme/theme';
 
 export interface Config {
   logo: string;
   color: string;
+  customColors: CustomColors;
   langs: string[];
+  code: string;
+  title: string;
+  banner: string;
+  description: string;
+  topics: string[];
 }
 
 export interface DataConfig {
   id: string;
   logo: string;
   color: string;
+  customColors: CustomColors;
   modeTheme: string;
   langs: string[];
   code: string;
+  title: string;
+  banner: string;
+  description: string;
+  topics: string[];
   userId: string;
   createdAt: string;
   updatedAt: string;

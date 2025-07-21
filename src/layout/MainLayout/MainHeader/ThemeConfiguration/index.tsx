@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import ThemeIcon from './Icons/ThemeIcon';
 import CloseIcon from './Icons/CloseIcon';
-import ColorTheme from './ColorTheme';
+import CustomColors from './CustomColors';
 import EditLogo from './EditLogo';
 import Languages from './Languages';
 import { useCreateTheme, useUpdateTheme } from './service';
@@ -17,7 +17,11 @@ import { toast } from '@/components/UI/Toast/toast';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '@/components/UI/Text';
-import { ImodeTheme, initialTheme } from '@/store/theme/theme';
+import {
+  ImodeTheme,
+  initialTheme,
+  CustomColors as CustomColorsType,
+} from '@/store/theme/theme';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
 import InputText from '@/components/UI/InputText';
@@ -40,6 +44,12 @@ const ThemeConfiguration = ({}: {}) => {
   const [topics, setTopics] = useAtom(topicsAtom);
   const [banner, setBanner] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [customColors, setCustomColors] = useState<CustomColorsType>({
+    primary: '#02A6C2',
+    background: '#FFFFFF',
+    card: '#F8F9FA',
+    secondary: '#6C757D',
+  });
 
   const [valueColorTheme, setValueColorTheme] = useState<any>({});
 
@@ -96,8 +106,8 @@ const ThemeConfiguration = ({}: {}) => {
   const onSave = () => {
     const body = {
       color: valueColorTheme?.color,
+      customColors,
       code,
-      modeTheme: valueColorTheme?.modeTheme,
       logo,
       langs,
       title,
@@ -123,6 +133,10 @@ const ThemeConfiguration = ({}: {}) => {
       color: dataThemeConfig?.color,
       modeTheme: dataThemeConfig?.modeTheme,
     });
+
+    if (dataThemeConfig?.customColors) {
+      setCustomColors(dataThemeConfig.customColors);
+    }
 
     // todo: set langs
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
@@ -256,10 +270,11 @@ const ThemeConfiguration = ({}: {}) => {
                 <EditBanner value={banner} onChange={onChangeBanner} />
                 <EditLogo logo={logo} onChangeLogo={onChangeLogo} />
 
-                {/* <ColorTheme
-                  valueColorTheme={valueColorTheme}
-                  handleChangeValueColor={handleChangeValueColor}
-                /> */}
+                <CustomColors
+                  colors={customColors}
+                  onColorsChange={setCustomColors}
+                />
+
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
                   <ConnectButton.Custom>

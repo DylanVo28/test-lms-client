@@ -1,9 +1,17 @@
 import { atom } from 'jotai';
 
+export interface CustomColors {
+  primary: string;
+  background: string;
+  card: string;
+  secondary: string;
+}
+
 export interface InitTheme {
   id: string;
   logo: string;
   color: string;
+  customColors: CustomColors;
   langs: string[];
   code: string;
   modeTheme: 'dark' | 'light';
@@ -28,6 +36,12 @@ export const initialTheme: InitTheme = {
   id: '',
   logo: '',
   color: '',
+  customColors: {
+    primary: '#02A6C2',
+    background: '#FFFFFF',
+    card: '#F8F9FA',
+    secondary: '#6C757D',
+  },
   title: '',
   topics: [],
   description: '',
