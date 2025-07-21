@@ -10,8 +10,7 @@ export interface CustomColors {
 export interface InitTheme {
   id: string;
   logo: string;
-  color: string;
-  customColors: CustomColors;
+  color: CustomColors;
   langs: string[];
   code: string;
   modeTheme: 'dark' | 'light';
@@ -32,16 +31,18 @@ export enum ImodeTheme {
   DARK_MODE = 'dark',
 }
 
+export const DefaultThemeColor = {
+  primary: '#02A6C2',
+  background: '#FFFFFF',
+  card: '#F8F9FA',
+  secondary: '#6C757D',
+};
+
 export const initialTheme: InitTheme = {
   id: '',
   logo: '',
-  color: '',
-  customColors: {
-    primary: '#02A6C2',
-    background: '#FFFFFF',
-    card: '#F8F9FA',
-    secondary: '#6C757D',
-  },
+  color: DefaultThemeColor,
+
   title: '',
   topics: [],
   description: '',

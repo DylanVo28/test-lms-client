@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
     APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,
-    APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
   httpAgentOptions: {
     keepAlive: false,

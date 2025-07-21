@@ -21,6 +21,7 @@ import {
   ImodeTheme,
   initialTheme,
   CustomColors as CustomColorsType,
+  DefaultThemeColor,
 } from '@/store/theme/theme';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
@@ -36,7 +37,7 @@ const DEFAULT_COLOR = '#02A6C2';
 
 const ThemeConfiguration = ({}: {}) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [color, setColor] = useState<string>('');
+
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
   const [code, setCode] = useState<string>('');
@@ -44,14 +45,8 @@ const ThemeConfiguration = ({}: {}) => {
   const [topics, setTopics] = useAtom(topicsAtom);
   const [banner, setBanner] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [customColors, setCustomColors] = useState<CustomColorsType>({
-    primary: '#02A6C2',
-    background: '#FFFFFF',
-    card: '#F8F9FA',
-    secondary: '#6C757D',
-  });
-
-  const [valueColorTheme, setValueColorTheme] = useState<any>({});
+  const [customColors, setCustomColors] =
+    useState<CustomColorsType>(DefaultThemeColor);
 
   const [isNonUserSave, setIsNonUserSave] = useState<boolean>(false);
   const { profile } = useProfileInitial();
@@ -79,10 +74,6 @@ const ThemeConfiguration = ({}: {}) => {
     },
   });
 
-  const onChangeColor = (color: string) => {
-    setColor(color);
-  };
-
   const onChangeLangs = (langs: string[]) => {
     setLangs(langs);
   };
@@ -105,7 +96,7 @@ const ThemeConfiguration = ({}: {}) => {
 
   const onSave = () => {
     const body = {
-      color: JSON.stringify(customColors || {}),
+      color: JSON.stringify(customColors || DefaultThemeColor),
       code,
       logo,
       langs,
@@ -128,25 +119,15 @@ const ThemeConfiguration = ({}: {}) => {
     setDescription(dataThemeConfig?.description);
     setTopics(dataThemeConfig?.topics);
     setBanner(dataThemeConfig?.banner);
-    setValueColorTheme({
-      color: dataThemeConfig?.color,
-      modeTheme: dataThemeConfig?.modeTheme,
-    });
 
     if (dataThemeConfig?.color) {
-      setCustomColors(JSON.parse(dataThemeConfig.color) || {});
+      setCustomColors(dataThemeConfig.color);
     }
 
     // todo: set langs
     if (dataThemeConfig?.langs && dataThemeConfig.langs.length > 0) {
       setLangs(dataThemeConfig.langs);
     } else {
-    }
-    if (dataThemeConfig.color) {
-      //   console.log(dataThemeConfig, 'dataThemeConfig');
-
-      setColor(dataThemeConfig.color);
-      //   document.body.setAttribute('data-theme', dataThemeConfig.color);
     }
   }, [dataThemeConfig]);
 
@@ -157,28 +138,13 @@ const ThemeConfiguration = ({}: {}) => {
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
 
-  // useEffect(() => {
-  //   if (profile?.id) {
-  //     requestGetTheme();
-  //   }
-  // }, [profile]);
-
   const onCopy = () => {
-    window.navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_APP_URL}/${code}`
-    );
+    window.navigator.clipboard.writeText(`${window.location.origin}/${code}`);
     toast.success('Copied!');
   };
 
   const onChangeBanner = (urlImg: string) => {
     setBanner(urlImg);
-  };
-
-  const handleChangeValueColor = (item: any, modeTheme: ImodeTheme) => {
-    setValueColorTheme({
-      color: item?.theme,
-      modeTheme,
-    });
   };
 
   return (
@@ -217,7 +183,7 @@ const ThemeConfiguration = ({}: {}) => {
                     startContent={
                       <div className="pointer-events-none flex items-center">
                         <Text type="font-16-400" className="w-max text-black-7">
-                          {process.env.NEXT_PUBLIC_APP_URL}/
+                          {window.location.origin}/
                         </Text>
                       </div>
                     }

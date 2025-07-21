@@ -2,7 +2,7 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import { useAtom } from 'jotai';
 
-import { themeAtom } from './theme';
+import { DefaultThemeColor, themeAtom } from './theme';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { useRouter } from 'next/router';
@@ -18,6 +18,8 @@ export const useThemeInitial = () => {
   const { profile } = useProfile();
   const { address } = useAccount();
   const token = useAccessToken();
+
+  console.log(theme, 'theme');
 
   const run = () => {
     const init = async () => {
@@ -37,6 +39,7 @@ export const useThemeInitial = () => {
           ...res?.data,
           kolId: res?.data?.userId ?? adminRes?.data?.userId,
           adminId: adminRes?.data?.userId,
+          color: JSON.parse(res?.data?.color || DefaultThemeColor),
         });
 
         const myThemeRes = await privateRequest(
@@ -46,6 +49,7 @@ export const useThemeInitial = () => {
 
         setMyTheme({
           ...myThemeRes?.data,
+          color: JSON.parse(myThemeRes?.data?.color || DefaultThemeColor),
         });
 
         document.body.setAttribute('data-theme', res?.data?.color);
@@ -61,6 +65,7 @@ export const useThemeInitial = () => {
             ...res?.data,
             kolId: res?.data?.userId ?? adminRes?.data?.userId,
             adminId: adminRes?.data?.userId,
+            color: JSON.parse(res?.data?.color || DefaultThemeColor),
           });
           document.body.setAttribute('data-theme', res?.data?.color);
           return;
