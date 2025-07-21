@@ -125,15 +125,15 @@ const DetailCourse = () => {
           </div>
           <div className="col-span-7 flex flex-col gap-5">
             <div className="flex flex-col border-b-1 border-b-black-10 pb-5 gap-5">
-              <Text type="font-28-700" className="text-white">
+              <Text type="font-28-700" className="text-letter">
                 {dataDetail?.data?.title}
               </Text>
-              <Text type="font-14-400" className="text-white">
+              <Text type="font-14-400" className="text-letter">
                 Learn: {mapCategoryCourse()}
               </Text>
               <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
                 <div className="flex items-center gap-2">
-                  <Text type="font-14-400" className="text-white">
+                  <Text type="font-14-400" className="text-letter">
                     {(dataDetail?.data?.rating || 5)?.toFixed(1)}
                   </Text>
                   <Rater total={5} rating={dataDetail?.data?.rating || 5} />
@@ -144,7 +144,7 @@ const DetailCourse = () => {
                   <>
                     <div className="flex items-center gap-1">
                       <IconBookMark />
-                      <Text type="font-14-400" className="text-white">
+                      <Text type="font-14-400" className="text-letter">
                         {lessonCount || 0} Lessons
                       </Text>
                     </div>
@@ -155,7 +155,7 @@ const DetailCourse = () => {
                   <>
                     <div className="flex items-center gap-1">
                       <IconStudent />
-                      <Text type="font-14-400" className="text-white">
+                      <Text type="font-14-400" className="text-letter">
                         {dataDetail?.data?.userCourses.length} Students
                       </Text>
                     </div>
@@ -165,7 +165,7 @@ const DetailCourse = () => {
 
                 <div className="flex items-center gap-1">
                   <IconTimeNew />
-                  <Text type="font-14-400" className="text-white">
+                  <Text type="font-14-400" className="text-letter">
                     {`Last updated ${dayjs(dataDetail?.data?.updatedAt).format(
                       'MM/YYYY'
                     )}`}
@@ -198,7 +198,7 @@ const DetailCourse = () => {
                 <Text
                   element="span"
                   type="font-15-500"
-                  className="text-white truncate w-full"
+                  className="text-letter truncate w-full"
                 >
                   {generateMentors()}
                 </Text>

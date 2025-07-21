@@ -16,12 +16,12 @@ const CommentReviews = () => {
           className="rounded-full"
         />
 
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           Darlene Robertson
         </Text>
       </div>
       <div className="flex items-center gap-2">
-        <Text type="font-14-400" className="text-white">
+        <Text type="font-14-400" className="text-letter">
           4.1
         </Text>
         <Rater total={5} rating={4} />
@@ -31,7 +31,9 @@ const CommentReviews = () => {
       </div>
 
       <Text type="font-16-400" className="text-black-3 w-9/12">
-        {"We're not allowed to buy from only relatives. Let's buy this coin. We'll reach 3M. Go ahead, friends. @InfernoDAO_ $INF"}
+        {
+          "We're not allowed to buy from only relatives. Let's buy this coin. We'll reach 3M. Go ahead, friends. @InfernoDAO_ $INF"
+        }
       </Text>
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-1 cursor-pointer">

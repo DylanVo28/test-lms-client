@@ -35,7 +35,7 @@ module.exports = {
         },
       },
       colors: {
-        white: 'var(--theme-white)',
+        white: 'var(--theme-letter)',
         'white-10': 'var(--theme-white-10)',
         'white-15': 'var(--theme-white-15)',
         'white-50': 'var(--theme-white-50)',
@@ -79,6 +79,16 @@ module.exports = {
         'main-10': 'var(--theme-main-10)',
         card: 'var(--theme-card)',
         background: 'var(--theme-background)',
+
+        letter: 'var(--theme-letter)',
+        'letter-10': 'var(--theme-letter-10)',
+        'letter-20': 'var(--theme-letter-20)',
+        'letter-30': 'var(--theme-letter-30)',
+        'letter-40': 'var(--theme-letter-40)',
+        'letter-50': 'var(--theme-letter-50)',
+        'letter-60': 'var(--theme-letter-60)',
+        'letter-70': 'var(--theme-letter-70)',
+        'letter-80': 'var(--theme-letter-80)',
 
         green: 'var(--theme-green)',
         'green-10': 'var(--theme-green-10)',

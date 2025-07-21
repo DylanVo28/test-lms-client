@@ -216,7 +216,7 @@ const VideoSection = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} className="fill-text-white" />
+          <CaretLeft size={24} className="fill-text-letter" />
         </Button>
       )}
 
@@ -263,7 +263,7 @@ const VideoSection = ({
           }}
           radius="sm"
         >
-          <CaretRight size={24} className="fill-text-white" />
+          <CaretRight size={24} className="fill-text-letter" />
         </Button>
       )}
 

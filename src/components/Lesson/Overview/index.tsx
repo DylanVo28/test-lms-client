@@ -39,7 +39,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
 
   return (
     <div className="flex flex-col gap-5 md:p-4 lg:pl-[80px] lg:pr-[32px]">
-      <Text className="text-white" type="font-20-700">
+      <Text className="text-letter" type="font-20-700">
         {dataDetail?.data?.subtitle}
       </Text>
       <div className="flex flex-col gap-12">
@@ -47,7 +47,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
           <div className="flex items-center gap-10">
             <div className="flex flex-col gap-[3px]">
               <div className="flex items-center gap-1">
-                <Text className="text-white" type="font-14-700">
+                <Text className="text-letter" type="font-14-700">
                   {+(dataDetail?.data?.rating || 5)?.toFixed(1)}
                 </Text>
                 <ReactStars
@@ -66,7 +66,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
             </div>
             <div className="flex flex-col gap-[6px]">
               <div className="flex items-center gap-1">
-                <Text className="text-white" type="font-14-700">
+                <Text className="text-letter" type="font-14-700">
                   {dataDetail?.data?.userCourses?.length ||
                     dataDetail?.data?.countStudents}
                 </Text>
@@ -78,7 +78,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
             </div>
             <div className="flex flex-col gap-[6px]">
               <div className="flex items-center gap-1">
-                <Text className="text-white" type="font-14-700">
+                <Text className="text-letter" type="font-14-700">
                   {formatTimeDuration(formattedTime)}
                 </Text>
                 <Clock size={18} />

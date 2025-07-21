@@ -227,7 +227,7 @@ const RegisterFormModal = () => {
 
           <div className="text-md text-gray-500">
             You register an account using{' '}
-            <span className="text-white font-semibold">
+            <span className="text-letter font-semibold">
               [{showRegisterForm?.themeCode || referralCode || 'Referral'}]
             </span>{' '}
             code, and you will receive a signature request to enable read

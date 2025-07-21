@@ -185,7 +185,7 @@ const DrawerMenu = (props: any, ref: any) => {
                               }
                             )}
                           >
-                            <Text type="font-12-500" className="text-white">
+                            <Text type="font-12-500" className="text-letter">
                               {notifications?.totalCount > 99
                                 ? '99+'
                                 : notifications?.totalCount}

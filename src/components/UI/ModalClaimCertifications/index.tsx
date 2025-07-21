@@ -36,7 +36,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
       <>
         <ModalBody className="p-6 flex flex-col gap-2">
           <div className="flex justify-between items-center">
-            <Text className="text-white" type="font-18-600">
+            <Text className="text-letter" type="font-18-600">
               You have received a certificate for this course.
             </Text>
             <Button
@@ -49,7 +49,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
             </Button>
           </div>
           <div className="flex flex-col gap-3 mt-4">
-            <div className="flex p-4 items-center gap-3 rounded border-1 border-white-10 bg-white-10">
+            <div className="flex p-4 items-center gap-3 rounded border-1 border-white-10 bg-card">
               <Image
                 src={dataCertifications?.certificate?.image}
                 alt=""

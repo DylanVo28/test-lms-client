@@ -34,7 +34,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
 
   return (
     <div className="flex items-center flex-col gap-10">
-      <Text className="text-white text-center" type="font-28-700">
+      <Text className="text-letter text-center" type="font-28-700">
         {"First, let's find out what type of course you're making."}
       </Text>
       <Controller
@@ -56,7 +56,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                     field.onChange(item?.id);
                   }}
                   className={clsx(
-                    'py-5 px-4 w-[302px] cursor-pointer transition-all items-center text-center min-h-[214px] bg-white-10 border-1 border-white-10 rounded flex flex-col gap-3',
+                    'py-5 px-4 w-[302px] cursor-pointer transition-all items-center text-center min-h-[214px] bg-card border-1 border-white-10 rounded flex flex-col gap-3',
                     {
                       ['!bg-[#02a6c233] !border-[#02A6C2]']:
                         field.value == item?.id,
@@ -65,7 +65,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                 >
                   <IconCourse />
                   {/* <Image alt="" width={48} height={48} src={item?.img} /> */}
-                  <Text type="font-20-700" className="text-white">
+                  <Text type="font-20-700" className="text-letter">
                     {item?.label}
                   </Text>
                   <Text type="font-16-400" className="text-black-6">

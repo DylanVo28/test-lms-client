@@ -173,7 +173,7 @@ const ThemeConfiguration = ({}: {}) => {
           {(onClose) => (
             <>
               <DrawerHeader className="flex justify-between items-center gap-1 p-0">
-                <span className="text-[28px] font-bold leading-[150%] text-white">
+                <span className="text-[28px] font-bold leading-[150%] text-letter">
                   {'Theme Configuration'}
                 </span>
                 <CloseIcon onClick={onClose} className={'cursor-pointer'} />
@@ -276,7 +276,7 @@ const ThemeConfiguration = ({}: {}) => {
                             onPress={onPress}
                             className="min-h-[40px] rounded mt-2 bg-main"
                           >
-                            <Text className="text-white" type="font-16-600">
+                            <Text className="text-letter" type="font-16-600">
                               Save
                             </Text>
                           </Button>

@@ -141,7 +141,7 @@ const FilterCourse = (props: any) => {
       <AccordionCustom
         isMobile={isMobile}
         title={
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Rating'}
           </Text>
         }
@@ -173,7 +173,7 @@ const FilterCourse = (props: any) => {
               >
                 <div className="flex items-center gap-2">
                   <Rater total={5} rating={item?.value} />
-                  <Text className="text-white" type="font-14-400">
+                  <Text className="text-letter" type="font-14-400">
                     {item?.label}
                   </Text>
                   {/* <Text className="text-black-7" type="font-14-400">
@@ -189,7 +189,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <div className="flex items-center gap-2">
-            <Text type="font-18-600" className="text-white">
+            <Text type="font-18-600" className="text-letter">
               {'Language'}
             </Text>
             {/* <TagCount count={2} /> */}
@@ -236,7 +236,7 @@ const FilterCourse = (props: any) => {
                       }
                     }}
                   >
-                    <Text type="font-15-500" className="text-white">
+                    <Text type="font-15-500" className="text-letter">
                       {item?.label}
                     </Text>
                   </Checkbox>
@@ -270,7 +270,7 @@ const FilterCourse = (props: any) => {
                         }}
                         value={item?.id}
                       >
-                        <Text type="font-15-500" className="text-white">
+                        <Text type="font-15-500" className="text-letter">
                           {item?.label}
                         </Text>
                       </Checkbox>
@@ -311,7 +311,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <div className="flex items-center gap-2">
-            <Text type="font-18-600" className="text-white">
+            <Text type="font-18-600" className="text-letter">
               {'Hands-on Practice'}
             </Text>
             {/* <TagCount count={1} /> */}
@@ -357,7 +357,7 @@ const FilterCourse = (props: any) => {
                     }
                   }}
                 >
-                  <Text type="font-15-500" className="text-white capitalize">
+                  <Text type="font-15-500" className="text-letter capitalize">
                     {item?.label}
                   </Text>
                 </Checkbox>
@@ -369,7 +369,7 @@ const FilterCourse = (props: any) => {
       <AccordionCustom
         isMobile={isMobile}
         title={
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Topic'}
           </Text>
         }
@@ -411,7 +411,7 @@ const FilterCourse = (props: any) => {
                     }
                   }}
                 >
-                  <Text type="font-15-500" className="text-white">
+                  <Text type="font-15-500" className="text-letter">
                     {item?.label}
                   </Text>
                 </Checkbox>
@@ -423,7 +423,7 @@ const FilterCourse = (props: any) => {
       <AccordionCustom
         isMobile={isMobile}
         title={
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Level'}
           </Text>
         }
@@ -465,7 +465,7 @@ const FilterCourse = (props: any) => {
                     }
                   }}
                 >
-                  <Text type="font-15-500" className="text-white">
+                  <Text type="font-15-500" className="text-letter">
                     {item?.label}
                   </Text>
                 </Checkbox>
@@ -477,7 +477,7 @@ const FilterCourse = (props: any) => {
       <AccordionCustom
         isMobile={isMobile}
         title={
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Price'}
           </Text>
         }
@@ -519,7 +519,7 @@ const FilterCourse = (props: any) => {
                     }
                   }}
                 >
-                  <Text type="font-15-500" className="text-white">
+                  <Text type="font-15-500" className="text-letter">
                     {item?.label}
                   </Text>
                 </Checkbox>
@@ -541,7 +541,7 @@ const FilterCourse = (props: any) => {
               });
             }}
           >
-            <Text type="font-14-500" className="text-white">
+            <Text type="font-14-500" className="text-letter">
               {'Clear filter'}
             </Text>
           </button>

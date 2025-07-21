@@ -66,7 +66,7 @@ const InputTextArena = (props: InputTextProps) => {
   return (
     <div className="flex flex-col gap-2 relative justify-center">
       {label && (
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           {label}
         </Text>
       )}
@@ -76,7 +76,7 @@ const InputTextArena = (props: InputTextProps) => {
           <>
             {maxLength && (
               <div className="absolute right-3 bg-black-30 px-2 rounded-sm">
-                <Text type="font-16-400" className="text-white-20">
+                <Text type="font-16-400" className="text-letter-20">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -101,8 +101,8 @@ const InputTextArena = (props: InputTextProps) => {
           input: clsx(
             'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2',
             {
-              'placeholder:text-white-20': isInputSubmit,
-              'placeholder:!text-white-20': inputDefault,
+              'placeholder:text-letter-20': isInputSubmit,
+              'placeholder:!text-letter-20': inputDefault,
             }
           ),
 

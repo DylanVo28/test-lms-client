@@ -164,7 +164,7 @@ const MoreCourse = (props: any) => {
     <div className="flex flex-col gap-10 pb-10 border-b-1 border-b-black-10">
       {dataCourses?.length > 0 && (
         <div className="flex flex-col gap-6">
-          <Text className="text-white truncate w-full" type="font-20-600">
+          <Text className="text-letter truncate w-full" type="font-20-600">
             {'More Course By'} {generateMentors()}
           </Text>
           <div className="lg:grid lg:grid-cols-3 flex h-full items-center lg:overflow-hidden overflow-auto gap-6">
@@ -182,7 +182,7 @@ const MoreCourse = (props: any) => {
         dataListReview?.data.map((item: any, index: number) => {
           <div className="flex flex-col gap-4">
             return (
-            <Text className="text-white" type="font-20-600">
+            <Text className="text-letter" type="font-20-600">
               {'Reviews'}
             </Text>
             <Comment

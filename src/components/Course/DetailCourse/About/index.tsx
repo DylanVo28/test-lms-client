@@ -5,13 +5,13 @@ import Image from 'next/image';
 const About = ({ data }: { data: any }) => {
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
-      <Text className="text-white" type="font-20-600">
+      <Text className="text-letter" type="font-20-600">
         About This Course
       </Text>
 
       <div
         dangerouslySetInnerHTML={{ __html: data?.description }}
-        className="text-[14px] font-normal text-white"
+        className="text-[14px] font-normal text-letter"
       />
       {/* <Button variant="light" radius="full" className="hover:bg-main-20 w-max">
         <div className="flex items-center gap-[2px]">

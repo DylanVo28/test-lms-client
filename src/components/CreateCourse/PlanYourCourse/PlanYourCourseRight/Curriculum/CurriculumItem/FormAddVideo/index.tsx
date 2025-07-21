@@ -98,7 +98,7 @@ const FormAddVideo = ({
                 value={valueProgress}
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <Text type="font-16-500" className="text-white">
+                <Text type="font-16-500" className="text-letter">
                   {valueProgress}%
                 </Text>
               </div>
@@ -115,7 +115,7 @@ const FormAddVideo = ({
                 }
               )}
             >
-              <Text type="font-14-400" className="text-white/40">
+              <Text type="font-14-400" className="text-letter/40">
                 {'No files selected'}
               </Text>
             </div>
@@ -185,7 +185,7 @@ const FormAddVideo = ({
           onPress={handleClickSaveVideo}
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
-          <Text type="font-16-400" className="text-white">
+          <Text type="font-16-400" className="text-letter">
             {uploading ? <div>Progress: {progress}%</div> : 'Save'}
           </Text>
         </Button>

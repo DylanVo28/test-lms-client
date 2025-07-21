@@ -53,7 +53,7 @@ export default function MyLearning() {
   return (
     <div className="flex flex-col gap-[40px]">
       <div className="pl-5 border-l-4 border-l-main">
-        <Text type="font-28-700" className="text-white">
+        <Text type="font-28-700" className="text-letter">
           {'My Learning'}
         </Text>
       </div>

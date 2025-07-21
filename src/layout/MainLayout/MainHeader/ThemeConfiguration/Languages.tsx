@@ -27,7 +27,7 @@ const Languages = ({
   return (
     <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
       <div className="flex justify-between">
-        <Text className="text-[18px] text-white font-semibold mb-[16px]">
+        <Text className="text-[18px] text-letter font-semibold mb-[16px]">
           {'Language'}{' '}
           <span className="bg-[#E55151] rounded-full py-[2px] px-[6px] leading-[16px] text-[12px]">
             {dataLangs.length}

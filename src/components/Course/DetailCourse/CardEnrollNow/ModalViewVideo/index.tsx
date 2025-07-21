@@ -149,7 +149,7 @@ const ModalViewVideo = (props: IModalViewVideo, ref?: any) => {
       <>
         <ModalBody className="p-6 flex flex-col gap-1">
           <div className="flex justify-between items-center">
-            <Text className="text-white" type="font-24-700">
+            <Text className="text-letter" type="font-24-700">
               {dataVideo?.title}
             </Text>
             <Button

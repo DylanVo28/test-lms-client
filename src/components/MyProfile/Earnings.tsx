@@ -27,8 +27,8 @@ const TabButton: React.FC<{
     className={`flex-1 px-6 py-1 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap
       ${
         active
-          ? 'bg-[#23262F] text-white shadow-sm'
-          : 'text-[#777E90] hover:text-white hover:bg-[#23262F]/70'
+          ? 'bg-[#23262F] text-letter shadow-sm'
+          : 'text-[#777E90] hover:text-letter hover:bg-[#23262F]/70'
       }
     `}
     style={{ minWidth: 0 }}
@@ -114,11 +114,11 @@ const Earnings = ({ reload }: { reload: () => void }) => {
             <CardContent>
               <div className="flex justify-between items-center">
                 <div className="mb-4 sm:mb-0">
-                  <h1 className="text-xl font-bold bg-clip-text text-white">
+                  <h1 className="text-xl font-bold bg-clip-text text-letter">
                     Your Rewards
                   </h1>
                   <p className="text-gray-400 mt-1">Available to claim</p>
-                  <div className="text-3xl font-bold text-white mt-1">
+                  <div className="text-3xl font-bold text-letter mt-1">
                     {totalRewards.toLocaleString()}{' '}
                     <span className="text-main">USDC</span>
                   </div>
@@ -126,7 +126,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
                 <div className="flex items-center gap-2">
                   <button
                     disabled={totalRewards <= 0 || claimLoading}
-                    className={`px-6 py-2 rounded-lg font-medium text-white transition-all ${
+                    className={`px-6 py-2 rounded-lg font-medium text-letter transition-all ${
                       totalRewards > 0 && !claimLoading
                         ? 'bg-[#35B6CC] hover:opacity-90'
                         : 'bg-[#3a4757] cursor-not-allowed opacity-50'

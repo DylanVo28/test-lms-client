@@ -17,7 +17,7 @@ const FormLecture = ({
     <div className="border-1 bg-transparent border-white-15 rounded py-4 px-3 flex flex-col gap-4 w-full">
       <div className="flex items-start w-full gap-2">
         <div className="w-[120px] mt-1">
-          <Text type="font-16-700" className="text-white">
+          <Text type="font-16-700" className="text-letter">
             {'New lecture:'}
           </Text>
         </div>
@@ -51,7 +51,7 @@ const FormLecture = ({
             }}
             className="rounded bg-main"
           >
-            <Text className="text-text-white" type="font-16-400">
+            <Text className="text-text-letter" type="font-16-400">
               {'Add lecture'}
             </Text>
           </Button>

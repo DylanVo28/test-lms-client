@@ -84,7 +84,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               height={120}
               className="w-[120px] h-full mx-auto md:mx-0"
             />
-            <Text type="font-20-700" className="text-white">
+            <Text type="font-20-700" className="text-letter">
               {'Publish course'}
             </Text>
             <Text type="font-16-400" className="text-black-6 text-start">
@@ -128,7 +128,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
               onPress={onVisible}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
-              <Text className="text-white" type="font-16-600">
+              <Text className="text-letter" type="font-16-600">
                 {'Ok'}
               </Text>
             </Button>

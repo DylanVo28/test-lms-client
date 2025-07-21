@@ -17,14 +17,14 @@ const SetPrice = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <Text type="font-28-700" className="text-white">
+      <Text type="font-28-700" className="text-letter">
         {'Set Price'}
       </Text>
       <div className="flex flex-col gap-6">
         {/* Origin Price */}
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="w-[150px] flex items-center gap-1">
-            <Text type="font-16-600" className="text-white">
+            <Text type="font-16-600" className="text-letter">
               {'Origin Price'}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
@@ -40,7 +40,7 @@ const SetPrice = ({
               render={({ field, fieldState }) => (
                 <InputText
                   endContent={
-                    <Text type="font-16-400" className="text-white">
+                    <Text type="font-16-400" className="text-letter">
                       USD
                     </Text>
                   }
@@ -66,7 +66,7 @@ const SetPrice = ({
         {/* Final Price */}
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="flex items-center gap-1 w-[150px]">
-            <Text type="font-16-600" className="text-white">
+            <Text type="font-16-600" className="text-letter">
               {'Final Price'}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
@@ -88,7 +88,7 @@ const SetPrice = ({
                 return (
                   <InputText
                     endContent={
-                      <Text type="font-16-400" className="text-white">
+                      <Text type="font-16-400" className="text-letter">
                         USD
                       </Text>
                     }
@@ -115,7 +115,7 @@ const SetPrice = ({
         {/* Promotion Period */}
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="flex items-center gap-1">
-            <Text type="font-16-600" className="text-white">
+            <Text type="font-16-600" className="text-letter">
               Unlock if user trades at least
             </Text>
             <Tooltip
@@ -133,7 +133,7 @@ const SetPrice = ({
                 </div>
               }
             >
-              <Info size={16} className="text-white" />
+              <Info size={16} className="text-letter" />
             </Tooltip>
           </div>
           <div className="col-span-4">
@@ -143,7 +143,7 @@ const SetPrice = ({
               render={({ field }) => (
                 <InputText
                   endContent={
-                    <Text type="font-16-400" className="text-white">
+                    <Text type="font-16-400" className="text-letter">
                       $
                     </Text>
                   }

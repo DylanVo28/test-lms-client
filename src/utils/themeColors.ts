@@ -22,6 +22,17 @@ export const applyCustomColors = (customColors?: CustomColors) => {
   root.style.setProperty('--theme-secondary-10', `${colors.secondary}10`);
   root.style.setProperty('--theme-secondary-50', `${colors.secondary}50`);
 
+  // Apply text colors
+  root.style.setProperty('--theme-letter', colors.text);
+  root.style.setProperty('--theme-letter-10', `${colors.text}10`);
+  root.style.setProperty('--theme-letter-20', `${colors.text}20`);
+  root.style.setProperty('--theme-letter-30', `${colors.text}30`);
+  root.style.setProperty('--theme-letter-40', `${colors.text}40`);
+  root.style.setProperty('--theme-letter-50', `${colors.text}50`);
+  root.style.setProperty('--theme-letter-60', `${colors.text}60`);
+  root.style.setProperty('--theme-letter-70', `${colors.text}70`);
+  root.style.setProperty('--theme-letter-80', `${colors.text}80`);
+
   console.log('Applied custom colors:', colors);
 };
 

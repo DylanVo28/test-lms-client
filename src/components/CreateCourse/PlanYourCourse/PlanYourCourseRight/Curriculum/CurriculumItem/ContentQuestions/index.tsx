@@ -16,15 +16,15 @@ const ContentQuestions = ({
         return (
           <div className="flex justify-between items-center" key={index}>
             <div className="flex items-center gap-1">
-              <Text type="font-14-700" className="text-white">
+              <Text type="font-14-700" className="text-letter">
                 {index + 1}.
               </Text>
               <div
-                className="text-sm font-normal text-white/40"
+                className="text-sm font-normal text-letter/40"
                 dangerouslySetInnerHTML={{ __html: item?.question }}
               />
 
-              <Text type="font-14-400" className="text-white/40">
+              <Text type="font-14-400" className="text-letter/40">
                 {'1 answer test'}
               </Text>
             </div>

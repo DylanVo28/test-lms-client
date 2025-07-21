@@ -81,7 +81,7 @@ const ListSection = ({
               isSection
               title={
                 <div className="flex flex-col gap-2">
-                  <Text type="font-16-600" className="text-white">
+                  <Text type="font-16-600" className="text-letter">
                     {`Section ${index + 1}: ${item?.title}`}
                   </Text>
                   <div className="flex items-center gap-3">

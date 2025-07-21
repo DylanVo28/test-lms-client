@@ -24,9 +24,7 @@ const EditBanner = ({ onChange, value }: any) => {
   const handleFileChange = (event: any) => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
-      toast.error(
-        'There are some images not cropped, please crop image first'
-      );
+      toast.error('There are some images not cropped, please crop image first');
       return;
     }
 
@@ -37,9 +35,7 @@ const EditBanner = ({ onChange, value }: any) => {
     const file = files[0];
 
     if (!allowedTypes.includes(file.type)) {
-      toast.error(
-        'Can only upload files in .jpg, .jpeg, .gif or .png format'
-      );
+      toast.error('Can only upload files in .jpg, .jpeg, .gif or .png format');
       return;
     }
 
@@ -62,9 +58,7 @@ const EditBanner = ({ onChange, value }: any) => {
   const handleClickUploadFile = () => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
-      toast.error(
-        'There are some images not cropped, please crop image first'
-      );
+      toast.error('There are some images not cropped, please crop image first');
       return;
     }
     fileInputRef.current.click();
@@ -92,7 +86,7 @@ const EditBanner = ({ onChange, value }: any) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <Text className="text-[18px] text-white font-semibold mb-[4px]">
+      <Text className="text-[18px] text-letter font-semibold mb-[4px]">
         {'Edit banner'}
       </Text>
       <input
@@ -113,11 +107,11 @@ const EditBanner = ({ onChange, value }: any) => {
               <div>
                 {!value && (
                   <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                    <div className="text-white">{'JPEG, PNG or JPG'}</div>
+                    <div className="text-letter">{'JPEG, PNG or JPG'}</div>
                     <div className="relative">
                       <Button
                         onClick={handleClickUploadFile}
-                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-letter border border-[var(--main-color)]"
                       >
                         {'Choose file'}
                       </Button>

@@ -79,7 +79,7 @@ const FormQuizz = ({
           size="sm"
           radius="sm"
         >
-          <CaretLeft size={24} className="fill-text-white" />
+          <CaretLeft size={24} className="fill-text-letter" />
         </Button>
       )}
 
@@ -109,7 +109,7 @@ const FormQuizz = ({
       ) : (
         <div className="w-full min-h-[400px] md:min-h-[566px] pt-20 md:p-12">
           <div className="md:w-8/12 mx-auto flex items-start text-start flex-col gap-6">
-            <Text className="text-white" type="font-28-700">
+            <Text className="text-letter" type="font-28-700">
               {dataQuizz?.title}
             </Text>
             <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ const FormQuizz = ({
               </Text>
             </div>
             <div
-              className="text-white"
+              className="text-letter"
               dangerouslySetInnerHTML={{ __html: dataQuizz?.description }}
             />
 
@@ -131,7 +131,7 @@ const FormQuizz = ({
                 onPress={handleStartTakingTheTest}
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
-                <Text className="text-text-white" type="font-16-400">
+                <Text className="text-text-letter" type="font-16-400">
                   {'Start taking the test'}
                 </Text>
               </Button>
@@ -140,7 +140,7 @@ const FormQuizz = ({
                 variant="light"
                 className="w-max min-h-[45px] rounded min-w-[150px]"
               >
-                <Text className="text-white" type="font-16-400">
+                <Text className="text-letter" type="font-16-400">
                   {'Skip the quizz'}
                 </Text>
               </Button>
@@ -168,7 +168,7 @@ const FormQuizz = ({
           }}
           radius="sm"
         >
-          <CaretRight size={24} className="fill-text-white" />
+          <CaretRight size={24} className="fill-text-letter" />
         </Button>
       )}
     </div>

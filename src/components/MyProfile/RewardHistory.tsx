@@ -119,7 +119,7 @@ const RewardHistory = () => {
                       href={`https://explorer.testnet.fantom.network/transactions/${reward.txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white underline hover:text-blue-400 text-xs"
+                      className="text-letter underline hover:text-blue-400 text-xs"
                     >
                       {reward.txHash.slice(0, 4)}...{reward.txHash.slice(-4)}
                     </a>

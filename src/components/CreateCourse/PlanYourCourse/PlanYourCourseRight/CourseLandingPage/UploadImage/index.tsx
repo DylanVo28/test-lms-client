@@ -112,7 +112,7 @@ const UploadImage = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <Text type="font-16-600" className="text-white">
+      <Text type="font-16-600" className="text-letter">
         {'Course image'}
       </Text>
       <input
@@ -141,7 +141,7 @@ const UploadImage = ({
           />
         </div>
         <div className="flex flex-col gap-3 md:gap-2 flex-1">
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-letter">
             Upload your course image here. It must be 302x200 pixels, in .jpg,
             .jpeg, .gif, or .png format, and contain no text.
           </Text>
@@ -151,7 +151,7 @@ const UploadImage = ({
                 {valueProgress > 10 && value ? (
                   <div className="relative w-full">
                     <div className="flex items-center justify-center bg-[#02A6C2] p-3">
-                      <Text type="font-16-500" className="text-white">
+                      <Text type="font-16-500" className="text-letter">
                         {valueProgress}%
                       </Text>
                     </div>

@@ -18,7 +18,7 @@ export const toast = {
           </div>
           <Text
             type="font-14-400"
-            className="text-white max-w-[85%] md:max-w-max"
+            className="text-letter max-w-[85%] md:max-w-max"
           >
             {message}
           </Text>
@@ -37,7 +37,7 @@ export const toast = {
           </div>
           <Text
             type="font-14-400"
-            className="text-white max-w-[85%] md:max-w-max"
+            className="text-letter max-w-[85%] md:max-w-max"
           >
             {message}
           </Text>
@@ -54,7 +54,7 @@ export const toast = {
           <Info size={24} color="#3E8800" />
           <Text
             type="font-14-400"
-            className="text-white max-w-[85%] md:max-w-max"
+            className="text-letter max-w-[85%] md:max-w-max"
           >
             {message}
           </Text>

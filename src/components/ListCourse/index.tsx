@@ -202,7 +202,7 @@ const ListCourse = () => {
                               rel="noopener noreferrer"
                             >
                               <IconEdit />
-                              <Text className="text-[20px] font-bold text-white">
+                              <Text className="text-[20px] font-bold text-letter">
                                 {'Edit Course'}
                               </Text>
                             </Link>
@@ -211,7 +211,7 @@ const ListCourse = () => {
                               onClick={() => deleteCourse(item.id)}
                             >
                               <IconDelete />
-                              <Text className="text-[20px] font-bold text-white">
+                              <Text className="text-[20px] font-bold text-letter">
                                 {'Delete Course'}
                               </Text>
                             </div>
@@ -221,7 +221,7 @@ const ListCourse = () => {
                               rel="noopener noreferrer"
                             >
                               <IconStatistic />
-                              <Text className="text-[20px] font-bold text-white">
+                              <Text className="text-[20px] font-bold text-letter">
                                 {'View Statistics'}
                               </Text>
                             </Link>
@@ -250,13 +250,13 @@ const ListCourse = () => {
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-[30px]">
                           {!item?.isPublish && (
-                            <Text type={'font-16-700'} className="text-white">
+                            <Text type={'font-16-700'} className="text-letter">
                               {'Draft'}
                             </Text>
                           )}
 
                           {item?.isPublish && (
-                            <Text type={'font-16-700'} className="text-white">
+                            <Text type={'font-16-700'} className="text-letter">
                               {'Public'}
                             </Text>
                           )}
@@ -314,7 +314,7 @@ const IconEdit = () => {
     >
       <path
         d="M6.414 16.0001L16.556 5.85808L15.142 4.44408L5 14.5861V16.0001H6.414ZM7.243 18.0001H3V13.7571L14.435 2.32208C14.6225 2.13461 14.8768 2.0293 15.142 2.0293C15.4072 2.0293 15.6615 2.13461 15.849 2.32208L18.678 5.15108C18.8655 5.33861 18.9708 5.59292 18.9708 5.85808C18.9708 6.12325 18.8655 6.37756 18.678 6.56508L7.243 18.0001ZM3 20.0001H21V22.0001H3V20.0001Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );
@@ -331,12 +331,12 @@ const IconDelete = () => {
       <g clip-path="url(#clip0_795_5780)">
         <path
           d="M4 8H20V21C20 21.2652 19.8946 21.5196 19.7071 21.7071C19.5196 21.8946 19.2652 22 19 22H5C4.73478 22 4.48043 21.8946 4.29289 21.7071C4.10536 21.5196 4 21.2652 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.73478 7.10536 2.48043 7.29289 2.29289C7.48043 2.10536 7.73478 2 8 2H16C16.2652 2 16.5196 2.10536 16.7071 2.29289C16.8946 2.48043 17 2.73478 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z"
-          fill="var(--theme-white)"
+          fill="var(--theme-letter)"
         />
       </g>
       <defs>
         <clipPath id="clip0_795_5780">
-          <rect width="24" height="24" fill="var(--theme-white)" />
+          <rect width="24" height="24" fill="var(--theme-letter)" />
         </clipPath>
       </defs>
     </svg>
@@ -353,7 +353,7 @@ const IconStatistic = () => {
     >
       <path
         d="M3 3H21C21.2652 3 21.5196 3.10536 21.7071 3.29289C21.8946 3.48043 22 3.73478 22 4V20C22 20.2652 21.8946 20.5196 21.7071 20.7071C21.5196 20.8946 21.2652 21 21 21H3C2.73478 21 2.48043 20.8946 2.29289 20.7071C2.10536 20.5196 2 20.2652 2 20V4C2 3.73478 2.10536 3.48043 2.29289 3.29289C2.48043 3.10536 2.73478 3 3 3ZM4 5V19H20V5H4ZM8 11H10V17H8V11ZM12 7H14V17H12V7ZM16 13H18V17H16V13Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

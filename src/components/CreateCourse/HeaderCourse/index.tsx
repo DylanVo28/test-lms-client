@@ -22,7 +22,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           height={46}
           src={'/logo.png'}
         />
-        <Text type="font-16-500" className="text-white">
+        <Text type="font-16-500" className="text-letter">
           {`${'Step'} ${currentStep} Of ${totalStep}`}
         </Text>
 
@@ -30,7 +30,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           className="py-2 px-4 bg-transparent border-1 border-black-5 rounded"
           onPress={() => navigate(ROUTE_PATH.LIST_COURSE)}
         >
-          <Text type="font-16-500" className="text-white">
+          <Text type="font-16-500" className="text-letter">
             {'Exit'}
           </Text>
         </Button>

@@ -68,7 +68,7 @@ const CardComment = ({
           isBlack
         />
         <div>
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-letter">
             {'Review'}
           </Text>
           <ReactStars
@@ -87,7 +87,7 @@ const CardComment = ({
           onPress={handleReview}
           className="bg-main min-w-[142px] w-max min-h-[40px] rounded"
         >
-          <Text type="font-16-500" className="text-white">
+          <Text type="font-16-500" className="text-letter">
             {'Comment'}
           </Text>
         </Button>

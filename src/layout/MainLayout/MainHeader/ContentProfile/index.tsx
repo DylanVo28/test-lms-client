@@ -101,7 +101,7 @@ const ContentProfile = ({
               onClick={() => handleRedirectPage(item?.href)}
               className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
             >
-              <Text type="font-14-500" className="text-white">
+              <Text type="font-14-500" className="text-letter">
                 {item?.label}
               </Text>
             </div>

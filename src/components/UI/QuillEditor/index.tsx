@@ -157,7 +157,7 @@ const QuillEditor = ({
   return (
     <div className="w-full flex flex-col gap-2">
       {label && (
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           {label}
         </Text>
       )}

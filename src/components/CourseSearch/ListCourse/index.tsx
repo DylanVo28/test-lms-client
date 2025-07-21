@@ -112,13 +112,13 @@ const ListCourse = () => {
   return (
     <LoadingScreen isLoading={loading || loadingMore}>
       <div className="flex flex-col gap-8 mb-4 md:mb-0 pt-[36px] md:px-10">
-        <Text type="font-28-700" className="text-white">{`${
+        <Text type="font-28-700" className="text-letter">{`${
           dataCourses?.length
         } ${'results for'} “${router.query.keySearch}”`}</Text>
         <div className={clsx('grid grid-cols-8 gap-6', {})}>
           <div className="col-span-2  flex-col hidden md:flex gap-5">
             <div className="flex items-center gap-4">
-              <Button className="min-w-[107px] border-1 py-[10px] px-2 bg-white-10 border-[#F0F0F01A] rounded">
+              <Button className="min-w-[107px] border-1 py-[10px] px-2 bg-card border-[#F0F0F01A] rounded">
                 <div className="flex items-center gap-1">
                   <IconShowFilter />
                   <Text type="font-14-500" className="text-black-6">
@@ -150,7 +150,7 @@ const ListCourse = () => {
                       onClick={() => {
                         refDrawerFilter.current.onOpen();
                       }}
-                      className="min-w-[117px] max-h-[36px] flex justify-center items-center border-1 py-[10px] px-2 bg-white-10 border-[#F0F0F01A] rounded"
+                      className="min-w-[117px] max-h-[36px] flex justify-center items-center border-1 py-[10px] px-2 bg-card border-[#F0F0F01A] rounded"
                     >
                       <div className="flex items-center gap-1">
                         <IconShowFilter />
@@ -187,7 +187,7 @@ const ListCourse = () => {
 
                 <div className="flex items-center gap-4">
                   {dataCourses?.length > 0 && (
-                    <Text type="font-20-600" className="text-white">
+                    <Text type="font-20-600" className="text-letter">
                       {dataCourses?.length} {'results'}
                     </Text>
                   )}

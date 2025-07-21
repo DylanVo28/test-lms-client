@@ -39,7 +39,7 @@ const CourseLandingPage = ({
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <Text type="font-28-700" className="text-white">
+        <Text type="font-28-700" className="text-letter">
           Course landing page
         </Text>
         <Text type="font-16-400" className="text-black-6">
@@ -132,7 +132,7 @@ const CourseLandingPage = ({
         </Text> */}
       </div>
       <div className="flex flex-col gap-3">
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           {'Basic info'}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -233,7 +233,7 @@ const CourseLandingPage = ({
             }}
             render={({ field, fieldState }) => (
               <>
-                <Text type="font-16-600" className="text-white mb-3">
+                <Text type="font-16-600" className="text-letter mb-3">
                   {'What is primarily taught in your course?'}
                 </Text>
                 <SelectCustom

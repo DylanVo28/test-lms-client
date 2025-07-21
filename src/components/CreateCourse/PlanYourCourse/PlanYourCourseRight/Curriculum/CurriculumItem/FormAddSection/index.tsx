@@ -22,7 +22,7 @@ const FormAddSection = ({
     <div className="border-1 min-w-[600px]  bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-4">
       <div className="flex items-start gap-2">
         <div className="min-w-[100px] pt-3">
-          <Text type="font-16-700" className="text-white">
+          <Text type="font-16-700" className="text-letter">
             {valueLesson?.id ? `${'Part'} ${valueLesson?.stt}` : 'New Section:'}
           </Text>
         </div>
@@ -50,7 +50,7 @@ const FormAddSection = ({
           />
 
           <div className="flex flex-col gap-2">
-            <Text type="font-16-700" className="text-white">
+            <Text type="font-16-700" className="text-letter">
               What will students be able to do at the end of this section?
             </Text>
             <Controller
@@ -83,7 +83,7 @@ const FormAddSection = ({
             variant="light"
             className="rounded"
           >
-            <Text type="font-16-400" className="text-white">
+            <Text type="font-16-400" className="text-letter">
               {'Cancel'}
             </Text>
           </Button>
@@ -92,7 +92,7 @@ const FormAddSection = ({
             className="bg-main rounded"
             isLoading={loading}
           >
-            <Text type="font-16-400" className="text-text-white">
+            <Text type="font-16-400" className="text-text-letter">
               {'Save'}
             </Text>
           </Button>

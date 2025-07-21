@@ -41,7 +41,7 @@ const Login = () => {
           className="cursor-pointer"
           src={'/logo.png'}
         />
-        <Text type="font-28-700" className="text-white">
+        <Text type="font-28-700" className="text-letter">
           Sign in to What Exchange Study
         </Text>
       </div>

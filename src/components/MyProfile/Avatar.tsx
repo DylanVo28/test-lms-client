@@ -38,9 +38,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
       const maxHeight = 3000;
 
       if (!allowedTypes.includes(file.type)) {
-        toast.error(
-          'Invalid file type. Only JPEG, PNG, or JPG are allowed.'
-        );
+        toast.error('Invalid file type. Only JPEG, PNG, or JPG are allowed.');
         return;
       }
 
@@ -91,7 +89,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
         <sup className="text-[#FF3132]">*</sup> {'Upload File'}
       </div>
 
-      {/* <div className="text-white">
+      {/* <div className="text-letter">
         {'Minimum 124x46 pixels, Maximum 3000x3000 pixels'}
       </div> */}
 
@@ -127,7 +125,7 @@ const Avatar = ({ reload }: { reload: VoidFunction }) => {
         onPress={onSave}
         isLoading={loading}
         type="button"
-        className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+        className="w-fit px-[24px] bg-main text-text-letter font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
       >
         {'Save Profile'}
       </Button>

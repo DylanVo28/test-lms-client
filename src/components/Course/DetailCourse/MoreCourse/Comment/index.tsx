@@ -65,12 +65,12 @@ const Comment = ({
           }}
         />
 
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           {item?.user?.fullName || formatWalletAddress(address ?? '')}
         </Text>
       </div>
       <div className="flex items-center gap-2">
-        <Text type="font-14-400" className="text-white">
+        <Text type="font-14-400" className="text-letter">
           {item?.rating}
         </Text>
         <ReactStars

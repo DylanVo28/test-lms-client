@@ -9,7 +9,7 @@ const IconArrowRight = () => {
     >
       <path
         d="M10.9766 10.5001L6.85156 6.37511L8.0299 5.19678L13.3332 10.5001L8.0299 15.8034L6.85156 14.6251L10.9766 10.5001Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

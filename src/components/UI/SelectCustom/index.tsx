@@ -65,9 +65,9 @@ const SelectCustom = (props: SelectCustomProps) => {
         classNames={{
           value: '!text-[14px] text-black-6 font-medium capitalize',
           trigger: clsx(
-            '!bg-white-10 rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30',
+            '!bg-card rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30',
             {
-              '!bg-white-10 border-white min-h-[40px] hover:!border-main transition-all bg-[#21252b]-30':
+              '!bg-card border-white min-h-[40px] hover:!border-main transition-all bg-[#21252b]-30':
                 isLesson,
               '!bg-back-30 data-[hover=true]:!border-main  min-h-[48px] border-black-10  bg-[#21252b]-30 group-data-[focus=true]:!border-main':
                 isSelectSubmit,
@@ -92,7 +92,7 @@ const SelectCustom = (props: SelectCustomProps) => {
         {options.map((item) => (
           <SelectItem
             key={item.key}
-            className="capitalize text-white hover:!bg-gray-800 data-[hover=true]:!bg-gray-800 data-[selectable=true]:focus:!bg-gray-800"
+            className="capitalize text-letter hover:!bg-gray-800 data-[hover=true]:!bg-gray-800 data-[selectable=true]:focus:!bg-gray-800"
           >
             {item.label}
           </SelectItem>
@@ -123,7 +123,7 @@ const IconArrowDown = ({ openSelect }: { openSelect: boolean }) => {
     >
       <path
         d="M9.99981 10.1434L12.3565 7.78589L13.5356 8.96422L9.99981 12.5001L6.46398 8.96422L7.64314 7.78589L9.99981 10.1434Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );
@@ -143,7 +143,7 @@ const IconArrowDownSubmit = ({ openSelect }: { openSelect: boolean }) => {
     >
       <path
         d="M12 13.1717L16.95 8.22168L18.364 9.63568L12 15.9997L5.63599 9.63568L7.04999 8.22168L12 13.1717Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

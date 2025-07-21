@@ -117,7 +117,7 @@ const FormStartTakingTest = ({
                     {'You did great'}
                   </Text>
                 </div>
-                <Text className="text-white" type="font-14-400">
+                <Text className="text-letter" type="font-14-400">
                   {valueExplain}
                 </Text>
               </div>
@@ -139,10 +139,13 @@ const FormStartTakingTest = ({
             </div>
           )}
 
-          <Text type="font-28-700" className="text-white">{`${'Question'} ${currentQuestion}`}</Text>
+          <Text
+            type="font-28-700"
+            className="text-letter"
+          >{`${'Question'} ${currentQuestion}`}</Text>
 
           <div
-            className="text-2xl text-white pb-4"
+            className="text-2xl text-letter pb-4"
             dangerouslySetInnerHTML={{
               __html: dataQuizz?.questions?.[currentQuestion - 1]?.question,
             }}
@@ -154,7 +157,7 @@ const FormStartTakingTest = ({
                   return (
                     <CustomRadio key={item.id} value={item.id}>
                       <div
-                        className="text-xl text-white font-semibold"
+                        className="text-xl text-letter font-semibold"
                         dangerouslySetInnerHTML={{
                           __html: item?.answer,
                         }}
@@ -174,7 +177,7 @@ const FormStartTakingTest = ({
             UserCourseProgressStatus.COMPLETED && (
             <Text
               type="font-16-400"
-              className="text-white"
+              className="text-letter"
             >{`${currentQuestion}/${dataQuizz?.questions?.length}`}</Text>
           )}
         </div>
@@ -185,13 +188,13 @@ const FormStartTakingTest = ({
             className="bg-main w-max  rounded min-w-[120px]"
           >
             <div className="flex items-center gap-2">
-              <Text className="text-text-white" type="font-16-400">
+              <Text className="text-text-letter" type="font-16-400">
                 {'Continue'}
               </Text>
               <CaretRight
                 size={16}
                 weight="light"
-                className="fill-text-white"
+                className="fill-text-letter"
               />
             </div>
           </Button>
@@ -202,13 +205,13 @@ const FormStartTakingTest = ({
             className="bg-main w-max  rounded min-w-[150px]"
           >
             <div className="flex items-center gap-2">
-              <Text className="text-text-white" type="font-16-400">
+              <Text className="text-text-letter" type="font-16-400">
                 {'See results'}
               </Text>
               <CaretRight
                 size={16}
                 weight="light"
-                className="fill-text-white"
+                className="fill-text-letter"
               />
             </div>
           </Button>
@@ -226,13 +229,13 @@ const FormStartTakingTest = ({
               className="bg-main w-max  rounded min-w-[100px]"
             >
               <div className="flex items-center gap-2">
-                <Text className="text-text-white" type="font-16-400">
+                <Text className="text-text-letter" type="font-16-400">
                   {'Continue'}
                 </Text>
                 <CaretRight
                   size={16}
                   weight="light"
-                  className="fill-text-white"
+                  className="fill-text-letter"
                 />
               </div>
             </Button>
@@ -246,13 +249,13 @@ const FormStartTakingTest = ({
                 onPress={handleNextQuestion}
               >
                 <div className="flex items-center gap-2">
-                  <Text className="text-text-white" type="font-16-400">
+                  <Text className="text-text-letter" type="font-16-400">
                     {'Next'}
                   </Text>
                   <CaretRight
                     size={16}
                     weight="light"
-                    className="fill-text-white"
+                    className="fill-text-letter"
                   />
                 </div>
               </Button>
@@ -262,7 +265,7 @@ const FormStartTakingTest = ({
                 onPress={() => handleCheckAnswer()}
                 className="bg-main w-max  rounded min-w-[150px]"
               >
-                <Text className="text-text-white" type="font-16-400">
+                <Text className="text-text-letter" type="font-16-400">
                   {'Check the answer'}
                 </Text>
               </Button>
@@ -285,7 +288,7 @@ export const CustomRadio = (props: any) => {
       value={value}
       classNames={{
         base: clsx(
-          'inline-flex min-w-full m-0 bg-white-5 hover:bg-white-10 text-start items-centers',
+          'inline-flex min-w-full m-0 bg-white-5 hover:bg-card text-start items-centers',
           'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
           'data-[selected=true]:border-primary'
         ),

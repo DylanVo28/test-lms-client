@@ -170,7 +170,9 @@ const FormAddQuestion = ({
                         maxLength={600}
                         onChange={field.onChange}
                         value={field.value}
-                        placeholder={'Explain why this is or is not the best answer.'}
+                        placeholder={
+                          'Explain why this is or is not the best answer.'
+                        }
                       />
                     )}
                   />
@@ -198,7 +200,7 @@ const FormAddQuestion = ({
             onClick={handleSubmit(onSubmit)}
             className="bg-main rounded min-h-[34px] min-w-[100px]"
           >
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Save'}
             </Text>
           </button>

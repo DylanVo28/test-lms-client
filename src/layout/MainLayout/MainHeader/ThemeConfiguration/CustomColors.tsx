@@ -1,20 +1,11 @@
 import React from 'react';
 import Text from '@/components/UI/Text';
 import InputText from '@/components/UI/InputText';
+import type { CustomColors } from '@/store/theme/theme';
 
 interface CustomColorsProps {
-  colors: {
-    primary: string;
-    background: string;
-    card: string;
-    secondary: string;
-  };
-  onColorsChange: (colors: {
-    primary: string;
-    background: string;
-    card: string;
-    secondary: string;
-  }) => void;
+  colors: CustomColors;
+  onColorsChange: (colors: CustomColors) => void;
 }
 
 const CustomColors: React.FC<CustomColorsProps> = ({
@@ -22,7 +13,7 @@ const CustomColors: React.FC<CustomColorsProps> = ({
   onColorsChange,
 }) => {
   const handleColorChange = (
-    colorType: 'primary' | 'background' | 'card' | 'secondary',
+    colorType: 'primary' | 'background' | 'card' | 'secondary' | 'text',
     value: string
   ) => {
     onColorsChange({
@@ -39,6 +30,18 @@ const CustomColors: React.FC<CustomColorsProps> = ({
       description: 'Main brand color used for buttons and highlights',
     },
     {
+      key: 'secondary' as const,
+      label: 'Secondary Color',
+      placeholder: '#6C757D',
+      description: 'Secondary color for text and subtle elements',
+    },
+    {
+      key: 'text' as const,
+      label: 'Text Color',
+      placeholder: '#ffffff',
+      description: 'Text color for the application',
+    },
+    {
       key: 'background' as const,
       label: 'Background Color',
       placeholder: '#FFFFFF',
@@ -49,12 +52,6 @@ const CustomColors: React.FC<CustomColorsProps> = ({
       label: 'Card Color',
       placeholder: '#F8F9FA',
       description: 'Background color for cards and content areas',
-    },
-    {
-      key: 'secondary' as const,
-      label: 'Secondary Color',
-      placeholder: '#6C757D',
-      description: 'Secondary color for text and subtle elements',
     },
   ];
 
@@ -70,7 +67,7 @@ const CustomColors: React.FC<CustomColorsProps> = ({
         {colorFields.map((field) => (
           <div key={field.key} className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Text type="font-16-600" className="text-white min-w-[120px]">
+              <Text type="font-16-600" className="text-letter min-w-[120px]">
                 {field.label}
               </Text>
             </div>

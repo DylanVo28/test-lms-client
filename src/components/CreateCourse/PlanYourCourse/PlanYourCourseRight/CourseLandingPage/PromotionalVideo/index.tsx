@@ -96,7 +96,7 @@ const PromotionalVideo = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <Text type="font-16-600" className="text-white">
+      <Text type="font-16-600" className="text-letter">
         {'Promotional video'}
       </Text>
       <input
@@ -139,7 +139,7 @@ const PromotionalVideo = ({
           )}
         </div>
         <div className="flex flex-col gap-3 md:gap-2 flex-1">
-          <Text type="font-16-600" className="text-white max-w-full">
+          <Text type="font-16-600" className="text-letter max-w-full">
             Your course image gives students a first impression of your course.
             A high-quality image helps attract more learners. Make sure it’s the
             right size and format—learn how to make it stand out!
@@ -157,7 +157,7 @@ const PromotionalVideo = ({
                   value={value && !uploading ? 100 : progress}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Text type="font-16-500" className="text-white">
+                  <Text type="font-16-500" className="text-letter">
                     {value && !uploading ? '100%' : `${progress}%`}
                   </Text>
                 </div>

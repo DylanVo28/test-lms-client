@@ -95,17 +95,17 @@ const ColorTheme = ({
 
   return (
     <div>
-      <Text className="text-[18px] text-white font-semibold mb-[16px]">
+      <Text className="text-[18px] text-letter font-semibold mb-[16px]">
         {'Color theme'}
       </Text>
       <div className="p-[20px] bg-gray-50 border border-[#00000033] rounded-[4px]">
         <div className="flex flex-col gap-3">
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Background'}
           </Text>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-4">
-              <Text type="font-16-700" className="text-white">
+              <Text type="font-16-700" className="text-letter">
                 {'Light color'}
               </Text>
               <div className="flex items-center gap-4">
@@ -131,7 +131,7 @@ const ColorTheme = ({
             </div>
 
             <div className="flex flex-col gap-4">
-              <Text type="font-16-700" className="text-white">
+              <Text type="font-16-700" className="text-letter">
                 {'Dark color'}
               </Text>
               <div className="flex items-center gap-4">

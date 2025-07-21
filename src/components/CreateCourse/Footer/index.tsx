@@ -32,7 +32,7 @@ const Footer = ({
             onPress={() => handleClickNextStep(currentStep)}
             className="bg-main rounded py-[10px] px-6"
           >
-            <Text type="font-16-700" className="text-text-white">
+            <Text type="font-16-700" className="text-text-letter">
               {'Continue'}
             </Text>
           </Button>
@@ -44,7 +44,7 @@ const Footer = ({
             onPress={() => handlePreviousStep(currentStep)}
             className="bg-transparent border-1 border-main rounded py-[10px] px-6"
           >
-            <Text type="font-16-700" className="text-white">
+            <Text type="font-16-700" className="text-letter">
               {'Previous'}
             </Text>
           </Button>
@@ -55,7 +55,7 @@ const Footer = ({
               onPress={() => handleClickNextStep(currentStep)}
               className="bg-main rounded py-[10px] px-6"
             >
-              <Text type="font-16-700" className="text-white">
+              <Text type="font-16-700" className="text-letter">
                 {'Duplicate'}
               </Text>
             </Button>
@@ -72,7 +72,7 @@ const Footer = ({
               onPress={() => handleClickNextStep(currentStep)}
               className="bg-main rounded py-[10px] px-6"
             >
-              <Text type="font-16-700" className="text-white">
+              <Text type="font-16-700" className="text-letter">
                 {'Continue'}
               </Text>
             </Button>

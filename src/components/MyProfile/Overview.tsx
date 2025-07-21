@@ -150,7 +150,7 @@ const Overview = ({
               decimalPlaces={6}
               fractionDigits={6}
               abbreviate={true}
-              className="text-white"
+              className="text-letter"
               prefix="$"
             />
           </div>
@@ -164,7 +164,7 @@ const Overview = ({
               decimalPlaces={6}
               fractionDigits={6}
               abbreviate={true}
-              className="text-white"
+              className="text-letter"
               prefix="$"
             />
           </div>
@@ -178,7 +178,7 @@ const Overview = ({
               decimalPlaces={6}
               fractionDigits={6}
               abbreviate={true}
-              className="text-white"
+              className="text-letter"
               prefix="$"
             />
           </div>
@@ -192,7 +192,7 @@ const Overview = ({
               decimalPlaces={6}
               fractionDigits={6}
               abbreviate={true}
-              className="text-white"
+              className="text-letter"
               prefix="$"
             />
           </div>

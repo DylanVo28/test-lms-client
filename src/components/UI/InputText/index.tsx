@@ -102,7 +102,7 @@ const InputText = (props: InputTextProps) => {
     <div className="flex flex-1  flex-col gap-2 relative justify-center">
       {label && (
         <div className="flex items-center gap-1">
-          <Text type="font-14-400" className="text-white">
+          <Text type="font-14-400" className="text-letter">
             {label}
           </Text>
           {required && (
@@ -116,7 +116,7 @@ const InputText = (props: InputTextProps) => {
           <>
             {maxLength ? (
               <div className="absolute right-[-4px] bottom-[0px] px-2 rounded-sm">
-                <Text type="font-12-400" className="text-white-50">
+                <Text type="font-12-400" className="text-letter-50">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -148,8 +148,8 @@ const InputText = (props: InputTextProps) => {
           input: clsx(
             'text-black-5 placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
             {
-              'placeholder:text-white-20': isInputSubmit,
-              'placeholder:!text-white-20': inputDefault,
+              'placeholder:text-letter-20': isInputSubmit,
+              'placeholder:!text-letter-20': inputDefault,
               'placeholder:!text-[#757575] text-[16px] font-normal': inputShare,
             }
           ),

@@ -32,7 +32,7 @@ const ContenStep4 = ({
   return (
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
-        <Text type="font-28-700" className="text-white">
+        <Text type="font-28-700" className="text-letter">
           {'How much time can you spend creating your course per week?'}
         </Text>
         <Text type="font-16-400" className="text-black-6">
@@ -63,7 +63,7 @@ const ContenStep4 = ({
                     >
                       <Text
                         type="font-16-400"
-                        className="text-white max-w-[760px]"
+                        className="text-letter max-w-[760px]"
                       >
                         {item?.content}
                       </Text>
@@ -91,7 +91,7 @@ export const CustomRadio = (props: any) => {
       classNames={{
         label: 'w-full',
         base: clsx(
-          'inline-flex md:min-w-[416px] lg:min-w-[916px] max-w-full w-full m-0 bg-white-5 hover:bg-white-10 text-start items-centers',
+          'inline-flex md:min-w-[416px] lg:min-w-[916px] max-w-full w-full m-0 bg-white-5 hover:bg-card text-start items-centers',
           'cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
           'data-[selected=true]:border-primary'
         ),

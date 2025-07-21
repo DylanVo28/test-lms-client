@@ -46,23 +46,23 @@ const MainBanner = () => {
               <House size={20} />
             </Button>
             <IconArrowRight />
-            <Text type="font-14-500" className="text-white">
+            <Text type="font-14-500" className="text-letter">
               {'Course'}
             </Text>
           </div>
           <div className="flex flex-col gap-[40px]">
             <div className="flex flex-col gap-2">
-              <Text type="font-28-700" className="text-white">
+              <Text type="font-28-700" className="text-letter">
                 {theme?.title ? theme?.title : 'Web Development Courses'}
               </Text>
-              <Text type="font-16-400" className="text-white">
+              <Text type="font-16-400" className="text-letter">
                 {theme?.description
                   ? theme?.description
                   : 'With one of our online web development courses, you can explore different areas of this in-demand field.'}
               </Text>
             </div>
             <div className="flex flex-col gap-3">
-              <Text type="font-16-400" className="text-white">
+              <Text type="font-16-400" className="text-letter">
                 {'Topics related to Web Development'}
               </Text>
               {theme?.topics?.length > 0 ? (
@@ -71,9 +71,9 @@ const MainBanner = () => {
                     return (
                       <div
                         key={item}
-                        className="rounded-full bg-white-10 border-1 border-white-10 py-1 px-3 flex justify-center items-center"
+                        className="rounded-full bg-card border-1 border-white-10 py-1 px-3 flex justify-center items-center"
                       >
-                        <Text type="font-14-400" className="text-black-7">
+                        <Text type="font-14-400" className="text-letter/70">
                           {item}
                         </Text>
                       </div>
@@ -86,7 +86,7 @@ const MainBanner = () => {
                     return (
                       <div
                         key={item}
-                        className="rounded-full bg-white-10 border-1 border-white-10 py-1 px-3 flex justify-center items-center"
+                        className="rounded-full bg-card border-1 border-white-10 py-1 px-3 flex justify-center items-center"
                       >
                         <Text type="font-14-400" className="text-black-7">
                           {item}

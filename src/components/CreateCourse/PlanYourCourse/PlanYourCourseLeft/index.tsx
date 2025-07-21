@@ -73,7 +73,7 @@ const PlanYourCourseLeft = ({
               )}
             </div>
 
-            <Text type="font-16-500" className="text-white">
+            <Text type="font-16-500" className="text-letter">
               {item?.content}
             </Text>
           </div>

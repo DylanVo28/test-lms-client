@@ -61,7 +61,7 @@ export const IconArrowUp = () => {
     >
       <path
         d="M12 10.828L7.04999 15.778L5.63599 14.364L12 8L18.364 14.364L16.95 15.778L12 10.828Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

@@ -79,7 +79,7 @@ export default function LanguageModal({ onClosePopover }: IProps) {
         onClick={onOpen}
         className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
       >
-        <Text type="font-14-500" className="text-white">
+        <Text type="font-14-500" className="text-letter">
           {findLang(selectedLanguage)}
         </Text>
 
@@ -119,7 +119,7 @@ export default function LanguageModal({ onClosePopover }: IProps) {
             onPress={onClose}
             className="min-h-[40px] bg-main rounded mt-2"
           >
-            <Text className="text-white" type="font-16-600">
+            <Text className="text-letter" type="font-16-600">
               {'Close'}
             </Text>
           </Button>

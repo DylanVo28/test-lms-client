@@ -37,7 +37,7 @@ const FormAddArticle = ({
           }}
           className="bg-main rounded h-[30px] min-w-[100px]"
         >
-          <Text type="font-16-400" className="text-white">
+          <Text type="font-16-400" className="text-letter">
             {'Save'}
           </Text>
         </Button>

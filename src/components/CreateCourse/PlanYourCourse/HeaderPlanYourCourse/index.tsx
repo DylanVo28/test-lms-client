@@ -38,13 +38,13 @@ const HeaderPlanYourCourse = ({
               height={20}
             />
 
-            <Text type="font-16-500" className="text-white">
+            <Text type="font-16-500" className="text-letter">
               {'Back to courses'}
             </Text>
           </div>
         </Button>
         {/* <div className="w-[1px] h-6 bg-[#595959]" />
-        <Text type="font-16-500" className="text-white">
+        <Text type="font-16-500" className="text-letter">
           0 min of video content uploaded
         </Text> */}
       </div>
@@ -63,7 +63,7 @@ const HeaderPlanYourCourse = ({
           isLoading={loadingPublish}
           className="bg-main min-w-[96px] !min-h-[40px] rounded"
         >
-          <Text type="font-16-600" className="text-text-white">
+          <Text type="font-16-600" className="text-text-letter">
             {'Publish'}
           </Text>
         </Button>
@@ -99,7 +99,7 @@ const IconBlack = () => {
     >
       <path
         d="M9.02344 10.0004L13.1484 14.1254L11.9701 15.3037L6.66677 10.0004L11.9701 4.69704L13.1484 5.87538L9.02344 10.0004Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

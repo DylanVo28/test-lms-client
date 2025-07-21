@@ -75,7 +75,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
   return (
     <div className="flex p-4 w-full md:min-w-[552px] flex-col gap-5">
       <div className="flex items-center gap-2">
-        <Text type="font-18-600" className="text-white">
+        <Text type="font-18-600" className="text-letter">
           Notification
         </Text>
         {notifications?.totalCount > 0 && (
@@ -87,7 +87,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
               }
             )}
           >
-            <Text type="font-12-500" className="text-white">
+            <Text type="font-12-500" className="text-letter">
               {notifications?.totalCount > 99
                 ? '99+'
                 : notifications?.totalCount}
@@ -105,7 +105,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
               tab: ['h-[40px] !border-0 shadow-none'],
               cursor: '!bg-main',
               tabContent: [
-                'text-[16px] group-data-[selected=true]:text-text-white group-data-[selected=true]:font-semibold',
+                'text-[16px] group-data-[selected=true]:text-text-letter group-data-[selected=true]:font-semibold',
               ],
             }}
             variant={'bordered'}

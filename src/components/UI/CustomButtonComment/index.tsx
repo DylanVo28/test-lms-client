@@ -23,7 +23,7 @@ const CustomButtonComment = ({}: {}) => {
                 onPress={openConnectModal}
                 className="border-1 min-h-10 max-w-[185px] border-black-9 py-2 px-4 rounded bg-black-10"
               >
-                <Text className="capitalize text-white" type="font-16-500">
+                <Text className="capitalize text-letter" type="font-16-500">
                   Login to comment
                 </Text>
               </Button>
@@ -32,7 +32,7 @@ const CustomButtonComment = ({}: {}) => {
                 onPress={openConnectModal}
                 className="border-1 min-h-10 max-w-[185px] border-black-9 py-2 px-4 rounded bg-black-10"
               >
-                <Text className="capitalize text-white" type="font-16-500">
+                <Text className="capitalize text-letter" type="font-16-500">
                   Login to comment
                 </Text>
               </Button>

@@ -1,11 +1,12 @@
 import { atom } from 'jotai';
 
-export interface CustomColors {
+export type CustomColors = {
   primary: string;
   background: string;
   card: string;
   secondary: string;
-}
+  text: string;
+};
 
 export interface InitTheme {
   id: string;
@@ -36,6 +37,7 @@ export const DefaultThemeColor = {
   background: '#FFFFFF',
   card: '#F8F9FA',
   secondary: '#6C757D',
+  text: '#ffffff',
 };
 
 export const initialTheme: InitTheme = {

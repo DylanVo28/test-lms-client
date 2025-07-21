@@ -41,7 +41,7 @@ const IntendedLearners = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <Text type="font-28-700" className="text-white">
+      <Text type="font-28-700" className="text-letter">
         {'Intended learners'}
       </Text>
       <Text type="font-16-400" className="text-black-6">
@@ -52,7 +52,7 @@ const IntendedLearners = ({
       </Text>
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-letter">
             What will students learn in your course?
           </Text>
           <Text type="font-16-400" className="text-black-6">
@@ -129,7 +129,7 @@ const IntendedLearners = ({
         </Button>
       </div>
       <div className="flex flex-col gap-3">
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           What are the requirements or prerequisites for taking your course?
         </Text>
         <Text type="font-16-400" className="text-black-6">
@@ -201,7 +201,7 @@ const IntendedLearners = ({
         </Button>
       </div>
       <div className="flex flex-col gap-3">
-        <Text type="font-16-600" className="text-white">
+        <Text type="font-16-600" className="text-letter">
           {'Who is this course for?'}
         </Text>
         <Text type="font-16-400" className="text-black-6">
@@ -277,7 +277,7 @@ const IntendedLearners = ({
           isLoading={requestEditCourse?.loading}
           className="min-h-[44px] rounded bg-main w-max min-w-[136px]"
         >
-          <Text type="font-16-700" className="text-white">
+          <Text type="font-16-700" className="text-letter">
             Save profile
           </Text>
         </Button> */}

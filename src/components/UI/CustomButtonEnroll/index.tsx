@@ -60,7 +60,7 @@ const CustomButtonEnroll = ({
                 className="bg-main w-full min-h-[40px] rounded"
                 disabled={isInsufficientBalance}
               >
-                <Text className="text-white" type="font-16-600">
+                <Text className="text-letter" type="font-16-600">
                   Connect Wallet
                 </Text>
               </Button>
@@ -89,11 +89,11 @@ const CustomButtonEnroll = ({
                     disabled={isInsufficientBalance}
                   >
                     {course?.enroll === 'verified' ? (
-                      <Text className="text-text-white" type="font-16-600">
+                      <Text className="text-text-letter" type="font-16-600">
                         Go to course
                       </Text>
                     ) : (
-                      <Text className="text-text-white" type="font-16-600">
+                      <Text className="text-text-letter" type="font-16-600">
                         Enroll Now for Free
                       </Text>
                     )}
@@ -116,12 +116,12 @@ const CustomButtonEnroll = ({
                     disabled={isInsufficientBalance}
                   >
                     {isInsufficientBalance && (
-                      <Text className="text-text-white" type="font-16-600">
+                      <Text className="text-text-letter" type="font-16-600">
                         Insufficient balance
                       </Text>
                     )}
                     {!isInsufficientBalance && (
-                      <Text className="text-text-white" type="font-16-600">
+                      <Text className="text-text-letter" type="font-16-600">
                         {course?.enroll === 'verified'
                           ? 'Go to course'
                           : course?.enroll === 'pending'

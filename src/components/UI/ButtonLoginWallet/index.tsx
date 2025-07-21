@@ -41,7 +41,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
                 }}
                 className="bg-main w-full min-h-[40px] rounded"
               >
-                <Text className="text-white" type="font-16-600">
+                <Text className="text-letter" type="font-16-600">
                   Connect Wallet
                 </Text>
               </Button>

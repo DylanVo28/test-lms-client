@@ -607,7 +607,7 @@ const Lesson = () => {
                 'gap-3 w-full relative rounded-none p-0 border-b border-white-10',
               cursor: 'w-full bg-[#129DDB]',
               tab: 'max-w-fit px-5 h-16 text-[16px] font-medium text-[#BFBFBF]',
-              tabContent: 'group-data-[selected=true]:text-white',
+              tabContent: 'group-data-[selected=true]:text-letter',
             }}
             color="primary"
             variant="underlined"
@@ -629,10 +629,10 @@ const Lesson = () => {
               <div className="flex items-center gap-2">
                 {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
                 <div className="flex flex-col gap-[2px]">
-                  <Text type="text-18-600" className="text-white">
+                  <Text type="text-18-600" className="text-letter">
                     {'Course content'}
                   </Text>
-                  {/* <Text type="font-14-400" className="text-white">
+                  {/* <Text type="font-14-400" className="text-letter">
                   Set certificate expiration date
                 </Text> */}
                 </div>

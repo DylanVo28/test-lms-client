@@ -88,7 +88,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   return (
     <div
       key={item?.id}
-      className="rounded border-1 border-white-10 bg-white-10 p-4 flex items-center gap-3"
+      className="rounded border-1 border-white-10 bg-card p-4 flex items-center gap-3"
     >
       <Image
         src={item?.certificate?.image}
@@ -102,7 +102,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       />
 
       <div className="flex flex-col gap-3">
-        <Text type="font-18-600" className="text-white line-clamp-2">
+        <Text type="font-18-600" className="text-letter line-clamp-2">
           {item?.certificate?.name}
         </Text>
         <Text type="font-16-400" className="text-black-7">
@@ -183,7 +183,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                       </div>
                     }
                   >
-                    <div className="text-white font-semibold text-sm">
+                    <div className="text-letter font-semibold text-sm">
                       <Info size={16} className="text-main" color="#818181" />
                     </div>
                   </Tooltip>

@@ -71,17 +71,23 @@ const ChildSection = ({
                   }}
                 />
                 {item?.type === TYPE_COURSE.QUIZ ? (
-                  <Text type="font-16-600" className="text-white mt-[-4px]">
+                  <Text type="font-16-600" className="text-letter mt-[-4px]">
                     {`Quizz ${item?.sttQuizz}. ${item?.title}`}
                   </Text>
                 ) : (
                   <>
                     {item?.type === TYPE_COURSE?.END_COURSE ? (
-                      <Text type="font-16-600" className="text-white mt-[-4px]">
+                      <Text
+                        type="font-16-600"
+                        className="text-letter mt-[-4px]"
+                      >
                         {'End of course'}
                       </Text>
                     ) : (
-                      <Text type="font-16-600" className="text-white mt-[-4px]">
+                      <Text
+                        type="font-16-600"
+                        className="text-letter mt-[-4px]"
+                      >
                         {`${index + 1}. ${item?.title}`}
                       </Text>
                     )}

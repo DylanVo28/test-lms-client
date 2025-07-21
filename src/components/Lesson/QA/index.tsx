@@ -38,7 +38,7 @@ const QA = () => {
   return (
     <div className="pt-8 flex flex-col gap-6 pl-[80px] pr-[64px]">
       <div className="flex flex-col gap-2">
-        <Text type="font-18-600" className="text-white">
+        <Text type="font-18-600" className="text-letter">
           {'Frequently Asked Questions'}
         </Text>
         <Text type="font-16-400" className="text-black-7">

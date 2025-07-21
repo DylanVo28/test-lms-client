@@ -54,7 +54,7 @@ const CardCourseMore = ({
       className="flex flex-col rounded transition-all min-w-max md:min-w-max lg:min-w-full relative  cursor-pointer duration-300 hover:opacity-80 h-full"
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
-        <Text type="font-14-500" className="text-white">
+        <Text type="font-14-500" className="text-letter">
           {'Best seller'}
         </Text>
       </div>
@@ -86,7 +86,7 @@ const CardCourseMore = ({
         href={item?.image || '/images/img-default.png'}
         target="_blank"
         onClick={(e) => e.preventDefault()}
-        className="bg-white-10 w-full lg:w-max rounded rounded-b-none"
+        className="bg-card w-full lg:w-max rounded rounded-b-none"
       >
         <Image
           src={item?.image ? item?.image : '/images/img-default.png'}
@@ -94,14 +94,14 @@ const CardCourseMore = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[200px] lg:w-max rounded rounded-b-none bg-white-10"
+          className="w-full h-[200px] lg:w-max rounded rounded-b-none bg-card"
           // objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
       </a>
-      <div className="py-4 px-3 max-w-[302px] min-h-[196px] lg:min-w-[302px] lg:min-h-max lg:w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
+      <div className="py-4 px-3 max-w-[302px] min-h-[196px] lg:min-w-[302px] lg:min-h-max lg:w-full rounded rounded-t-none bg-card h-full flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
@@ -171,7 +171,7 @@ const CardCourseMore = ({
           </div>
           <Button variant="light" radius="full" onPress={handleClickCardCourse}>
             <div className="flex items-center gap-1">
-              <Text type="font-14-500" className="text-white">
+              <Text type="font-14-500" className="text-letter">
                 {'Enroll Course'}
               </Text>
               <IconArrowUp />

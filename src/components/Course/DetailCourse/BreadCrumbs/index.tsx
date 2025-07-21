@@ -22,7 +22,7 @@ const BreadCrumbs = () => {
       <Text
         type="font-16-500"
         onClick={() => navigate(ROUTE_PATH.COURSE)}
-        className="text-white hover:opacity-80 cursor-pointer"
+        className="text-letter hover:opacity-80 cursor-pointer"
       >
         Course
       </Text>

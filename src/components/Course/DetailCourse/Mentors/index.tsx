@@ -103,7 +103,7 @@ const Mentors = ({ mentor }: any) => {
 
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
-      <Text className="text-white" type="font-20-600">
+      <Text className="text-letter" type="font-20-600">
         {'Mentors (KOLs)'}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
@@ -119,7 +119,7 @@ const Mentors = ({ mentor }: any) => {
         />
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Text className="text-white" type="font-16-600">
+            <Text className="text-letter" type="font-16-600">
               {generateMentors()}
             </Text>
             <div className="flex flex-col gap-2">
@@ -128,7 +128,7 @@ const Mentors = ({ mentor }: any) => {
               </Text>
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex gap-x-2 items-center">
-                  <Text type="font-14-400" className="text-white">
+                  <Text type="font-14-400" className="text-letter">
                     {(mentorProfile?.instructorInfo?.avgRate || 5)?.toFixed(
                       1
                     ) || 0}
@@ -138,13 +138,13 @@ const Mentors = ({ mentor }: any) => {
                     rating={mentorProfile?.instructorInfo?.avgRate || 5}
                   />
                 </div>
-                <Text type="font-14-400" className="text-white">
+                <Text type="font-14-400" className="text-letter">
                   {mentorProfile?.instructorInfo?.countReviews || 0} {'Reviews'}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
-                  <Text type="font-14-400" className="text-white">
+                  <Text type="font-14-400" className="text-letter">
                     {mentorProfile?.instructorInfo?.countStudents || 0}{' '}
                     {'Students'}
                   </Text>
@@ -152,7 +152,7 @@ const Mentors = ({ mentor }: any) => {
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconVideo />
-                  <Text type="font-14-400" className="text-white">
+                  <Text type="font-14-400" className="text-letter">
                     {mentorProfile?.instructorInfo?.countCourses || 0}{' '}
                     {'Courses'}
                   </Text>
@@ -161,7 +161,7 @@ const Mentors = ({ mentor }: any) => {
             </div>
             <div className="flex flex-col gap-4">
               {mentor?.biography && (
-                <Text className="text-white" type="font-14-400">
+                <Text className="text-letter" type="font-14-400">
                   {mentor?.biography}
                 </Text>
               )}

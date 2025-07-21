@@ -71,14 +71,14 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 <div className="flex items-center gap-2">
                   <IconArrowLeft />
 
-                  <Text type="font-16-500" className="text-white">
+                  <Text type="font-16-500" className="text-letter">
                     {'Home'}
                   </Text>
                 </div>
               </Button>
             </div>
             <div className="w-[1px] h-6 bg-black-6" />
-            <Text type="font-16-500" className="text-white">
+            <Text type="font-16-500" className="text-letter">
               {dataDetail?.data?.title}
             </Text>
           </div>
@@ -101,7 +101,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                     />
                   </div>
                   <div className="flex gap-x-1 items-center">
-                    <Text type="font-16-500" className="text-white">
+                    <Text type="font-16-500" className="text-letter">
                       {'Your Progress'}
                     </Text>
                     <IconArrowDown />
@@ -112,7 +112,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 {valueYourProgress?.total > 0 &&
                 valueYourProgress?.total == valueYourProgress?.value ? (
                   <div className="px-1 py-2 flex flex-col gap-3">
-                    <div className="font-bold text-lg text-white">
+                    <div className="font-bold text-lg text-letter">
                       You have completed the course
                     </div>
                     <Link
@@ -124,7 +124,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                 ) : (
                   <div className="px-1 py-2 flex flex-col gap-3">
-                    <div className="text-lg font-bold text-white">
+                    <div className="text-lg font-bold text-letter">
                       {valueYourProgress?.value} of {valueYourProgress?.total}{' '}
                       completed{' '}
                     </div>
@@ -137,11 +137,11 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             </Popover>
             <Button
               onClick={() => refModalShare.current.onOpen()}
-              className="rounded w-[90px] border-white-10 border-1 bg-white-10"
+              className="rounded w-[90px] border-white-10 border-1 bg-card"
               size="lg"
             >
               <div className="flex items-center gap-1">
-                <Text type="font-16-500" className="text-white">
+                <Text type="font-16-500" className="text-letter">
                   {'Share'}
                 </Text>
                 <IconShare />
@@ -177,7 +177,7 @@ const IconShare = () => {
     >
       <path
         d="M11.3332 11.6667V15.8333L19.6665 9.16667L11.3332 2.5V6.66667C6.73067 6.66667 2.99984 10.3975 2.99984 15C2.99984 15.2275 3.00817 15.4525 3.0265 15.675C3.66284 14.4651 4.61777 13.4522 5.78807 12.7458C6.95836 12.0393 8.2995 11.6661 9.6665 11.6667H11.3332Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

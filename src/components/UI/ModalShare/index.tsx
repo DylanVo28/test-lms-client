@@ -56,16 +56,16 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex flex-col gap-2">
-            <Text className="text-white text-2xl font-semibold tracking-[-0.03em]">
+            <Text className="text-letter text-2xl font-semibold tracking-[-0.03em]">
               Share This Course
             </Text>
-            <Text className="text-white/60 text-sm">
+            <Text className="text-letter/60 text-sm">
               Share this course with your friends
             </Text>
           </div>
           <button
             onClick={onVisible}
-            className="text-white/80 hover:opacity-85 active:scale-[98%] hover:text-white"
+            className="text-letter/80 hover:opacity-85 active:scale-[98%] hover:text-letter"
           >
             <CloseIcon />
           </button>
@@ -74,9 +74,9 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
         <div className="flex flex-col gap-6">
           {/* Referral Link Section */}
           <div className="flex flex-col gap-3">
-            <Text className="text-white font-medium">Referral Link</Text>
+            <Text className="text-letter font-medium">Referral Link</Text>
             <div className="flex items-center gap-3 p-3 bg-[#1A1A1A] rounded-lg border border-[rgba(255,255,255,0.1)]">
-              <div className="flex-1 text-white/80 text-sm font-mono truncate">
+              <div className="flex-1 text-letter/80 text-sm font-mono truncate">
                 {shareUrl.length > 46
                   ? `${shareUrl.slice(0, 46)}...`
                   : shareUrl}
@@ -93,16 +93,16 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
 
           {/* Share to Section */}
           <div className="flex flex-col gap-4">
-            <Text className="text-white font-medium">Share to</Text>
+            <Text className="text-letter font-medium">Share to</Text>
             <div className="grid grid-cols-6 gap-4 justify-items-center">
               {/* Twitter */}
               <div className="flex flex-col items-center gap-2">
                 <TwitterShareButton url={shareUrl}>
                   <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DA1F2] hover:opacity-80 transition-opacity">
-                    <XLogo className="text-white" size={20} />
+                    <XLogo className="text-letter" size={20} />
                   </div>
                 </TwitterShareButton>
-                <span className="text-xs text-white">Twitter</span>
+                <span className="text-xs text-letter">Twitter</span>
               </div>
 
               {/* Telegram */}
@@ -112,7 +112,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
                     <TelegramIcon />
                   </div>
                 </TelegramShareButton>
-                <span className="text-xs text-white">Telegram</span>
+                <span className="text-xs text-letter">Telegram</span>
               </div>
 
               {/* Facebook */}
@@ -122,7 +122,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
                     <IconFacebook />
                   </div>
                 </FacebookShareButton>
-                <span className="text-xs text-white">Facebook</span>
+                <span className="text-xs text-letter">Facebook</span>
               </div>
 
               {/* WhatsApp */}
@@ -132,7 +132,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
                     <WhatsAppIcon />
                   </div>
                 </WhatsappShareButton>
-                <span className="text-xs text-white">WhatsApp</span>
+                <span className="text-xs text-letter">WhatsApp</span>
               </div>
 
               {/* Reddit */}
@@ -142,7 +142,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
                     <RedditIcon />
                   </div>
                 </RedditShareButton>
-                <span className="text-xs text-white">Reddit</span>
+                <span className="text-xs text-letter">Reddit</span>
               </div>
 
               {/* LinkedIn */}
@@ -152,7 +152,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
                     <LinkedInIcon />
                   </div>
                 </LinkedinShareButton>
-                <span className="text-xs text-white">Linkedin</span>
+                <span className="text-xs text-letter">Linkedin</span>
               </div>
             </div>
           </div>

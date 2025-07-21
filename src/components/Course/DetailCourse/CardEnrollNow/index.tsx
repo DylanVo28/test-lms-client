@@ -204,7 +204,7 @@ const CardEnrollNow = ({
           {course?.liked ? <IconLikedCourse /> : <IconLikeCourse />}
         </Button>
         {isLoading ? (
-          <div className="h-[200px] w-full bg-white-10 animate-pulse rounded" />
+          <div className="h-[200px] w-full bg-card animate-pulse rounded" />
         ) : (
           <Image
             src={course?.image || '/images/img-default.png'}
@@ -234,36 +234,36 @@ const CardEnrollNow = ({
       {/* Loading */}
       {isLoading && (
         <div>
-          <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
+          <div className="p-4 rounded bg-card flex flex-col gap-[10px]">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="h-6 w-20 bg-white-10 animate-pulse rounded" />
-                  <div className="h-4 w-16 bg-white-10 animate-pulse rounded" />
+                  <div className="h-6 w-20 bg-card animate-pulse rounded" />
+                  <div className="h-4 w-16 bg-card animate-pulse rounded" />
                 </div>
-                <div className="h-8 w-24 bg-white-10 animate-pulse rounded-full" />
+                <div className="h-8 w-24 bg-card animate-pulse rounded-full" />
               </div>
-              <div className="h-10 w-full bg-white-10 animate-pulse rounded" />
+              <div className="h-10 w-full bg-card animate-pulse rounded" />
             </div>
             <div className="flex flex-col gap-2">
-              <div className="h-5 w-40 bg-white-10 animate-pulse rounded" />
+              <div className="h-5 w-40 bg-card animate-pulse rounded" />
               <div className="flex flex-col gap-1">
                 {[1, 2, 3, 4, 5, 6].map((item) => (
                   <div key={item} className="flex items-center gap-2">
-                    <div className="h-4 w-4 bg-white-10 animate-pulse rounded" />
-                    <div className="h-4 w-48 bg-white-10 animate-pulse rounded" />
+                    <div className="h-4 w-4 bg-card animate-pulse rounded" />
+                    <div className="h-4 w-48 bg-card animate-pulse rounded" />
                   </div>
                 ))}
               </div>
             </div>
-            <div className="h-10 w-full bg-white-10 animate-pulse rounded" />
+            <div className="h-10 w-full bg-card animate-pulse rounded" />
           </div>
-          <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
+          <div className="p-4 rounded bg-card flex flex-col gap-[10px]">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="h-6 w-20 bg-white-10 animate-pulse rounded" />
-                  <div className="h-4 w-16 bg-white-10 animate-pulse rounded" />
+                  <div className="h-6 w-20 bg-card animate-pulse rounded" />
+                  <div className="h-4 w-16 bg-card animate-pulse rounded" />
                 </div>
               </div>
             </div>
@@ -271,7 +271,7 @@ const CardEnrollNow = ({
         </div>
       )}
       {!isLoading && (
-        <div className="p-4 rounded bg-white-10 flex flex-col gap-[10px]">
+        <div className="p-4 rounded bg-card flex flex-col gap-[10px]">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -324,7 +324,7 @@ const CardEnrollNow = ({
               />
             )}
             <div className="flex flex-col gap-2">
-              <Text className="text-white" type="font-18-600">
+              <Text className="text-letter" type="font-18-600">
                 This course includes
               </Text>
 

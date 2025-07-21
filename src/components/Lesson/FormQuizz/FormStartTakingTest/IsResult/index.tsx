@@ -16,16 +16,16 @@ const IsResult = ({
         <div className="flex flex-col justify-center  gap-3 md:w-6/12 mx-auto">
           <div className="flex items-center gap-4">
             <div className="w-full bg-white h-[2px]" />
-            <div className="min-w-14 min-h-14 flex justify-center rounded-full  items-center bg-text-white">
+            <div className="min-w-14 min-h-14 flex justify-center rounded-full  items-center bg-text-letter">
               <Star size={32} className="!fill-green" weight="bold" />
             </div>
             <div className="w-full bg-white h-[2px]" />
           </div>
 
-          <Text className="text-white" type="font-24-700">
+          <Text className="text-letter" type="font-24-700">
             {"Great! You're ready to move on to the next lecture."}
           </Text>
-          <Text className="text-white" type="font-16-400">
+          <Text className="text-letter" type="font-16-400">
             {`You answered ${totalQuizz}/${totalQuizz} question correctly.`}
           </Text>
         </div>
@@ -34,7 +34,7 @@ const IsResult = ({
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 mb-4">
             <Check size={24} weight="light" className="fill-green" />
-            <Text className="text-white" type="font-24-700">
+            <Text className="text-letter" type="font-24-700">
               {'Things you need to know'}
             </Text>
             <Info size={20} weight="fill" />

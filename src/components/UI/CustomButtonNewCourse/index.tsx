@@ -20,7 +20,7 @@ const CustomButtonNewCourse = ({
                 onPress={openConnectModal}
                 className="bg-main w-max min-h-[40px] rounded"
               >
-                <Text className="text-white" type="font-16-600">
+                <Text className="text-letter" type="font-16-600">
                   New Course
                 </Text>
               </Button>
@@ -29,7 +29,7 @@ const CustomButtonNewCourse = ({
                 onPress={handleClickButton}
                 className="bg-main w-max min-h-[40px] rounded"
               >
-                <Text className="text-text-white" type="font-16-600">
+                <Text className="text-text-letter" type="font-16-600">
                   New Course
                 </Text>
               </Button>

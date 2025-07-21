@@ -124,7 +124,7 @@ export default function Information({ reload }: { reload: VoidFunction }) {
     }
   };
   return (
-    <div className="bg-gray-900 text-white rounded-lg w-full">
+    <div className="bg-gray-900 text-letter rounded-lg w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="box-border">
         <div className="flex md:flex-row flex-col gap-6">
           <div className="flex flex-col gap-6 w-full">
@@ -157,7 +157,7 @@ export default function Information({ reload }: { reload: VoidFunction }) {
           <Button
             isLoading={loading}
             type="submit"
-            className="w-fit px-[24px] bg-main text-text-white font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
+            className="w-fit px-[24px] bg-main text-text-letter font-semibold py-[10px] rounded-[4px] hover:bg-cyan-400 transition"
           >
             {'Save Profile'}
           </Button>

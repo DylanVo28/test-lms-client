@@ -26,20 +26,20 @@ const Certifications = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
-        <Text type="font-18-600" className="text-white">
+        <Text type="font-18-600" className="text-letter">
           {'Certification Preparation'}
         </Text>
         <div className="flex flex-col gap-5 md:gap-0 md:flex-row justify-between md:items-center">
           <div className="flex items-center gap-[2px]">
-            <Text type="font-16-400" className="text-white">
+            <Text type="font-16-400" className="text-letter">
               {'You are preparing for'}{' '}
-              <Text element="span" type="font-16-700" className="text-white">
+              <Text element="span" type="font-16-700" className="text-letter">
                 {`${
                   dataListCertificates?.data?.length || 0
                 } ${'certifications'}`}
               </Text>
             </Text>
-            <Info className="text-white" size={18} />
+            <Info className="text-letter" size={18} />
           </div>
 
           {/* <Button className="bg-transparent w-max border-1 border-main rounded py-[10px] px-6 min-h-[44px]">

@@ -39,9 +39,7 @@ const EditLogo = ({
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
-      toast.error(
-        'There are some images not cropped, please crop image first'
-      );
+      toast.error('There are some images not cropped, please crop image first');
       return;
     }
 
@@ -56,9 +54,7 @@ const EditLogo = ({
       const maxHeight = 3000;
 
       if (!allowedTypes.includes(file.type)) {
-        toast.error(
-          'Invalid file type. Only JPEG, PNG, or JPG are allowed.'
-        );
+        toast.error('Invalid file type. Only JPEG, PNG, or JPG are allowed.');
         return;
       }
 
@@ -114,9 +110,7 @@ const EditLogo = ({
   const handleClickUploadFile = () => {
     const cropperImage = localStorage.getItem('cropper-image');
     if (cropperImage) {
-      toast.error(
-        'There are some images not cropped, please crop image first'
-      );
+      toast.error('There are some images not cropped, please crop image first');
       return;
     }
     fileInputRef.current.click();
@@ -131,10 +125,10 @@ const EditLogo = ({
         style={{ display: 'none' }}
         accept="image/jpeg, image/png, image/jpg"
       />
-      <Text className="text-[18px] text-white font-semibold mb-[16px]">
+      <Text className="text-[18px] text-letter font-semibold mb-[16px]">
         {'Edit logo'}
       </Text>
-      {/* <p className="text-md text-white mb-[8px]">
+      {/* <p className="text-md text-letter mb-[8px]">
         {'Minimum 124x46 pixels, Maximum 3000x3000 pixels'}
       </p> */}
       <div className="flex flex-col gap-4">
@@ -151,12 +145,12 @@ const EditLogo = ({
                   </div>
                 ) : (
                   <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">
-                    <div className="text-white">{'JPEG, PNG or JPG.'}</div>
+                    <div className="text-letter">{'JPEG, PNG or JPG.'}</div>
                     <div className="relative">
                       <Button
                         onClick={handleClickUploadFile}
                         isLoading={loadingFile}
-                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-white border border-[var(--main-color)]"
+                        className="text-base font-semibold leading-[24px] capitalize w-[154px] h-[40px] px-[8px] rounded-[4px] bg-[#ffffff19] text-letter border border-[var(--main-color)]"
                       >
                         {'Choose file'}
                       </Button>

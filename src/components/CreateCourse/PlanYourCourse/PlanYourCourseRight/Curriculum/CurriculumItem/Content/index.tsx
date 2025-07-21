@@ -42,12 +42,12 @@ const Content = ({
 
         <div className="flex flex-col gap-1">
           {info?.fileNameVideo && (
-            <Text type="font-14-700" className="text-white line-clamp-1">
+            <Text type="font-14-700" className="text-letter line-clamp-1">
               {info?.fileNameVideo}
             </Text>
           )}
           {info?.duration && (
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {formattedTime}
             </Text>
           )}

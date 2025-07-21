@@ -23,7 +23,7 @@ export const CardTitle: React.FC<CardProps> = ({
   className = '',
 }) => {
   return (
-    <h3 className={`text-lg font-semibold text-white ${className}`}>
+    <h3 className={`text-lg font-semibold text-letter ${className}`}>
       {children}
     </h3>
   );

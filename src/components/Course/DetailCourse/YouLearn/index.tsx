@@ -3,7 +3,7 @@ const YouLearn = ({ data }: { data: any }) => {
   return (
     <>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
-        <Text className="text-white" type="font-20-600">
+        <Text className="text-letter" type="font-20-600">
           {"What you'll learn"}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
@@ -13,7 +13,7 @@ const YouLearn = ({ data }: { data: any }) => {
                 <div className="w-6 h-6">
                   <IconCheck />
                 </div>
-                <Text type="font-14-400" className="text-white">
+                <Text type="font-14-400" className="text-letter">
                   {item}
                 </Text>
               </div>
@@ -22,7 +22,7 @@ const YouLearn = ({ data }: { data: any }) => {
         </div>
       </div>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
-        <Text className="text-white" type="font-20-600">
+        <Text className="text-letter" type="font-20-600">
           What are the requirements or prerequisites for taking your course?
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
@@ -32,7 +32,7 @@ const YouLearn = ({ data }: { data: any }) => {
                 <div className="w-6 h-6">
                   <IconCheck />
                 </div>
-                <Text type="font-14-400" className="text-white">
+                <Text type="font-14-400" className="text-letter">
                   {item}
                 </Text>
               </div>
@@ -41,7 +41,7 @@ const YouLearn = ({ data }: { data: any }) => {
         </div>
       </div>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
-        <Text className="text-white" type="font-20-600">
+        <Text className="text-letter" type="font-20-600">
           {'Who is this course for?'}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
@@ -51,7 +51,7 @@ const YouLearn = ({ data }: { data: any }) => {
                 <div className="w-6 h-6">
                   <IconCheck />
                 </div>
-                <Text type="font-14-400" className="text-white">
+                <Text type="font-14-400" className="text-letter">
                   {item}
                 </Text>
               </div>

@@ -40,7 +40,7 @@ export default function CardMentor({ mentor }: IProps) {
         </Text>
         <Text type="font-16-400">{mentor?.headline}</Text>
         <div className="flex items-center gap-2 flex-row">
-          <Text type="font-14-400" className="text-white">
+          <Text type="font-14-400" className="text-letter">
             {mentor?.instructorInfo?.avgRate?.toFixed(1) || 0}
           </Text>
           <Rater

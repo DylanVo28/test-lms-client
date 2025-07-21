@@ -69,10 +69,10 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex flex-col gap-2">
-            <Text className="text-white text-2xl font-semibold tracking-[-0.03em]">
+            <Text className="text-letter text-2xl font-semibold tracking-[-0.03em]">
               {submitReviewSuccess ? 'Congratulations! 🎉' : 'Course Review'}
             </Text>
-            <Text className="text-white/60 text-sm">
+            <Text className="text-letter/60 text-sm">
               {submitReviewSuccess
                 ? 'You have successfully completed the course'
                 : 'Share your experience with other learners'}
@@ -80,7 +80,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
           </div>
           <button
             onClick={onVisible}
-            className="text-white/80 hover:opacity-85 active:scale-[98%] hover:text-white"
+            className="text-letter/80 hover:opacity-85 active:scale-[98%] hover:text-letter"
           >
             <CloseIcon />
           </button>
@@ -101,7 +101,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
                 }}
                 className="bg-main min-w-[200px] w-max min-h-[50px] rounded hover:opacity-90 transition-opacity"
               >
-                <Text type="font-16-500" className="text-white">
+                <Text type="font-16-500" className="text-letter">
                   {'Find more courses'}
                 </Text>
               </Button>
@@ -109,7 +109,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
           ) : (
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3">
-                <Text className="text-white font-medium text-center">
+                <Text className="text-letter font-medium text-center">
                   {'Select rating'}
                 </Text>
                 <ReactStars
@@ -124,7 +124,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Text className="text-white font-medium">Your Review</Text>
+                <Text className="text-letter font-medium">Your Review</Text>
                 <InputTextArena
                   className="w-full bg-[#1A1A1A] border border-[rgba(255,255,255,0.1)] rounded-lg"
                   minRows={6}
@@ -145,7 +145,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
                   onPress={handleClickSave}
                   className="bg-main min-w-[142px] w-max min-h-[40px] rounded hover:opacity-90 transition-opacity"
                 >
-                  <Text type="font-16-500" className="text-white">
+                  <Text type="font-16-500" className="text-letter">
                     {'Submit Review'}
                   </Text>
                 </Button>

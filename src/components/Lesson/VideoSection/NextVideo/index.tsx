@@ -43,7 +43,7 @@ const NextVideo = ({
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col text-center gap-3 mb-2">
-          <Text type="font-18-600" className="text-white">
+          <Text type="font-18-600" className="text-letter">
             {'Next'}
           </Text>
           <Text type="font-24-700" className="text-black-5">
@@ -64,7 +64,7 @@ const NextVideo = ({
             color="secondary"
             classNames={{
               svg: 'w-[80px] h-[80px]',
-              indicator: 'text-white/80',
+              indicator: 'text-letter/80',
             }}
             size="sm"
             value={valueProgress}
@@ -75,7 +75,7 @@ const NextVideo = ({
           className="min-w-[80px] mx-auto"
           variant="light"
         >
-          <Text type="font-14-400" className="text-white ">
+          <Text type="font-14-400" className="text-letter ">
             {'Cancel'}
           </Text>
         </Button>

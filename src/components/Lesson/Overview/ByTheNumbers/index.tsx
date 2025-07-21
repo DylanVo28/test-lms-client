@@ -37,31 +37,31 @@ const ByTheNumbers = ({ course }: { course: any }) => {
   }, [course?.sections]);
   return (
     <div className="py-6 grid grid-cols-1 gap-5 lg:gap-0 lg:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
-      <Text type="font-18-600" className="text-white">
+      <Text type="font-18-600" className="text-letter">
         {'By the numbers'}
       </Text>
       {isMobile ? (
         <div className="flex gap-8">
           <div className="flex flex-col gap-1">
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Skill level'}: {course?.level}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Students'}:{' '}
               {course?.userCourses?.length || course?.countStudents}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Languages'}: {course?.lang}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Captions'}: {'Yes'}
             </Text>
           </div>
           <div className="flex flex-col gap-1">
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Lectures'}: {lessonCount || 0}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {`${'Video'}: ${formatTimeDuration(formattedTime)}`}
             </Text>
           </div>
@@ -69,25 +69,25 @@ const ByTheNumbers = ({ course }: { course: any }) => {
       ) : (
         <>
           <div className="flex flex-col gap-1">
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Skill level'}: {course?.level}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Students'}:{' '}
               {course?.userCourses?.length || course?.countStudents}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Languages'}: {course?.lang}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Captions'}: {'Yes'}
             </Text>
           </div>
           <div className="flex flex-col gap-1">
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {'Lectures'}: {lessonCount || 0}
             </Text>
-            <Text type="font-14-400" className="text-white">
+            <Text type="font-14-400" className="text-letter">
               {`${'Video'}: ${formatTimeDuration(formattedTime)}`}
             </Text>
           </div>

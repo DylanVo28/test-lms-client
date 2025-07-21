@@ -58,7 +58,7 @@ const CardCourse = ({
       className="flex flex-col h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80"
     >
       {/* <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
-        <Text type="font-14-500" className="text-white">
+        <Text type="font-14-500" className="text-letter">
           {'Best seller'}
         </Text>
       </div> */}
@@ -93,19 +93,19 @@ const CardCourse = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[200px] rounded rounded-b-none bg-white-10 object-cover"
+          className="w-full h-[200px] rounded rounded-b-none bg-card object-cover"
           // objectFit="scale-down"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
       </div>
-      <div className="py-4 px-3 w-full rounded rounded-t-none bg-white-10 h-full flex flex-col gap-[10px]">
+      <div className="py-4 px-3 w-full rounded rounded-t-none bg-card h-full flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] flex-1 border-b border-b-white-5">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
               <IconDate />
-              <Text type="font-14-500">
+              <Text type="font-14-500" className="text-letter">
                 {lessonCount} {'Lessons'}
               </Text>
             </div>
@@ -114,12 +114,15 @@ const CardCourse = ({
 
             <div className="flex items-center gap-1">
               <IconTime />
-              <Text type="font-14-500">
+              <Text type="font-14-500" className="text-letter">
                 {dayjs(item?.createdAt).fromNow(true)}
               </Text>
             </div>
           </div>
-          <Text type="font-16-500" className="line-clamp-2 capitalize">
+          <Text
+            type="font-16-500"
+            className="line-clamp-2 capitalize text-letter"
+          >
             {item?.title}
           </Text>
           <div className="flex flex-col gap-[8px] pb-0">
@@ -170,7 +173,7 @@ const CardCourse = ({
           </div>
           {/* <Button variant="light" radius="full">
             <div className="flex items-center gap-1">
-              <Text type="font-14-500" className="text-white">
+              <Text type="font-14-500" className="text-letter">
                 {'Enroll Course'}
               </Text>
               <IconArrowUp />

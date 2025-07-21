@@ -19,13 +19,13 @@ const Referral = ({ control }: { control: Control }) => {
 
   return (
     <div className="flex flex-col gap-8">
-      <Text type="font-28-700" className="text-white">
+      <Text type="font-28-700" className="text-letter">
         {'Referral'}
       </Text>
 
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-letter">
             {'Choose Exchange'}
           </Text>
 
@@ -63,7 +63,7 @@ const Referral = ({ control }: { control: Control }) => {
 
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-[10px]">
-          <Text type="font-16-600" className="text-white">
+          <Text type="font-16-600" className="text-letter">
             {
               'What are the requirements or prerequisites for unlocking free course?'
             }

@@ -135,11 +135,11 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
       <LoadingScreen isLoading={loadingListSession}>
         <div className="flex flex-col gap-8">
           <div className="flex justify-between items-center">
-            <Text type="font-28-700" className="text-white">
+            <Text type="font-28-700" className="text-letter">
               {'Curriculum item'}
             </Text>
             {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
-            <Text type="font-16-700" className="text-white">
+            <Text type="font-16-700" className="text-letter">
               Bulk Uploader
             </Text>
           </Button> */}
@@ -309,7 +309,7 @@ export const IconClose = () => {
     >
       <path
         d="M9.99999 8.82129L14.125 4.69629L15.3033 5.87462L11.1783 9.99962L15.3033 14.1246L14.125 15.303L9.99999 11.178L5.87499 15.303L4.69666 14.1246L8.82166 9.99962L4.69666 5.87462L5.87499 4.69629L9.99999 8.82129Z"
-        fill="var(--theme-white)"
+        fill="var(--theme-letter)"
       />
     </svg>
   );

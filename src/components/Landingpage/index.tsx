@@ -33,7 +33,7 @@ const LandingPage = () => {
             Master Trading with Top KOLs – Learn from the Best
           </h1>
 
-          <h5 className="text-[16px] text-white font-bold text-center">
+          <h5 className="text-[16px] text-letter font-bold text-center">
             Join our exclusive learning platform where top trading KOLs share
             their proven strategies and insights. From beginner basics to
             advanced techniques — learn at your own pace, anytime, anywhere.
@@ -49,7 +49,7 @@ const LandingPage = () => {
                   }}
                   className="bg-main w-fit min-h-[40px] rounded"
                 >
-                  <Text className="text-white" type="font-16-600">
+                  <Text className="text-letter" type="font-16-600">
                     Connect Wallet
                   </Text>
                 </Button>

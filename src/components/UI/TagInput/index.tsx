@@ -46,7 +46,7 @@ const TagInput = () => {
       {topics?.map((tag: any) => (
         <div
           key={tag}
-          className="rounded-full bg-white-10 capitalize border-1 gap-2 border-white-10 py-2 px-3 flex justify-center items-center"
+          className="rounded-full bg-card capitalize border-1 gap-2 border-white-10 py-2 px-3 flex justify-center items-center"
         >
           {tag}
           <span
@@ -76,13 +76,13 @@ const TagInput = () => {
           <div className="flex items-center gap-2">
             <Text
               type="font-12-400"
-              className="text-white group-hover:text-main"
+              className="text-letter group-hover:text-main"
             >
               +
             </Text>
             <Text
               type="font-12-400"
-              className="text-white group-hover:text-main"
+              className="text-letter group-hover:text-main"
             >
               New topic
             </Text>
