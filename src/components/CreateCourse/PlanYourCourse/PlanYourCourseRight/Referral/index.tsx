@@ -29,7 +29,7 @@ const Referral = ({ control }: { control: Control }) => {
             {'Choose Exchange'}
           </Text>
 
-          <Text type="font-16-600" className="text-black-6">
+          <Text type="font-16-600" className="text-letter/70">
             {
               'You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.'
             }
@@ -69,7 +69,7 @@ const Referral = ({ control }: { control: Control }) => {
             }
           </Text>
 
-          <Text type="font-16-600" className="text-black-6">
+          <Text type="font-16-600" className="text-letter/70">
             {
               'List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners.'
             }

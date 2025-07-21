@@ -43,12 +43,12 @@ const IsResult = ({
           {questions?.map((item: any, index: number) => {
             return (
               <div key={item?.id} className="flex items-center gap-1 pl-10">
-                <Text className="text-black-6" type="font-16-600">
+                <Text className="text-letter/70" type="font-16-600">
                   {`${index + 1}.`}
                 </Text>
                 <div
                   dangerouslySetInnerHTML={{ __html: item?.question }}
-                  className="text-xl font-semibold text-black-6"
+                  className="text-xl font-semibold text-letter/70"
                 />
               </div>
             );

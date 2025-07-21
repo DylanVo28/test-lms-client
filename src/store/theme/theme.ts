@@ -34,9 +34,9 @@ export enum ImodeTheme {
 
 export const DefaultThemeColor = {
   primary: '#02A6C2',
-  background: '#FFFFFF',
-  card: '#F8F9FA',
-  secondary: '#6C757D',
+  background: '#000000',
+  card: '#282828',
+  secondary: '#F26F21',
   text: '#ffffff',
 };
 

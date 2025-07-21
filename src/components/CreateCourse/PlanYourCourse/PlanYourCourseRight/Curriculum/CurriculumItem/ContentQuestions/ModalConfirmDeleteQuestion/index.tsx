@@ -54,7 +54,7 @@ const ModalConfirmDeleteQuestion = (
               <Text type="font-20-700" className="text-letter">
                 {'Please confirm'}
               </Text>
-              <Text type="font-16-400" className="text-black-6 text-center">
+              <Text type="font-16-400" className="text-letter/70 text-center">
                 You are about to delete a question. Are you sure you want to
                 continue?
               </Text>

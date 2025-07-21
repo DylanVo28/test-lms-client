@@ -87,7 +87,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
             <Text type="font-20-700" className="text-letter">
               {'Publish course'}
             </Text>
-            <Text type="font-16-400" className="text-black-6 text-start">
+            <Text type="font-16-400" className="text-letter/70 text-start">
               {'Please enter the required fields'}
             </Text>
             <div className="flex flex-col gap-3 items-start my-3">

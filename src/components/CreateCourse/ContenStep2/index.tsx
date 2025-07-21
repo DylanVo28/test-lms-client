@@ -8,7 +8,7 @@ const ContenStep2 = ({ control }: { control: Control }) => {
         <Text type="font-28-700" className="text-letter">
           {'How about a working title?'}
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           It's ok if you can't think of a good title now. You can change it
           later.
         </Text>

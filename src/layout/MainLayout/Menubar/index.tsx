@@ -77,7 +77,7 @@ const Menubar = () => {
             key={item?.key}
             onClick={() => handleClickRedirectPage(item?.key)}
             className={clsx(
-              'cursor-pointer transition-all hover:text-main text-black-5 ',
+              'cursor-pointer transition-all hover:text-main text-letter/50 ',
               {
                 'text-main font-bold': router.query.type
                   ? router.query.type === TabMyLearning.WISHLIST &&

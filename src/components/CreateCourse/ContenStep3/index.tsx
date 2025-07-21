@@ -11,7 +11,7 @@ const ContenStep3 = ({ control }: { control: Control }) => {
         <Text type="font-28-700" className="text-letter">
           {"What category best fits the knowledge you'll share?"}
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           If you're not sure about the right category, you can change it later.
         </Text>
       </div>

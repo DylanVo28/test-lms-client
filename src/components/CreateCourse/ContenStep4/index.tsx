@@ -35,7 +35,7 @@ const ContenStep4 = ({
         <Text type="font-28-700" className="text-letter">
           {'How much time can you spend creating your course per week?'}
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           There's no wrong answer. We can help you achieve your goals even if
           you don't have much time.
         </Text>

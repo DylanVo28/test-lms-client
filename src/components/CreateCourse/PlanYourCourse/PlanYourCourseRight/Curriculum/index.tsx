@@ -145,7 +145,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
           </Button> */}
           </div>
 
-          <Text type="font-16-400" className="text-black-6">
+          <Text type="font-16-400" className="text-letter/70">
             Start putting together your course by creating sections, lectures
             and practice activities (quizzes, coding exercises and assignments).
             Use your course outline to structure your content and label your

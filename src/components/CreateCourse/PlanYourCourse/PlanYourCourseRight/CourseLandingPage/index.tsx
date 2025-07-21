@@ -42,7 +42,7 @@ const CourseLandingPage = ({
         <Text type="font-28-700" className="text-letter">
           Course landing page
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           Your course landing page is crucial to your success on Udemy. If it’s
           done right, it can also help you gain visibility in search engines
           like Google. As you complete this section, think about creating a

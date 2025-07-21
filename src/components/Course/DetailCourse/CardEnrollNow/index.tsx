@@ -275,13 +275,13 @@ const CardEnrollNow = ({
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Text type="font-20-400" className="text-orange">
+                <Text type="font-20-400" className="text-secondary">
                   {course?.price ? `$ ${formatNumber(course?.price)}` : 'Free'}
                 </Text>
                 {course?.originPrice && (
                   <Text
                     type="font-14-400"
-                    className="text-black-6 line-through"
+                    className="text-letter/70 line-through"
                   >
                     $ {formatNumber(course?.originPrice)}
                   </Text>
@@ -289,10 +289,10 @@ const CardEnrollNow = ({
               </div>
               {course?.originPrice && course?.price && (
                 <div className="rounded-full border-1 border-[#F26F2133] py-1 px-3 bg-[#F26F2133] flex items-center gap-1">
-                  <Text type="font-14-500" className="text-[#F26F21]">
+                  <Text type="font-14-500" className="text-secondary">
                     {discountCalculator(course?.originPrice, course?.price)}
                   </Text>
-                  <Text type="font-14-500" className="text-[#F26F21]">
+                  <Text type="font-14-500" className="text-secondary">
                     OFF
                   </Text>
                 </div>
@@ -333,7 +333,7 @@ const CardEnrollNow = ({
                   return (
                     <div key={index} className="flex items-center gap-1">
                       <div className="w-1 h-1 bg-black-6 rounded-full" />
-                      <Text className="text-black-6" type="font-16-400">
+                      <Text className="text-letter/70" type="font-16-400">
                         {item}
                       </Text>
                     </div>
@@ -348,7 +348,7 @@ const CardEnrollNow = ({
                     <Text type="font-16-600" className="text-main">
                       Free Course Unlock Available!
                     </Text>
-                    <Text type="font-14-400" className="text-black-6">
+                    <Text type="font-14-400" className="text-letter/70">
                       Reach{' '}
                       <span className="text-main font-bold">
                         ${formatNumber(course?.unlockIfUserTradesAtLeast)}
@@ -356,7 +356,7 @@ const CardEnrollNow = ({
                       in lifetime trading volume to unlock this course for free
                     </Text>
                     <div className="flex items-center gap-1">
-                      <Text type="font-14-400" className="text-black-6">
+                      <Text type="font-14-400" className="text-letter/70">
                         Your current trading volume:
                       </Text>
                       <FormatNumberDecimal
@@ -378,7 +378,7 @@ const CardEnrollNow = ({
                     <Text type="font-16-600" className="text-main">
                       Free Course Unlock Available!
                     </Text>
-                    <Text type="font-14-400" className="text-black-6">
+                    <Text type="font-14-400" className="text-letter">
                       This course is free to enroll
                     </Text>
                   </div>

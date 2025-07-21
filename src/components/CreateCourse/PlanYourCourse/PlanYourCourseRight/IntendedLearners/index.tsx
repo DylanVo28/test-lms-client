@@ -44,7 +44,7 @@ const IntendedLearners = ({
       <Text type="font-28-700" className="text-letter">
         {'Intended learners'}
       </Text>
-      <Text type="font-16-400" className="text-black-6">
+      <Text type="font-16-400" className="text-letter/70">
         The following descriptions will be publicly visible on your Course
         Landing Page and will have a direct impact on your course performance.
         These descriptions will help learners decide if your course is right for
@@ -55,7 +55,7 @@ const IntendedLearners = ({
           <Text type="font-16-600" className="text-letter">
             What will students learn in your course?
           </Text>
-          <Text type="font-16-400" className="text-black-6">
+          <Text type="font-16-400" className="text-letter/70">
             You must enter at least 4
             <Text className="underline mx-1" element="span">
               learning objectives or outcomes
@@ -132,7 +132,7 @@ const IntendedLearners = ({
         <Text type="font-16-600" className="text-letter">
           What are the requirements or prerequisites for taking your course?
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           List the required skills, experience, tools or equipment learners
           should have prior to taking your course. If there are no requirements,
           use this space as an opportunity to lower the barrier for beginners.
@@ -204,7 +204,7 @@ const IntendedLearners = ({
         <Text type="font-16-600" className="text-letter">
           {'Who is this course for?'}
         </Text>
-        <Text type="font-16-400" className="text-black-6">
+        <Text type="font-16-400" className="text-letter/70">
           List the required skills, experience, tools or equipment learners
           should have prior to taking your course. If there are no requirements,
           use this space as an opportunity to lower the barrier for beginners.

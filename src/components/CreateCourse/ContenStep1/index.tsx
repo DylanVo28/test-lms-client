@@ -68,7 +68,7 @@ const ContenStep1 = ({ control }: { control: Control }) => {
                   <Text type="font-20-700" className="text-letter">
                     {item?.label}
                   </Text>
-                  <Text type="font-16-400" className="text-black-6">
+                  <Text type="font-16-400" className="text-letter/70">
                     {item?.description}
                   </Text>
                 </div>

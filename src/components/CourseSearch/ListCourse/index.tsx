@@ -121,7 +121,7 @@ const ListCourse = () => {
               <Button className="min-w-[107px] border-1 py-[10px] px-2 bg-card border-[#F0F0F01A] rounded">
                 <div className="flex items-center gap-1">
                   <IconShowFilter />
-                  <Text type="font-14-500" className="text-black-6">
+                  <Text type="font-14-500" className="text-letter/70">
                     {'Filters'}
                   </Text>
                 </div>
@@ -154,7 +154,7 @@ const ListCourse = () => {
                     >
                       <div className="flex items-center gap-1">
                         <IconShowFilter />
-                        <Text type="font-14-500" className="text-black-6">
+                        <Text type="font-14-500" className="text-letter/70">
                           {'Show Filters'}
                         </Text>
                       </div>

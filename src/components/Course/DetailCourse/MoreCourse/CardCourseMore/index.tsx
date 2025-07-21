@@ -163,7 +163,7 @@ const CardCourseMore = ({
             {item?.originPrice && (
               <Text
                 type="font-14-400"
-                className="text-black-6 line-through w-max"
+                className="text-letter/70 line-through w-max"
               >
                 $ {formatNumber(item.originPrice)}
               </Text>

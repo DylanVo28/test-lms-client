@@ -54,7 +54,7 @@ const QA = () => {
           itemClasses={{
             base: 'bg-[#181F25] rounded shadow-custom pb-4',
             trigger: '!pt-4 py-0',
-            title: 'text-[20px] text-black-6 font-semibold',
+            title: 'text-[20px] text-letter/70 font-semibold',
           }}
           variant="splitted"
         >
@@ -70,7 +70,7 @@ const QA = () => {
                 title={
                   <Text
                     type="font-20-600"
-                    className={clsx('text-black-6', {
+                    className={clsx('text-letter/70', {
                       ['!text-main']: item?.id === Number(currentKey),
                     })}
                   >

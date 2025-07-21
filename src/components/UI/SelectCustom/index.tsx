@@ -63,7 +63,7 @@ const SelectCustom = (props: SelectCustomProps) => {
         }}
         placeholder={placeholder}
         classNames={{
-          value: '!text-[14px] text-black-6 font-medium capitalize',
+          value: '!text-[14px] text-letter/70 font-medium capitalize',
           trigger: clsx(
             '!bg-card rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30',
             {

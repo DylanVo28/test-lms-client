@@ -113,11 +113,11 @@ const FormQuizz = ({
               {dataQuizz?.title}
             </Text>
             <div className="flex items-center gap-3">
-              <Text className="text-black-6" type="font-18-600">
+              <Text className="text-letter/70" type="font-18-600">
                 {sttQuizz}
               </Text>
               <div className="w-[1px] h-4 bg-black-6" />
-              <Text className="text-black-6" type="font-18-600">
+              <Text className="text-letter/70" type="font-18-600">
                 {`${dataQuizz?.questions?.length} ${'question'}`}
               </Text>
             </div>
