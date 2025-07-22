@@ -76,7 +76,7 @@ const InputTextArena = (props: InputTextProps) => {
           <>
             {maxLength && (
               <div className="absolute right-3 bg-black-30 px-2 rounded-sm">
-                <Text type="font-16-400" className="text-letter-20">
+                <Text type="font-16-400" className="text-letter-70">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
                     : maxLength}
@@ -99,11 +99,7 @@ const InputTextArena = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5 font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2',
-            {
-              'placeholder:text-letter-20': isInputSubmit,
-              'placeholder:!text-letter-20': inputDefault,
-            }
+            'text-letter font-roboto-flex text-[16px] data-[has-start-content=true]:ps-2 placeholder:text-letter-80'
           ),
 
           inputWrapper: clsx(

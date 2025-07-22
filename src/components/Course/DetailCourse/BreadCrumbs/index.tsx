@@ -29,7 +29,7 @@ const BreadCrumbs = () => {
 
       <IconArrowRight />
 
-      <Text type="font-16-500" className="text-main">
+      <Text type="font-16-500" className="text-letter">
         Course details
       </Text>
     </div>

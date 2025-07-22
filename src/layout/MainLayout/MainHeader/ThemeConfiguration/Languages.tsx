@@ -55,6 +55,7 @@ const Languages = ({
               classNames={{
                 wrapper: 'me-3 after:!bg-main before:!border-black-7',
                 base: '',
+                label: 'text-letter',
               }}
               color="primary"
             >

@@ -156,7 +156,7 @@ const IntendedLearners = ({
                       {...field}
                       maxLength={160}
                       endContent
-                      className="md:min-w-[500px] flex-1"
+                      className="md:min-w-[500px] flex-1 text-letter"
                       placeholder={
                         item?.pladholder
                           ? item?.pladholder

@@ -1,40 +1,32 @@
+import InputText from '@/components/UI/InputText';
+import InputTextArena from '@/components/UI/InputTextArena';
+import TagInput, { topicsAtom } from '@/components/UI/TagInput';
+import Text from '@/components/UI/Text';
+import { toast } from '@/components/UI/Toast/toast';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
+import {
+  CustomColors as CustomColorsType,
+  DefaultThemeColor,
+} from '@/store/theme/theme';
+import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { applyCustomColors } from '@/utils/themeColors';
 import {
   Button,
   Drawer,
   DrawerContent,
   DrawerHeader,
-  Slider,
   useDisclosure,
 } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
-import ThemeIcon from './Icons/ThemeIcon';
-import CloseIcon from './Icons/CloseIcon';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
 import CustomColors from './CustomColors';
+import EditBanner from './EditBanner';
 import EditLogo from './EditLogo';
+import CloseIcon from './Icons/CloseIcon';
+import ThemeIcon from './Icons/ThemeIcon';
 import Languages from './Languages';
 import { useCreateTheme, useUpdateTheme } from './service';
-import { toast } from '@/components/UI/Toast/toast';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Text from '@/components/UI/Text';
-import {
-  ImodeTheme,
-  initialTheme,
-  CustomColors as CustomColorsType,
-  DefaultThemeColor,
-} from '@/store/theme/theme';
-import { applyCustomColors } from '@/utils/themeColors';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
-import { useTheme } from '@/store/theme/useTheme';
-import InputText from '@/components/UI/InputText';
-import { useSearchParams } from 'next/navigation';
-import TagInput, { topicsAtom } from '@/components/UI/TagInput';
-import { useAtom } from 'jotai';
-import InputTextArena from '@/components/UI/InputTextArena';
-import EditBanner from './EditBanner';
-
-const DEFAULT_SELECT_LANG = 'en';
-const DEFAULT_COLOR = '#02A6C2';
 
 const ThemeConfiguration = ({}: {}) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
