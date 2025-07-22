@@ -88,7 +88,7 @@ const MainBanner = () => {
                         key={item}
                         className="rounded-full bg-card border-1 border-white-10 py-1 px-3 flex justify-center items-center"
                       >
-                        <Text type="font-14-400" className="text-black-7">
+                        <Text type="font-14-400" className="text-letter/70">
                           {item}
                         </Text>
                       </div>

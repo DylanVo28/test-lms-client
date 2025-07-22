@@ -115,7 +115,7 @@ const ListCourse = () => {
         <div className="flex items-center gap-2">
           <Text
             type="font-14-500"
-            className="text-black-7 w-[70px] md:w-[100px]"
+            className="text-letter/70 w-[70px] md:w-[100px]"
           >
             {'Sort by'}
           </Text>

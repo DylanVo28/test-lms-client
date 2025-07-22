@@ -41,7 +41,7 @@ const QA = () => {
         <Text type="font-18-600" className="text-letter">
           {'Frequently Asked Questions'}
         </Text>
-        <Text type="font-16-400" className="text-black-7">
+        <Text type="font-16-400" className="text-letter/70">
           {
             'If you’ve sent us an existing PR or article then if your content is urgent we can start publishing your content across a number of languages in a matter of hours.'
           }

@@ -83,7 +83,7 @@ const Wishlist = () => {
             />
           </div>
           <div className="md:flex hidden items-center gap-2">
-            <Text type="font-14-500" className="text-black-7 w-[100px]">
+            <Text type="font-14-500" className="text-letter/70 w-[100px]">
               {'Sort by'}
             </Text>
             <SelectCustom
@@ -100,7 +100,7 @@ const Wishlist = () => {
         <div className="flex md:hidden items-center gap-2">
           <Text
             type="font-14-500"
-            className="text-black-7 w-[60px] md:w-[100px]"
+            className="text-letter/70 w-[60px] md:w-[100px]"
           >
             {'Sort by'}
           </Text>

@@ -64,7 +64,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
                 <Text type="font-16-600">
                   {dataCertifications?.certificate?.name}
                 </Text>
-                <Text type="font-14-400" className="text-black-7">
+                <Text type="font-14-400" className="text-letter/70">
                   {dataCertifications?.certificate?.description}
                 </Text>
               </div>

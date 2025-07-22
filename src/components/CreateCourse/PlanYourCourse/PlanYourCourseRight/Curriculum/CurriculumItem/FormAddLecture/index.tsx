@@ -63,7 +63,7 @@ const FormAddLecture = ({
         </>
       ) : (
         <div className="flex text-center justify-center py-3 flex-col border-1 border-t-0 border-white-15 items-center gap-3">
-          <Text className="text-black-7 px-20" type="font-14-400">
+          <Text className="text-letter/70 px-20" type="font-14-400">
             Select the primary content type. Files and links can be added as
             resources. Learn about content types.
           </Text>

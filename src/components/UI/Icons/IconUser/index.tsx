@@ -18,7 +18,7 @@ const IconUser = () => {
           <rect
             width="20"
             height="20"
-            fill="white"
+            fill="var(--theme-letter)"
             transform="translate(0 0.318359)"
           />
         </clipPath>

@@ -123,7 +123,7 @@ const Mentors = ({ mentor }: any) => {
               {generateMentors()}
             </Text>
             <div className="flex flex-col gap-2">
-              <Text className="text-black-7" type="font-14-400">
+              <Text className="text-letter/70" type="font-14-400">
                 {mentor?.headline}
               </Text>
               <div className="flex items-center gap-3 flex-wrap">

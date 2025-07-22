@@ -5,7 +5,7 @@ const Announcements = () => {
       <Text className="text-letter" type="font-18-600">
         {'No announcements posted yet'}
       </Text>
-      <Text className="text-black-7" type="font-14-400">
+      <Text className="text-letter/70" type="font-14-400">
         {
           'The instructor hasn’t added any announcements to this course yet. Announcements are used to inform you of updates or additions to the course.'
         }

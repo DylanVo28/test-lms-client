@@ -165,7 +165,7 @@ const IconSelector = ({ openSelect }: { openSelect: boolean }) => {
       </g>
       <defs>
         <clipPath id="clip0_2001_1904">
-          <rect width="10" height="10" fill="white" />
+          <rect width="10" height="10" fill="var(--theme-letter)" />
         </clipPath>
       </defs>
     </svg>

@@ -127,7 +127,7 @@ const CourseLandingPage = ({
             />
           )}
         />
-        {/* <Text type="font-12-400" className="text-black-7">
+        {/* <Text type="font-12-400" className="text-letter/70">
           {'Description should have minimum 200 words.'}
         </Text> */}
       </div>
@@ -218,7 +218,7 @@ const CourseLandingPage = ({
             )}
           />
         </div>
-        <Text type="font-12-400" className="text-black-7">
+        <Text type="font-12-400" className="text-letter/70">
           Use 1 or 2 related keywords, and mention 3-4 of the most important
           areas that you have covered during your course.
         </Text>

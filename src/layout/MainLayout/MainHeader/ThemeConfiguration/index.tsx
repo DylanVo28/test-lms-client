@@ -188,7 +188,10 @@ const ThemeConfiguration = ({}: {}) => {
                     onChange={onChangeCode}
                     startContent={
                       <div className="pointer-events-none flex items-center">
-                        <Text type="font-16-400" className="w-max text-black-7">
+                        <Text
+                          type="font-16-400"
+                          className="w-max text-letter/70"
+                        >
                           {window.location.origin}/
                         </Text>
                       </div>

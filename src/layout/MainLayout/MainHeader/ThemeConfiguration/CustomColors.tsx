@@ -98,13 +98,6 @@ const CustomColors: React.FC<CustomColorsProps> = ({
                 }
                 placeholder={field.placeholder}
                 className="flex-1 rounded-[4px]"
-                startContent={
-                  <div className="pointer-events-none flex items-center">
-                    <Text type="font-14-400" className="text-black-7">
-                      #
-                    </Text>
-                  </div>
-                }
               />
             </div>
 

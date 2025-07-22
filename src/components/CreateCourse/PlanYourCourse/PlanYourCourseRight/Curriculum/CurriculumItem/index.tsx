@@ -510,7 +510,7 @@ const CurriculumItem = ({
                       )}
                       <Text
                         type="font-16-500"
-                        className="text-black-7 max-w-[600px] truncate"
+                        className="text-letter/70 max-w-[600px] truncate"
                       >
                         {item.title}
                       </Text>

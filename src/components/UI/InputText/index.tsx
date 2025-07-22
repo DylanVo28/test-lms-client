@@ -139,19 +139,14 @@ const InputText = (props: InputTextProps) => {
         readOnly={readOnly}
         defaultValue={defaultValue}
         radius={radius}
-        className={clsx('rounded ', {
+        className={clsx('rounded text-letter', {
           [className]: !!className,
         })}
         isReadOnly={isReadOnly}
         label={''}
         classNames={{
           input: clsx(
-            'text-black-5 placeholder:!text-black-7 font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1',
-            {
-              'placeholder:text-letter-20': isInputSubmit,
-              'placeholder:!text-letter-20': inputDefault,
-              'placeholder:!text-[#757575] text-[16px] font-normal': inputShare,
-            }
+            'text-letter font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1 placeholder:text-letter-80'
           ),
 
           inputWrapper: clsx(

@@ -25,7 +25,7 @@ const CommentReviews = () => {
           4.1
         </Text>
         <Rater total={5} rating={4} />
-        <Text type="font-14-500" className="text-black-7">
+        <Text type="font-14-500" className="text-letter/70">
           {'36m ago'}
         </Text>
       </div>
@@ -38,13 +38,13 @@ const CommentReviews = () => {
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-1 cursor-pointer">
           <IconComment />
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             0
           </Text>
         </div>
         <div className="flex items-center gap-1 cursor-pointer">
           <IconLike />
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             0
           </Text>
         </div>

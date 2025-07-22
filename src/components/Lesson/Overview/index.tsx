@@ -60,7 +60,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                   edit={false}
                 />
               </div>
-              <Text className="text-black-7" type="font-14-400">
+              <Text className="text-letter/70" type="font-14-400">
                 {`${dataDetail?.data?.countReviews} ${'rating'}`}
               </Text>
             </div>
@@ -72,7 +72,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 </Text>
                 <Student size={18} />
               </div>
-              <Text className="text-black-7" type="font-14-400">
+              <Text className="text-letter/70" type="font-14-400">
                 {'Students'}
               </Text>
             </div>
@@ -83,7 +83,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 </Text>
                 <Clock size={18} />
               </div>
-              <Text className="text-black-7" type="font-14-400">
+              <Text className="text-letter/70" type="font-14-400">
                 {'Total'}
               </Text>
             </div>

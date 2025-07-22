@@ -105,7 +105,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         <Text type="font-18-600" className="text-letter line-clamp-2">
           {item?.certificate?.name}
         </Text>
-        <Text type="font-16-400" className="text-black-7">
+        <Text type="font-16-400" className="text-letter/70">
           {item?.certificate?.description}
         </Text>
         {!hasMinted && !isLoading && walletAddress && (

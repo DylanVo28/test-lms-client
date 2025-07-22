@@ -176,7 +176,7 @@ const FilterCourse = (props: any) => {
                   <Text className="text-letter" type="font-14-400">
                     {item?.label}
                   </Text>
-                  {/* <Text className="text-black-7" type="font-14-400">
+                  {/* <Text className="text-letter/70" type="font-14-400">
                     ({item?.total})
                   </Text> */}
                 </div>

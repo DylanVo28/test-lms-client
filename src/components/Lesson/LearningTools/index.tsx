@@ -8,7 +8,7 @@ const LearningTools = () => {
         <Text type="font-18-600" className="text-letter">
           {'Mobile notifications'}
         </Text>
-        <Text className="text-black-7" type="font-14-400">
+        <Text className="text-letter/70" type="font-14-400">
           {'Receive learning reminders on your mobile device.'}
         </Text>
       </div>

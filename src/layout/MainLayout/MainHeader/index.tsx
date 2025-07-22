@@ -93,7 +93,7 @@ const MainHeader = () => {
         <div className="md:flex hidden items-center gap-8">
           <Menubar />
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 text-letter">
             <InputText
               onChange={handleChangeSearch}
               onKeyUp={handleKeyUp}

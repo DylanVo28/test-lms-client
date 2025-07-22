@@ -82,7 +82,7 @@ const Comment = ({
           size={14}
           className="flex items-center gap-1"
         />
-        <Text type="font-14-500" className="text-black-7">
+        <Text type="font-14-500" className="text-letter/70">
           {dayjs(item?.createdAt).fromNow(true)}
         </Text>
       </div>
@@ -126,7 +126,7 @@ const Comment = ({
               }
             />
           </Button>
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             {
               item?.reactions?.filter(
                 (item: any) =>
@@ -169,7 +169,7 @@ const Comment = ({
               <IconUnLikeReview />
             )} */}
           </Button>
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             {
               item?.reactions?.filter(
                 (item: any) => item?.name === TypeReactions?.DISLIKE
@@ -180,7 +180,7 @@ const Comment = ({
 
         {/* <div className="flex items-center gap-1 cursor-pointer">
           <IconComment />
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             0
           </Text>
         </div> */}
@@ -195,7 +195,7 @@ const Comment = ({
           className="flex items-center gap-1 cursor-pointer"
         >
           {meLiked ? <IconLikedCourse /> : <IconLike />}
-          <Text type="font-14-500" className="text-black-7">
+          <Text type="font-14-500" className="text-letter/70">
             {item?.reactions?.length}
           </Text>
         </div> */}

@@ -217,7 +217,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                           <FileText size={20} weight="light" />
                           <Text
                             type="font-16-400"
-                            className="text-black-7 max-w-[800px] truncate"
+                            className="text-letter/70 max-w-[800px] truncate"
                           >
                             {field.title}
                           </Text>

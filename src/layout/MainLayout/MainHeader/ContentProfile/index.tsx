@@ -78,7 +78,7 @@ const ContentProfile = ({
       <div className="p-4 border-b-1 border-solid border-[#F0F0F01A] flex gap-1 justify-between items-center">
         <div className="flex flex-col  gap-[2px]">
           <Text
-            className="text-black-7 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap truncate w-full"
+            className="text-letter/70 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap truncate w-full"
             type="font-14-400"
           >
             {generateName()}

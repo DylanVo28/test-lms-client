@@ -104,9 +104,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
               tabList: 'w-full',
               tab: ['h-[40px] !border-0 shadow-none'],
               cursor: '!bg-main',
-              tabContent: [
-                'text-[16px] group-data-[selected=true]:text-text-letter group-data-[selected=true]:font-semibold',
-              ],
+              tabContent: ['text-[16px] text-letter'],
             }}
             variant={'bordered'}
           >

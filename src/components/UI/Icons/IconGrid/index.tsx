@@ -99,7 +99,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
         <clipPath id="clip1_106_2899">
@@ -109,7 +109,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
         <clipPath id="clip2_106_2899">
@@ -119,7 +119,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
         <clipPath id="clip3_106_2899">
@@ -129,7 +129,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
         <clipPath id="clip4_106_2899">
@@ -139,7 +139,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
         <clipPath id="clip5_106_2899">
@@ -149,7 +149,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
             width="6.22222"
             height="8.55556"
             rx="1"
-            fill="white"
+            fill="var(--theme-letter)"
           />
         </clipPath>
       </defs>
