@@ -7,6 +7,7 @@ import { toast } from '../UI/Toast/toast';
 import { referralRequest } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
 import FormatNumberDecimal from '../Commons/FormatNumberDecimal';
+import { useAccount } from 'wagmi';
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -36,7 +37,7 @@ const Overview = ({
   const [refCode, setRefCode] = useState('');
   const { theme: dataThemeConfig } = useThemeInitial();
 
-  // const { address } = useAccount();
+  const { address } = useAccount();
   // const {
   //   data: volumnData,
   //   loading,
@@ -84,7 +85,12 @@ const Overview = ({
               src={data.avatar}
             />
           </div>
-          <Text type="font-20-700">{data.fullname}</Text>
+          {data.fullname && <Text type="font-20-700">{data.fullname}</Text>}
+          {!data.fullname && (
+            <Text type="font-20-700">
+              {address?.slice(0, 6)}...{address?.slice(-4)}
+            </Text>
+          )}
           <div className="opacity-50">{data.email}</div>
         </div>
 
