@@ -455,68 +455,78 @@ const PlanYourCourse = () => {
       return;
     }
 
-    // Validate all sections similar to publish
-    const resData = await fetchDetailSection();
-
-    const allLessonsHaveContent =
-      Array.isArray(resData?.data) &&
-      resData?.data.length > 0 &&
-      resData?.data.every((section: any) => {
-        if (section.lessons.length === 0) {
-          return section.quizzes.length > 0;
-        }
-
-        return section.lessons.every(
-          (lesson: any) =>
-            (lesson.id && (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
-            !lesson.id
-        );
-      });
-    const allQuizzesHaveQuestions =
-      Array.isArray(resData?.data) &&
-      resData?.data.length > 0 &&
-      resData?.data.every((section: any) => {
-        if (section.quizzes.length === 0) {
-          return section.lessons.length > 0;
-        }
-
-        return section.quizzes.every(
-          (quizz: any) =>
-            (quizz.id &&
-              Array.isArray(quizz.questions) &&
-              quizz.questions.length > 0) ||
-            !quizz.id
-        );
-      });
-
-    const isEnoughtSetPrice = values?.price && values?.originPrice;
-    const isEnoughIntendedLearners =
-      values?.objectives?.length > 0 &&
-      values?.intenedLeaners?.length > 0 &&
-      values?.requirements?.length > 0;
-    const isEnoughCourseLangdingePage =
-      values?.title && values?.categoryId && values?.level && values?.lang;
-
-    // Set validation errors for incomplete sections
+    // Validate only the current active plan
     const validationErrorsToSet: any = {};
 
-    if (!isEnoughIntendedLearners) {
-      validationErrorsToSet.intendedLearners = true;
+    if (activePlan === 1) {
+      // Validate Intended Learners
+      const isEnoughIntendedLearners =
+        values?.objectives?.length > 0 &&
+        values?.intenedLeaners?.length > 0 &&
+        values?.requirements?.length > 0;
+
+      if (!isEnoughIntendedLearners) {
+        validationErrorsToSet.intendedLearners = true;
+      }
+    } else if (activePlan === 2) {
+      // Validate Curriculum
+      const resData = await fetchDetailSection();
+
+      const allLessonsHaveContent =
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every((section: any) => {
+          if (section.lessons.length === 0) {
+            return section.quizzes.length > 0;
+          }
+
+          return section.lessons.every(
+            (lesson: any) =>
+              (lesson.id &&
+                (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+              !lesson.id
+          );
+        });
+      const allQuizzesHaveQuestions =
+        Array.isArray(resData?.data) &&
+        resData?.data.length > 0 &&
+        resData?.data.every((section: any) => {
+          if (section.quizzes.length === 0) {
+            return section.lessons.length > 0;
+          }
+
+          return section.quizzes.every(
+            (quizz: any) =>
+              (quizz.id &&
+                Array.isArray(quizz.questions) &&
+                quizz.questions.length > 0) ||
+              !quizz.id
+          );
+        });
+
+      if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
+        const incompleteItems = getIncompleteItems(resData?.data || []);
+        validationErrorsToSet.curriculum = true;
+        validationErrorsToSet.incompleteItems = incompleteItems;
+      }
+    } else if (activePlan === 3) {
+      // Validate Course Landing Page
+      const isEnoughCourseLangdingePage =
+        values?.title && values?.categoryId && values?.level && values?.lang;
+
+      if (!isEnoughCourseLangdingePage) {
+        validationErrorsToSet.courseLandingPage = true;
+      }
+    } else if (activePlan === 4) {
+      // Validate Set Price
+      const isEnoughtSetPrice = values?.price && values?.originPrice;
+
+      if (!isEnoughtSetPrice) {
+        validationErrorsToSet.setPrice = true;
+      }
     }
 
-    if (!allLessonsHaveContent || !allQuizzesHaveQuestions) {
-      const incompleteItems = getIncompleteItems(resData?.data || []);
-      validationErrorsToSet.curriculum = true;
-      validationErrorsToSet.incompleteItems = incompleteItems;
-    }
-
-    if (!isEnoughCourseLangdingePage) {
-      validationErrorsToSet.courseLandingPage = true;
-    }
-
-    if (!isEnoughtSetPrice) {
-      validationErrorsToSet.setPrice = true;
-    }
+    console.log('validationErrorsToSet', validationErrorsToSet);
 
     // Set validation errors if any exist
     if (Object.keys(validationErrorsToSet).length > 0) {

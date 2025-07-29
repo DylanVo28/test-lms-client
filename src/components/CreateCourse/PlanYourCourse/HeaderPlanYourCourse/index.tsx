@@ -31,12 +31,13 @@ const HeaderPlanYourCourse = ({
           size={isMobile ? 'sm' : 'md'}
         >
           <div className="flex items-center gap-1">
-            <Image
+            {/* <Image
               src="/icons/ic-back.svg"
               alt="icon-back"
               width={20}
               height={20}
-            />
+            /> */}
+            <IconBlack />
 
             <Text type="font-16-500" className="text-letter">
               {'Back to courses'}
