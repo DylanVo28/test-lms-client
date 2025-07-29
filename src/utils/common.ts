@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { ethers } from 'ethers';
 
 export const mapRatingData = (rating: any) => {
   if (!rating) return {};
@@ -108,4 +109,35 @@ export const formatPrice = (price: any) => {
 
 export function calculateGasMargin(value: BigNumber): BigNumber {
   return value.mul(BigNumber.from(150)).div(BigNumber.from(100));
+}
+
+export function extractRevertReason(errorMessage: string): string {
+  // 1️⃣ Look for `reason="execution reverted: ..."`
+  const reasonMatch = errorMessage.match(/reason="([^"]+)"/);
+  if (reasonMatch) {
+    return `reason="${reasonMatch[1]}"`;
+  }
+
+  // 2️⃣ Look for JSON-RPC error message
+  const messageMatch = errorMessage.match(
+    /message":"(execution reverted:[^"]+)"/
+  );
+  if (messageMatch) {
+    return `reason="${messageMatch[1]}"`;
+  }
+
+  // 3️⃣ Try to decode standard Error(string) from hex if present
+  const hexMatch = errorMessage.match(/data":"(0x08c379a0[0-9a-fA-F]+)"/);
+  if (hexMatch) {
+    try {
+      const hexData = '0x' + hexMatch[1].slice(10); // strip selector
+      const reason = ethers.utils.defaultAbiCoder.decode(['string'], hexData);
+      return `reason="execution reverted: ${reason[0]}"`;
+    } catch (e) {
+      console.error('Failed to decode hex reason:', e);
+    }
+  }
+
+  // 4️⃣ Fallback
+  return `reason=UNKNOWN`;
 }

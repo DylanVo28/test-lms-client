@@ -17,6 +17,7 @@ import { useProfile } from '@/store/profile/useProfile';
 import { getVaultContract } from '@/hooks/useContract';
 import BigNumber from 'bignumber.js';
 import { BIG_TEN } from '@/utils/bigNumber';
+import { extractRevertReason } from '@/utils/common';
 
 const TabButton: React.FC<{
   active: boolean;
@@ -95,11 +96,11 @@ const Earnings = ({ reload }: { reload: () => void }) => {
           API_PATH.CANCEL_TRANSACTION(metadata.data.transactionId)
         );
 
-        toast.success('Cancel transaction.');
+        toast.error('Cancel transaction.');
         return;
       }
 
-      toast.success(error.message);
+      toast.error(extractRevertReason(error.message));
     } finally {
       setClaimLoading(false);
       getKOLClaimableAmount();
