@@ -35,6 +35,7 @@ const FormQuiz = ({
             className="w-full"
             placeholder={'Introduction to JavaScript Functions'}
             inputDefault
+            value={valueTitle}
           />
           <QuillEditor
             onChange={(value: any) => setValueDescription(value)}

@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 interface CurriculumContextInterface {
   dataCurriculum: any;
   setDataCurriculum: (data: any) => void;
-  // editLessonId: string | null;
+  editLessonId: string | null;
   handleUpdateEditLessonId: (id: string | null) => void;
   // showBoundingBox: boolean;
   handleUpdateShowBoundingBox: (show: boolean) => void;
@@ -11,7 +11,7 @@ interface CurriculumContextInterface {
 const CurriculumContext = createContext<CurriculumContextInterface>({
   dataCurriculum: [],
   setDataCurriculum: () => {},
-  // editLessonId: null,
+  editLessonId: null,
   handleUpdateEditLessonId: () => {},
   // showBoundingBox: false,
   handleUpdateShowBoundingBox: () => {},
@@ -35,7 +35,7 @@ const CurriculumProvider = ({ children }: any) => {
       value={{
         dataCurriculum,
         setDataCurriculum,
-        // editLessonId,
+        editLessonId,
         handleUpdateEditLessonId,
         // showBoundingBox,
         handleUpdateShowBoundingBox,

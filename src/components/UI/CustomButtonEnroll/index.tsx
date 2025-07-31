@@ -1,4 +1,4 @@
-import { Button } from '@nextui-org/react';
+import { Button, cn } from '@nextui-org/react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Text from '../Text';
 import { useTokenInfo } from '@/hooks/useTokenInfo';
@@ -112,8 +112,12 @@ const CustomButtonEnroll = ({
                       }
                       handleClickButton();
                     }}
-                    className="bg-main w-full min-h-[40px] rounded"
+                    className={cn(
+                      'bg-main w-full min-h-[40px] rounded',
+                      isInsufficientBalance && 'opacity-60 cursor-not-allowed'
+                    )}
                     disabled={isInsufficientBalance}
+                    data-hover={!isInsufficientBalance}
                   >
                     {isInsufficientBalance && (
                       <Text className="text-text-letter" type="font-16-600">

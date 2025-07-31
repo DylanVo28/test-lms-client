@@ -12,7 +12,7 @@ import {
 import IconPlusMain from '@/components/UI/Icons/IconPlusMain';
 import Text from '@/components/UI/Text';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
-import { Button } from '@nextui-org/react';
+import { Button, cn, Tooltip } from '@nextui-org/react';
 import {
   FileText,
   MonitorPlay,
@@ -36,6 +36,8 @@ import ModalConfirmDeleteSection from '../ModalConfirmDeleteSection';
 import Content from './Content';
 import ContentQuestions from './ContentQuestions';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
+import { toast } from 'sonner';
+import EditLessonToastContent from '@/components/Commons/EditLessonToast';
 
 const CurriculumItem = ({
   item,
@@ -68,8 +70,7 @@ const CurriculumItem = ({
   const [indexAddQuestion, setIndexAddQuestion] = useState<any>([]);
   const [idAddQuestionQuizz, setIdAddQuestionQuizz] = useState<string>('');
 
-  const { handleUpdateEditLessonId, handleUpdateShowBoundingBox } =
-    useCurriculumContext();
+  const { handleUpdateEditLessonId, editLessonId } = useCurriculumContext();
 
   useEffect(() => {
     if (item?.id) {
@@ -208,6 +209,7 @@ const CurriculumItem = ({
 
   const { run: runCreateQuizz, loading: loadingQuizz } = useCreateQuizz({
     onSuccess(res) {
+      handleUpdateEditLessonId(null);
       const dataQuizz = dataCurriculum?.filter(
         (item: any) => item?.type === TYPE_COURSE.QUIZ
       );
@@ -269,6 +271,7 @@ const CurriculumItem = ({
     const newData = indexAddQuestion?.filter((item: any) => item !== index);
     setIndexAddQuestion(newData);
     setIdAddQuestionQuizz(id);
+    handleUpdateEditLessonId(null);
 
     const body = {
       question: values?.question,
@@ -313,14 +316,6 @@ const CurriculumItem = ({
 
   const handleClickAddContent = (item: any, index: number) => {
     const type = item?.type as TYPE_COURSE;
-
-    // if (editLessonId) {
-    //   handleUpdateShowBoundingBox(true);
-    //   toast.error('Please save the lesson before adding a new item');
-    //   return;
-    // } else {
-    //   handleUpdateEditLessonId(item?.id);
-    // }
 
     handleUpdateEditLessonId(item?.id);
 
@@ -569,9 +564,9 @@ const CurriculumItem = ({
               {indexContentAdd?.includes(indexCurriculum) ||
               indexAddQuestion?.includes(indexCurriculum) ? (
                 <div className="flex items-center gap-3">
-                  <Text type="font-14-500" className="w-max">
+                  {/* <Text type="font-14-500" className="w-max">
                     {'Select content type'}
-                  </Text>
+                  </Text> */}
                   <Button
                     onPress={() => {
                       const newData = indexContentAdd?.filter(
@@ -585,6 +580,7 @@ const CurriculumItem = ({
                       setValueContent('');
                       setValueInfo({});
                       setValueQuestion({});
+                      handleUpdateEditLessonId(null);
                     }}
                     isIconOnly
                     variant="light"
@@ -596,27 +592,34 @@ const CurriculumItem = ({
                 </div>
               ) : (
                 <>
-                  {item?.content || item?.info?.duration ? null : (
-                    <>
-                      {!valueEditEditCotentLesson?.id && (
+                  {!item?.content &&
+                    !item?.info?.duration &&
+                    !valueEditEditCotentLesson?.id && (
+                      <Tooltip
+                        content={editLessonId ? <EditLessonToastContent /> : ''}
+                      >
                         <Button
-                          onPress={() =>
-                            handleClickAddContent(item, indexCurriculum)
-                          }
-                          className="border-main border-1 bg-transparent rounded h-[30px]"
+                          onPress={() => {
+                            if (!!editLessonId) return;
+                            handleClickAddContent(item, indexCurriculum);
+                          }}
+                          className={cn(
+                            'border-main border-1 bg-transparent rounded h-[30px] pr-3',
+                            !!editLessonId && 'opacity-50 cursor-not-allowed'
+                          )}
+                          disabled={!!editLessonId}
                         >
-                          <div className="flex items-center gap-1">
-                            <IconPlusMain />
+                          <div className="flex items-center">
                             <Text type="font-16-400" className="text-main">
+                              +{' '}
                               {item.type === TYPE_COURSE.LECTURE
                                 ? 'Content'
                                 : 'Question'}
                             </Text>
                           </div>
                         </Button>
-                      )}
-                    </>
-                  )}
+                      </Tooltip>
+                    )}
                 </>
               )}
             </div>

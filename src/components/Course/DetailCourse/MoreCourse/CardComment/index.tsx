@@ -1,15 +1,10 @@
-import {
-  useCommentCours,
-  useReviewCours,
-} from '@/components/Course/ListCourse/service';
-import InputText from '@/components/UI/InputText';
+import { useReviewCours } from '@/components/Course/ListCourse/service';
 import InputTextArena from '@/components/UI/InputTextArena';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { useProfile } from '@/store/profile/useProfile';
 import { getAvatar } from '@/utils/common';
-import { Avatar, Button } from '@nextui-org/react';
-import { Star } from '@phosphor-icons/react';
+import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import ReactStars from 'react-stars';

@@ -22,6 +22,7 @@ import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import IconNotification from '@/components/UI/Icons/IconNotification';
 
 const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
@@ -178,7 +179,7 @@ const DrawerMenu = (props: any, ref: any) => {
                         {notifications?.totalCount > 0 && (
                           <div
                             className={clsx(
-                              'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-[18px] flex justify-center items-center',
+                              'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-auto px-1 flex justify-center items-center',
                               {
                                 ['!min-w-8 !right-[-12px] !top-[-12px]']:
                                   notifications?.totalCount > 99,
@@ -193,12 +194,7 @@ const DrawerMenu = (props: any, ref: any) => {
                           </div>
                         )}
 
-                        <Image
-                          src={'/icons/ic-notification.svg'}
-                          height={20}
-                          width={20}
-                          alt=""
-                        />
+                        <IconNotification />
                       </div>
                     </PopoverTrigger>
                     <PopoverContent className="rounded-lg">

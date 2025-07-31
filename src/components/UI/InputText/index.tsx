@@ -115,7 +115,7 @@ const InputText = (props: InputTextProps) => {
         endContent={
           <>
             {maxLength ? (
-              <div className="absolute right-[-4px] bottom-[0px] px-2 rounded-sm">
+              <div className="absolute h-full right-[4px] pl-1 bottom-[0px] rounded-sm backdrop-blur-sm bg-white/60 flex items-center justify-center">
                 <Text type="font-12-400" className="text-letter-50">
                   {value && value?.length > 0
                     ? maxLength - Number(value?.length)
@@ -123,6 +123,13 @@ const InputText = (props: InputTextProps) => {
                 </Text>
               </div>
             ) : (
+              // <div className="absolute right-[-4px] bottom-[0px] px-2 rounded-sm">
+              //   <Text type="font-12-400" className="text-letter-50">
+              //     {value && value?.length > 0
+              //       ? maxLength - Number(value?.length)
+              //       : maxLength}
+              //   </Text>
+              // </div>
               <>{endContent}</>
             )}
           </>
@@ -146,7 +153,7 @@ const InputText = (props: InputTextProps) => {
         label={''}
         classNames={{
           input: clsx(
-            'text-letter font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1 placeholder:text-letter-80'
+            'text-letter font-roboto-flex text-[16px] data-[has-start-content=true]:mb-[2px] data-[has-start-content=true]:ps-1 placeholder:text-letter-80 !pr-6'
           ),
 
           inputWrapper: clsx(
