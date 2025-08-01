@@ -22,6 +22,7 @@ import ModalViewVideo from './ModalViewVideo';
 import { useEnrollCourse, useEnrollCourseFree } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
 import FormatNumberDecimal from '@/components/Commons/FormatNumberDecimal';
+import BigNumber from 'bignumber.js';
 
 const CardEnrollNow = ({
   course,
@@ -104,12 +105,26 @@ const CardEnrollNow = ({
   const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
   const refModalViewVideo: any = useRef(null);
-  const amount = +(course?.price ?? 10000000);
 
   const preCheckEnroll = async (id: string) => {
     const res = await privateRequest(
       request.post,
       API_PATH.PRE_CHECK_ENROLL(id)
+    );
+    return res.data;
+  };
+
+  const getMetadataPayment = async (
+    id: string
+  ): Promise<{
+    courseId: string;
+    amount: BigNumber;
+    kolAddress: string;
+    commissionRate: BigNumber;
+  }> => {
+    const res = await privateRequest(
+      request.get,
+      API_PATH.GET_METADATA_PAYMENT(id)
     );
     return res.data;
   };
@@ -152,14 +167,14 @@ const CardEnrollNow = ({
     try {
       const res = await preCheckEnroll(course.id);
       if (res === true) {
-        const kolAddress = course.author.walletAddress || ZERO_ADDRESS;
-        const commissionRate = kolAddress !== ZERO_ADDRESS ? '50' : '0';
-        await approveUSDC(VAULT_ADDRESS, amount);
+        const metadataPayment = await getMetadataPayment(course.id);
+
+        await approveUSDC(VAULT_ADDRESS, metadataPayment.amount);
         const txHash = await buyCourse(
-          course.id,
-          amount,
-          kolAddress,
-          commissionRate
+          metadataPayment.courseId,
+          metadataPayment.amount,
+          metadataPayment.kolAddress,
+          metadataPayment.commissionRate
         );
         if (txHash) {
           run(course.id, txHash);

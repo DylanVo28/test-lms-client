@@ -44,9 +44,9 @@ export const useUSDCOperations = () => {
   const buyCourse = useCallback(
     async (
       courseId: string,
-      amount: string | number,
+      amount: BigNumber,
       kolAddress: string,
-      commissionRateRate: string
+      commissionRateRate: BigNumber
     ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -56,15 +56,15 @@ export const useUSDCOperations = () => {
         setLoading(true);
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
-          parseAmount(amount),
+          amount,
           kolAddress,
-          BigNumber(commissionRateRate).multipliedBy(BIG_TEN.pow(2)).toFixed(0)
+          commissionRateRate
         );
         const tx = await vaultContract.pay(
           courseId,
-          parseAmount(amount),
+          amount,
           kolAddress,
-          BigNumber(commissionRateRate).multipliedBy(BIG_TEN.pow(2)).toFixed(0),
+          commissionRateRate,
           {
             gasLimit: calculateGasMargin(estimatedGas),
           }

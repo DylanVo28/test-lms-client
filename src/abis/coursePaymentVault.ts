@@ -235,6 +235,19 @@ export const coursePaymentVaultAbi = [
   },
   {
     inputs: [],
+    name: 'DEFAULT_KOL_COMMISSION_RATE',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'execute',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -262,6 +275,38 @@ export const coursePaymentVaultAbi = [
       },
     ],
     name: 'getKolClaimableAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getKolComissionRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getNonce',
     outputs: [
       {
         internalType: 'uint256',
@@ -404,6 +449,19 @@ export const coursePaymentVaultAbi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'kolComissionRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -521,9 +579,9 @@ export const coursePaymentVaultAbi = [
         type: 'address',
       },
       {
-        internalType: 'uint256',
-        name: 'kolCommissionRate',
-        type: 'uint256',
+        internalType: 'bytes',
+        name: 'signature',
+        type: 'bytes',
       },
     ],
     name: 'pay',
@@ -570,6 +628,37 @@ export const coursePaymentVaultAbi = [
       },
     ],
     name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: '_isKol',
+        type: 'bool',
+      },
+    ],
+    name: 'setKol',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_kolComissionRate',
+        type: 'uint256',
+      },
+    ],
+    name: 'setKolComissionRate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -659,6 +748,19 @@ export const coursePaymentVaultAbi = [
       },
     ],
     name: 'userCoursePayments',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'whatAvailableToClaim',
     outputs: [
       {
         internalType: 'uint256',
