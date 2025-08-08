@@ -11,7 +11,8 @@ import { useAccount } from 'wagmi';
 const REQ_TIMEOUT = 25 * 1000;
 export const isDev = ENV.NODE_ENV === 'development';
 
-export const PREFIX_API = ENV.APP_API_URL;
+// export const PREFIX_API = ENV.APP_API_URL;
+export const PREFIX_API = 'http://localhost:19988';
 
 const handleLogout = async () => {
   try {
