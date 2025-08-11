@@ -46,7 +46,7 @@ export const useUSDCOperations = () => {
       courseId: string,
       amount: BigNumber,
       kolAddress: string,
-      commissionRateRate: BigNumber
+      signature: string
     ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -58,13 +58,13 @@ export const useUSDCOperations = () => {
           courseId,
           amount,
           kolAddress,
-          commissionRateRate
+          signature
         );
         const tx = await vaultContract.pay(
           courseId,
           amount,
           kolAddress,
-          commissionRateRate,
+          signature,
           {
             gasLimit: calculateGasMargin(estimatedGas),
           }

@@ -61,7 +61,7 @@ export default function CourseCard({
       </div>
       <div className="py-4 px-3 flex flex-col gap-4">
         <div className="flex flex-col gap-[10px]">
-          <Text type="font-16-500" className="line-clamp-2">
+          <Text type="font-16-500" className="line-clamp-2 min-h-[48px]">
             {name}
           </Text>
 

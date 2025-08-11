@@ -120,7 +120,7 @@ const CardEnrollNow = ({
     courseId: string;
     amount: BigNumber;
     kolAddress: string;
-    commissionRate: BigNumber;
+    signature: string;
   }> => {
     const res = await privateRequest(
       request.get,
@@ -169,12 +169,13 @@ const CardEnrollNow = ({
       if (res === true) {
         const metadataPayment = await getMetadataPayment(course.id);
 
-        await approveUSDC(VAULT_ADDRESS, metadataPayment.amount);
+        await approveUSDC(VAULT_ADDRESS, metadataPayment.amount.toString());
+
         const txHash = await buyCourse(
           metadataPayment.courseId,
           metadataPayment.amount,
           metadataPayment.kolAddress,
-          metadataPayment.commissionRate
+          metadataPayment.signature
         );
         if (txHash) {
           run(course.id, txHash);
