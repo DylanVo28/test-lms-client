@@ -80,43 +80,24 @@ export const useUSDCOperations = () => {
     [vaultContract]
   );
 
-  const withdraw = useCallback(
-    async (
-      txId: string,
-      amount: string,
-      deadline: number,
-      signature: string
-    ) => {
-      if (!vaultContract) {
-        console.error('Vault contract not initialized');
-        return;
-      }
-      try {
-        const estimatedGas = await vaultContract.estimateGas.withdraw(
-          txId,
-          amount,
-          deadline,
-          signature
-        );
-        const tx = await vaultContract.withdraw(
-          txId,
-          amount,
-          deadline,
-          signature,
-          {
-            gasLimit: calculateGasMargin(estimatedGas),
-          }
-        );
-        await tx.wait();
-        return tx.hash;
-      } catch (error) {
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    },
-    [vaultContract]
-  );
+  const withdraw = useCallback(async () => {
+    if (!vaultContract) {
+      console.error('Vault contract not initialized');
+      return;
+    }
+    try {
+      const estimatedGas = await vaultContract.estimateGas.withdraw();
+      const tx = await vaultContract.withdraw({
+        gasLimit: calculateGasMargin(estimatedGas),
+      });
+      await tx.wait();
+      return tx.hash;
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }, [vaultContract]);
 
   const execute = useCallback(async () => {
     if (!vaultContract) {

@@ -76,12 +76,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
         request.get,
         API_PATH.GET_WITHDRAW_METADATA
       );
-      const tx = await withdraw(
-        metadata.data.transactionId,
-        metadata.data.nonce,
-        metadata.data.deadline,
-        metadata.data.signature
-      );
+      const tx = await withdraw();
 
       if (tx) {
         toast.success('Successfully withdraw from the course.');
@@ -91,7 +86,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
         'user rejected transaction'
       );
       if (isCancelTransaction) {
-        const cancelTxRes = await privateRequest(
+        await privateRequest(
           request.post,
           API_PATH.CANCEL_TRANSACTION(metadata.data.transactionId)
         );
