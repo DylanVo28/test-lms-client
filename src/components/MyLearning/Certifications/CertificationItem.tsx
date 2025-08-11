@@ -40,7 +40,11 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         localStorage.removeItem(`minting_${item.id}`);
       },
       onError(e) {
-        toast.error(e.message);
+        if (e.message?.includes('Already minted for this course')) {
+          toast.error('You have already minted this certificate');
+        } else {
+          toast.error(e.message);
+        }
         localStorage.removeItem(`minting_${item.id}`);
       },
     }
@@ -56,6 +60,13 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   } = useHasMinted({
     address: walletAddress,
     courseId: item?.certificate?.courseId,
+  });
+
+  console.log('hasMinted::::', {
+    hasMinted,
+    walletAddress,
+    courseId: item?.certificate?.courseId,
+    courseTitle: item?.certificate?.name,
   });
 
   useEffect(() => {
@@ -95,20 +106,23 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         alt=""
         width={240}
         height={120}
-        className="w-[240px] h-[120px] object-cover"
+        className="w-[120px] h-[120px] object-cover"
         onError={(e: any) => {
           e.target.srcset = '/images/img-certification.png';
         }}
       />
 
       <div className="flex flex-col gap-3">
-        <Text type="font-18-600" className="text-letter line-clamp-2">
+        <Text
+          type="font-18-600"
+          className="text-letter line-clamp-2 min-h-[48px]"
+        >
           {item?.certificate?.name}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
           {item?.certificate?.description}
         </Text>
-        {!hasMinted && !isLoading && walletAddress && (
+        {!item.tokenId && !isLoading && walletAddress && (
           <>
             <Button
               onPress={handleMint}
@@ -130,65 +144,52 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
           </div>
         )}
 
-        {hasMinted && (
+        {item.tokenId && (
           <div className="flex gap-x-2 items-center">
             <div className="text-main">
               You have already minted this certificate
             </div>
             <div>
-              {!item.tokenId && (
-                <Button
-                  isIconOnly
-                  size="sm"
-                  variant="light"
-                  onPress={handleManualRefetch}
-                  isLoading={isRefetching}
-                >
-                  <ArrowClockwise size={20} className="text-main" />
-                </Button>
-              )}
-              {item.tokenId && (
-                <div>
-                  <Tooltip
-                    content={
-                      <div className="flex flex-col items-start gap-2 p-2">
-                        <div>
-                          To import this certificate to MetaMask, go to MetaMask
-                          → NFTs → Add NFT → Enter:
-                        </div>
-                        <div className="flex gap-x-1 items-center">
-                          Contract:{' '}
-                          <code className="text-main">{MINT_NFT_ADDRESS}</code>
-                          <div
-                            className="cursor-pointer"
-                            onClick={() => {
-                              onCopy(MINT_NFT_ADDRESS);
-                            }}
-                          >
-                            <CopyIcon />
-                          </div>
-                        </div>
-                        <div className="flex gap-x-1 items-center">
-                          Token ID:{' '}
-                          <code className="text-main">{item.tokenId}</code>
-                          <div
-                            className="cursor-pointer"
-                            onClick={() => {
-                              onCopy(item.tokenId);
-                            }}
-                          >
-                            <CopyIcon />
-                          </div>
+              <div>
+                <Tooltip
+                  content={
+                    <div className="flex flex-col items-start gap-2 p-2">
+                      <div>
+                        To import this certificate to MetaMask, go to MetaMask →
+                        NFTs → Add NFT → Enter:
+                      </div>
+                      <div className="flex gap-x-1 items-center">
+                        Contract:{' '}
+                        <code className="text-main">{MINT_NFT_ADDRESS}</code>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            onCopy(MINT_NFT_ADDRESS);
+                          }}
+                        >
+                          <CopyIcon />
                         </div>
                       </div>
-                    }
-                  >
-                    <div className="text-letter font-semibold text-sm">
-                      <Info size={16} className="text-main" color="#818181" />
+                      <div className="flex gap-x-1 items-center">
+                        Token ID:{' '}
+                        <code className="text-main">{item.tokenId}</code>
+                        <div
+                          className="cursor-pointer"
+                          onClick={() => {
+                            onCopy(item.tokenId);
+                          }}
+                        >
+                          <CopyIcon />
+                        </div>
+                      </div>
                     </div>
-                  </Tooltip>
-                </div>
-              )}
+                  }
+                >
+                  <div className="text-letter font-semibold text-sm">
+                    <Info size={16} className="text-main" color="#818181" />
+                  </div>
+                </Tooltip>
+              </div>
             </div>
           </div>
         )}
