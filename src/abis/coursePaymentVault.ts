@@ -772,28 +772,7 @@ export const coursePaymentVaultAbi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_txId',
-        type: 'string',
-      },
-      {
-        internalType: 'uint256',
-        name: '_nonce',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_deadline',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: '_signature',
-        type: 'bytes',
-      },
-    ],
+    inputs: [],
     name: 'withdraw',
     outputs: [],
     stateMutability: 'nonpayable',
