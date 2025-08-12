@@ -301,25 +301,6 @@ export const coursePaymentVaultAbi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-    ],
-    name: 'getNonce',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'bytes32',
         name: 'role',
         type: 'bytes32',
@@ -450,7 +431,7 @@ export const coursePaymentVaultAbi = [
   },
   {
     inputs: [],
-    name: 'kolComissionRate',
+    name: 'kolCommisionRate',
     outputs: [
       {
         internalType: 'uint256',
@@ -503,25 +484,6 @@ export const coursePaymentVaultAbi = [
       {
         internalType: 'uint256',
         name: 'availableToClaim',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'nonces',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
         type: 'uint256',
       },
     ],
