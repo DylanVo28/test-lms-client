@@ -2,6 +2,7 @@ import { TabMyLearning } from '@/components/MyLearning';
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
 import {
+  Button,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -26,6 +27,7 @@ import IconNotification from '@/components/UI/Icons/IconNotification';
 import Link from 'next/link';
 import ProfileModal from '@/components/UI/ProfileModal';
 import { formatWalletAddress } from '@/utils/common';
+import IconUser from '@/components/UI/Icons/IconUser';
 
 const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
@@ -139,10 +141,35 @@ const DrawerMenu = (props: any, ref: any) => {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                {accessToken && profile?.id ? (
+                <>
+                  {/* Menu Items for Non-Logged In Users */}
+                  <div className="flex flex-col gap-6 justify-center items-center py-6 px-4">
+                    {MENUS?.map((item) => {
+                      return (
+                        <Text
+                          key={item?.key}
+                          onClick={() => handleClickRedirectPage(item?.key)}
+                          className={clsx(
+                            'cursor-pointer transition-all hover:text-main text-black-5 ',
+                            {
+                              'text-main font-bold': router.query.type
+                                ? router.query.type ===
+                                    TabMyLearning.WISHLIST && item?.key === 2
+                                : item.href === router.pathname,
+                            }
+                          )}
+                          type="font-16-600"
+                        >
+                          {item?.label}
+                        </Text>
+                      );
+                    })}
+                  </div>
+                </>
+                {accessToken && profile?.id && (
                   <>
                     {/* Profile Section */}
-                    <div className="flex flex-col gap-6 justify-center items-center py-6 px-4">
+                    {/* <div className="flex flex-col gap-6 justify-center items-center py-6 px-4 w-fit mx-auto">
                       <div
                         onClick={onOpen}
                         className="w-full bg-gray-10 hover:bg-gray-20 transition-colors rounded-lg p-4 cursor-pointer border border-gray-20"
@@ -164,66 +191,64 @@ const DrawerMenu = (props: any, ref: any) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    {/* Action Buttons for Logged In Users */}
                     <div className="flex justify-center items-center gap-4">
-                      <Link
-                        href={`/${router.query.code}${ROUTE_PATH.NOTIFICATIONS}`}
-                      >
-                        <div className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10 hover:bg-gray-20 transition-colors">
-                          {notifications?.totalCount > 0 && (
-                            <div
-                              className={clsx(
-                                'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-auto px-1 flex justify-center items-center',
-                                {
-                                  ['!min-w-8 !right-[-12px] !top-[-12px]']:
-                                    notifications?.totalCount > 99,
-                                }
-                              )}
-                            >
-                              <Text type="font-12-500" className="text-letter">
-                                {notifications?.totalCount > 99
-                                  ? '99+'
-                                  : notifications?.totalCount}
-                              </Text>
-                            </div>
-                          )}
-                          <IconNotification />
-                        </div>
-                      </Link>
-                      {profile?.role === 'KOL' && <ThemeConfiguration />}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Menu Items for Non-Logged In Users */}
-                    <div className="flex flex-col gap-6 justify-center items-center py-6 px-4">
-                      {MENUS?.map((item) => {
-                        return (
-                          <Text
-                            key={item?.key}
-                            onClick={() => handleClickRedirectPage(item?.key)}
-                            className={clsx(
-                              'cursor-pointer transition-all hover:text-main text-black-5 ',
-                              {
-                                'text-main font-bold': router.query.type
-                                  ? router.query.type ===
-                                      TabMyLearning.WISHLIST && item?.key === 2
-                                  : item.href === router.pathname,
-                              }
+                      {/* Action Buttons for Logged In Users */}
+                      <div className="flex justify-center items-center gap-4">
+                        <Link
+                          href={`/${router.query.code}${ROUTE_PATH.NOTIFICATIONS}`}
+                        >
+                          <div className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10 hover:bg-gray-20 transition-colors">
+                            {notifications?.totalCount > 0 && (
+                              <div
+                                className={clsx(
+                                  'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-auto px-1 flex justify-center items-center',
+                                  {
+                                    ['!min-w-8 !right-[-12px] !top-[-12px]']:
+                                      notifications?.totalCount > 99,
+                                  }
+                                )}
+                              >
+                                <Text
+                                  type="font-12-500"
+                                  className="text-letter"
+                                >
+                                  {notifications?.totalCount > 99
+                                    ? '99+'
+                                    : notifications?.totalCount}
+                                </Text>
+                              </div>
                             )}
-                            type="font-16-600"
-                          >
-                            {item?.label}
-                          </Text>
-                        );
-                      })}
-                    </div>
+                            <IconNotification />
+                          </div>
+                        </Link>
+                        {profile?.role === 'KOL' && <ThemeConfiguration />}
+                      </div>
 
-                    {/* Login Button for Non-Logged In Users */}
-                    <div className="flex justify-center items-center gap-4">
-                      <ButtonLoginWallet setVisible={setVisible} />
+                      {/* Login Button for Non-Logged In Users */}
+                      <div className="flex justify-center items-center gap-4">
+                        {!profile.id ? (
+                          <Button
+                            onPress={() => {
+                              openConnectModal();
+                            }}
+                            className="bg-main w-full min-h-[40px] rounded"
+                          >
+                            <Text className="text-letter" type="font-16-600">
+                              Connect Wallet
+                            </Text>
+                          </Button>
+                        ) : (
+                          <Button
+                            isIconOnly
+                            className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
+                            onClick={onOpen}
+                          >
+                            <IconUser />
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </>
                 )}
