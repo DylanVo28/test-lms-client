@@ -70,12 +70,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
 
   const handleWithdraw = async () => {
     setClaimLoading(true);
-    let metadata = null;
     try {
-      metadata = await privateRequest(
-        request.get,
-        API_PATH.GET_WITHDRAW_METADATA
-      );
       const tx = await withdraw();
 
       if (tx) {
@@ -86,11 +81,6 @@ const Earnings = ({ reload }: { reload: () => void }) => {
         'user rejected transaction'
       );
       if (isCancelTransaction) {
-        await privateRequest(
-          request.post,
-          API_PATH.CANCEL_TRANSACTION(metadata.data.transactionId)
-        );
-
         toast.error('Cancel transaction.');
         return;
       }
