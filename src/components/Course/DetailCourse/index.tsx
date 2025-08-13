@@ -117,21 +117,34 @@ const DetailCourse = () => {
   };
   return (
     <LoadingScreen isLoading={false}>
-      <div id="top" className="flex flex-col gap-[20px] md:gap-[30px] relative">
+      <div
+        id="top"
+        className="flex flex-col gap-4 lg:gap-[30px] relative px-4 lg:px-0"
+      >
         <BreadCrumbs />
-        <div className="md:grid md:grid-cols-10 gap-[70px]">
-          <div className="block mb-4 md:hidden">
+        <div className="lg:grid lg:grid-cols-10 lg:gap-[70px]">
+          {/* Mobile Card - Show at top on mobile */}
+          <div className="block mb-6 lg:hidden">
             <CardEnrollNow course={dataDetail?.data} isLoading={loading} />
           </div>
-          <div className="col-span-7 flex flex-col gap-5">
-            <div className="flex flex-col border-b-1 border-b-black-10 pb-5 gap-5">
-              <Text type="font-28-700" className="text-letter">
+
+          {/* Main Content */}
+          <div className="lg:col-span-7 flex flex-col gap-4 lg:gap-5">
+            {/* Course Header */}
+            <div className="flex flex-col border-b-1 border-b-black-10 pb-4 lg:pb-5 gap-3 lg:gap-5">
+              <Text
+                type="font-28-700"
+                className="text-letter text-xl lg:text-3xl leading-tight"
+              >
                 {dataDetail?.data?.title}
               </Text>
               <Text type="font-14-400" className="text-letter">
                 Learn: {mapCategoryCourse()}
               </Text>
-              <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2">
+
+              {/* Course Stats - Stack on mobile, row on desktop */}
+              <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-2">
+                {/* Rating */}
                 <div className="flex items-center gap-2">
                   <Text type="font-14-400" className="text-letter">
                     {(dataDetail?.data?.rating || 5)?.toFixed(1)}
@@ -139,7 +152,10 @@ const DetailCourse = () => {
                   <Rater total={5} rating={dataDetail?.data?.rating || 5} />
                 </div>
 
-                <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
+                {/* Separator - Desktop only */}
+                <div className="w-[1px] hidden lg:block h-5 bg-[#BFBFBF]" />
+
+                {/* Lessons Count */}
                 {lessonCount && (
                   <>
                     <div className="flex items-center gap-1">
@@ -148,9 +164,11 @@ const DetailCourse = () => {
                         {lessonCount || 0} Lessons
                       </Text>
                     </div>
-                    <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
+                    <div className="w-[1px] hidden lg:block h-5 bg-[#BFBFBF]" />
                   </>
                 )}
+
+                {/* Students Count */}
                 {dataDetail?.data?.userCourses?.length > 0 && (
                   <>
                     <div className="flex items-center gap-1">
@@ -159,10 +177,11 @@ const DetailCourse = () => {
                         {dataDetail?.data?.userCourses.length} Students
                       </Text>
                     </div>
-                    <div className="w-[1px] hidden md:block h-5 bg-[#BFBFBF]" />
+                    <div className="w-[1px] hidden lg:block h-5 bg-[#BFBFBF]" />
                   </>
                 )}
 
+                {/* Last Updated */}
                 <div className="flex items-center gap-1">
                   <IconTimeNew />
                   <Text type="font-14-400" className="text-letter">
@@ -173,6 +192,7 @@ const DetailCourse = () => {
                 </div>
               </div>
 
+              {/* Author Info */}
               <div className="flex items-center gap-[6px]">
                 {dataDetail?.data?.author?.avatar ? (
                   <Image
@@ -183,13 +203,13 @@ const DetailCourse = () => {
                     }
                     width={24}
                     height={24}
-                    className="rounded-full w-6 h-6"
+                    className="rounded-full w-6 h-6 flex-shrink-0"
                     onError={(e: any) => {
                       e.target.srcset = '/images/user-line.png';
                     }}
                   />
                 ) : (
-                  <User size={18} />
+                  <User size={18} className="flex-shrink-0" />
                 )}
 
                 <Text type="font-15-500" className="text-main">
@@ -198,22 +218,28 @@ const DetailCourse = () => {
                 <Text
                   element="span"
                   type="font-15-500"
-                  className="text-letter truncate w-full"
+                  className="text-letter truncate"
                 >
                   {generateMentors()}
                 </Text>
               </div>
             </div>
-            <YouLearn data={dataDetail?.data} />
-            <Requirements data={dataDetail?.data} />
-            <About data={dataDetail?.data} />
-            <Mentors mentor={dataDetail?.data?.author} />
-            <MoreCourse
-              courseId={dataDetail?.data?.id}
-              author={dataDetail?.data?.author}
-            />
+
+            {/* Course Sections */}
+            <div className="flex flex-col gap-4 lg:gap-5">
+              <YouLearn data={dataDetail?.data} />
+              <Requirements data={dataDetail?.data} />
+              <About data={dataDetail?.data} />
+              <Mentors mentor={dataDetail?.data?.author} />
+              <MoreCourse
+                courseId={dataDetail?.data?.id}
+                author={dataDetail?.data?.author}
+              />
+            </div>
           </div>
-          <div className="col-span-3 hidden md:block">
+
+          {/* Desktop Sidebar */}
+          <div className="lg:col-span-3 hidden lg:block">
             <div className="sticky top-28 z-[40]">
               <CardEnrollNow
                 handleUnLike={handleUnLike}

@@ -1,6 +1,7 @@
 import NoData from '@/components/ListCourse/NoData';
 import Loading from '@/components/UI/Loading';
 import Text from '@/components/UI/Text';
+import { truncateWalletInText } from '@/utils/common';
 import { Avatar, Tooltip } from '@nextui-org/react';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -22,7 +23,11 @@ const ListNotification = ({
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 pr-2 scroll-custom min-h-[300px] max-h-[300px] overflow-auto">
+    <div
+      className={clsx(
+        'flex flex-col gap-2 pr-2 scroll-custom md:min-h-[300px] md:max-h-[300px] overflow-auto'
+      )}
+    >
       {listNotification?.length > 0 &&
         listNotification?.map((item: any, index: number) => {
           return (
@@ -52,23 +57,12 @@ const ListNotification = ({
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <Tooltip
-                    radius="md"
-                    classNames={{
-                      content: 'p-2 rounded',
-                    }}
-                    content={item?.body}
+                  <Text
+                    type="font-16-500"
+                    className="line-clamp-4 max-w-[430px] text-ellipsis"
                   >
-                    <a>
-                      <Text
-                        type="font-16-500"
-                        className="truncate max-w-[430px]"
-                      >
-                        {item?.body}
-                      </Text>
-                    </a>
-                  </Tooltip>
-
+                    {truncateWalletInText(item?.body)}
+                  </Text>
                   <Text type="font-14-400" className="text-secondary-500">
                     {dayjs(item?.createdAt).format('DD/MM/YYYY hh:mm A')}
                   </Text>

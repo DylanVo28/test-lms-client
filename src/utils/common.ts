@@ -40,6 +40,34 @@ export enum TypeReactions {
   DISLIKE = 'DISLIKE',
 }
 
+export const truncateWalletInText = (
+  text: string,
+  startChars: number = 3,
+  endChars: number = 2
+): string => {
+  if (!text) return text;
+
+  const walletRegex = /0x[a-fA-F0-9]{40}/g;
+
+  return text.replace(walletRegex, (match) => {
+    if (match.length <= startChars + endChars + 3) {
+      return match;
+    }
+    return `${match.slice(0, startChars)}...${match.slice(-endChars)}`;
+  });
+};
+
+export const truncateWalletAddress = (
+  address: string,
+  startChars: number = 6,
+  endChars: number = 4
+): string => {
+  if (!address) return '';
+  if (address.length <= startChars + endChars) return address;
+
+  return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
+};
+
 // log code
 export const generateRandomId = () => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {

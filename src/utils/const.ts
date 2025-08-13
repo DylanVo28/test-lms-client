@@ -13,6 +13,7 @@ export const ROUTE_PATH = {
 
   MY_PROFILE: '/my-profile',
   DASHBOARD: '/dashboard',
+  NOTIFICATIONS: '/notifications',
 };
 
 export enum TYPE_COURSE {
