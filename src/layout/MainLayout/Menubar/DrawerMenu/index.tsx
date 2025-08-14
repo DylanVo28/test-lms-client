@@ -168,31 +168,6 @@ const DrawerMenu = (props: any, ref: any) => {
                 </>
                 {accessToken && profile?.id && (
                   <>
-                    {/* Profile Section */}
-                    {/* <div className="flex flex-col gap-6 justify-center items-center py-6 px-4 w-fit mx-auto">
-                      <div
-                        onClick={onOpen}
-                        className="w-full bg-gray-10 hover:bg-gray-20 transition-colors rounded-lg p-4 cursor-pointer border border-gray-20"
-                      >
-                        <div className="flex justify-between items-center">
-                          <div className="flex flex-col gap-1">
-                            <Text
-                              className="text-black-5 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap truncate w-full"
-                              type="font-14-400"
-                            >
-                              {profile?.fullName ||
-                                formatWalletAddress(profile?.walletAddress)}
-                            </Text>
-                          </div>
-                          <div className="py-1 px-3 rounded-full bg-green/10 flex justify-center items-center">
-                            <Text type="font-12-500" className="text-green">
-                              Verified
-                            </Text>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <div className="flex justify-center items-center gap-4">
                       {/* Action Buttons for Logged In Users */}
                       <div className="flex justify-center items-center gap-4">
