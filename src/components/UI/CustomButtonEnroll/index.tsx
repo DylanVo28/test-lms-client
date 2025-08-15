@@ -38,6 +38,8 @@ const CustomButtonEnroll = ({
     );
   }, [course?.unlockIfUserTradesAtLeast, volumeData]);
 
+  const authorRole = course?.author?.role;
+
   return (
     <ConnectButton.Custom>
       {({ account, chain, openConnectModal, mounted }) => {

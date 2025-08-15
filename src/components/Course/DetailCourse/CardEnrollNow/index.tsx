@@ -114,6 +114,8 @@ const CardEnrollNow = ({
     return res.data;
   };
 
+  const authorRole = course?.author?.role;
+
   const getMetadataPayment = async (
     id: string
   ): Promise<{
@@ -319,6 +321,7 @@ const CardEnrollNow = ({
                 course={course}
                 handleClickButton={async () => {
                   if (!course?.id) return;
+
                   if (course.isOwner || course.authorId === profile?.id) {
                     navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
                     return;
@@ -333,6 +336,7 @@ const CardEnrollNow = ({
                 }}
                 handleEnrollCourseFree={async () => {
                   if (!course?.id) return;
+
                   await handleEnrollCourseFree();
                 }}
                 loading={loadingBuy || loadingEnrollCourseFree || loading}
