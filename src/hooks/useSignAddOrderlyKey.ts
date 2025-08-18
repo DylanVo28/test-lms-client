@@ -10,7 +10,7 @@ const generatePrivateKey = async () => {
     // Create a random array of bytes as seed
     const seed = randomBytes(32);
     // Use the browser's crypto API to hash the seed with SHA-256
-    const hashBuffer = await crypto.subtle.digest('SHA-256', seed);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', new Uint8Array(seed));
     // Convert the hash to Uint8Array
     return new Uint8Array(hashBuffer);
   } catch (error) {

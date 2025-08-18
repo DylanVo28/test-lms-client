@@ -4,7 +4,7 @@ import withTM from 'next-transpile-modules';
 const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // output: 'standalone',
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
     APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,

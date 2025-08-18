@@ -6,6 +6,7 @@ import MainLayout from '@/layout/MainLayout';
 import { DefaultData } from '@/utils/const';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { GetServerSideProps } from 'next';
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
@@ -36,6 +37,13 @@ const NotificationsPage: React.FC = () => {
       </AppProvider>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  if (!params?.code) {
+    return { notFound: true };
+  }
+  return { props: { code: params.code as string } };
 };
 
 export default NotificationsPage;
