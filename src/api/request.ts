@@ -1,12 +1,8 @@
-import { toast } from '@/components/UI/Toast/toast';
 import { deleteAuthCookies, getAccessToken } from '@/store/auth';
 import { ENV } from '@/utils/env';
-import { translate } from '@/utils/i18n-utils';
 import { injectBearer } from 'brainless-token-manager';
 import { extend } from 'umi-request';
 import { API_PATH } from './constant';
-import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useAccount } from 'wagmi';
 
 const REQ_TIMEOUT = 25 * 1000;
 export const isDev = ENV.NODE_ENV === 'development';
@@ -17,7 +13,7 @@ const handleLogout = async () => {
   try {
     await privateRequest(request.post, `${API_PATH.LOGOUT}`, {});
   } catch (error) {
-    console.error(translate('Logout API failed'), error);
+    console.error('Logout API failed', error);
   }
   // toast.error('Expire Token');
 };
