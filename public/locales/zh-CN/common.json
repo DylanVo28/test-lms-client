@@ -69,5 +69,65 @@
     "privacyPolicy": "隐私政策",
     "termsOfService": "服务条款",
     "support": "支持"
+  },
+  "seo": {
+    "homeTitle": "What Exchange | 首页",
+    "homeDescription": "欢迎来到 What Exchange，您的学习与知识分享平台。",
+    "homeAltTitle": "首页 | What Exchange",
+    "homeAltDescription": "欢迎来到 What Exchange 首页。",
+    "courseDefaultTitle": "课程 | What Exchange",
+    "courseDefaultDescription": "在 What Exchange 上探索本课程的详细信息。"
+  },
+  "landing": {
+    "headline": "与顶级KOL一起掌握交易——向最优秀的人学习",
+    "subheadline": "加入我们的独家学习平台，顶级交易KOL分享他们经过验证的策略与见解。从入门基础到高级技巧——随时随地按自己的节奏学习。",
+    "connectWallet": "连接钱包"
+  },
+  "banner": {
+    "defaultTitle": "Web 开发课程",
+    "defaultDescription": "通过我们的在线 Web 开发课程，您可以探索这一热门领域的不同方向。",
+    "topicsTitle": "与 Web 开发相关的主题",
+    "altBackground": "横幅背景图",
+    "altMobileBanner": "移动端横幅图",
+    "defaultTopics": [
+      "设计",
+      "用户体验",
+      "Java",
+      "SEO",
+      "Python",
+      "区块链",
+      "数字媒体"
+    ]
+  },
+  "listCourse": {
+    "allFilter": "全部筛选",
+    "categories": "分类",
+    "price": "价格",
+    "sortBy": "排序方式",
+    "default": "默认",
+    "search": "搜索",
+    "noData": "没有数据",
+    "seeMore": "查看更多",
+    "newest": "最新",
+    "oldest": "最早"
+  },
+  "register": {
+    "title": "注册账户",
+    "description": "您使用[{{code}}]码注册账户，并将收到签名请求以启用读取权限。签名是免费的且不会发送交易。",
+    "placeholder": "推荐码（可选）",
+    "referral": "推荐"
+  },
+  "card": {
+    "lessons": "课时",
+    "mentor": "导师:",
+    "free": "免费"
+  },
+  "auth": {
+    "signIn": "登录"
+  },
+  "errors": {
+    "connectWallet": "请先连接您的钱包",
+    "invalidReferral": "推荐码无效",
+    "registerKeyFailed": "注册密钥失败：{{error}}"
   }
 }

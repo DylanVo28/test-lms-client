@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
+import { useTranslation } from 'next-i18next';
 
 const RegisterFormModal = () => {
   const [referralCode, setReferralCode] = useState('');
@@ -28,6 +29,7 @@ const RegisterFormModal = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const router = useRouter();
   const { disconnect } = useDisconnect();
+  const { t } = useTranslation('common');
 
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
@@ -100,7 +102,7 @@ const RegisterFormModal = () => {
     try {
       setIsRegistering(true);
       if (!address) {
-        toast.error('Please connect your wallet');
+        toast.error(t('errors.connectWallet'));
         setIsRegistering(false);
         return;
       }
@@ -109,7 +111,7 @@ const RegisterFormModal = () => {
         const checkAddressRes = await verifyReferralCode(referralCode);
 
         if (!checkAddressRes?.data?.exist) {
-          toast.error('Referral code is invalid');
+          toast.error(t('errors.invalidReferral'));
           setIsRegistering(false);
           return;
         }
@@ -160,7 +162,7 @@ const RegisterFormModal = () => {
 
       if (!res.ok) {
         const error = await res.text();
-        throw new Error(`Đăng ký key thất bại: ${error}`);
+        throw new Error(t('errors.registerKeyFailed', { error }));
       }
 
       if (parentCode && orderlyAccountId) {
@@ -223,21 +225,21 @@ const RegisterFormModal = () => {
         onClose={() => {}}
       >
         <ModalBody className="p-6 flex flex-col gap-4 bg-[#191c21]">
-          <div className="text-xl font-bold">Register account</div>
+          <div className="text-xl font-bold">{t('register.title')}</div>
 
           <div className="text-md text-gray-500">
-            You register an account using{' '}
-            <span className="text-letter font-semibold">
-              [{showRegisterForm?.themeCode || referralCode || 'Referral'}]
-            </span>{' '}
-            code, and you will receive a signature request to enable read
-            access. Signing is free and does not send a transaction.
+            {t('register.description', {
+              code:
+                showRegisterForm?.themeCode ||
+                referralCode ||
+                t('register.referral'),
+            })}
           </div>
 
           {!showRegisterForm?.themeCode && (
             <InputText
               classInputWrapper="min-w-[400px] bg-white"
-              placeholder="Referral code (Optional)"
+              placeholder={t('register.placeholder')}
               isInputSubmit
               onChange={(e: any) => setReferralCode(e.target.value)}
             />
@@ -250,7 +252,7 @@ const RegisterFormModal = () => {
                 disconnect();
               }}
             >
-              Cancel
+              {t('common.cancel')}
             </div>
 
             <div
@@ -264,7 +266,7 @@ const RegisterFormModal = () => {
               {isRegistering && (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               )}
-              Sign in
+              {t('auth.signIn')}
             </div>
           </div>
         </ModalBody>

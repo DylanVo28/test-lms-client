@@ -9,12 +9,14 @@ import Head from 'next/head';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
 import AppProvider from '@/components/Provider/AppProvider';
+import { useTranslation } from 'next-i18next';
 
 type Props = {
   code: string;
 };
 
 const HomePage = ({ code }: Props) => {
+  const { t } = useTranslation('common');
   return (
     <>
       <Course />
@@ -39,20 +41,24 @@ export const getServerSideProps: GetServerSideProps = async ({
 };
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <>
-      <SEO
-        title="Home | What Exchange"
-        description="Welcome to the What Exchange homepage."
-        imageUrl={DefaultData.DefaultCourseImage}
-      />
-      <AppProvider>
-        <MainLayout>
-          <>{page}</>
-        </MainLayout>
-      </AppProvider>
-    </>
-  );
+  const LayoutWrapper = () => {
+    const { t } = useTranslation('common');
+    return (
+      <>
+        <SEO
+          title={t('seo.homeAltTitle')}
+          description={t('seo.homeAltDescription')}
+          imageUrl={DefaultData.DefaultCourseImage}
+        />
+        <AppProvider>
+          <MainLayout>
+            <>{page}</>
+          </MainLayout>
+        </AppProvider>
+      </>
+    );
+  };
+  return <LayoutWrapper />;
 };
 
 export default HomePage;

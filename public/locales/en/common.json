@@ -69,5 +69,65 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "support": "Support"
+  },
+  "seo": {
+    "homeTitle": "What Exchange | Home",
+    "homeDescription": "Welcome to What Exchange, your platform for learning and sharing knowledge.",
+    "homeAltTitle": "Home | What Exchange",
+    "homeAltDescription": "Welcome to the What Exchange homepage.",
+    "courseDefaultTitle": "Course | What Exchange",
+    "courseDefaultDescription": "Explore detailed information about this course on What Exchange."
+  },
+  "landing": {
+    "headline": "Master Trading with Top KOLs – Learn from the Best",
+    "subheadline": "Join our exclusive learning platform where top trading KOLs share their proven strategies and insights. From beginner basics to advanced techniques — learn at your own pace, anytime, anywhere.",
+    "connectWallet": "Connect Wallet"
+  },
+  "banner": {
+    "defaultTitle": "Web Development Courses",
+    "defaultDescription": "With one of our online web development courses, you can explore different areas of this in-demand field.",
+    "topicsTitle": "Topics related to Web Development",
+    "altBackground": "Banner background",
+    "altMobileBanner": "Mobile banner image",
+    "defaultTopics": [
+      "Design",
+      "UX",
+      "Java",
+      "SEO",
+      "Python",
+      "Blockchain",
+      "Digital Media"
+    ]
+  },
+  "listCourse": {
+    "allFilter": "All Filter",
+    "categories": "Categories",
+    "price": "Price",
+    "sortBy": "Sort by",
+    "default": "Default",
+    "search": "Search",
+    "noData": "No data",
+    "seeMore": "See More",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "register": {
+    "title": "Register account",
+    "description": "You register an account using [{{code}}] code, and you will receive a signature request to enable read access. Signing is free and does not send a transaction.",
+    "placeholder": "Referral code (Optional)",
+    "referral": "Referral"
+  },
+  "card": {
+    "lessons": "Lessons",
+    "mentor": "Mentor:",
+    "free": "Free"
+  },
+  "auth": {
+    "signIn": "Sign in"
+  },
+  "errors": {
+    "connectWallet": "Please connect your wallet",
+    "invalidReferral": "Referral code is invalid",
+    "registerKeyFailed": "Register key failed: {{error}}"
   }
 }

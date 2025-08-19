@@ -69,5 +69,65 @@
     "privacyPolicy": "Chính sách bảo mật",
     "termsOfService": "Điều khoản dịch vụ",
     "support": "Hỗ trợ"
+  },
+  "seo": {
+    "homeTitle": "What Exchange | Trang chủ",
+    "homeDescription": "Chào mừng đến với What Exchange, nền tảng học tập và chia sẻ kiến thức của bạn.",
+    "homeAltTitle": "Trang chủ | What Exchange",
+    "homeAltDescription": "Chào mừng đến với trang chủ What Exchange.",
+    "courseDefaultTitle": "Khóa học | What Exchange",
+    "courseDefaultDescription": "Khám phá thông tin chi tiết về khóa học này trên What Exchange."
+  },
+  "landing": {
+    "headline": "Làm chủ giao dịch cùng các KOL hàng đầu – Học từ những người giỏi nhất",
+    "subheadline": "Tham gia nền tảng học tập độc quyền, nơi các KOL giao dịch hàng đầu chia sẻ chiến lược và góc nhìn đã được kiểm chứng. Từ kiến thức cơ bản đến kỹ thuật nâng cao — học theo tốc độ của bạn, mọi lúc, mọi nơi.",
+    "connectWallet": "Kết nối ví"
+  },
+  "banner": {
+    "defaultTitle": "Khóa học Phát triển Web",
+    "defaultDescription": "Với các khóa học phát triển web trực tuyến, bạn có thể khám phá nhiều lĩnh vực hấp dẫn của ngành đang được quan tâm này.",
+    "topicsTitle": "Chủ đề liên quan đến Phát triển Web",
+    "altBackground": "Hình nền banner",
+    "altMobileBanner": "Hình banner trên di động",
+    "defaultTopics": [
+      "Thiết kế",
+      "UX",
+      "Java",
+      "SEO",
+      "Python",
+      "Blockchain",
+      "Truyền thông số"
+    ]
+  },
+  "listCourse": {
+    "allFilter": "Bộ lọc",
+    "categories": "Danh mục",
+    "price": "Giá",
+    "sortBy": "Sắp xếp theo",
+    "default": "Mặc định",
+    "search": "Tìm kiếm",
+    "noData": "Không có dữ liệu",
+    "seeMore": "Xem thêm",
+    "newest": "Mới nhất",
+    "oldest": "Cũ nhất"
+  },
+  "register": {
+    "title": "Đăng ký tài khoản",
+    "description": "Bạn đăng ký tài khoản bằng mã [{{code}}], và bạn sẽ nhận được yêu cầu ký để bật quyền đọc. Việc ký là miễn phí và không gửi giao dịch.",
+    "placeholder": "Mã giới thiệu (Không bắt buộc)",
+    "referral": "Mã giới thiệu"
+  },
+  "card": {
+    "lessons": "Bài học",
+    "mentor": "Người hướng dẫn:",
+    "free": "Miễn phí"
+  },
+  "auth": {
+    "signIn": "Đăng nhập"
+  },
+  "errors": {
+    "connectWallet": "Vui lòng kết nối ví của bạn",
+    "invalidReferral": "Mã giới thiệu không hợp lệ",
+    "registerKeyFailed": "Đăng ký key thất bại: {{error}}"
   }
 }

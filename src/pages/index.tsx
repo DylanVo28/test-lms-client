@@ -1,6 +1,7 @@
 import { ReactElement, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
@@ -23,11 +24,12 @@ function getLayout(page: ReactElement) {
 }
 
 const HomePage = () => {
+  const { t } = useTranslation('common');
   return (
     <>
       <SEO
-        title="What Exchange | Home"
-        description="Welcome to What Exchange, your platform for learning and sharing knowledge."
+        title={t('seo.homeTitle')}
+        description={t('seo.homeDescription')}
         imageUrl={DefaultData.DefaultCourseImage}
       />
       <AppProvider>

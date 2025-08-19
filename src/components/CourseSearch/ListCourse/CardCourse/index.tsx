@@ -17,6 +17,7 @@ import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslation } from 'next-i18next';
 dayjs.extend(relativeTime);
 
 const CardCourse = ({
@@ -33,6 +34,7 @@ const CardCourse = ({
   noLike?: boolean;
 }) => {
   const accessToken = useAccessToken();
+  const { t } = useTranslation('common');
 
   const {
     query: { code },
@@ -106,7 +108,7 @@ const CardCourse = ({
             <div className="flex items-center gap-1">
               <IconDate />
               <Text type="font-14-500" className="text-letter">
-                {lessonCount} {'Lessons'}
+                {lessonCount} {t('card.lessons')}
               </Text>
             </div>
 
@@ -142,7 +144,7 @@ const CardCourse = ({
             {item?.author?.walletAddress && (
               <div className="flex gap-0.5 break-words">
                 <Text type="font-15-500" className="text-main break-words">
-                  Mentor:
+                  {t('card.mentor')}
                 </Text>
                 <Text
                   type="font-15-500"
@@ -159,7 +161,9 @@ const CardCourse = ({
           <div className="flex items-center gap-2">
             <div className="py-[2px] px-2 flex justify-center items-center border-1 border-secondary-50 bg-secondary-10 rounded-full">
               <Text type="font-16-600" className="text-secondary">
-                {item?.price ? `$ ${formatNumber(item?.price)}` : 'Free'}
+                {item?.price
+                  ? `$ ${formatNumber(item?.price)}`
+                  : t('card.free')}
               </Text>
             </div>
             {item?.originPrice && (

@@ -16,11 +16,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetListCourse } from './service';
+import { useTranslation } from 'next-i18next';
 
 const ListCourse = () => {
+  const { t } = useTranslation('common');
   const SORT_BY = [
-    { key: 'createdAt desc', label: 'Newest' },
-    { key: 'createdAt asc', label: 'Oldest' },
+    { key: 'createdAt desc', label: t('listCourse.newest') },
+    { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
@@ -90,11 +92,11 @@ const ListCourse = () => {
               <IconFilter />
             </div>
             <Text className="text-main w-max" type="font-14-500">
-              {'All Filter'}
+              {t('listCourse.allFilter')}
             </Text>
           </div>
           <SelectCustom
-            placeholder={'Categories'}
+            placeholder={t('listCourse.categories')}
             className="min-w-[120px]"
             options={mapCategories()}
             value={category}
@@ -103,7 +105,7 @@ const ListCourse = () => {
             }}
           />
           <SelectCustom
-            placeholder={'Price'}
+            placeholder={t('listCourse.price')}
             className="min-w-[80px]"
             options={mapPrices()}
             value={price}
@@ -117,10 +119,10 @@ const ListCourse = () => {
             type="font-14-500"
             className="text-letter/70 w-[70px] md:w-[100px]"
           >
-            {'Sort by'}
+            {t('listCourse.sortBy')}
           </Text>
           <SelectCustom
-            placeholder={'Default'}
+            placeholder={t('listCourse.default')}
             className="min-w-[40px] max-w-[200px]"
             options={SORT_BY}
             value={sort}
@@ -141,7 +143,7 @@ const ListCourse = () => {
             }
             className="block md:hidden"
             radius="sm"
-            placeholder={'Search'}
+            placeholder={t('listCourse.search')}
           />
         </div>
       </div>
@@ -162,7 +164,7 @@ const ListCourse = () => {
               </div>
               {dataCourses?.length === 0 && (
                 <div className="flex justify-center items-center">
-                  <NoData text={'No data'} />
+                  <NoData text={t('listCourse.noData')} />
                 </div>
               )}
             </>
@@ -183,7 +185,7 @@ const ListCourse = () => {
             >
               <div className="flex items-center gap-[2px]">
                 <Text type="font-14-500" className="text-main">
-                  {'See More'}
+                  {t('listCourse.seeMore')}
                 </Text>
                 <Image
                   src={'/icons/ic-arrow-drop-right-line.svg'}
