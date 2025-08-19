@@ -1,9 +1,12 @@
 import type { NextConfig } from 'next';
 import withTM from 'next-transpile-modules';
 
+const { i18n } = require('./next-i18next.config');
+
 const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
+  i18n,
   output: 'standalone',
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,

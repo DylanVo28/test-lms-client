@@ -1,0 +1,73 @@
+{
+  "header": {
+    "search": "Search",
+    "myLearning": "My learning",
+    "wishList": "Wish list",
+    "teach": "Teach",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "navigation": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "course": {
+    "title": "Course",
+    "description": "Description",
+    "instructor": "Instructor",
+    "duration": "Duration",
+    "level": "Level",
+    "price": "Price",
+    "enroll": "Enroll Now",
+    "preview": "Preview",
+    "requirements": "Requirements",
+    "whatYouLearn": "What you'll learn",
+    "reviews": "Reviews",
+    "rating": "Rating"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "submit": "Submit",
+    "reset": "Reset",
+    "clear": "Clear",
+    "select": "Select",
+    "choose": "Choose",
+    "upload": "Upload",
+    "download": "Download",
+    "share": "Share",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut",
+    "undo": "Undo",
+    "redo": "Redo",
+    "refresh": "Refresh",
+    "reload": "Reload",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "language": "Language"
+  },
+  "footer": {
+    "copyright": "© 2024 LMS Platform. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "support": "Support"
+  }
+}

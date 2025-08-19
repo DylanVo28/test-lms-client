@@ -6,11 +6,13 @@ import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 
 const Menubar = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
@@ -25,33 +27,33 @@ const Menubar = () => {
         ? [
             {
               key: 1,
-              label: 'My learning',
+              label: t('header.myLearning'),
               href: ROUTE_PATH.MY_LEARNING,
             },
             {
               key: 2,
-              label: 'Wish list',
+              label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
             {
               key: 3,
-              label: 'Teach',
+              label: t('header.teach'),
               href: ROUTE_PATH.LIST_COURSE,
             },
           ]
         : [
             {
               key: 1,
-              label: 'My learning',
+              label: t('header.myLearning'),
               href: ROUTE_PATH.MY_LEARNING,
             },
             {
               key: 2,
-              label: 'Wish list',
+              label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
           ],
-    [profile?.role]
+    [profile?.role, t]
   );
   const handleClickRedirectPage = (key: number) => {
     if (!accessToken) {

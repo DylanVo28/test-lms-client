@@ -1,0 +1,73 @@
+{
+  "header": {
+    "search": "Tìm kiếm",
+    "myLearning": "Học tập của tôi",
+    "wishList": "Danh sách yêu thích",
+    "teach": "Giảng dạy",
+    "notifications": "Thông báo",
+    "profile": "Hồ sơ",
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ"
+  },
+  "course": {
+    "title": "Khóa học",
+    "description": "Mô tả",
+    "instructor": "Giảng viên",
+    "duration": "Thời lượng",
+    "level": "Cấp độ",
+    "price": "Giá",
+    "enroll": "Đăng ký ngay",
+    "preview": "Xem trước",
+    "requirements": "Yêu cầu",
+    "whatYouLearn": "Bạn sẽ học được gì",
+    "reviews": "Đánh giá",
+    "rating": "Xếp hạng"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "view": "Xem",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "previous": "Trước đó",
+    "close": "Đóng",
+    "open": "Mở",
+    "submit": "Gửi",
+    "reset": "Đặt lại",
+    "clear": "Xóa",
+    "select": "Chọn",
+    "choose": "Lựa chọn",
+    "upload": "Tải lên",
+    "download": "Tải xuống",
+    "share": "Chia sẻ",
+    "copy": "Sao chép",
+    "paste": "Dán",
+    "cut": "Cắt",
+    "undo": "Hoàn tác",
+    "redo": "Làm lại",
+    "refresh": "Làm mới",
+    "reload": "Tải lại",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "sort": "Sắp xếp",
+    "language": "Ngôn ngữ"
+  },
+  "footer": {
+    "copyright": "© 2024 Nền tảng LMS. Tất cả quyền được bảo lưu.",
+    "privacyPolicy": "Chính sách bảo mật",
+    "termsOfService": "Điều khoản dịch vụ",
+    "support": "Hỗ trợ"
+  }
+}

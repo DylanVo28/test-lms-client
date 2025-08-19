@@ -1,5 +1,6 @@
 import { ReactElement, Fragment } from 'react';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
@@ -41,7 +42,7 @@ HomePage.getLayout = getLayout;
 export async function getStaticProps({ locale }: any) {
   return {
     props: {
-      // Will be passed to the page component as props
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   };
 }
