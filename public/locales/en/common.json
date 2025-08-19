@@ -158,6 +158,45 @@
       "onTheSide": "I'll work on this on the side (2-4 hours)",
       "flexible": "I have lots of flexibility (5+ hours)",
       "undecided": "I haven't yet decided if I have time"
+    },
+    "planCourse": {
+      "pageTitle": "Plan Your Course | What Exchange",
+      "pageDescription": "Plan your course details on What Exchange",
+      "title": "Plan your course",
+      "objectivesPlaceholder1": "Example: Identifying the roles and responsibilities of a project manager",
+      "objectivesPlaceholder2": "Example: Project schedule and budget estimates",
+      "objectivesPlaceholder3": "Example: Identifying and Managing Project Risks",
+      "objectivesPlaceholder4": "Example: Complete a case study for managing a project from concept to completion",
+      "requirementsPlaceholder": "For example: No programming experience required. You will learn everything you need to know.",
+      "intendedLearnersPlaceholder": "Example: Entry-level Python developers who want to learn data science",
+      "backToCourses": "Back to courses",
+      "save": "Save",
+      "publish": "Publish",
+      "menu": {
+        "intendedLearners": "Intended learners",
+        "curriculum": "Curriculum",
+        "courseLandingPage": "Course landing page",
+        "setPrice": "Set Price"
+      }
+    },
+    "intendedLearners": {
+      "title": "Intended learners",
+      "description": "The following descriptions will be publicly visible on your Course Landing Page and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.",
+      "whatWillLearn": "What will students learn in your course?",
+      "objectivesDescription": {
+        "prefix": "You must enter at least 4",
+        "highlight": "learning objectives or outcomes",
+        "suffix": "that learners can expect to achieve after completing your course."
+      },
+      "addMore": "+ Add more to your answer",
+      "requirements": {
+        "title": "What are the requirements or prerequisites for taking your course?",
+        "description": "List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners."
+      },
+      "whoIsFor": {
+        "title": "Who is this course for?",
+        "description": "List the required skills, experience, tools or equipment learners should have prior to taking your course. If there are no requirements, use this space as an opportunity to lower the barrier for beginners."
+      }
     }
   },
   "listCourse": {

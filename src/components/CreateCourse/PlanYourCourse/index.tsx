@@ -17,7 +17,9 @@ import useNavigate from '@/hooks/useNavigate';
 import { set } from 'video.js/dist/types/tech/middleware';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
+import { useTranslation } from 'next-i18next';
 const PlanYourCourse = () => {
+  const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
@@ -32,37 +34,33 @@ const PlanYourCourse = () => {
   const dataObjectivesDefault = [
     {
       name: '',
-      pladholder:
-        'Example: Identifying the roles and responsibilities of a project manager',
+      pladholder: t('createCourse.planCourse.objectivesPlaceholder1'),
     },
     {
       name: '',
-      pladholder: 'Example: Project schedule and budget estimates',
+      pladholder: t('createCourse.planCourse.objectivesPlaceholder2'),
     },
     {
       name: '',
-      pladholder: 'Example: Identifying and Managing Project Risks',
+      pladholder: t('createCourse.planCourse.objectivesPlaceholder3'),
     },
     {
       name: '',
-      pladholder:
-        'Example: Complete a case study for managing a project from concept to completion',
+      pladholder: t('createCourse.planCourse.objectivesPlaceholder4'),
     },
   ];
 
   const dataRequirementsDefault = [
     {
       name: '',
-      pladholder:
-        'For example: No programming experience required. You will learn everything you need to know.',
+      pladholder: t('createCourse.planCourse.requirementsPlaceholder'),
     },
   ];
 
   const dataIntenedLeanersDefault = [
     {
       name: '',
-      pladholder:
-        'Example: Entry-level Python developers who want to learn data science',
+      pladholder: t('createCourse.planCourse.intendedLearnersPlaceholder'),
     },
   ];
 
@@ -658,7 +656,9 @@ const PlanYourCourse = () => {
             <div className="grid grid-cols-10 gap-10 md:gap-12">
               <div className="col-span-10 md:col-span-2">
                 <div className="flex flex-col gap-4">
-                  <Text type="font-18-600">{'Plan your course'}</Text>
+                  <Text type="font-18-600">
+                    {t('createCourse.planCourse.title')}
+                  </Text>
                   <PlanYourCourseLeft
                     isEnoughtSetPrice={isEnoughtSetPrice}
                     isEnoughCourseLangdingePage={isEnoughCourseLangdingePage}

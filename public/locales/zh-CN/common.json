@@ -158,6 +158,45 @@
       "onTheSide": "我会在工作之余处理（2-4小时）",
       "flexible": "我有很大的时间灵活性（5+小时）",
       "undecided": "我还没决定是否有时间"
+    },
+    "planCourse": {
+      "pageTitle": "规划课程 | What Exchange",
+      "pageDescription": "在 What Exchange 上规划您的课程详情",
+      "title": "规划课程",
+      "objectivesPlaceholder1": "示例：确定项目经理的角色和职责",
+      "objectivesPlaceholder2": "示例：项目进度和预算估算",
+      "objectivesPlaceholder3": "示例：识别和管理项目风险",
+      "objectivesPlaceholder4": "示例：完成从概念到完成的项目管理案例研究",
+      "requirementsPlaceholder": "示例：无需编程经验。您将学到所需的一切知识。",
+      "intendedLearnersPlaceholder": "示例：想要学习数据科学的入门级 Python 开发者",
+      "backToCourses": "返回课程列表",
+      "save": "保存",
+      "publish": "发布",
+      "menu": {
+        "intendedLearners": "目标学员",
+        "curriculum": "课程大纲",
+        "courseLandingPage": "课程登陆页",
+        "setPrice": "设置价格"
+      }
+    },
+    "intendedLearners": {
+      "title": "目标学员",
+      "description": "以下描述将在您的课程登陆页面上公开显示，并将直接影响您的课程表现。这些描述将帮助学员决定您的课程是否适合他们。",
+      "whatWillLearn": "学员将在您的课程中学到什么？",
+      "objectivesDescription": {
+        "prefix": "您必须输入至少4个",
+        "highlight": "学习目标或成果",
+        "suffix": "，这些是学员完成您的课程后可以期望达到的。"
+      },
+      "addMore": "+ 添加更多答案",
+      "requirements": {
+        "title": "参加您的课程需要哪些要求或先决条件？",
+        "description": "列出学员在参加您的课程之前应具备的必要技能、经验、工具或设备。如果没有要求，请利用这个空间来降低初学者的门槛。"
+      },
+      "whoIsFor": {
+        "title": "这门课程适合谁？",
+        "description": "列出学员在参加您的课程之前应具备的必要技能、经验、工具或设备。如果没有要求，请利用这个空间来降低初学者的门槛。"
+      }
     }
   },
   "listCourse": {

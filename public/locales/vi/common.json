@@ -158,6 +158,45 @@
       "onTheSide": "Tôi sẽ làm việc này bên cạnh công việc chính (2-4 giờ)",
       "flexible": "Tôi có nhiều thời gian linh hoạt (5+ giờ)",
       "undecided": "Tôi chưa quyết định được có thời gian hay không"
+    },
+    "planCourse": {
+      "pageTitle": "Lập kế hoạch khóa học | What Exchange",
+      "pageDescription": "Lập kế hoạch chi tiết cho khóa học của bạn trên What Exchange",
+      "title": "Lập kế hoạch khóa học",
+      "objectivesPlaceholder1": "Ví dụ: Xác định vai trò và trách nhiệm của người quản lý dự án",
+      "objectivesPlaceholder2": "Ví dụ: Lập kế hoạch và dự toán ngân sách dự án",
+      "objectivesPlaceholder3": "Ví dụ: Xác định và quản lý rủi ro dự án",
+      "objectivesPlaceholder4": "Ví dụ: Hoàn thành một nghiên cứu điển hình về quản lý dự án từ ý tưởng đến hoàn thành",
+      "requirementsPlaceholder": "Ví dụ: Không yêu cầu kinh nghiệm lập trình. Bạn sẽ học được tất cả những gì bạn cần biết.",
+      "intendedLearnersPlaceholder": "Ví dụ: Lập trình viên Python mới bắt đầu muốn học khoa học dữ liệu",
+      "backToCourses": "Quay lại danh sách khóa học",
+      "save": "Lưu",
+      "publish": "Xuất bản",
+      "menu": {
+        "intendedLearners": "Học viên mục tiêu",
+        "curriculum": "Chương trình học",
+        "courseLandingPage": "Trang giới thiệu khóa học",
+        "setPrice": "Thiết lập giá"
+      }
+    },
+    "intendedLearners": {
+      "title": "Học viên mục tiêu",
+      "description": "Các mô tả sau đây sẽ được hiển thị công khai trên Trang Khóa học của bạn và sẽ có tác động trực tiếp đến hiệu suất khóa học. Những mô tả này sẽ giúp học viên quyết định xem khóa học của bạn có phù hợp với họ hay không.",
+      "whatWillLearn": "Học viên sẽ học được gì trong khóa học của bạn?",
+      "objectivesDescription": {
+        "prefix": "Bạn phải nhập ít nhất 4",
+        "highlight": "mục tiêu hoặc kết quả học tập",
+        "suffix": "mà học viên có thể đạt được sau khi hoàn thành khóa học của bạn."
+      },
+      "addMore": "+ Thêm câu trả lời",
+      "requirements": {
+        "title": "Yêu cầu hoặc điều kiện tiên quyết để tham gia khóa học của bạn là gì?",
+        "description": "Liệt kê các kỹ năng, kinh nghiệm, công cụ hoặc thiết bị cần thiết mà học viên nên có trước khi tham gia khóa học của bạn. Nếu không có yêu cầu, hãy sử dụng phần này như một cơ hội để giảm rào cản cho người mới bắt đầu."
+      },
+      "whoIsFor": {
+        "title": "Khóa học này dành cho ai?",
+        "description": "Liệt kê các kỹ năng, kinh nghiệm, công cụ hoặc thiết bị cần thiết mà học viên nên có trước khi tham gia khóa học của bạn. Nếu không có yêu cầu, hãy sử dụng phần này như một cơ hội để giảm rào cản cho người mới bắt đầu."
+      }
     }
   },
   "listCourse": {
