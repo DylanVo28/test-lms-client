@@ -1,9 +1,11 @@
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 const Requirements = ({ data }: { data: any }) => {
+  const { t } = useTranslation('common');
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-letter" type="font-20-600">
-        {'Requirements'}
+        {t('course.requirements')}
       </Text>
       <div className="flex flex-col gap-1">
         {data?.requirements?.map((item: any) => {

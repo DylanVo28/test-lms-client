@@ -1,10 +1,12 @@
 import Text from '@/components/UI/Text';
+import { useTranslation } from 'next-i18next';
 const YouLearn = ({ data }: { data: any }) => {
+  const { t } = useTranslation('common');
   return (
     <>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
         <Text className="text-letter" type="font-20-600">
-          {"What you'll learn"}
+          {t('course.whatYouLearn')}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
           {data?.objectives?.map((item: any) => {
@@ -23,7 +25,7 @@ const YouLearn = ({ data }: { data: any }) => {
       </div>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
         <Text className="text-letter" type="font-20-600">
-          What are the requirements or prerequisites for taking your course?
+          {t('course.prerequisitesQuestion')}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
           {data?.requirements?.map((item: any) => {
@@ -42,7 +44,7 @@ const YouLearn = ({ data }: { data: any }) => {
       </div>
       <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
         <Text className="text-letter" type="font-20-600">
-          {'Who is this course for?'}
+          {t('course.whoIsThisFor')}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
           {data?.intenedLeaners?.map((item: any) => {

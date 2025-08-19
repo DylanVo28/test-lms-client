@@ -20,6 +20,7 @@ import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
 import { User } from '@phosphor-icons/react';
+import { useTranslation } from 'next-i18next';
 import {
   useLikeCourse,
   useUnLikeCourse,
@@ -28,6 +29,7 @@ import {
 const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
+  const { t } = useTranslation('common');
   const {
     run: getDetailCourse,
     data: dataDetail,
@@ -139,7 +141,7 @@ const DetailCourse = () => {
                 {dataDetail?.data?.title}
               </Text>
               <Text type="font-14-400" className="text-letter">
-                Learn: {mapCategoryCourse()}
+                {t('course.learn')}: {mapCategoryCourse()}
               </Text>
 
               {/* Course Stats - Stack on mobile, row on desktop */}
@@ -161,7 +163,10 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconBookMark />
                       <Text type="font-14-400" className="text-letter">
-                        {lessonCount || 0} Lessons
+                        {lessonCount || 0}{' '}
+                        {t(
+                          lessonCount === 1 ? 'course.lesson' : 'course.lessons'
+                        )}
                       </Text>
                     </div>
                     <div className="w-[1px] hidden lg:block h-5 bg-[#BFBFBF]" />
@@ -174,7 +179,8 @@ const DetailCourse = () => {
                     <div className="flex items-center gap-1">
                       <IconStudent />
                       <Text type="font-14-400" className="text-letter">
-                        {dataDetail?.data?.userCourses.length} Students
+                        {dataDetail?.data?.userCourses.length}{' '}
+                        {t('course.students')}
                       </Text>
                     </div>
                     <div className="w-[1px] hidden lg:block h-5 bg-[#BFBFBF]" />
@@ -185,9 +191,11 @@ const DetailCourse = () => {
                 <div className="flex items-center gap-1">
                   <IconTimeNew />
                   <Text type="font-14-400" className="text-letter">
-                    {`Last updated ${dayjs(dataDetail?.data?.updatedAt).format(
-                      'MM/YYYY'
-                    )}`}
+                    {t('course.lastUpdated', {
+                      date: dayjs(dataDetail?.data?.updatedAt).format(
+                        'MM/YYYY'
+                      ),
+                    })}
                   </Text>
                 </div>
               </div>
@@ -213,7 +221,7 @@ const DetailCourse = () => {
                 )}
 
                 <Text type="font-15-500" className="text-main">
-                  By
+                  {t('course.by')}
                 </Text>
                 <Text
                   element="span"

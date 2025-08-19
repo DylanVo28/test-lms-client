@@ -23,6 +23,7 @@ import { useEnrollCourse, useEnrollCourseFree } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
 import FormatNumberDecimal from '@/components/Commons/FormatNumberDecimal';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'next-i18next';
 
 const CardEnrollNow = ({
   course,
@@ -38,6 +39,7 @@ const CardEnrollNow = ({
   isLoading: boolean;
 }) => {
   const isLoading = _isLoading && !course?.id;
+  const { t } = useTranslation('common');
 
   const getCourseIncludes = (metadata: any) => {
     if (!metadata) return [];
@@ -45,52 +47,65 @@ const CardEnrollNow = ({
     const includes = [];
 
     if (metadata.videoDuration?.formatted > 0) {
-      includes.push(`${metadata.videoDuration.formatted} of on-demand video`);
+      includes.push(
+        t('course.includes.onDemandVideo', {
+          time: metadata.videoDuration.formatted,
+        })
+      );
     }
 
     if (metadata.totalLessons > 0) {
       includes.push(
-        `${metadata.totalLessons} ${
-          metadata.totalLessons === 1 ? 'lesson' : 'lessons'
-        }`
+        t(
+          metadata.totalLessons === 1
+            ? 'course.includes.singleLesson'
+            : 'course.includes.multipleLessons',
+          { count: metadata.totalLessons }
+        )
       );
     }
 
     if (metadata.hasExercises) {
-      includes.push('Exercises');
+      includes.push(t('course.includes.exercises'));
     }
 
     if (metadata.downloadableResources > 0) {
       includes.push(
-        `${metadata.downloadableResources} ${
+        t(
           metadata.downloadableResources === 1
-            ? 'downloadable resource'
-            : 'downloadable resources'
-        }`
+            ? 'course.includes.singleDownloadableResource'
+            : 'course.includes.multipleDownloadableResources',
+          { count: metadata.downloadableResources }
+        )
       );
     }
 
     if (metadata.hasMobileAccess) {
-      includes.push('Mobile and TV access');
+      includes.push(t('course.includes.mobileAndTvAccess'));
     }
 
     if (metadata.hasQuizzes && metadata.totalQuizzes > 0) {
       includes.push(
-        `${metadata.totalQuizzes} ${
-          metadata.totalQuizzes === 1 ? 'quiz' : 'quizzes'
-        }`
+        t(
+          metadata.totalQuizzes === 1
+            ? 'course.includes.singleQuiz'
+            : 'course.includes.multipleQuizzes',
+          { count: metadata.totalQuizzes }
+        )
       );
     }
     if (metadata.totalQuizzes > 0) {
-      includes.push(`${metadata.totalQuizzes} Exercises`);
+      includes.push(
+        t('course.includes.exercisesCount', { count: metadata.totalQuizzes })
+      );
     }
 
     if (metadata.hasLifetimeAccess) {
-      includes.push('Lifetime access');
+      includes.push(t('course.includes.lifetimeAccess'));
     }
 
     if (metadata.hasCertificate) {
-      includes.push('Certificate of completion');
+      includes.push(t('course.includes.certificateOfCompletion'));
     }
 
     return includes;
@@ -294,7 +309,9 @@ const CardEnrollNow = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Text type="font-20-400" className="text-secondary">
-                  {course?.price ? `$ ${formatNumber(course?.price)}` : 'Free'}
+                  {course?.price
+                    ? `$ ${formatNumber(course?.price)}`
+                    : t('course.free')}
                 </Text>
                 {course?.originPrice && (
                   <Text
@@ -311,7 +328,7 @@ const CardEnrollNow = ({
                     {discountCalculator(course?.originPrice, course?.price)}
                   </Text>
                   <Text type="font-14-500" className="text-secondary">
-                    OFF
+                    {t('course.off')}
                   </Text>
                 </div>
               )}
@@ -345,7 +362,7 @@ const CardEnrollNow = ({
             )}
             <div className="flex flex-col gap-2">
               <Text className="text-letter" type="font-18-600">
-                This course includes
+                {t('course.thisCourseIncludes')}
               </Text>
 
               <div className="flex flex-col gap-1">
@@ -366,18 +383,18 @@ const CardEnrollNow = ({
                   <IconGift />
                   <div>
                     <Text type="font-16-600" className="text-main">
-                      Free Course Unlock Available!
+                      {t('course.freeCourseUnlockAvailable')}
                     </Text>
                     <Text type="font-14-400" className="text-letter/70">
-                      Reach{' '}
+                      {t('course.reachToUnlock')}{' '}
                       <span className="text-main font-bold">
                         ${formatNumber(course?.unlockIfUserTradesAtLeast)}
                       </span>{' '}
-                      in lifetime trading volume to unlock this course for free
+                      {t('course.inLifetimeTrading')}
                     </Text>
                     <div className="flex items-center gap-1">
                       <Text type="font-14-400" className="text-letter/70">
-                        Your current trading volume:
+                        {t('course.currentTradingVolume')}
                       </Text>
                       <FormatNumberDecimal
                         value={volumeData?.data?.perp_volume_ltd || 0}
@@ -396,10 +413,10 @@ const CardEnrollNow = ({
                   <IconGift />
                   <div>
                     <Text type="font-16-600" className="text-main">
-                      Free Course Unlock Available!
+                      {t('course.freeCourseUnlockAvailable')}
                     </Text>
                     <Text type="font-14-400" className="text-letter">
-                      This course is free to enroll
+                      {t('course.freeToEnroll')}
                     </Text>
                   </div>
                 </div>

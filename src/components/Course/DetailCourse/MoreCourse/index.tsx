@@ -11,9 +11,11 @@ import {
 import CardCourseMore from './CardCourseMore';
 import Comment from './Comment';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
+import { useTranslation } from 'next-i18next';
 
 const MoreCourse = (props: any) => {
   const { author, courseId } = props;
+  const { t } = useTranslation('common');
 
   const { dataCourses, loadMore, noMore, reload } = useGetListCourse({
     pageSize: 3,
@@ -165,7 +167,7 @@ const MoreCourse = (props: any) => {
       {dataCourses?.length > 0 && (
         <div className="flex flex-col gap-6">
           <Text className="text-letter truncate w-full" type="font-20-600">
-            {'More Course By'} {generateMentors()}
+            {t('course.moreCoursesBy', { mentor: generateMentors() })}
           </Text>
           <div className="lg:grid lg:grid-cols-3 flex h-full items-center lg:overflow-hidden overflow-auto gap-6">
             {dataCourses?.length > 0 &&
@@ -183,7 +185,7 @@ const MoreCourse = (props: any) => {
           <div className="flex flex-col gap-4">
             return (
             <Text className="text-letter" type="font-20-600">
-              {'Reviews'}
+              {t('course.reviews')}
             </Text>
             <Comment
               handleUnDisLikeReview={handleUnDisLikeReview}
