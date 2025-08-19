@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 import { Control, Controller, useWatch, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
@@ -12,20 +13,21 @@ const SetPrice = ({
   control: Control;
   validationErrors?: any;
 }) => {
+  const { t } = useTranslation('common');
   const { setError, clearErrors, formState } = useForm({}); // Lấy các hàm hỗ trợ từ react-hook-form
   const originPrice = useWatch({ control, name: 'originPrice' });
 
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-letter">
-        {'Set Price'}
+        {t('createCourse.curriculum.setPrice.title')}
       </Text>
       <div className="flex flex-col gap-6">
         {/* Origin Price */}
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="w-[150px] flex items-center gap-1">
             <Text type="font-16-600" className="text-letter">
-              {'Origin Price'}
+              {t('createCourse.curriculum.setPrice.originPrice')}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -67,7 +69,7 @@ const SetPrice = ({
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="flex items-center gap-1 w-[150px]">
             <Text type="font-16-600" className="text-letter">
-              {'Final Price'}
+              {t('createCourse.curriculum.setPrice.finalPrice')}
             </Text>
             <Text className="font-16-400 text-danger"> &nbsp;*</Text>
           </div>
@@ -116,20 +118,14 @@ const SetPrice = ({
         <div className="grid grid-cols-1 items-center gap-4">
           <div className="flex items-center gap-1">
             <Text type="font-16-600" className="text-letter">
-              Unlock if user trades at least
+              {t('createCourse.curriculum.setPrice.unlockIfTrades')}
             </Text>
             <Tooltip
               content={
                 <div className="p-2 text-sm">
-                  <div>
-                    Users who trade at least this amount on What Exchange can
-                    unlock this course for free
-                  </div>
+                  <div>{t('setPrice.unlockDescription')}</div>
 
-                  <div className="mt-2">
-                    The trading volume entered here refers to the total volume
-                    traded within a 90-day period.
-                  </div>
+                  <div className="mt-2">{t('setPrice.tradingVolumeNote')}</div>
                 </div>
               }
             >

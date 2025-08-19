@@ -194,7 +194,31 @@
       "content": "内容",
       "addItem": "添加课程内容",
       "editContent": "编辑内容",
-      "editVideo": "编辑视频"
+      "editVideo": "编辑视频",
+    "setPrice": {
+        "title": "设置价格",
+        "originPrice": "原价",
+        "finalPrice": "最终价格",
+        "unlockIfTrades": "用户交易达到以下金额时解锁",
+        "unlockDescription": "在 What Exchange 上交易达到此金额的用户可以免费解锁此课程",
+        "tradingVolumeNote": "此处输入的交易量是指90天内的总交易量。"
+      },
+      "landingPage": {
+        "title": "课程登陆页",
+        "description": "您的课程登陆页对您在Udemy上的成功至关重要。如果做得好，它还可以帮助您在Google等搜索引擎中提高可见度。在完成本部分时，请考虑创建一个引人注目的课程登陆页，展示为什么有人会想要参加您的课程。了解更多关于创建课程登陆页和课程标题标准的信息。",
+        "courseTitle": "课程标题",
+        "courseSubtitle": "课程副标题",
+        "courseDescription": "课程描述",
+        "basicInfo": "基本信息",
+        "primaryTaught": "您的课程主要教授什么内容？",
+        "courseImage": "课程图片",
+        "promotionalVideo": "宣传视频",
+        "uploadImageHelp": "在此上传您的课程图片。它必须是302x200像素，格式为.jpg、.jpeg、.gif或.png，且不含文字。",
+        "imageHelp": "您的课程图片给学生留下第一印象。高质量的图片有助于吸引更多学习者。确保它的尺寸和格式正确—了解如何让它脱颖而出！",
+        "cropImage": "裁剪图片",
+        "change": "更换",
+        "uploadFile": "上传文件"
+      }
     },
     "intendedLearners": {
       "title": "目标学员",

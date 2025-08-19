@@ -14,6 +14,7 @@ import {
 } from '@/services/filter.service';
 import { useGetSubCategories } from '@/components/CreateCourse/service';
 import { useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 const CourseLandingPage = ({
   control,
   watch,
@@ -23,6 +24,7 @@ const CourseLandingPage = ({
   watch: any;
   validationErrors?: any;
 }) => {
+  const { t } = useTranslation('common');
   const { data } = useGetCategories({ order: 'createdAt asc' });
   const { data: levels } = useGetLevels();
   const { data: languages } = useGetLanguages();
@@ -40,15 +42,10 @@ const CourseLandingPage = ({
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
         <Text type="font-28-700" className="text-letter">
-          Course landing page
+          {t('createCourse.curriculum.landingPage.title')}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
-          Your course landing page is crucial to your success on Udemy. If it’s
-          done right, it can also help you gain visibility in search engines
-          like Google. As you complete this section, think about creating a
-          compelling Course Landing Page that demonstrates why someone would
-          want to enroll in your course. Learn more about creating your course
-          landing page and course title standards.
+          {t('createCourse.curriculum.landingPage.description')}
         </Text>
       </div>
       <div className="flex flex-col gap-1">
@@ -65,7 +62,7 @@ const CourseLandingPage = ({
               error={fieldState?.error?.message}
               onChange={field.onChange}
               maxLength={160}
-              label={'Course title'}
+              label={t('createCourse.curriculum.landingPage.courseTitle')}
               placeholder={'From Beginner to Expert'}
               inputDefault
               classInputWrapper={
@@ -90,7 +87,7 @@ const CourseLandingPage = ({
               value={field.value}
               onChange={field.onChange}
               maxLength={160}
-              label={'Course subtitle'}
+              label={t('createCourse.curriculum.landingPage.courseSubtitle')}
               placeholder={'Everything You Need to Know to Get Started'}
               inputDefault
               error={fieldState?.error?.message}
@@ -121,7 +118,7 @@ const CourseLandingPage = ({
               placeholder="Are you ready to master [Topic]? This comprehensive course will take you from beginner to expert, covering everything you need to know step by step..."
               onChange={field.onChange}
               value={field.value}
-              label={'Course description'}
+              label={t('createCourse.curriculum.landingPage.courseDescription')}
               inputDefault
               error={fieldState?.error?.message}
             />
@@ -133,7 +130,7 @@ const CourseLandingPage = ({
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-letter">
-          {'Basic info'}
+          {t('createCourse.curriculum.landingPage.basicInfo')}
         </Text>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Controller
@@ -234,7 +231,7 @@ const CourseLandingPage = ({
             render={({ field, fieldState }) => (
               <>
                 <Text type="font-16-600" className="text-letter mb-3">
-                  {'What is primarily taught in your course?'}
+                  {t('createCourse.curriculum.landingPage.primaryTaught')}
                 </Text>
                 <SelectCustom
                   placeholder={'e.g Landscape Photography'}

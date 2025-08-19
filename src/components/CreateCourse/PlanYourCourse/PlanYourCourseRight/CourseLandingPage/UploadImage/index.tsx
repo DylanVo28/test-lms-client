@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -19,6 +20,7 @@ const UploadImage = ({
   onChange: any;
   error: any;
 }) => {
+  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [valueProgress, setValueProgress] = useState(0);
   const [inputKey, setInputKey] = useState(Date.now());
@@ -113,7 +115,7 @@ const UploadImage = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-letter">
-        {'Course image'}
+        {t('createCourse.curriculum.landingPage.courseImage')}
       </Text>
       <input
         key={inputKey}
@@ -142,8 +144,7 @@ const UploadImage = ({
         </div>
         <div className="flex flex-col gap-3 md:gap-2 flex-1">
           <Text type="font-16-600" className="text-letter">
-            Upload your course image here. It must be 302x200 pixels, in .jpg,
-            .jpeg, .gif, or .png format, and contain no text.
+            {t('createCourse.curriculum.landingPage.uploadImageHelp')}
           </Text>
           <div className="flex items-center gap-2">
             {!imageSrc && (
@@ -173,7 +174,7 @@ const UploadImage = ({
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
-                  {'Crop image'}
+                  {t('createCourse.curriculum.landingPage.cropImage')}
                 </Text>
               </Button>
             ) : (
@@ -182,7 +183,9 @@ const UploadImage = ({
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
-                  {valueProgress > 10 && value ? 'Change' : 'Upload File'}
+                  {valueProgress > 10 && value
+                    ? t('createCourse.curriculum.landingPage.change')
+                    : t('createCourse.curriculum.landingPage.uploadFile')}
                 </Text>
               </Button>
             )}

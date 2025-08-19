@@ -194,7 +194,31 @@
       "content": "Content",
       "addItem": "Curriculum item",
       "editContent": "Edit content",
-      "editVideo": "Edit video"
+      "editVideo": "Edit video",
+    "setPrice": {
+        "title": "Set Price",
+        "originPrice": "Origin Price",
+        "finalPrice": "Final Price",
+        "unlockIfTrades": "Unlock if user trades at least",
+        "unlockDescription": "Users who trade at least this amount on What Exchange can unlock this course for free",
+        "tradingVolumeNote": "The trading volume entered here refers to the total volume traded within a 90-day period."
+      },
+      "landingPage": {
+        "title": "Course landing page",
+        "description": "Your course landing page is crucial to your success on Udemy. If it's done right, it can also help you gain visibility in search engines like Google. As you complete this section, think about creating a compelling Course Landing Page that demonstrates why someone would want to enroll in your course. Learn more about creating your course landing page and course title standards.",
+        "courseTitle": "Course title",
+        "courseSubtitle": "Course subtitle",
+        "courseDescription": "Course description",
+        "basicInfo": "Basic info",
+        "primaryTaught": "What is primarily taught in your course?",
+        "courseImage": "Course image",
+        "promotionalVideo": "Promotional video",
+        "uploadImageHelp": "Upload your course image here. It must be 302x200 pixels, in .jpg, .jpeg, .gif, or .png format, and contain no text.",
+        "imageHelp": "Your course image gives students a first impression of your course. A high-quality image helps attract more learners. Make sure it's the right size and format—learn how to make it stand out!",
+        "cropImage": "Crop image",
+        "change": "Change",
+        "uploadFile": "Upload File"
+      }
     },
     "intendedLearners": {
       "title": "Intended learners",

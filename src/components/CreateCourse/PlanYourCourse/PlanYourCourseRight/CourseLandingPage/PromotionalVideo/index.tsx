@@ -11,6 +11,7 @@ import useHandleFileChange from '@/hooks/useHandleFileChange';
 import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
 import useVideoThumbFromUrl from '@/hooks/useVideoThumbFromUrl';
 import CloseIcon from '@/layout/MainLayout/MainHeader/ThemeConfiguration/Icons/CloseIcon';
+import { useTranslation } from 'next-i18next';
 
 const PromotionalVideo = ({
   value,
@@ -21,6 +22,7 @@ const PromotionalVideo = ({
   onChange: any;
   error: any;
 }) => {
+  const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
   const [inputKey, setInputKey] = useState(Date.now());
   const [fileData, setFileData] = useState<any>({});
@@ -97,7 +99,7 @@ const PromotionalVideo = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-letter">
-        {'Promotional video'}
+        {t('createCourse.curriculum.landingPage.promotionalVideo')}
       </Text>
       <input
         key={inputKey}
@@ -140,9 +142,7 @@ const PromotionalVideo = ({
         </div>
         <div className="flex flex-col gap-3 md:gap-2 flex-1">
           <Text type="font-16-600" className="text-letter max-w-full">
-            Your course image gives students a first impression of your course.
-            A high-quality image helps attract more learners. Make sure it’s the
-            right size and format—learn how to make it stand out!
+            {t('createCourse.curriculum.landingPage.imageHelp')}
           </Text>
           <div className="flex items-center gap-2">
             {(isHasVideo && uploading) || value ? (
@@ -176,7 +176,9 @@ const PromotionalVideo = ({
                 className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
               >
                 <Text type="font-16-700" className="text-main">
-                  {value ? 'Change' : 'Upload File'}
+                  {value
+                    ? t('createCourse.curriculum.landingPage.change')
+                    : t('createCourse.curriculum.landingPage.uploadFile')}
                 </Text>
               </Button>
             )}
