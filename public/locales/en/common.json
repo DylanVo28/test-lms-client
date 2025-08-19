@@ -255,6 +255,7 @@
     "pageDescription": "Browse all available courses on What Exchange",
     "editCourse": "Edit Course",
     "deleteCourse": "Delete Course",
+    "deleteConfirmation": "Course information cannot be restored after cancellation and students cannot continue taking this course, are you sure you want to cancel the course?",
     "viewStatistics": "View Statistics",
     "finishYourCourses": "Finish your courses",
     "draft": "Draft",

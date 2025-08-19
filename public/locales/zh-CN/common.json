@@ -255,6 +255,7 @@
     "pageDescription": "浏览 What Exchange 上的所有可用课程",
     "editCourse": "编辑课程",
     "deleteCourse": "删除课程",
+    "deleteConfirmation": "取消后课程信息无法恢复，学生也无法继续学习该课程，您确定要取消该课程吗？",
     "viewStatistics": "查看统计",
     "finishYourCourses": "完成您的课程",
     "draft": "草稿",
