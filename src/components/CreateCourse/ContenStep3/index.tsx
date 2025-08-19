@@ -2,17 +2,19 @@ import InputText from '@/components/UI/InputText';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { Control, Controller } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 import { useGetCategories } from '../service';
 const ContenStep3 = ({ control }: { control: Control }) => {
   const { dataCategories } = useGetCategories({ order: 'createdAt asc' });
+  const { t } = useTranslation('common');
   return (
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
         <Text type="font-28-700" className="text-letter">
-          {"What category best fits the knowledge you'll share?"}
+          {t('createCourse.categoryQuestion')}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
-          If you're not sure about the right category, you can change it later.
+          {t('createCourse.categoryDescription')}
         </Text>
       </div>
       <div className="w-full">
@@ -21,7 +23,7 @@ const ContenStep3 = ({ control }: { control: Control }) => {
           control={control}
           render={({ field }) => (
             <SelectCustom
-              placeholder={'Choose a category'}
+              placeholder={t('createCourse.chooseCategoryPlaceholder')}
               className="md:min-w-[620px]"
               isSelectSubmit
               onChange={field.onChange}

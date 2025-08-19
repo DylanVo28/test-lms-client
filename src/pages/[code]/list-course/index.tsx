@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import MainLayout from '@/layout/MainLayout';
 import ListCourse from '@/components/ListCourse';
@@ -17,11 +19,12 @@ const ListCoursePage = () => {
 };
 
 ListCoursePage.getLayout = function getLayout(page: ReactElement) {
+  const { t } = useTranslation('common');
   return (
     <>
       <SEO
-        title="List Courses | What Exchange"
-        description="Browse all available courses on What Exchange."
+        title={t('listCourse.pageTitle')}
+        description={t('listCourse.pageDescription')}
         imageUrl={DefaultData.DefaultCourseImage}
       ></SEO>
       <AppProvider>
@@ -44,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

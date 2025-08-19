@@ -97,7 +97,8 @@
     "search": "搜索",
     "filter": "筛选",
     "sort": "排序",
-    "language": "语言"
+    "language": "语言",
+    "newCourse": "新课程"
   },
   "footer": {
     "copyright": "© 2024 学习管理系统平台。保留所有权利。",
@@ -134,6 +135,31 @@
       "数字媒体"
     ]
   },
+  "createCourse": {
+    "pageTitle": "创建课程 | What Exchange",
+    "pageDescription": "在 What Exchange 上创建新课程",
+    "stepProgress": "步骤 {{current}} / {{total}}",
+    "exit": "退出",
+    "findOutType": "首先，让我们确定您要创建的课程类型",
+    "courseType": "课程",
+    "courseTypeDescription": "通过视频讲座、测验、编程练习等创建丰富的学习体验。",
+    "premadeContent": "预制内容",
+    "premadeContentDescription": "允许内容创作者直接从我们的白标数据库复制",
+    "workingTitle": "想好课程标题了吗？",
+    "titleDescription": "如果现在想不到好标题也没关系。您可以稍后再更改。",
+    "titlePlaceholder": "例如：从零开始学习 Photoshop CS6",
+    "categoryQuestion": "哪个类别最适合您要分享的知识？",
+    "categoryDescription": "如果您不确定合适的类别，可以稍后更改。",
+    "chooseCategoryPlaceholder": "选择类别",
+    "timeSpent": {
+      "question": "您每周能花多少时间来创建课程？",
+      "description": "没有错误的答案。即使您没有太多时间，我们也能帮助您实现目标。",
+      "veryBusy": "我现在很忙（0-2小时）",
+      "onTheSide": "我会在工作之余处理（2-4小时）",
+      "flexible": "我有很大的时间灵活性（5+小时）",
+      "undecided": "我还没决定是否有时间"
+    }
+  },
   "listCourse": {
     "allFilter": "全部筛选",
     "categories": "分类",
@@ -144,7 +170,15 @@
     "noData": "没有数据",
     "seeMore": "查看更多",
     "newest": "最新",
-    "oldest": "最早"
+    "oldest": "最早",
+    "pageTitle": "课程列表 | What Exchange",
+    "pageDescription": "浏览 What Exchange 上的所有可用课程",
+    "editCourse": "编辑课程",
+    "deleteCourse": "删除课程",
+    "viewStatistics": "查看统计",
+    "finishYourCourses": "完成您的课程",
+    "draft": "草稿",
+    "public": "公开"
   },
   "register": {
     "title": "注册账户",
@@ -164,5 +198,20 @@
     "connectWallet": "请先连接您的钱包",
     "invalidReferral": "推荐码无效",
     "registerKeyFailed": "注册密钥失败：{{error}}"
+  },
+  "profileMenu": {
+    "admin": "管理员",
+    "verified": "已验证",
+    "myProfile": "我的资料",
+    "myLearning": "我的学习",
+    "logout": "退出登录"
+  },
+  "admin": {
+    "loginTitle": "管理员登录 | What Exchange",
+    "loginDescription": "What Exchange 平台管理员登录页面"
+  },
+  "notifications": {
+    "title": "通知 | What Exchange",
+    "description": "查看您在 What Exchange 上的所有通知"
   }
 }

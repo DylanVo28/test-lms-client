@@ -97,7 +97,8 @@
     "search": "Search",
     "filter": "Filter",
     "sort": "Sort",
-    "language": "Language"
+    "language": "Language",
+    "newCourse": "New Course"
   },
   "footer": {
     "copyright": "© 2024 LMS Platform. All rights reserved.",
@@ -134,6 +135,31 @@
       "Digital Media"
     ]
   },
+  "createCourse": {
+    "pageTitle": "Create Course | What Exchange",
+    "pageDescription": "Create a new course on What Exchange",
+    "stepProgress": "Step {{current}} of {{total}}",
+    "exit": "Exit",
+    "findOutType": "First, let's find out what type of course you're making",
+    "courseType": "Courses",
+    "courseTypeDescription": "Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.",
+    "premadeContent": "Premade Content",
+    "premadeContentDescription": "Allows the content creator to just duplicate from our white label database",
+    "workingTitle": "How about a working title?",
+    "titleDescription": "It's ok if you can't think of a good title now. You can change it later.",
+    "titlePlaceholder": "e.g Learn photoshop CS6 from Scratch",
+    "categoryQuestion": "What category best fits the knowledge you'll share?",
+    "categoryDescription": "If you're not sure about the right category, you can change it later.",
+    "chooseCategoryPlaceholder": "Choose a category",
+    "timeSpent": {
+      "question": "How much time can you spend creating your course per week?",
+      "description": "There's no wrong answer. We can help you achieve your goals even if you don't have much time.",
+      "veryBusy": "I'm very busy right now (0-2 hours)",
+      "onTheSide": "I'll work on this on the side (2-4 hours)",
+      "flexible": "I have lots of flexibility (5+ hours)",
+      "undecided": "I haven't yet decided if I have time"
+    }
+  },
   "listCourse": {
     "allFilter": "All Filter",
     "categories": "Categories",
@@ -144,7 +170,15 @@
     "noData": "No data",
     "seeMore": "See More",
     "newest": "Newest",
-    "oldest": "Oldest"
+    "oldest": "Oldest",
+    "pageTitle": "List Courses | What Exchange",
+    "pageDescription": "Browse all available courses on What Exchange",
+    "editCourse": "Edit Course",
+    "deleteCourse": "Delete Course",
+    "viewStatistics": "View Statistics",
+    "finishYourCourses": "Finish your courses",
+    "draft": "Draft",
+    "public": "Public"
   },
   "register": {
     "title": "Register account",
@@ -164,5 +198,20 @@
     "connectWallet": "Please connect your wallet",
     "invalidReferral": "Referral code is invalid",
     "registerKeyFailed": "Register key failed: {{error}}"
+  },
+  "profileMenu": {
+    "admin": "Admin",
+    "verified": "Verified",
+    "myProfile": "My Profile",
+    "myLearning": "My Learning",
+    "logout": "Logout"
+  },
+  "admin": {
+    "loginTitle": "Admin Login | What Exchange",
+    "loginDescription": "Admin login page for What Exchange platform."
+  },
+  "notifications": {
+    "title": "Notifications | What Exchange",
+    "description": "View all your notifications on What Exchange"
   }
 }

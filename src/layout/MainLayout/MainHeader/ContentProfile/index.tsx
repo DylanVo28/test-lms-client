@@ -14,16 +14,17 @@ import useNavigate from '@/hooks/useNavigate';
 import { useLogout } from '../service';
 import { initialTheme, themeAtom } from '@/store/theme/theme';
 import { initialProfile } from '@/store/profile/profile';
+import { useTranslation } from 'next-i18next';
 
 const MENUS = [
   {
     id: 1,
-    label: 'My Profile',
+    labelKey: 'profileMenu.myProfile',
     href: ROUTE_PATH.MY_PROFILE,
   },
   {
     id: 2,
-    label: 'My Learning',
+    labelKey: 'profileMenu.myLearning',
     href: ROUTE_PATH.MY_LEARNING,
   },
   // {
@@ -40,6 +41,7 @@ const ContentProfile = ({
   disconnect: any;
   onClosePopover: VoidFunction;
 }) => {
+  const { t } = useTranslation('common');
   const { profile, setProfile } = useProfile();
   const router = useRouter();
   const [, setNotifications] = useAtom(notificationAtom);
@@ -86,7 +88,7 @@ const ContentProfile = ({
         </div>
         <div className="py-[2px] px-2 rounded-[50px] bg-green/10 flex justify-center items-center">
           <Text type="font-12-500" className="text-green">
-            {'Verified'}
+            {t('profileMenu.verified')}
           </Text>
         </div>
       </div>
@@ -102,7 +104,7 @@ const ContentProfile = ({
               className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
             >
               <Text type="font-14-500" className="text-letter">
-                {item?.label}
+                {t(item?.labelKey as any)}
               </Text>
             </div>
           );
@@ -114,7 +116,7 @@ const ContentProfile = ({
       >
         <Image src={'/images/ig-logout.png'} width={24} height={24} alt="" />
         <Text type="font-14-500" className="text-error">
-          {'Logout'}
+          {t('profileMenu.logout')}
         </Text>
       </div>
     </div>

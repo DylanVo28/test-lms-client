@@ -6,6 +6,7 @@ import { Control, Controller } from 'react-hook-form';
 import IconCourse from '@/components/UI/Icons/IconCourse';
 import { useAtom } from 'jotai';
 import { totalStepAtom } from '../HeaderCourse';
+import { useTranslation } from 'next-i18next';
 
 export const enum TYPE_CREATE_COURSE {
   COURSE = 'COURSE',
@@ -14,28 +15,27 @@ export const enum TYPE_CREATE_COURSE {
 
 const ContenStep1 = ({ control }: { control: Control }) => {
   const [, setTotalStep] = useAtom(totalStepAtom);
+  const { t } = useTranslation('common');
 
   const DATA_CONTENT = [
     {
       id: 'COURSE',
-      label: 'Courses',
+      label: t('createCourse.courseType'),
       img: '/images/img-courses.png',
-      description:
-        'Create rich learning experiences with the help of video lectures, quizzes, programming exercises, and more.',
+      description: t('createCourse.courseTypeDescription'),
     },
     {
       id: 'PREMADE_CONTENT',
-      label: 'Premade Content',
+      label: t('createCourse.premadeContent'),
       img: '/images/img-practice.png',
-      description:
-        'Allows the content creator to just duplicate from our white label database',
+      description: t('createCourse.premadeContentDescription'),
     },
   ];
 
   return (
     <div className="flex items-center flex-col gap-10">
       <Text className="text-letter text-center" type="font-28-700">
-        {"First, let's find out what type of course you're making."}
+        {t('createCourse.findOutType')}
       </Text>
       <Controller
         name="type"
