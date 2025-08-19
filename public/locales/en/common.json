@@ -179,6 +179,23 @@
         "setPrice": "Set Price"
       }
     },
+    "curriculum": {
+      "title": "Curriculum item",
+      "description": "Start putting together your course by creating sections, lectures and practice activities (quizzes, coding exercises and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you're intending to offer your course for free, the total length of video content must be less than 2 hours.",
+      "part": "Part {{number}}:",
+      "section": "Section",
+      "lecture": "Lecture",
+      "question": "Question",
+      "lectureNumber": "Lecture {{number}}:",
+      "quizNumber": "Quiz {{number}}:",
+      "enterTitle": "Enter title",
+      "cancel": "Cancel",
+      "save": "Save",
+      "content": "Content",
+      "addItem": "Curriculum item",
+      "editContent": "Edit content",
+      "editVideo": "Edit video"
+    },
     "intendedLearners": {
       "title": "Intended learners",
       "description": "The following descriptions will be publicly visible on your Course Landing Page and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.",

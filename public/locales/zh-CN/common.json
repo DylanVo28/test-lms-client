@@ -179,6 +179,23 @@
         "setPrice": "设置价格"
       }
     },
+    "curriculum": {
+      "title": "课程内容",
+      "description": "通过创建章节、讲座和练习活动（测验、编程练习和作业）来开始组织您的课程。使用课程大纲来构建内容，并清晰地标记章节和讲座。如果您打算免费提供课程，视频内容的总长度必须少于2小时。",
+      "part": "第{{number}}部分：",
+      "section": "章节",
+      "lecture": "讲座",
+      "question": "问题",
+      "lectureNumber": "课时 {{number}}:",
+      "quizNumber": "测验 {{number}}:",
+      "enterTitle": "输入标题",
+      "cancel": "取消",
+      "save": "保存",
+      "content": "内容",
+      "addItem": "添加课程内容",
+      "editContent": "编辑内容",
+      "editVideo": "编辑视频"
+    },
     "intendedLearners": {
       "title": "目标学员",
       "description": "以下描述将在您的课程登陆页面上公开显示，并将直接影响您的课程表现。这些描述将帮助学员决定您的课程是否适合他们。",

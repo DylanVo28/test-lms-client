@@ -179,6 +179,23 @@
         "setPrice": "Thiết lập giá"
       }
     },
+    "curriculum": {
+      "title": "Nội dung khóa học",
+      "description": "Bắt đầu xây dựng khóa học của bạn bằng cách tạo các phần, bài giảng và hoạt động thực hành (câu hỏi trắc nghiệm, bài tập lập trình và bài tập). Sử dụng đề cương khóa học để cấu trúc nội dung và gắn nhãn các phần và bài giảng một cách rõ ràng. Nếu bạn dự định cung cấp khóa học miễn phí, tổng thời lượng nội dung video phải ít hơn 2 giờ.",
+      "part": "Phần {{number}}:",
+      "section": "Phần",
+      "lecture": "Bài giảng",
+      "question": "Câu hỏi",
+      "lectureNumber": "Bài giảng {{number}}:",
+      "quizNumber": "Bài kiểm tra {{number}}:",
+      "enterTitle": "Nhập tiêu đề",
+      "cancel": "Hủy",
+      "save": "Lưu",
+      "content": "Nội dung",
+      "addItem": "Thêm nội dung",
+        "editContent": "Chỉnh sửa nội dung",
+      "editVideo": "Chỉnh sửa video"
+    },
     "intendedLearners": {
       "title": "Học viên mục tiêu",
       "description": "Các mô tả sau đây sẽ được hiển thị công khai trên Trang Khóa học của bạn và sẽ có tác động trực tiếp đến hiệu suất khóa học. Những mô tả này sẽ giúp học viên quyết định xem khóa học của bạn có phù hợp với họ hay không.",

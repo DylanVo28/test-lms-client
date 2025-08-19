@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import { Control, useFieldArray, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
+import { useTranslation } from 'next-i18next';
 import { createContext, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
@@ -31,6 +32,7 @@ const CurriculumItem = dynamic(
 );
 
 const Curriculum = ({ setValue, validationErrors }: any) => {
+  const { t } = useTranslation('common');
   const {
     control,
     reset,
@@ -136,7 +138,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
         <div className="flex flex-col gap-8">
           <div className="flex justify-between items-center">
             <Text type="font-28-700" className="text-letter">
-              {'Curriculum item'}
+              {t('createCourse.curriculum.title')}
             </Text>
             {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
             <Text type="font-16-700" className="text-letter">
@@ -146,12 +148,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
           </div>
 
           <Text type="font-16-400" className="text-letter/70">
-            Start putting together your course by creating sections, lectures
-            and practice activities (quizzes, coding exercises and assignments).
-            Use your course outline to structure your content and label your
-            sections and lectures clearly. If you’re intending to offer your
-            course for free, the total length of video content must be less than
-            2 hours.
+            {t('createCourse.curriculum.description')}
           </Text>
           {fields?.map((field: any, index: number) => {
             const sectionHasContent =
@@ -211,7 +208,9 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                     ) : (
                       <div className="flex items-center gap-2">
                         <Text type="font-16-700" className="whitespace-nowrap">
-                          {`${'Part'} ${index + 1}:`}
+                          {t('createCourse.curriculum.part', {
+                            number: index + 1,
+                          })}
                         </Text>
                         <div className="flex items-center gap-1">
                           <FileText size={20} weight="light" />
@@ -282,7 +281,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
               <div className="flex items-center gap-1">
                 <IconPlusMain />
                 <Text type="font-16-400" className="text-main">
-                  {'Section'}
+                  {t('createCourse.curriculum.section')}
                 </Text>
               </div>
             </Button>

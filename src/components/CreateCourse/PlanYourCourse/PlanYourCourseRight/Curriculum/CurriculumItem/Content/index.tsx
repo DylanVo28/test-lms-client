@@ -3,6 +3,7 @@ import { LessonContentType } from '@/utils/const';
 import { File, FileText } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const Content = ({
   handleClickEditContent,
@@ -13,6 +14,7 @@ const Content = ({
   type: LessonContentType;
   info: any;
 }) => {
+  const { t } = useTranslation('common');
   const formattedTime: string = useMemo(() => {
     const minutes = Math.floor(info?.duration / 60);
     const seconds = Math.floor(info?.duration % 60);
@@ -60,8 +62,8 @@ const Content = ({
               <IconEdit />
               <Text type="font-14-400" className="text-[#0059FF]">
                 {type === LessonContentType.VIDEO
-                  ? 'Edit video'
-                  : 'Edit content'}
+                  ? t('createCourse.curriculum.editVideo')
+                  : t('createCourse.curriculum.editContent')}
               </Text>
             </div>
           )}
