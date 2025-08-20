@@ -178,7 +178,7 @@ const CardCourse = ({
           {/* <Button variant="light" radius="full">
             <div className="flex items-center gap-1">
               <Text type="font-14-500" className="text-letter">
-                {'Enroll Course'}
+                {t('listCourse.enrollCourse')}
               </Text>
               <IconArrowUp />
             </div>

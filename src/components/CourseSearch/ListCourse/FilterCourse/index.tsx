@@ -14,6 +14,8 @@ import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Rater from 'react-rater';
+import { useTranslation } from 'next-i18next';
+
 const DATA_LANGUAGE = [
   {
     id: '1',
@@ -43,6 +45,7 @@ const DATA_LANGUAGE = [
 const initialItemsLanguage = 5;
 
 const FilterCourse = (props: any) => {
+  const { t } = useTranslation('common');
   const { params, setParams, isMobile, onCloseModalFilter } = props;
   const [expanded, setExpanded] = useState(false);
   const contentRef: any = useRef(null);
@@ -142,7 +145,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-letter">
-            {'Rating'}
+            {t('listCourse.rating')}
           </Text>
         }
       >
@@ -190,7 +193,7 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-letter">
-              {'Language'}
+              {t('listCourse.language')}
             </Text>
             {/* <TagCount count={2} /> */}
           </div>
@@ -200,7 +203,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchLanguages}
             isFilter
-            placeholder={'Search...'}
+            placeholder={t('listCourse.searchPlaceholder')}
           />
           <div className="flex flex-col gap-2">
             <CheckboxGroup size="lg" radius="sm" value={params.langs}>
@@ -292,7 +295,7 @@ const FilterCourse = (props: any) => {
           >
             <div className="flex items-center gap-[2px]">
               <Text type="font-14-500" className="text-main">
-                {expanded ? 'See Less' : 'See More'}
+                {expanded ? t('listCourse.seeLess') : t('listCourse.seeMore')}
               </Text>
               <Image
                 src={'/icons/ic-arrow-drop-right-line.svg'}
@@ -312,7 +315,7 @@ const FilterCourse = (props: any) => {
         title={
           <div className="flex items-center gap-2">
             <Text type="font-18-600" className="text-letter">
-              {'Hands-on Practice'}
+              {t('listCourse.handsOnPractice')}
             </Text>
             {/* <TagCount count={1} /> */}
           </div>
@@ -322,7 +325,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchFeatures}
             isFilter
-            placeholder={'Search...'}
+            placeholder={t('listCourse.searchPlaceholder')}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.features}>
             {features?.map((item: any) => {
@@ -370,7 +373,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-letter">
-            {'Topic'}
+            {t('listCourse.topic')}
           </Text>
         }
       >
@@ -378,7 +381,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchTopic}
             isFilter
-            placeholder={'Search...'}
+            placeholder={t('listCourse.searchPlaceholder')}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.topics}>
             {topics?.map((item: any) => {
@@ -424,7 +427,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-letter">
-            {'Level'}
+            {t('listCourse.level')}
           </Text>
         }
       >
@@ -432,7 +435,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchLevel}
             isFilter
-            placeholder={'Search...'}
+            placeholder={t('listCourse.searchPlaceholder')}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.levels}>
             {levels?.map((item: any) => {
@@ -478,7 +481,7 @@ const FilterCourse = (props: any) => {
         isMobile={isMobile}
         title={
           <Text type="font-18-600" className="text-letter">
-            {'Price'}
+            {t('listCourse.price')}
           </Text>
         }
       >
@@ -486,7 +489,7 @@ const FilterCourse = (props: any) => {
           <InputText
             onChange={onSearchPrice}
             isFilter
-            placeholder={'Search...'}
+            placeholder={t('listCourse.searchPlaceholder')}
           />
           <CheckboxGroup size="lg" radius="sm" value={params.prices}>
             {pricesData?.map((item: any) => {
@@ -542,7 +545,7 @@ const FilterCourse = (props: any) => {
             }}
           >
             <Text type="font-14-500" className="text-letter">
-              {'Clear filter'}
+              {t('listCourse.clearFilter')}
             </Text>
           </button>
         </div>

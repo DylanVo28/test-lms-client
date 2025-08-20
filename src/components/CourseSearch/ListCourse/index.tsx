@@ -12,6 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 import DrawerFilter from '../DrawerFilter';
 import { useLikeCourse, useUnLikeCourse } from '../service';
 import CardCourse from './CardCourse';
@@ -30,6 +31,7 @@ const initParams = {
   prices: [],
 };
 const ListCourse = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [tab, setTab] = useState(TAB_VIEW?.GRID);
   const [pageSize, setPageSize] = useState(3);
@@ -37,8 +39,8 @@ const ListCourse = () => {
   const searchParams = useSearchParams();
 
   const SORT_BY = [
-    { key: 'createdAt desc', label: 'Newest' },
-    { key: 'createdAt asc', label: 'Oldest' },
+    { key: 'createdAt desc', label: t('listCourse.newest') },
+    { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
 
   const refDrawerFilter: any = useRef(null);
@@ -114,20 +116,20 @@ const ListCourse = () => {
       <div className="flex flex-col gap-8 mb-4 md:mb-0 pt-[36px] md:px-10">
         <Text type="font-28-700" className="text-letter">{`${
           dataCourses?.length
-        } ${'results for'} “${router.query.keySearch}”`}</Text>
+        } ${t('listCourse.searchFor')} "${router.query.keySearch}"`}</Text>
         <div className={clsx('grid grid-cols-8 gap-6', {})}>
-          <div className="col-span-2  flex-col hidden md:flex gap-5">
+          <div className="col-span-2 flex-col gap-5">
             <div className="flex items-center gap-4">
               <Button className="min-w-[107px] border-1 py-[10px] px-2 bg-card border-[#F0F0F01A] rounded">
                 <div className="flex items-center gap-1">
                   <IconShowFilter />
                   <Text type="font-14-500" className="text-letter/70">
-                    {'Filters'}
+                    {t('listCourse.filters')}
                   </Text>
                 </div>
               </Button>
               <SelectCustom
-                placeholder={'Sort by type'}
+                placeholder={t('listCourse.sortByType')}
                 className="w-full"
                 options={SORT_BY}
                 value={sort}
@@ -155,12 +157,12 @@ const ListCourse = () => {
                       <div className="flex items-center gap-1">
                         <IconShowFilter />
                         <Text type="font-14-500" className="text-letter/70">
-                          {'Show Filters'}
+                          {t('listCourse.showFilters')}
                         </Text>
                       </div>
                     </button>
                     <SelectCustom
-                      placeholder={'Sort by type'}
+                      placeholder={t('listCourse.sortByType')}
                       className="w-full"
                       options={SORT_BY}
                       value={sort}
@@ -179,7 +181,7 @@ const ListCourse = () => {
                     <div className="flex items-center gap-2">
                       <IconDeleteMain />
                       <Text type="font-16-700" className="text-main">
-                        {'Clear filter'}
+                        {t('listCourse.clearFilter')}
                       </Text>
                     </div>
                   </Button>
@@ -188,7 +190,7 @@ const ListCourse = () => {
                 <div className="flex items-center gap-4">
                   {dataCourses?.length > 0 && (
                     <Text type="font-20-600" className="text-letter">
-                      {dataCourses?.length} {'results'}
+                      {dataCourses?.length} {t('listCourse.results')}
                     </Text>
                   )}
                   {/* <Tabs
@@ -236,7 +238,7 @@ const ListCourse = () => {
               >
                 <div className="flex items-center gap-[2px]">
                   <Text type="font-14-500" className="text-main">
-                    {'See More'}
+                    {t('listCourse.seeMore')}
                   </Text>
                   <Image
                     src={'/icons/ic-arrow-drop-right-line.svg'}

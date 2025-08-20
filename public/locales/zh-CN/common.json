@@ -267,7 +267,28 @@
     "viewStatistics": "查看统计",
     "finishYourCourses": "完成您的课程",
     "draft": "草稿",
-    "public": "公开"
+    "public": "公开",
+    "searchFor": "搜索结果",
+    "filters": "筛选",
+    "sortByType": "按类型排序",
+    "clearFilter": "清除筛选",
+    "results": "结果",
+    "showFilters": "显示筛选",
+    "rating": "评分",
+    "language": "语言",
+    "topic": "主题",
+    "level": "级别",
+    "free": "免费",
+    "paid": "付费",
+    "searchPlaceholder": "搜索...",
+    "handsOnPractice": "实践练习",
+    "seeLess": "显示更少",
+    "seeMore": "显示更多",
+    "courseSearch": {
+      "pageTitle": "课程搜索 | What Exchange",
+      "pageDescription": "在 What Exchange 上搜索课程。"
+    },
+    "enrollCourse": "报名课程"
   },
   "register": {
     "title": "注册账户",

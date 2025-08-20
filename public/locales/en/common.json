@@ -267,7 +267,27 @@
     "viewStatistics": "View Statistics",
     "finishYourCourses": "Finish your courses",
     "draft": "Draft",
-    "public": "Public"
+    "public": "Public",
+    "searchFor": "results for",
+    "filters": "Filters",
+    "sortByType": "Sort by type",
+    "clearFilter": "Clear filter",
+    "results": "results",
+    "showFilters": "Show Filters",
+    "rating": "Rating",
+    "language": "Language",
+    "topic": "Topic",
+    "level": "Level",
+    "free": "Free",
+    "paid": "Paid",
+    "searchPlaceholder": "Search...",
+    "handsOnPractice": "Hands-on Practice",
+    "seeLess": "See Less",
+    "courseSearch": {
+      "pageTitle": "Course Search | What Exchange",
+      "pageDescription": "Search for courses on What Exchange."
+    },
+    "enrollCourse": "Enroll Course"
   },
   "register": {
     "title": "Register account",

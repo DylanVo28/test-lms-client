@@ -6,6 +6,7 @@ import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'next-i18next';
 
 const MainLayout = dynamic(() => import('@/layout/MainLayout'), {
   ssr: false,
@@ -16,8 +17,15 @@ const CourseSearch = dynamic(() => import('@/components/CourseSearch'), {
 });
 
 const CourseSearchPage = () => {
+  const { t } = useTranslation('common');
+  
   return (
     <>
+      <SEO
+        title={t('listCourse.courseSearch.pageTitle')}
+        description={t('listCourse.courseSearch.pageDescription')}
+        imageUrl={DefaultData.DefaultCourseImage}
+      />
       <CourseSearch />
     </>
   );
@@ -26,11 +34,6 @@ const CourseSearchPage = () => {
 CourseSearchPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <SEO
-        title="Course Search | What Exchange"
-        description="Search for courses on What Exchange."
-        imageUrl={DefaultData.DefaultCourseImage}
-      />
       <AppProvider>
         <MainLayout>
           <>{page}</>

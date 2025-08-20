@@ -267,7 +267,28 @@
     "viewStatistics": "Xem thống kê",
     "finishYourCourses": "Hoàn thành khóa học của bạn",
     "draft": "Bản nháp",
-    "public": "Công khai"
+    "public": "Công khai",
+    "searchFor": "kết quả cho",
+    "filters": "Bộ lọc",
+    "sortByType": "Sắp xếp theo loại",
+    "clearFilter": "Xóa bộ lọc",
+    "results": "kết quả",
+    "showFilters": "Hiển thị bộ lọc",
+    "rating": "Đánh giá",
+    "language": "Ngôn ngữ",
+    "topic": "Chủ đề",
+    "level": "Cấp độ",
+    "free": "Miễn phí",
+    "paid": "Trả phí",
+    "searchPlaceholder": "Tìm kiếm...",
+    "handsOnPractice": "Thực hành",
+    "seeLess": "Xem ít hơn",
+    "seeMore": "Xem thêm",
+    "courseSearch": {
+      "pageTitle": "Tìm kiếm khóa học | What Exchange",
+      "pageDescription": "Tìm kiếm khóa học trên What Exchange."
+    },
+    "enrollCourse": "Đăng ký khóa học"
   },
   "register": {
     "title": "Đăng ký tài khoản",
