@@ -9,6 +9,11 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from '@nextui-org/react';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -28,18 +33,40 @@ import Link from 'next/link';
 import ProfileModal from '@/components/UI/ProfileModal';
 import { formatWalletAddress } from '@/utils/common';
 import IconUser from '@/components/UI/Icons/IconUser';
+import IconGlobal from '@/components/UI/Icons/IconGlobal';
+import { useTranslation } from 'next-i18next';
+import { useRouter as useNextRouter } from 'next/router';
 
 const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
   const [urlLogo, setUrlLogo] = useState<string>('');
   const [notifications] = useAtom(notificationAtom);
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
   const { openConnectModal }: any = useConnectModal();
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
+  const nextRouter = useNextRouter();
   const { navigate } = useNavigate();
+  const { t, i18n } = useTranslation('common');
+
+  const LANGUAGES = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+    { code: 'zh-CN', name: '中文', flag: '🇨🇳' },
+  ];
+
+  const currentLanguage =
+    LANGUAGES.find((lang) => lang.code === i18n.language) || LANGUAGES[0];
+
+  const handleLanguageChange = (languageCode: string) => {
+    i18n.changeLanguage(languageCode);
+    setIsLanguageModalOpen(false);
+    // Refresh the page to apply language changes
+    window.location.reload();
+  };
 
   const MENUS = useMemo(
     () =>
@@ -47,29 +74,29 @@ const DrawerMenu = (props: any, ref: any) => {
         ? [
             {
               key: 1,
-              label: 'My learning',
+              label: t('header.myLearning'),
               href: ROUTE_PATH.MY_LEARNING,
             },
             {
               key: 2,
-              label: 'Wish list',
+              label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}`,
             },
             {
               key: 3,
-              label: 'Teach',
+              label: t('header.teach'),
               href: ROUTE_PATH.LIST_COURSE,
             },
           ]
         : [
             {
               key: 1,
-              label: 'My learning',
+              label: t('header.myLearning'),
               href: ROUTE_PATH.MY_LEARNING,
             },
             {
               key: 2,
-              label: 'Wish list',
+              label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}`,
             },
           ],
@@ -198,6 +225,17 @@ const DrawerMenu = (props: any, ref: any) => {
                             <IconNotification />
                           </div>
                         </Link>
+
+                        {/* Language Switcher Button */}
+                        <Button
+                          isIconOnly
+                          variant="light"
+                          className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10 hover:bg-gray-20 transition-colors"
+                          onPress={() => setIsLanguageModalOpen(true)}
+                        >
+                          <IconGlobal />
+                        </Button>
+
                         {profile?.role === 'KOL' && <ThemeConfiguration />}
                       </div>
 
@@ -234,6 +272,87 @@ const DrawerMenu = (props: any, ref: any) => {
       </DrawerContent>
 
       <ProfileModal isOpen={isOpen} onClose={() => setOpen(false)} />
+
+      {/* Language Selection Modal */}
+      <Modal
+        isOpen={isLanguageModalOpen}
+        onClose={() => setIsLanguageModalOpen(false)}
+        size="sm"
+        placement="center"
+        classNames={{
+          base: 'bg-card border border-white-10',
+          header: 'border-b border-white-10',
+          body: 'py-6',
+          footer: 'border-t border-white-10',
+          backdrop: 'bg-black/50 backdrop-blur-sm',
+          wrapper: 'items-center justify-center',
+        }}
+        motionProps={{
+          variants: {
+            enter: {
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.3,
+                ease: 'easeOut',
+              },
+            },
+            exit: {
+              y: -20,
+              opacity: 0,
+              transition: {
+                duration: 0.2,
+                ease: 'easeIn',
+              },
+            },
+          },
+        }}
+      >
+        <ModalContent>
+          <ModalHeader className="flex flex-col gap-1">
+            <Text type="font-18-600" className="text-letter">
+              {t('header.selectLanguage')}
+            </Text>
+          </ModalHeader>
+          <ModalBody>
+            <div className="flex flex-col gap-3">
+              {LANGUAGES.map((language) => (
+                <Button
+                  key={language.code}
+                  variant="light"
+                  className={clsx(
+                    'w-full justify-start h-12 px-4 transition-all',
+                    {
+                      'bg-main text-letter':
+                        language.code === currentLanguage.code,
+                      'bg-white-10 hover:bg-white-20 text-letter':
+                        language.code !== currentLanguage.code,
+                    }
+                  )}
+                  onPress={() => handleLanguageChange(language.code)}
+                >
+                  <div className="flex items-center gap-3 w-full">
+                    <span className="text-xl">{language.flag}</span>
+                    <Text
+                      type="font-16-500"
+                      className={clsx('flex-1 text-left', {
+                        'text-letter': language.code === currentLanguage.code,
+                        'text-letter/70':
+                          language.code !== currentLanguage.code,
+                      })}
+                    >
+                      {language.name}
+                    </Text>
+                    {language.code === currentLanguage.code && (
+                      <div className="w-2 h-2 bg-letter rounded-full"></div>
+                    )}
+                  </div>
+                </Button>
+              ))}
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Drawer>
   );
 };

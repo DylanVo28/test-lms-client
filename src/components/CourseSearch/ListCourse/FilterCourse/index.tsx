@@ -15,6 +15,10 @@ import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import Rater from 'react-rater';
 import { useTranslation } from 'next-i18next';
+import IconShowFilter from '@/components/UI/Icons/IconShowFilter';
+import IconClose from '@/components/UI/Icons/IconClose';
+import IconSearch from '@/components/UI/Icons/IconSearch';
+import { useRouter } from 'next/router';
 
 const DATA_LANGUAGE = [
   {
@@ -46,8 +50,17 @@ const initialItemsLanguage = 5;
 
 const FilterCourse = (props: any) => {
   const { t } = useTranslation('common');
-  const { params, setParams, isMobile, onCloseModalFilter } = props;
+  const router = useRouter();
+  const {
+    params,
+    setParams,
+    isMobile,
+    onCloseModalFilter,
+    showMobileFilters,
+    setShowMobileFilters,
+  } = props;
   const [expanded, setExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const contentRef: any = useRef(null);
   const [contentHeight, setContentHeight] = useState(0);
 
@@ -84,6 +97,7 @@ const FilterCourse = (props: any) => {
     },
   });
   const [ratings, setRatings] = useState([]);
+
   useEffect(() => {
     if (ratingsData?.data) {
       const items = ratingsData.data.map((r: any) => {
@@ -102,6 +116,42 @@ const FilterCourse = (props: any) => {
       setContentHeight(contentRef.current.scrollHeight);
     }
   }, [expanded, DATA_LANGUAGE]);
+
+  // Initialize search query from URL
+  useEffect(() => {
+    const currentSearch = router.query.keySearch as string;
+    if (currentSearch) {
+      setSearchQuery(currentSearch);
+    }
+  }, [router.query.keySearch]);
+
+  // Sync searchQuery with parent component
+  useEffect(() => {
+    if (props.onSearchQueryChange) {
+      props.onSearchQueryChange(searchQuery);
+    }
+  }, [searchQuery, props.onSearchQueryChange]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Always update URL with search query (even if empty)
+    const currentQuery = { ...router.query };
+    currentQuery.keySearch = searchQuery.trim();
+
+    router.push({
+      pathname: router.pathname,
+      query: currentQuery,
+    });
+
+    // Close mobile filter sidebar
+    setShowMobileFilters && setShowMobileFilters(false);
+  };
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit(e as any);
+    }
+  };
 
   const onSearchLanguages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
@@ -139,8 +189,91 @@ const FilterCourse = (props: any) => {
     setPricesData(filteredPrices);
   };
 
-  return (
-    <div className="flex flex-col gap-5 mx-[-8px]">
+  const handleFilterChange = (filterType: string, value: any) => {
+    onCloseModalFilter && onCloseModalFilter();
+    setShowMobileFilters && setShowMobileFilters(false);
+
+    if (filterType === 'ratings') {
+      setParams({
+        ...params,
+        ratings: value,
+      });
+    } else if (filterType === 'langs') {
+      const idx = params.langs.findIndex((p: any) => p === value);
+      if (idx >= 0) {
+        const newItems = params.langs.filter((p: any) => p !== value);
+        setParams({
+          ...params,
+          langs: [...newItems],
+        });
+      } else {
+        setParams({
+          ...params,
+          langs: [...params.langs, value],
+        });
+      }
+    } else if (filterType === 'features') {
+      const idx = params.features.findIndex((p: any) => p === value);
+      if (idx >= 0) {
+        const newItems = params.features.filter((p: any) => p !== value);
+        setParams({
+          ...params,
+          features: [...newItems],
+        });
+      } else {
+        setParams({
+          ...params,
+          features: [...params.features, value],
+        });
+      }
+    } else if (filterType === 'topics') {
+      const idx = params.topics.findIndex((p: any) => p === value);
+      if (idx >= 0) {
+        const newItems = params.topics.filter((p: any) => p !== value);
+        setParams({
+          ...params,
+          topics: [...newItems],
+        });
+      } else {
+        setParams({
+          ...params,
+          topics: [...params.topics, value],
+        });
+      }
+    } else if (filterType === 'levels') {
+      const idx = params.levels.findIndex((p: any) => p === value);
+      if (idx >= 0) {
+        const newItems = params.levels.filter((p: any) => p !== value);
+        setParams({
+          ...params,
+          levels: [...newItems],
+        });
+      } else {
+        setParams({
+          ...params,
+          levels: [...params.levels, value],
+        });
+      }
+    } else if (filterType === 'prices') {
+      const idx = params.prices.findIndex((p: any) => p === value);
+      if (idx >= 0) {
+        const newPrices = params.prices.filter((p: any) => p !== value);
+        setParams({
+          ...params,
+          prices: [...newPrices],
+        });
+      } else {
+        setParams({
+          ...params,
+          prices: [...params.prices, value],
+        });
+      }
+    }
+  };
+
+  const FilterContent = () => (
+    <div className="flex flex-col gap-5">
+      {/* Rating Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -166,12 +299,7 @@ const FilterCourse = (props: any) => {
                 }}
                 value={item?.id}
                 onChange={(e: any) => {
-                  onCloseModalFilter && onCloseModalFilter();
-
-                  setParams({
-                    ...params,
-                    ratings: e.target.value,
-                  });
+                  handleFilterChange('ratings', e.target.value);
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -179,15 +307,14 @@ const FilterCourse = (props: any) => {
                   <Text className="text-letter" type="font-14-400">
                     {item?.label}
                   </Text>
-                  {/* <Text className="text-letter/70" type="font-14-400">
-                    ({item?.total})
-                  </Text> */}
                 </div>
               </Radio>
             );
           })}
         </RadioGroup>
       </AccordionCustom>
+
+      {/* Language Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -195,7 +322,6 @@ const FilterCourse = (props: any) => {
             <Text type="font-18-600" className="text-letter">
               {t('listCourse.language')}
             </Text>
-            {/* <TagCount count={2} /> */}
           </div>
         }
       >
@@ -216,27 +342,7 @@ const FilterCourse = (props: any) => {
                     }}
                     value={item?.value}
                     onChange={(e: any) => {
-                      {
-                        onCloseModalFilter && onCloseModalFilter();
-
-                        const idx = params.langs.findIndex(
-                          (p: any) => p === e.target.value
-                        );
-                        if (idx >= 0) {
-                          const newItems = params.langs.filter(
-                            (p: any) => p !== e.target.value
-                          );
-                          setParams({
-                            ...params,
-                            langs: [...newItems],
-                          });
-                        } else {
-                          setParams({
-                            ...params,
-                            langs: [...params.langs, e.target.value],
-                          });
-                        }
-                      }
+                      handleFilterChange('langs', e.target.value);
                     }}
                   >
                     <Text type="font-15-500" className="text-letter">
@@ -283,33 +389,10 @@ const FilterCourse = (props: any) => {
               </div>
             </div>
           </div>
-
-          {/* <Button
-            variant="light"
-            size="sm"
-            onClick={() => setExpanded(!expanded)}
-            radius="full"
-            className={clsx('w-max hover:bg-main-20', {
-              ['mt-[-8px]']: !expanded,
-            })}
-          >
-            <div className="flex items-center gap-[2px]">
-              <Text type="font-14-500" className="text-main">
-                {expanded ? t('listCourse.seeLess') : t('listCourse.seeMore')}
-              </Text>
-              <Image
-                src={'/icons/ic-arrow-drop-right-line.svg'}
-                width={20}
-                className={clsx('transition-transform duration-300', {
-                  ['rotate-180']: expanded,
-                })}
-                height={20}
-                alt=""
-              />
-            </div>
-          </Button> */}
         </div>
       </AccordionCustom>
+
+      {/* Features Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -317,7 +400,6 @@ const FilterCourse = (props: any) => {
             <Text type="font-18-600" className="text-letter">
               {t('listCourse.handsOnPractice')}
             </Text>
-            {/* <TagCount count={1} /> */}
           </div>
         }
       >
@@ -337,27 +419,7 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
-                    onCloseModalFilter && onCloseModalFilter();
-
-                    {
-                      const idx = params.features.findIndex(
-                        (p: any) => p === e.target.value
-                      );
-                      if (idx >= 0) {
-                        const newItems = params.features.filter(
-                          (p: any) => p !== e.target.value
-                        );
-                        setParams({
-                          ...params,
-                          features: [...newItems],
-                        });
-                      } else {
-                        setParams({
-                          ...params,
-                          features: [...params.features, e.target.value],
-                        });
-                      }
-                    }
+                    handleFilterChange('features', e.target.value);
                   }}
                 >
                   <Text type="font-15-500" className="text-letter capitalize">
@@ -369,6 +431,8 @@ const FilterCourse = (props: any) => {
           </CheckboxGroup>
         </div>
       </AccordionCustom>
+
+      {/* Topic Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -393,25 +457,7 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
-                    onCloseModalFilter && onCloseModalFilter();
-
-                    const idx = params.topics.findIndex(
-                      (p: any) => p === e.target.value
-                    );
-                    if (idx >= 0) {
-                      const newItems = params.topics.filter(
-                        (p: any) => p !== e.target.value
-                      );
-                      setParams({
-                        ...params,
-                        topics: [...newItems],
-                      });
-                    } else {
-                      setParams({
-                        ...params,
-                        topics: [...params.topics, e.target.value],
-                      });
-                    }
+                    handleFilterChange('topics', e.target.value);
                   }}
                 >
                   <Text type="font-15-500" className="text-letter">
@@ -423,6 +469,8 @@ const FilterCourse = (props: any) => {
           </CheckboxGroup>
         </div>
       </AccordionCustom>
+
+      {/* Level Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -447,25 +495,7 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
-                    onCloseModalFilter && onCloseModalFilter();
-
-                    const idx = params.levels.findIndex(
-                      (p: any) => p === e.target.value
-                    );
-                    if (idx >= 0) {
-                      const newItems = params.levels.filter(
-                        (p: any) => p !== e.target.value
-                      );
-                      setParams({
-                        ...params,
-                        levels: [...newItems],
-                      });
-                    } else {
-                      setParams({
-                        ...params,
-                        levels: [...params.levels, e.target.value],
-                      });
-                    }
+                    handleFilterChange('levels', e.target.value);
                   }}
                 >
                   <Text type="font-15-500" className="text-letter">
@@ -477,6 +507,8 @@ const FilterCourse = (props: any) => {
           </CheckboxGroup>
         </div>
       </AccordionCustom>
+
+      {/* Price Filter */}
       <AccordionCustom
         isMobile={isMobile}
         title={
@@ -501,25 +533,7 @@ const FilterCourse = (props: any) => {
                   }}
                   value={item?.value}
                   onChange={(e: any) => {
-                    const idx = params.prices.findIndex(
-                      (p: any) => p === e.target.value
-                    );
-                    onCloseModalFilter && onCloseModalFilter();
-
-                    if (idx >= 0) {
-                      const newPrices = params.prices.filter(
-                        (p: any) => p !== e.target.value
-                      );
-                      setParams({
-                        ...params,
-                        prices: [...newPrices],
-                      });
-                    } else {
-                      setParams({
-                        ...params,
-                        prices: [...params.prices, e.target.value],
-                      });
-                    }
+                    handleFilterChange('prices', e.target.value);
                   }}
                 >
                   <Text type="font-15-500" className="text-letter">
@@ -532,15 +546,25 @@ const FilterCourse = (props: any) => {
         </div>
       </AccordionCustom>
 
+      {/* Mobile Clear Filter Button */}
       {isMobile && (
         <div className="flex items-center px-2 gap-3">
           <button
             className="bg-main rounded min-h-[44px] w-full"
             onClick={() => {
               onCloseModalFilter && onCloseModalFilter();
+              setShowMobileFilters && setShowMobileFilters(false);
+              setSearchQuery('');
               setParams({
                 page: 1,
                 pageSize: 3,
+              });
+              // Clear search from URL
+              const currentQuery = { ...router.query };
+              delete currentQuery.keySearch;
+              router.push({
+                pathname: router.pathname,
+                query: currentQuery,
               });
             }}
           >
@@ -551,6 +575,62 @@ const FilterCourse = (props: any) => {
         </div>
       )}
     </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Filters - Always visible */}
+      <div className="hidden lg:block">
+        <FilterContent />
+      </div>
+
+      {/* Mobile Filter Sidebar */}
+      {showMobileFilters && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
+          <div className="absolute right-0 top-0 h-full w-120 bg-card shadow-xl transform transition-transform duration-300 ease-in-out">
+            <div className="flex flex-col h-full">
+              {/* Header with Search Field */}
+              <div className="flex flex-col border-b border-white-10">
+                {/* Header */}
+                <div className="flex items-center justify-between p-4">
+                  <Text type="font-18-600" className="text-letter">
+                    {t('listCourse.filters')}
+                  </Text>
+                  <button
+                    onClick={() => setShowMobileFilters(false)}
+                    className="p-2 hover:bg-white-10 rounded-full transition-colors"
+                  >
+                    <IconClose />
+                  </button>
+                </div>
+
+                {/* Search Field - Mobile Only */}
+                <div className="px-4 pb-4">
+                  <form onSubmit={handleSearchSubmit} className="relative">
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                      <IconSearch />
+                    </div>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyPress={handleSearchKeyPress}
+                      placeholder={t('listCourse.searchPlaceholder')}
+                      className="w-full pl-10 pr-4 py-3 bg-white-10 border border-white-20 rounded-lg text-white placeholder-white-50 focus:outline-none focus:border-main transition-colors"
+                    />
+                  </form>
+                </div>
+              </div>
+
+              {/* Filter Content */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <FilterContent />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 export default FilterCourse;
