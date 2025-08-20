@@ -26,8 +26,10 @@ import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 const LessonLayout = ({ children }: { children: ReactNode }) => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [valueYourProgress] = useAtom(valueProgressAtom);
   const { profile } = useProfile();
@@ -102,7 +104,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                   <div className="flex gap-x-1 items-center">
                     <Text type="font-16-500" className="text-letter">
-                      {'Your Progress'}
+                      {t('lesson.header.yourProgress')}
                     </Text>
                     <IconArrowDown />
                   </div>
@@ -113,23 +115,25 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 valueYourProgress?.total == valueYourProgress?.value ? (
                   <div className="px-1 py-2 flex flex-col gap-3">
                     <div className="font-bold text-lg text-letter">
-                      You have completed the course
+                      {t('lesson.header.completedCourse')}
                     </div>
                     <Link
                       href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.MY_LEARNING}`}
                       className="text-sm text-main underline font-bold"
                     >
-                      View your certificate
+                      {t('lesson.header.viewCertificate')}
                     </Link>
                   </div>
                 ) : (
                   <div className="px-1 py-2 flex flex-col gap-3">
                     <div className="text-lg font-bold text-letter">
-                      {valueYourProgress?.value} of {valueYourProgress?.total}{' '}
-                      completed{' '}
+                      {t('lesson.header.completedOf', {
+                        completed: valueYourProgress?.value,
+                        total: valueYourProgress?.total,
+                      })}
                     </div>
                     <div className="text-sm ">
-                      Finish course to get your certificate
+                      {t('lesson.header.finishToGetCertificate')}
                     </div>
                   </div>
                 )}
@@ -142,7 +146,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
             >
               <div className="flex items-center gap-1">
                 <Text type="font-16-500" className="text-letter">
-                  {'Share'}
+                  {t('lesson.header.share')}
                 </Text>
                 <IconShare />
               </div>

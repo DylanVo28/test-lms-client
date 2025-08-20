@@ -16,6 +16,7 @@ import { formatNumber, formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
+import { useTranslation } from 'next-i18next';
 
 dayjs.extend(relativeTime);
 
@@ -32,6 +33,7 @@ const CardCourseMore = ({
   item: any;
   noLike?: boolean;
 }) => {
+  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
   const accessToken = useAccessToken();
 
@@ -55,7 +57,7 @@ const CardCourseMore = ({
     >
       <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-letter">
-          {'Best seller'}
+          {t('course.bestSeller')}
         </Text>
       </div>
       {!noLike && (

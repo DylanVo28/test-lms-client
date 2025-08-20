@@ -4,6 +4,7 @@ import ListCourses from './ListCourses';
 import { Tab, Tabs } from '@nextui-org/react';
 import Wishlist from './Wishlist';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import Certifications from './Certifications';
 import FollowMentors from './FollowMentors';
 export const enum TabMyLearning {
@@ -14,22 +15,23 @@ export const enum TabMyLearning {
 }
 
 export default function MyLearning() {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(TabMyLearning.COURSE_PROGRESS);
   const itemsTab = [
     {
       key: TabMyLearning.COURSE_PROGRESS,
-      label: 'Course Progress',
+      label: t('myLearning.tabs.courseProgress'),
       children: <ListCourses />,
     },
     {
       key: TabMyLearning.CERTIFICATIONS,
-      label: 'Certifications',
+      label: t('myLearning.tabs.certifications'),
       children: <Certifications />,
     },
     {
       key: TabMyLearning.WISHLIST,
-      label: 'Wishlist',
+      label: t('myLearning.tabs.wishlist'),
       children: <Wishlist />,
     },
     // {
@@ -54,7 +56,7 @@ export default function MyLearning() {
     <div className="flex flex-col gap-[40px]">
       <div className="pl-5 border-l-4 border-l-main">
         <Text type="font-28-700" className="text-letter">
-          {'My Learning'}
+          {t('myLearning.title')}
         </Text>
       </div>
 

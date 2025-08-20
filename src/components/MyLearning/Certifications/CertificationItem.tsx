@@ -9,10 +9,12 @@ import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
 
 const CertificationItem = ({ item, refetchCertificates }: any) => {
+  const { t } = useTranslation('common');
   const [isMintingInProgress, setIsMintingInProgress] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
 
@@ -36,12 +38,12 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
     {
       onSuccess(res) {
-        toast.success('Minted certificate successfully');
+        toast.success(t('myLearning.certifications.mintSuccess'));
         localStorage.removeItem(`minting_${item.id}`);
       },
       onError(e) {
         if (e.message?.includes('Already minted for this course')) {
-          toast.error('You have already minted this certificate');
+          toast.error(t('myLearning.certifications.alreadyMinted'));
         } else {
           toast.error(e.message);
         }
@@ -78,7 +80,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
 
   const handleMint = () => {
     if (!walletAddress) {
-      toast.error('Please connect your wallet');
+      toast.error(t('errors.connectWallet'));
       return;
     }
 
@@ -130,7 +132,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
               isDisabled={isMintingInProgress}
             >
               <Text type="font-16-600" className="text-main">
-                Mint
+                {t('myLearning.certifications.mint')}
               </Text>
             </Button>
           </>
@@ -139,7 +141,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         {isMintingInProgress && (
           <div className="flex items-center gap-2">
             <Text type="font-14-400" className="text-main">
-              Your certificate is minting. Please wait a moment...
+              {t('myLearning.certifications.minting')}
             </Text>
           </div>
         )}
@@ -147,7 +149,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         {item.tokenId && (
           <div className="flex gap-x-2 items-center">
             <div className="text-main">
-              You have already minted this certificate
+              {t('myLearning.certifications.alreadyMinted')}
             </div>
             <div>
               <div>
@@ -155,11 +157,10 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                   content={
                     <div className="flex flex-col items-start gap-2 p-2">
                       <div>
-                        To import this certificate to MetaMask, go to MetaMask →
-                        NFTs → Add NFT → Enter:
+                        {t('myLearning.certifications.importInstructions')}
                       </div>
                       <div className="flex gap-x-1 items-center">
-                        Contract:{' '}
+                        {t('myLearning.certifications.contract')}:{' '}
                         <code className="text-main">{MINT_NFT_ADDRESS}</code>
                         <div
                           className="cursor-pointer"
@@ -171,7 +172,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                         </div>
                       </div>
                       <div className="flex gap-x-1 items-center">
-                        Token ID:{' '}
+                        {t('myLearning.certifications.tokenId')}:{' '}
                         <code className="text-main">{item.tokenId}</code>
                         <div
                           className="cursor-pointer"

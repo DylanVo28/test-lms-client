@@ -17,6 +17,11 @@
     "contact": "Contact"
   },
   "course": {
+    "goToCourse": "Go to course",
+    "enrollNowForFree": "Enroll Now for Free",
+    "enrollNow": "Enroll Now",
+    "verifying": "Verifying...",
+    "insufficientBalance": "Insufficient balance",
     "title": "Course",
     "description": "Description",
     "instructor": "Instructor",
@@ -62,7 +67,8 @@
       "multipleQuizzes": "{{count}} quizzes",
       "lifetimeAccess": "Lifetime access",
       "certificateOfCompletion": "Certificate of completion"
-    }
+    },
+    "bestSeller": "Best seller"
   },
   "common": {
     "loading": "Loading...",
@@ -98,7 +104,9 @@
     "filter": "Filter",
     "sort": "Sort",
     "language": "Language",
-    "newCourse": "New Course"
+    "newCourse": "New Course",
+    "yes": "Yes",
+    "no": "No"
   },
   "footer": {
     "copyright": "© 2024 LMS Platform. All rights reserved.",
@@ -280,6 +288,35 @@
     "invalidReferral": "Referral code is invalid",
     "registerKeyFailed": "Register key failed: {{error}}"
   },
+  "myLearning": {
+    "title": "My Learning",
+    "tabs": {
+      "courseProgress": "Course Progress",
+      "certifications": "Certifications",
+      "wishlist": "Wishlist"
+    },
+    "filters": {
+      "allFilter": "All Filter",
+      "categories": "Categories",
+      "price": "Price",
+      "sortBy": "Sort by",
+      "default": "Default"
+    },
+    "complete": "complete",
+    "certifications": {
+      "preparation": "Certification Preparation",
+      "preparingFor": "You are preparing for",
+      "title": "certifications",
+      "mint": "Mint",
+      "mintSuccess": "Minted certificate successfully",
+      "alreadyMinted": "You have already minted this certificate",
+      "minting": "Your certificate is minting. Please wait a moment...",
+      "importInstructions": "To import this certificate to MetaMask, go to MetaMask → NFTs → Add NFT → Enter:",
+      "contract": "Contract",
+      "tokenId": "Token ID",
+      "receivedCertificate": "Received Certificate"
+    }
+  },
   "profileMenu": {
     "admin": "Admin",
     "verified": "Verified",
@@ -290,6 +327,67 @@
   "admin": {
     "loginTitle": "Admin Login | What Exchange",
     "loginDescription": "Admin login page for What Exchange platform."
+  },
+  "lesson": {
+    "header": {
+      "yourProgress": "Your Progress",
+      "completedOf": "{{completed}} of {{total}} completed",
+      "finishToGetCertificate": "Finish course to get your certificate",
+      "share": "Share",
+      "shareThisCourse": "Share This Course",
+      "shareWithFriends": "Share this course with your friends",
+      "referralLink": "Referral Link",
+      "shareTo": "Share to",
+      "completedCourse": "You have completed the course",
+      "viewCertificate": "View your certificate"
+    },
+    "courseContent": "Course content",
+    "overview": {
+      "title": "Overview",
+      "byTheNumbers": "By the numbers",
+      "skillLevel": "Skill level",
+      "students": "Students",
+      "languages": "Languages",
+      "captions": "Captions",
+      "lectures": "Lectures",
+      "video": "Video",
+      "description": "Description",
+      "rating": "rating",
+      "total": "Total",
+      "lastUpdated": "Last Updated",
+      "english": "English",
+      "englishAuto": "English (auto)"
+    },
+    "reviews": "Reviews",
+    "studentFeedbacks": "Student feedbacks",
+    "baseOn": "base on",
+    "allRatings": "All Ratings",
+    "noReviews": "No reviews",
+    "endCourse": {
+      "congratulations": "Congratulations! 🎉",
+      "courseReview": "Course Review",
+      "completedCourse": "You have successfully completed the course",
+      "shareExperience": "Share your experience with other learners",
+      "congratsCompleted": "Congratulations on completing the course!",
+      "findMoreCourses": "Find more courses",
+      "selectRating": "Select rating",
+      "yourReview": "Your Review",
+      "reviewPlaceholder": "Tell us about your own personal experience taking this course. Was it right for you?",
+      "submitReview": "Submit Review"
+    },
+    "quiz": {
+      "question": "Question",
+      "startTest": "Start taking the test",
+      "skip": "Skip the quiz",
+      "didGreat": "You did great",
+      "incorrectAnswer": "The answer is not correct. Please try again.",
+      "continue": "Continue",
+      "seeResults": "See results",
+      "checkAnswer": "Check the answer"
+    },
+    "video": {
+      "next": "Next"
+    }
   },
   "notifications": {
     "title": "Notifications | What Exchange",

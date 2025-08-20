@@ -15,6 +15,7 @@ import { useGetDetailCourse, useGetListSession } from '../CreateCourse/service';
 import ModalClaimCertifications from '../UI/ModalClaimCertifications';
 import Text from '../UI/Text';
 import { toast } from '../UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 import Article from './Article';
 import FormEndCourse from './FormEndCourse';
 import FormQuizz from './FormQuizz';
@@ -39,6 +40,7 @@ export const reviewedAtom = atom<boolean>(false);
 export const lastModalShowTimeAtom = atom<Record<string, number>>({});
 
 const Lesson = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const courseId = router.query.id as string;
   const [typeLoadContent, setTypeLoadContent] = useState<string>('');
@@ -189,7 +191,7 @@ const Lesson = () => {
     // },
     {
       key: '2',
-      label: 'Overview',
+      label: t('lesson.overview.title'),
       children: (
         <Overview
           dataDetail={dataDetail}
@@ -214,7 +216,7 @@ const Lesson = () => {
     // },
     {
       key: '6',
-      label: 'Reviews',
+      label: t('lesson.reviews'),
       children: (
         <Reviews
           dataListReviewSummary={dataListReviewSummary}
@@ -630,7 +632,7 @@ const Lesson = () => {
                 {/* <Avatar src="/images/avatar-user.png" className="w-12 h-12" /> */}
                 <div className="flex flex-col gap-[2px]">
                   <Text type="text-18-600" className="text-letter">
-                    {'Course content'}
+                    {t('lesson.courseContent')}
                   </Text>
                   {/* <Text type="font-14-400" className="text-letter">
                   Set certificate expiration date

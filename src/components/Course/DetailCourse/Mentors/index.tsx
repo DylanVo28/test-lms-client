@@ -140,7 +140,10 @@ const Mentors = ({ mentor }: any) => {
                     rating={mentorProfile?.instructorInfo?.avgRate || 5}
                   />
                 </div>
-                <Text type="font-14-400" className="text-letter">
+                <Text
+                  type="font-14-400"
+                  className="text-letter whitespace-nowrap"
+                >
                   {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
                   {t('course.reviews')}
                 </Text>

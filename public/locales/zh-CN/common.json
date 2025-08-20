@@ -17,6 +17,11 @@
     "contact": "联系我们"
   },
   "course": {
+    "goToCourse": "进入课程",
+    "enrollNowForFree": "立即免费注册",
+    "enrollNow": "立即注册",
+    "verifying": "验证中...",
+    "insufficientBalance": "余额不足",
     "title": "课程",
     "description": "描述",
     "instructor": "讲师",
@@ -62,7 +67,8 @@
       "multipleQuizzes": "{{count}} 个测验",
       "lifetimeAccess": "终身访问",
       "certificateOfCompletion": "结课证书"
-    }
+    },
+    "bestSeller": "畅销"
   },
   "common": {
     "loading": "加载中...",
@@ -98,7 +104,9 @@
     "filter": "筛选",
     "sort": "排序",
     "language": "语言",
-    "newCourse": "新课程"
+    "newCourse": "新课程",
+    "yes": "是",
+    "no": "否"
   },
   "footer": {
     "copyright": "© 2024 学习管理系统平台。保留所有权利。",
@@ -280,6 +288,35 @@
     "invalidReferral": "推荐码无效",
     "registerKeyFailed": "注册密钥失败：{{error}}"
   },
+  "myLearning": {
+    "title": "我的学习",
+    "tabs": {
+      "courseProgress": "课程进度",
+      "certifications": "证书",
+      "wishlist": "愿望清单"
+    },
+    "filters": {
+      "allFilter": "所有筛选",
+      "categories": "分类",
+      "price": "价格",
+      "sortBy": "排序方式",
+      "default": "默认"
+    },
+    "complete": "完成",
+    "certifications": {
+      "preparation": "证书准备",
+      "preparingFor": "您正在准备",
+      "title": "证书",
+      "mint": "铸造",
+      "mintSuccess": "证书铸造成功",
+      "alreadyMinted": "您已经铸造了此证书",
+      "minting": "您的证书正在铸造中。请稍等...",
+      "importInstructions": "要将此证书导入 MetaMask，请转到 MetaMask → NFTs → 添加 NFT → 输入：",
+      "contract": "合约",
+      "tokenId": "代币 ID",
+      "receivedCertificate": "已收到证书"
+    }
+  },
   "profileMenu": {
     "admin": "管理员",
     "verified": "已验证",
@@ -290,6 +327,68 @@
   "admin": {
     "loginTitle": "管理员登录 | What Exchange",
     "loginDescription": "What Exchange 平台管理员登录页面"
+  },
+  "lesson": {
+    "header": {
+      "yourProgress": "您的进度",
+      "completedOf": "已完成 {{completed}}/{{total}}",
+      "finishToGetCertificate": "完成课程获取证书",
+      "share": "分享",
+      "shareThisCourse": "分享此课程",
+      "shareWithFriends": "与朋友分享此课程",
+      "referralLink": "推荐链接",
+      "shareTo": "分享到",
+      "completedCourse": "您已完成课程",
+      "viewCertificate": "查看您的证书"
+    },
+    "courseContent": "课程内容",
+    "overview": {
+      "title": "概述",
+      "byTheNumbers": "详细信息",
+      "skillLevel": "技能等级",
+      "students": "学生",
+      "languages": "语言",
+      "captions": "字幕",
+      "lectures": "讲座",
+      "video": "视频",
+      "description": "描述",
+      "rating": "评分",
+      "total": "总计",
+      "lastUpdated": "最后更新",
+      "english": "英语",
+      "englishAuto": "英语（自动）"
+    },
+    "reviews": "评价",
+    "studentFeedbacks": "学生反馈",
+    "baseOn": "基于",
+    "allRatings": "所有评分",
+    "noReviews": "暂无评价",
+    "endCourse": {
+      "congratulations": "恭喜！🎉",
+      "courseReview": "课程评价",
+      "completedCourse": "您已成功完成课程",
+      "shareExperience": "与其他学习者分享您的经验",
+      "congratsCompleted": "恭喜您完成课程！",
+      "findMoreCourses": "查找更多课程",
+      "selectRating": "选择评分",
+      "yourReview": "您的评价",
+      "reviewPlaceholder": "请告诉我们您参加这门课程的个人体验。这门课程适合您吗？",
+      "submitReview": "提交评价"
+    },
+    "quiz": {
+      "question": "问题",
+      "startTest": "开始测试",
+      "skip": "跳过测试",
+      "didGreat": "你做得很好",
+      "incorrectAnswer": "答案不正确。请重试。",
+      "continue": "继续",
+      "seeResults": "查看结果",
+      "checkAnswer": "检查答案"
+    },
+    "video": {
+      "next": "下一个"
+    }
+   
   },
   "notifications": {
     "title": "通知 | What Exchange",

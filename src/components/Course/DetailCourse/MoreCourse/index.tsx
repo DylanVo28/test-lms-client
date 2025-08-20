@@ -184,7 +184,7 @@ const MoreCourse = (props: any) => {
         dataListReview?.data.map((item: any, index: number) => {
           <div className="flex flex-col gap-4">
             return (
-            <Text className="text-letter" type="font-20-600">
+            <Text className="text-letter whitespace-nowrap" type="font-20-600">
               {t('course.reviews')}
             </Text>
             <Comment

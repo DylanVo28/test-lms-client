@@ -5,6 +5,7 @@ import { useTokenInfo } from '@/hooks/useTokenInfo';
 import { useMemo, useState } from 'react';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
 import { toast } from '../Toast/toast';
+import { useTranslation } from 'next-i18next';
 
 const CustomButtonEnroll = ({
   course,
@@ -38,6 +39,7 @@ const CustomButtonEnroll = ({
     );
   }, [course?.unlockIfUserTradesAtLeast, volumeData]);
 
+  const { t } = useTranslation('common');
   const authorRole = course?.author?.role;
 
   return (
@@ -63,7 +65,7 @@ const CustomButtonEnroll = ({
                 disabled={isInsufficientBalance}
               >
                 <Text className="text-letter" type="font-16-600">
-                  Connect Wallet
+                  {t('auth.connectWallet')}
                 </Text>
               </Button>
             ) : (
@@ -92,11 +94,11 @@ const CustomButtonEnroll = ({
                   >
                     {course?.enroll === 'verified' ? (
                       <Text className="text-text-letter" type="font-16-600">
-                        Go to course
+                        {t('course.goToCourse')}
                       </Text>
                     ) : (
                       <Text className="text-text-letter" type="font-16-600">
-                        Enroll Now for Free
+                        {t('course.enrollNowForFree')}
                       </Text>
                     )}
                   </Button>
@@ -123,16 +125,16 @@ const CustomButtonEnroll = ({
                   >
                     {isInsufficientBalance && (
                       <Text className="text-text-letter" type="font-16-600">
-                        Insufficient balance
+                        {t('course.insufficientBalance')}
                       </Text>
                     )}
                     {!isInsufficientBalance && (
                       <Text className="text-text-letter" type="font-16-600">
                         {course?.enroll === 'verified'
-                          ? 'Go to course'
+                          ? t('course.goToCourse')
                           : course?.enroll === 'pending'
-                          ? 'Verifying...'
-                          : 'Enroll Now'}
+                          ? t('course.verifying')
+                          : t('course.enrollNow')}
                       </Text>
                     )}
                   </Button>

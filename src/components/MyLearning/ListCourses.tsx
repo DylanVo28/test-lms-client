@@ -11,10 +11,12 @@ import Image from 'next/image';
 import NoData from '../ListCourse/NoData';
 import { useProfile } from '@/store/profile/useProfile';
 import Loading from '../UI/Loading';
+import { useTranslation } from 'next-i18next';
 export default function ListCourses() {
+  const { t } = useTranslation('common');
   const SORT_BY = [
-    { key: 'createdAt desc', label: 'Newest' },
-    { key: 'createdAt asc', label: 'Oldest' },
+    { key: 'createdAt desc', label: t('listCourse.newest') },
+    { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
   const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
@@ -64,11 +66,11 @@ export default function ListCourses() {
                 <IconFilter />
               </div>
               <Text className="text-main w-max" type="font-14-500">
-                {'All Filter'}
+                {t('listCourse.allFilter')}
               </Text>
             </div>
             <SelectCustom
-              placeholder={'Categories'}
+              placeholder={t('listCourse.categories')}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
@@ -77,7 +79,7 @@ export default function ListCourses() {
               }}
             />
             <SelectCustom
-              placeholder={'Price'}
+              placeholder={t('listCourse.price')}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
@@ -88,10 +90,10 @@ export default function ListCourses() {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-letter/70 w-[100px]">
-              {'Sort by'}
+              {t('listCourse.sortBy')}
             </Text>
             <SelectCustom
-              placeholder={'Default'}
+              placeholder={t('listCourse.default')}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
@@ -106,10 +108,10 @@ export default function ListCourses() {
             type="font-14-500"
             className="text-letter/70 w-[60px] md:w-[100px]"
           >
-            {'Sort by'}
+            {t('listCourse.sortBy')}
           </Text>
           <SelectCustom
-            placeholder={'Default'}
+            placeholder={t('listCourse.default')}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}
@@ -133,7 +135,7 @@ export default function ListCourses() {
                   course={item?.course}
                   author={item?.course?.author}
                   image={item?.course?.image}
-                  progress={item?.progress || 0}
+                  progress={Math.min(item?.progress || 0, 1)}
                 />
               ))}
           </div>
@@ -151,7 +153,7 @@ export default function ListCourses() {
         >
           <div className="flex items-center gap-[2px]">
             <Text type="font-14-500" className="text-main">
-              {'See More'}
+              {t('listCourse.seeMore')}
             </Text>
             <Image
               src={'/icons/ic-arrow-drop-right-line.svg'}

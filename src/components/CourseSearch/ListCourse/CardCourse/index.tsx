@@ -61,7 +61,7 @@ const CardCourse = ({
     >
       {/* <div className="absolute left-2 top-2 bg-orange rounded-full py-[2px] px-2 flex items-center justify-center">
         <Text type="font-14-500" className="text-letter">
-          {'Best seller'}
+          {t('course.bestSeller')}
         </Text>
       </div> */}
       {!noLike && (

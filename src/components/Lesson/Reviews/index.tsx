@@ -13,6 +13,7 @@ import { Progress, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import Rater from 'react-rater';
 import ReactStars from 'react-stars';
+import { useTranslation } from 'next-i18next';
 
 const Reviews = ({
   courseId,
@@ -30,6 +31,7 @@ const Reviews = ({
 
   courseId: string;
 }) => {
+  const { t } = useTranslation('common');
   const [valueSearch, setValueSearch] = useState('');
   const [valueLevel, setValueLevel] = useState<any>();
 
@@ -187,7 +189,7 @@ const Reviews = ({
 
   return (
     <div className="md:pt-[14px] py-[40px] md:py-0 flex flex-col gap-2 md:px-[80px]">
-      <Text type="font-20-600">{'Student feedbacks'}</Text>
+      <Text type="font-20-600">{t('lesson.studentFeedbacks')}</Text>
       <div className="flex gap-2 items-start mb-8">
         <div className="">
           <div className="flex items-center gap-2">
@@ -195,7 +197,8 @@ const Reviews = ({
               {dataListReviewSummary?.data?.avgRate?.toFixed(1) || 0}
             </Text>
             <div className="text-black-5 text-md">
-              (base on {dataListReviewSummary?.data?.total} reviews)
+              ({t('lesson.baseOn')} {dataListReviewSummary?.data?.total}{' '}
+              {t('lesson.reviews')})
             </div>
           </div>
 
@@ -212,7 +215,9 @@ const Reviews = ({
       </div>
 
       <div className="flex items-center gap-4 mb-4">
-        <Text type="font-20-600">{'Reviews'}</Text>
+        <Text type="font-20-600" className="whitespace-nowrap">
+          {t('lesson.reviews')}
+        </Text>
 
         {/* <InputText
           className="max-w-[470px]"
@@ -252,7 +257,7 @@ const Reviews = ({
             },
           ]}
           className="max-w-[117px]"
-          placeholder={'All Ratings'}
+          placeholder={t('lesson.allRatings')}
         />
       </div>
       <div className="flex flex-col gap-6">
@@ -273,7 +278,7 @@ const Reviews = ({
               })}
 
             {dataListReview?.data?.length === 0 && (
-              <NoData text={'No reviews'} />
+              <NoData text={t('lesson.noReviews')} />
             )}
           </>
         )}

@@ -17,6 +17,11 @@
     "contact": "Liên hệ"
   },
   "course": {
+    "goToCourse": "Vào khóa học",
+    "enrollNowForFree": "Đăng ký ngay miễn phí",
+    "enrollNow": "Đăng ký ngay",
+    "verifying": "Đang xác minh...",
+    "insufficientBalance": "Số dư không đủ",
     "title": "Khóa học",
     "description": "Mô tả",
     "instructor": "Giảng viên",
@@ -62,7 +67,8 @@
       "multipleQuizzes": "{{count}} bài kiểm tra",
       "lifetimeAccess": "Truy cập trọn đời",
       "certificateOfCompletion": "Chứng chỉ hoàn thành"
-    }
+    },
+    "bestSeller": "Bán chạy nhất"
   },
   "common": {
     "loading": "Đang tải...",
@@ -98,7 +104,9 @@
     "filter": "Lọc",
     "sort": "Sắp xếp",
     "language": "Ngôn ngữ",
-    "newCourse": "Khóa học mới"
+    "newCourse": "Khóa học mới",
+    "yes": "Có",
+    "no": "Không"
   },
   "footer": {
     "copyright": "© 2024 Nền tảng LMS. Tất cả quyền được bảo lưu.",
@@ -280,6 +288,35 @@
     "invalidReferral": "Mã giới thiệu không hợp lệ",
     "registerKeyFailed": "Đăng ký key thất bại: {{error}}"
   },
+  "myLearning": {
+    "title": "Học tập của tôi",
+    "tabs": {
+      "courseProgress": "Tiến độ khóa học",
+      "certifications": "Chứng chỉ",
+      "wishlist": "Danh sách yêu thích"
+    },
+    "filters": {
+      "allFilter": "Tất cả bộ lọc",
+      "categories": "Danh mục",
+      "price": "Giá",
+      "sortBy": "Sắp xếp theo",
+      "default": "Mặc định"
+    },
+    "complete": "hoàn thành",
+    "certifications": {
+      "preparation": "Chuẩn bị chứng chỉ",
+      "preparingFor": "Bạn đang chuẩn bị cho",
+      "title": "chứng chỉ",
+      "mint": "Tạo NFT",
+      "mintSuccess": "Tạo chứng chỉ NFT thành công",
+      "alreadyMinted": "Bạn đã tạo chứng chỉ NFT này",
+      "minting": "Chứng chỉ NFT của bạn đang được tạo. Vui lòng đợi trong giây lát...",
+      "importInstructions": "Để nhập chứng chỉ này vào MetaMask, đi tới MetaMask → NFTs → Thêm NFT → Nhập:",
+      "contract": "Hợp đồng",
+      "tokenId": "Token ID",
+      "receivedCertificate": "Đã nhận chứng chỉ"
+    }
+  },
   "profileMenu": {
     "admin": "Quản trị",
     "verified": "Đã xác minh",
@@ -290,6 +327,67 @@
   "admin": {
     "loginTitle": "Đăng nhập Admin | What Exchange",
     "loginDescription": "Trang đăng nhập quản trị viên của What Exchange."
+  },
+  "lesson": {
+    "header": {
+      "yourProgress": "Tiến độ của bạn",
+      "completedOf": "Đã hoàn thành {{completed}} trên {{total}}",
+      "finishToGetCertificate": "Hoàn thành khóa học để nhận chứng chỉ",
+      "share": "Chia sẻ",
+      "shareThisCourse": "Chia sẻ khóa học này",
+      "shareWithFriends": "Chia sẻ khóa học này với bạn bè",
+      "referralLink": "Liên kết giới thiệu",
+      "shareTo": "Chia sẻ đến",
+      "completedCourse": "Bạn đã hoàn thành khóa học",
+      "viewCertificate": "Xem chứng chỉ của bạn"
+    },
+    "courseContent": "Nội dung khóa học",
+    "overview": {
+      "title": "Tổng quan",
+      "byTheNumbers": "Thông tin chi tiết",
+      "skillLevel": "Cấp độ kỹ năng",
+      "students": "Học viên",
+      "languages": "Ngôn ngữ",
+      "captions": "Phụ đề",
+      "lectures": "Bài giảng",
+      "video": "Video",
+      "description": "Mô tả",
+      "rating": "đánh giá",
+      "total": "Tổng",
+      "lastUpdated": "Cập nhật lần cuối",
+      "english": "Tiếng Anh",
+      "englishAuto": "Tiếng Anh (tự động)"
+    },
+    "reviews": "Đánh giá",
+    "studentFeedbacks": "Phản hồi của học viên",
+    "baseOn": "dựa trên",
+    "allRatings": "Tất cả đánh giá",
+    "noReviews": "Chưa có đánh giá",
+    "endCourse": {
+      "congratulations": "Chúc mừng! 🎉",
+      "courseReview": "Đánh giá khóa học",
+      "completedCourse": "Bạn đã hoàn thành khóa học thành công",
+      "shareExperience": "Chia sẻ trải nghiệm của bạn với những người học khác",
+      "congratsCompleted": "Chúc mừng bạn đã hoàn thành khóa học!",
+      "findMoreCourses": "Tìm thêm khóa học",
+      "selectRating": "Chọn đánh giá",
+      "yourReview": "Đánh giá của bạn",
+      "reviewPlaceholder": "Hãy chia sẻ về trải nghiệm cá nhân của bạn khi học khóa học này. Nó có phù hợp với bạn không?",
+      "submitReview": "Gửi đánh giá"
+    },
+    "quiz": {
+      "question": "Câu hỏi",
+      "startTest": "Bắt đầu làm bài kiểm tra",
+      "skip": "Bỏ qua bài kiểm tra",
+      "didGreat": "Bạn đã làm rất tốt",
+      "incorrectAnswer": "Câu trả lời không chính xác. Vui lòng thử lại.",
+      "continue": "Tiếp tục",
+      "seeResults": "Xem kết quả",
+      "checkAnswer": "Kiểm tra câu trả lời"
+    },
+    "video": {
+      "next": "Tiếp theo"
+    }
   },
   "notifications": {
     "title": "Thông báo | What Exchange",

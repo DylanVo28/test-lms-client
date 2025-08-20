@@ -6,13 +6,14 @@ import Text from '@/components/UI/Text';
 import { Button, ModalBody } from '@nextui-org/react';
 import Image from 'next/image';
 import IconClose from '../Icons/IconClose';
+import { useTranslation } from 'next-i18next';
 
 interface IModalSupport {}
 
 const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
   const [visible, setVisible] = useState(false);
   const [dataCertifications, setDataCertifications] = useState<any>({});
-
+  const { t } = useTranslation('common');
   useImperativeHandle(ref, () => {
     return {
       onOpen: (data: any) => {
@@ -37,7 +38,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
         <ModalBody className="p-6 flex flex-col gap-2">
           <div className="flex justify-between items-center">
             <Text className="text-letter" type="font-18-600">
-              You have received a certificate for this course.
+              {t('myLearning.certifications.receivedCertificate')}
             </Text>
             <Button
               onPress={onVisible}
