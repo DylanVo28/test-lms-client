@@ -188,14 +188,18 @@ const CardEnrollNow = ({
 
         await approveUSDC(VAULT_ADDRESS, metadataPayment.amount.toString());
 
-        const txHash = await buyCourse(
+        const receipt = await buyCourse(
           metadataPayment.courseId,
           metadataPayment.amount,
           metadataPayment.kolAddress,
           metadataPayment.signature
         );
-        if (txHash) {
-          run(course.id, txHash);
+        if (receipt.status === 1) {
+          toast.success(
+            'You have successfully enrolled in the course. Please wait a moment while the system verifies the transaction.'
+          );
+        } else {
+          toast.error('Failed to enroll in the course. Please try again.');
         }
       } else {
         toast.error(
