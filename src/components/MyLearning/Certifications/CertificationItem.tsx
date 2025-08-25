@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
 const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
+const MINTING_COUNTDOWN = 10 * 1000; // 10 seconds in milliseconds
 
 const CertificationItem = ({ item, refetchCertificates }: any) => {
   const { t } = useTranslation('common');
@@ -60,7 +61,20 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       return;
     }
 
+    if (localStorage.getItem(`minting_countdown`)) {
+      const mintCountdown = new Date(
+        localStorage.getItem(`minting_countdown`) || 0
+      );
+      if (mintCountdown.getTime() > Date.now()) {
+        toast.error(t('You are minting too fast'));
+        return;
+      }
+    }
+
+    const mintCountdown = new Date(Date.now() + MINTING_COUNTDOWN);
     localStorage.setItem(`minting_${item.id}`, Date.now().toString());
+    localStorage.setItem(`minting_countdown`, mintCountdown.toString());
+
     setIsMintingInProgress(true);
     handleMintCertificate({
       to: walletAddress?.toString(),
