@@ -141,14 +141,14 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
               </div>
 
               {/* Reddit */}
-              <div className="flex flex-col items-center gap-2">
+              {/* <div className="flex flex-col items-center gap-2">
                 <RedditShareButton url={shareUrl}>
                   <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#FF4500] hover:opacity-80 transition-opacity">
                     <RedditIcon />
                   </div>
                 </RedditShareButton>
                 <span className="text-xs text-letter">Reddit</span>
-              </div>
+              </div> */}
 
               {/* LinkedIn */}
               <div className="flex flex-col items-center gap-2">
