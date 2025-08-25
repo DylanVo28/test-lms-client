@@ -26,13 +26,12 @@ export default function ListCourses() {
   const { data: prices } = useGetPrices();
   const { profile } = useProfile();
 
-  const { list, loadMore, noMore, reload, loading, loadingMore } =
-    useGetListUserCourse({
-      pageSize,
-      order: sort,
-      categories: category,
-      prices: price,
-    });
+  const { list, loadMore, noMore, reload, loading } = useGetListUserCourse({
+    pageSize,
+    order: sort,
+    categories: category,
+    prices: price,
+  });
 
   const mapCategories = () => {
     return (categories?.data || [])?.map((item: any) => {
@@ -53,7 +52,13 @@ export default function ListCourses() {
   };
 
   useEffect(() => {
-    reload();
+    if (!profile.id) return;
+
+    const timer = setTimeout(() => {
+      reload();
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [sort, category, price, profile]);
 
   return (
@@ -122,27 +127,25 @@ export default function ListCourses() {
         </div>
       </div>
 
-      {!loading && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {list?.length > 0 &&
-              list.map((item) => (
-                <CourseCard
-                  key={item.id}
-                  id={item?.course?.id}
-                  name={item?.course?.title}
-                  countReviews={item?.countReviews}
-                  course={item?.course}
-                  author={item?.course?.author}
-                  image={item?.course?.image}
-                  progress={Math.min(item?.progress || 0, 1)}
-                />
-              ))}
-          </div>
-          {list?.length === 0 && <NoData />}
-        </>
-      )}
-      {loading && <Loading />}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {list?.length > 0 &&
+          list.map((item) => (
+            <CourseCard
+              key={item.id}
+              id={item?.course?.id}
+              name={item?.course?.title}
+              countReviews={item?.countReviews}
+              course={item?.course}
+              author={item?.course?.author}
+              image={item?.course?.image}
+              progress={Math.min(item?.progress || 0, 1)}
+            />
+          ))}
+      </div>
+
+      {!loading && <>{list?.length === 0 && <NoData />}</>}
+
+      {loading && !list?.length && <Loading />}
 
       {!noMore && list?.length > 0 && !loading && (
         <Button
