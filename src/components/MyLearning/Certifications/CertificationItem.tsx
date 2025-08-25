@@ -38,7 +38,6 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
     {
       onSuccess(res) {
-        toast.success(t('myLearning.certifications.mintSuccess'));
         localStorage.removeItem(`minting_${item.id}`);
       },
       onError(e) {
@@ -55,29 +54,6 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   const account = useAccount();
   const { address: walletAddress } = account;
 
-  const {
-    data: hasMinted,
-    isLoading,
-    refetch,
-  } = useHasMinted({
-    address: walletAddress,
-    courseId: item?.certificate?.courseId,
-  });
-
-  console.log('hasMinted::::', {
-    hasMinted,
-    walletAddress,
-    courseId: item?.certificate?.courseId,
-    courseTitle: item?.certificate?.name,
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [item]);
-
   const handleMint = () => {
     if (!walletAddress) {
       toast.error(t('errors.connectWallet'));
@@ -92,10 +68,6 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
     });
   };
 
-  const handleManualRefetch = async () => {
-    refetchCertificates();
-  };
-
   const { onCopy } = useCopy();
 
   return (
@@ -106,9 +78,9 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       <Image
         src={item?.certificate?.image}
         alt=""
-        width={240}
-        height={120}
-        className="w-[120px] h-[120px] object-cover"
+        width={140}
+        height={140}
+        className="w-[140px] h-[140px] object-cover"
         onError={(e: any) => {
           e.target.srcset = '/images/img-certification.png';
         }}
@@ -116,20 +88,21 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
 
       <div className="flex flex-col gap-3">
         <Text
-          type="font-18-600"
+          type="font-16-600"
           className="text-letter line-clamp-2 min-h-[48px]"
         >
           {item?.certificate?.name}
         </Text>
-        <Text type="font-16-400" className="text-letter/70">
+        <Text type="font-14-400" className="text-letter line-clamp-2">
           {item?.certificate?.description}
         </Text>
-        {!item.tokenId && !isLoading && walletAddress && (
+        {!item.tokenId && walletAddress && (
           <>
             <Button
               onPress={handleMint}
               isLoading={isMinting}
               isDisabled={isMintingInProgress}
+              className="w-fit"
             >
               <Text type="font-16-600" className="text-main">
                 {t('myLearning.certifications.mint')}
@@ -138,7 +111,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
           </>
         )}
 
-        {isMintingInProgress && (
+        {isMintingInProgress && !item.tokenId && (
           <div className="flex items-center gap-2">
             <Text type="font-14-400" className="text-main">
               {t('myLearning.certifications.minting')}
@@ -194,8 +167,6 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
             </div>
           </div>
         )}
-
-        {isLoading && <Skeleton className="w-full h-[40px] rounded-md" />}
       </div>
     </div>
   );

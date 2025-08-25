@@ -60,6 +60,8 @@ export const useUSDCOperations = () => {
           kolAddress,
           signature
         );
+
+        console.log('estimatedGas:::', estimatedGas);
         const tx = await vaultContract.pay(
           courseId,
           amount,

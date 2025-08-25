@@ -23,6 +23,17 @@ const Certifications = () => {
 
   useEffect(() => {
     run();
+
+    // if all dataListCertificates
+    if (dataListCertificates?.data?.every((item: any) => item.tokenId)) {
+      return;
+    }
+
+    //call api every 5s
+    const interval = setInterval(() => {
+      run();
+    }, 5000);
+    return () => clearInterval(interval);
   }, [profile]);
 
   return (
@@ -43,31 +54,25 @@ const Certifications = () => {
             </Text>
             <Info className="text-letter" size={18} />
           </div>
-
-          {/* <Button className="bg-transparent w-max border-1 border-main rounded py-[10px] px-6 min-h-[44px]">
-            <Text type="font-16-600" className="text-main">
-              {'Explore certification preparation'}
-            </Text>
-          </Button> */}
         </div>
       </div>
-      {!loading && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {dataListCertificates?.data?.map((item: any) => {
-              return (
-                <CertificationItem
-                  key={item?.id}
-                  item={item}
-                  refetchCertificates={run}
-                />
-              );
-            })}
-          </div>
-          {dataListCertificates?.data?.length === 0 && <NoData />}
-        </>
-      )}
-      {loading && <Loading />}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {dataListCertificates?.data?.map((item: any) => {
+          return (
+            <CertificationItem
+              key={item?.id}
+              item={item}
+              refetchCertificates={run}
+            />
+          );
+        })}
+      </div>
+      {dataListCertificates?.data?.length === 0 && <NoData />}
+
+      {loading &&
+        (dataListCertificates?.data?.length === 0 || !dataListCertificates) && (
+          <Loading />
+        )}
     </div>
   );
 };
