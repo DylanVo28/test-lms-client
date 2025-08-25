@@ -178,6 +178,7 @@ const PlanYourCourse = () => {
         unlockIfUserTradesAtLeast: courseDetail?.unlockIfUserTradesAtLeast ?? 0,
         promotionPeriod: courseDetail?.promotionPeriod,
         categoryId: courseDetail?.categoryId,
+        certificationLogo: courseDetail?.certificationLogo,
       });
     },
   });
@@ -306,12 +307,6 @@ const PlanYourCourse = () => {
   };
 
   const onPublish = async (values: any) => {
-    const image = localStorage.getItem('cropper-image');
-
-    if (image) {
-      toast.error('There are some images not cropped');
-      return;
-    }
     const resData = await fetchDetailSection();
 
     const allLessonsHaveContent =
@@ -428,6 +423,7 @@ const PlanYourCourse = () => {
       unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast
         ? +values?.unlockIfUserTradesAtLeast
         : null,
+      certificationLogo: values?.certificationLogo,
     };
     if (!values.topics) {
       delete body.topics;
@@ -446,13 +442,6 @@ const PlanYourCourse = () => {
     requestEditPublishCourse.run(filteredBody, router.query.id as string);
   };
   const onSubmit = async (values: any) => {
-    const image = localStorage.getItem('cropper-image');
-
-    if (image) {
-      toast.error('There are some images not cropped');
-      return;
-    }
-
     // Validate only the current active plan
     const validationErrorsToSet: any = {};
 
@@ -564,6 +553,7 @@ const PlanYourCourse = () => {
       unlockIfUserTradesAtLeast: values?.unlockIfUserTradesAtLeast
         ? +values?.unlockIfUserTradesAtLeast
         : null,
+      certificationLogo: values?.certificationLogo,
     };
     if (!values.topics) {
       delete body.topics;

@@ -22,12 +22,6 @@ const EditBanner = ({ onChange, value }: any) => {
   });
 
   const handleFileChange = (event: any) => {
-    const cropperImage = localStorage.getItem('cropper-image');
-    if (cropperImage) {
-      toast.error('There are some images not cropped, please crop image first');
-      return;
-    }
-
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -56,11 +50,6 @@ const EditBanner = ({ onChange, value }: any) => {
   };
 
   const handleClickUploadFile = () => {
-    const cropperImage = localStorage.getItem('cropper-image');
-    if (cropperImage) {
-      toast.error('There are some images not cropped, please crop image first');
-      return;
-    }
     fileInputRef.current.click();
   };
 

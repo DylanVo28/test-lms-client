@@ -73,7 +73,7 @@ export default function CourseCard({
         </div>
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />
         <div className="flex items-center justify-between">
-          <Text type="font-14-500">{`${progress * 100}% ${t(
+          <Text type="font-14-500">{`${(progress * 100).toFixed(0)}% ${t(
             'myLearning.complete'
           )}`}</Text>
           <div className="flex items-center gap-2">

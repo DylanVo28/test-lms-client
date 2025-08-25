@@ -269,6 +269,26 @@ const CourseLandingPage = ({
         )}
       />
       <Controller
+        name="certificationLogo"
+        control={control}
+        rules={{
+          required:
+            'Please upload an certification image, this helps your course stand out',
+        }}
+        render={({ field, fieldState }) => (
+          <UploadImage
+            onChange={field.onChange}
+            value={field.value}
+            error={fieldState?.error?.message}
+            defaultSize={{
+              width: 150,
+              height: 150,
+            }}
+            label={t('createCourse.curriculum.landingPage.certificationLogo')}
+          />
+        )}
+      />
+      <Controller
         name="video"
         control={control}
         rules={{

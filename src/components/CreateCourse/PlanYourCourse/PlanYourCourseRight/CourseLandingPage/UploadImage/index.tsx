@@ -15,10 +15,20 @@ const UploadImage = ({
   value,
   onChange,
   error,
+  defaultSize = {
+    width: 302,
+    height: 200,
+  },
+  label,
 }: {
   value: any;
   onChange: any;
   error: any;
+  defaultSize?: {
+    width: number;
+    height: number;
+  };
+  label?: string;
 }) => {
   const { t } = useTranslation('common');
   const fileInputRef: any = useRef(null);
@@ -68,12 +78,12 @@ const UploadImage = ({
     const img = new window.Image();
 
     img.onload = () => {
-      const minWidth = 200;
-      const minHeight = 150;
+      const minWidth = defaultSize.width;
+      const minHeight = defaultSize.height;
 
       if (img.width < minWidth || img.height < minHeight) {
         toast.error(
-          `The uploaded image is too small. Minimum image size is 302x200px. Please upload a larger image.`
+          `The uploaded image is too small. Minimum image size is ${defaultSize.width}x${defaultSize.height}px. Please upload a larger image.`
         );
         return;
       }
@@ -96,8 +106,8 @@ const UploadImage = ({
     if (cropperRef.current) {
       const cropper = cropperRef.current?.cropper;
       const croppedCanvas = cropper.getCroppedCanvas({
-        width: 302,
-        height: 200,
+        width: defaultSize.width,
+        height: defaultSize.height,
         imageSmoothingEnabled: true,
         imageSmoothingQuality: 'high',
       });
@@ -115,7 +125,7 @@ const UploadImage = ({
   return (
     <div className="flex flex-col gap-3">
       <Text type="font-16-600" className="text-letter">
-        {t('createCourse.curriculum.landingPage.courseImage')}
+        {label || t('createCourse.curriculum.landingPage.courseImage')}
       </Text>
       <input
         key={inputKey}
@@ -134,17 +144,19 @@ const UploadImage = ({
             fallbackElement={
               <Image
                 src={value || '/img-default.png'}
-                className="w-full md:w-[240px] h-[200px] object-contain"
+                className="w-full md:w-[240px] max-h-[150px] object-contain"
                 alt=""
-                width={240}
-                height={180}
+                width={defaultSize.width}
+                height={defaultSize.height}
               />
             }
           />
         </div>
         <div className="flex flex-col gap-3 md:gap-2 flex-1">
           <Text type="font-16-600" className="text-letter">
-            {t('createCourse.curriculum.landingPage.uploadImageHelp')}
+            Upload your image here. It must be {defaultSize.width}x
+            {defaultSize.height} pixels, in .jpg, .jpeg, .gif, or .png format,
+            and contain no text
           </Text>
           <div className="flex items-center gap-2">
             {!imageSrc && (

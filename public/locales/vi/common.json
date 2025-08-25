@@ -214,7 +214,7 @@
       },
       "landingPage": {
         "title": "Trang giới thiệu khóa học",
-        "description": "Trang giới thiệu khóa học của bạn rất quan trọng đối với sự thành công của bạn trên Udemy. Nếu được thực hiện đúng cách, nó cũng có thể giúp bạn tăng khả năng hiển thị trên các công cụ tìm kiếm như Google. Khi hoàn thành phần này, hãy nghĩ về việc tạo một Trang Giới Thiệu Khóa Học hấp dẫn thể hiện lý do tại sao ai đó muốn tham gia khóa học của bạn. Tìm hiểu thêm về cách tạo trang giới thiệu khóa học và tiêu chuẩn tiêu đề khóa học.",
+        "description": "Trang giới thiệu khóa học của bạn rất quan trọng đối với sự thành công của bạn trên What Exchange. Nếu được thực hiện đúng cách, nó cũng có thể giúp bạn tăng khả năng hiển thị trên các công cụ tìm kiếm như Google. Khi hoàn thành phần này, hãy nghĩ về việc tạo một Trang Giới Thiệu Khóa Học hấp dẫn thể hiện lý do tại sao ai đó muốn tham gia khóa học của bạn. Tìm hiểu thêm về cách tạo trang giới thiệu khóa học và tiêu chuẩn tiêu đề khóa học.",
         "courseTitle": "Tiêu đề khóa học",
         "courseSubtitle": "Phụ đề khóa học",
         "courseDescription": "Mô tả khóa học",
@@ -222,7 +222,7 @@
         "primaryTaught": "Nội dung chính được dạy trong khóa học của bạn là gì?",
         "courseImage": "Hình ảnh khóa học",
         "promotionalVideo": "Video quảng bá",
-        "uploadImageHelp": "Tải lên hình ảnh khóa học của bạn tại đây. Nó phải có kích thước 302x200 pixel, ở định dạng .jpg, .jpeg, .gif, hoặc .png, và không chứa văn bản.",
+        "uploadImageHelp": "Tải lên hình ảnh của bạn tại đây. Nó phải có kích thước 302x200 pixel, ở định dạng .jpg, .jpeg, .gif, hoặc .png, và không chứa văn bản.",
         "imageHelp": "Hình ảnh khóa học của bạn tạo ấn tượng đầu tiên cho học viên. Một hình ảnh chất lượng cao giúp thu hút nhiều học viên hơn. Hãy đảm bảo nó có kích thước và định dạng phù hợp—tìm hiểu cách làm nó nổi bật!",
         "cropImage": "Cắt ảnh",
         "change": "Thay đổi",

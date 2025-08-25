@@ -53,6 +53,9 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [router.query.id, profile?.id]);
 
+  const progessPercent =
+    (valueYourProgress?.value / valueYourProgress?.total) * 100;
+
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
       {isMobile ? (
@@ -111,8 +114,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                 </div>
               </PopoverTrigger>
               <PopoverContent className="rounded-lg">
-                {valueYourProgress?.total > 0 &&
-                valueYourProgress?.total == valueYourProgress?.value ? (
+                {progessPercent >= 80 ? (
                   <div className="px-1 py-2 flex flex-col gap-3">
                     <div className="font-bold text-lg text-letter">
                       {t('lesson.header.completedCourse')}
