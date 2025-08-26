@@ -11,6 +11,7 @@ import type { NextPage } from 'next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
+import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
 import { fantomTestnet } from 'wagmi/chains';
 
@@ -38,6 +39,16 @@ if (typeof window !== 'undefined') {
 }
 
 const queryClient = new QueryClient();
+
+const ClientWagmiProvider: any = dynamic(
+  async () => {
+    const mod = await import('wagmi');
+    return ({ children }: any) => (
+      <mod.WagmiProvider config={config}>{children}</mod.WagmiProvider>
+    );
+  },
+  { ssr: false }
+);
 
 function AppProvider({ children }: any) {
   return (
@@ -67,7 +78,7 @@ function AppProvider({ children }: any) {
         shallowRouting
       />
       <main>
-        <WagmiProvider config={config}>
+        <ClientWagmiProvider>
           <AppLayout>
             <QueryClientProvider client={queryClient}>
               <RainbowKitProvider
@@ -82,7 +93,7 @@ function AppProvider({ children }: any) {
               </RainbowKitProvider>
             </QueryClientProvider>
           </AppLayout>
-        </WagmiProvider>
+        </ClientWagmiProvider>
       </main>
     </>
   );

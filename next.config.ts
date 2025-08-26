@@ -39,10 +39,17 @@ const nextConfig: NextConfig = {
       crypto: require.resolve('crypto-browserify'),
     };
 
-    // Force resolution to use ESM versions
+    // Force resolution to use server/client safe variants
     config.resolve.alias = {
       ...config.resolve.alias,
       '@noble/ed25519': require.resolve('@noble/ed25519'),
+      ...(isServer
+        ? {
+            wagmi: require.resolve('./src/lib/wagmi.server.ts'),
+          }
+        : {
+            wagmi: require.resolve('./src/lib/wagmi.ts'),
+          }),
     };
 
     // Handle module resolution
