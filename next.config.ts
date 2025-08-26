@@ -58,6 +58,9 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@noble/ed25519': require.resolve('@noble/ed25519'),
+      '@phosphor-icons/react': require.resolve(
+        '@phosphor-icons/react/dist/ssr'
+      ),
     };
 
     // Handle module resolution
