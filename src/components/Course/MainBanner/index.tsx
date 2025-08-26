@@ -5,12 +5,15 @@ import { Button } from '@nextui-org/react';
 import House from '@/components/UI/Icons/House';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
-import { useBannerTranslations } from '@/hooks/useI18n';
+import { useTranslation } from 'next-i18next';
 
 const MainBanner = () => {
   const { theme } = useTheme();
-  const { title, description, ready } = useBannerTranslations();
-  
+  const { t } = useTranslation('common');
+  const defaultTopics = t('banner.defaultTopics', {
+    returnObjects: true,
+  }) as string[];
+
   const bgImageSrc = isMobile
     ? '/bg-banner-mobile.png'
     : theme?.banner || '/images/bg-banner.png';
@@ -21,7 +24,7 @@ const MainBanner = () => {
       <div className="absolute inset-0 z-0 w-full h-full">
         <Image
           src={bgImageSrc}
-          alt="Banner background"
+          alt={t('banner.altBackground')}
           fill
           priority
           sizes="100vw"
@@ -39,21 +42,21 @@ const MainBanner = () => {
             </Button>
             <IconArrowRight />
             <Text type="font-14-500" className="text-letter">
-              {ready ? 'Courses' : 'Courses'}
+              {t('navigation.courses')}
             </Text>
           </div>
           <div className="flex flex-col gap-[40px]">
             <div className="flex flex-col gap-2">
               <Text type="font-28-700" className="text-letter">
-                {theme?.title || title}
+                {theme?.title || t('banner.defaultTitle')}
               </Text>
               <Text type="font-16-400" className="text-letter">
-                {theme?.description || description}
+                {theme?.description || t('banner.defaultDescription')}
               </Text>
             </div>
             <div className="flex flex-col gap-3">
               <Text type="font-16-400" className="text-letter">
-                {ready ? 'Topics related to Web Development' : 'Topics related to Web Development'}
+                {t('banner.topicsTitle')}
               </Text>
               {theme?.topics?.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-3">
@@ -72,7 +75,7 @@ const MainBanner = () => {
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center gap-3">
-                  {['Design', 'UX', 'Java', 'SEO', 'Python', 'Blockchain', 'Digital Media'].map((item) => {
+                  {defaultTopics?.map((item) => {
                     return (
                       <div
                         key={item}
@@ -93,9 +96,9 @@ const MainBanner = () => {
           <div className="block md:hidden w-full mb-[-40px]">
             <Image
               src="/images/bg-banner-mobile1.png"
-              alt="Mobile banner image"
+              alt={t('banner.altMobileBanner')}
               width={343}
-              height={200}
+              height={230}
               className="w-full h-auto"
             />
           </div>

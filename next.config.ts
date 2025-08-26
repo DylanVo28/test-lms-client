@@ -36,11 +36,6 @@ const nextConfig: NextConfig = {
   // External packages for server components to prevent viem from being bundled on server
   serverComponentsExternalPackages: ['viem', 'wagmi', '@wagmi/core'],
 
-  // Ensure i18n files are properly bundled
-  experimental: {
-    esmExternals: false,
-  },
-
   webpack: (config, { isServer }) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -59,13 +54,6 @@ const nextConfig: NextConfig = {
       '.mjs': ['.mjs', '.mts'],
       '.cjs': ['.cjs', '.cts'],
     };
-
-    // Ensure i18n files are properly handled
-    config.module.rules.push({
-      test: /\.json$/,
-      type: 'json',
-      include: /locales/,
-    });
 
     // Optimize viem imports for better tree-shaking
     if (!isServer) {
