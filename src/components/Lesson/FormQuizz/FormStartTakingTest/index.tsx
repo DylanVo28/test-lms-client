@@ -115,7 +115,7 @@ const FormStartTakingTest = ({
             <div className="p-4 flex items-center gap-3 w-full bg-transparent rounded-2xl border-1 border-green">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3">
-                  <CheckCircle className="fill-green" size={30} weight="fill" />
+                  <CheckCircle className="fill-green" size={30} />
                   <Text className="text-green" type="font-16-400">
                     {t('lesson.quiz.didGreat')}
                   </Text>
@@ -130,7 +130,7 @@ const FormStartTakingTest = ({
             <div className="p-4 w-full bg-transparent flex items-center gap-3   rounded-2xl border-1 border-red-500">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3">
-                  <XCircle size={30} weight="fill" className="fill-red-500" />
+                  <XCircle size={30} className="fill-red-500" />
                   <Text className="text-red-500" type="font-16-400">
                     {t('lesson.quiz.incorrectAnswer')}
                   </Text>
@@ -193,11 +193,7 @@ const FormStartTakingTest = ({
               <Text className="text-text-letter" type="font-16-400">
                 {t('lesson.quiz.continue')}
               </Text>
-              <CaretRight
-                size={16}
-                weight="light"
-                className="fill-text-letter"
-              />
+              <CaretRight size={16} className="fill-text-letter" />
             </div>
           </Button>
         )}
@@ -210,11 +206,7 @@ const FormStartTakingTest = ({
               <Text className="text-text-letter" type="font-16-400">
                 {t('lesson.quiz.seeResults')}
               </Text>
-              <CaretRight
-                size={16}
-                weight="light"
-                className="fill-text-letter"
-              />
+              <CaretRight size={16} className="fill-text-letter" />
             </div>
           </Button>
         )}
@@ -234,11 +226,7 @@ const FormStartTakingTest = ({
                 <Text className="text-text-letter" type="font-16-400">
                   {t('lesson.quiz.continue')}
                 </Text>
-                <CaretRight
-                  size={16}
-                  weight="light"
-                  className="fill-text-letter"
-                />
+                <CaretRight size={16} className="fill-text-letter" />
               </div>
             </Button>
           )}
@@ -254,11 +242,7 @@ const FormStartTakingTest = ({
                   <Text className="text-text-letter" type="font-16-400">
                     {t('common.next')}
                   </Text>
-                  <CaretRight
-                    size={16}
-                    weight="light"
-                    className="fill-text-letter"
-                  />
+                  <CaretRight size={16} className="fill-text-letter" />
                 </div>
               </Button>
             ) : (

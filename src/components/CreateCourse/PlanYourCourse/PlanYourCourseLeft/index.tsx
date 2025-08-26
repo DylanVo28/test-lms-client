@@ -61,17 +61,17 @@ const PlanYourCourseLeft = ({
           >
             <div className="w-6 h-6 flex justify-center rounded-full items-center  border-1 border-black-7">
               {item?.id === 1 && isEnoughIntendedLearners && (
-                <Check className="text-main" size={14} weight="bold" />
+                <Check className="text-main" />
               )}
               {item?.id === 2 && isEnoughCurruclum && (
-                <Check className="text-main" size={14} weight="bold" />
+                <Check className="text-main" />
               )}
 
               {item?.id === 3 && isEnoughCourseLangdingePage && (
-                <Check className="text-main" size={14} weight="bold" />
+                <Check className="text-main" />
               )}
               {item?.id === 4 && isEnoughtSetPrice && (
-                <Check className="text-main" size={14} weight="bold" />
+                <Check className="text-main" />
               )}
             </div>
 

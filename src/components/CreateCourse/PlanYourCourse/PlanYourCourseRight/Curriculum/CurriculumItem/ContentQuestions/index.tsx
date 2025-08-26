@@ -48,7 +48,7 @@ const ContentQuestions = ({
                     !!editLessonId && 'opacity-50 cursor-not-allowed'
                   )}
                 >
-                  <PencilSimpleLine size={16} weight="light" />
+                  <PencilSimpleLine size={16} />
                 </Button>
               </Tooltip>
 
@@ -67,7 +67,7 @@ const ContentQuestions = ({
                     !!editLessonId && 'opacity-50 cursor-not-allowed'
                   )}
                 >
-                  <Trash size={16} weight="light" />
+                  <Trash size={16} />
                 </Button>
               </Tooltip>
             </div>

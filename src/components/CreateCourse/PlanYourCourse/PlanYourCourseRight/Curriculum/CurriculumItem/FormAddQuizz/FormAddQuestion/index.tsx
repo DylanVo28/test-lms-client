@@ -186,7 +186,7 @@ const FormAddQuestion = ({
                         radius="full"
                         variant="light"
                       >
-                        <Trash size={20} weight="light" color="#DF2638" />
+                        <Trash size={20} color="#DF2638" />
                       </Button>
                     </div>
                   )}

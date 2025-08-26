@@ -215,7 +215,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                           })}
                         </Text>
                         <div className="flex items-center gap-1">
-                          <FileText size={20} weight="light" />
+                          <FileText size={20} />
                           <Text
                             type="font-16-400"
                             className="text-letter/70 max-w-[800px] truncate"
@@ -231,7 +231,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                             radius="full"
                             variant="light"
                           >
-                            <PencilSimpleLine size={16} weight="light" />
+                            <PencilSimpleLine size={16} />
                           </Button>
                           {index !== 0 && (
                             <Button
@@ -243,7 +243,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                               radius="full"
                               variant="light"
                             >
-                              <Trash size={16} weight="light" />
+                              <Trash size={16} />
                             </Button>
                           )}
                         </div>

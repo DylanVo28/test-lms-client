@@ -1,8 +1,10 @@
-export const ThumbsUp = (props: React.SVGProps<SVGSVGElement>) => (
+type Props = React.SVGProps<SVGSVGElement> & { size?: number };
+
+export const ThumbsUp = ({ size = 16, ...props }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width={size}
+    height={size}
     viewBox="0 0 256 256"
     fill="currentColor"
     {...props}
@@ -11,11 +13,11 @@ export const ThumbsUp = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const ThumbsDown = (props: React.SVGProps<SVGSVGElement>) => (
+export const ThumbsDown = ({ size = 16, ...props }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
+    width={size}
+    height={size}
     viewBox="0 0 256 256"
     fill="currentColor"
     {...props}

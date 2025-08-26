@@ -113,7 +113,7 @@ const IntendedLearners = ({
                   radius="full"
                   className="mt-1.5"
                 >
-                  <Trash size={20} weight="light" />
+                  <Trash size={20} />
                 </Button>
               )}
             </div>
@@ -183,7 +183,7 @@ const IntendedLearners = ({
                   radius="full"
                   className="mt-1.5"
                 >
-                  <Trash size={20} weight="light" />
+                  <Trash size={20} />
                 </Button>
               )}
             </div>
@@ -253,7 +253,7 @@ const IntendedLearners = ({
                   radius="full"
                   className="mt-1.5"
                 >
-                  <Trash size={20} weight="light" />
+                  <Trash size={20} />
                 </Button>
               )}
             </div>

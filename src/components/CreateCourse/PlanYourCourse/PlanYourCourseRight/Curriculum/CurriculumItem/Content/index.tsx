@@ -38,7 +38,7 @@ const Content = ({
           />
         ) : (
           <div className="w-[116px] h-[65px] bg-black-10 flex justify-center items-center">
-            <FileText size={30} weight="light" />
+            <FileText size={30} />
           </div>
         )}
 

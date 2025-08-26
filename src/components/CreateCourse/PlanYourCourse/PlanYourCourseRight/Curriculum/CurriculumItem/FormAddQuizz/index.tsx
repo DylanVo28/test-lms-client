@@ -44,7 +44,7 @@ const FormAddQuizz = ({
           >
             <div className="flex flex-col cursor-pointer items-center border-1 border-white-20 min-w-[70px]">
               <div className="border-b w-full items-center justify-center flex py-2 border-b-white-20">
-                <QuestionMark size={32} color="#8C8C8C" weight="fill" />
+                <QuestionMark size={32} color="#8C8C8C" />
               </div>
 
               <div className="p-2 bg-slate-600 w-full text-center">

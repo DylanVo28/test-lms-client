@@ -9,7 +9,6 @@ const RateStar = ({ rate }: { rate: number }) => {
             key={item}
             size={12}
             color={rate > index ? '#F2B021' : '#D9D9D9'}
-            weight={'fill'}
           />
         );
       })}

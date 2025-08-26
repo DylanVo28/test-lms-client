@@ -118,7 +118,6 @@ const Comment = ({
               <IconLikeReview />
             )} */}
             <ThumbsUp
-              size={18}
               color={
                 meLiked && meReaction?.name === TypeReactions?.LIKE
                   ? '#02A6C2'
@@ -156,7 +155,6 @@ const Comment = ({
             variant="light"
           >
             <ThumbsDown
-              size={18}
               color={
                 meLiked && meReaction?.name === TypeReactions?.DISLIKE
                   ? '#02A6C2'
