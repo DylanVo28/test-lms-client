@@ -25,6 +25,26 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
 
+  // Ensure i18n is properly initialized
+  useEffect(() => {
+    // Force reload of translations if they're not loaded properly
+    if (typeof window !== 'undefined') {
+      const checkTranslations = () => {
+        const currentLang = localStorage.getItem('i18nextLng') || 'en';
+        const hasTranslations = document.querySelector('[data-i18n-loaded]');
+
+        if (!hasTranslations) {
+          console.warn('Translations not loaded, attempting to reload...');
+          // Force page reload to reinitialize i18n
+          window.location.reload();
+        }
+      };
+
+      // Check after a short delay
+      setTimeout(checkTranslations, 1000);
+    }
+  }, []);
+
   return (
     <>
       {/* Ignore runtime errors from browser extensions in dev/runtime */}
