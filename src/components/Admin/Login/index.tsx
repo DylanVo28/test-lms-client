@@ -1,7 +1,7 @@
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
-import { Eye, EyeSlash } from '@phosphor-icons/react';
+import { Eye, EyeSlash } from '@/components/UI/Icons/Eye';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useLoginUserName } from './service';

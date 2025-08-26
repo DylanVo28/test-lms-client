@@ -3,7 +3,7 @@ import { useProfile } from '@/store/profile/useProfile';
 import { UserCourseProgressStatus } from '@/utils/common';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Button, Tab, Tabs } from '@nextui-org/react';
-import { X } from '@phosphor-icons/react';
+import X from '@/components/UI/Icons/X';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';

@@ -3,7 +3,7 @@ import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
-import { Trash } from '@phosphor-icons/react';
+import Trash from '@/components/UI/Icons/Trash';
 import { useTranslation } from 'next-i18next';
 import { type Control, Controller, useFieldArray } from 'react-hook-form';
 interface IntendedLearnersProps {

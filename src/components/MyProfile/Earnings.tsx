@@ -11,7 +11,7 @@ import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
 import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
-import { Info } from '@phosphor-icons/react';
+import Info from '@/components/UI/Icons/Info';
 import { Tooltip, Spinner } from '@nextui-org/react';
 import { useProfile } from '@/store/profile/useProfile';
 import { getVaultContract } from '@/hooks/useContract';

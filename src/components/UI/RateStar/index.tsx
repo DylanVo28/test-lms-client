@@ -1,4 +1,4 @@
-import { Star } from '@phosphor-icons/react';
+import Star from '@/components/UI/Icons/Star';
 
 const RateStar = ({ rate }: { rate: number }) => {
   return (

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { CheckCircle, Info, XCircle } from '@phosphor-icons/react';
+import { CheckCircle, XCircle } from '@/components/UI/Icons/Circles';
+import Info from '@/components/UI/Icons/Info';
 import classNames from 'classnames';
 import { ExternalToast, toast as t } from 'sonner';
 // import { Icon } from '~components/UI/IconFont/Icon';

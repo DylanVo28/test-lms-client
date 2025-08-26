@@ -5,7 +5,7 @@ import RadioCustom from '@/components/UI/RadioCustom';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button, Radio } from '@nextui-org/react';
-import { Trash } from '@phosphor-icons/react';
+import Trash from '@/components/UI/Icons/Trash';
 import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 const FormAddQuestion = ({

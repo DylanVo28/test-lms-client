@@ -2,7 +2,7 @@ import IconArrowRight from '@/components/UI/Icons/IconArrowRight';
 import Text from '@/components/UI/Text';
 import { useTheme } from '@/store/theme/useTheme';
 import { Button } from '@nextui-org/react';
-import { House } from '@phosphor-icons/react';
+import House from '@/components/UI/Icons/House';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';

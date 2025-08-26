@@ -1,6 +1,6 @@
 import Text from '@/components/UI/Text';
 import { Button, CircularProgress } from '@nextui-org/react';
-import { Play } from '@phosphor-icons/react';
+import Play from '@/components/UI/Icons/Play';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 const NextVideo = ({

@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/react';
 import { useState } from 'react';
 import FormStartTakingTest from './FormStartTakingTest';
 import LoadingContainer from '@/components/UI/LoadingContainer';
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight } from '@/components/UI/Icons/Arrows';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import { reviewedAtom } from '..';

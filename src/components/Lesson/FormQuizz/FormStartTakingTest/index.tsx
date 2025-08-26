@@ -1,7 +1,8 @@
 import LoadingContainer from '@/components/UI/LoadingContainer';
 import Text from '@/components/UI/Text';
 import { Button, Radio, RadioGroup } from '@nextui-org/react';
-import { CaretRight, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { CaretRight } from '@/components/UI/Icons/Arrows';
+import { CheckCircle, XCircle } from '@/components/UI/Icons/Circles';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';

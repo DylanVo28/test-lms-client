@@ -16,10 +16,10 @@ import { Button, cn, Tooltip } from '@nextui-org/react';
 import {
   FileText,
   MonitorPlay,
-  PencilSimpleLine,
   Question,
-  Trash,
-} from '@phosphor-icons/react';
+} from '@/components/UI/Icons/FileIcons';
+import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
+import Trash from '@/components/UI/Icons/Trash';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { IconClose } from '..';

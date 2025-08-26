@@ -19,7 +19,7 @@ import dayjs from 'dayjs';
 import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
-import { User } from '@phosphor-icons/react';
+import User from '@/components/UI/Icons/User';
 import { useTranslation } from 'next-i18next';
 import {
   useLikeCourse,

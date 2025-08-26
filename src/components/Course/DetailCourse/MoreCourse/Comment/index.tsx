@@ -17,7 +17,7 @@ import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
 import { formatWalletAddress, getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { ThumbsDown, ThumbsUp } from '@phosphor-icons/react';
+import { ThumbsDown, ThumbsUp } from '@/components/UI/Icons/Thumbs';
 import clsx from 'clsx';
 
 dayjs.extend(relativeTime);

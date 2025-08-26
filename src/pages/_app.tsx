@@ -7,7 +7,7 @@ import '../styles/globals.scss';
 import '../styles/tailwind.css';
 import 'video.js/dist/video-js.css';
 
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
@@ -27,6 +27,36 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
+      {/* Ignore runtime errors from browser extensions in dev/runtime */}
+      {typeof window !== 'undefined' &&
+        (() => {
+          const onError = (ev: ErrorEvent) => {
+            const src = (ev?.filename || '') as string;
+            if (src.startsWith('chrome-extension://')) {
+              ev.stopImmediatePropagation();
+              ev.preventDefault();
+              return false;
+            }
+          };
+          const onRejection = (ev: PromiseRejectionEvent) => {
+            const reason: any = ev?.reason;
+            const stack: string = reason?.stack || '';
+            const msg: string = reason?.message || '';
+            if (
+              stack.includes('chrome-extension://') ||
+              msg.includes('chrome-extension://')
+            ) {
+              ev.stopImmediatePropagation();
+              ev.preventDefault();
+              return false;
+            }
+          };
+          window.addEventListener('error', onError, { capture: true });
+          window.addEventListener('unhandledrejection', onRejection, {
+            capture: true,
+          });
+          return null;
+        })()}
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content={'index,follow'} />

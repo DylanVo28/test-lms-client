@@ -1,6 +1,6 @@
 import Text from '@/components/UI/Text';
 import { ROUTE_PATH } from '@/utils/const';
-import { Check } from '@phosphor-icons/react';
+import Check from '@/components/UI/Icons/Check';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';

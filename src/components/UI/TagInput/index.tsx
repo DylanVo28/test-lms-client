@@ -1,4 +1,4 @@
-import { Plus } from '@phosphor-icons/react';
+import Plus from '@/components/UI/Icons/Plus';
 import React, { useState, useRef } from 'react';
 import Text from '../Text';
 import { atom, useAtom } from 'jotai';

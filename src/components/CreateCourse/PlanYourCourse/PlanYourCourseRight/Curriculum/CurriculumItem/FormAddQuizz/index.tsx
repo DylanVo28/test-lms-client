@@ -1,5 +1,9 @@
 import Text from '@/components/UI/Text';
-import { File, PlayCircle, QuestionMark } from '@phosphor-icons/react';
+import {
+  File,
+  PlayCircle,
+  QuestionMark,
+} from '@/components/UI/Icons/FileIcons';
 import { useEffect, useState } from 'react';
 import FormAddQuestion from './FormAddQuestion';
 const FormAddQuizz = ({

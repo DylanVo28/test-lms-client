@@ -8,6 +8,7 @@ const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 const nextConfig: NextConfig = {
   i18n,
   output: 'standalone',
+
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
     APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,
@@ -42,9 +43,6 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@noble/ed25519': require.resolve('@noble/ed25519'),
-      '@phosphor-icons/react': require.resolve(
-        '@phosphor-icons/react/dist/ssr'
-      ),
     };
 
     // Handle module resolution

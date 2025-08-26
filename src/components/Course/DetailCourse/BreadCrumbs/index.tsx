@@ -3,7 +3,7 @@ import Text from '@/components/UI/Text';
 import useNavigate from '@/hooks/useNavigate';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import { House } from '@phosphor-icons/react';
+import House from '@/components/UI/Icons/House';
 import { useTranslation } from 'next-i18next';
 
 const BreadCrumbs = () => {

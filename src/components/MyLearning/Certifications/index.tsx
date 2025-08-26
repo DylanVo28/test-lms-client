@@ -1,6 +1,6 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
-import { Info } from '@phosphor-icons/react';
+import Info from '@/components/UI/Icons/Info';
 import Image from 'next/image';
 import { useGetMyCertificates, useMintCertificate } from '../service';
 import NoData from '@/components/ListCourse/NoData';

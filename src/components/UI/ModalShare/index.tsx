@@ -5,7 +5,8 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
-import { Copy, XLogo } from '@phosphor-icons/react';
+import Copy from '@/components/UI/Icons/Copy';
+import X from '@/components/UI/Icons/X';
 import { useRouter } from 'next/router';
 import {
   FacebookShareButton,
@@ -104,7 +105,7 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
               <div className="flex flex-col items-center gap-2">
                 <TwitterShareButton url={shareUrl}>
                   <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DA1F2] hover:opacity-80 transition-opacity">
-                    <XLogo className="text-letter" size={20} />
+                    <X className="text-letter" size={20} />
                   </div>
                 </TwitterShareButton>
                 <span className="text-xs text-letter">Twitter</span>

@@ -1,6 +1,8 @@
 import Text from '@/components/UI/Text';
 import { Tooltip } from '@nextui-org/react';
-import { Check, Info, Star } from '@phosphor-icons/react';
+import Check from '@/components/UI/Icons/Check';
+import Info from '@/components/UI/Icons/Info';
+import Star from '@/components/UI/Icons/Star';
 const IsResult = ({
   title,
   totalQuizz,

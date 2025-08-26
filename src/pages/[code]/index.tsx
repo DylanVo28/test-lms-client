@@ -10,6 +10,7 @@ import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
 import AppProvider from '@/components/Provider/AppProvider';
 import { useTranslation } from 'next-i18next';
+import { ENV } from '@/utils/env';
 
 type Props = {
   code: string;
@@ -38,12 +39,14 @@ export const getServerSideProps: GetServerSideProps = async ({
       props: {
         code: params.code as string,
         ...i18nProps,
+        _env: { APP_API_URL: ENV.APP_API_URL || null },
       },
     };
   } catch (e) {
     return {
       props: {
         code: params.code as string,
+        _env: { APP_API_URL: ENV.APP_API_URL || null },
       },
     };
   }

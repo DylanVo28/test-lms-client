@@ -4,7 +4,7 @@ import { Control, Controller, useWatch, useForm } from 'react-hook-form';
 import InputText from '@/components/UI/InputText';
 import Text from '@/components/UI/Text';
 import { Tooltip } from '@nextui-org/react';
-import { Info } from '@phosphor-icons/react';
+import Info from '@/components/UI/Icons/Info';
 
 const SetPrice = ({
   control,
