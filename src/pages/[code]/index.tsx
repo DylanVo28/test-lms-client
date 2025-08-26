@@ -32,12 +32,21 @@ export const getServerSideProps: GetServerSideProps = async ({
     return { notFound: true };
   }
 
-  return {
-    props: {
-      code: params.code as string,
-      ...(await serverSideTranslations(locale || 'en', ['common'])),
-    },
-  };
+  try {
+    const i18nProps = await serverSideTranslations(locale || 'en', ['common']);
+    return {
+      props: {
+        code: params.code as string,
+        ...i18nProps,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        code: params.code as string,
+      },
+    };
+  }
 };
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
