@@ -13,7 +13,8 @@ import Head from 'next/head';
 import { Toaster } from 'sonner';
 import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
-import { fantomTestnet } from 'wagmi/chains';
+import { fantomTestnet } from '@/config/viem';
+import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -40,19 +41,23 @@ if (typeof window !== 'undefined') {
 
 const queryClient = new QueryClient();
 
-const ClientWagmiProvider: any = dynamic(
+// Optimized dynamic import to prevent EMFILE errors
+const ClientWagmiProvider = dynamic(
   async () => {
-    const mod = await import('wagmi');
-    return ({ children }: any) => (
-      <mod.WagmiProvider config={config}>{children}</mod.WagmiProvider>
+    const { WagmiProvider } = await import('wagmi');
+    return ({ children }: { children: ReactNode }) => (
+      <WagmiProvider config={config}>{children}</WagmiProvider>
     );
   },
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <div>Loading wallet...</div>,
+  }
 );
 
 function AppProvider({ children }: any) {
   return (
-    <>
+    <ViemErrorBoundary>
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content={'index,follow'} />
@@ -95,7 +100,7 @@ function AppProvider({ children }: any) {
           </AppLayout>
         </ClientWagmiProvider>
       </main>
-    </>
+    </ViemErrorBoundary>
   );
 }
 

@@ -30,9 +30,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Remove COOP/COEP to avoid blocking cross-origin requests on Vercel SW/runtime
   reactStrictMode: true,
   transpilePackages: ['@noble/ed25519', 'bs58'],
+
+  // External packages for server components to prevent viem from being bundled on server
+  serverComponentsExternalPackages: ['viem', 'wagmi', '@wagmi/core'],
+
   webpack: (config, { isServer }) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -51,6 +54,47 @@ const nextConfig: NextConfig = {
       '.mjs': ['.mjs', '.mts'],
       '.cjs': ['.cjs', '.cts'],
     };
+
+    // Optimize viem imports for better tree-shaking
+    if (!isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          ...config.optimization.splitChunks,
+          cacheGroups: {
+            ...config.optimization.splitChunks?.cacheGroups,
+            viem: {
+              test: /[\\/]node_modules[\\/]viem[\\/]/,
+              name: 'viem',
+              chunks: 'all',
+              priority: 20,
+            },
+            wagmi: {
+              test: /[\\/]node_modules[\\/]wagmi[\\/]/,
+              name: 'wagmi',
+              chunks: 'all',
+              priority: 20,
+            },
+          },
+        },
+      };
+    }
+
+    // External viem on server to prevent file handle issues
+    if (isServer) {
+      config.externals = config.externals || [];
+      if (typeof config.externals === 'function') {
+        const originalExternals = config.externals;
+        config.externals = (context: any, request: any, callback: any) => {
+          if (request?.startsWith('viem') || request?.startsWith('wagmi')) {
+            return callback(null, `commonjs ${request}`);
+          }
+          return originalExternals(context, request, callback);
+        };
+      } else if (Array.isArray(config.externals)) {
+        config.externals.push('viem', 'wagmi');
+      }
+    }
 
     return config;
   },
