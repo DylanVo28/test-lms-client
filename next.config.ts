@@ -29,23 +29,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
-          },
-        ],
-      },
-    ];
-  },
+  // Remove COOP/COEP to avoid blocking cross-origin requests on Vercel SW/runtime
   reactStrictMode: true,
   transpilePackages: ['@noble/ed25519', 'bs58'],
   webpack: (config, { isServer }) => {
