@@ -161,6 +161,7 @@ const Comment = ({
                   : '#ffffff'
               }
             />
+            {/* trigger */}
 
             {/* {meLiked && meReaction?.name === TypeReactions?.DISLIKE ? (
             ) : (
