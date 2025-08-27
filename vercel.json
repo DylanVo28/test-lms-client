@@ -8,6 +8,21 @@
     {
       "source": "/:locale(en|vi|zh-CN)/:path*",
       "destination": "/:path*?locale=:locale"
+    },
+    {
+      "source": "/:locale(en|vi|zh-CN)",
+      "destination": "/?locale=:locale"
+    },
+    {
+      "source": "/((?!api|_next/static|_next/image|favicon.ico|locales).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/en",
+      "permanent": false
     }
   ],
   "headers": [
