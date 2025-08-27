@@ -7,8 +7,6 @@ const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
   i18n,
-  // Xóa output: 'standalone' để tránh xung đột với i18n
-  // output: 'standalone',
 
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
@@ -33,9 +31,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   transpilePackages: ['@noble/ed25519', 'bs58'],
-
-  // External packages for server components to prevent viem from being bundled on server
-  serverComponentsExternalPackages: ['viem', 'wagmi', '@wagmi/core'],
 
   webpack: (config, { isServer }) => {
     config.resolve.fallback = {

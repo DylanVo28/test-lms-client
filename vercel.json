@@ -6,8 +6,8 @@
   },
   "rewrites": [
     {
-      "source": "/((?!api|_next/static|_next/image|favicon.ico).*)",
-      "destination": "/index.html"
+      "source": "/:locale(en|vi|zh-CN)/:path*",
+      "destination": "/:path*?locale=:locale"
     }
   ],
   "headers": [
@@ -17,8 +17,24 @@
         {
           "key": "Accept-Language",
           "value": "en,vi,zh-CN"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/locales/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
-  ]
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install"
 }
