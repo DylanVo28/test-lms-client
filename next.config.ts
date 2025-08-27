@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
         source: '/:locale(en|vi|zh-CN)',
         destination: '/?locale=:locale',
       },
+      {
+        source: '/:path*',
+        destination: '/:path*',
+      },
     ];
   },
 
