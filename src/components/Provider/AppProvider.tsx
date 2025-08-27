@@ -1,7 +1,11 @@
 import { ReactElement, ReactNode } from 'react';
 
 import AppLayout from '@/layout/AppLayout';
-import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  darkTheme,
+  RainbowKitProvider,
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { NextPage } from 'next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
@@ -11,13 +15,18 @@ import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
 import { fantomTestnet } from '@/config/viem';
 import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
-import { createWagmiConfig } from '@/config/wagmi';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-const config = createWagmiConfig();
+const config = getDefaultConfig({
+  appName: 'What Exchange',
+  projectId:
+    process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
+  chains: [fantomTestnet],
+  ssr: false,
+});
 
 if (typeof window !== 'undefined') {
   const hasWalletConnectSession = Object.keys(window.localStorage).some((key) =>
