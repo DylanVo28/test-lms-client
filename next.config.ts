@@ -7,6 +7,15 @@ const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
   i18n,
+  trailingSlash: false,
+  async rewrites() {
+    return [
+      {
+        source: '/:locale(en|vi|zh-CN)/:path*',
+        destination: '/:path*?locale=:locale',
+      },
+    ];
+  },
 
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,

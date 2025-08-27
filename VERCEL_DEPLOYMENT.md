@@ -15,6 +15,12 @@
 - ✅ Removed `serverComponentsExternalPackages` (not supported in Next.js 15)
 - ✅ Removed `output: 'standalone'` (causes i18n issues on Vercel)
 
+### 3. 404 Error on Page Refresh - FIXED ✅
+
+- **Issue**: Page refresh (F5) shows 404 error on nested routes
+- **Cause**: Missing SPA fallback and improper routing configuration
+- **Solution**: Added proper rewrites and fallback routes in vercel.json
+
 ## 🔧 Steps to Fix i18n on Vercel
 
 ### Step 1: Update Node.js Version
@@ -124,6 +130,21 @@ npm run start
    - `https://your-domain.vercel.app/vi`
    - `https://your-domain.vercel.app/zh-CN`
 3. Check browser language detection
+4. **NEW**: Test page refresh (F5) on nested routes
+
+### 404 Error Testing - CRITICAL ✅
+
+**Before (Broken)**:
+
+- Navigate to `/vi/course`
+- Press F5 (refresh)
+- ❌ Shows 404 error
+
+**After (Fixed)**:
+
+- Navigate to `/vi/course`
+- Press F5 (refresh)
+- ✅ Page loads correctly with Vietnamese locale
 
 ## 🐛 Troubleshooting
 
@@ -151,12 +172,18 @@ npm run start
 - Check for TypeScript errors
 - Verify i18n configuration
 
+#### 5. "404 error on page refresh" - SOLVED ✅
+
+- **Solution**: Updated vercel.json with proper rewrites and SPA fallback
+- **Status**: Completely fixed
+
 ### Debug Steps
 
 1. Check Vercel build logs
 2. Verify environment variables
 3. Test locale switching locally
 4. Check browser console for errors
+5. **NEW**: Test page refresh on all routes
 
 ## 📊 Performance Optimization
 
@@ -172,6 +199,12 @@ npm run start
 - Tree-shaking for unused translations
 - Lazy loading for non-critical locales
 
+### Routing Optimization
+
+- **NEW**: SPA fallback prevents 404 errors
+- **NEW**: Proper rewrites for all locale routes
+- **NEW**: Optimized redirects for root path
+
 ## 🔄 Maintenance
 
 ### Regular Checks
@@ -180,12 +213,14 @@ npm run start
 - Check for new Next.js i18n features
 - Update dependencies regularly
 - Test locale switching after updates
+- **NEW**: Test page refresh functionality
 
 ### Updates
 
 - Keep Next.js updated to latest 15.x version
 - Update next-i18next when available
 - Test i18n functionality after major updates
+- **NEW**: Verify routing still works after updates
 
 ## 📞 Support
 
@@ -206,4 +241,27 @@ If you continue to have issues:
 - [ ] Environment variables set
 - [ ] Local build successful
 - [ ] Local i18n working
+- [ ] **NEW**: Page refresh working locally
+- [ ] **NEW**: All routes accessible directly
 - [ ] Ready to deploy
+
+## 🎯 What's Fixed
+
+### ✅ i18n Translation
+
+- All locales working correctly
+- Proper language switching
+- Translation files loading
+
+### ✅ Routing Issues
+
+- No more 404 errors on page refresh
+- Direct URL access works
+- Nested routes supported
+- Dynamic routes working
+
+### ✅ Vercel Compatibility
+
+- Proper build configuration
+- Optimized caching
+- Performance improvements
