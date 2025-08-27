@@ -1,15 +1,14 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAccount, useConnect, useDisconnect, useChainId } from 'wagmi';
-import { 
-  saveConnectionState, 
-  getConnectionState, 
+import {
+  saveConnectionState,
+  getConnectionState,
   clearConnectionState,
-  updateConnectionTimestamp 
 } from '@/utils/connectionPersistence';
-import { 
-  isMobile, 
-  isMetaMaskInAppBrowser, 
-  getOptimalConnectionMethod 
+import {
+  isMobile,
+  isMetaMaskInAppBrowser,
+  getOptimalConnectionMethod,
 } from '@/utils/mobileDetection';
 
 interface UseMobileWalletConnectionReturn {
@@ -24,118 +23,145 @@ interface UseMobileWalletConnectionReturn {
   isMobileDevice: boolean;
 }
 
-export const useMobileWalletConnection = (): UseMobileWalletConnectionReturn => {
-  const { address, isConnected, isConnecting } = useAccount();
-  const { connect, connectors } = useConnect();
-  const { disconnect: wagmiDisconnect } = useDisconnect();
-  const chainId = useChainId();
-  
-  const [connectionMethod] = useState(getOptimalConnectionMethod());
-  const [isMobileDevice] = useState(isMobile());
+export const useMobileWalletConnection =
+  (): UseMobileWalletConnectionReturn => {
+    const {
+      address,
+      isConnected,
+      isConnecting,
+      connector: currentConnector,
+    } = useAccount();
+    const { connect, connectAsync, connectors } = useConnect();
+    const { disconnect: wagmiDisconnect } = useDisconnect();
+    const chainId = useChainId();
 
-  const saveCurrentConnection = useCallback(() => {
-    if (address && chainId) {
-      saveConnectionState({
-        address,
-        chainId,
-        connector: connectionMethod,
-      });
-    }
-  }, [address, chainId, connectionMethod]);
+    const [connectionMethod] = useState(getOptimalConnectionMethod());
+    const [isMobileDevice] = useState(isMobile());
 
-  const clearCurrentConnection = useCallback(() => {
-    clearConnectionState();
-  }, []);
-
-  const autoReconnect = useCallback(async () => {
-    if (isConnected) return;
-
-    const savedState = getConnectionState();
-    if (!savedState) return;
-
-    try {
-      const connector = connectors.find(c => 
-        c.id === (savedState.connector === 'walletConnect' ? 'walletConnect' : 'injected')
-      );
-
-      if (connector) {
-        await connect({ connector });
+    const saveCurrentConnection = useCallback(() => {
+      if (address && chainId) {
+        const connectorId =
+          currentConnector?.id === 'walletConnect'
+            ? 'walletConnect'
+            : 'injected';
+        saveConnectionState({
+          address,
+          chainId,
+          connector: connectorId,
+        });
       }
-    } catch (error) {
-      console.warn('Auto-reconnection failed:', error);
+    }, [address, chainId, currentConnector]);
+
+    const clearCurrentConnection = useCallback(() => {
+      clearConnectionState();
+    }, []);
+
+    const autoReconnect = useCallback(async () => {
+      if (isConnected) return;
+
+      const savedState = getConnectionState();
+      if (!savedState) return;
+
+      try {
+        const wantedId =
+          savedState.connector === 'walletConnect'
+            ? 'walletConnect'
+            : 'injected';
+        const connector = connectors.find((c) => c.id === wantedId);
+
+        if (connector) {
+          await connectAsync({ connector });
+        }
+      } catch (error) {
+        console.warn('Auto-reconnection failed:', error);
+        clearCurrentConnection();
+      }
+    }, [isConnected, connectors, connectAsync, clearCurrentConnection]);
+
+    const connectWallet = useCallback(async () => {
+      try {
+        let connector;
+
+        if (isMobileDevice && !isMetaMaskInAppBrowser()) {
+          connector = connectors.find((c) => c.id === 'walletConnect');
+        } else {
+          connector = connectors.find((c) => c.id === 'injected');
+        }
+
+        if (!connector) {
+          throw new Error('No suitable connector found');
+        }
+
+        const result = await connectAsync({ connector });
+        const connectedAddress = result?.accounts?.[0] || address;
+        const connectedChainId = (result as any)?.chainId || chainId;
+        const connectorId =
+          connector.id === 'walletConnect' ? 'walletConnect' : 'injected';
+
+        if (connectedAddress && connectedChainId) {
+          saveConnectionState({
+            address: connectedAddress,
+            chainId: connectedChainId,
+            connector: connectorId,
+          });
+        }
+      } catch (error) {
+        console.error('Connection failed:', error);
+        throw error;
+      }
+    }, [isMobileDevice, connectors, connectAsync, address, chainId]);
+
+    const disconnectWallet = useCallback(() => {
+      wagmiDisconnect();
       clearCurrentConnection();
-    }
-  }, [isConnected, connectors, connect, clearCurrentConnection]);
+    }, [wagmiDisconnect, clearCurrentConnection]);
 
-  const connectWallet = useCallback(async () => {
-    try {
-      let connector;
-      
-      if (isMobileDevice && !isMetaMaskInAppBrowser()) {
-        connector = connectors.find(c => c.id === 'walletConnect');
-      } else {
-        connector = connectors.find(c => c.id === 'injected');
+    useEffect(() => {
+      if (isConnected && address && chainId) {
+        saveCurrentConnection();
       }
+    }, [isConnected, address, chainId, saveCurrentConnection]);
 
-      if (!connector) {
-        throw new Error('No suitable connector found');
-      }
+    useEffect(() => {
+      const handleVisibilityChange = () => {
+        if (!document.hidden && !isConnected) {
+          autoReconnect();
+        }
+      };
 
-      await connect({ connector });
-    } catch (error) {
-      console.error('Connection failed:', error);
-      throw error;
-    }
-  }, [isMobileDevice, connectors, connect]);
+      const handleFocus = () => {
+        if (!isConnected) {
+          autoReconnect();
+        }
+      };
 
-  const disconnectWallet = useCallback(() => {
-    wagmiDisconnect();
-    clearCurrentConnection();
-  }, [wagmiDisconnect, clearCurrentConnection]);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      window.addEventListener('focus', handleFocus);
 
-  useEffect(() => {
-    if (isConnected && address && chainId) {
-      saveCurrentConnection();
-    }
-  }, [isConnected, address, chainId, saveCurrentConnection]);
+      return () => {
+        document.removeEventListener(
+          'visibilitychange',
+          handleVisibilityChange
+        );
+        window.removeEventListener('focus', handleFocus);
+      };
+    }, [isConnected, autoReconnect]);
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden && !isConnected) {
-        autoReconnect();
-      }
-    };
-
-    const handleFocus = () => {
+    useEffect(() => {
       if (!isConnected) {
         autoReconnect();
       }
+    }, [isConnected, autoReconnect]);
+
+    return {
+      isConnecting,
+      isConnected,
+      address,
+      chainId,
+      connect: connectWallet,
+      disconnect: disconnectWallet,
+      autoReconnect,
+      connectionMethod,
+      isMobileDevice,
     };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [isConnected, autoReconnect]);
-
-  useEffect(() => {
-    if (!isConnected) {
-      autoReconnect();
-    }
-  }, [isConnected, autoReconnect]);
-
-  return {
-    isConnecting,
-    isConnected,
-    address,
-    chainId,
-    connect: connectWallet,
-    disconnect: disconnectWallet,
-    autoReconnect,
-    connectionMethod,
-    isMobileDevice,
   };
-};
