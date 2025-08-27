@@ -3,6 +3,10 @@
     {
       "source": "/:locale(en|vi|zh-CN)/:path*",
       "destination": "/:path*?locale=:locale"
+    },
+    {
+      "source": "/:locale(en|vi|zh-CN)",
+      "destination": "/?locale=:locale"
     }
   ],
   "redirects": [
@@ -10,18 +14,11 @@
       "source": "/",
       "destination": "/en",
       "permanent": false
-    },
-    {
-      "source": "/:path*",
-      "destination": "/en/:path*",
-      "permanent": false,
-      "has": [
-        {
-          "type": "header",
-          "key": "x-pathname",
-          "value": "^(?!/(en|vi|zh-CN|api|_next|favicon.ico)).*"
-        }
-      ]
     }
-  ]
+  ],
+  "functions": {
+    "src/pages/**/*.tsx": {
+      "maxDuration": 30
+    }
+  }
 }
