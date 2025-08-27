@@ -7,7 +7,8 @@ const withTranspile = withTM(['@noble/ed25519', 'bs58']);
 
 const nextConfig: NextConfig = {
   i18n,
-  output: 'standalone',
+  // Xóa output: 'standalone' để tránh xung đột với i18n
+  // output: 'standalone',
 
   publicRuntimeConfig: {
     NODE_ENV: process.env.NODE_ENV,
