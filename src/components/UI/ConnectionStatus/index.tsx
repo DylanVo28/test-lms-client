@@ -54,10 +54,7 @@ const ConnectionStatus: React.FC = () => {
   return (
     <div className="fixed bottom-4 right-4 bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-lg z-50 max-w-xs">
       <div className="flex items-center justify-between mb-2">
-        <Text
-          className={`text-sm font-medium ${getStatusColor()}`}
-          type="font-14-600"
-        >
+        <Text className={`text-sm font-medium ${getStatusColor()}`}>
           {getStatusText()}
         </Text>
         <div
