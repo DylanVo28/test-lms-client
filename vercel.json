@@ -10,6 +10,18 @@
       "source": "/",
       "destination": "/en",
       "permanent": false
+    },
+    {
+      "source": "/:path*",
+      "destination": "/en/:path*",
+      "permanent": false,
+      "has": [
+        {
+          "type": "header",
+          "key": "x-pathname",
+          "value": "^(?!/(en|vi|zh-CN|api|_next|favicon.ico)).*"
+        }
+      ]
     }
   ]
 }
