@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
 import { fantomTestnet } from '@/config/viem';
 import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
+import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -33,8 +34,13 @@ if (typeof window !== 'undefined') {
     key.startsWith('wc@2:client:')
   );
 
-  if (hasWalletConnectSession && window.location.href.includes('wc?')) {
-    const cleanUrl = window.location.href.split('?')[0];
+  const hasWalletConnectParams =
+    window.location.search.includes('wc') ||
+    window.location.href.includes('wc%3F') ||
+    window.location.hash.includes('wc');
+
+  if (hasWalletConnectSession && hasWalletConnectParams) {
+    const cleanUrl = `${window.location.origin}${window.location.pathname}`;
     window.history.replaceState({}, document.title, cleanUrl);
   }
 }
@@ -94,6 +100,7 @@ function AppProvider({ children }: any) {
                 initialChain={fantomTestnet}
               >
                 <Toaster position="top-center" richColors />
+                <WagmiAutoReconnect />
                 {children}
               </RainbowKitProvider>
             </QueryClientProvider>
