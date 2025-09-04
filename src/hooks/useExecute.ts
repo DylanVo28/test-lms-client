@@ -4,11 +4,11 @@ import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
-export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0x7aD97560d4EB52DAd0BC2Eeabff7cFe68601D553';
+export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const parseAmount = (amount: string | number) => {
-  return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
+  return BigNumber(amount).multipliedBy(BIG_TEN.pow(6)).toFixed(0);
 };
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);

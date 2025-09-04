@@ -623,6 +623,25 @@ export const coursePaymentVaultAbi = [
         type: 'address',
       },
     ],
+    name: 'getKolStatus',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+    ],
     name: 'getKolTotalEarned',
     outputs: [
       {

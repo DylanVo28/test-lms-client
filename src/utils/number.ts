@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import Decimal from 'decimal.js';
 
-const DEFAULT_DECIMALS = 18;
+const DEFAULT_DECIMALS = 6;
 const ten = new BigNumber(10);
 
 export function fromUnits(
