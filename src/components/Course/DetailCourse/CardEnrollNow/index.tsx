@@ -138,6 +138,7 @@ const CardEnrollNow = ({
     amount: BigNumber;
     kolAddress: string;
     signature: string;
+    deadline: number;
   }> => {
     const res = await privateRequest(
       request.get,
@@ -192,7 +193,8 @@ const CardEnrollNow = ({
           metadataPayment.courseId,
           metadataPayment.amount,
           metadataPayment.kolAddress,
-          metadataPayment.signature
+          metadataPayment.signature,
+          metadataPayment.deadline
         );
         if (receipt.status === 1) {
           toast.success(

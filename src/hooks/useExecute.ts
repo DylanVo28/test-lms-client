@@ -5,7 +5,7 @@ import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
 export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0xF1Ecbe1Cbc767fd074ccDD0A4c22B3Cc4adedA70';
+export const VAULT_ADDRESS = '0x7aD97560d4EB52DAd0BC2Eeabff7cFe68601D553';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const parseAmount = (amount: string | number) => {
   return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
@@ -46,7 +46,8 @@ export const useUSDCOperations = () => {
       courseId: string,
       amount: BigNumber,
       kolAddress: string,
-      signature: string
+      signature: string,
+      deadline: number
     ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -58,7 +59,8 @@ export const useUSDCOperations = () => {
           courseId,
           amount,
           kolAddress,
-          signature
+          signature,
+          deadline
         );
 
         console.log('estimatedGas:::', estimatedGas);
@@ -67,6 +69,7 @@ export const useUSDCOperations = () => {
           amount,
           kolAddress,
           signature,
+          deadline,
           {
             gasLimit: calculateGasMargin(estimatedGas),
           }
