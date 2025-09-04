@@ -1,5 +1,4 @@
 import LoadingBase from '@/components/UI/LoadingBase';
-import { firebaseCloudMessaging } from '@/firebase/firebase';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
@@ -11,10 +10,8 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import PushNotificationLayout from '../PushNotificationLayout/PushNotificationLayout';
 
 const AppLayout = ({ children }: any) => {
-  const { requestUpdateFcmToken } = useAuth();
   const { theme } = useTheme();
   const { requestGetTheme } = useThemeInitial();
   const { requestCheckHasNotification } = useNotifications();
@@ -31,13 +28,7 @@ const AppLayout = ({ children }: any) => {
   const router = useRouter();
 
   useEffect(() => {
-    firebaseCloudMessaging.requestPermissions();
-  }, []);
-
-  useEffect(() => {
     if (token) {
-      // requestGetProfile();
-      requestUpdateFcmToken?.run(token);
       requestCheckHasNotification?.run();
     }
     requestGetTheme();
@@ -54,7 +45,6 @@ const AppLayout = ({ children }: any) => {
           <NextUIProvider>{children}</NextUIProvider>
         </NextThemesProvider>
       )}
-      <PushNotificationLayout />
     </Fragment>
   );
 };
