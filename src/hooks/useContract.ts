@@ -4,12 +4,12 @@ import { Contract } from '@ethersproject/contracts';
 import { useMemo } from 'react';
 import { useEthersSigner } from './useEthersSigner';
 import { ethers } from 'ethers';
-import { fantomTestnet } from '@/config/viem';
+import { base } from '@/config/viem';
 import { mintNFTAbi } from '@/abis/mintNFT';
 
 // Optimized RPC provider using specific chain import
 export const simpleRpcProvider = new ethers.providers.JsonRpcProvider(
-  fantomTestnet.rpcUrls.default.http[0]
+  base.rpcUrls.default.http[0]
 );
 
 export const useContract = (

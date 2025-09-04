@@ -7,9 +7,7 @@ import { BIG_TEN } from '@/utils/bigNumber';
 export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-const parseAmount = (amount: string | number) => {
-  return BigNumber(amount).multipliedBy(BIG_TEN.pow(6)).toFixed(0);
-};
+
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
 
@@ -22,13 +20,13 @@ export const useUSDCOperations = () => {
         console.error('USDC contract not initialized');
         return;
       }
+
       try {
         setLoading(true);
-        const estimatedGas = await usdcContract.estimateGas.approve(
-          spender,
-          parseAmount(amount)
-        );
-        const tx = await usdcContract.approve(spender, parseAmount(amount), {
+        const estimatedGas = await usdcContract.estimateGas.approve(spender, 0);
+        // 150000000000
+
+        const tx = await usdcContract.approve(spender, amount, {
           gasLimit: calculateGasMargin(estimatedGas),
         });
         await tx.wait();

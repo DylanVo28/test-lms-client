@@ -97,7 +97,7 @@ function AppProvider({ children }: any) {
                   accentColor: '#02A6C2',
                   borderRadius: 'small',
                 })}
-                initialChain={fantomTestnet}
+                initialChain={base}
               >
                 <Toaster position="top-center" richColors />
                 <WagmiAutoReconnect />
