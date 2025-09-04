@@ -13,7 +13,7 @@ import Head from 'next/head';
 import { Toaster } from 'sonner';
 import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
-import { fantomTestnet } from '@/config/viem';
+import { base } from '@/config/viem';
 import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 
@@ -25,7 +25,7 @@ const config = getDefaultConfig({
   appName: 'What Exchange',
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-  chains: [fantomTestnet],
+  chains: [base],
   ssr: false,
 });
 

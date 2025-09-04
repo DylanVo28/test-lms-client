@@ -14,15 +14,15 @@ export const getNumberFixed3 = (number: string) => {
   return parseFloat(parseFloat(number).toFixed(3));
 };
 
-export const getDecimalAmount = (amount: BigNumber, decimals = 18) => {
+export const getDecimalAmount = (amount: BigNumber, decimals = 6) => {
   return new BigNumber(amount).times(BIG_TEN.pow(decimals));
 };
 
-export const getBalanceAmount = (amount: BigNumber, decimals = 18) => {
+export const getBalanceAmount = (amount: BigNumber, decimals = 6) => {
   return new BigNumber(amount).dividedBy(BIG_TEN.pow(decimals));
 };
 
-export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
+export const getFullDisplayBalance = (balance: BigNumber, decimals = 6) => {
   const balanceAmount = getBalanceAmount(balance, decimals);
   return balanceAmount.isZero() ? '0' : balanceAmount.toFixed();
 };

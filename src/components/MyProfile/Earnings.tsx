@@ -53,7 +53,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
       profile?.walletAddress
     );
     const formatByDecimal = BigNumber(tx.toString())
-      .dividedBy(BIG_TEN.pow(18))
+      .dividedBy(BIG_TEN.pow(6))
       .toNumber();
     setTotalRewards(formatByDecimal);
   };

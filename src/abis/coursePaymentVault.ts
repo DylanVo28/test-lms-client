@@ -1,5 +1,155 @@
 export const coursePaymentVaultAbi = [
   {
+    inputs: [],
+    name: 'AmountTooLarge',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'CourseAlreadyPurchased',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'EmptyCourseId',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InsufficientContractBalance',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidAmount',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidCommissionRate',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidKol',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidOwner',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidSignature',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NoFundsToExecute',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NoKolBalance',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NotKol',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'OnlyEOA',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'SignatureExpired',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'USDCAddressZero',
+    type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'usdcToken',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'defaultCommissionRate',
+        type: 'uint256',
+      },
+    ],
+    name: 'ContractInitialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'reason',
+        type: 'string',
+      },
+    ],
+    name: 'ContractPaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+    ],
+    name: 'ContractUnpaused',
+    type: 'event',
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -12,6 +162,12 @@ export const coursePaymentVaultAbi = [
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
         type: 'uint256',
       },
     ],
@@ -29,6 +185,68 @@ export const coursePaymentVaultAbi = [
       },
     ],
     name: 'Initialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldRate',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newRate',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'updatedBy',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+    ],
+    name: 'KolCommissionRateUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: 'isKol',
+        type: 'bool',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'updatedBy',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+    ],
+    name: 'KolStatusUpdated',
     type: 'event',
   },
   {
@@ -69,6 +287,30 @@ export const coursePaymentVaultAbi = [
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'kolEarning',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'platformEarning',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
         type: 'uint256',
       },
     ],
@@ -180,12 +422,6 @@ export const coursePaymentVaultAbi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'string',
-        name: 'txId',
-        type: 'string',
-      },
-      {
         indexed: true,
         internalType: 'address',
         name: 'user',
@@ -200,7 +436,7 @@ export const coursePaymentVaultAbi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'nonce',
+        name: 'timestamp',
         type: 'uint256',
       },
     ],
@@ -215,6 +451,19 @@ export const coursePaymentVaultAbi = [
         internalType: 'bytes32',
         name: '',
         type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'BASIS_POINTS',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -244,6 +493,50 @@ export const coursePaymentVaultAbi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'MAX_AMOUNT',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
+        name: 'kols',
+        type: 'address[]',
+      },
+      {
+        internalType: 'bool[]',
+        name: 'statuses',
+        type: 'bool[]',
+      },
+    ],
+    name: 'batchSetKol',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'reason',
+        type: 'string',
+      },
+    ],
+    name: 'emergencyPause',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -287,7 +580,69 @@ export const coursePaymentVaultAbi = [
   },
   {
     inputs: [],
-    name: 'getKolComissionRate',
+    name: 'getKolCommissionRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'courseId',
+        type: 'string',
+      },
+    ],
+    name: 'getKolCourseEarning',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+    ],
+    name: 'getKolStatus',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
+      },
+    ],
+    name: 'getKolTotalEarned',
     outputs: [
       {
         internalType: 'uint256',
@@ -318,6 +673,38 @@ export const coursePaymentVaultAbi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'getTotalPlatformEarnings',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getUserCourseCount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -331,6 +718,25 @@ export const coursePaymentVaultAbi = [
         internalType: 'string[]',
         name: '',
         type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getUserTotalPaid',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -385,6 +791,11 @@ export const coursePaymentVaultAbi = [
         name: '_usdc',
         type: 'address',
       },
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
     ],
     name: 'initialize',
     outputs: [],
@@ -413,12 +824,12 @@ export const coursePaymentVaultAbi = [
   {
     inputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: 'address',
+        name: 'kol',
+        type: 'address',
       },
     ],
-    name: 'isTxIdUsed',
+    name: 'isKolAddress',
     outputs: [
       {
         internalType: 'bool',
@@ -431,7 +842,7 @@ export const coursePaymentVaultAbi = [
   },
   {
     inputs: [],
-    name: 'kolCommisionRate',
+    name: 'kolCommissionRate',
     outputs: [
       {
         internalType: 'uint256',
@@ -545,10 +956,28 @@ export const coursePaymentVaultAbi = [
         name: 'signature',
         type: 'bytes',
       },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
     ],
     name: 'pay',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'platformAvailableToClaim',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -616,11 +1045,11 @@ export const coursePaymentVaultAbi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_kolComissionRate',
+        name: '_kolCommissionRate',
         type: 'uint256',
       },
     ],
-    name: 'setKolComissionRate',
+    name: 'setKolCommissionRate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -710,19 +1139,6 @@ export const coursePaymentVaultAbi = [
       },
     ],
     name: 'userCoursePayments',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'whatAvailableToClaim',
     outputs: [
       {
         internalType: 'uint256',
