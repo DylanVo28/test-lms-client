@@ -10,7 +10,8 @@ import { useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
-import { Clock, Student } from '@phosphor-icons/react';
+import Clock from '@/components/UI/Icons/Clock';
+import Student from '@/components/UI/Icons/Student';
 import { useTranslation } from 'next-i18next';
 
 const Overview = ({ dataListSection, dataDetail }: any) => {

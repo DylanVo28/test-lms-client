@@ -4,12 +4,10 @@ import { getUSDCContract, getVaultContract } from './useContract';
 import { calculateGasMargin } from '@/utils/common';
 import { BIG_TEN } from '@/utils/bigNumber';
 
-export const USDC_ADDRESS = '0xfaFedb041c0DD4fA2Dc0d87a6B0979Ee6FA7af5F';
-export const VAULT_ADDRESS = '0xF1Ecbe1Cbc767fd074ccDD0A4c22B3Cc4adedA70';
+export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-const parseAmount = (amount: string | number) => {
-  return BigNumber(amount).multipliedBy(BIG_TEN.pow(18)).toFixed(0);
-};
+
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
 
@@ -22,13 +20,13 @@ export const useUSDCOperations = () => {
         console.error('USDC contract not initialized');
         return;
       }
+
       try {
         setLoading(true);
-        const estimatedGas = await usdcContract.estimateGas.approve(
-          spender,
-          parseAmount(amount)
-        );
-        const tx = await usdcContract.approve(spender, parseAmount(amount), {
+        const estimatedGas = await usdcContract.estimateGas.approve(spender, 0);
+        // 150000000000
+
+        const tx = await usdcContract.approve(spender, amount, {
           gasLimit: calculateGasMargin(estimatedGas),
         });
         await tx.wait();
@@ -46,7 +44,8 @@ export const useUSDCOperations = () => {
       courseId: string,
       amount: BigNumber,
       kolAddress: string,
-      signature: string
+      signature: string,
+      deadline: number
     ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -58,7 +57,8 @@ export const useUSDCOperations = () => {
           courseId,
           amount,
           kolAddress,
-          signature
+          signature,
+          deadline
         );
 
         console.log('estimatedGas:::', estimatedGas);
@@ -67,6 +67,7 @@ export const useUSDCOperations = () => {
           amount,
           kolAddress,
           signature,
+          deadline,
           {
             gasLimit: calculateGasMargin(estimatedGas),
           }

@@ -5,7 +5,7 @@ import { loadVideoJSPlugins } from '@/utils/videojs-plugins';
 
 import NextVideo from './NextVideo';
 import { Button, Tooltip } from '@nextui-org/react';
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight } from '@/components/UI/Icons/Arrows';
 import { TYPE_COURSE } from '@/utils/const';
 import { isMobile } from 'react-device-detect';
 import clsx from 'clsx';

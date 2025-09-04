@@ -225,9 +225,6 @@ const CourseLandingPage = ({
           <Controller
             name="topics"
             control={control}
-            rules={{
-              required: 'Field topics is required',
-            }}
             render={({ field, fieldState }) => (
               <>
                 <Text type="font-16-600" className="text-letter mb-3">

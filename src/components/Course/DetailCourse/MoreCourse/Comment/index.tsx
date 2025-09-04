@@ -17,7 +17,7 @@ import IconLikedReview from '@/components/UI/Icons/IconLikedReview';
 import { formatWalletAddress, getAvatar, TypeReactions } from '@/utils/common';
 import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { ThumbsDown, ThumbsUp } from '@phosphor-icons/react';
+import { ThumbsDown, ThumbsUp } from '@/components/UI/Icons/Thumbs';
 import clsx from 'clsx';
 
 dayjs.extend(relativeTime);
@@ -118,7 +118,6 @@ const Comment = ({
               <IconLikeReview />
             )} */}
             <ThumbsUp
-              size={18}
               color={
                 meLiked && meReaction?.name === TypeReactions?.LIKE
                   ? '#02A6C2'
@@ -156,13 +155,13 @@ const Comment = ({
             variant="light"
           >
             <ThumbsDown
-              size={18}
               color={
                 meLiked && meReaction?.name === TypeReactions?.DISLIKE
                   ? '#02A6C2'
                   : '#ffffff'
               }
             />
+            {/* trigger */}
 
             {/* {meLiked && meReaction?.name === TypeReactions?.DISLIKE ? (
             ) : (

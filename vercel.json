@@ -1,3 +1,14 @@
 {
-  "rewrites": [{ "source": "/user/:id", "destination": "/user/[id]" }]
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/en",
+      "permanent": false
+    }
+  ],
+  "functions": {
+    "src/pages/**/*.tsx": {
+      "maxDuration": 60
+    }
+  }
 }

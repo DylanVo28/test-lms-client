@@ -1,6 +1,8 @@
 import Text from '@/components/UI/Text';
 import { Tooltip } from '@nextui-org/react';
-import { Check, Info, Star } from '@phosphor-icons/react';
+import Check from '@/components/UI/Icons/Check';
+import Info from '@/components/UI/Icons/Info';
+import Star from '@/components/UI/Icons/Star';
 const IsResult = ({
   title,
   totalQuizz,
@@ -17,7 +19,7 @@ const IsResult = ({
           <div className="flex items-center gap-4">
             <div className="w-full bg-white h-[2px]" />
             <div className="min-w-14 min-h-14 flex justify-center rounded-full  items-center bg-text-letter">
-              <Star size={32} className="!fill-green" weight="bold" />
+              <Star size={32} className="!fill-green" />
             </div>
             <div className="w-full bg-white h-[2px]" />
           </div>
@@ -33,11 +35,11 @@ const IsResult = ({
       <div className="flex-1 md:p-12 px-4 py-8 md:w-6/12 mx-auto h-full flex flex-col gap-5">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3 mb-4">
-            <Check size={24} weight="light" className="fill-green" />
+            <Check size={24} className="fill-green" />
             <Text className="text-letter" type="font-24-700">
               {'Things you need to know'}
             </Text>
-            <Info size={20} weight="fill" />
+            <Info size={20} />
           </div>
 
           {questions?.map((item: any, index: number) => {

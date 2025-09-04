@@ -1,6 +1,7 @@
 import Text from '@/components/UI/Text';
 import { Button, cn, Tooltip } from '@nextui-org/react';
-import { PencilSimpleLine, Trash } from '@phosphor-icons/react';
+import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
+import Trash from '@/components/UI/Icons/Trash';
 import { useCurriculumContext } from '../../context';
 import EditLessonToastContent from '@/components/Commons/EditLessonToast';
 const ContentQuestions = ({
@@ -47,7 +48,7 @@ const ContentQuestions = ({
                     !!editLessonId && 'opacity-50 cursor-not-allowed'
                   )}
                 >
-                  <PencilSimpleLine size={16} weight="light" />
+                  <PencilSimpleLine size={16} />
                 </Button>
               </Tooltip>
 
@@ -66,7 +67,7 @@ const ContentQuestions = ({
                     !!editLessonId && 'opacity-50 cursor-not-allowed'
                   )}
                 >
-                  <Trash size={16} weight="light" />
+                  <Trash size={16} />
                 </Button>
               </Tooltip>
             </div>

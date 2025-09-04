@@ -16,10 +16,10 @@ import { Button, cn, Tooltip } from '@nextui-org/react';
 import {
   FileText,
   MonitorPlay,
-  PencilSimpleLine,
   Question,
-  Trash,
-} from '@phosphor-icons/react';
+} from '@/components/UI/Icons/FileIcons';
+import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
+import Trash from '@/components/UI/Icons/Trash';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { IconClose } from '..';
@@ -501,13 +501,13 @@ const CurriculumItem = ({
                       {item?.type === TYPE_COURSE.LECTURE ? (
                         <>
                           {item?.contentType === LessonContentType?.VIDEO ? (
-                            <MonitorPlay size={20} weight="light" />
+                            <MonitorPlay size={20} />
                           ) : (
-                            <FileText size={20} weight="light" />
+                            <FileText size={20} />
                           )}
                         </>
                       ) : (
-                        <Question color="#8C8C8C" weight="bold" size={20} />
+                        <Question color="#8C8C8C" size={20} />
                       )}
                       <Text
                         type="font-16-500"
@@ -526,7 +526,7 @@ const CurriculumItem = ({
                         variant="light"
                         className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
-                        <PencilSimpleLine size={16} weight="light" />
+                        <PencilSimpleLine size={16} />
                       </Button>
                       <Button
                         isIconOnly
@@ -542,7 +542,7 @@ const CurriculumItem = ({
                         variant="light"
                         className="md:group-hover:opacity-100 md:opacity-0 transition-all"
                       >
-                        <Trash size={16} weight="light" />
+                        <Trash size={16} />
                       </Button>
                     </div>
                   )}

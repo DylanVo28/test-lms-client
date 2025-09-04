@@ -2,7 +2,12 @@ import Text from '@/components/UI/Text';
 import { UserCourseProgressStatus } from '@/utils/common';
 import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Checkbox } from '@nextui-org/react';
-import { File, FileText, MonitorPlay, Question } from '@phosphor-icons/react';
+import {
+  File,
+  FileText,
+  MonitorPlay,
+  Question,
+} from '@/components/UI/Icons/FileIcons';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';

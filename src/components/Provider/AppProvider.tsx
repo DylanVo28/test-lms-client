@@ -11,8 +11,11 @@ import type { NextPage } from 'next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
+import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
-import { fantomTestnet } from 'wagmi/chains';
+import { base } from '@/config/viem';
+import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
+import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -22,7 +25,7 @@ const config = getDefaultConfig({
   appName: 'What Exchange',
   projectId:
     process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-  chains: [fantomTestnet],
+  chains: [base],
   ssr: false,
 });
 
@@ -31,17 +34,36 @@ if (typeof window !== 'undefined') {
     key.startsWith('wc@2:client:')
   );
 
-  if (hasWalletConnectSession && window.location.href.includes('wc?')) {
-    const cleanUrl = window.location.href.split('?')[0];
+  const hasWalletConnectParams =
+    window.location.search.includes('wc') ||
+    window.location.href.includes('wc%3F') ||
+    window.location.hash.includes('wc');
+
+  if (hasWalletConnectSession && hasWalletConnectParams) {
+    const cleanUrl = `${window.location.origin}${window.location.pathname}`;
     window.history.replaceState({}, document.title, cleanUrl);
   }
 }
 
 const queryClient = new QueryClient();
 
+// Optimized dynamic import to prevent EMFILE errors
+const ClientWagmiProvider = dynamic(
+  async () => {
+    const { WagmiProvider } = await import('wagmi');
+    return ({ children }: { children: ReactNode }) => (
+      <WagmiProvider config={config}>{children}</WagmiProvider>
+    );
+  },
+  {
+    ssr: false,
+    loading: () => <div>Loading wallet...</div>,
+  }
+);
+
 function AppProvider({ children }: any) {
   return (
-    <>
+    <ViemErrorBoundary>
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content={'index,follow'} />
@@ -67,7 +89,7 @@ function AppProvider({ children }: any) {
         shallowRouting
       />
       <main>
-        <WagmiProvider config={config}>
+        <ClientWagmiProvider>
           <AppLayout>
             <QueryClientProvider client={queryClient}>
               <RainbowKitProvider
@@ -75,16 +97,17 @@ function AppProvider({ children }: any) {
                   accentColor: '#02A6C2',
                   borderRadius: 'small',
                 })}
-                initialChain={fantomTestnet}
+                initialChain={base}
               >
                 <Toaster position="top-center" richColors />
+                <WagmiAutoReconnect />
                 {children}
               </RainbowKitProvider>
             </QueryClientProvider>
           </AppLayout>
-        </WagmiProvider>
+        </ClientWagmiProvider>
       </main>
-    </>
+    </ViemErrorBoundary>
   );
 }
 

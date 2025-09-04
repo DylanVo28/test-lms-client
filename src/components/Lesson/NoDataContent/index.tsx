@@ -3,7 +3,7 @@ import LoadingContainer from '@/components/UI/LoadingContainer';
 import Text from '@/components/UI/Text';
 import { TYPE_COURSE } from '@/utils/const';
 import { Button } from '@nextui-org/react';
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight } from '@/components/UI/Icons/Arrows';
 
 interface NoDataContentProps {
   handleNextChildSection: (
