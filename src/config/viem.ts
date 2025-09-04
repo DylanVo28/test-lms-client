@@ -2,15 +2,15 @@
 // Only import specific chains and utilities instead of entire packages
 
 import { createPublicClient, http, createWalletClient, custom } from 'viem';
-import { fantomTestnet } from 'viem/chains';
+import { base } from 'viem/chains';
 
 // Only import the specific chain we use instead of all chain definitions
-export const supportedChains = [fantomTestnet] as const;
+export const supportedChains = [base] as const;
 
 // Create optimized public client with minimal configuration
 export const createOptimizedPublicClient = () => {
   return createPublicClient({
-    chain: fantomTestnet,
+    chain: base,
     transport: http(),
   });
 };
@@ -18,11 +18,11 @@ export const createOptimizedPublicClient = () => {
 // Create optimized wallet client
 export const createOptimizedWalletClient = () => {
   return createWalletClient({
-    chain: fantomTestnet,
+    chain: base,
     transport: custom(window.ethereum),
   });
 };
 
 // Export only what we need
-export { fantomTestnet };
+export { base };
 export type { PublicClient, WalletClient } from 'viem';

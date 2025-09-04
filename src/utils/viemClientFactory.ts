@@ -28,21 +28,24 @@ const loadChain = async (chainId: number): Promise<Chain | null> => {
     }
 
     // Only import specific chains to prevent EMFILE errors
-    const { mainnet, polygon, arbitrum, fantomTestnet } = await import('viem/chains');
-    
+    const { mainnet, polygon, arbitrum, fantomTestnet, base } = await import(
+      'viem/chains'
+    );
+
     const chainMap: Record<number, Chain> = {
       1: mainnet,
       137: polygon,
       42161: arbitrum,
       4002: fantomTestnet,
+      8453: base,
     };
-    
+
     const chain = chainMap[chainId];
     if (chain) {
       clientCache.chains.set(chainId, chain);
       return chain;
     }
-    
+
     return null;
   } catch (error) {
     console.error(`Failed to load chain ${chainId}:`, error);
@@ -51,7 +54,9 @@ const loadChain = async (chainId: number): Promise<Chain | null> => {
 };
 
 // Create public client with caching
-export const createPublicClient = async (chainId: number): Promise<PublicClient | null> => {
+export const createPublicClient = async (
+  chainId: number
+): Promise<PublicClient | null> => {
   try {
     // Check cache first
     if (clientCache.public.has(chainId)) {
@@ -63,7 +68,7 @@ export const createPublicClient = async (chainId: number): Promise<PublicClient 
 
     // Lazy import viem functions
     const { createPublicClient: createClient, http } = await import('viem');
-    
+
     const client = createClient({
       chain,
       transport: http(),
@@ -73,13 +78,18 @@ export const createPublicClient = async (chainId: number): Promise<PublicClient 
     clientCache.public.set(chainId, client);
     return client;
   } catch (error) {
-    console.error(`Failed to create public client for chain ${chainId}:`, error);
+    console.error(
+      `Failed to create public client for chain ${chainId}:`,
+      error
+    );
     return null;
   }
 };
 
 // Create wallet client with caching
-export const createWalletClient = async (chainId: number): Promise<WalletClient | null> => {
+export const createWalletClient = async (
+  chainId: number
+): Promise<WalletClient | null> => {
   try {
     // Check cache first
     if (clientCache.wallet.has(chainId)) {
@@ -97,7 +107,7 @@ export const createWalletClient = async (chainId: number): Promise<WalletClient 
 
     // Lazy import viem functions
     const { createWalletClient: createClient, custom } = await import('viem');
-    
+
     const client = createClient({
       chain,
       transport: custom(window.ethereum),
@@ -107,20 +117,27 @@ export const createWalletClient = async (chainId: number): Promise<WalletClient 
     clientCache.wallet.set(chainId, client);
     return client;
   } catch (error) {
-    console.error(`Failed to create wallet client for chain ${chainId}:`, error);
+    console.error(
+      `Failed to create wallet client for chain ${chainId}:`,
+      error
+    );
     return null;
   }
 };
 
 // Get cached client or create new one
-export const getOrCreatePublicClient = async (chainId: number): Promise<PublicClient | null> => {
+export const getOrCreatePublicClient = async (
+  chainId: number
+): Promise<PublicClient | null> => {
   if (clientCache.public.has(chainId)) {
     return clientCache.public.get(chainId)!;
   }
   return createPublicClient(chainId);
 };
 
-export const getOrCreateWalletClient = async (chainId: number): Promise<WalletClient | null> => {
+export const getOrCreateWalletClient = async (
+  chainId: number
+): Promise<WalletClient | null> => {
   if (clientCache.wallet.has(chainId)) {
     return clientCache.wallet.get(chainId)!;
   }
