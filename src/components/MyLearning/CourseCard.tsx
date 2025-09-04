@@ -8,6 +8,7 @@ import ReactStars from 'react-stars';
 import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 interface IProps {
   id: string;
@@ -29,6 +30,7 @@ export default function CourseCard({
   countReviews,
 }: IProps) {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const { navigate } = useNavigate();
 
   const generateMentors = () => {
@@ -71,7 +73,9 @@ export default function CourseCard({
         </div>
         <ProgressBar progress={Number((progress * 100).toFixed(0))} />
         <div className="flex items-center justify-between">
-          <Text type="font-14-500">{`${progress * 100}% complete`}</Text>
+          <Text type="font-14-500">{`${(progress * 100).toFixed(0)}% ${t(
+            'myLearning.complete'
+          )}`}</Text>
           <div className="flex items-center gap-2">
             <ReactStars
               count={5}

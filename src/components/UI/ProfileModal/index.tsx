@@ -12,6 +12,7 @@ import { useLogout } from '@/layout/MainLayout/MainHeader/service';
 import { initialTheme, themeAtom } from '@/store/theme/theme';
 import { initialProfile } from '@/store/profile/profile';
 import CustomModal from '@/components/UI/CustomModal';
+import { useTranslation } from 'next-i18next';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
+  const { t } = useTranslation('common');
   const { profile, setProfile } = useProfile();
   const { disconnect } = useDisconnect();
   const [, setNotifications] = useAtom(notificationAtom);
@@ -73,7 +75,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
           </div>
           <div className="py-1 px-3 rounded-full bg-green/10 flex justify-center items-center">
             <Text type="font-12-500" className="text-green">
-              Verified
+              {t('profileMenu.verified')}
             </Text>
           </div>
         </div>
@@ -85,7 +87,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
             className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
           >
             <Text type="font-14-500" className="text-letter">
-              My Profile
+              {t('profileMenu.myProfile')}
             </Text>
           </div>
           <div
@@ -93,7 +95,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
             className="py-3 transition-all flex justify-between items-center cursor-pointer px-4 hover:bg-green-10"
           >
             <Text type="font-14-500" className="text-letter">
-              My Learning
+              {t('profileMenu.myLearning')}
             </Text>
           </div>
         </div>
@@ -107,10 +109,10 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
             src={'/images/ig-logout.png'}
             width={24}
             height={24}
-            alt="Logout"
+            alt={t('profileMenu.logout')}
           />
           <Text type="font-14-500" className="text-error">
-            Logout
+            {t('profileMenu.logout')}
           </Text>
         </div>
       </div>

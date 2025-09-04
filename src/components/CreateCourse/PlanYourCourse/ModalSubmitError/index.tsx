@@ -79,7 +79,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
           <div className="flex justify-center items-center flex-col gap-2">
             <Image
               alt=""
-              src={'/images/img-warning.png'}
+              src={'/images/img-warning.svg'}
               width={120}
               height={120}
               className="w-[120px] h-full mx-auto md:mx-0"

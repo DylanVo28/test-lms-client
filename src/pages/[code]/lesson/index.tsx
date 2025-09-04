@@ -7,6 +7,7 @@ import { GetServerSideProps } from 'next';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const LessonPage = () => {
   return (
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   return {
     props: {
       code: params.code as string,
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

@@ -6,8 +6,10 @@ import { useEffect } from 'react';
 import { useDisconnect } from 'wagmi';
 import RegisterFormModal from '../RegisterFormModal';
 import Text from '../UI/Text';
+import { useTranslation } from 'next-i18next';
 
 const LandingPage = () => {
+  const { t } = useTranslation('common');
   return (
     <div
       className="relative min-h-screen w-full h-[100vh]"
@@ -30,13 +32,11 @@ const LandingPage = () => {
       <div className="w-full flex justify-center items-center flex-col gap-10 h-[80vh]">
         <div className="max-w-[800px] px-5 flex flex-col gap-5 justify-center items-center">
           <h1 className="text-[30px] text-main font-bold text-center">
-            Master Trading with Top KOLs – Learn from the Best
+            {t('landing.headline')}
           </h1>
 
           <h5 className="text-[16px] text-letter font-bold text-center">
-            Join our exclusive learning platform where top trading KOLs share
-            their proven strategies and insights. From beginner basics to
-            advanced techniques — learn at your own pace, anytime, anywhere.
+            {t('landing.subheadline')}
           </h5>
         </div>
         <ConnectButton.Custom>
@@ -50,7 +50,7 @@ const LandingPage = () => {
                   className="bg-main w-fit min-h-[40px] rounded"
                 >
                   <Text className="text-letter" type="font-16-600">
-                    Connect Wallet
+                    {t('landing.connectWallet')}
                   </Text>
                 </Button>
               </>

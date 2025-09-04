@@ -7,9 +7,12 @@ import { DefaultData } from '@/utils/const';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const NotificationsPage: React.FC = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const handleGoBack = () => {
     router.back();
@@ -18,8 +21,8 @@ const NotificationsPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Notifications"
-        description="View all your notifications"
+        title={t('notifications.title')}
+        description={t('notifications.description')}
         imageUrl={DefaultData.DefaultCourseImage}
       />
       <AppProvider>
@@ -39,11 +42,20 @@ const NotificationsPage: React.FC = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  locale,
+}) => {
   if (!params?.code) {
     return { notFound: true };
   }
-  return { props: { code: params.code as string } };
+
+  return {
+    props: {
+      code: params.code as string,
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
 };
 
 export default NotificationsPage;

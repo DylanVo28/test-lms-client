@@ -3,6 +3,7 @@ import Text from '@/components/UI/Text';
 import { Radio, RadioGroup } from '@nextui-org/react';
 import clsx from 'clsx';
 import { Control, Controller } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 const ContenStep4 = ({
   control,
   setValue,
@@ -10,22 +11,23 @@ const ContenStep4 = ({
   control: Control;
   setValue: any;
 }) => {
+  const { t } = useTranslation('common');
   const DATA_CONTENT = [
     {
       id: '0-2',
-      content: 'I’m very busy right now (0-2 hours)',
+      content: t('createCourse.timeSpent.veryBusy'),
     },
     {
       id: '2-4',
-      content: 'I’ll work on this on the side (2-4 hours)',
+      content: t('createCourse.timeSpent.onTheSide'),
     },
     {
       id: '5+',
-      content: 'I have lots of flexibility (5+ hours)',
+      content: t('createCourse.timeSpent.flexible'),
     },
     {
       id: 'no-time',
-      content: 'I haven’t yet decided if I have time',
+      content: t('createCourse.timeSpent.undecided'),
     },
   ];
 
@@ -33,11 +35,10 @@ const ContenStep4 = ({
     <div className="flex flex-col gap-10 items-center text-center">
       <div className="flex flex-col gap-3">
         <Text type="font-28-700" className="text-letter">
-          {'How much time can you spend creating your course per week?'}
+          {t('createCourse.timeSpent.question')}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
-          There's no wrong answer. We can help you achieve your goals even if
-          you don't have much time.
+          {t('createCourse.timeSpent.description')}
         </Text>
       </div>
       <div className="w-full mx-auto">

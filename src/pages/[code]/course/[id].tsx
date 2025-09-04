@@ -1,14 +1,13 @@
-import { ReactElement } from 'react';
-
 import MainLayout from '@/layout/MainLayout';
 import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import { DefaultData } from '@/utils/const';
-import { NextSeo } from 'next-seo';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const DetailCourse = dynamic(() => import('@/components/Course/DetailCourse'), {
   ssr: false,
@@ -22,15 +21,15 @@ const DetailCoursePage = ({ courseMedadata }: any) => {
   );
 };
 
-DetailCoursePage.getLayout = function getLayout(page: any) {
-  const courseMedadata = page?.props?.courseMedadata;
+const CourseLayoutWrapper = ({ courseMedadata }: any) => {
+  const { t } = useTranslation('common');
 
   return (
     <>
       <SEO
-        title={courseMedadata?.title || DefaultData.DefaultTitle}
+        title={courseMedadata?.title || t('seo.courseDefaultTitle')}
         description={
-          courseMedadata?.description || DefaultData.DefaultDescription
+          courseMedadata?.description || t('seo.courseDefaultDescription')
         }
         imageUrl={courseMedadata?.image || DefaultData.DefaultCourseImage}
       />
@@ -41,6 +40,12 @@ DetailCoursePage.getLayout = function getLayout(page: any) {
       </AppProvider>
     </>
   );
+};
+
+DetailCoursePage.getLayout = function getLayout(page: any) {
+  const courseMedadata = page?.props?.courseMedadata;
+
+  return <CourseLayoutWrapper courseMedadata={courseMedadata} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
@@ -67,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     props: {
       code: params.code as string,
       courseMedadata,
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };

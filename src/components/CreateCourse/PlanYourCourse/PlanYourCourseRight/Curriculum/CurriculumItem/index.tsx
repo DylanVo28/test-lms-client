@@ -38,6 +38,7 @@ import ContentQuestions from './ContentQuestions';
 import ModalConfirmDeleteQuestion from './ContentQuestions/ModalConfirmDeleteQuestion';
 import { toast } from 'sonner';
 import EditLessonToastContent from '@/components/Commons/EditLessonToast';
+import { useTranslation } from 'next-i18next';
 
 const CurriculumItem = ({
   item,
@@ -46,6 +47,7 @@ const CurriculumItem = ({
   item: any;
   validationErrors?: any;
 }) => {
+  const { t } = useTranslation('common');
   const [dataCurriculum, setDataCurriculum] = useState<any>([]);
   const [isAddCurriculum, setIsAddCurriculum] = useState<boolean>(false);
   const [formAdd, setFormAdd] = useState<string>('');
@@ -468,8 +470,12 @@ const CurriculumItem = ({
                       className={clsx('text-letter w-max', {})}
                     >
                       {item?.type === TYPE_COURSE.LECTURE
-                        ? `${'Lecture'} ${item?.sttLesson}:`
-                        : `${'Quiz'} ${item?.sttQuizz}:`}
+                        ? t('createCourse.curriculum.lectureNumber', {
+                            number: item?.sttLesson,
+                          })
+                        : t('createCourse.curriculum.quizNumber', {
+                            number: item?.sttQuizz,
+                          })}
                     </Text>
                   </div>
 
@@ -485,7 +491,7 @@ const CurriculumItem = ({
                         onChange={(e: any) =>
                           setValueTitleLecture(e.target.value)
                         }
-                        placeholder={'Enter title'}
+                        placeholder={t('createCourse.curriculum.enterTitle')}
                         inputDefault
                         value={valueTitleLecture}
                       />
@@ -548,14 +554,18 @@ const CurriculumItem = ({
                       variant="light"
                       className="rounded"
                     >
-                      <Text type="font-16-400">{'Cancel'}</Text>
+                      <Text type="font-16-400">
+                        {t('createCourse.curriculum.cancel')}
+                      </Text>
                     </Button>
                     <Button
                       isLoading={loadingEditLecture || loadingEditQuizz}
                       onPress={handleSaveEditContentLesson}
                       className="rounded min-w-[100px] bg-main"
                     >
-                      <Text type="font-16-400">{'Save'}</Text>
+                      <Text type="font-16-400">
+                        {t('createCourse.curriculum.save')}
+                      </Text>
                     </Button>
                   </div>
                 )}
@@ -613,8 +623,8 @@ const CurriculumItem = ({
                             <Text type="font-16-400" className="text-main">
                               +{' '}
                               {item.type === TYPE_COURSE.LECTURE
-                                ? 'Content'
-                                : 'Question'}
+                                ? t('createCourse.curriculum.content')
+                                : t('createCourse.curriculum.question')}
                             </Text>
                           </div>
                         </Button>
@@ -734,7 +744,7 @@ const CurriculumItem = ({
         >
           <div className="flex items-center gap-1">
             <IconPlus />
-            <Text>{'Curriculum item'}</Text>
+            <Text>{t('createCourse.curriculum.addItem')}</Text>
           </div>
         </Button>
       )}

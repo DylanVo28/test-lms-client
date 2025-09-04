@@ -1,12 +1,14 @@
 import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 const Description = ({ description }: { description: string }) => {
+  const { t } = useTranslation('common');
   return (
     <div className="py-6 grid grid-cols-1 gap-5 lg:gap-0 lg:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
       <div className="col-span-1">
         <Text type="font-18-600" className="text-letter">
-          {'Description'}
+          {t('lesson.overview.description')}
         </Text>
       </div>
 

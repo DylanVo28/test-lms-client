@@ -6,6 +6,7 @@ import { ROUTE_PATH } from '@/utils/const';
 import { Button, ModalBody } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { forwardRef, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import ReactStars from 'react-stars';
 import useNavigate from '@/hooks/useNavigate';
 import { reviewedAtom } from '..';
@@ -21,6 +22,7 @@ interface IFormEndCourse {
 
 const FormEndCourse = forwardRef((props: IFormEndCourse) => {
   const { courseId, handleGetReviews, visible, onVisible } = props;
+  const { t } = useTranslation('common');
   const [valueRating, setValueRating] = useState<any>();
   const [valueComment, setValueComment] = useState<any>();
   const router = useRouter();
@@ -70,12 +72,14 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
         <div className="flex justify-between items-start mb-6">
           <div className="flex flex-col gap-2">
             <Text className="text-letter text-2xl font-semibold tracking-[-0.03em]">
-              {submitReviewSuccess ? 'Congratulations! 🎉' : 'Course Review'}
+              {submitReviewSuccess
+                ? t('lesson.endCourse.congratulations')
+                : t('lesson.endCourse.courseReview')}
             </Text>
             <Text className="text-letter/60 text-sm">
               {submitReviewSuccess
-                ? 'You have successfully completed the course'
-                : 'Share your experience with other learners'}
+                ? t('lesson.endCourse.completedCourse')
+                : t('lesson.endCourse.shareExperience')}
             </Text>
           </div>
           <button
@@ -90,7 +94,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
           {submitReviewSuccess ? (
             <div className="flex flex-col items-center gap-6">
               <Text type="font-18-600" className="text-center">
-                🙌 {'Congratulations on completing the course!'}
+                🙌 {t('lesson.endCourse.congratsCompleted')}
               </Text>
 
               <Button
@@ -102,7 +106,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
                 className="bg-main min-w-[200px] w-max min-h-[50px] rounded hover:opacity-90 transition-opacity"
               >
                 <Text type="font-16-500" className="text-letter">
-                  {'Find more courses'}
+                  {t('lesson.endCourse.findMoreCourses')}
                 </Text>
               </Button>
             </div>
@@ -110,7 +114,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3">
                 <Text className="text-letter font-medium text-center">
-                  {'Select rating'}
+                  {t('lesson.endCourse.selectRating')}
                 </Text>
                 <ReactStars
                   count={5}
@@ -124,13 +128,13 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Text className="text-letter font-medium">Your Review</Text>
+                <Text className="text-letter font-medium">
+                  {t('lesson.endCourse.yourReview')}
+                </Text>
                 <InputTextArena
                   className="w-full bg-[#1A1A1A] border border-[rgba(255,255,255,0.1)] rounded-lg"
                   minRows={6}
-                  placeholder={
-                    'Tell us about your own personal experience taking this course. Was it right for you?'
-                  }
+                  placeholder={t('lesson.endCourse.reviewPlaceholder')}
                   value={valueComment}
                   onChange={(e: any) => setValueComment(e.target.value)}
                   isBlack
@@ -146,7 +150,7 @@ const FormEndCourse = forwardRef((props: IFormEndCourse) => {
                   className="bg-main min-w-[142px] w-max min-h-[40px] rounded hover:opacity-90 transition-opacity"
                 >
                   <Text type="font-16-500" className="text-letter">
-                    {'Submit Review'}
+                    {t('lesson.endCourse.submitReview')}
                   </Text>
                 </Button>
               </div>

@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { forwardRef, useImperativeHandle, useState } from 'react';
-
+import { useTranslation } from 'next-i18next';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
@@ -21,6 +21,7 @@ interface IModalShare {
 }
 
 const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const router = useRouter();
 
@@ -57,10 +58,10 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
         <div className="flex justify-between items-start mb-6">
           <div className="flex flex-col gap-2">
             <Text className="text-letter text-2xl font-semibold tracking-[-0.03em]">
-              Share This Course
+              {t('lesson.header.shareThisCourse')}
             </Text>
             <Text className="text-letter/60 text-sm">
-              Share this course with your friends
+              {t('lesson.header.shareWithFriends')}
             </Text>
           </div>
           <button
@@ -74,7 +75,9 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
         <div className="flex flex-col gap-6">
           {/* Referral Link Section */}
           <div className="flex flex-col gap-3">
-            <Text className="text-letter font-medium">Referral Link</Text>
+            <Text className="text-letter font-medium">
+              {t('lesson.header.referralLink')}
+            </Text>
             <div className="flex items-center gap-3 p-3 bg-[#1A1A1A] rounded-lg border border-[rgba(255,255,255,0.1)]">
               <div className="flex-1 text-letter/80 text-sm font-mono truncate">
                 {shareUrl.length > 46
@@ -93,7 +96,9 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
 
           {/* Share to Section */}
           <div className="flex flex-col gap-4">
-            <Text className="text-letter font-medium">Share to</Text>
+            <Text className="text-letter font-medium">
+              {t('lesson.header.shareTo')}
+            </Text>
             <div className="grid grid-cols-6 gap-4 justify-items-center">
               {/* Twitter */}
               <div className="flex flex-col items-center gap-2">
@@ -136,14 +141,14 @@ const ModalShare = ({ courseSlug }: IModalShare, ref?: any) => {
               </div>
 
               {/* Reddit */}
-              <div className="flex flex-col items-center gap-2">
+              {/* <div className="flex flex-col items-center gap-2">
                 <RedditShareButton url={shareUrl}>
                   <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#FF4500] hover:opacity-80 transition-opacity">
                     <RedditIcon />
                   </div>
                 </RedditShareButton>
                 <span className="text-xs text-letter">Reddit</span>
-              </div>
+              </div> */}
 
               {/* LinkedIn */}
               <div className="flex flex-col items-center gap-2">

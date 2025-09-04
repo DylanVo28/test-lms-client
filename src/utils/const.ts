@@ -60,7 +60,7 @@ export enum LessonContentType {
 }
 
 export const DefaultData = {
-  DefaultCourseImage: '/course-detail.png',
+  DefaultCourseImage: '/images/img-default.png',
   CourseDefaultUrl: 'https://app-lms.focalfossa.site/course',
   DefaultTitle: 'What Exchange LMS',
   DefaultDescription:

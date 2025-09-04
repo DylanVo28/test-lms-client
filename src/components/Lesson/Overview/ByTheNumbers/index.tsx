@@ -1,9 +1,11 @@
 import Text from '@/components/UI/Text';
 import { formatTimeDuration } from '@/utils/common';
 import { useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
 import { isMobile } from 'react-device-detect';
 
 const ByTheNumbers = ({ course }: { course: any }) => {
+  const { t } = useTranslation('common');
   const lessonCount = course?.sections?.reduce(
     (total: number, section: any) => {
       return (
@@ -38,31 +40,33 @@ const ByTheNumbers = ({ course }: { course: any }) => {
   return (
     <div className="py-6 grid grid-cols-1 gap-5 lg:gap-0 lg:grid-cols-3 border-b border-b-[#1F1F1F] pb-9">
       <Text type="font-18-600" className="text-letter">
-        {'By the numbers'}
+        {t('lesson.overview.byTheNumbers')}
       </Text>
       {isMobile ? (
         <div className="flex gap-8">
           <div className="flex flex-col gap-1">
             <Text type="font-14-400" className="text-letter">
-              {'Skill level'}: {course?.level}
+              {t('lesson.overview.skillLevel')}: {course?.level}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Students'}:{' '}
+              {t('lesson.overview.students')}:{' '}
               {course?.userCourses?.length || course?.countStudents}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Languages'}: {course?.lang}
+              {t('lesson.overview.languages')}: {course?.lang}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Captions'}: {'Yes'}
+              {t('lesson.overview.captions')}: {t('common.yes')}
             </Text>
           </div>
           <div className="flex flex-col gap-1">
             <Text type="font-14-400" className="text-letter">
-              {'Lectures'}: {lessonCount || 0}
+              {t('lesson.overview.lectures')}: {lessonCount || 0}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {`${'Video'}: ${formatTimeDuration(formattedTime)}`}
+              {`${t('lesson.overview.video')}: ${formatTimeDuration(
+                formattedTime
+              )}`}
             </Text>
           </div>
         </div>
@@ -70,25 +74,27 @@ const ByTheNumbers = ({ course }: { course: any }) => {
         <>
           <div className="flex flex-col gap-1">
             <Text type="font-14-400" className="text-letter">
-              {'Skill level'}: {course?.level}
+              {t('lesson.overview.skillLevel')}: {course?.level}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Students'}:{' '}
+              {t('lesson.overview.students')}:{' '}
               {course?.userCourses?.length || course?.countStudents}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Languages'}: {course?.lang}
+              {t('lesson.overview.languages')}: {course?.lang}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {'Captions'}: {'Yes'}
+              {t('lesson.overview.captions')}: {t('common.yes')}
             </Text>
           </div>
           <div className="flex flex-col gap-1">
             <Text type="font-14-400" className="text-letter">
-              {'Lectures'}: {lessonCount || 0}
+              {t('lesson.overview.lectures')}: {lessonCount || 0}
             </Text>
             <Text type="font-14-400" className="text-letter">
-              {`${'Video'}: ${formatTimeDuration(formattedTime)}`}
+              {`${t('lesson.overview.video')}: ${formatTimeDuration(
+                formattedTime
+              )}`}
             </Text>
           </div>
         </>

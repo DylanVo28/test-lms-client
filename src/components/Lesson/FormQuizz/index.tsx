@@ -9,6 +9,7 @@ import { isMobile } from 'react-device-detect';
 import { reviewedAtom } from '..';
 import { useAtom } from 'jotai';
 import { useShouldVideoReviewModal } from '@/hooks/useShouldVideoReviewModal';
+import { useTranslation } from 'next-i18next';
 
 const FormQuizz = ({
   startTakingTest,
@@ -51,6 +52,7 @@ const FormQuizz = ({
   handleFindIdNextChildSection: any;
   handleFindIdPrevChildSection: any;
 }) => {
+  const { t } = useTranslation('common');
   const sttQuizz = localStorage.getItem('titleQuizz');
   const dataItemNext = handleFindIdNextChildSection(dataQuizz?.id);
   const dataItemPrev = handleFindIdPrevChildSection(dataQuizz?.id);
@@ -118,7 +120,7 @@ const FormQuizz = ({
               </Text>
               <div className="w-[1px] h-4 bg-black-6" />
               <Text className="text-letter/70" type="font-18-600">
-                {`${dataQuizz?.questions?.length} ${'question'}`}
+                {`${dataQuizz?.questions?.length} ${t('lesson.quiz.question')}`}
               </Text>
             </div>
             <div
@@ -132,7 +134,7 @@ const FormQuizz = ({
                 className="bg-main w-max min-h-[45px] rounded min-w-[200px]"
               >
                 <Text className="text-text-letter" type="font-16-400">
-                  {'Start taking the test'}
+                  {t('lesson.quiz.startTest')}
                 </Text>
               </Button>
               <Button
@@ -141,7 +143,7 @@ const FormQuizz = ({
                 className="w-max min-h-[45px] rounded min-w-[150px]"
               >
                 <Text className="text-letter" type="font-16-400">
-                  {'Skip the quizz'}
+                  {t('lesson.quiz.skip')}
                 </Text>
               </Button>
             </div>

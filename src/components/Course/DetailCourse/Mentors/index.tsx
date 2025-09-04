@@ -22,8 +22,10 @@ import { toast } from '@/components/UI/Toast/toast';
 import { formatWalletAddress, isValidURL } from '@/utils/common';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
+import { useTranslation } from 'next-i18next';
 
 const Mentors = ({ mentor }: any) => {
+  const { t } = useTranslation('common');
   const { profile } = useProfile();
   const accessToken = useAccessToken();
 
@@ -104,7 +106,7 @@ const Mentors = ({ mentor }: any) => {
   return (
     <div className="flex flex-col gap-3 border-b-1 border-b-black-10 pb-5">
       <Text className="text-letter" type="font-20-600">
-        {'Mentors (KOLs)'}
+        {t('course.mentors')}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
         <Image
@@ -138,15 +140,19 @@ const Mentors = ({ mentor }: any) => {
                     rating={mentorProfile?.instructorInfo?.avgRate || 5}
                   />
                 </div>
-                <Text type="font-14-400" className="text-letter">
-                  {mentorProfile?.instructorInfo?.countReviews || 0} {'Reviews'}
+                <Text
+                  type="font-14-400"
+                  className="text-letter whitespace-nowrap"
+                >
+                  {mentorProfile?.instructorInfo?.countReviews || 0}{' '}
+                  {t('course.reviews')}
                 </Text>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
                 <div className="flex items-center gap-1">
                   <IconStudent />
                   <Text type="font-14-400" className="text-letter">
                     {mentorProfile?.instructorInfo?.countStudents || 0}{' '}
-                    {'Students'}
+                    {t('course.students')}
                   </Text>
                 </div>
                 <div className="w-[1px] h-5 bg-[#BFBFBF]" />
@@ -154,7 +160,7 @@ const Mentors = ({ mentor }: any) => {
                   <IconVideo />
                   <Text type="font-14-400" className="text-letter">
                     {mentorProfile?.instructorInfo?.countCourses || 0}{' '}
-                    {'Courses'}
+                    {t('course.courses')}
                   </Text>
                 </div>
               </div>

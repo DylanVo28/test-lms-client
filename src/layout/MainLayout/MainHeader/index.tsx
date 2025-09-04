@@ -4,7 +4,9 @@ import ButtonLoginWallet from '@/components/UI/ButtonLoginWallet';
 import IconNotification from '@/components/UI/Icons/IconNotification';
 import IconSearch from '@/components/UI/Icons/IconSearch';
 import InputText from '@/components/UI/InputText';
+import LanguageSwitcher from '@/components/UI/LanguageSwitcher';
 import Text from '@/components/UI/Text';
+
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { notificationAtom } from '@/store/notification/notification';
@@ -16,6 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import Menubar from '../Menubar';
@@ -24,6 +27,7 @@ import ThemeConfiguration from './ThemeConfiguration';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const MainHeader = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [valueSearch, setValueSearch] = useState('');
   const token = useAccessToken();
@@ -34,6 +38,7 @@ const MainHeader = () => {
   const { profile } = useProfile();
   const { navigate } = useNavigate();
   const [isOpen, setOpen] = useState(false);
+  const refNotification: any = useRef(null);
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -64,8 +69,6 @@ const MainHeader = () => {
   const onOpen = () => {
     setOpen(true);
   };
-
-  const refNotification = useRef(null);
 
   useClickOutside(refNotification, () => setOpen(false));
 
@@ -101,7 +104,7 @@ const MainHeader = () => {
               startContent={<IconSearch />}
               className="xl:min-w-[470px] lg:min-w-[320px]"
               radius="sm"
-              placeholder={'Search'}
+              placeholder={t('header.search')}
             />
             <div className="border-1 border-gray-20 h-8" />
 
@@ -138,7 +141,7 @@ const MainHeader = () => {
               {notifications?.totalCount > 0 && (
                 <div
                   className={clsx(
-                    'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] w-auto px-1 flex justify-center items-center',
+                    'absolute bg-error rounded-full top-[-8px] right-[-8px] h-[18px] min-w-[18px] w-auto px-1 flex justify-center items-center',
                     {
                       ['!min-w-8 !right-[-12px] !top-[-12px]']:
                         notifications?.totalCount > 99,
@@ -165,6 +168,7 @@ const MainHeader = () => {
               )}
             </div>
 
+            {/* <LanguageSwitcher /> */}
             <ButtonLoginWallet />
             {profile?.role === 'KOL' && <ThemeConfiguration />}
 

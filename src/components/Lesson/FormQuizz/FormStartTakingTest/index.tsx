@@ -4,6 +4,7 @@ import { Button, Radio, RadioGroup } from '@nextui-org/react';
 import { CaretRight, CheckCircle, XCircle } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import IsResult from './IsResult';
 import { UserCourseProgressStatus } from '@/utils/common';
 const enum STEP_ANSWER_QUESTION {
@@ -24,6 +25,7 @@ const FormStartTakingTest = ({
   reviewed: boolean;
   isLast: boolean;
 }) => {
+  const { t } = useTranslation('common');
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answerCorrectly, setAnswerCorrectly] = useState<any>('');
   const [loading, setLoading] = useState(false);
@@ -114,7 +116,7 @@ const FormStartTakingTest = ({
                 <div className="flex items-center gap-3">
                   <CheckCircle className="fill-green" size={30} weight="fill" />
                   <Text className="text-green" type="font-16-400">
-                    {'You did great'}
+                    {t('lesson.quiz.didGreat')}
                   </Text>
                 </div>
                 <Text className="text-letter" type="font-14-400">
@@ -129,7 +131,7 @@ const FormStartTakingTest = ({
                 <div className="flex items-center gap-3">
                   <XCircle size={30} weight="fill" className="fill-red-500" />
                   <Text className="text-red-500" type="font-16-400">
-                    {'The answer is not correct. Please try again.'}
+                    {t('lesson.quiz.incorrectAnswer')}
                   </Text>
                 </div>
                 <Text className="text-letter/70" type="font-14-400">
@@ -139,10 +141,9 @@ const FormStartTakingTest = ({
             </div>
           )}
 
-          <Text
-            type="font-28-700"
-            className="text-letter"
-          >{`${'Question'} ${currentQuestion}`}</Text>
+          <Text type="font-28-700" className="text-letter">{`${t(
+            'lesson.quiz.question'
+          )} ${currentQuestion}`}</Text>
 
           <div
             className="text-2xl text-letter pb-4"
@@ -189,7 +190,7 @@ const FormStartTakingTest = ({
           >
             <div className="flex items-center gap-2">
               <Text className="text-text-letter" type="font-16-400">
-                {'Continue'}
+                {t('lesson.quiz.continue')}
               </Text>
               <CaretRight
                 size={16}
@@ -206,7 +207,7 @@ const FormStartTakingTest = ({
           >
             <div className="flex items-center gap-2">
               <Text className="text-text-letter" type="font-16-400">
-                {'See results'}
+                {t('lesson.quiz.seeResults')}
               </Text>
               <CaretRight
                 size={16}
@@ -230,7 +231,7 @@ const FormStartTakingTest = ({
             >
               <div className="flex items-center gap-2">
                 <Text className="text-text-letter" type="font-16-400">
-                  {'Continue'}
+                  {t('lesson.quiz.continue')}
                 </Text>
                 <CaretRight
                   size={16}
@@ -250,7 +251,7 @@ const FormStartTakingTest = ({
               >
                 <div className="flex items-center gap-2">
                   <Text className="text-text-letter" type="font-16-400">
-                    {'Next'}
+                    {t('common.next')}
                   </Text>
                   <CaretRight
                     size={16}
@@ -266,7 +267,7 @@ const FormStartTakingTest = ({
                 className="bg-main w-max  rounded min-w-[150px]"
               >
                 <Text className="text-text-letter" type="font-16-400">
-                  {'Check the answer'}
+                  {t('lesson.quiz.checkAnswer')}
                 </Text>
               </Button>
             )}

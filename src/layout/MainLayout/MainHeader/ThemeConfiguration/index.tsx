@@ -249,13 +249,6 @@ const ThemeConfiguration = ({}: {}) => {
                       const connected = ready && account && chain;
 
                       const onPress = () => {
-                        const cropperImage =
-                          localStorage.getItem('cropper-image');
-                        if (cropperImage) {
-                          toast.error('There are some images not cropped');
-                          return;
-                        }
-
                         if (!connected) {
                           openConnectModal();
                           setIsNonUserSave(true);

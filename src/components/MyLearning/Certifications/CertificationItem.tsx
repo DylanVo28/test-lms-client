@@ -9,10 +9,13 @@ import Image from 'next/image';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
+const MINTING_COUNTDOWN = 10 * 1000; // 10 seconds in milliseconds
 
 const CertificationItem = ({ item, refetchCertificates }: any) => {
+  const { t } = useTranslation('common');
   const [isMintingInProgress, setIsMintingInProgress] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
 
@@ -36,12 +39,11 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
     {
       onSuccess(res) {
-        toast.success('Minted certificate successfully');
         localStorage.removeItem(`minting_${item.id}`);
       },
       onError(e) {
         if (e.message?.includes('Already minted for this course')) {
-          toast.error('You have already minted this certificate');
+          toast.error(t('myLearning.certifications.alreadyMinted'));
         } else {
           toast.error(e.message);
         }
@@ -53,45 +55,31 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
   const account = useAccount();
   const { address: walletAddress } = account;
 
-  const {
-    data: hasMinted,
-    isLoading,
-    refetch,
-  } = useHasMinted({
-    address: walletAddress,
-    courseId: item?.certificate?.courseId,
-  });
-
-  console.log('hasMinted::::', {
-    hasMinted,
-    walletAddress,
-    courseId: item?.certificate?.courseId,
-    courseTitle: item?.certificate?.name,
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch();
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [item]);
-
   const handleMint = () => {
     if (!walletAddress) {
-      toast.error('Please connect your wallet');
+      toast.error(t('errors.connectWallet'));
       return;
     }
 
+    if (localStorage.getItem(`minting_countdown`)) {
+      const mintCountdown = new Date(
+        localStorage.getItem(`minting_countdown`) || 0
+      );
+      if (mintCountdown.getTime() > Date.now()) {
+        toast.error(t('You are minting too fast'));
+        return;
+      }
+    }
+
+    const mintCountdown = new Date(Date.now() + MINTING_COUNTDOWN);
     localStorage.setItem(`minting_${item.id}`, Date.now().toString());
+    localStorage.setItem(`minting_countdown`, mintCountdown.toString());
+
     setIsMintingInProgress(true);
     handleMintCertificate({
       to: walletAddress?.toString(),
       certificateId: item.certificate.id,
     });
-  };
-
-  const handleManualRefetch = async () => {
-    refetchCertificates();
   };
 
   const { onCopy } = useCopy();
@@ -104,9 +92,9 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       <Image
         src={item?.certificate?.image}
         alt=""
-        width={240}
-        height={120}
-        className="w-[120px] h-[120px] object-cover"
+        width={140}
+        height={140}
+        className="w-[140px] h-[140px] object-cover"
         onError={(e: any) => {
           e.target.srcset = '/images/img-certification.png';
         }}
@@ -114,32 +102,33 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
 
       <div className="flex flex-col gap-3">
         <Text
-          type="font-18-600"
+          type="font-16-600"
           className="text-letter line-clamp-2 min-h-[48px]"
         >
           {item?.certificate?.name}
         </Text>
-        <Text type="font-16-400" className="text-letter/70">
+        <Text type="font-14-400" className="text-letter line-clamp-2">
           {item?.certificate?.description}
         </Text>
-        {!item.tokenId && !isLoading && walletAddress && (
+        {!item.tokenId && walletAddress && (
           <>
             <Button
               onPress={handleMint}
               isLoading={isMinting}
               isDisabled={isMintingInProgress}
+              className="w-fit"
             >
               <Text type="font-16-600" className="text-main">
-                Mint
+                {t('myLearning.certifications.mint')}
               </Text>
             </Button>
           </>
         )}
 
-        {isMintingInProgress && (
+        {isMintingInProgress && !item.tokenId && (
           <div className="flex items-center gap-2">
             <Text type="font-14-400" className="text-main">
-              Your certificate is minting. Please wait a moment...
+              {t('myLearning.certifications.minting')}
             </Text>
           </div>
         )}
@@ -147,7 +136,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
         {item.tokenId && (
           <div className="flex gap-x-2 items-center">
             <div className="text-main">
-              You have already minted this certificate
+              {t('myLearning.certifications.alreadyMinted')}
             </div>
             <div>
               <div>
@@ -155,11 +144,10 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                   content={
                     <div className="flex flex-col items-start gap-2 p-2">
                       <div>
-                        To import this certificate to MetaMask, go to MetaMask →
-                        NFTs → Add NFT → Enter:
+                        {t('myLearning.certifications.importInstructions')}
                       </div>
                       <div className="flex gap-x-1 items-center">
-                        Contract:{' '}
+                        {t('myLearning.certifications.contract')}:{' '}
                         <code className="text-main">{MINT_NFT_ADDRESS}</code>
                         <div
                           className="cursor-pointer"
@@ -171,7 +159,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                         </div>
                       </div>
                       <div className="flex gap-x-1 items-center">
-                        Token ID:{' '}
+                        {t('myLearning.certifications.tokenId')}:{' '}
                         <code className="text-main">{item.tokenId}</code>
                         <div
                           className="cursor-pointer"
@@ -193,8 +181,6 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
             </div>
           </div>
         )}
-
-        {isLoading && <Skeleton className="w-full h-[40px] rounded-md" />}
       </div>
     </div>
   );

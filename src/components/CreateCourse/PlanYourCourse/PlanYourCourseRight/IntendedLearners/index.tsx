@@ -4,18 +4,22 @@ import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button } from '@nextui-org/react';
 import { Trash } from '@phosphor-icons/react';
-import { Control, Controller, useFieldArray } from 'react-hook-form';
-const IntendedLearners = ({
-  control,
-  errors,
-  validationErrors,
-}: {
+import { useTranslation } from 'next-i18next';
+import { type Control, Controller, useFieldArray } from 'react-hook-form';
+interface IntendedLearnersProps {
   control: Control;
   idDetail: string;
   handleSubmit: any;
   errors: any;
   validationErrors?: any;
-}) => {
+}
+
+const IntendedLearners = ({
+  control,
+  errors,
+  validationErrors,
+}: IntendedLearnersProps) => {
+  const { t } = useTranslation('common');
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'objectives',
@@ -42,25 +46,24 @@ const IntendedLearners = ({
   return (
     <div className="flex flex-col gap-8">
       <Text type="font-28-700" className="text-letter">
-        {'Intended learners'}
+        {t('createCourse.intendedLearners.title')}
       </Text>
       <Text type="font-16-400" className="text-letter/70">
-        The following descriptions will be publicly visible on your Course
-        Landing Page and will have a direct impact on your course performance.
-        These descriptions will help learners decide if your course is right for
-        them.
+        {t('createCourse.intendedLearners.description')}
       </Text>
       <div className="flex flex-col gap-3 w-full">
         <div className="flex flex-col gap-[10px]">
           <Text type="font-16-600" className="text-letter">
-            What will students learn in your course?
+            {t('createCourse.intendedLearners.whatWillLearn')}
           </Text>
           <Text type="font-16-400" className="text-letter/70">
-            You must enter at least 4
+            {t('createCourse.intendedLearners.objectivesDescription.prefix')}
             <Text className="underline mx-1" element="span">
-              learning objectives or outcomes
+              {t(
+                'createCourse.intendedLearners.objectivesDescription.highlight'
+              )}
             </Text>
-            that learners can expect to achieve after completing your course.
+            {t('createCourse.intendedLearners.objectivesDescription.suffix')}
           </Text>
         </div>
         {fields?.map((item: any, index) => {
@@ -124,18 +127,16 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {'+ Add more to your answer'}
+            {t('createCourse.intendedLearners.addMore')}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-letter">
-          What are the requirements or prerequisites for taking your course?
+          {t('createCourse.intendedLearners.requirements.title')}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
-          List the required skills, experience, tools or equipment learners
-          should have prior to taking your course. If there are no requirements,
-          use this space as an opportunity to lower the barrier for beginners.
+          {t('createCourse.intendedLearners.requirements.description')}
         </Text>
 
         {fieldsRequirements?.map((item: any, index) => {
@@ -196,18 +197,16 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {'+ Add more to your answer'}
+            {t('createCourse.intendedLearners.addMore')}
           </Text>
         </Button>
       </div>
       <div className="flex flex-col gap-3">
         <Text type="font-16-600" className="text-letter">
-          {'Who is this course for?'}
+          {t('createCourse.intendedLearners.whoIsFor.title')}
         </Text>
         <Text type="font-16-400" className="text-letter/70">
-          List the required skills, experience, tools or equipment learners
-          should have prior to taking your course. If there are no requirements,
-          use this space as an opportunity to lower the barrier for beginners.
+          {t('createCourse.intendedLearners.requirements.description')}
         </Text>
 
         {fieldsIntenedLeaners?.map((item: any, index) => {
@@ -268,7 +267,7 @@ const IntendedLearners = ({
           className="w-max"
         >
           <Text type="font-16-600" className="text-main">
-            {'+ Add more to your answer'}
+            {t('createCourse.intendedLearners.addMore')}
           </Text>
         </Button>
       </div>

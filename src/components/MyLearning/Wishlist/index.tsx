@@ -10,11 +10,13 @@ import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
 import { useProfile } from '@/store/profile/useProfile';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 const Wishlist = () => {
+  const { t } = useTranslation('common');
   const SORT_BY = [
-    { key: 'createdAt desc', label: 'Newest' },
-    { key: 'createdAt asc', label: 'Oldest' },
+    { key: 'createdAt desc', label: t('listCourse.newest') },
+    { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
   const { dataCategories: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
@@ -60,11 +62,11 @@ const Wishlist = () => {
             <div className="py-2 min-w-[98px] px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
               <IconFilter />
               <Text className="text-main" type="font-14-500">
-                {'All Filter'}
+                {t('myLearning.filters.allFilter')}
               </Text>
             </div>
             <SelectCustom
-              placeholder={'Categories'}
+              placeholder={t('myLearning.filters.categories')}
               className="min-w-[120px]"
               options={mapCategories()}
               value={category}
@@ -73,7 +75,7 @@ const Wishlist = () => {
               }}
             />
             <SelectCustom
-              placeholder={'Price'}
+              placeholder={t('myLearning.filters.price')}
               className="min-w-[80px]"
               options={mapPrices()}
               value={price}
@@ -84,10 +86,10 @@ const Wishlist = () => {
           </div>
           <div className="md:flex hidden items-center gap-2">
             <Text type="font-14-500" className="text-letter/70 w-[100px]">
-              {'Sort by'}
+              {t('myLearning.filters.sortBy')}
             </Text>
             <SelectCustom
-              placeholder={'Default'}
+              placeholder={t('myLearning.filters.default')}
               className="min-w-[40px]"
               options={SORT_BY}
               value={sort}
@@ -102,10 +104,10 @@ const Wishlist = () => {
             type="font-14-500"
             className="text-letter/70 w-[60px] md:w-[100px]"
           >
-            {'Sort by'}
+            {t('myLearning.filters.sortBy')}
           </Text>
           <SelectCustom
-            placeholder={'Default'}
+            placeholder={t('myLearning.filters.default')}
             className="md:min-w-[40px] min-w-[100px] max-w-[40px] md:max-w-[40px]"
             options={SORT_BY}
             value={sort}

@@ -4,6 +4,7 @@ import { Check } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
 const PlanYourCourseLeft = ({
   activePlan,
   handleActivePlan,
@@ -19,22 +20,23 @@ const PlanYourCourseLeft = ({
   isEnoughCurruclum: any;
   isEnoughIntendedLearners: any;
 }) => {
+  const { t } = useTranslation('common');
   const DATA_CONTENT = [
     {
       id: 1,
-      content: 'Intended learners',
+      content: t('createCourse.planCourse.menu.intendedLearners'),
     },
     {
       id: 2,
-      content: 'Curriculum',
+      content: t('createCourse.planCourse.menu.curriculum'),
     },
     {
       id: 3,
-      content: 'Course landing page',
+      content: t('createCourse.planCourse.menu.courseLandingPage'),
     },
     {
       id: 4,
-      content: 'Set Price',
+      content: t('createCourse.planCourse.menu.setPrice'),
     },
     // {
     //   id: 4,

@@ -60,6 +60,8 @@ export const useUSDCOperations = () => {
           kolAddress,
           signature
         );
+
+        console.log('estimatedGas:::', estimatedGas);
         const tx = await vaultContract.pay(
           courseId,
           amount,
@@ -69,8 +71,9 @@ export const useUSDCOperations = () => {
             gasLimit: calculateGasMargin(estimatedGas),
           }
         );
-        await tx.wait();
-        return tx.hash;
+        const receipt = await tx.wait();
+
+        return receipt;
       } catch (error) {
         console.log('Transfer failed:', error);
       } finally {

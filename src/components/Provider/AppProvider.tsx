@@ -1,47 +1,29 @@
 import { ReactElement, ReactNode } from 'react';
 
 import AppLayout from '@/layout/AppLayout';
-import { darkTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  darkTheme,
+  RainbowKitProvider,
+  getDefaultConfig,
+} from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { NextPage } from 'next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
-import { createConfig, createStorage, http, WagmiProvider } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 import { fantomTestnet } from 'wagmi/chains';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-const config = createConfig({
+const config = getDefaultConfig({
+  appName: 'What Exchange',
+  projectId:
+    process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
   chains: [fantomTestnet],
-  transports: {
-    [fantomTestnet.id]: http('https://rpc.testnet.fantom.network/'),
-  },
   ssr: false,
-  storage: createStorage({
-    storage:
-      typeof window !== 'undefined'
-        ? {
-            getItem: (key) => {
-              const item = window.localStorage.getItem(key);
-              if (key.startsWith('wc@2:client:')) {
-                return item || window.localStorage.getItem('wagmi.wallet');
-              }
-              if (
-                window.location.href.includes('wc?') &&
-                key.includes('wagmi')
-              ) {
-                return item || 'true';
-              }
-              return item;
-            },
-            setItem: (key, value) => window.localStorage.setItem(key, value),
-            removeItem: (key) => window.localStorage.removeItem(key),
-          }
-        : undefined,
-  }),
 });
 
 if (typeof window !== 'undefined') {

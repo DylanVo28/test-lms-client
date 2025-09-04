@@ -12,14 +12,6 @@ export const CropperWrap = ({
   cropperRef: React.RefObject<any>;
   fallbackElement?: React.ReactNode;
 }) => {
-  useEffect(() => {
-    if (imageSrc) {
-      localStorage.setItem('cropper-image', imageSrc);
-    } else {
-      localStorage.removeItem('cropper-image');
-    }
-  }, [imageSrc]);
-
   if (imageSrc) {
     return (
       <div style={{ width: '100%', height: '200px', position: 'relative' }}>

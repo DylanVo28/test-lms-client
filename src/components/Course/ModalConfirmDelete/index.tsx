@@ -7,11 +7,13 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
+import { useTranslation } from 'next-i18next';
 interface IModalSupport {
   reload: any;
 }
 
 const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
+  const { t } = useTranslation('common');
   const [visible, setVisible] = useState(false);
   const [courseId, setCourseId] = useState<any>();
 
@@ -53,23 +55,23 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
           <div className="flex justify-center items-center flex-col gap-2">
             <Image
               alt=""
-              src={'/images/img-warning.png'}
+              src={'/images/img-warning.svg'}
               width={120}
               height={120}
               className="w-[120px] h-full mx-auto md:mx-0"
             />
-            <div className="font-bold text-[20px]">{'Delete Course'}</div>
+            <div className="font-bold text-[20px]">
+              {t('listCourse.deleteCourse')}
+            </div>
             <div className="font-normal text-base text-[#BFBFBF] text-center">
-              Course information cannot be restored after cancellation and
-              students cannot continue taking this course, are you sure you want
-              to cancel the course?
+              {t('listCourse.deleteConfirmation')}
             </div>
             <Button
               onPress={submitDeleteCourse}
               className="bg-main w-full min-h-[40px] rounded mt-2"
             >
               <Text className="text-letter" type="font-16-600">
-                {'Submit'}
+                {t('common.submit')}
               </Text>
             </Button>
             <Button
@@ -77,7 +79,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
               className="bg-[#383d41] w-full min-h-[40px] rounded"
             >
               <Text className="text-letter" type="font-16-600">
-                {'Cancel'}
+                {t('common.cancel')}
               </Text>
             </Button>
           </div>

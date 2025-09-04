@@ -11,8 +11,10 @@ import dayjs from 'dayjs';
 import { formatTimeDuration } from '@/utils/common';
 import ReactStars from 'react-stars';
 import { Clock, Student } from '@phosphor-icons/react';
+import { useTranslation } from 'next-i18next';
 
 const Overview = ({ dataListSection, dataDetail }: any) => {
+  const { t } = useTranslation('common');
   const formattedTime: string = useMemo(() => {
     const totalDuration = dataListSection?.reduce(
       (total: any, section: any) => {
@@ -61,7 +63,9 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 />
               </div>
               <Text className="text-letter/70" type="font-14-400">
-                {`${dataDetail?.data?.countReviews} ${'rating'}`}
+                {`${dataDetail?.data?.countReviews} ${t(
+                  'lesson.overview.rating'
+                )}`}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
@@ -73,7 +77,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 <Student size={18} />
               </div>
               <Text className="text-letter/70" type="font-14-400">
-                {'Students'}
+                {t('lesson.overview.students')}
               </Text>
             </div>
             <div className="flex flex-col gap-[6px]">
@@ -84,7 +88,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
                 <Clock size={18} />
               </div>
               <Text className="text-letter/70" type="font-14-400">
-                {'Total'}
+                {t('lesson.overview.total')}
               </Text>
             </div>
           </div>
@@ -92,7 +96,7 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
             <div className="flex items-center gap-2">
               <IconUpload />
               <Text className="text-black-5" type="font-14-400">
-                {'Last Updated'}{' '}
+                {t('lesson.overview.lastUpdated')}{' '}
                 {dayjs(dataDetail?.data?.updatedAt).format('MMMM YYYY')}
               </Text>
             </div>
@@ -100,13 +104,13 @@ const Overview = ({ dataListSection, dataDetail }: any) => {
               <div className="flex items-center gap-2">
                 <IconGlobal />
                 <Text className="text-black-5" type="font-14-400">
-                  {'English'}
+                  {t('lesson.overview.english')}
                 </Text>
               </div>
               <div className="flex items-center gap-2">
                 <IconCoppyRight />
                 <Text className="text-black-5" type="font-14-400">
-                  {'English (auto)'}
+                  {t('lesson.overview.englishAuto')}
                 </Text>
               </div>
             </div>

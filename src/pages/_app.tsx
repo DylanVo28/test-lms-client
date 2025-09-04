@@ -55,5 +55,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </>
   );
 }
-// @ts-ignore
-export default MyApp;
+export default appWithTranslation(MyApp);

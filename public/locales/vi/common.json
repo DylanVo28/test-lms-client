@@ -1,0 +1,418 @@
+{
+  "header": {
+    "search": "Tìm kiếm",
+    "myLearning": "Học tập của tôi",
+    "wishList": "Danh sách yêu thích",
+    "teach": "Giảng dạy",
+    "notifications": "Thông báo",
+    "profile": "Hồ sơ",
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "selectLanguage": "Chọn ngôn ngữ"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "courseDetails": "Chi tiết khóa học",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ"
+  },
+  "course": {
+    "goToCourse": "Vào khóa học",
+    "enrollNowForFree": "Đăng ký ngay miễn phí",
+    "enrollNow": "Đăng ký ngay",
+    "verifying": "Đang xác minh...",
+    "insufficientBalance": "Số dư không đủ",
+    "title": "Khóa học",
+    "description": "Mô tả",
+    "instructor": "Giảng viên",
+    "duration": "Thời lượng",
+    "level": "Cấp độ",
+    "price": "Giá",
+    "enroll": "Đăng ký ngay",
+    "preview": "Xem trước",
+    "requirements": "Yêu cầu",
+    "whatYouLearn": "Bạn sẽ học được gì",
+    "reviews": "Đánh giá",
+    "rating": "Xếp hạng",
+    "prerequisitesQuestion": "Các yêu cầu hoặc điều kiện tiên quyết để tham gia khóa học là gì?",
+    "whoIsThisFor": "Khóa học này dành cho ai?",
+    "aboutThisCourse": "Giới thiệu về khóa học",
+    "mentors": "Người hướng dẫn (KOLs)",
+    "students": "Học viên",
+    "courses": "Khóa học",
+    "moreCoursesBy": "Khóa học khác của {{mentor}}",
+    "learn": "Học",
+    "lesson": "Bài học",
+    "lessons": "Bài học",
+    "lastUpdated": "Cập nhật lần cuối {{date}}",
+    "by": "Bởi",
+    "thisCourseIncludes": "Khóa học này bao gồm",
+    "free": "Miễn phí",
+    "off": "GIẢM",
+    "freeCourseUnlockAvailable": "Có thể mở khóa khóa học miễn phí!",
+    "reachToUnlock": "Đạt",
+    "inLifetimeTrading": "khối lượng giao dịch trọn đời để mở khóa khóa học này miễn phí",
+    "currentTradingVolume": "Khối lượng giao dịch hiện tại của bạn:",
+    "freeToEnroll": "Khóa học này miễn phí để đăng ký",
+    "includes": {
+      "onDemandVideo": "{{time}} video theo yêu cầu",
+      "singleLesson": "{{count}} bài học",
+      "multipleLessons": "{{count}} bài học",
+      "exercises": "Bài tập",
+      "exercisesCount": "{{count}} bài tập",
+      "singleDownloadableResource": "{{count}} tài nguyên có thể tải xuống",
+      "multipleDownloadableResources": "{{count}} tài nguyên có thể tải xuống",
+      "mobileAndTvAccess": "Truy cập trên di động và TV",
+      "singleQuiz": "{{count}} bài kiểm tra",
+      "multipleQuizzes": "{{count}} bài kiểm tra",
+      "lifetimeAccess": "Truy cập trọn đời",
+      "certificateOfCompletion": "Chứng chỉ hoàn thành"
+    },
+    "bestSeller": "Bán chạy nhất"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "view": "Xem",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "previous": "Trước đó",
+    "close": "Đóng",
+    "open": "Mở",
+    "submit": "Gửi",
+    "reset": "Đặt lại",
+    "clear": "Xóa",
+    "select": "Chọn",
+    "choose": "Lựa chọn",
+    "upload": "Tải lên",
+    "download": "Tải xuống",
+    "share": "Chia sẻ",
+    "copy": "Sao chép",
+    "paste": "Dán",
+    "cut": "Cắt",
+    "undo": "Hoàn tác",
+    "redo": "Làm lại",
+    "refresh": "Làm mới",
+    "reload": "Tải lại",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "sort": "Sắp xếp",
+    "language": "Ngôn ngữ",
+    "newCourse": "Khóa học mới",
+    "yes": "Có",
+    "no": "Không"
+  },
+  "footer": {
+    "copyright": "© 2024 Nền tảng LMS. Tất cả quyền được bảo lưu.",
+    "privacyPolicy": "Chính sách bảo mật",
+    "termsOfService": "Điều khoản dịch vụ",
+    "support": "Hỗ trợ"
+  },
+  "seo": {
+    "homeTitle": "What Exchange | Trang chủ",
+    "homeDescription": "Chào mừng đến với What Exchange, nền tảng học tập và chia sẻ kiến thức của bạn.",
+    "homeAltTitle": "Trang chủ | What Exchange",
+    "homeAltDescription": "Chào mừng đến với trang chủ What Exchange.",
+    "courseDefaultTitle": "Khóa học | What Exchange",
+    "courseDefaultDescription": "Khám phá thông tin chi tiết về khóa học này trên What Exchange"
+  },
+  "landing": {
+    "headline": "Làm chủ giao dịch cùng các KOL hàng đầu – Học từ những người giỏi nhất",
+    "subheadline": "Tham gia nền tảng học tập độc quyền, nơi các KOL giao dịch hàng đầu chia sẻ chiến lược và góc nhìn đã được kiểm chứng. Từ kiến thức cơ bản đến kỹ thuật nâng cao — học theo tốc độ của bạn, mọi lúc, mọi nơi.",
+    "connectWallet": "Kết nối ví"
+  },
+  "banner": {
+    "defaultTitle": "Khóa học Phát triển Web",
+    "defaultDescription": "Với các khóa học phát triển web trực tuyến, bạn có thể khám phá nhiều lĩnh vực hấp dẫn của ngành đang được quan tâm này.",
+    "topicsTitle": "Chủ đề liên quan đến Phát triển Web",
+    "altBackground": "Hình nền banner",
+    "altMobileBanner": "Hình banner trên di động",
+    "defaultTopics": [
+      "Thiết kế",
+      "UX",
+      "Java",
+      "SEO",
+      "Python",
+      "Blockchain",
+      "Truyền thông số"
+    ]
+  },
+  "createCourse": {
+    "pageTitle": "Tạo khóa học | What Exchange",
+    "pageDescription": "Tạo khóa học mới trên What Exchange",
+    "stepProgress": "Bước {{current}} / {{total}}",
+    "exit": "Thoát",
+    "findOutType": "Trước tiên, hãy xác định loại khóa học bạn muốn tạo",
+    "courseType": "Khóa học",
+    "courseTypeDescription": "Tạo trải nghiệm học tập phong phú với bài giảng video, câu hỏi trắc nghiệm, bài tập lập trình và nhiều hơn nữa.",
+    "premadeContent": "Nội dung có sẵn",
+    "premadeContentDescription": "Cho phép người tạo nội dung sao chép từ cơ sở dữ liệu white label của chúng tôi",
+    "workingTitle": "Bạn muốn đặt tiêu đề gì?",
+    "titleDescription": "Không sao nếu bạn chưa nghĩ ra tiêu đề hay. Bạn có thể thay đổi sau.",
+    "titlePlaceholder": "Ví dụ: Học Photoshop CS6 từ cơ bản",
+    "categoryQuestion": "Danh mục nào phù hợp nhất với kiến thức bạn sẽ chia sẻ?",
+    "categoryDescription": "Nếu bạn chưa chắc chắn về danh mục phù hợp, bạn có thể thay đổi sau.",
+    "chooseCategoryPlaceholder": "Chọn danh mục",
+    "timeSpent": {
+      "question": "Bạn có thể dành bao nhiêu thời gian để tạo khóa học mỗi tuần?",
+      "description": "Không có câu trả lời nào là sai. Chúng tôi có thể giúp bạn đạt được mục tiêu ngay cả khi bạn không có nhiều thời gian.",
+      "veryBusy": "Tôi đang rất bận (0-2 giờ)",
+      "onTheSide": "Tôi sẽ làm việc này bên cạnh công việc chính (2-4 giờ)",
+      "flexible": "Tôi có nhiều thời gian linh hoạt (5+ giờ)",
+      "undecided": "Tôi chưa quyết định được có thời gian hay không"
+    },
+    "planCourse": {
+      "pageTitle": "Lập kế hoạch khóa học | What Exchange",
+      "pageDescription": "Lập kế hoạch chi tiết cho khóa học của bạn trên What Exchange",
+      "title": "Lập kế hoạch khóa học",
+      "objectivesPlaceholder1": "Ví dụ: Xác định vai trò và trách nhiệm của người quản lý dự án",
+      "objectivesPlaceholder2": "Ví dụ: Lập kế hoạch và dự toán ngân sách dự án",
+      "objectivesPlaceholder3": "Ví dụ: Xác định và quản lý rủi ro dự án",
+      "objectivesPlaceholder4": "Ví dụ: Hoàn thành một nghiên cứu điển hình về quản lý dự án từ ý tưởng đến hoàn thành",
+      "requirementsPlaceholder": "Ví dụ: Không yêu cầu kinh nghiệm lập trình. Bạn sẽ học được tất cả những gì bạn cần biết.",
+      "intendedLearnersPlaceholder": "Ví dụ: Lập trình viên Python mới bắt đầu muốn học khoa học dữ liệu",
+      "backToCourses": "Quay lại danh sách khóa học",
+      "save": "Lưu",
+      "publish": "Xuất bản",
+      "menu": {
+        "intendedLearners": "Học viên mục tiêu",
+        "curriculum": "Chương trình học",
+        "courseLandingPage": "Trang giới thiệu khóa học",
+        "setPrice": "Thiết lập giá"
+      }
+    },
+    "curriculum": {
+      "title": "Nội dung khóa học",
+      "description": "Bắt đầu xây dựng khóa học của bạn bằng cách tạo các phần, bài giảng và hoạt động thực hành (câu hỏi trắc nghiệm, bài tập lập trình và bài tập). Sử dụng đề cương khóa học để cấu trúc nội dung và gắn nhãn các phần và bài giảng một cách rõ ràng. Nếu bạn dự định cung cấp khóa học miễn phí, tổng thời lượng nội dung video phải ít hơn 2 giờ.",
+      "part": "Phần {{number}}:",
+      "section": "Phần",
+      "lecture": "Bài giảng",
+      "question": "Câu hỏi",
+      "lectureNumber": "Bài giảng {{number}}:",
+      "quizNumber": "Bài kiểm tra {{number}}:",
+      "enterTitle": "Nhập tiêu đề",
+      "cancel": "Hủy",
+      "save": "Lưu",
+      "content": "Nội dung",
+      "addItem": "Thêm nội dung",
+        "editContent": "Chỉnh sửa nội dung",
+      "editVideo": "Chỉnh sửa video",
+    "setPrice": {
+        "title": "Thiết lập giá",
+        "originPrice": "Giá gốc",
+        "finalPrice": "Giá cuối cùng",
+        "unlockIfTrades": "Mở khóa nếu người dùng giao dịch ít nhất",
+        "unlockDescription": "Người dùng giao dịch ít nhất số tiền này trên What Exchange có thể mở khóa khóa học này miễn phí",
+        "tradingVolumeNote": "Khối lượng giao dịch được nhập ở đây là tổng khối lượng giao dịch trong khoảng thời gian 90 ngày."
+      },
+      "landingPage": {
+        "title": "Trang giới thiệu khóa học",
+        "description": "Trang giới thiệu khóa học của bạn rất quan trọng đối với sự thành công của bạn trên What Exchange. Nếu được thực hiện đúng cách, nó cũng có thể giúp bạn tăng khả năng hiển thị trên các công cụ tìm kiếm như Google. Khi hoàn thành phần này, hãy nghĩ về việc tạo một Trang Giới Thiệu Khóa Học hấp dẫn thể hiện lý do tại sao ai đó muốn tham gia khóa học của bạn. Tìm hiểu thêm về cách tạo trang giới thiệu khóa học và tiêu chuẩn tiêu đề khóa học.",
+        "courseTitle": "Tiêu đề khóa học",
+        "courseSubtitle": "Phụ đề khóa học",
+        "courseDescription": "Mô tả khóa học",
+        "basicInfo": "Thông tin cơ bản",
+        "primaryTaught": "Nội dung chính được dạy trong khóa học của bạn là gì?",
+        "courseImage": "Hình ảnh khóa học",
+        "promotionalVideo": "Video quảng bá",
+        "uploadImageHelp": "Tải lên hình ảnh của bạn tại đây. Nó phải có kích thước 302x200 pixel, ở định dạng .jpg, .jpeg, .gif, hoặc .png, và không chứa văn bản.",
+        "imageHelp": "Hình ảnh khóa học của bạn tạo ấn tượng đầu tiên cho học viên. Một hình ảnh chất lượng cao giúp thu hút nhiều học viên hơn. Hãy đảm bảo nó có kích thước và định dạng phù hợp—tìm hiểu cách làm nó nổi bật!",
+        "cropImage": "Cắt ảnh",
+        "change": "Thay đổi",
+        "uploadFile": "Tải lên"
+      }
+    },
+    "intendedLearners": {
+      "title": "Học viên mục tiêu",
+      "description": "Các mô tả sau đây sẽ được hiển thị công khai trên Trang Khóa học của bạn và sẽ có tác động trực tiếp đến hiệu suất khóa học. Những mô tả này sẽ giúp học viên quyết định xem khóa học của bạn có phù hợp với họ hay không.",
+      "whatWillLearn": "Học viên sẽ học được gì trong khóa học của bạn?",
+      "objectivesDescription": {
+        "prefix": "Bạn phải nhập ít nhất 4",
+        "highlight": "mục tiêu hoặc kết quả học tập",
+        "suffix": "mà học viên có thể đạt được sau khi hoàn thành khóa học của bạn."
+      },
+      "addMore": "+ Thêm câu trả lời",
+      "requirements": {
+        "title": "Yêu cầu hoặc điều kiện tiên quyết để tham gia khóa học của bạn là gì?",
+        "description": "Liệt kê các kỹ năng, kinh nghiệm, công cụ hoặc thiết bị cần thiết mà học viên nên có trước khi tham gia khóa học của bạn. Nếu không có yêu cầu, hãy sử dụng phần này như một cơ hội để giảm rào cản cho người mới bắt đầu."
+      },
+      "whoIsFor": {
+        "title": "Khóa học này dành cho ai?",
+        "description": "Liệt kê các kỹ năng, kinh nghiệm, công cụ hoặc thiết bị cần thiết mà học viên nên có trước khi tham gia khóa học của bạn. Nếu không có yêu cầu, hãy sử dụng phần này như một cơ hội để giảm rào cản cho người mới bắt đầu."
+      }
+    }
+  },
+  "listCourse": {
+    "allFilter": "Bộ lọc",
+    "categories": "Danh mục",
+    "price": "Giá",
+    "sortBy": "Sắp xếp theo",
+    "default": "Mặc định",
+    "search": "Tìm kiếm",
+    "noData": "Không có dữ liệu",
+    "seeMore": "Xem thêm",
+    "newest": "Mới nhất",
+    "oldest": "Cũ nhất",
+    "pageTitle": "Danh sách khóa học | What Exchange",
+    "pageDescription": "Xem tất cả các khóa học có sẵn trên What Exchange",
+    "editCourse": "Chỉnh sửa khóa học",
+    "deleteCourse": "Xóa khóa học",
+    "deleteConfirmation": "Thông tin khóa học không thể khôi phục sau khi hủy và học viên không thể tiếp tục học khóa học này, bạn có chắc chắn muốn hủy khóa học không?",
+    "viewStatistics": "Xem thống kê",
+    "finishYourCourses": "Hoàn thành khóa học của bạn",
+    "draft": "Bản nháp",
+    "public": "Công khai",
+    "searchFor": "kết quả cho",
+    "filters": "Bộ lọc",
+    "sortByType": "Sắp xếp theo loại",
+    "clearFilter": "Xóa bộ lọc",
+    "results": "kết quả",
+    "showFilters": "Hiển thị bộ lọc",
+    "rating": "Đánh giá",
+    "language": "Ngôn ngữ",
+    "topic": "Chủ đề",
+    "level": "Cấp độ",
+    "free": "Miễn phí",
+    "paid": "Trả phí",
+    "searchPlaceholder": "Tìm kiếm...",
+    "handsOnPractice": "Thực hành",
+    "seeLess": "Xem ít hơn",
+    "seeMore": "Xem thêm",
+    "courseSearch": {
+      "pageTitle": "Tìm kiếm khóa học | What Exchange",
+      "pageDescription": "Tìm kiếm khóa học trên What Exchange."
+    },
+    "enrollCourse": "Đăng ký khóa học"
+  },
+  "register": {
+    "title": "Đăng ký tài khoản",
+    "description": "Bạn đăng ký tài khoản bằng mã [{{code}}], và bạn sẽ nhận được yêu cầu ký để bật quyền đọc. Việc ký là miễn phí và không gửi giao dịch.",
+    "placeholder": "Mã giới thiệu (Không bắt buộc)",
+    "referral": "Mã giới thiệu"
+  },
+  "card": {
+    "lessons": "Bài học",
+    "mentor": "Người hướng dẫn:",
+    "free": "Miễn phí"
+  },
+  "auth": {
+    "signIn": "Đăng nhập"
+  },
+  "errors": {
+    "connectWallet": "Vui lòng kết nối ví của bạn",
+    "invalidReferral": "Mã giới thiệu không hợp lệ",
+    "registerKeyFailed": "Đăng ký key thất bại: {{error}}"
+  },
+  "myLearning": {
+    "title": "Học tập của tôi",
+    "tabs": {
+      "courseProgress": "Tiến độ khóa học",
+      "certifications": "Chứng chỉ",
+      "wishlist": "Danh sách yêu thích"
+    },
+    "filters": {
+      "allFilter": "Tất cả bộ lọc",
+      "categories": "Danh mục",
+      "price": "Giá",
+      "sortBy": "Sắp xếp theo",
+      "default": "Mặc định"
+    },
+    "complete": "hoàn thành",
+    "certifications": {
+      "preparation": "Chuẩn bị chứng chỉ",
+      "preparingFor": "Bạn đang chuẩn bị cho",
+      "title": "chứng chỉ",
+      "mint": "Tạo NFT",
+      "mintSuccess": "Tạo chứng chỉ NFT thành công",
+      "alreadyMinted": "Bạn đã tạo chứng chỉ NFT này",
+      "minting": "Chứng chỉ NFT của bạn đang được tạo. Vui lòng đợi trong giây lát...",
+      "importInstructions": "Để nhập chứng chỉ này vào MetaMask, đi tới MetaMask → NFTs → Thêm NFT → Nhập:",
+      "contract": "Hợp đồng",
+      "tokenId": "Token ID",
+      "receivedCertificate": "Đã nhận chứng chỉ"
+    }
+  },
+  "profileMenu": {
+    "admin": "Quản trị",
+    "verified": "Đã xác minh",
+    "myProfile": "Hồ sơ của tôi",
+    "myLearning": "Học tập của tôi",
+    "logout": "Đăng xuất"
+  },
+  "admin": {
+    "loginTitle": "Đăng nhập Admin | What Exchange",
+    "loginDescription": "Trang đăng nhập quản trị viên của What Exchange."
+  },
+  "lesson": {
+    "header": {
+      "yourProgress": "Tiến độ của bạn",
+      "completedOf": "Đã hoàn thành {{completed}} trên {{total}}",
+      "finishToGetCertificate": "Hoàn thành khóa học để nhận chứng chỉ",
+      "share": "Chia sẻ",
+      "shareThisCourse": "Chia sẻ khóa học này",
+      "shareWithFriends": "Chia sẻ khóa học này với bạn bè",
+      "referralLink": "Liên kết giới thiệu",
+      "shareTo": "Chia sẻ đến",
+      "completedCourse": "Bạn đã hoàn thành khóa học",
+      "viewCertificate": "Xem chứng chỉ của bạn"
+    },
+    "courseContent": "Nội dung khóa học",
+    "overview": {
+      "title": "Tổng quan",
+      "byTheNumbers": "Thông tin chi tiết",
+      "skillLevel": "Cấp độ kỹ năng",
+      "students": "Học viên",
+      "languages": "Ngôn ngữ",
+      "captions": "Phụ đề",
+      "lectures": "Bài giảng",
+      "video": "Video",
+      "description": "Mô tả",
+      "rating": "đánh giá",
+      "total": "Tổng",
+      "lastUpdated": "Cập nhật lần cuối",
+      "english": "Tiếng Anh",
+      "englishAuto": "Tiếng Anh (tự động)"
+    },
+    "reviews": "Đánh giá",
+    "studentFeedbacks": "Phản hồi của học viên",
+    "baseOn": "dựa trên",
+    "allRatings": "Tất cả đánh giá",
+    "noReviews": "Chưa có đánh giá",
+    "endCourse": {
+      "congratulations": "Chúc mừng! 🎉",
+      "courseReview": "Đánh giá khóa học",
+      "completedCourse": "Bạn đã hoàn thành khóa học thành công",
+      "shareExperience": "Chia sẻ trải nghiệm của bạn với những người học khác",
+      "congratsCompleted": "Chúc mừng bạn đã hoàn thành khóa học!",
+      "findMoreCourses": "Tìm thêm khóa học",
+      "selectRating": "Chọn đánh giá",
+      "yourReview": "Đánh giá của bạn",
+      "reviewPlaceholder": "Hãy chia sẻ về trải nghiệm cá nhân của bạn khi học khóa học này. Nó có phù hợp với bạn không?",
+      "submitReview": "Gửi đánh giá"
+    },
+    "quiz": {
+      "question": "Câu hỏi",
+      "startTest": "Bắt đầu làm bài kiểm tra",
+      "skip": "Bỏ qua bài kiểm tra",
+      "didGreat": "Bạn đã làm rất tốt",
+      "incorrectAnswer": "Câu trả lời không chính xác. Vui lòng thử lại.",
+      "continue": "Tiếp tục",
+      "seeResults": "Xem kết quả",
+      "checkAnswer": "Kiểm tra câu trả lời"
+    },
+    "video": {
+      "next": "Tiếp theo"
+    }
+  },
+  "notifications": {
+    "title": "Thông báo | What Exchange",
+    "description": "Xem tất cả thông báo của bạn trên What Exchange"
+  }
+}
