@@ -227,14 +227,14 @@ const DrawerMenu = (props: any, ref: any) => {
                         </Link>
 
                         {/* Language Switcher Button */}
-                        <Button
+                        {/* <Button
                           isIconOnly
                           variant="light"
                           className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10 hover:bg-gray-20 transition-colors"
                           onPress={() => setIsLanguageModalOpen(true)}
                         >
                           <IconGlobal />
-                        </Button>
+                        </Button> */}
 
                         {profile?.role === 'KOL' && <ThemeConfiguration />}
                       </div>

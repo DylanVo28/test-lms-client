@@ -1,8 +1,7 @@
+import { calculateGasMargin } from '@/utils/common';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
-import { calculateGasMargin } from '@/utils/common';
-import { BIG_TEN } from '@/utils/bigNumber';
 
 export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
@@ -33,7 +32,6 @@ export const useUSDCOperations = () => {
         });
         await tx.wait();
       } catch (error) {
-        console.log('approveUSDC error:::', error);
         throw error;
       } finally {
         setLoading(false);
@@ -64,9 +62,19 @@ export const useUSDCOperations = () => {
       }
       try {
         setLoading(true);
-        const estimatedGas = await vaultContract.estimateGas.pay(
+
+        console.log('estimatedGas:::', {
           courseId,
           amount,
+          kolAddress,
+          adminSigner,
+          signature,
+          deadline,
+        });
+
+        const estimatedGas = await vaultContract.estimateGas.pay(
+          courseId,
+          0,
           kolAddress,
           adminSigner,
           signature,
@@ -88,7 +96,7 @@ export const useUSDCOperations = () => {
 
         return receipt;
       } catch (error) {
-        console.log('Transfer failed:', error);
+        console.log('estimatedGasestimatedGasestimatedGas:', error);
       } finally {
         setLoading(false);
       }

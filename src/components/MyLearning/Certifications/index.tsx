@@ -52,7 +52,7 @@ const Certifications = () => {
                 )}`}
               </Text>
             </Text>
-            <Info className="text-letter" size={18} />
+            {/* <Info className="text-letter" size={18} /> */}
           </div>
         </div>
       </div>

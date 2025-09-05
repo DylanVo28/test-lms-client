@@ -144,9 +144,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
                 <Tooltip
                   content={
                     <div className="flex flex-col items-start gap-2 p-2">
-                      <div>
-                        {t('myLearning.certifications.importInstructions')}
-                      </div>
+                      <div>View on BaseScan:</div>
                       <div className="flex gap-x-1 items-center">
                         {t('myLearning.certifications.contract')}:{' '}
                         <code className="text-main">{MINT_NFT_ADDRESS}</code>

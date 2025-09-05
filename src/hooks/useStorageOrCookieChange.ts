@@ -1,22 +1,14 @@
-import {
-  deleteAuthCookies,
-  getAccessToken,
-  setAuthCookies,
-} from '@/store/auth';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useAccount, useDisconnect } from 'wagmi';
-import { useAtom } from 'jotai';
-import { initialProfile, profileAtom } from '@/store/profile/profile';
+import { deleteAuthCookies, getAccessToken } from '@/store/auth';
 import { notificationAtom } from '@/store/notification/notification';
+import { initialProfile, profileAtom } from '@/store/profile/profile';
 import { initialTheme, themeAtom } from '@/store/theme/theme';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 
 const useStorageOrCookieChange = () => {
-  const router = useRouter();
-  const [profile, setProfile] = useAtom(profileAtom);
+  const [_profile, setProfile] = useAtom(profileAtom);
   const [, setNotifications] = useAtom(notificationAtom);
-  const [_, setTheme] = useAtom(themeAtom);
-  const { disconnect } = useDisconnect();
+  const [_theme, setTheme] = useAtom(themeAtom);
 
   useEffect(() => {
     const handleStorage = () => {};

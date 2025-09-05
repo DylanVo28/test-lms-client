@@ -89,7 +89,7 @@ const SoldCourses = () => {
                   </td>
                   <td className="px-6 py-4 text-main">
                     <Link
-                      href={`https://explorer.testnet.fantom.network/transactions/${tx.txHash}`}
+                      href={`https://basescan.org/tx/${tx.txHash}`}
                       target="_blank"
                     >
                       <span className="text-sm text-main">
