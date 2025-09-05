@@ -161,7 +161,7 @@ const CourseStatisticPage = ({
                   <TableCell>
                     <Link
                       className="flex items-center gap-2 cursor-pointer"
-                      href={`https://explorer.testnet.fantom.network/transactions/${student?.txHash}`}
+                      href={`https://basescan.org/tx/${student?.txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

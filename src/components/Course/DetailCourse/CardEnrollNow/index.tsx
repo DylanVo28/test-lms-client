@@ -139,6 +139,7 @@ const CardEnrollNow = ({
     kolAddress: string;
     signature: string;
     deadline: number;
+    adminSigner: string;
   }> => {
     const res = await privateRequest(
       request.get,
@@ -189,13 +190,14 @@ const CardEnrollNow = ({
 
         await approveUSDC(VAULT_ADDRESS, metadataPayment.amount.toString());
 
-        const receipt = await buyCourse(
-          metadataPayment.courseId,
-          metadataPayment.amount,
-          metadataPayment.kolAddress,
-          metadataPayment.signature,
-          metadataPayment.deadline
-        );
+        const receipt = await buyCourse({
+          courseId: metadataPayment.courseId,
+          amount: metadataPayment.amount,
+          kolAddress: metadataPayment.kolAddress,
+          adminSigner: metadataPayment.adminSigner,
+          signature: metadataPayment.signature,
+          deadline: metadataPayment.deadline,
+        });
         if (receipt.status === 1) {
           toast.success(
             'You have successfully enrolled in the course. Please wait a moment while the system verifies the transaction.'

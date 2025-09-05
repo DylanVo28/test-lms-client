@@ -1,8 +1,7 @@
+import { calculateGasMargin } from '@/utils/common';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
-import { calculateGasMargin } from '@/utils/common';
-import { BIG_TEN } from '@/utils/bigNumber';
 
 export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
@@ -23,8 +22,10 @@ export const useUSDCOperations = () => {
 
       try {
         setLoading(true);
-        const estimatedGas = await usdcContract.estimateGas.approve(spender, 0);
-        // 150000000000
+        const estimatedGas = await usdcContract.estimateGas.approve(
+          spender,
+          amount
+        );
 
         const tx = await usdcContract.approve(spender, amount, {
           gasLimit: calculateGasMargin(estimatedGas),
@@ -40,32 +41,51 @@ export const useUSDCOperations = () => {
   );
 
   const buyCourse = useCallback(
-    async (
-      courseId: string,
-      amount: BigNumber,
-      kolAddress: string,
-      signature: string,
-      deadline: number
-    ) => {
+    async ({
+      adminSigner,
+      amount,
+      courseId,
+      deadline,
+      kolAddress,
+      signature,
+    }: {
+      courseId: string;
+      amount: BigNumber;
+      kolAddress: string;
+      signature: string;
+      deadline: number;
+      adminSigner: string;
+    }) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
         return;
       }
       try {
         setLoading(true);
+
+        console.log('estimatedGas:::', {
+          courseId,
+          amount,
+          kolAddress,
+          adminSigner,
+          signature,
+          deadline,
+        });
+
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
           amount,
           kolAddress,
+          adminSigner,
           signature,
           deadline
         );
 
-        console.log('estimatedGas:::', estimatedGas);
         const tx = await vaultContract.pay(
           courseId,
           amount,
           kolAddress,
+          adminSigner,
           signature,
           deadline,
           {
@@ -76,7 +96,7 @@ export const useUSDCOperations = () => {
 
         return receipt;
       } catch (error) {
-        console.log('Transfer failed:', error);
+        console.log('estimatedGasestimatedGasestimatedGas:', error);
       } finally {
         setLoading(false);
       }

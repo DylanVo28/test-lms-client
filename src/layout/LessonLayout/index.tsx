@@ -61,14 +61,14 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
       {isMobile ? (
         <MainHeader />
       ) : (
-        <div className="flex py-6 px-4 border-b-1 border-b-black-9 justify-between items-center">
-          <div className="flex items-center gap-5">
+        <div className="flex md:flex-row flex-col  md:py-6 py-3 md:px-4 border-b-1 border-b-black-9 justify-between items-between">
+          <div className="flex items-center md:gap-5 gap-3">
             <div className="flex items-center gap-1">
               <Button
                 onPress={() =>
                   navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id))
                 }
-                className="hover:bg-black-10"
+                className="hover:bg-black-10 py-3 px-0"
                 radius="md"
                 size="md"
                 variant="light"
@@ -83,11 +83,14 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
               </Button>
             </div>
             <div className="w-[1px] h-6 bg-black-6" />
-            <Text type="font-16-500" className="text-letter">
+            <Text
+              type="font-16-500"
+              className="text-letter whitespace-nowrap line-clamp-1 flex-1 overflow-hidden text-ellipsis"
+            >
               {dataDetail?.data?.title}
             </Text>
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center md:gap-5 gap-3 justify-between px-3">
             <Popover placement="bottom" showArrow={true}>
               <PopoverTrigger>
                 <div className="flex items-center gap-2 cursor-pointer">
@@ -106,7 +109,10 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                     />
                   </div>
                   <div className="flex gap-x-1 items-center">
-                    <Text type="font-16-500" className="text-letter">
+                    <Text
+                      type="font-16-500"
+                      className="text-letter whitespace-nowrap line-clamp-1"
+                    >
                       {t('lesson.header.yourProgress')}
                     </Text>
                     <IconArrowDown />

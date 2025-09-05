@@ -3,6 +3,7 @@ import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useProfile } from '@/store/profile/useProfile';
+import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { NextUIProvider } from '@nextui-org/react';
@@ -15,7 +16,7 @@ const AppLayout = ({ children }: any) => {
   const { theme } = useTheme();
   const { requestGetTheme } = useThemeInitial();
   const { requestCheckHasNotification } = useNotifications();
-  const { address } = useAccount();
+
   const token = useAccessToken();
   const [loading, setLoading] = useState(true);
   const { profile } = useProfile();
