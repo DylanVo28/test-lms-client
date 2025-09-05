@@ -23,14 +23,17 @@ export const useUSDCOperations = () => {
 
       try {
         setLoading(true);
-        const estimatedGas = await usdcContract.estimateGas.approve(spender, 0);
-        // 150000000000
+        const estimatedGas = await usdcContract.estimateGas.approve(
+          spender,
+          amount
+        );
 
         const tx = await usdcContract.approve(spender, amount, {
           gasLimit: calculateGasMargin(estimatedGas),
         });
         await tx.wait();
       } catch (error) {
+        console.log('approveUSDC error:::', error);
         throw error;
       } finally {
         setLoading(false);
@@ -40,14 +43,21 @@ export const useUSDCOperations = () => {
   );
 
   const buyCourse = useCallback(
-    async (
-      courseId: string,
-      amount: BigNumber,
-      kolAddress: string,
-      signature: string,
-      deadline: number,
-      adminSigner: string
-    ) => {
+    async ({
+      adminSigner,
+      amount,
+      courseId,
+      deadline,
+      kolAddress,
+      signature,
+    }: {
+      courseId: string;
+      amount: BigNumber;
+      kolAddress: string;
+      signature: string;
+      deadline: number;
+      adminSigner: string;
+    }) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
         return;
@@ -63,7 +73,6 @@ export const useUSDCOperations = () => {
           deadline
         );
 
-        console.log('estimatedGas:::', estimatedGas);
         const tx = await vaultContract.pay(
           courseId,
           amount,
