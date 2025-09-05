@@ -74,7 +74,7 @@ export const useUSDCOperations = () => {
 
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
-          0,
+          amount,
           kolAddress,
           adminSigner,
           signature,
