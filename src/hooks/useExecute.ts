@@ -45,7 +45,8 @@ export const useUSDCOperations = () => {
       amount: BigNumber,
       kolAddress: string,
       signature: string,
-      deadline: number
+      deadline: number,
+      adminSigner: string
     ) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -57,6 +58,7 @@ export const useUSDCOperations = () => {
           courseId,
           amount,
           kolAddress,
+          adminSigner,
           signature,
           deadline
         );
@@ -66,6 +68,7 @@ export const useUSDCOperations = () => {
           courseId,
           amount,
           kolAddress,
+          adminSigner,
           signature,
           deadline,
           {

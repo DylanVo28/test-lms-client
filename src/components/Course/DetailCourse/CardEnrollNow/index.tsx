@@ -139,6 +139,7 @@ const CardEnrollNow = ({
     kolAddress: string;
     signature: string;
     deadline: number;
+    adminSigner: string;
   }> => {
     const res = await privateRequest(
       request.get,
@@ -193,6 +194,7 @@ const CardEnrollNow = ({
           metadataPayment.courseId,
           metadataPayment.amount,
           metadataPayment.kolAddress,
+          metadataPayment.adminSigner,
           metadataPayment.signature,
           metadataPayment.deadline
         );
