@@ -620,16 +620,7 @@ const CurriculumItem = ({
                     !item?.info?.duration &&
                     !valueEditEditCotentLesson?.id && (
                       <Tooltip
-                        content={
-                          editLessonId ? (
-                            <EditLessonToastContent
-                              editLessonId={editLessonId}
-                              dataCurriculum={dataCurriculum}
-                            />
-                          ) : (
-                            ''
-                          )
-                        }
+                        content={editLessonId ? <EditLessonToastContent /> : ''}
                       >
                         <Button
                           onPress={() => {
