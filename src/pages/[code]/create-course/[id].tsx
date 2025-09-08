@@ -1,4 +1,5 @@
 import PlanYourCourse from '@/components/CreateCourse/PlanYourCourse';
+import CurriculumProvider from '@/components/CreateCourse/PlanYourCourse/PlanYourCourseRight/Curriculum/context';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import AuthLayout from '@/layout/MainLayout/AuthLayout';
@@ -18,7 +19,9 @@ const PlanYourCoursePage = () => {
       />
       <AppProvider>
         <AuthLayout roles={['ADMIN', 'KOL']}>
-          <PlanYourCourse />
+          <CurriculumProvider>
+            <PlanYourCourse />
+          </CurriculumProvider>
         </AuthLayout>
       </AppProvider>
     </>
