@@ -391,6 +391,7 @@ const CurriculumItem = ({
 
   const handleEditLecture = (item: any) => {
     setValueEditCotentLesson(item);
+    setValueTitleLecture(item?.title);
   };
   const handleRemoveLecture = (index: number, id: string, type: string) => {
     // setValueEditCotentLesson(item);
@@ -533,7 +534,7 @@ const CurriculumItem = ({
                           className="w-fit cursor-pointer"
                         >
                           <PencilSimpleLine size={16} />
-                          Edit
+                          Edit title
                         </Button>
                         <Button
                           isIconOnly
