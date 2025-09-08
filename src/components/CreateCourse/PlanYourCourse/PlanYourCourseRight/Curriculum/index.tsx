@@ -20,7 +20,7 @@ import { FileText } from '@/components/UI/Icons/FileIcons';
 import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
 import Trash from '@/components/UI/Icons/Trash';
 import ModalConfirmDeleteSection from './ModalConfirmDeleteSection';
-import CurriculumProvider from './context';
+import CurriculumProvider, { useCurriculumContext } from './context';
 import clsx from 'clsx';
 
 const CurriculumItem = dynamic(
@@ -44,6 +44,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   const { profile } = useProfile();
 
   const refModalConfirmDeleteSection: any = useRef(null);
+  const { handleUpdateEditLessonId } = useCurriculumContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -119,12 +120,14 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   };
 
   const handleSubmitDelete = (index: number, id: string) => {
+    handleUpdateEditLessonId(null);
     remove(index);
     if (id) {
       runDeleteSesson(id);
     }
     setAddSection(false);
   };
+
   const handleEditLesson = (item: any, index: number) => {
     const newData = {
       ...item,
@@ -135,166 +138,164 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   };
 
   return (
-    <CurriculumProvider>
-      <LoadingScreen isLoading={loadingListSession}>
-        <div className="flex flex-col gap-8">
-          <div className="flex justify-between items-center">
-            <Text type="font-28-700" className="text-letter">
-              {t('createCourse.curriculum.title')}
-            </Text>
-            {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
+    <LoadingScreen isLoading={loadingListSession}>
+      <div className="flex flex-col gap-8">
+        <div className="flex justify-between items-center">
+          <Text type="font-28-700" className="text-letter">
+            {t('createCourse.curriculum.title')}
+          </Text>
+          {/* <Button className="rounded border-1 bg-transparent border-main min-h-[44px] w-max min-w-[154px]">
             <Text type="font-16-700" className="text-letter">
               Bulk Uploader
             </Text>
           </Button> */}
-          </div>
+        </div>
 
-          <Text type="font-16-400" className="text-letter/70">
-            {t('createCourse.curriculum.description')}
-          </Text>
-          {fields?.map((field: any, index: number) => {
-            const sectionHasContent =
-              field?.lessons?.some(
-                (lesson: any) => lesson?.content || lesson?.info?.thumbnailUrl
-              ) ||
-              field?.quizzes?.some(
-                (quiz: any) =>
-                  Array.isArray(quiz?.questions) && quiz?.questions.length > 0
-              );
+        <Text type="font-16-400" className="text-letter/70">
+          {t('createCourse.curriculum.description')}
+        </Text>
+        {fields?.map((field: any, index: number) => {
+          const sectionHasContent =
+            field?.lessons?.some(
+              (lesson: any) => lesson?.content || lesson?.info?.thumbnailUrl
+            ) ||
+            field?.quizzes?.some(
+              (quiz: any) =>
+                Array.isArray(quiz?.questions) && quiz?.questions.length > 0
+            );
 
-            const isSectionIncomplete =
-              validationErrors?.curriculum &&
-              !sectionHasContent &&
-              validationErrors?.incompleteItems?.sections?.includes(field?.id);
+          const isSectionIncomplete =
+            validationErrors?.curriculum &&
+            !sectionHasContent &&
+            validationErrors?.incompleteItems?.sections?.includes(field?.id);
 
-            return (
-              <div className="flex flex-col gap-1 overflow-auto">
-                {index !== 0 && (
-                  <Button
-                    onPress={() => handleRemoveSection(index, field.idSection)}
-                    isIconOnly
-                    variant="light"
-                    radius="full"
-                    size="sm"
-                  >
-                    <IconClose />
-                  </Button>
-                )}
+          return (
+            <div className="flex flex-col gap-1 overflow-auto">
+              {index !== 0 && (
+                <Button
+                  onPress={() => handleRemoveSection(index, field.idSection)}
+                  isIconOnly
+                  variant="light"
+                  radius="full"
+                  size="sm"
+                >
+                  <IconClose />
+                </Button>
+              )}
 
-                {field?.title ? (
-                  <div
-                    className={clsx(
-                      'border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
-                      {
-                        '!border-red-500': isSectionIncomplete,
-                      }
-                    )}
-                  >
-                    {valueLesson?.id === field?.id ? (
-                      <FormAddSection
-                        handleSaveAddSection={(values: any) => {
-                          if (valueLesson?.id) {
-                            handleSaveEditSection(values);
-                          } else {
-                            handleSaveAddSection(values, index);
-                          }
-                        }}
-                        loading={loadingEditSection}
-                        control={control}
-                        valueLesson={valueLesson}
-                        handleSubmit={handleSubmit}
-                        handleCancelFormAddSection={() => {
-                          setValueLesson({});
-                        }}
-                      />
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <Text type="font-16-700" className="whitespace-nowrap">
-                          {t('createCourse.curriculum.part', {
-                            number: index + 1,
-                          })}
+              {field?.title ? (
+                <div
+                  className={clsx(
+                    'border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
+                    {
+                      '!border-red-500': isSectionIncomplete,
+                    }
+                  )}
+                >
+                  {valueLesson?.id === field?.id ? (
+                    <FormAddSection
+                      handleSaveAddSection={(values: any) => {
+                        if (valueLesson?.id) {
+                          handleSaveEditSection(values);
+                        } else {
+                          handleSaveAddSection(values, index);
+                        }
+                      }}
+                      loading={loadingEditSection}
+                      control={control}
+                      valueLesson={valueLesson}
+                      handleSubmit={handleSubmit}
+                      handleCancelFormAddSection={() => {
+                        setValueLesson({});
+                      }}
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Text type="font-16-700" className="whitespace-nowrap">
+                        {t('createCourse.curriculum.part', {
+                          number: index + 1,
+                        })}
+                      </Text>
+                      <div className="flex items-center gap-1">
+                        <FileText size={20} />
+                        <Text
+                          type="font-16-400"
+                          className="text-letter/70 max-w-[800px] truncate"
+                        >
+                          {field.title}
                         </Text>
-                        <div className="flex items-center gap-1">
-                          <FileText size={20} />
-                          <Text
-                            type="font-16-400"
-                            className="text-letter/70 max-w-[800px] truncate"
-                          >
-                            {field.title}
-                          </Text>
+                        <Button
+                          isIconOnly
+                          onPress={() => {
+                            handleEditLesson(field, index);
+                          }}
+                          size="sm"
+                          radius="full"
+                          variant="light"
+                        >
+                          <PencilSimpleLine size={16} />
+                        </Button>
+                        {index !== 0 && (
                           <Button
                             isIconOnly
                             onPress={() => {
-                              handleEditLesson(field, index);
+                              handleRemoveSection(index, field?.idSection);
                             }}
                             size="sm"
                             radius="full"
                             variant="light"
                           >
-                            <PencilSimpleLine size={16} />
+                            <Trash size={16} />
                           </Button>
-                          {index !== 0 && (
-                            <Button
-                              isIconOnly
-                              onPress={() => {
-                                handleRemoveSection(index, field?.idSection);
-                              }}
-                              size="sm"
-                              radius="full"
-                              variant="light"
-                            >
-                              <Trash size={16} />
-                            </Button>
-                          )}
-                        </div>
+                        )}
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    <CurriculumItem
-                      item={field}
-                      validationErrors={validationErrors}
-                    />
-                  </div>
-                ) : (
-                  <FormAddSection
-                    handleSaveAddSection={(values: any) =>
-                      handleSaveAddSection(values, index)
-                    }
-                    loading={loadingAddSection}
-                    control={control}
-                    handleSubmit={handleSubmit}
-                    handleCancelFormAddSection={() => {
-                      setAddSection(false);
-                      remove(index);
-                    }}
+                  <CurriculumItem
+                    item={field}
+                    validationErrors={validationErrors}
                   />
-                )}
-              </div>
-            );
-          })}
-          {!addSection && (
-            <Button
-              onPress={() => {
-                setAddSection(true);
-                append({ title: '', introduction: '' });
-              }}
-              className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
-            >
-              <div className="flex items-center gap-1">
-                <IconPlusMain />
-                <Text type="font-16-400" className="text-main">
-                  {t('createCourse.curriculum.section')}
-                </Text>
-              </div>
-            </Button>
-          )}
-        </div>
-        <ModalConfirmDeleteSection
-          handleSubmitDelete={handleSubmitDelete}
-          ref={refModalConfirmDeleteSection}
-        />
-      </LoadingScreen>
-    </CurriculumProvider>
+                </div>
+              ) : (
+                <FormAddSection
+                  handleSaveAddSection={(values: any) =>
+                    handleSaveAddSection(values, index)
+                  }
+                  loading={loadingAddSection}
+                  control={control}
+                  handleSubmit={handleSubmit}
+                  handleCancelFormAddSection={() => {
+                    setAddSection(false);
+                    remove(index);
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+        {!addSection && (
+          <Button
+            onPress={() => {
+              setAddSection(true);
+              append({ title: '', introduction: '' });
+            }}
+            className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
+          >
+            <div className="flex items-center gap-1">
+              <IconPlusMain />
+              <Text type="font-16-400" className="text-main">
+                {t('createCourse.curriculum.section')}
+              </Text>
+            </div>
+          </Button>
+        )}
+      </div>
+      <ModalConfirmDeleteSection
+        handleSubmitDelete={handleSubmitDelete}
+        ref={refModalConfirmDeleteSection}
+      />
+    </LoadingScreen>
   );
 };
 export default Curriculum;
