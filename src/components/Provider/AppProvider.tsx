@@ -16,6 +16,10 @@ import { WagmiProvider } from 'wagmi';
 import { base } from '@/config/viem';
 import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
+import ErrorModalBoundary, {
+  ErrorBoundary,
+} from '@/components/UI/ErrorModalBoundary';
+import { ErrorModalProvider } from '@/components/UI/ErrorModalBoundary/ErrorModalProvider';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -90,21 +94,25 @@ function AppProvider({ children }: any) {
       />
       <main>
         <ClientWagmiProvider>
-          <AppLayout>
-            <QueryClientProvider client={queryClient}>
-              <RainbowKitProvider
-                theme={darkTheme({
-                  accentColor: '#02A6C2',
-                  borderRadius: 'small',
-                })}
-                initialChain={base}
-              >
-                <Toaster position="top-center" richColors />
-                <WagmiAutoReconnect />
-                {children}
-              </RainbowKitProvider>
-            </QueryClientProvider>
-          </AppLayout>
+          <ErrorModalProvider>
+            <ErrorModalBoundary>
+              <AppLayout>
+                <QueryClientProvider client={queryClient}>
+                  <RainbowKitProvider
+                    theme={darkTheme({
+                      accentColor: '#02A6C2',
+                      borderRadius: 'small',
+                    })}
+                    initialChain={base}
+                  >
+                    <Toaster position="top-center" richColors />
+                    <WagmiAutoReconnect />
+                    {children}
+                  </RainbowKitProvider>
+                </QueryClientProvider>
+              </AppLayout>
+            </ErrorModalBoundary>
+          </ErrorModalProvider>
         </ClientWagmiProvider>
       </main>
     </ViemErrorBoundary>

@@ -38,67 +38,39 @@ export const FileText = ({ size = 16, ...props }: Props) => (
   </svg>
 );
 
-export const MonitorPlay = ({ size = 16, ...props }: Props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 256 256"
-    fill="currentColor"
-    {...props}
-  >
-    <rect
-      x="32"
-      y="48"
-      width="192"
-      height="128"
-      rx="8"
-      ry="8"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="12"
-    />
-    <path d="M116 96l40 32-40 32Z" />
-  </svg>
-);
-
 export const Question = ({ size = 16, ...props }: Props) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
-    viewBox="0 0 256 256"
-    fill="currentColor"
-    {...props}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M96 104a32 32 0 1 1 48 28v16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="12"
+      d="M13 14H11C11 12 12.2 11.4 13 11C13.3 10.9 13.5 10.8 13.7 10.6C13.8 10.5 14 10.3 13.8 9.90002C13.6 9.40002 13 8.90002 12.1 8.90002C10.7 8.90002 10.5 10.1 10.4 10.4L8.39999 10.1C8.49999 9.00002 9.39999 6.90002 12 6.90002C13.6 6.90002 15 7.80002 15.6 9.10002C16 10.2 15.8 11.3 15 12.1C14.6 12.5 14.2 12.7 13.8 12.8C13.2 13.2 13 13 13 14Z"
+      fill="currentColor"
     />
-    <circle cx="128" cy="184" r="8" />
+    <path
+      d="M12 5C15.9 5 19 8.1 19 12C19 15.9 15.9 19 12 19C8.1 19 5 15.9 5 12C5 8.1 8.1 5 12 5ZM12 4C7.6 4 4 7.6 4 12C4 16.4 7.6 20 12 20C16.4 20 20 16.4 20 12C20 7.6 16.4 4 12 4Z"
+      fill="currentColor"
+    />
+    <path d="M10.9 15H12.9V17H10.9V15Z" fill="currentColor" />
   </svg>
 );
 
 export const PlayCircle = ({ size = 16, ...props }: Props) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     width={size}
     height={size}
-    viewBox="0 0 256 256"
-    fill="currentColor"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <circle
-      cx="128"
-      cy="128"
-      r="96"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="12"
+    <path
+      d="M12 4C7.6 4 4 7.6 4 12C4 16.4 7.6 20 12 20C16.4 20 20 16.4 20 12C20 7.6 16.4 4 12 4ZM10 16V8L16 12L10 16Z"
+      fill="currentColor"
     />
-    <path d="M112 96l48 32-48 32Z" />
   </svg>
 );
 
