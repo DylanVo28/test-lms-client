@@ -15,7 +15,7 @@ import { LessonContentType, TYPE_COURSE } from '@/utils/const';
 import { Button, cn, Tooltip } from '@nextui-org/react';
 import {
   FileText,
-  MonitorPlay,
+  PlayCircle,
   Question,
 } from '@/components/UI/Icons/FileIcons';
 import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
@@ -68,8 +68,8 @@ const CurriculumItem = ({
 
   const [valueQuestion, setValueQuestion] = useState<any>({});
 
-  const [indexContentAdd, setIndexAddContent] = useState<any>([]);
-  const [indexAddQuestion, setIndexAddQuestion] = useState<any>([]);
+  const [idsContentAdd, setIdsContentAdd] = useState<string[]>([]);
+  const [idsAddQuestion, setIdsAddQuestion] = useState<string[]>([]);
   const [idAddQuestionQuizz, setIdAddQuestionQuizz] = useState<string>('');
 
   const { handleUpdateEditLessonId, editLessonId } = useCurriculumContext();
@@ -211,7 +211,6 @@ const CurriculumItem = ({
 
   const { run: runCreateQuizz, loading: loadingQuizz } = useCreateQuizz({
     onSuccess(res) {
-      handleUpdateEditLessonId(null);
       const dataQuizz = dataCurriculum?.filter(
         (item: any) => item?.type === TYPE_COURSE.QUIZ
       );
@@ -243,35 +242,36 @@ const CurriculumItem = ({
     setFormAdd(type);
   };
 
-  const handleSaveVideo = (values: any, id: string, index: number) => {
-    const newData = indexContentAdd?.filter((item: any) => item !== index);
-    setIndexAddContent(newData);
+  const handleSaveVideo = (values: any, id: string) => {
+    const newData = idsContentAdd?.filter((itemId: string) => itemId !== id);
+    setIdsContentAdd(newData);
     const body = {
       info: values,
       contentType: LessonContentType?.VIDEO,
     };
 
     runEditLecture(body, id);
+    handleUpdateEditLessonId(null);
   };
 
-  const handleSaveArticle = (value: string, id: string, index: number) => {
-    const newData = indexContentAdd?.filter((item: any) => item !== index);
-    setIndexAddContent(newData);
+  const handleSaveArticle = (value: string, id: string) => {
+    const newData = idsContentAdd?.filter((itemId: string) => itemId !== id);
+    setIdsContentAdd(newData);
     const body = {
       content: value,
       contentType: LessonContentType?.ARTICLE,
     };
     runEditLecture(body, id);
+    handleUpdateEditLessonId(null);
   };
   const handleSaveAddQuestion = (
     values: any,
     id: string,
-    index: number,
     quizzes: any,
     idEdit?: string
   ) => {
-    const newData = indexAddQuestion?.filter((item: any) => item !== index);
-    setIndexAddQuestion(newData);
+    const newData = idsAddQuestion?.filter((itemId: string) => itemId !== id);
+    setIdsAddQuestion(newData);
     setIdAddQuestionQuizz(id);
     handleUpdateEditLessonId(null);
 
@@ -316,25 +316,25 @@ const CurriculumItem = ({
     setFormAdd('');
   };
 
-  const handleClickAddContent = (item: any, index: number) => {
+  const handleClickAddContent = (item: any) => {
     const type = item?.type as TYPE_COURSE;
 
     handleUpdateEditLessonId(item?.id);
 
     if (type === TYPE_COURSE.LECTURE) {
-      setIndexAddContent((prev: any) =>
-        prev.includes(index)
-          ? prev.filter((i: any) => i !== index)
-          : [...prev, index]
+      setIdsContentAdd((prev: string[]) =>
+        prev.includes(item.id)
+          ? prev.filter((id: string) => id !== item.id)
+          : [...prev, item.id]
       );
       setTypeAddContent(type);
     } else {
       setAddQuizzQuestion(type);
 
-      setIndexAddQuestion((prev: any) =>
-        prev.includes(index)
-          ? prev.filter((i: any) => i !== index)
-          : [...prev, index]
+      setIdsAddQuestion((prev: string[]) =>
+        prev.includes(item.id)
+          ? prev.filter((id: string) => id !== item.id)
+          : [...prev, item.id]
       );
     }
   };
@@ -342,17 +342,17 @@ const CurriculumItem = ({
   const handleClickEditContent = (
     content: string,
     type: TYPE_COURSE,
-    index: number,
+    itemId: string,
     info: any
   ) => {
     setTypeAddContent(type);
     setValueContent(content);
     setValueInfo(info);
 
-    setIndexAddContent((prev: any) =>
-      prev.includes(index)
-        ? prev.filter((i: any) => i !== index)
-        : [...prev, index]
+    setIdsContentAdd((prev: string[]) =>
+      prev.includes(itemId)
+        ? prev.filter((id: string) => id !== itemId)
+        : [...prev, itemId]
     );
   };
 
@@ -378,14 +378,14 @@ const CurriculumItem = ({
   const handleClickEditQuestion = (
     values: any,
     type: TYPE_COURSE,
-    index: number
+    itemId: string
   ) => {
     setAddQuizzQuestion(type);
     setValueQuestion(values);
-    setIndexAddQuestion((prev: any) =>
-      prev.includes(index)
-        ? prev.filter((i: any) => i !== index)
-        : [...prev, index]
+    setIdsAddQuestion((prev: string[]) =>
+      prev.includes(itemId)
+        ? prev.filter((id: string) => id !== itemId)
+        : [...prev, itemId]
     );
   };
 
@@ -404,6 +404,11 @@ const CurriculumItem = ({
   ) => {
     if (type === TYPE_COURSE.LECTURE) {
       runDeleteLecture(id);
+
+      if (editLessonId === id) {
+        handleUpdateEditLessonId(null);
+      }
+
       const newData = dataCurriculum?.filter((item: any) => item?.id !== id);
       setDataCurriculum(newData);
     } else {
@@ -501,7 +506,7 @@ const CurriculumItem = ({
                       {item?.type === TYPE_COURSE.LECTURE ? (
                         <>
                           {item?.contentType === LessonContentType?.VIDEO ? (
-                            <MonitorPlay size={20} />
+                            <PlayCircle size={20} />
                           ) : (
                             <FileText size={20} />
                           )}
@@ -516,34 +521,38 @@ const CurriculumItem = ({
                         {item.title}
                       </Text>
 
-                      <Button
-                        isIconOnly
-                        onPress={() => {
-                          handleEditLecture(item);
-                        }}
-                        size="sm"
-                        radius="full"
-                        variant="light"
-                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
-                      >
-                        <PencilSimpleLine size={16} />
-                      </Button>
-                      <Button
-                        isIconOnly
-                        onPress={() => {
-                          handleRemoveLecture(
-                            indexCurriculum,
-                            item?.id,
-                            item?.type
-                          );
-                        }}
-                        size="sm"
-                        radius="full"
-                        variant="light"
-                        className="md:group-hover:opacity-100 md:opacity-0 transition-all"
-                      >
-                        <Trash size={16} />
-                      </Button>
+                      <div className="flex items-center gap-1 ml-4">
+                        <Button
+                          isIconOnly
+                          onPress={() => {
+                            handleEditLecture(item);
+                          }}
+                          size="sm"
+                          radius="full"
+                          variant="light"
+                          className="w-fit cursor-pointer"
+                        >
+                          <PencilSimpleLine size={16} />
+                          Edit
+                        </Button>
+                        <Button
+                          isIconOnly
+                          onPress={() => {
+                            handleRemoveLecture(
+                              indexCurriculum,
+                              item?.id,
+                              item?.type
+                            );
+                          }}
+                          size="sm"
+                          radius="full"
+                          variant="light"
+                          className="w-fit cursor-pointer"
+                        >
+                          <Trash size={16} />
+                          Delete
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -571,26 +580,30 @@ const CurriculumItem = ({
                 )}
               </div>
 
-              {indexContentAdd?.includes(indexCurriculum) ||
-              indexAddQuestion?.includes(indexCurriculum) ? (
+              {idsContentAdd?.includes(item.id) ||
+              idsAddQuestion?.includes(item.id) ? (
                 <div className="flex items-center gap-3">
                   {/* <Text type="font-14-500" className="w-max">
                     {'Select content type'}
                   </Text> */}
                   <Button
                     onPress={() => {
-                      const newData = indexContentAdd?.filter(
-                        (item: any) => item !== indexCurriculum
+                      const newData = idsContentAdd?.filter(
+                        (itemId: string) => itemId !== item.id
                       );
-                      const newDataQuestion = indexAddQuestion?.filter(
-                        (item: any) => item !== indexCurriculum
+                      const newDataQuestion = idsAddQuestion?.filter(
+                        (itemId: string) => itemId !== item.id
                       );
-                      setIndexAddContent(newData);
-                      setIndexAddQuestion(newDataQuestion);
+
+                      if (editLessonId === item.id) {
+                        handleUpdateEditLessonId(null);
+                      }
+
+                      setIdsContentAdd(newData);
+                      setIdsAddQuestion(newDataQuestion);
                       setValueContent('');
                       setValueInfo({});
                       setValueQuestion({});
-                      handleUpdateEditLessonId(null);
                     }}
                     isIconOnly
                     variant="light"
@@ -602,16 +615,26 @@ const CurriculumItem = ({
                 </div>
               ) : (
                 <>
+                  {/* +content--+question */}
                   {!item?.content &&
                     !item?.info?.duration &&
                     !valueEditEditCotentLesson?.id && (
                       <Tooltip
-                        content={editLessonId ? <EditLessonToastContent /> : ''}
+                        content={
+                          editLessonId ? (
+                            <EditLessonToastContent
+                              editLessonId={editLessonId}
+                              dataCurriculum={dataCurriculum}
+                            />
+                          ) : (
+                            ''
+                          )
+                        }
                       >
                         <Button
                           onPress={() => {
                             if (!!editLessonId) return;
-                            handleClickAddContent(item, indexCurriculum);
+                            handleClickAddContent(item);
                           }}
                           className={cn(
                             'border-main border-1 bg-transparent rounded h-[30px] pr-3',
@@ -634,7 +657,7 @@ const CurriculumItem = ({
               )}
             </div>
             {(item?.content || item?.info?.duration) &&
-              !indexContentAdd?.includes(indexCurriculum) && (
+              !idsContentAdd?.includes(item.id) && (
                 <Content
                   info={item?.info}
                   type={item?.contentType}
@@ -642,37 +665,33 @@ const CurriculumItem = ({
                     handleClickEditContent(
                       item.content,
                       item?.contentType,
-                      indexCurriculum,
+                      item.id,
                       item?.info
                     )
                   }
                 />
               )}
             {item?.questions?.length > 0 &&
-              !indexAddQuestion?.includes(indexCurriculum) && (
+              !idsAddQuestion?.includes(item.id) && (
                 <ContentQuestions
                   handleClickDeleteQuestion={handleClickDeleteQuestion}
                   handleClickEditQuestion={(values) => {
-                    handleClickEditQuestion(
-                      values,
-                      item?.type,
-                      indexCurriculum
-                    );
+                    handleClickEditQuestion(values, item?.type, item.id);
                   }}
                   questions={item?.questions}
                 />
               )}
-            {typeAddContent && indexContentAdd?.includes(indexCurriculum) && (
+            {typeAddContent && idsContentAdd?.includes(item.id) && (
               <>
                 <FormAddLecture
                   typeAddContent={typeAddContent}
                   valueContent={valueContent}
                   valueInfo={valueInfo}
                   handleSaveVideo={(values) =>
-                    handleSaveVideo(values, item?.id, indexCurriculum)
+                    handleSaveVideo(values, item?.id)
                   }
                   handleSaveArticle={(value) =>
-                    handleSaveArticle(value, item?.id, indexCurriculum)
+                    handleSaveArticle(value, item?.id)
                   }
                   loading={loadingEditLecture}
                   lectureItem={item}
@@ -681,7 +700,7 @@ const CurriculumItem = ({
             )}
 
             {typeAddQuizzQuestion === TYPE_COURSE.QUIZ &&
-              indexAddQuestion.includes(indexCurriculum) && (
+              idsAddQuestion.includes(item.id) && (
                 <FormAddQuizz
                   valueQuestion={valueQuestion}
                   loading={
@@ -691,7 +710,6 @@ const CurriculumItem = ({
                     handleSaveAddQuestion(
                       values,
                       item?.id,
-                      indexCurriculum,
                       item?.quizzes,
                       idEdit
                     )

@@ -5,7 +5,7 @@ import { Checkbox } from '@nextui-org/react';
 import {
   File,
   FileText,
-  MonitorPlay,
+  PlayCircle,
   Question,
 } from '@/components/UI/Icons/FileIcons';
 import clsx from 'clsx';
@@ -105,7 +105,7 @@ const ChildSection = ({
                   {item.contentType === LessonContentType.VIDEO && (
                     <div className="flex items-center gap-2">
                       <>
-                        <MonitorPlay size={20} className="text-black-5" />
+                        <PlayCircle size={20} className="text-black-5" />
                         <Text type="font-14-400" className="text-black-5">
                           {formattedTime}
                         </Text>

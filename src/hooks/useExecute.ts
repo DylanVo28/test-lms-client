@@ -1,4 +1,5 @@
 import { calculateGasMargin } from '@/utils/common';
+import { useErrorModal } from '@/components/UI/ErrorModalBoundary/ErrorModalProvider';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
@@ -9,6 +10,7 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
+  const { open } = useErrorModal();
 
   const vaultContract = getVaultContract(VAULT_ADDRESS);
   const usdcContract = getUSDCContract(USDC_ADDRESS);
@@ -32,7 +34,8 @@ export const useUSDCOperations = () => {
         });
         await tx.wait();
       } catch (error) {
-        throw error;
+        open(error as Error);
+        return;
       } finally {
         setLoading(false);
       }
@@ -74,7 +77,7 @@ export const useUSDCOperations = () => {
 
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
-          amount,
+          0,
           kolAddress,
           adminSigner,
           signature,
@@ -96,7 +99,7 @@ export const useUSDCOperations = () => {
 
         return receipt;
       } catch (error) {
-        console.log('estimatedGasestimatedGasestimatedGas:', error);
+        open(error as Error);
       } finally {
         setLoading(false);
       }
