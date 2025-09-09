@@ -220,7 +220,7 @@ const CourseLandingPage = ({
           areas that you have covered during your course.
         </Text>
       </div>
-      <div className="grid md:grid-cols-2 gap-4">
+      {/* <div className="grid md:grid-cols-2 gap-4">
         <div className="col-span-1">
           <Controller
             name="topics"
@@ -250,7 +250,7 @@ const CourseLandingPage = ({
             )}
           />
         </div>
-      </div>
+      </div> */}
       <Controller
         name="image"
         control={control}
