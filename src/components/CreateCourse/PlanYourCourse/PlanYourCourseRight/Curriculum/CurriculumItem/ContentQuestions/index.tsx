@@ -28,7 +28,7 @@ const ContentQuestions = ({
                 Question {index + 1}:
               </Text>
               <div
-                className="text-sm font-normal text-letter/40 line-clamp-2 mt-0.5"
+                className="text-sm font-normal text-letter/40 line-clamp-2 mt-0.5 customContentEditor"
                 dangerouslySetInnerHTML={{ __html: item?.question }}
               />
             </div>

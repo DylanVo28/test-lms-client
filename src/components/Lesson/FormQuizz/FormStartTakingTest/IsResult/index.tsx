@@ -50,7 +50,7 @@ const IsResult = ({
                 </Text>
                 <div
                   dangerouslySetInnerHTML={{ __html: item?.question }}
-                  className="text-xl font-semibold text-letter/70"
+                  className="text-xl font-semibold text-letter/70 customContentEditor"
                 />
               </div>
             );

@@ -147,7 +147,7 @@ const FormStartTakingTest = ({
           )} ${currentQuestion}`}</Text>
 
           <div
-            className="text-2xl text-letter pb-4"
+            className="text-2xl text-letter pb-4 customContentEditor"
             dangerouslySetInnerHTML={{
               __html: dataQuizz?.questions?.[currentQuestion - 1]?.question,
             }}
@@ -159,7 +159,7 @@ const FormStartTakingTest = ({
                   return (
                     <CustomRadio key={item.id} value={item.id}>
                       <div
-                        className="text-xl text-letter font-semibold"
+                        className="text-xl text-letter font-semibold customContentEditor"
                         dangerouslySetInnerHTML={{
                           __html: item?.answer,
                         }}

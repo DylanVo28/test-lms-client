@@ -50,23 +50,23 @@ const QuillEditor = ({
       });
 
       // @ts-ignore
-      // Handle pasted content formatting
-      quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-        const ops = delta.ops.map((op: any) => {
-          if (op.insert && typeof op.insert === 'string') {
-            return {
-              insert: op.insert,
-              attributes: {
-                ...(op.attributes || {}),
-                color: 'white',
-                background: 'transparent',
-              },
-            };
-          }
-          return op;
-        });
-        return { ops };
-      });
+      // Handle pasted content formatting - only use clipboard matchers
+      // quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+      //   const ops = delta.ops.map((op: any) => {
+      //     if (op.insert && typeof op.insert === 'string') {
+      //       return {
+      //         insert: op.insert,
+      //         attributes: {
+      //           ...(op.attributes || {}),
+      //           color: 'white',
+      //           background: 'transparent',
+      //         },
+      //       };
+      //     }
+      //     return op;
+      //   });
+      //   return { ops };
+      // });
 
       // @ts-ignore
       quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
@@ -84,19 +84,6 @@ const QuillEditor = ({
             return op;
           }),
         };
-      });
-
-      // Override default paste behavior
-      quill.root.addEventListener('paste', function (e: ClipboardEvent) {
-        e.preventDefault();
-        const text = e.clipboardData?.getData('text/plain') || '';
-        const range = quill.getSelection();
-        if (range) {
-          quill.insertText(range.index, text, {
-            color: 'white',
-            background: 'transparent',
-          });
-        }
       });
 
       setEditor(quill);

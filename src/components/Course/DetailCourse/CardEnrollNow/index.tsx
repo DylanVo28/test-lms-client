@@ -330,13 +330,21 @@ const CardEnrollNow = ({
                   </Text>
                 )}
               </div>
-              {course?.originPrice && course?.price && (
+              {course?.originPrice > 0 && course?.price > 0 && (
                 <div className="rounded-full border-1 border-[#F26F2133] py-1 px-3 bg-[#F26F2133] flex items-center gap-1">
                   <Text type="font-14-500" className="text-secondary">
                     {discountCalculator(course?.originPrice, course?.price)}
                   </Text>
                   <Text type="font-14-500" className="text-secondary">
                     {t('course.off')}
+                  </Text>
+                </div>
+              )}
+
+              {course?.price == 0 && (
+                <div className="rounded-full border-1 border-[#F26F2133] py-1 px-3 bg-[#F26F2133] flex items-center gap-1">
+                  <Text type="font-14-500" className="text-secondary">
+                    {t('course.free')}
                   </Text>
                 </div>
               )}

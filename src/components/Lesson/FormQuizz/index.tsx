@@ -124,7 +124,7 @@ const FormQuizz = ({
               </Text>
             </div>
             <div
-              className="text-letter"
+              className="text-letter customContentEditor"
               dangerouslySetInnerHTML={{ __html: dataQuizz?.description }}
             />
 
