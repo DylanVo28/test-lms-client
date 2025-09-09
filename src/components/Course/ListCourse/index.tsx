@@ -24,7 +24,6 @@ const ListCourse = () => {
     { key: 'createdAt desc', label: t('listCourse.newest') },
     { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
-  const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
   const [category, setCategory] = useState();
   const [price, setPrice] = useState();
@@ -36,7 +35,7 @@ const ListCourse = () => {
 
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
     useGetListCourse({
-      pageSize,
+      pageSize: 12,
       order: sort,
       categories: category,
       prices: price,

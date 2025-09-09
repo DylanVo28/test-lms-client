@@ -6,13 +6,11 @@ import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { Button } from '@nextui-org/react';
-import clsx from 'clsx';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
 import DrawerFilter from '../DrawerFilter';
 import { useLikeCourse, useUnLikeCourse } from '../service';
 import CardCourse from './CardCourse';
@@ -33,8 +31,6 @@ const initParams = {
 const ListCourse = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
-  const [tab, setTab] = useState(TAB_VIEW?.GRID);
-  const [pageSize, setPageSize] = useState(3);
   const [sort, setSort] = useState<any>();
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,7 +57,7 @@ const ListCourse = () => {
     loading,
     loadingMore,
   } = useGetListCourse({
-    pageSize,
+    pageSize: 12,
     order: sort,
     prices: params?.prices?.join(','),
     ratings: params?.ratings,
