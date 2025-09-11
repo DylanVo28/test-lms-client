@@ -87,9 +87,15 @@ const ThemeConfiguration = ({}: {}) => {
     setDescription(e.target.value);
   };
 
-  const onSave = () => {
+  const onSave = ({
+    forceCustomColorsData,
+  }: {
+    forceCustomColorsData?: CustomColorsType;
+  }) => {
     const body = {
-      color: JSON.stringify(customColors || DefaultThemeColor),
+      color: JSON.stringify(
+        forceCustomColorsData || customColors || DefaultThemeColor
+      ),
       code,
       logo,
       langs,
@@ -126,7 +132,7 @@ const ThemeConfiguration = ({}: {}) => {
 
   useEffect(() => {
     if (isNonUserSave && profile?.id && dataThemeConfig?.userId) {
-      onSave();
+      onSave({});
       setIsNonUserSave(false);
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
@@ -238,7 +244,15 @@ const ThemeConfiguration = ({}: {}) => {
 
                 <CustomColors
                   colors={customColors}
-                  onColorsChange={setCustomColors}
+                  onColorsChange={(data, syncToServer) => {
+                    setCustomColors(data);
+
+                    if (syncToServer) {
+                      onSave({
+                        forceCustomColorsData: data,
+                      });
+                    }
+                  }}
                 />
 
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
@@ -253,7 +267,7 @@ const ThemeConfiguration = ({}: {}) => {
                           openConnectModal();
                           setIsNonUserSave(true);
                         } else {
-                          onSave();
+                          onSave({});
                         }
                       };
 
