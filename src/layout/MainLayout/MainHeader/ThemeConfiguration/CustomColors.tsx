@@ -5,21 +5,29 @@ import { DefaultThemeColor, type CustomColors } from '@/store/theme/theme';
 
 interface CustomColorsProps {
   colors: CustomColors;
-  onColorsChange: (colors: CustomColors) => void;
+  onColorsChange: (colors: CustomColors, syncToServer?: boolean) => void;
 }
 
 const CustomColors: React.FC<CustomColorsProps> = ({
   colors,
   onColorsChange,
 }) => {
-  const handleColorChange = (
-    colorType: 'primary' | 'background' | 'card' | 'secondary' | 'text',
-    value: string
-  ) => {
-    onColorsChange({
-      ...colors,
-      [colorType]: value,
-    });
+  const handleColorChange = ({
+    colorType,
+    value,
+    syncToServer,
+  }: {
+    colorType: 'primary' | 'background' | 'card' | 'secondary' | 'text';
+    value: string;
+    syncToServer?: boolean;
+  }) => {
+    onColorsChange(
+      {
+        ...colors,
+        [colorType]: value,
+      },
+      syncToServer
+    );
   };
 
   const colorFields = [
@@ -65,7 +73,7 @@ const CustomColors: React.FC<CustomColorsProps> = ({
         <Text className="text-[18px] font-semibold">Custom Colors</Text>
         <button
           onClick={() => {
-            onColorsChange(DefaultThemeColor);
+            onColorsChange(DefaultThemeColor, true);
           }}
           className="px-3 py-1.5 bg-card hover:bg-card-80 text-letter text-sm rounded-md transition-colors border border-main"
         >
@@ -90,7 +98,12 @@ const CustomColors: React.FC<CustomColorsProps> = ({
                     ? colors[field.key]
                     : field.placeholder
                 }
-                onChange={(e) => handleColorChange(field.key, e.target.value)}
+                onChange={(e) =>
+                  handleColorChange({
+                    colorType: field.key,
+                    value: e.target.value,
+                  })
+                }
                 className="w-12 h-10 rounded cursor-pointer transition-colors"
                 title={`Pick ${field.label.toLowerCase()}`}
                 style={{
@@ -104,7 +117,10 @@ const CustomColors: React.FC<CustomColorsProps> = ({
                 inputDefault
                 value={colors[field.key]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  handleColorChange(field.key, e.target.value)
+                  handleColorChange({
+                    colorType: field.key,
+                    value: e.target.value,
+                  })
                 }
                 placeholder={field.placeholder}
                 className="flex-1 rounded-[4px]"

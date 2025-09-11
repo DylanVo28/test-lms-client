@@ -18,7 +18,6 @@ export default function ListCourses() {
     { key: 'createdAt desc', label: t('listCourse.newest') },
     { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
-  const [pageSize, setPageSize] = useState(4);
   const [sort, setSort] = useState();
   const [category, setCategory] = useState();
   const [price, setPrice] = useState();
@@ -27,7 +26,7 @@ export default function ListCourses() {
   const { profile } = useProfile();
 
   const { list, loadMore, noMore, reload, loading } = useGetListUserCourse({
-    pageSize,
+    pageSize: 12,
     order: sort,
     categories: category,
     prices: price,
