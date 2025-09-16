@@ -14,6 +14,10 @@ import {
   applyCustomColors,
   getCustomColorsFromTheme,
 } from '@/utils/themeColors';
+import {
+  THEME_PREVIEW_KEY,
+  THEME_PREVIEW_MODE_KEY,
+} from '@/utils/theme-preview';
 
 export const useThemeInitial = () => {
   const [theme, setTheme] = useAtom(themeAtom);
@@ -27,6 +31,28 @@ export const useThemeInitial = () => {
 
   const run = () => {
     const init = async () => {
+      // Check preview mode first
+      const isPreview = localStorage.getItem(THEME_PREVIEW_MODE_KEY) === 'true';
+      // If in preview mode and has preview data, use that instead\
+
+      if (isPreview) {
+        const previewData = localStorage.getItem(THEME_PREVIEW_KEY);
+        if (previewData) {
+          const parsedData = JSON.parse(previewData);
+          setTheme({
+            ...theme,
+            title: parsedData.title,
+            description: parsedData.description,
+            topics: parsedData.topics,
+            banner: parsedData.banner,
+            logo: parsedData.logo,
+            color: parsedData.color,
+          });
+          applyCustomColors(parsedData.color);
+          return;
+        }
+      }
+
       let res;
 
       const adminRes = await privateRequest(
