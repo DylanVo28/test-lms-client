@@ -8,6 +8,7 @@ export const API_PATH = {
   GET_USER_VOLUMN: '/api/referral/get-user-volumn',
   PREPARE_REGISTER_METADATA: '/api/auth/prepare-register-metadata',
   ENROLL_COURSE_FREE: (id: string) => `/api/courses/${id}/enroll-course-free`,
+  CREATE_TX: `/api/web3/create-transaction`,
 
   CHECK_ADDRESS: '/api/auth/check-address',
 

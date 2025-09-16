@@ -7,7 +7,7 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error?: Error;
+  errorMessage?: string;
 }
 
 // Error boundary specifically for viem operations
@@ -20,7 +20,10 @@ export class ViemErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI
-    return { hasError: true, error };
+    return {
+      hasError: true,
+      errorMessage: error?.message || 'An unexpected error occurred',
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
@@ -54,8 +57,8 @@ export class ViemErrorBoundary extends Component<Props, State> {
             Wallet Connection Error
           </h3>
           <p className="text-red-600 text-sm mb-3">
-            There was an issue with the wallet connection. Please try refreshing
-            the page.
+            {this.state.errorMessage ||
+              'There was an issue with the wallet connection. Please try refreshing the page.'}
           </p>
           <button
             onClick={() => this.setState({ hasError: false })}

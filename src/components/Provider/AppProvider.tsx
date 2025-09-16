@@ -14,12 +14,7 @@ import { Toaster } from 'sonner';
 import dynamic from 'next/dynamic';
 import { WagmiProvider } from 'wagmi';
 import { base } from '@/config/viem';
-import { ViemErrorBoundary } from '@/components/UI/ViemErrorBoundary';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
-import ErrorModalBoundary, {
-  ErrorBoundary,
-} from '@/components/UI/ErrorModalBoundary';
-import { ErrorModalProvider } from '@/components/UI/ErrorModalBoundary/ErrorModalProvider';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -67,7 +62,7 @@ const ClientWagmiProvider = dynamic(
 
 function AppProvider({ children }: any) {
   return (
-    <ViemErrorBoundary>
+    <>
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content={'index,follow'} />
@@ -94,28 +89,24 @@ function AppProvider({ children }: any) {
       />
       <main>
         <ClientWagmiProvider>
-          <ErrorModalProvider>
-            <ErrorModalBoundary>
-              <AppLayout>
-                <QueryClientProvider client={queryClient}>
-                  <RainbowKitProvider
-                    theme={darkTheme({
-                      accentColor: '#02A6C2',
-                      borderRadius: 'small',
-                    })}
-                    initialChain={base}
-                  >
-                    <Toaster position="top-center" richColors />
-                    <WagmiAutoReconnect />
-                    {children}
-                  </RainbowKitProvider>
-                </QueryClientProvider>
-              </AppLayout>
-            </ErrorModalBoundary>
-          </ErrorModalProvider>
+          <AppLayout>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider
+                theme={darkTheme({
+                  accentColor: '#02A6C2',
+                  borderRadius: 'small',
+                })}
+                initialChain={base}
+              >
+                <Toaster position="top-center" richColors />
+                <WagmiAutoReconnect />
+                {children}
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </AppLayout>
         </ClientWagmiProvider>
       </main>
-    </ViemErrorBoundary>
+    </>
   );
 }
 

@@ -1,16 +1,33 @@
 import { calculateGasMargin } from '@/utils/common';
-import { useErrorModal } from '@/components/UI/ErrorModalBoundary/ErrorModalProvider';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
+import { toast } from '@/components/UI/Toast/toast';
+import { API_PATH } from '@/api/constant';
+import { privateRequest, request } from '@/api/request';
 
 export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
+const createTx = async ({
+  courseId,
+  userId,
+}: {
+  courseId: string;
+  userId: string;
+}) => {
+  const res = await privateRequest(request.post, API_PATH.CREATE_TX, {
+    data: {
+      courseId,
+      userId,
+    },
+  });
+  return res.data;
+};
+
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
-  const { open } = useErrorModal();
 
   const vaultContract = getVaultContract(VAULT_ADDRESS);
   const usdcContract = getUSDCContract(USDC_ADDRESS);
@@ -34,7 +51,7 @@ export const useUSDCOperations = () => {
         });
         await tx.wait();
       } catch (error) {
-        open(error as Error);
+        toast.error(error as string);
         return;
       } finally {
         setLoading(false);
@@ -51,6 +68,7 @@ export const useUSDCOperations = () => {
       deadline,
       kolAddress,
       signature,
+      userId,
     }: {
       courseId: string;
       amount: BigNumber;
@@ -58,6 +76,7 @@ export const useUSDCOperations = () => {
       signature: string;
       deadline: number;
       adminSigner: string;
+      userId: string;
     }) => {
       if (!vaultContract) {
         console.error('Vault contract not initialized');
@@ -66,18 +85,9 @@ export const useUSDCOperations = () => {
       try {
         setLoading(true);
 
-        console.log('estimatedGas:::', {
-          courseId,
-          amount,
-          kolAddress,
-          adminSigner,
-          signature,
-          deadline,
-        });
-
         const estimatedGas = await vaultContract.estimateGas.pay(
           courseId,
-          0,
+          amount,
           kolAddress,
           adminSigner,
           signature,
@@ -95,11 +105,16 @@ export const useUSDCOperations = () => {
             gasLimit: calculateGasMargin(estimatedGas),
           }
         );
+
+        //create tx
+        await createTx({ courseId, userId: userId });
+
         const receipt = await tx.wait();
 
         return receipt;
       } catch (error) {
-        open(error as Error);
+        console.log('ERROR:::', error);
+        toast.error((JSON.stringify(error).slice(0, 500) + '...') as string);
       } finally {
         setLoading(false);
       }
