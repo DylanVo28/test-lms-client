@@ -197,6 +197,7 @@ const CardEnrollNow = ({
           adminSigner: metadataPayment.adminSigner,
           signature: metadataPayment.signature,
           deadline: metadataPayment.deadline,
+          userId: profile?.id,
         });
         if (receipt.status === 1) {
           toast.success(
@@ -211,11 +212,9 @@ const CardEnrollNow = ({
         );
       }
     } catch (error: any) {
-      const message = error?.message?.includes('User rejected transaction')
-        ? 'user rejected transaction'
-        : 'Failed to enroll in the course. Please try again.';
-
-      toast.error(message);
+      if (error?.message?.includes('User rejected transaction')) {
+        toast.error('user rejected transaction');
+      }
     }
   };
 
