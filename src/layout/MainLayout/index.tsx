@@ -7,10 +7,12 @@ import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
 import MainHeader from './MainHeader';
+import { useThemePreview } from '@/hooks/useThemePreview';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   useStorageOrCookieChange();
+  useThemePreview(); // Initialize theme preview if in preview mode
 
   const accessToken = getAccessToken();
   const { address } = useAccount();

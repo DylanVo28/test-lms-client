@@ -11,6 +11,12 @@ import {
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { applyCustomColors } from '@/utils/themeColors';
 import {
+  saveThemePreview,
+  setPreviewMode,
+  THEME_PREVIEW_KEY,
+  THEME_PREVIEW_MODE_KEY,
+} from '@/utils/theme-preview';
+import {
   Button,
   Drawer,
   DrawerContent,
@@ -137,10 +143,46 @@ const ThemeConfiguration = ({}: {}) => {
     }
   }, [isNonUserSave, profile, dataThemeConfig]);
 
-  // Apply custom colors in real-time when they change
+  const isPreview = localStorage.getItem(THEME_PREVIEW_MODE_KEY) === 'true';
+
+  const handlePreview = () => {
+    const previewData = {
+      title,
+      description,
+      topics,
+      banner,
+      logo,
+      color: customColors,
+    };
+    saveThemePreview(previewData);
+    setPreviewMode(true);
+    requestGetTheme(); // T
+  };
+
+  const handleExitPreview = () => {
+    setPreviewMode(false);
+    localStorage.removeItem(THEME_PREVIEW_KEY);
+    localStorage.removeItem(THEME_PREVIEW_MODE_KEY);
+
+    // sleep 0.5 seconds
+
+    requestGetTheme(); // F
+  };
+
   useEffect(() => {
-    applyCustomColors(customColors);
-  }, [customColors]);
+    if (isPreview) {
+      const previewData = localStorage.getItem(THEME_PREVIEW_KEY);
+      if (previewData) {
+        const parsedData = JSON.parse(previewData);
+        setTitle(parsedData.title);
+        setDescription(parsedData.description);
+        setTopics(parsedData.topics);
+        setBanner(parsedData.banner);
+        setLogo(parsedData.logo);
+        setCustomColors(parsedData.color);
+      }
+    }
+  }, [isPreview]);
 
   const onCopy = () => {
     window.navigator.clipboard.writeText(`${window.location.origin}/${code}`);
@@ -251,8 +293,17 @@ const ThemeConfiguration = ({}: {}) => {
                       onSave({
                         forceCustomColorsData: data,
                       });
+
+                      if (isPreview) {
+                        //exit preview mode
+                        localStorage.removeItem(THEME_PREVIEW_KEY);
+                        localStorage.removeItem(THEME_PREVIEW_MODE_KEY);
+
+                        handleExitPreview();
+                      }
                     }
                   }}
+                  isLoading={createThemeLoading || updateThemeLoading}
                 />
 
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
@@ -268,11 +319,32 @@ const ThemeConfiguration = ({}: {}) => {
                           setIsNonUserSave(true);
                         } else {
                           onSave({});
+                          if (isPreview) {
+                            handleExitPreview();
+                          }
                         }
                       };
 
                       return (
-                        <div>
+                        <div className="flex gap-2">
+                          {isPreview && (
+                            <Button
+                              className="min-h-[40px] rounded mt-2 border-1 border-main"
+                              onClick={handleExitPreview}
+                            >
+                              <Text className="text-letter" type="font-16-600">
+                                Exit Preview
+                              </Text>
+                            </Button>
+                          )}
+                          <Button
+                            className="min-h-[40px] rounded mt-2 border-1 border-main"
+                            onClick={handlePreview}
+                          >
+                            <Text className="text-letter" type="font-16-600">
+                              {isPreview ? 'Update Preview' : 'Preview'}
+                            </Text>
+                          </Button>
                           <Button
                             isLoading={createThemeLoading || updateThemeLoading}
                             onPress={onPress}

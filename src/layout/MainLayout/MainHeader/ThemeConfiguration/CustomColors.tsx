@@ -6,11 +6,13 @@ import { DefaultThemeColor, type CustomColors } from '@/store/theme/theme';
 interface CustomColorsProps {
   colors: CustomColors;
   onColorsChange: (colors: CustomColors, syncToServer?: boolean) => void;
+  isLoading: boolean;
 }
 
 const CustomColors: React.FC<CustomColorsProps> = ({
   colors,
   onColorsChange,
+  isLoading,
 }) => {
   const handleColorChange = ({
     colorType,
@@ -72,12 +74,13 @@ const CustomColors: React.FC<CustomColorsProps> = ({
       <div className="flex items-center justify-between">
         <Text className="text-[18px] font-semibold">Custom Colors</Text>
         <button
+          disabled={isLoading}
           onClick={() => {
             onColorsChange(DefaultThemeColor, true);
           }}
           className="px-3 py-1.5 bg-card hover:bg-card-80 text-letter text-sm rounded-md transition-colors border border-main"
         >
-          Reset to Default
+          {isLoading ? 'Resetting...' : 'Reset to Default'}
         </button>
       </div>
 
