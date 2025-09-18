@@ -3,12 +3,8 @@ import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
 import { toast } from '@/components/UI/Toast/toast';
-import { API_PATH } from '@/api/constant';
+import { API_PATH, CONTRACT_ADDRESS } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
-
-export const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
-export const VAULT_ADDRESS = '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807';
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 const createTx = async ({
   courseId,
@@ -29,8 +25,8 @@ const createTx = async ({
 export const useUSDCOperations = () => {
   const [loading, setLoading] = useState(false);
 
-  const vaultContract = getVaultContract(VAULT_ADDRESS);
-  const usdcContract = getUSDCContract(USDC_ADDRESS);
+  const vaultContract = getVaultContract(CONTRACT_ADDRESS.VAULT_ADDRESS);
+  const usdcContract = getUSDCContract(CONTRACT_ADDRESS.USDC_ADDRESS);
 
   const approveUSDC = useCallback(
     async (spender: string, amount: string | number) => {

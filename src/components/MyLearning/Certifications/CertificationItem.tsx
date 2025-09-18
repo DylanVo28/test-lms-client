@@ -1,16 +1,15 @@
+import Info from '@/components/UI/Icons/Info';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import useCopy from '@/hooks/useCopy';
-import { MINT_NFT_ADDRESS, useHasMinted } from '@/hooks/useHasMinted';
+import { MINT_NFT_ADDRESS } from '@/hooks/useHasMinted';
 import CopyIcon from '@/icons/CopyIcon';
-import { Button, Skeleton, Tooltip } from '@nextui-org/react';
-import Info from '@/components/UI/Icons/Info';
-import { ArrowClockwise } from '@/components/UI/Icons/Arrows';
+import { Button, Tooltip } from '@nextui-org/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 
 const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
 const MINTING_COUNTDOWN = 10 * 1000; // 10 seconds in milliseconds
@@ -18,7 +17,6 @@ const MINTING_COUNTDOWN = 10 * 1000; // 10 seconds in milliseconds
 const CertificationItem = ({ item, refetchCertificates }: any) => {
   const { t } = useTranslation('common');
   const [isMintingInProgress, setIsMintingInProgress] = useState(false);
-  const [isRefetching, setIsRefetching] = useState(false);
 
   const checkMintingStatus = () => {
     const mintingRecord = localStorage.getItem(`minting_${item.id}`);
