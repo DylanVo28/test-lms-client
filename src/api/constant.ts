@@ -125,3 +125,8 @@ export const API_PATH = {
   COURSE_STUDENTS: (id: string) => `/api/courses/${id}/students`,
   COURSE_COMMENTS: (id: string) => `/api/courses/${id}/comments`,
 };
+
+export const CONTRACT_ADDRESS = {
+  USDC_ADDRESS: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+  VAULT_ADDRESS: '0xA30E833ce646d01C2eBd71bb5F879B9Fe845F807',
+};

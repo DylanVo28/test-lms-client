@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { CONTRACT_ADDRESS } from '@/api/constant';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/UI/Card/Card';
-import RewardHistory from './RewardHistory';
-import SoldCourses from './SoldCourses';
-import { useUSDCOperations, VAULT_ADDRESS } from '@/hooks/useExecute';
-import { API_PATH } from '@/api/constant';
-import { privateRequest, request } from '@/api/request';
-import { toast } from '@/components/UI/Toast/toast';
 import Info from '@/components/UI/Icons/Info';
-import { Tooltip, Spinner } from '@nextui-org/react';
-import { useProfile } from '@/store/profile/useProfile';
+import { toast } from '@/components/UI/Toast/toast';
 import { getVaultContract } from '@/hooks/useContract';
-import BigNumber from 'bignumber.js';
+import { useUSDCOperations } from '@/hooks/useExecute';
+import { useProfile } from '@/store/profile/useProfile';
 import { BIG_TEN } from '@/utils/bigNumber';
 import { extractRevertReason } from '@/utils/common';
+import { Spinner, Tooltip } from '@nextui-org/react';
+import BigNumber from 'bignumber.js';
+import React, { useEffect, useState } from 'react';
+import RewardHistory from './RewardHistory';
+import SoldCourses from './SoldCourses';
 
 const TabButton: React.FC<{
   active: boolean;
@@ -45,7 +44,7 @@ const Earnings = ({ reload }: { reload: () => void }) => {
   const { profile } = useProfile();
   const [totalRewards, setTotalRewards] = useState(0);
   const { withdraw } = useUSDCOperations();
-  const vaultContract = getVaultContract(VAULT_ADDRESS);
+  const vaultContract = getVaultContract(CONTRACT_ADDRESS.VAULT_ADDRESS);
 
   const getKOLClaimableAmount = async () => {
     if (!vaultContract) return;

@@ -1,15 +1,11 @@
-import { API_PATH } from '@/api/constant';
+import { API_PATH, CONTRACT_ADDRESS } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import CustomButtonEnroll from '@/components/UI/CustomButtonEnroll';
 import IconLikeCourse from '@/components/UI/IconLikeCourse';
 import IconLikedCourse from '@/components/UI/Icons/IconLikedCourse';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
-import {
-  useUSDCOperations,
-  VAULT_ADDRESS,
-  ZERO_ADDRESS,
-} from '@/hooks/useExecute';
+import { useUSDCOperations } from '@/hooks/useExecute';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useProfile } from '@/store/profile/useProfile';
@@ -188,7 +184,10 @@ const CardEnrollNow = ({
       if (res === true) {
         const metadataPayment = await getMetadataPayment(course.id);
 
-        await approveUSDC(VAULT_ADDRESS, metadataPayment.amount.toString());
+        await approveUSDC(
+          CONTRACT_ADDRESS.VAULT_ADDRESS,
+          metadataPayment.amount.toString()
+        );
 
         const receipt = await buyCourse({
           courseId: metadataPayment.courseId,
