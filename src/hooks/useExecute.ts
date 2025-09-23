@@ -1,10 +1,10 @@
+import { API_PATH, CONTRACT_ADDRESS } from '@/api/constant';
+import { privateRequest, request } from '@/api/request';
+import { toast } from '@/components/UI/Toast/toast';
 import { calculateGasMargin } from '@/utils/common';
 import BigNumber from 'bignumber.js';
 import { useCallback, useState } from 'react';
 import { getUSDCContract, getVaultContract } from './useContract';
-import { toast } from '@/components/UI/Toast/toast';
-import { API_PATH, CONTRACT_ADDRESS } from '@/api/constant';
-import { privateRequest, request } from '@/api/request';
 
 const createTx = async ({
   courseId,
