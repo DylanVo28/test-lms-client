@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { getUSDCContract } from './useContract';
-import { USDC_ADDRESS } from './useExecute';
+import { CONTRACT_ADDRESS } from '@/api/constant';
 
 export const useTokenInfo = () => {
   const { address } = useAccount();
@@ -11,7 +11,7 @@ export const useTokenInfo = () => {
   const [symbol, setSymbol] = useState('');
   const [decimals, setDecimals] = useState(0);
 
-  const usdcContract = getUSDCContract(USDC_ADDRESS);
+  const usdcContract = getUSDCContract(CONTRACT_ADDRESS.USDC_ADDRESS);
 
   useEffect(() => {
     if (!usdcContract) {
