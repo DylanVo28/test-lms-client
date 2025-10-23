@@ -5,6 +5,8 @@ import 'quill/dist/quill.snow.css';
 import 'react-rater/lib/react-rater.css';
 import '../styles/globals.scss';
 import '../styles/tailwind.css';
+import '../styles/quill.css';
+
 import 'video.js/dist/video-js.css';
 
 import { ReactElement, ReactNode, useEffect } from 'react';

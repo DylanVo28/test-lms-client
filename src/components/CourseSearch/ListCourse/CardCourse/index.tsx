@@ -155,7 +155,7 @@ const CardCourse = ({
                 </Text>
                 <Text
                   type="font-14-500"
-                  className="text-main underline break-all ml-2 sm:text-sm"
+                  className="text-main underline ml-2 sm:text-sm"
                 >
                   {generateMentors()}
                 </Text>

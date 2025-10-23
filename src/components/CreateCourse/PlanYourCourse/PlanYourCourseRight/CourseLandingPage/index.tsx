@@ -288,9 +288,9 @@ const CourseLandingPage = ({
       <Controller
         name="video"
         control={control}
-        rules={{
-          required: 'Please upload a video, this helps your course stand out',
-        }}
+        // rules={{
+        //   required: 'Please upload a video, this helps your course stand out',
+        // }}
         render={({ field, fieldState }) => (
           <PromotionalVideo
             onChange={field.onChange}

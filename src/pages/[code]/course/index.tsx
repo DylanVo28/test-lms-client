@@ -7,6 +7,9 @@ import { GetServerSideProps } from 'next';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import { DefaultData } from '@/utils/const';
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {ENV} from "@/utils/env";
+import {useTranslation} from "next-i18next";
 
 const CoursePage = () => {
   return (
@@ -17,35 +20,50 @@ const CoursePage = () => {
 };
 
 CoursePage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <>
-      <SEO
-        title="Courses | What Exchange"
-        description="Explore all courses available on What Exchange."
-        imageUrl={DefaultData.DefaultCourseImage}
-      />
-      <AppProvider>
-        <MainLayout>
-          <>{page}</>
-        </MainLayout>
-      </AppProvider>
-    </>
-  );
+    const LayoutWrapper = () => {
+        const { t } = useTranslation('common');
+        return (
+            <>
+                <SEO
+                    title={t('seo.homeAltTitle')}
+                    description={t('seo.homeAltDescription')}
+                    imageUrl={DefaultData.DefaultCourseImage}
+                />
+                <AppProvider>
+                    <MainLayout>
+                        <>{page}</>
+                    </MainLayout>
+                </AppProvider>
+            </>
+        );
+    };
+    return <LayoutWrapper />;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  locale,
-}) => {
-  if (!params?.code) {
-    return { notFound: true };
-  }
+                                                                 params,
+                                                                 locale,
+                                                             }) => {
+    if (!params?.code) {
+        return { notFound: true };
+    }
 
-  return {
-    props: {
-      code: params.code as string,
-    },
-  };
+    try {
+        const i18nProps = await serverSideTranslations(locale || 'en', ['common']);
+        return {
+            props: {
+                code: params.code as string,
+                ...i18nProps,
+                _env: { APP_API_URL: ENV.APP_API_URL || null },
+            },
+        };
+    } catch (e) {
+        return {
+            props: {
+                code: params.code as string,
+                _env: { APP_API_URL: ENV.APP_API_URL || null },
+            },
+        };
+    }
 };
-
 export default CoursePage;

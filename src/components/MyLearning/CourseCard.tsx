@@ -67,7 +67,7 @@ export default function CourseCard({
             {name}
           </Text>
 
-          <Text type="font-14-400" className="text-[#8C8C8C] break-all">
+          <Text type="font-14-400" className="text-[#8C8C8C]">
             {generateMentors()}
           </Text>
         </div>
