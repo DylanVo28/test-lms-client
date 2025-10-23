@@ -1,7 +1,7 @@
 import { coursePaymentVaultAbi } from '@/abis/coursePaymentVault';
 import { usdcAbi } from '@/abis/usdc';
 import { Contract } from '@ethersproject/contracts';
-import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useEthersSigner } from './useEthersSigner';
 import { ethers } from 'ethers';
 import { base } from '@/config/viem';
@@ -18,19 +18,27 @@ export const useContract = (
 ): Contract | null => {
   const signer = useEthersSigner();
 
-  return useMemo(() => {
-    if (!address || !ABI || !simpleRpcProvider) {
-      return null;
-    }
+  const { data } = useQuery<Contract | null>({
+    queryKey: ['contract', address, ABI, signer],
+    queryFn: () => {
+      if (!address || !ABI || !simpleRpcProvider) {
+        return null;
+      }
 
-    try {
-      const library = signer ?? simpleRpcProvider;
-      return new Contract(address, ABI, library);
-    } catch (error) {
-      console.error('Failed To Get Contract', error);
-      return null;
-    }
-  }, [address, ABI, signer, simpleRpcProvider]);
+      try {
+        const library = signer ?? simpleRpcProvider;
+        return new Contract(address, ABI, library);
+      } catch (error) {
+        console.error('Failed To Get Contract', error);
+        return null;
+      }
+    },
+    enabled: !!address && !!ABI && !!simpleRpcProvider,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  return data || null;
 };
 
 export const getUSDCContract = (address: string) =>

@@ -88,7 +88,7 @@ const CardCourse = ({
           height={200}
           alt=""
           layout="contain"
-          className="w-full h-[160px] sm:h-[180px] md:h-[200px] rounded rounded-b-none bg-card object-cover"
+          className="w-full h-[160px] sm:h-[180px] md:h-[200px] 2k:h-[400px] 4k:h-[600px] rounded rounded-b-none bg-card object-cover"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
@@ -119,7 +119,7 @@ const CardCourse = ({
           {/* Course Title */}
           <Text
             type="font-14-500"
-            className="line-clamp-2 capitalize text-letter leading-tight sm:text-base"
+            className="line-clamp-2 capitalize text-letter leading-tight"
           >
             {item?.title}
           </Text>
@@ -155,7 +155,7 @@ const CardCourse = ({
                 </Text>
                 <Text
                   type="font-14-500"
-                  className="text-main underline break-all ml-2 sm:text-sm"
+                  className="text-main underline ml-2 sm:text-sm"
                 >
                   {generateMentors()}
                 </Text>
