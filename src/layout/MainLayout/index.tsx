@@ -29,7 +29,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
           ['!p-0 md:!p-10']: router.pathname === ROUTE_PATH.HOME,
         })}
       >
-        <div className="max-w-[1440px] mx-auto">{children}</div>
+        <div className="max-w-[2048px] mx-auto">{children}</div>
       </div>
     </div>
   );

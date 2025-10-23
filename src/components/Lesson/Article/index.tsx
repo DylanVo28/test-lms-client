@@ -42,7 +42,8 @@ const Article = ({
   return (
     <div
       ref={containerRef}
-      className="w-full min-h-[400px] md:min-h-[566px] max-h-[566px] scroll-custom overflow-auto relative pt-10 md:pt-20 p-4 md:p-10 group ql-container ql-snow"
+      className="w-full min-h-[400px] md:min-h-[566px] max-h-[566px] scroll-custom overflow-auto relative pt-10 md:pt-20 p-4 md:p-10 group ql-container ql-snow !border-none"
+
     >
       {/* {dataItemPrev?.id && (
         <Button
@@ -121,9 +122,14 @@ const Article = ({
         </>
       )}
       <div className="flex flex-col gap-8 w-10/12 mx-auto ql-editor">
-        <Text type="font-28-700">{content?.title}</Text>
+        <Text 
+          type="font-28-700" 
+          className="text-2xl 2k:text-5xl 4k:text-7xl"
+        >
+          {content?.title}
+        </Text>
         <div
-          className="text-2xl text-black-5 customContentEditor "
+          className="text-2xl 2k:text-3xl 4k:text-4xl text-black-5 customContentEditor"
           dangerouslySetInnerHTML={{
             __html: content?.content,
           }}

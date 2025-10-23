@@ -15,6 +15,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {},
+      screens: {
+        '2k': '2048px',
+      },
       animation: {
         ping: 'ping 1s ease-out infinite',
         ping200: 'ping200 1s ease-out infinite',
