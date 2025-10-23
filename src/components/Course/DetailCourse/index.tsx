@@ -36,7 +36,7 @@ const DetailCourse = () => {
     loading,
     mutate,
   } = useGetDetailCourse({
-    pollingInterval: 5000,
+    // pollingInterval: 5000,
     onSuccess: () => {
       // handleScrollTop();
     },
