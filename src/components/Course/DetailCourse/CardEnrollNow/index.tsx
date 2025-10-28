@@ -26,12 +26,14 @@ const CardEnrollNow = ({
   handleLike,
   handleUnLike,
   getDetailCourse,
+  onEnrollSuccess,
   isLoading: _isLoading,
 }: {
   course: any;
   handleLike?: (id: string) => void;
   handleUnLike?: (id: string) => void;
   getDetailCourse?: (id: string, userId?: string | undefined) => void;
+  onEnrollSuccess?: () => void;
   isLoading: boolean;
 }) => {
   const isLoading = _isLoading && !course?.id;
@@ -148,6 +150,7 @@ const CardEnrollNow = ({
     // pollingInterval: 3000,
     onSuccess: (res) => {
       if (res?.message === 'Successfully') {
+        onEnrollSuccess && onEnrollSuccess();
         getDetailCourse && getDetailCourse(course?.id);
         toast.success(
           'You have successfully enrolled in the course. Please wait a moment while the system verifies the transaction.'
@@ -165,6 +168,7 @@ const CardEnrollNow = ({
   const { run: runEnrollCourseFree, loading: loadingEnrollCourseFree } =
     useEnrollCourseFree({
       onSuccess: (res) => {
+        onEnrollSuccess && onEnrollSuccess();
         toast.success(res?.message);
       },
       onError: (err) => {
@@ -199,6 +203,7 @@ const CardEnrollNow = ({
           userId: profile?.id,
         });
         if (receipt.status === 1) {
+          onEnrollSuccess && onEnrollSuccess();
           toast.success(
             'You have successfully enrolled in the course. Please wait a moment while the system verifies the transaction.'
           );

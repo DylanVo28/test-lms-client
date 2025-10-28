@@ -127,7 +127,20 @@ const DetailCourse = () => {
         <div className="lg:grid lg:grid-cols-10 lg:gap-[70px]">
           {/* Mobile Card - Show at top on mobile */}
           <div className="block mb-6 lg:hidden">
-            <CardEnrollNow course={dataDetail?.data} isLoading={loading} />
+          <CardEnrollNow
+              course={dataDetail?.data}
+              isLoading={loading}
+              getDetailCourse={getDetailCourse}
+              onEnrollSuccess={() =>
+                mutate({
+                  ...dataDetail,
+                  data: {
+                    ...dataDetail?.data,
+                    enroll: 'verified',
+                  },
+                })
+              }
+            />
           </div>
 
           {/* Main Content */}
@@ -254,6 +267,16 @@ const DetailCourse = () => {
                 handleLike={handleLike}
                 course={dataDetail?.data}
                 isLoading={loading}
+                getDetailCourse={getDetailCourse}
+                onEnrollSuccess={() =>
+                  mutate({
+                    ...dataDetail,
+                    data: {
+                      ...dataDetail?.data,
+                      enroll: 'verified',
+                    },
+                  })
+                }
               />
             </div>
           </div>

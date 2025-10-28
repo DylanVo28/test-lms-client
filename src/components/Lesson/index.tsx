@@ -665,12 +665,20 @@ const Lesson = () => {
           className="absolute top-[25px] right-0 w-[40px] h-[30px] bg-main rounded-l-lg cursor-pointer flex items-center justify-center"
           onClick={handleToggleSidebar}
         >
-          <Image
-            src="/icons/ic-back.svg"
-            alt="icon-back"
-            width={20}
-            height={20}
-          />
+          <div className="rotate-180">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+          >
+            <path
+              d="M11.3332 11.6667V15.8333L19.6665 9.16667L11.3332 2.5V6.66667C6.73067 6.66667 2.99984 10.3975 2.99984 15C2.99984 15.2275 3.00817 15.4525 3.0265 15.675C3.66284 14.4651 4.61777 13.4522 5.78807 12.7458C6.95836 12.0393 8.2995 11.6661 9.6665 11.6667H11.3332Z"
+              fill="var(--theme-letter)"
+            />
+          </svg>
+          </div>
         </div>
       )}
 
