@@ -53,6 +53,25 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [router.query.id, profile?.id]);
 
+  // Guard: redirect if user hasn't purchased and isn't the owner
+  useEffect(() => {
+    // If not logged in (e.g., wallet switched -> logout), block access
+    if (!profile?.id) {
+      navigate(ROUTE_PATH.HOME);
+      return;
+    }
+
+    if (!dataDetail?.data) return;
+
+    const isOwner =
+      dataDetail?.data?.isOwner || dataDetail?.data?.authorId === profile?.id;
+    const isEnrolled = dataDetail?.data?.enroll === 'verified';
+
+    if (!isOwner && !isEnrolled) {
+      navigate(ROUTE_PATH.HOME);
+    }
+  }, [profile?.id, dataDetail?.data?.enroll, dataDetail?.data?.authorId]);
+
   const progessPercent =
     (valueYourProgress?.value / valueYourProgress?.total) * 100;
 
