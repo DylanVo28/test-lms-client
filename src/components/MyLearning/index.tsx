@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Text from '../UI/Text';
 import ListCourses from './ListCourses';
-import { Tab, Tabs } from '@nextui-org/react';
 import Wishlist from './Wishlist';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import Certifications from './Certifications';
-import FollowMentors from './FollowMentors';
 export const enum TabMyLearning {
   COURSE_PROGRESS = 'COURSE_PROGRESS',
   WISHLIST = 'WISHLIST',
@@ -18,29 +16,23 @@ export default function MyLearning() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(TabMyLearning.COURSE_PROGRESS);
+
   const itemsTab = [
     {
       key: TabMyLearning.COURSE_PROGRESS,
-      label: t('myLearning.tabs.courseProgress'),
-      children: <ListCourses />,
+      label: t('myLearning.tabs.courseProgress')
     },
     {
       key: TabMyLearning.CERTIFICATIONS,
-      label: t('myLearning.tabs.certifications'),
-      children: <Certifications />,
+      label: t('myLearning.tabs.certifications')
     },
     {
       key: TabMyLearning.WISHLIST,
-      label: t('myLearning.tabs.wishlist'),
-      children: <Wishlist />,
-    },
-    // {
-    //   key: TabMyLearning.FOLLOW_MENTORS,
-    //   label: 'Follow Mentors',
-    //   children: <FollowMentors />,
-    // },
+      label: t('myLearning.tabs.wishlist')
+    }
   ];
-  const handleChangeTab = (tab: any) => {
+
+  const handleChangeTab = (tab: TabMyLearning) => {
     setActiveTab(tab);
   };
 
@@ -52,6 +44,8 @@ export default function MyLearning() {
     }
   }, [router.query.type]);
 
+  // React Query sẽ cache dữ liệu; panes có thể unmount/remount an toàn
+
   return (
     <div className="flex flex-col gap-[40px]">
       <div className="pl-5 border-l-4 border-l-main">
@@ -60,30 +54,32 @@ export default function MyLearning() {
         </Text>
       </div>
 
-      <Tabs
-        aria-label="Options"
-        selectedKey={activeTab}
-        onSelectionChange={handleChangeTab}
-        classNames={{
-          tabList:
-            'gap-8 w-full relative rounded-none p-0 border-b border-black-10',
-          cursor: 'w-full bg-main',
-          tab: 'max-w-fit px-0 h-12',
-          tabContent:
-            'text-[16px] font-semibold !text-gray-30 group-data-[selected=true]:text-main pt-0',
-          panel: '!p-0',
-        }}
-        color="primary"
-        variant="underlined"
-      >
-        {itemsTab?.map((item: any) => {
-          return (
-            <Tab key={item?.key} className="py-6" title={item?.label}>
-              {item?.children && item?.children}
-            </Tab>
-          );
-        })}
-      </Tabs>
+      {/* Custom Tabs header */}
+      <div className="flex gap-8 w-full border-b border-black-10 mb-6">
+        {itemsTab.map((item) => (
+          <button
+            key={item.key}
+            onClick={() => handleChangeTab(item.key as TabMyLearning)}
+            className={
+              `text-[16px] font-semibold pt-0 pb-3 px-1 transition-all border-b-2 ` +
+              (activeTab === item.key
+                ? 'text-main border-main'
+                : 'text-gray-30 border-transparent') +
+              ' focus:outline-none bg-transparent'
+            }
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab panes - render theo tab, rely on React Query cache for data */}
+      <div className="w-full">
+        {activeTab === TabMyLearning.COURSE_PROGRESS && <ListCourses />}
+        {activeTab === TabMyLearning.CERTIFICATIONS && <Certifications />}
+        {activeTab === TabMyLearning.WISHLIST && <Wishlist />}
+      </div>
     </div>
   );
 }
