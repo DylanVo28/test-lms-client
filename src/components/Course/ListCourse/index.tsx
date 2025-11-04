@@ -24,7 +24,7 @@ const ListCourse = () => {
     { key: 'createdAt desc', label: t('listCourse.newest') },
     { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
-  const [sort, setSort] = useState();
+  const [sort, setSort] = useState('createdAt asc');
   const [category, setCategory] = useState();
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
