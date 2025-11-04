@@ -84,9 +84,22 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
           <div className="flex items-center md:gap-5 gap-3">
             <div className="flex items-center gap-1">
               <Button
-                onPress={() =>
-                  navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id))
-                }
+                onPress={() => {
+                  try {
+                    if (typeof window !== 'undefined' && dataDetail?.data && router.query.id) {
+                      window.sessionStorage.setItem(
+                        `courseDetail:${router.query.id}`,
+                        JSON.stringify(dataDetail.data)
+                      );
+                    }
+                  } catch {}
+                  // Prefer client history to avoid reload flicker
+                  if (typeof window !== 'undefined' && window.history.length > 1) {
+                    router.back();
+                  } else {
+                    navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id));
+                  }
+                }}
                 className="hover:bg-black-10 py-3 px-0"
                 radius="md"
                 size="md"

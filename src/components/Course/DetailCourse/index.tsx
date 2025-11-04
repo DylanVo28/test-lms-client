@@ -43,6 +43,18 @@ const DetailCourse = () => {
   });
 
   useEffect(() => {
+    // Hydrate from session cache if navigated back from lesson
+    try {
+      if (typeof window !== 'undefined' && router.query.id) {
+        const cached = window.sessionStorage.getItem(`courseDetail:${router.query.id}`);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          mutate({ data: parsed });
+          window.sessionStorage.removeItem(`courseDetail:${router.query.id}`);
+        }
+      }
+    } catch {}
+
     if (router.query.id) {
       getDetailCourse(router.query.id as string, profile?.id);
     }

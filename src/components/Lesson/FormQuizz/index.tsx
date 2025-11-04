@@ -85,7 +85,7 @@ const FormQuizz = ({
         </Button>
       )}
 
-      <LoadingContainer loading={loading} />
+      {/* <LoadingContainer loading={loading} /> */}
 
       {startTakingTest ? (
         <FormStartTakingTest
