@@ -53,7 +53,6 @@ const ListCourse = () => {
     loadMore,
     noMore,
     reload,
-    mutate,
     loading,
     loadingMore,
   } = useGetListCourse({
@@ -100,9 +99,9 @@ const ListCourse = () => {
     runUnLikeCourse(id);
   };
 
-  useEffect(() => {
-    reload();
-  }, [sort, search, params]);
+  // useEffect(() => {
+  //   reload();
+  // }, [sort, search, params]);
 
   const clearFilter = () => {
     setParams(initParams);

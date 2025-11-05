@@ -3,6 +3,7 @@ import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useRequest } from 'ahooks';
+import { useQuery } from '@tanstack/react-query';
 
 const serviceGetCategories = async (params: any) => {
   return await privateRequest(request.get, API_PATH.CATEGORIES, {
@@ -85,6 +86,23 @@ const getDetailCourse = async (id: string, userId?: string): Promise<any> => {
 
 export const useGetDetailCourse = (options?: IOptions) => {
   return useRequest(getDetailCourse, { manual: true, ...options });
+};
+
+// TanStack Query version for caching across navigations
+export const useGetDetailCourseQuery = (
+  id?: string,
+  userId?: string,
+  options?: any
+) => {
+  return useQuery<any>({
+    queryKey: ['courseDetail', id, userId],
+    queryFn: () => getDetailCourse(id as string, userId),
+    enabled: Boolean(id),
+    staleTime: 1000 * 60 * 2, // 2 minutes cache fresh
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    ...options,
+  });
 };
 
 const serviceEditCourse = (body: any, id: string) => {

@@ -1,4 +1,3 @@
-import LoadingBase from '@/components/UI/LoadingBase';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
@@ -9,7 +8,7 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 
 const AppLayout = ({ children }: any) => {
@@ -18,14 +17,8 @@ const AppLayout = ({ children }: any) => {
   const { requestCheckHasNotification } = useNotifications();
 
   const token = useAccessToken();
-  const [loading, setLoading] = useState(true);
   const { profile } = useProfile();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,15 +30,12 @@ const AppLayout = ({ children }: any) => {
 
   return (
     <Fragment>
-      <LoadingBase loading={loading} />
-      {!loading && (
-        <NextThemesProvider
-          attribute="class"
-          forcedTheme={theme?.modeTheme || 'dark'}
-        >
-          <NextUIProvider>{children}</NextUIProvider>
-        </NextThemesProvider>
-      )}
+      <NextThemesProvider
+        attribute="class"
+        forcedTheme={theme?.modeTheme || 'dark'}
+      >
+        <NextUIProvider>{children}</NextUIProvider>
+      </NextThemesProvider>
     </Fragment>
   );
 };

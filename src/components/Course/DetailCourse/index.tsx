@@ -14,7 +14,8 @@ import MoreCourse from './MoreCourse';
 import CardEnrollNow from './CardEnrollNow';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { useGetDetailCourse } from '@/components/CreateCourse/service';
+import { useGetDetailCourseQuery } from '@/components/CreateCourse/service';
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { clean, formatWalletAddress, getAvatar } from '@/utils/common';
 import LoadingScreen from '@/components/UI/LoadingScreen';
@@ -30,17 +31,16 @@ const DetailCourse = () => {
   const router = useRouter();
   const { profile } = useProfile();
   const { t } = useTranslation('common');
-  const {
-    run: getDetailCourse,
-    data: dataDetail,
-    loading,
-    mutate,
-  } = useGetDetailCourse({
-    // pollingInterval: 5000,
-    onSuccess: () => {
-      // handleScrollTop();
-    },
-  });
+  const queryClient = useQueryClient();
+  const { data: dataDetail, isLoading: loading, refetch } = useGetDetailCourseQuery(
+    router.query.id as string,
+    profile?.id,
+    {
+      onSuccess: () => {
+        // handleScrollTop();
+      },
+    }
+  );
 
   useEffect(() => {
     // Hydrate from session cache if navigated back from lesson
@@ -49,14 +49,17 @@ const DetailCourse = () => {
         const cached = window.sessionStorage.getItem(`courseDetail:${router.query.id}`);
         if (cached) {
           const parsed = JSON.parse(cached);
-          mutate({ data: parsed });
+          queryClient.setQueryData(
+            ['courseDetail', router.query.id as string, profile?.id],
+            (old: any) => ({ ...old, data: parsed })
+          );
           window.sessionStorage.removeItem(`courseDetail:${router.query.id}`);
         }
       }
     } catch {}
 
     if (router.query.id) {
-      getDetailCourse(router.query.id as string, profile?.id);
+      refetch();
     }
   }, [router.query.id, profile?.id]);
 
@@ -83,25 +86,19 @@ const DetailCourse = () => {
 
   const { run: runLikeCourse } = useLikeCourse({
     onSuccess(res) {
-      mutate({
-        ...dataDetail,
-        data: {
-          ...dataDetail?.data,
-          liked: true,
-        },
-      });
+      queryClient.setQueryData(['courseDetail', router.query.id as string, profile?.id], (old: any) => ({
+        ...old,
+        data: { ...(old?.data || {}), liked: true },
+      }));
     },
   });
 
   const { run: runUnLikeCourse } = useUnLikeCourse({
     onSuccess(res) {
-      mutate({
-        ...dataDetail,
-        data: {
-          ...dataDetail?.data,
-          liked: false,
-        },
-      });
+      queryClient.setQueryData(['courseDetail', router.query.id as string, profile?.id], (old: any) => ({
+        ...old,
+        data: { ...(old?.data || {}), liked: false },
+      }));
     },
   });
 
@@ -141,16 +138,16 @@ const DetailCourse = () => {
           <div className="block mb-6 lg:hidden">
           <CardEnrollNow
               course={dataDetail?.data}
-              isLoading={loading}
-              getDetailCourse={getDetailCourse}
+              isLoading={Boolean(loading && !dataDetail?.data)}
+              getDetailCourse={() => refetch()}
               onEnrollSuccess={() =>
-                mutate({
-                  ...dataDetail,
-                  data: {
-                    ...dataDetail?.data,
-                    enroll: 'verified',
-                  },
-                })
+                queryClient.setQueryData(
+                  ['courseDetail', router.query.id as string, profile?.id],
+                  (old: any) => ({
+                    ...old,
+                    data: { ...(old?.data || {}), enroll: 'verified' },
+                  })
+                )
               }
             />
           </div>
@@ -278,16 +275,16 @@ const DetailCourse = () => {
                 handleUnLike={handleUnLike}
                 handleLike={handleLike}
                 course={dataDetail?.data}
-                isLoading={loading}
-                getDetailCourse={getDetailCourse}
+                isLoading={Boolean(loading && !dataDetail?.data)}
+                getDetailCourse={() => refetch()}
                 onEnrollSuccess={() =>
-                  mutate({
-                    ...dataDetail,
-                    data: {
-                      ...dataDetail?.data,
-                      enroll: 'verified',
-                    },
-                  })
+                  queryClient.setQueryData(
+                    ['courseDetail', router.query.id as string, profile?.id],
+                    (old: any) => ({
+                      ...old,
+                      data: { ...(old?.data || {}), enroll: 'verified' },
+                    })
+                  )
                 }
               />
             </div>
