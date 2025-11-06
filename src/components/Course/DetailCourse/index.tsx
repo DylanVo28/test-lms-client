@@ -42,26 +42,38 @@ const DetailCourse = () => {
     }
   );
 
+  const hasHydratedRef = useRef(false);
+  const lastCourseIdRef = useRef<string | undefined>(undefined);
+
   useEffect(() => {
+    const courseId = router.query.id as string;
+    const courseIdChanged = lastCourseIdRef.current !== courseId;
+
     // Hydrate from session cache if navigated back from lesson
     try {
-      if (typeof window !== 'undefined' && router.query.id) {
-        const cached = window.sessionStorage.getItem(`courseDetail:${router.query.id}`);
+      if (typeof window !== 'undefined' && courseId) {
+        const cached = window.sessionStorage.getItem(`courseDetail:${courseId}`);
         if (cached) {
           const parsed = JSON.parse(cached);
           queryClient.setQueryData(
-            ['courseDetail', router.query.id as string, profile?.id],
+            ['courseDetail', courseId, profile?.id],
             (old: any) => ({ ...old, data: parsed })
           );
-          window.sessionStorage.removeItem(`courseDetail:${router.query.id}`);
+          window.sessionStorage.removeItem(`courseDetail:${courseId}`);
+          hasHydratedRef.current = true;
         }
       }
     } catch {}
 
-    if (router.query.id) {
-      refetch();
+    // Only refetch if courseId changed or we don't have cached data
+    if (courseId) {
+      const cachedData = queryClient.getQueryData(['courseDetail', courseId, profile?.id]);
+      if (courseIdChanged || !cachedData) {
+        refetch();
+      }
+      lastCourseIdRef.current = courseId;
     }
-  }, [router.query.id, profile?.id]);
+  }, [router.query.id, profile?.id, queryClient, refetch]);
 
   const lessonCount = dataDetail?.data?.sections?.reduce(
     (total: number, section: any) => {

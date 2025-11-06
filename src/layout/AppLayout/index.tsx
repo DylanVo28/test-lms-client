@@ -8,7 +8,7 @@ import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useAccount } from 'wagmi';
 
 const AppLayout = ({ children }: any) => {
@@ -20,13 +20,28 @@ const AppLayout = ({ children }: any) => {
   const { profile } = useProfile();
 
   const router = useRouter();
+  const prevCodeRef = useRef<string | undefined>(undefined);
+  const prevProfileIdRef = useRef<string | undefined>(undefined);
+  const prevTokenRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    if (token) {
-      requestCheckHasNotification?.run();
+    const codeChanged = prevCodeRef.current !== router.query.code;
+    const profileIdChanged = prevProfileIdRef.current !== profile?.id;
+    const tokenChanged = prevTokenRef.current !== token;
+
+    // Only call if something actually changed
+    if (codeChanged || profileIdChanged || tokenChanged) {
+      if (token) {
+        requestCheckHasNotification?.run();
+      }
+      requestGetTheme();
+
+      // Update refs
+      prevCodeRef.current = router.query.code as string | undefined;
+      prevProfileIdRef.current = profile?.id;
+      prevTokenRef.current = token;
     }
-    requestGetTheme();
-  }, [token, router.query.code, profile?.id]);
+  }, [token, router.query.code, profile?.id, requestGetTheme, requestCheckHasNotification]);
 
   return (
     <Fragment>

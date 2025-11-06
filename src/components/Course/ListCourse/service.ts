@@ -4,8 +4,8 @@ import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useInfiniteScroll, useRequest } from 'ahooks';
-import { useMemo } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useMemo, useState, useCallback } from 'react';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const getListCourse = async (params: any) => {
   return await privateRequest(request.get, API_PATH.LIST_COURSE, { params });
@@ -207,27 +207,46 @@ const serviceGetListReview = async (id: string, filter?: IFilter) => {
 };
 
 export const useGetListReview = (options?: IOptions) => {
-  const { data, loading, run, mutate } = useRequest(
-    async (id: string, filter?: IFilter) => {
-      return serviceGetListReview(id, filter);
+  const queryClient = useQueryClient();
+  const [currentId, setCurrentId] = useState<string | undefined>(undefined);
+  const [currentFilter, setCurrentFilter] = useState<IFilter | undefined>(undefined);
+
+  const query = useQuery({
+    queryKey: ['reviews', currentId, currentFilter],
+    queryFn: async () => {
+      if (!currentId) return null;
+      return serviceGetListReview(currentId, currentFilter);
     },
+    enabled: !!currentId,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    ...options,
+  });
 
-    {
-      manual: true,
-      ...options,
-    }
-  );
+  const run = useCallback((id: string, filter?: IFilter) => {
+    setCurrentId(id);
+    setCurrentFilter(filter);
+  }, []);
 
-  const onChange = (id: string, filter?: IFilter) => {
+  const onChange = useCallback((id: string, filter?: IFilter) => {
     run(id, filter);
-  };
+  }, [run]);
+
+  const mutate = useCallback((newData: any) => {
+    if (currentId) {
+      queryClient.setQueryData(['reviews', currentId, currentFilter], newData);
+    }
+  }, [currentId, currentFilter, queryClient]);
 
   return {
     mutate,
-    dataListReview: data,
+    dataListReview: query.data,
     run,
     onChange,
-    loading,
+    loading: query.isLoading,
   };
 };
 
