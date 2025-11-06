@@ -14,7 +14,21 @@ export const useHasMinted = ({
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['hasMinted', address, courseId],
-    queryFn: () => contract?.hasMinted(address, courseId),
+    queryFn: async () => {
+      if (!contract || !address) return false;
+      try {
+        return await contract.hasMinted(address, courseId);
+      } catch (error) {
+        console.error('Error checking mint status:', error);
+        return false;
+      }
+    },
+    enabled: !!contract && !!address && !!courseId,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   return { data, isLoading, refetch };

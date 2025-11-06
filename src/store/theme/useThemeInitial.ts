@@ -1,6 +1,7 @@
 /* eslint-disable require-await */
 /* eslint-disable unicorn/consistent-function-scoping */
 import { useAtom } from 'jotai';
+import { useRef } from 'react';
 
 import { DefaultThemeColor, themeAtom } from './theme';
 import { API_PATH } from '@/api/constant';
@@ -26,77 +27,54 @@ export const useThemeInitial = () => {
   const { profile } = useProfile();
   const { address } = useAccount();
   const token = useAccessToken();
+  const fetchingRef = useRef(false);
+  const lastFetchParamsRef = useRef<string>('');
 
   console.log(theme, 'theme');
 
   const run = () => {
     const init = async () => {
-      // Check preview mode first
-      const isPreview = localStorage.getItem(THEME_PREVIEW_MODE_KEY) === 'true';
-      // If in preview mode and has preview data, use that instead\
-
-      if (isPreview) {
-        const previewData = localStorage.getItem(THEME_PREVIEW_KEY);
-        if (previewData) {
-          const parsedData = JSON.parse(previewData);
-          setTheme({
-            ...theme,
-            title: parsedData.title,
-            description: parsedData.description,
-            topics: parsedData.topics,
-            banner: parsedData.banner,
-            logo: parsedData.logo,
-            color: parsedData.color,
-          });
-          applyCustomColors(parsedData.color);
-          return;
-        }
+      // Create unique key for current fetch params to prevent duplicate calls
+      const fetchKey = `${router.query?.code || ''}-${profile?.id || ''}-${token || ''}`;
+      
+      // Prevent duplicate calls with same params
+      if (fetchingRef.current && lastFetchParamsRef.current === fetchKey) {
+        return;
       }
 
-      let res;
+      fetchingRef.current = true;
+      lastFetchParamsRef.current = fetchKey;
 
-      const adminRes = await privateRequest(
-        request.get,
-        API_PATH.THEMES + `/platform`
-      );
-      if (profile?.role === 'KOL' && token) {
-        res = await privateRequest(
+      try {
+        // Check preview mode first
+        const isPreview = localStorage.getItem(THEME_PREVIEW_MODE_KEY) === 'true';
+        // If in preview mode and has preview data, use that instead\
+
+        if (isPreview) {
+          const previewData = localStorage.getItem(THEME_PREVIEW_KEY);
+          if (previewData) {
+            const parsedData = JSON.parse(previewData);
+            setTheme({
+              ...theme,
+              title: parsedData.title,
+              description: parsedData.description,
+              topics: parsedData.topics,
+              banner: parsedData.banner,
+              logo: parsedData.logo,
+              color: parsedData.color,
+            });
+            applyCustomColors(parsedData.color);
+            return;
+          }
+        }
+
+        let res;
+
+        const adminRes = await privateRequest(
           request.get,
-          API_PATH.THEMES + `/${router.query?.code}`
+          API_PATH.THEMES + `/platform`
         );
-
-        const themeColors = JSON.parse(
-          res?.data?.color || JSON.stringify(DefaultThemeColor)
-        );
-
-        setTheme({
-          ...res?.data,
-          kolId: res?.data?.userId ?? adminRes?.data?.userId,
-          adminId: adminRes?.data?.userId,
-          color: themeColors,
-        });
-
-        const myThemeRes = await privateRequest(
-          request.get,
-          API_PATH.THEME_DETAIL
-        );
-
-        const myThemeColors = JSON.parse(
-          myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
-        );
-
-        setMyTheme({
-          ...myThemeRes?.data,
-          color: myThemeColors,
-        });
-
-        // Apply custom colors to CSS variables
-        applyCustomColors(getCustomColorsFromTheme(themeColors));
-
-        document.body.setAttribute('data-theme', res?.data?.color);
-        return;
-      } else {
-        if (router.query?.code) {
+        if (profile?.role === 'KOL' && token) {
           res = await privateRequest(
             request.get,
             API_PATH.THEMES + `/${router.query?.code}`
@@ -113,12 +91,54 @@ export const useThemeInitial = () => {
             color: themeColors,
           });
 
+          const myThemeRes = await privateRequest(
+            request.get,
+            API_PATH.THEME_DETAIL
+          );
+
+          const myThemeColors = JSON.parse(
+            myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
+          );
+
+          setMyTheme({
+            ...myThemeRes?.data,
+            color: myThemeColors,
+          });
+
           // Apply custom colors to CSS variables
           applyCustomColors(getCustomColorsFromTheme(themeColors));
 
           document.body.setAttribute('data-theme', res?.data?.color);
           return;
+        } else {
+          if (router.query?.code) {
+            res = await privateRequest(
+              request.get,
+              API_PATH.THEMES + `/${router.query?.code}`
+            );
+
+            const themeColors = JSON.parse(
+              res?.data?.color || JSON.stringify(DefaultThemeColor)
+            );
+
+            setTheme({
+              ...res?.data,
+              kolId: res?.data?.userId ?? adminRes?.data?.userId,
+              adminId: adminRes?.data?.userId,
+              color: themeColors,
+            });
+
+            // Apply custom colors to CSS variables
+            applyCustomColors(getCustomColorsFromTheme(themeColors));
+
+            document.body.setAttribute('data-theme', res?.data?.color);
+            return;
+          }
         }
+      } catch (error) {
+        console.error('Error fetching theme:', error);
+      } finally {
+        fetchingRef.current = false;
       }
     };
     init();

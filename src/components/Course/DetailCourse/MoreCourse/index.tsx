@@ -1,7 +1,7 @@
 import NoData from '@/components/ListCourse/NoData';
 import Text from '@/components/UI/Text';
 import { TypeReactions, formatWalletAddress } from '@/utils/common';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   useGetListCourse,
   useGetListReview,
@@ -115,12 +115,24 @@ const MoreCourse = (props: any) => {
   //   runRemoveLikeComment(id);
   // };
 
+  const prevAuthorIdRef = useRef<string | undefined>(undefined);
+  const prevCourseIdRef = useRef<string | undefined>(undefined);
+
   useEffect(() => {
+    const authorChanged = prevAuthorIdRef.current !== author?.id;
+    const courseIdChanged = prevCourseIdRef.current !== courseId;
+
     if (author?.id && courseId) {
-      reload();
-      runGetListReview(courseId);
+      // Only reload if author or courseId actually changed
+      if (authorChanged || courseIdChanged) {
+        reload();
+        runGetListReview(courseId);
+      }
+
+      prevAuthorIdRef.current = author?.id;
+      prevCourseIdRef.current = courseId;
     }
-  }, [author?.id, courseId]);
+  }, [author?.id, courseId, reload, runGetListReview]);
 
   const reloadListReview = () => {
     runGetListReview(courseId);

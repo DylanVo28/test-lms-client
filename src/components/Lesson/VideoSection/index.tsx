@@ -267,7 +267,7 @@ const VideoSection = ({
         </Button>
       )}
 
-      <LoadingContainer loading={loading} />
+      {/* <LoadingContainer loading={loading} /> */}
       <div ref={videoRef} />
     </div>
   );

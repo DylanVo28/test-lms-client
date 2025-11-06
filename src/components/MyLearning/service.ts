@@ -2,18 +2,25 @@
 import { API_PATH } from '@/api/constant';
 import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
-import { useInfiniteScroll, useRequest } from 'ahooks';
 import { useMemo } from 'react';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  UseMutationOptions,
+} from '@tanstack/react-query';
 
-const serviceMintCertificate = async (data: {
-  to: string;
-  certificateId: string;
-}) => {
+const serviceMintCertificate = async (data: { to: string; certificateId: string; }) => {
   return privateRequest(request.post, API_PATH.MINT_CERTIFICATE, { data });
 };
 
-export const useMintCertificate = (options?: IOptions) => {
-  return useRequest(serviceMintCertificate, { manual: true, ...options });
+export const useMintCertificate = (
+  options?: UseMutationOptions<any, unknown, { to: string; certificateId: string }>
+) => {
+  return useMutation({
+    mutationFn: (variables) => serviceMintCertificate(variables),
+    ...options,
+  });
 };
 
 const getListUserCourse = async (params: any) => {
@@ -22,35 +29,30 @@ const getListUserCourse = async (params: any) => {
 
 export const useGetListUserCourse = (initialParams: any) => {
   const memoizedParams = useMemo(() => initialParams, [initialParams]);
-  const { data, loading, loadMore, loadingMore, noMore, reload } =
-    useInfiniteScroll(
-      async (lastData) => {
-        const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
-        const nextPage = currentPage + 1;
 
-        const response = await getListUserCourse({
-          ...memoizedParams,
-          page: nextPage,
-        });
+  const query = useInfiniteQuery({
+    queryKey: ['myLearning', 'courses', memoizedParams],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getListUserCourse({ ...memoizedParams, page: pageParam });
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = lastPage?.meta?.totalPage || 0;
+      const next = allPages.length + 1;
+      return allPages.length < totalPage ? next : undefined;
+    },
+    initialPageParam: 1,
+  });
 
-        return {
-          list: [...(response.data || [])],
-          page: nextPage,
-          total: response?.meta?.totalRecord,
-          totalPage: response?.meta?.totalPage,
-        };
-      },
-      {
-        isNoMore: (d) => {
-          return d ? d.page >= d.totalPage : false;
-        },
-      }
-    );
+  const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
+  const noMore = !query.hasNextPage;
+  const loading = query.isLoading || query.isRefetching;
+  const loadingMore = query.isFetchingNextPage;
 
   return {
-    reload,
-    list: data?.list || [],
-    loadMore,
+    reload: () => query.refetch(),
+    list,
+    loadMore: () => query.fetchNextPage(),
     loading,
     loadingMore,
     noMore,
@@ -63,35 +65,30 @@ const getListWishList = async (params: any) => {
 
 export const useGetListWishList = (initialParams: any) => {
   const memoizedParams = useMemo(() => initialParams, [initialParams]);
-  const { data, loading, loadMore, loadingMore, noMore, reload } =
-    useInfiniteScroll(
-      async (lastData) => {
-        const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
-        const nextPage = currentPage + 1;
 
-        const response = await getListWishList({
-          ...memoizedParams,
-          page: nextPage,
-        });
+  const query = useInfiniteQuery({
+    queryKey: ['myLearning', 'wishlist', memoizedParams],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getListWishList({ ...memoizedParams, page: pageParam });
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = lastPage?.meta?.totalPage || 0;
+      const next = allPages.length + 1;
+      return allPages.length < totalPage ? next : undefined;
+    },
+    initialPageParam: 1,
+  });
 
-        return {
-          list: [...(response.data || [])],
-          page: nextPage,
-          total: response?.meta?.totalRecord,
-          totalPage: response?.meta?.totalPage,
-        };
-      },
-      {
-        isNoMore: (d) => {
-          return d ? d.page >= d.totalPage : false;
-        },
-      }
-    );
+  const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
+  const noMore = !query.hasNextPage;
+  const loading = query.isLoading || query.isRefetching;
+  const loadingMore = query.isFetchingNextPage;
 
   return {
-    reload,
-    list: data?.list || [],
-    loadMore,
+    reload: () => query.refetch(),
+    list,
+    loadMore: () => query.fetchNextPage(),
     loading,
     loadingMore,
     noMore,
@@ -108,20 +105,17 @@ const serviceGetMyCertificates = async () => {
 };
 
 export const useGetMyCertificates = (options?: IOptions) => {
-  const { data, loading, run, mutate } = useRequest(
-    async () => {
-      return serviceGetMyCertificates();
-    },
-    {
-      ...options,
-    }
-  );
+  const query = useQuery({
+    queryKey: ['myLearning', 'certificates'],
+    queryFn: () => serviceGetMyCertificates(),
+    ...options,
+  } as any);
 
   return {
-    mutate,
-    dataListCertificates: data,
-    run,
-    loading,
+    mutate: query.refetch,
+    dataListCertificates: query.data,
+    run: query.refetch,
+    loading: query.isLoading || query.isRefetching,
   };
 };
 
@@ -131,35 +125,30 @@ const getListFollower = async (params: any) => {
 
 export const useGetListFollowers = (initialParams: any) => {
   const memoizedParams = useMemo(() => initialParams, [initialParams]);
-  const { data, loading, loadMore, loadingMore, noMore, reload } =
-    useInfiniteScroll(
-      async (lastData) => {
-        const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
-        const nextPage = currentPage + 1;
 
-        const response = await getListFollower({
-          ...memoizedParams,
-          page: nextPage,
-        });
+  const query = useInfiniteQuery({
+    queryKey: ['myLearning', 'followers', memoizedParams],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getListFollower({ ...memoizedParams, page: pageParam });
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = lastPage?.meta?.totalPage || 0;
+      const next = allPages.length + 1;
+      return allPages.length < totalPage ? next : undefined;
+    },
+    initialPageParam: 1,
+  });
 
-        return {
-          list: [...(response.data || [])],
-          page: nextPage,
-          total: response?.meta?.totalRecord,
-          totalPage: response?.meta?.totalPage,
-        };
-      },
-      {
-        isNoMore: (d) => {
-          return d ? d.page >= d.totalPage : false;
-        },
-      }
-    );
+  const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
+  const noMore = !query.hasNextPage;
+  const loading = query.isLoading || query.isRefetching;
+  const loadingMore = query.isFetchingNextPage;
 
   return {
-    reload,
-    list: data?.list || [],
-    loadMore,
+    reload: () => query.refetch(),
+    list,
+    loadMore: () => query.fetchNextPage(),
     loading,
     loadingMore,
     noMore,

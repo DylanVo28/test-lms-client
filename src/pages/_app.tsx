@@ -10,6 +10,8 @@ import '../styles/quill.css';
 import 'video.js/dist/video-js.css';
 
 import { ReactElement, ReactNode, useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; // optionally enable in development
 
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
@@ -23,6 +25,16 @@ export type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60, // 1 minute
+      gcTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
@@ -83,7 +95,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         options={{ showSpinner: false }}
         shallowRouting
       />
-      <main>{getLayout(<Component {...pageProps} />)}</main>
+      <QueryClientProvider client={queryClient}>
+        <main>{getLayout(<Component {...pageProps} />)}</main>
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      </QueryClientProvider>
     </>
   );
 }

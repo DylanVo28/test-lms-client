@@ -1,50 +1,69 @@
 import { BIG_TEN } from '@/utils/bigNumber';
 import BigNumber from 'bignumber.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 import { getUSDCContract } from './useContract';
 import { CONTRACT_ADDRESS } from '@/api/constant';
+import { useQuery } from '@tanstack/react-query';
 
 export const useTokenInfo = () => {
   const { address } = useAccount();
-  const [balance, setBalance] = useState(0);
-  const [symbol, setSymbol] = useState('');
-  const [decimals, setDecimals] = useState(0);
-
   const usdcContract = getUSDCContract(CONTRACT_ADDRESS.USDC_ADDRESS);
 
-  useEffect(() => {
-    if (!usdcContract) {
-      return;
-    }
-    const getBalance = async () => {
-      const balance = await usdcContract.balanceOf(address);
-      setBalance(balance);
-    };
+  // Use React Query for caching and preventing duplicate calls
+  const { data: balanceData } = useQuery({
+    queryKey: ['tokenBalance', CONTRACT_ADDRESS.USDC_ADDRESS, address],
+    queryFn: async () => {
+      if (!usdcContract || !address) return null;
+      try {
+        const balance = await usdcContract.balanceOf(address);
+        return balance;
+      } catch (error) {
+        console.error('Error fetching balance:', error);
+        return null;
+      }
+    },
+    enabled: !!usdcContract && !!address,
+    staleTime: 1000 * 30, // 30 seconds
+    gcTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  });
 
-    const getTokenInfo = async () => {
-      const [symbol, decimals] = await Promise.all([
-        usdcContract.symbol(),
-        usdcContract.decimals(),
-      ]);
-
-      setSymbol(symbol);
-      setDecimals(decimals);
-    };
-
-    getBalance();
-    getTokenInfo();
-  }, [usdcContract, address]);
+  const { data: tokenInfo } = useQuery({
+    queryKey: ['tokenInfo', CONTRACT_ADDRESS.USDC_ADDRESS],
+    queryFn: async () => {
+      if (!usdcContract) return null;
+      try {
+        const [symbol, decimals] = await Promise.all([
+          usdcContract.symbol(),
+          usdcContract.decimals(),
+        ]);
+        return { symbol, decimals };
+      } catch (error) {
+        console.error('Error fetching token info:', error);
+        return null;
+      }
+    },
+    enabled: !!usdcContract,
+    staleTime: 1000 * 60 * 10, // 10 minutes - token info rarely changes
+    gcTime: 1000 * 60 * 30, // 30 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  });
 
   const formattedBalance = useMemo(() => {
-    return new BigNumber(balance.toString())
-      .dividedBy(BIG_TEN.pow(decimals))
+    if (!balanceData || !tokenInfo?.decimals) return '0';
+    return new BigNumber(balanceData.toString())
+      .dividedBy(BIG_TEN.pow(tokenInfo.decimals))
       .toFixed();
-  }, [balance, decimals]);
+  }, [balanceData, tokenInfo?.decimals]);
 
   return {
     balance: formattedBalance,
-    symbol,
-    decimals,
+    symbol: tokenInfo?.symbol || '',
+    decimals: tokenInfo?.decimals || 0,
   };
 };

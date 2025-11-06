@@ -6,7 +6,7 @@ import { Button, Tab, Tabs } from '@nextui-org/react';
 import X from '@/components/UI/Icons/X';
 import { atom, useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   useGetListReview,
   useGetListReviewSummary,
@@ -64,6 +64,7 @@ const Lesson = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [loadingNoData, setLoadingNoData] = useState(false);
   const [isHideSidebar, setIsHideSidebar] = useState(false);
+  const fetchingListSessionRef = useRef(false);
 
   const {
     run: runGetListSession,
@@ -71,6 +72,7 @@ const Lesson = () => {
     loading: loadingListSession,
   } = useGetListSession({
     onSuccess: (res) => {
+      fetchingListSessionRef.current = false;
       const firstSection = res?.data?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
@@ -134,6 +136,9 @@ const Lesson = () => {
           setTypeLoadContent(TYPE_COURSE.QUIZ);
         }
       }
+    },
+    onError: () => {
+      fetchingListSessionRef.current = false;
     },
   });
 
@@ -292,10 +297,28 @@ const Lesson = () => {
     }
   };
 
+  // Helper function to safely call runGetListSession without duplicates
+  const safeRunGetListSession = useCallback(
+    (courseId: string, userId: string) => {
+      if (!fetchingListSessionRef.current && courseId && userId) {
+        fetchingListSessionRef.current = true;
+        runGetListSession(courseId, userId);
+      }
+    },
+    [runGetListSession]
+  );
+
+  // Reset ref when courseId or profileId changes
+  useEffect(() => {
+    fetchingListSessionRef.current = false;
+  }, [router.query.id, profile?.id]);
+
   const requestProgressStatusLesson = useProgressStatusLesson({
     onSuccess: (res: any) => {
       // toast.success(res?.message);
-      runGetListSession(router.query.id as string, profile?.id);
+      if (router.query.id && profile?.id) {
+        safeRunGetListSession(router.query.id as string, profile?.id);
+      }
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -304,8 +327,9 @@ const Lesson = () => {
   const requestProgressStatusQuizz = useProgressStatusQuizz({
     onSuccess: (res: any) => {
       // toast.success(res?.message);
-
-      runGetListSession(router.query.id as string, profile?.id);
+      if (router.query.id && profile?.id) {
+        safeRunGetListSession(router.query.id as string, profile?.id);
+      }
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -313,9 +337,11 @@ const Lesson = () => {
   });
 
   useEffect(() => {
-    if (router.query.id && profile?.id) {
+    if (router.query.id && profile?.id && !fetchingListSessionRef.current) {
+      fetchingListSessionRef.current = true;
       runGetListSession(router.query.id as string, profile?.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.id, profile?.id]);
 
   const handleScrollTop = () => {
@@ -542,7 +568,7 @@ const Lesson = () => {
               allItems={allItems}
               loading={
                 loadingNoData ||
-                loadingListSession ||
+                // loadingListSession ||
                 loadingLesson ||
                 isFirstLoad
               }

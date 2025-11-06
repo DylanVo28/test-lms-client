@@ -4,7 +4,8 @@ import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useInfiniteScroll, useRequest } from 'ahooks';
-import { useMemo } from 'react';
+import { useMemo, useState, useCallback } from 'react';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const getListCourse = async (params: any) => {
   return await privateRequest(request.get, API_PATH.LIST_COURSE, { params });
@@ -12,48 +13,45 @@ const getListCourse = async (params: any) => {
 
 export const useGetListCourse = (initialParams: any) => {
   const { profile } = useProfile();
-  const { data, loading, loadMore, loadingMore, noMore, reload, mutate } =
-    useInfiniteScroll(
-      async (lastData) => {
-        if (!initialParams.authors) {
-          return {
-            list: [],
-            page: 1,
-            total: 0,
-            totalPage: 0,
-          };
-        }
+  const enabled = Boolean(initialParams?.authors);
 
-        const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
-        const nextPage = currentPage + 1;
-        const response = await getListCourse({
-          ...initialParams,
-          page: nextPage,
-          userId: profile?.id,
-        });
+  const query = useInfiniteQuery({
+    queryKey: ['courses', initialParams, profile?.id],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getListCourse({
+        ...initialParams,
+        page: pageParam,
+        userId: profile?.id,
+      });
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = lastPage?.meta?.totalPage || 0;
+      const next = allPages.length + 1;
+      return allPages.length < totalPage ? next : undefined;
+    },
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    enabled,
+  });
 
-        return {
-          list: [...(response.data || [])],
-          page: nextPage,
-          total: response?.meta?.totalRecord,
-          totalPage: response?.meta?.totalPage,
-        };
-      },
-      {
-        isNoMore: (d) => {
-          return d ? d.page >= d.totalPage : false;
-        },
-      }
-    );
+  const dataCourses = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
+  // Only treat cold start as loading; keep cached data visible during background refetch
+  const loading = query.isLoading;
+  const loadingMore = query.isFetchingNextPage;
+  const isFetching = query.isFetching || query.isRefetching;
+  const noMore = !query.hasNextPage;
 
   return {
-    reload,
-    mutate,
-    dataCourses: data?.list || [],
-    loadMore,
+    reload: () => query.refetch(),
+    dataCourses,
+    loadMore: () => query.fetchNextPage(),
     loading,
     loadingMore,
     noMore,
+    isFetching,
   };
 };
 
@@ -209,27 +207,46 @@ const serviceGetListReview = async (id: string, filter?: IFilter) => {
 };
 
 export const useGetListReview = (options?: IOptions) => {
-  const { data, loading, run, mutate } = useRequest(
-    async (id: string, filter?: IFilter) => {
-      return serviceGetListReview(id, filter);
+  const queryClient = useQueryClient();
+  const [currentId, setCurrentId] = useState<string | undefined>(undefined);
+  const [currentFilter, setCurrentFilter] = useState<IFilter | undefined>(undefined);
+
+  const query = useQuery({
+    queryKey: ['reviews', currentId, currentFilter],
+    queryFn: async () => {
+      if (!currentId) return null;
+      return serviceGetListReview(currentId, currentFilter);
     },
+    enabled: !!currentId,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    ...options,
+  });
 
-    {
-      manual: true,
-      ...options,
-    }
-  );
+  const run = useCallback((id: string, filter?: IFilter) => {
+    setCurrentId(id);
+    setCurrentFilter(filter);
+  }, []);
 
-  const onChange = (id: string, filter?: IFilter) => {
+  const onChange = useCallback((id: string, filter?: IFilter) => {
     run(id, filter);
-  };
+  }, [run]);
+
+  const mutate = useCallback((newData: any) => {
+    if (currentId) {
+      queryClient.setQueryData(['reviews', currentId, currentFilter], newData);
+    }
+  }, [currentId, currentFilter, queryClient]);
 
   return {
     mutate,
-    dataListReview: data,
+    dataListReview: query.data,
     run,
     onChange,
-    loading,
+    loading: query.isLoading,
   };
 };
 

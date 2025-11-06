@@ -121,7 +121,7 @@ const Article = ({
           )}
         </>
       )}
-      <div className="flex flex-col gap-8 w-10/12 mx-auto ql-editor">
+      <div className="flex flex-col gap-8 mx-auto ql-editor">
         <Text 
           type="font-28-700" 
           className="text-2xl 2k:text-5xl 4k:text-7xl"

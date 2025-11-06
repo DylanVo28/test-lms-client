@@ -19,6 +19,7 @@ import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { isMobile } from 'react-device-detect';
 import MainHeader from '../MainLayout/MainHeader';
 import IconCup from '@/components/UI/Icons/IconCup';
@@ -39,9 +40,18 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const token = useAccessToken();
 
   const { requestGetProfile } = useProfileInitial();
-  useEffect(() => {
-    requestGetProfile();
-  }, [token]);
+
+  // React Query: fetch profile once when token exists and profile not loaded
+  useQuery({
+    queryKey: ['profile', token],
+    queryFn: async () => requestGetProfile(),
+    enabled: Boolean(token && !profile?.id),
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 15,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  });
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},
@@ -84,9 +94,22 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
           <div className="flex items-center md:gap-5 gap-3">
             <div className="flex items-center gap-1">
               <Button
-                onPress={() =>
-                  navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id))
-                }
+                onPress={() => {
+                  try {
+                    if (typeof window !== 'undefined' && dataDetail?.data && router.query.id) {
+                      window.sessionStorage.setItem(
+                        `courseDetail:${router.query.id}`,
+                        JSON.stringify(dataDetail.data)
+                      );
+                    }
+                  } catch {}
+                  // Prefer client history to avoid reload flicker
+                  if (typeof window !== 'undefined' && window.history.length > 1) {
+                    router.back();
+                  } else {
+                    navigate(ROUTE_PATH.DETAIL_COURSE(router.query.id));
+                  }
+                }}
                 className="hover:bg-black-10 py-3 px-0"
                 radius="md"
                 size="md"

@@ -6,20 +6,39 @@ import { useEthersSigner } from './useEthersSigner';
 import { ethers } from 'ethers';
 import { base } from '@/config/viem';
 import { mintNFTAbi } from '@/abis/mintNFT';
+import { useAccount } from 'wagmi';
+import { useMemo } from 'react';
 
-// Optimized RPC provider using specific chain import
-export const simpleRpcProvider = new ethers.providers.JsonRpcProvider(
-  base.rpcUrls.default.http[0]
-);
+// Optimized RPC provider using specific chain import - memoized to prevent recreation
+let simpleRpcProviderInstance: ethers.providers.JsonRpcProvider | null = null;
+
+export const getSimpleRpcProvider = () => {
+  if (!simpleRpcProviderInstance) {
+    simpleRpcProviderInstance = new ethers.providers.JsonRpcProvider(
+      base.rpcUrls.default.http[0]
+    );
+  }
+  return simpleRpcProviderInstance;
+};
+
+// Export for backward compatibility
+export const simpleRpcProvider = getSimpleRpcProvider();
 
 export const useContract = (
   address: string | undefined,
   ABI: any
 ): Contract | null => {
   const signer = useEthersSigner();
+  const { address: accountAddress } = useAccount();
+  const simpleRpcProvider = getSimpleRpcProvider();
+
+  // Use account address instead of signer object to prevent unnecessary re-creation
+  const signerAddress = useMemo(() => {
+    return signer ? accountAddress : null;
+  }, [signer, accountAddress]);
 
   const { data } = useQuery<Contract | null>({
-    queryKey: ['contract', address, ABI, signer],
+    queryKey: ['contract', address, ABI, signerAddress],
     queryFn: () => {
       if (!address || !ABI || !simpleRpcProvider) {
         return null;
@@ -34,8 +53,11 @@ export const useContract = (
       }
     },
     enabled: !!address && !!ABI && !!simpleRpcProvider,
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 1000 * 60 * 5, // 5 minutes - prevent unnecessary refetches
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
 
   return data || null;
