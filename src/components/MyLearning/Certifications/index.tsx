@@ -18,6 +18,10 @@ const Certifications = () => {
   const { t } = useTranslation('common');
   const { profile } = useProfile();
   const { dataListCertificates, loading, run } = useGetMyCertificates();
+  // Normalize data shape (query.data or { data: [...] }) to a plain array
+  const certificates: any[] =
+    ((dataListCertificates as any)?.data as any[]) ||
+    ((Array.isArray(dataListCertificates) ? (dataListCertificates as any) : []) as any[]);
   const account = useAccount();
   const { address: walletAddress } = account;
 
@@ -25,7 +29,7 @@ const Certifications = () => {
     run();
 
     // if all dataListCertificates
-    if (dataListCertificates?.data?.every((item: any) => item.tokenId)) {
+    if (certificates?.every((item: any) => item.tokenId)) {
       return;
     }
 
@@ -47,7 +51,7 @@ const Certifications = () => {
             <Text type="font-16-400" className="text-letter">
               {t('myLearning.certifications.preparingFor')}{' '}
               <Text element="span" type="font-16-700" className="text-letter">
-                {`${dataListCertificates?.data?.length || 0} ${t(
+                {`${certificates?.length || 0} ${t(
                   'myLearning.certifications.title'
                 )}`}
               </Text>
@@ -57,7 +61,7 @@ const Certifications = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {dataListCertificates?.data?.map((item: any) => {
+        {certificates?.map((item: any) => {
           return (
             <CertificationItem
               key={item?.id}
@@ -67,10 +71,9 @@ const Certifications = () => {
           );
         })}
       </div>
-      {dataListCertificates?.data?.length === 0 && <NoData />}
+      {certificates?.length === 0 && <NoData />}
 
-      {loading &&
-        (dataListCertificates?.data?.length === 0 || !dataListCertificates) && (
+      {loading && (certificates?.length === 0 || !dataListCertificates) && (
           <Loading />
         )}
     </div>
