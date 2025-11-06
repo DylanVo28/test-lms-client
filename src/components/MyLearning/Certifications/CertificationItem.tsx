@@ -35,16 +35,16 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
     setIsMintingInProgress(checkMintingStatus());
   }, [item.id]);
 
-  const { run: handleMintCertificate, loading: isMinting } = useMintCertificate(
+  const { mutate: handleMintCertificate, isPending: isMinting } = useMintCertificate(
     {
       onSuccess(res) {
         localStorage.removeItem(`minting_${item.id}`);
       },
-      onError(e) {
-        if (e.message?.includes('Already minted for this course')) {
+      onError(e: any) {
+        if (e?.message?.includes('Already minted for this course')) {
           toast.error(t('myLearning.certifications.alreadyMinted'));
         } else {
-          toast.error(e.message);
+          toast.error(e?.message);
         }
         localStorage.removeItem(`minting_${item.id}`);
       },
