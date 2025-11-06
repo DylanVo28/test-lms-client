@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Text from '../UI/Text';
 import ListNotification from './ListNotification';
+import { getAllNotification } from '@/store/notification/useNotification';
+import { useQueries } from '@tanstack/react-query';
 
 export enum TAB_NOTIFICATION {
   VIEW_ALL = 'VIEW_ALL',
@@ -20,15 +22,8 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
   //   return languages.find((lang) => lang.code === code)?.name || '';
   // };
 
-  const onChangeTab = (tab: any) => {
-    const params = {
-      page: 1,
-      pageSize: 50,
-      userType: tab === TAB_NOTIFICATION?.VIEW_ALL ? '' : tab,
-    };
-    requestGetNotification.run(params);
-
-    setTab(tab);
+  const onChangeTab = (nextTab: any) => {
+    setTab(nextTab);
   };
 
   const {
@@ -37,18 +32,63 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
     requestCheckHasNotification,
     loading,
     requestGetNotification,
+    setNotifications,
   } = useNotifications();
 
   useEffect(() => {
     if (token && isOpen) {
-      const params = {
-        page: 1,
-        pageSize: 50,
-      };
       requestCheckHasNotification?.run();
-      requestGetNotification.run(params);
     }
   }, [token, isOpen]);
+
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.VIEW_ALL],
+        queryFn: async () => {
+          const res = await getAllNotification({ page: 1, pageSize: 50, userType: '' });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.INSTRUCTOR],
+        queryFn: async () => {
+          const res = await getAllNotification({ page: 1, pageSize: 50, userType: TAB_NOTIFICATION.INSTRUCTOR });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.STUDENT],
+        queryFn: async () => {
+          const res = await getAllNotification({ page: 1, pageSize: 50, userType: TAB_NOTIFICATION.STUDENT });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    ],
+  });
+
+  const listByTab = () => {
+    if (tab === TAB_NOTIFICATION.VIEW_ALL) return (queries[0]?.data as any[]) || [];
+    if (tab === TAB_NOTIFICATION.INSTRUCTOR) return (queries[1]?.data as any[]) || [];
+    return (queries[2]?.data as any[]) || [];
+  };
+
+  const isLoadingTabs = queries.some((q) => q.isLoading || q.isFetching);
 
   const DATA_TAB_NOTIFICATION = [
     {
@@ -115,8 +155,8 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
 
           <ListNotification
             handleReadNotification={handleReadNotification}
-            listNotification={notifications?.content}
-            loading={loading}
+            listNotification={listByTab()}
+            loading={loading || isLoadingTabs}
           />
         </>
       )}

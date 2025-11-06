@@ -43,7 +43,7 @@ export default function CourseCard({
   return (
     <Link
       className="w-full bg-black-20 rounded overflow-hidden cursor-pointer"
-      href={`/${router.query.code}/${ROUTE_PATH.DETAIL_LESSON(id)}`}
+      href={`/${router.query.code}${ROUTE_PATH.DETAIL_LESSON(id)}`}
     >
       <div className="w-full">
         <div>

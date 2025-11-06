@@ -4,7 +4,7 @@ import IconFilter from '@/components/UI/Icons/IconFilter';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import { useGetPrices } from '@/services/filter.service';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetListWishList } from '../service';
 import CardCourse from '@/components/CourseSearch/ListCourse/CardCourse';
 import Loading from '@/components/UI/Loading';
@@ -50,9 +50,7 @@ const Wishlist = () => {
     });
   };
 
-  useEffect(() => {
-    reload();
-  }, [sort, category, price, profile]);
+  // Rely on React Query key changes to refetch when filters change; avoid manual reload on mount
 
   return (
     <div className="flex flex-col gap-[26px]">

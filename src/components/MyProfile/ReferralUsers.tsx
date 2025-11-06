@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import Pagination from './Pagination';
 import Loading from '@/components/UI/Loading';
 import Image from 'next/image';
 import { formatDateTime } from './RewardHistory';
+import { useQuery } from '@tanstack/react-query';
 
 interface ReferralUser {
   walletAddress: string;
@@ -14,29 +15,22 @@ interface ReferralUser {
 }
 
 const ReferralUsers = () => {
-  const [users, setUsers] = useState<ReferralUser[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const rowsPerPage = 10;
 
-  useEffect(() => {
-    const fetchReferralUsers = async () => {
-      setLoading(true);
-      try {
-        const response = await privateRequest(
-          request.get,
-          API_PATH.GET_REFERRAL_USERS
-        );
-        setUsers(response?.data ?? []);
-      } catch (error) {
-        console.error('Error fetching referral users:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading } = useQuery({
+    queryKey: ['myProfile', 'referralUsers'],
+    queryFn: async () => {
+      const response = await privateRequest(request.get, API_PATH.GET_REFERRAL_USERS);
+      return response?.data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
-    fetchReferralUsers();
-  }, []);
+  const users: ReferralUser[] = data || [];
 
   const totalPages = Math.ceil(users.length / rowsPerPage);
   const paginatedData = users.slice(
@@ -46,7 +40,7 @@ const ReferralUsers = () => {
 
   return (
     <div className="rounded-lg overflow-hidden">
-      {loading ? (
+      {isLoading ? (
         <div className="py-10">
           <Loading />
         </div>

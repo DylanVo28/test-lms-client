@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import Pagination from './Pagination';
 import Loading from '@/components/UI/Loading';
+import { useQuery } from '@tanstack/react-query';
 
 interface Reward {
   txHash: string;
@@ -28,34 +29,26 @@ export const formatDateTime = (dateString: string) => {
 };
 
 const RewardHistory = () => {
-  const [rewards, setRewards] = useState<Reward[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const rowsPerPage = 10;
 
-  useEffect(() => {
-    const fetchRewards = async () => {
-      setLoading(true);
-      try {
-        const response = await privateRequest(
-          request.get,
-          API_PATH.REWARD_HISTORY
-        );
-        // Mock status if not present
-        const dataWithStatus = (response.data || []).map((item: any) => ({
-          ...item,
-          status: item.status || (Math.random() > 0.5 ? 'Success' : 'Pending'),
-        }));
-        setRewards(dataWithStatus);
-      } catch (error) {
-        console.error('Error fetching reward history:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading } = useQuery({
+    queryKey: ['myProfile', 'rewardHistory'],
+    queryFn: async () => {
+      const response = await privateRequest(request.get, API_PATH.REWARD_HISTORY);
+      const dataWithStatus = (response.data || []).map((item: any) => ({
+        ...item,
+        status: item.status || (Math.random() > 0.5 ? 'Success' : 'Pending'),
+      }));
+      return dataWithStatus as Reward[];
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
-    fetchRewards();
-  }, []);
+  const rewards: Reward[] = data || [];
 
   const getStatusLabel = (status?: string) => {
     if (status === 'verified') {
@@ -85,7 +78,7 @@ const RewardHistory = () => {
 
   return (
     <div className="rounded-lg overflow-hidden">
-      {loading ? (
+      {isLoading ? (
         <div className="py-10">
           <Loading />
         </div>
