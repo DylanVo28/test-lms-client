@@ -1,12 +1,13 @@
 `use client`;
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { privateRequest, request } from '@/api/request';
 import { API_PATH } from '@/api/constant';
 import Pagination from './Pagination';
 import { formatDateTime } from './RewardHistory';
 import Loading from '@/components/UI/Loading';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 interface Transaction {
   walletAddress: string;
@@ -17,29 +18,22 @@ interface Transaction {
 }
 
 const SoldCourses = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const rowsPerPage = 10;
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      setLoading(true);
-      try {
-        const response = await privateRequest(
-          request.get,
-          API_PATH.YOUR_NETWORK
-        );
-        setTransactions(response?.data ?? []);
-      } catch (error) {
-        console.error('Error fetching network data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading } = useQuery({
+    queryKey: ['myProfile', 'soldCourses'],
+    queryFn: async () => {
+      const response = await privateRequest(request.get, API_PATH.YOUR_NETWORK);
+      return response?.data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
-    fetchTransactions();
-  }, []);
+  const transactions: Transaction[] = data || [];
 
   const totalPages = Math.ceil(transactions.length / rowsPerPage);
   const paginatedData = transactions.slice(
@@ -49,7 +43,7 @@ const SoldCourses = () => {
 
   return (
     <div className="rounded-lg overflow-hidden">
-      {loading ? (
+      {isLoading ? (
         <div className="py-10">
           <Loading />
         </div>
