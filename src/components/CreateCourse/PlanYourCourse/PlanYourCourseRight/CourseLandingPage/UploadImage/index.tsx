@@ -3,13 +3,13 @@ import LoadingScreen from '@/components/UI/LoadingScreen';
 import Text from '@/components/UI/Text';
 import { toast } from '@/components/UI/Toast/toast';
 import { Button, Progress, Spinner } from '@nextui-org/react';
-import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import React from 'react';
 import { useTranslation } from 'next-i18next';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
 import useClickOutside from '@/hooks/useClickOutside';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const UploadImage = ({
   value,
@@ -38,7 +38,7 @@ const UploadImage = ({
   const cropperRef: any = useRef(null);
 
   const [imageSrc, setImageSrc] = useState<string>('');
-
+  const originalImageSizeRef=useRef<{ width: number; height: number } | null>(null);
   useEffect(() => {
     if (!value) {
       const interval = setInterval(() => {
@@ -60,6 +60,7 @@ const UploadImage = ({
     onSuccess(res) {
       onChange(res?.data?.url);
       setImageSrc('');
+      originalImageSizeRef.current= null
     },
   });
 
@@ -88,6 +89,9 @@ const UploadImage = ({
         return;
       }
 
+      // Store original image size for later use in cropping
+      originalImageSizeRef.current= { width: img.width, height: img.height }
+
       const reader = new FileReader();
       reader.onload = () => {
         setImageSrc(reader.result as string);
@@ -98,16 +102,16 @@ const UploadImage = ({
     // Trigger the image loading
     img.src = URL.createObjectURL(file);
   };
-
   const handleClickUploadFile = () => {
     fileInputRef.current.click();
   };
+
   const getCropData = () => {
-    if (cropperRef.current) {
+    if (cropperRef.current && originalImageSizeRef.current) {
       const cropper = cropperRef.current?.cropper;
       const croppedCanvas = cropper.getCroppedCanvas({
-        width: defaultSize.width,
-        height: defaultSize.height,
+        maxWidth: originalImageSizeRef.current.width,
+        maxHeight: originalImageSizeRef.current.height,
         imageSmoothingEnabled: true,
         imageSmoothingQuality: 'high',
       });
@@ -142,7 +146,7 @@ const UploadImage = ({
             value={value}
             cropperRef={cropperRef}
             fallbackElement={
-              <Image
+              <ImageCustom
                 src={value || '/img-default.png'}
                 className="w-full md:w-[240px] max-h-[150px] object-contain"
                 alt=""
