@@ -149,7 +149,7 @@ const QuillEditor = ({
         </Text>
       )}
       <div
-        className={clsx('w-full', {
+        className={clsx('w-full customContentEditor', {
           ['custom-quill-editor']: inputDefault,
           ['custom-quill-editor-quizz']: inputQuizz,
           // ['quill-error']: error,
