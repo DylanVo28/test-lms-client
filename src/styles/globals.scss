@@ -1311,7 +1311,7 @@ input[type='number'] {
   {
     background: transparent !important;
     font-size: 20px !important;
-    
+    font-weight: 500 !important;
 
 
     strong {
@@ -1334,6 +1334,8 @@ input[type='number'] {
   }
   strong {
     background: transparent !important;
+    line-height: 1.8 !important;
+    word-break: initial !important;
   }
 
   span {
