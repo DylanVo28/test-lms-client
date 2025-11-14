@@ -1338,6 +1338,12 @@ input[type='number'] {
     word-break: initial !important;
   }
 
+  li{
+    strong{
+      font-size: 14px !important;
+    }
+  }
+
   span {
     font-size: 14px !important;
     line-height: 1.8 !important;
