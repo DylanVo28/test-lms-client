@@ -7,6 +7,7 @@ import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
+import ImageCustom from "@/components/UI/ImageCustom";
 interface IModalModalConfirmDeleteSection {
   handleSubmitDelete: (index: number, id: string, type?: string) => void;
   loading?: boolean;
@@ -48,7 +49,7 @@ const ModalConfirmDeleteSection = (
         <ModalBody className="p-6 flex flex-col gap-2">
           <div className="flex flex-col gap-4">
             <div className="flex justify-center items-center flex-col gap-2">
-              <Image
+              <ImageCustom
                 alt=""
                 src={'/images/img-warning.svg'}
                 width={120}

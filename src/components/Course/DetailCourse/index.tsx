@@ -26,6 +26,7 @@ import {
   useLikeCourse,
   useUnLikeCourse,
 } from '@/components/CourseSearch/service';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const DetailCourse = () => {
   const router = useRouter();
@@ -237,7 +238,7 @@ const DetailCourse = () => {
               {/* Author Info */}
               <div className="flex items-center gap-[6px]">
                 {dataDetail?.data?.author?.avatar ? (
-                  <Image
+                  <ImageCustom
                     alt=""
                     src={
                       dataDetail?.data?.author?.avatar ||

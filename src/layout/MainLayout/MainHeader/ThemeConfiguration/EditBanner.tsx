@@ -6,6 +6,7 @@ import { Fragment, useRef, useState } from 'react';
 
 import { useUploadFile } from '@/components/CreateCourse/service';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const EditBanner = ({ onChange, value }: any) => {
   const [inputKey, setInputKey] = useState(Date.now());
@@ -109,7 +110,7 @@ const EditBanner = ({ onChange, value }: any) => {
                 )}
 
                 {value && (
-                  <Image
+                  <ImageCustom
                     src={value || '/img-default.png'}
                     className="w-full md:w-[480px] h-auto"
                     alt=""

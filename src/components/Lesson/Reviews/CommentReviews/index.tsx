@@ -4,11 +4,12 @@ import Text from '@/components/UI/Text';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import Rater from 'react-rater';
+import ImageCustom from "@/components/UI/ImageCustom";
 const CommentReviews = () => {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <Image
+        <ImageCustom
           alt=""
           src={'/images/avatar.png'}
           width={24}

@@ -17,6 +17,7 @@ import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 dayjs.extend(relativeTime);
 
@@ -90,7 +91,7 @@ const CardCourseMore = ({
         onClick={(e) => e.preventDefault()}
         className="bg-card w-full lg:w-max rounded rounded-b-none"
       >
-        <Image
+        <ImageCustom
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
           height={200}

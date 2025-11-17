@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { atom, useAtom } from 'jotai';
 import useNavigate from '@/hooks/useNavigate';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 export const totalStepAtom = atom<number>(4);
 
@@ -16,7 +17,7 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
   return (
     <div>
       <div className="p-4 flex justify-between items-center">
-        <Image
+        <ImageCustom
           onClick={() => navigate(ROUTE_PATH.HOME)}
           alt="logo"
           width={125}

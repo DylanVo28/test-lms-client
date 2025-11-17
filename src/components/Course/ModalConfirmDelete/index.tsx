@@ -8,6 +8,7 @@ import Text from '@/components/UI/Text';
 import { useDeleteCourse } from '@/components/CreateCourse/service';
 import { toast } from '@/components/UI/Toast/toast';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 interface IModalSupport {
   reload: any;
 }
@@ -53,7 +54,7 @@ const ModalConfirmDelete = (props: IModalSupport, ref?: any) => {
       <>
         <ModalBody className="p-6 flex flex-col gap-2">
           <div className="flex justify-center items-center flex-col gap-2">
-            <Image
+            <ImageCustom
               alt=""
               src={'/images/img-warning.svg'}
               width={120}

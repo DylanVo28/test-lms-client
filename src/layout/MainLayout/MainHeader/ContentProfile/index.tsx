@@ -15,6 +15,7 @@ import { useLogout } from '../service';
 import { initialTheme, themeAtom } from '@/store/theme/theme';
 import { initialProfile } from '@/store/profile/profile';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const MENUS = [
   {
@@ -114,7 +115,7 @@ const ContentProfile = ({
         onClick={handleLogout}
         className="cursor-pointer transition-all rounded-b-[4px] hover:bg-error-10 py-3 px-4 flex items-center gap-3"
       >
-        <Image src={'/images/ig-logout.png'} width={24} height={24} alt="" />
+        <ImageCustom src={'/images/ig-logout.png'} width={24} height={24} alt="" />
         <Text type="font-14-500" className="text-error">
           {t('profileMenu.logout')}
         </Text>

@@ -12,6 +12,7 @@ import NoData from '../ListCourse/NoData';
 import { useProfile } from '@/store/profile/useProfile';
 import Loading from '../UI/Loading';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 export default function ListCourses() {
   const { t } = useTranslation('common');
   const SORT_BY = [
@@ -157,7 +158,7 @@ export default function ListCourses() {
             <Text type="font-14-500" className="text-main">
               {t('listCourse.seeMore')}
             </Text>
-            <Image
+            <ImageCustom
               src={'/icons/ic-arrow-drop-right-line.svg'}
               width={20}
               height={20}

@@ -8,6 +8,7 @@ import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import ReactStars from 'react-stars';
+import ImageCustom from "@/components/UI/ImageCustom";
 const CardComment = ({
   courseId,
   reloadListReview,
@@ -45,7 +46,7 @@ const CardComment = ({
   return (
     <div className="rounded p-4 bg-white-5 flex gap-6 items-start">
       <div>
-        <Image
+        <ImageCustom
           src={profile?.avatar || getAvatar()}
           className="w-[50px] h-[50px] rounded-full"
           width={50}

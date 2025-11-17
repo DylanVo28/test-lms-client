@@ -8,6 +8,7 @@ import { referralRequest } from './service';
 import { useAccountInfo } from '@/hooks/useAccountInfo';
 import FormatNumberDecimal from '../Commons/FormatNumberDecimal';
 import { useAccount } from 'wagmi';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const calculatePercentage = (value: number, total: number): number => {
   if (total === 0) {
@@ -78,7 +79,7 @@ const Overview = ({
       <div className="p-[20px] bg-gray-70 rounded-[4px] w-full h-fit flex flex-col gap-[12px]">
         <div className="flex flex-col justify-center items-center gap-[4px]">
           <div className="w-[64px] h-[64px] rounded-full relative overflow-hidden">
-            <Image
+            <ImageCustom
               className="object-cover w-full h-full"
               alt="avatar"
               fill
@@ -98,7 +99,7 @@ const Overview = ({
 
         <div className="flex justify-between items-center py-[8px]">
           <Text type="font-16-700">{'Verified Account'}</Text>
-          <Image src={'/icons/ic-kyc.svg'} alt="kyc" width={24} height={24} />
+          <ImageCustom src={'/icons/ic-kyc.svg'} alt="kyc" width={24} height={24} />
         </div>
 
         {data?.role === 'KOL' && (

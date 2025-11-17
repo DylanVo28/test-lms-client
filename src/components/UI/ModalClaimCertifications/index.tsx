@@ -7,6 +7,7 @@ import { Button, ModalBody } from '@nextui-org/react';
 import Image from 'next/image';
 import IconClose from '../Icons/IconClose';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface IModalSupport {}
 
@@ -51,7 +52,7 @@ const ModalClaimCertifications = (props: IModalSupport, ref?: any) => {
           </div>
           <div className="flex flex-col gap-3 mt-4">
             <div className="flex p-4 items-center gap-3 rounded border-1 border-white-10 bg-card">
-              <Image
+              <ImageCustom
                 src={dataCertifications?.certificate?.image}
                 alt=""
                 width={120}

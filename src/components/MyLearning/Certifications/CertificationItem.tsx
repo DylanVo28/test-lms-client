@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import { useMintCertificate } from '../service';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const MINTING_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
 const MINTING_COUNTDOWN = 10 * 1000; // 10 seconds in milliseconds
@@ -88,7 +89,7 @@ const CertificationItem = ({ item, refetchCertificates }: any) => {
       key={item?.id}
       className="rounded border-1 border-white-10 bg-card p-4 flex items-center gap-3"
     >
-      <Image
+      <ImageCustom
         src={item?.certificate?.image}
         alt=""
         width={140}

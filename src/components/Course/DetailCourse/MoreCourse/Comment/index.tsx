@@ -19,6 +19,7 @@ import IconUnLikedReview from '@/components/UI/Icons/IconUnLikedReview';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { ThumbsDown, ThumbsUp } from '@/components/UI/Icons/Thumbs';
 import clsx from 'clsx';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 dayjs.extend(relativeTime);
 
@@ -54,7 +55,7 @@ const Comment = ({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <Image
+        <ImageCustom
           src={item?.user?.avatar || getAvatar()}
           className="w-[24px] h-[24px] rounded-full"
           width={24}

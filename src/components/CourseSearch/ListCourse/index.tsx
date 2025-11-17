@@ -15,6 +15,7 @@ import DrawerFilter from '../DrawerFilter';
 import { useLikeCourse, useUnLikeCourse } from '../service';
 import CardCourse from './CardCourse';
 import FilterCourse from './FilterCourse';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 enum TAB_VIEW {
   GRID = 'grid',
@@ -212,7 +213,7 @@ const ListCourse = () => {
                     <Text type="font-14-500" className="text-main">
                       {t('listCourse.seeMore')}
                     </Text>
-                    <Image
+                    <ImageCustom
                       src={'/icons/ic-arrow-drop-right-line.svg'}
                       width={20}
                       height={20}

@@ -25,6 +25,7 @@ import CopyIcon from '@/icons/CopyIcon';
 import Link from 'next/link';
 import ReactStars from 'react-stars';
 import Image from 'next/image';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 declare module '@/api/constant' {
   interface ApiPath {
@@ -195,7 +196,7 @@ const CourseStatisticPage = ({
               <div key={comment.id} className="pb-4">
                 <div className="flex items-center gap-4 mb-2">
                   <div className="flex items-center gap-2">
-                    <Image
+                    <ImageCustom
                       src={
                         comment.user.avatar ?? '/images/img-mentor-default.png'
                       }

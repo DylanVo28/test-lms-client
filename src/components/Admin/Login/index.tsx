@@ -8,6 +8,7 @@ import { useLoginUserName } from './service';
 import { setAuthCookies } from '@/store/auth';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/utils/const';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const Login = () => {
   return (
     <div className="flex flex-col gap-4 items-center w-full">
       <div className="mb-8 flex flex-col gap-8 items-center">
-        <Image
+          <ImageCustom
           alt="logo"
           width={125}
           height={46}

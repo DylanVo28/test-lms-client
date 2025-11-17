@@ -4,6 +4,7 @@ import { File, FileText } from '@/components/UI/Icons/FileIcons';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const Content = ({
   handleClickEditContent,
@@ -29,7 +30,7 @@ const Content = ({
     <div className="flex items-start justify-between p-3  border-1 border-t-0 border-white-15 gap-3">
       <div className="flex items-center gap-2 cursor-pointer">
         {info?.thumbnailUrl ? (
-          <Image
+          <ImageCustom
             alt=""
             width={116}
             height={65}

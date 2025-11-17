@@ -20,6 +20,7 @@ import { useAccountInfo } from '@/hooks/useAccountInfo';
 import FormatNumberDecimal from '@/components/Commons/FormatNumberDecimal';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const CardEnrollNow = ({
   course,
@@ -250,7 +251,7 @@ const CardEnrollNow = ({
         {isLoading ? (
           <div className="h-[200px] w-full bg-card animate-pulse rounded" />
         ) : (
-          <Image
+          <ImageCustom
             src={course?.image || '/images/img-default.png'}
             width={302}
             height={200}
@@ -263,7 +264,7 @@ const CardEnrollNow = ({
         )}
         {course?.video && (
           <>
-            <Image
+            <ImageCustom
               src={'/images/img-youtube.png'}
               width={64}
               height={64}
