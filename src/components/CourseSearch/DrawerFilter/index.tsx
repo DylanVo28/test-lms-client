@@ -8,6 +8,7 @@ import {
 import Image from 'next/image';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import FilterCourse from '../ListCourse/FilterCourse';
+import ImageCustom from "@/components/UI/ImageCustom";
 const DrawerFilter = (props: any, ref: any) => {
   const { setParams, params } = props;
   const [visible, setVisible] = useState(false);
@@ -39,14 +40,14 @@ const DrawerFilter = (props: any, ref: any) => {
           <DrawerBody className="p-0">
             <div className="flex flex-col">
               <div className="flex p-4 items-center justify-between border-b-1 border-white-10">
-                <Image
+                <ImageCustom
                   alt="logo"
                   width={125}
                   height={46}
                   className="cursor-pointer"
                   src={'/logo.png'}
                 />
-                <Image
+                <ImageCustom
                   onClick={onVisible}
                   src={'/images/ic-close.png'}
                   width={32}

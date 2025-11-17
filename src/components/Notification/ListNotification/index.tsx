@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const ListNotification = ({
   listNotification = [],
@@ -44,7 +45,7 @@ const ListNotification = ({
               <div className="flex items-center gap-4">
                 <div>
                   {item?.data?.avatar ? (
-                    <Image
+                    <ImageCustom
                       src={item?.data?.avatar}
                       className="w-10 h-10"
                       width={40}

@@ -9,6 +9,7 @@ import { formatWalletAddress } from '@/utils/common';
 import useNavigate from '@/hooks/useNavigate';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface IProps {
   id: string;
@@ -47,7 +48,7 @@ export default function CourseCard({
     >
       <div className="w-full">
         <div>
-          <Image
+          <ImageCustom
             src={image || '/images/img-default.png'}
             alt={name}
             width={302}

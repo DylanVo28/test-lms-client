@@ -25,6 +25,7 @@ import Menubar from '../Menubar';
 import DrawerMenu from '../Menubar/DrawerMenu';
 import ThemeConfiguration from './ThemeConfiguration';
 import useClickOutside from '@/hooks/useClickOutside';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const MainHeader = () => {
   const { t } = useTranslation('common');
@@ -75,7 +76,7 @@ const MainHeader = () => {
   return (
     <div className="w-full sticky z-[49] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className=" max-w-[2048px] mx-auto flex justify-between items-center">
-        <Image
+        <ImageCustom
           onClick={() => navigate(ROUTE_PATH.HOME)}
           alt="logo"
           className="cursor-pointer max-h-[50px] w-auto"
@@ -84,7 +85,7 @@ const MainHeader = () => {
           height={56}
         />
 
-        <Image
+        <ImageCustom
           onClick={() => refDrawerMenu.current.onOpen()}
           src={'/images/img-menu.png'}
           width={40}

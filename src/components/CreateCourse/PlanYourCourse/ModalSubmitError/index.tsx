@@ -6,6 +6,7 @@ import Image from 'next/image';
 import CustomModal from '@/components/UI/CustomModal';
 import Text from '@/components/UI/Text';
 import { values } from 'video.js/dist/types/utils/obj';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface IModalSubmitError {}
 
@@ -77,7 +78,7 @@ const ModalSubmitError = (props: IModalSubmitError, ref?: any) => {
       <>
         <ModalBody className="p-6 flex flex-col gap-2">
           <div className="flex justify-center items-center flex-col gap-2">
-            <Image
+            <ImageCustom
               alt=""
               src={'/images/img-warning.svg'}
               width={120}

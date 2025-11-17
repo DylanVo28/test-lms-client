@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useGetListCourse } from './service';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const ListCourse = () => {
   const { t } = useTranslation('common');
@@ -133,7 +134,7 @@ const ListCourse = () => {
             onChange={handleChangeSearch}
             onKeyUp={handleKeyUp}
             startContent={
-              <Image
+              <ImageCustom
                 width={20}
                 height={20}
                 alt=""
@@ -186,7 +187,7 @@ const ListCourse = () => {
                 <Text type="font-14-500" className="text-main">
                   {t('listCourse.seeMore')}
                 </Text>
-                <Image
+                <ImageCustom
                   src={'/icons/ic-arrow-drop-right-line.svg'}
                   width={20}
                   height={20}

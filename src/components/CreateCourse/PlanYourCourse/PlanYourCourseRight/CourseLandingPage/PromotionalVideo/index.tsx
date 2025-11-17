@@ -12,6 +12,7 @@ import { useS3MultipartUpload } from '@/hooks/useS3MultipartUpload';
 import useVideoThumbFromUrl from '@/hooks/useVideoThumbFromUrl';
 import CloseIcon from '@/layout/MainLayout/MainHeader/ThemeConfiguration/Icons/CloseIcon';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const PromotionalVideo = ({
   value,
@@ -111,7 +112,7 @@ const PromotionalVideo = ({
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
         <div className="relative md:w-[240px] w-full h-[180px] bg-default flex items-center justify-center">
-          <Image
+          <ImageCustom
             src={
               isHasVideo
                 ? fileData?.blobThumbnailUrl

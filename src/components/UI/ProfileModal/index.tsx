@@ -13,6 +13,7 @@ import { initialTheme, themeAtom } from '@/store/theme/theme';
 import { initialProfile } from '@/store/profile/profile';
 import CustomModal from '@/components/UI/CustomModal';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -105,7 +106,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
           onClick={handleLogout}
           className="cursor-pointer transition-all rounded-b-lg hover:bg-error-10 py-3 px-4 flex items-center gap-3"
         >
-          <Image
+          <ImageCustom
             src={'/images/ig-logout.png'}
             width={24}
             height={24}

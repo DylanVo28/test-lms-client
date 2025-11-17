@@ -18,6 +18,7 @@ import useAccessToken from '@/store/auth/hook/useAccessToken';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 dayjs.extend(relativeTime);
 
 const CardCourse = ({
@@ -82,7 +83,7 @@ const CardCourse = ({
       )}
 
       <div className="bg-card w-full rounded rounded-b-none">
-        <Image
+        <ImageCustom
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
           height={200}

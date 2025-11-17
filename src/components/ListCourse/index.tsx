@@ -19,6 +19,7 @@ import Text from '../UI/Text';
 import NoData from './NoData';
 import { getAccessToken } from '@/store/auth';
 import Link from 'next/link';
+import ImageCustom from "@/components/UI/ImageCustom";
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -186,7 +187,7 @@ const ListCourse = () => {
                     className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
                   >
                     <div className="h-full bg-white">
-                      <Image
+                      <ImageCustom
                         alt=""
                         src={item.image || '/img-course.png'}
                         width={300}

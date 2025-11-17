@@ -23,6 +23,7 @@ import { formatWalletAddress, isValidURL } from '@/utils/common';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const Mentors = ({ mentor }: any) => {
   const { t } = useTranslation('common');
@@ -109,7 +110,7 @@ const Mentors = ({ mentor }: any) => {
         {t('course.mentors')}
       </Text>
       <div className="flex flex-col md:flex-row md:items-start gap-5">
-        <Image
+        <ImageCustom
           alt=""
           src={mentor?.avatar || '/images/img-mentor-default.png'}
           width={40}

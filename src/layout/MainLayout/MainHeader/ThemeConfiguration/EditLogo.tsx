@@ -5,6 +5,7 @@ import { Button } from '@nextui-org/react';
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { CropperWrap } from '@/components/Commons/CropperWrap';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface UploadedFile {
   url: string;
@@ -130,7 +131,7 @@ const EditLogo = ({
               <>
                 {logo ? (
                   <div className="min-h-[100px] bg-gray-70 rounded-md flex justify-center items-center">
-                    <Image src={logo} alt="" width={124} height={46} />
+                    <ImageCustom src={logo} alt="" width={124} height={46} />
                   </div>
                 ) : (
                   <div className="w-full box-border overflow-hidden h-[153px] flex flex-col items-center justify-center gap-[16px] bg-gray-70 rounded-[4px] ">

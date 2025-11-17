@@ -7,6 +7,7 @@ import { useDisconnect } from 'wagmi';
 import RegisterFormModal from '../RegisterFormModal';
 import Text from '../UI/Text';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const LandingPage = () => {
   const { t } = useTranslation('common');
@@ -20,7 +21,7 @@ const LandingPage = () => {
       }}
     >
       <div className="absolute top-5 left-5 ">
-        <Image
+        <ImageCustom
           alt="logo"
           className="cursor-pointer max-h-[50px] w-auto"
           src={'/logo.png'}

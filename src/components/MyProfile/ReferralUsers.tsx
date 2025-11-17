@@ -6,6 +6,7 @@ import Loading from '@/components/UI/Loading';
 import Image from 'next/image';
 import { formatDateTime } from './RewardHistory';
 import { useQuery } from '@tanstack/react-query';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface ReferralUser {
   walletAddress: string;
@@ -67,7 +68,7 @@ const ReferralUsers = () => {
                   className="hover:bg-[#1E1F25] transition-colors"
                 >
                   <td className="px-6 py-4 flex items-center gap-2">
-                    <Image
+                    <ImageCustom
                       src={user.avatar || '/images/img-mentor-default.png'}
                       alt="User Avatar"
                       width={32}

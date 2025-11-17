@@ -36,6 +36,7 @@ import IconUser from '@/components/UI/Icons/IconUser';
 import IconGlobal from '@/components/UI/Icons/IconGlobal';
 import { useTranslation } from 'next-i18next';
 import { useRouter as useNextRouter } from 'next/router';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
@@ -151,14 +152,14 @@ const DrawerMenu = (props: any, ref: any) => {
           <DrawerBody className="p-0">
             <div className="flex flex-col">
               <div className="py-4 px-4 flex items-center border-b-1 border-white-10 justify-between">
-                <Image
+                <ImageCustom
                   alt="logo"
                   width={125}
                   height={46}
                   className="cursor-pointer"
                   src={urlLogo || '/logo.png'}
                 />
-                <Image
+                <ImageCustom
                   onClick={onVisible}
                   src={'/images/ic-close.png'}
                   width={32}

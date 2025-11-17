@@ -6,6 +6,7 @@ import House from '@/components/UI/Icons/House';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const MainBanner = () => {
   const { theme } = useTheme();
@@ -22,7 +23,7 @@ const MainBanner = () => {
     <div className="relative w-full min-h-[400px]  md:min-h-[410px]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 w-full h-full">
-        <Image
+        <ImageCustom
           src={bgImageSrc}
           alt={t('banner.altBackground')}
           fill
@@ -94,7 +95,7 @@ const MainBanner = () => {
 
           {/* Mobile image at bottom */}
           <div className="block md:hidden w-full mb-[-40px]">
-            <Image
+            <ImageCustom
               src="/images/bg-banner-mobile1.png"
               alt={t('banner.altMobileBanner')}
               width={343}

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 const ProgressCircle = ({ value }: { value: number }) => {
   // Ensure the value is within 0 to 100
@@ -35,7 +36,7 @@ const ProgressCircle = ({ value }: { value: number }) => {
 
       {/* Center image */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <Image
+        <ImageCustom
           src="/images/img-trophy-line.png"
           width={16}
           height={16}

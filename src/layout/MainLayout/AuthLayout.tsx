@@ -6,6 +6,7 @@ import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 type ROLE = 'ADMIN' | 'KOL' | 'USER';
 const AuthLayout = ({
@@ -43,7 +44,7 @@ const AuthLayout = ({
         }}
       >
         <div className="absolute top-5 left-5 ">
-          <Image
+          <ImageCustom
             alt="logo"
             className="cursor-pointer max-h-[50px] w-auto"
             src={'/logo.png'}

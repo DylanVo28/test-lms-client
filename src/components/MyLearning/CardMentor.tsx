@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import Rater from 'react-rater';
 import { formatWalletAddress } from '@/utils/common';
+import ImageCustom from "@/components/UI/ImageCustom";
 
 interface IProps {
   mentor?: any;
@@ -19,7 +20,7 @@ export default function CardMentor({ mentor }: IProps) {
   return (
     <div className="w-full bg-[#FFFFFF0D] rounded-[4px] overflow-hidden cursor-pointer flex flex-row gap-3 p-4">
       <div className="h-[64px] w-[64px]">
-        <Image
+        <ImageCustom
           src={mentor?.avatar || '/images/img-default.png'}
           alt={'avatar'}
           width={64}
