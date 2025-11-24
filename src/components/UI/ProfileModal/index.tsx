@@ -14,6 +14,7 @@ import { initialProfile } from '@/store/profile/profile';
 import CustomModal from '@/components/UI/CustomModal';
 import { useTranslation } from 'next-i18next';
 import ImageCustom from "@/components/UI/ImageCustom";
+import { useRouter } from 'next/router';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
   const [, setNotifications] = useAtom(notificationAtom);
   const [_, setTheme] = useAtom(themeAtom);
   const { navigate } = useNavigate();
+  const router = useRouter();
 
   const { run: runLogout } = useLogout({
     onSuccess(res) {},
@@ -42,6 +44,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
     setProfile(initialProfile);
     disconnect();
     onClose();
+    router.replace('/');
   };
 
   const handleRedirectPage = (link: string) => {
