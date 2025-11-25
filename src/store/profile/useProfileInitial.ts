@@ -52,18 +52,35 @@ export const useProfileInitial = () => {
 
     if (!profile?.id) return;
 
-    const routeCode = router.query.code;
-    const currentThemeCode = profile?.refererThemeCode;
-
-    // Ensure `routeCode` is available and not already correct
-    if (routeCode !== currentThemeCode) {
-      // navigate to currentThemeCode path
-      if (!currentThemeCode) {
-        router.replace(`/platform`);
-      } else {
-        router.replace(`/${currentThemeCode}`);
-      }
+    // Only run this logic on landing/dynamic theme routes
+    const isThemeRoute = router.pathname === '/' || router.pathname === '/[code]';
+    if (!isThemeRoute) {
+      return;
     }
+
+    const rawRouteCode = router.query.code;
+    const currentRouteCode = Array.isArray(rawRouteCode)
+      ? rawRouteCode[0]
+      : rawRouteCode;
+
+    const normalizedRouteCode = currentRouteCode?.toLowerCase();
+    const preferredSlug =
+      profile?.role === 'KOL' && profile?.refererCode
+        ? profile.refererCode
+        : profile?.refererThemeCode;
+
+    const normalizedPreferredSlug = preferredSlug?.toLowerCase();
+
+    if (normalizedRouteCode === normalizedPreferredSlug) {
+      return;
+    }
+
+    if (!preferredSlug) {
+      router.replace(`/platform`);
+      return;
+    }
+
+    router.replace(`/${preferredSlug}`);
   }, [router, profile]);
 
   useEffect(() => {

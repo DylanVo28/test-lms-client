@@ -36,10 +36,27 @@ export const applyCustomColors = (customColors?: CustomColors) => {
   console.log('Applied custom colors:', colors);
 };
 
+const FORCE_PLATFORM_THEME_KEY = 'force-platform-theme';
+
 export const resetToDefaultColors = () => {
   if (typeof window === 'undefined') return;
 
   applyCustomColors(DefaultThemeColor);
+};
+
+export const markForcePlatformTheme = () => {
+  if (typeof window === 'undefined') return;
+  sessionStorage.setItem(FORCE_PLATFORM_THEME_KEY, 'true');
+};
+
+export const consumeForcePlatformThemeFlag = () => {
+  if (typeof window === 'undefined') return false;
+  const shouldForce =
+    sessionStorage.getItem(FORCE_PLATFORM_THEME_KEY) === 'true';
+  if (shouldForce) {
+    sessionStorage.removeItem(FORCE_PLATFORM_THEME_KEY);
+  }
+  return shouldForce;
 };
 
 export const getCustomColorsFromTheme = (themeColor: any): CustomColors => {

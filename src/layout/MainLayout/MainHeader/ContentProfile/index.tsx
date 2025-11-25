@@ -67,6 +67,7 @@ const ContentProfile = ({
     disconnect();
 
     // toast.success('Logout successfully');
+    router.replace('/');
   };
 
   const generateName = (): any => {
