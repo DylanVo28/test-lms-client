@@ -14,6 +14,7 @@ import { myThemeAtom } from './my-theme';
 import {
   applyCustomColors,
   getCustomColorsFromTheme,
+  consumeForcePlatformThemeFlag,
 } from '@/utils/themeColors';
 import {
   THEME_PREVIEW_KEY,
@@ -70,11 +71,16 @@ export const useThemeInitial = () => {
 
         let res;
 
+        const shouldForcePlatformTheme = consumeForcePlatformThemeFlag();
+
         const adminRes = await privateRequest(
           request.get,
           API_PATH.THEMES + `/platform`
         );
-        if (profile?.role === 'KOL' && token) {
+        const shouldUsePlatformTheme =
+          shouldForcePlatformTheme || !token || !profile?.id;
+
+        if (profile?.role === 'KOL' && token && !shouldUsePlatformTheme) {
           res = await privateRequest(
             request.get,
             API_PATH.THEMES + `/${router.query?.code}`
@@ -111,7 +117,7 @@ export const useThemeInitial = () => {
           document.body.setAttribute('data-theme', res?.data?.color);
           return;
         } else {
-          if (router.query?.code) {
+          if (!shouldUsePlatformTheme && router.query?.code) {
             res = await privateRequest(
               request.get,
               API_PATH.THEMES + `/${router.query?.code}`
@@ -134,6 +140,22 @@ export const useThemeInitial = () => {
             document.body.setAttribute('data-theme', res?.data?.color);
             return;
           }
+
+          // Fallback to platform theme when no token/profile (e.g., after logout)
+          const platformColors = JSON.parse(
+            adminRes?.data?.color || JSON.stringify(DefaultThemeColor)
+          );
+
+          setTheme({
+            ...adminRes?.data,
+            kolId: adminRes?.data?.userId,
+            adminId: adminRes?.data?.userId,
+            color: platformColors,
+          });
+
+          applyCustomColors(getCustomColorsFromTheme(platformColors));
+          document.body.setAttribute('data-theme', adminRes?.data?.color || '');
+          return;
         }
       } catch (error) {
         console.error('Error fetching theme:', error);
