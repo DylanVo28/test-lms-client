@@ -4,9 +4,10 @@ import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button, Progress } from '@nextui-org/react';
 import { useDebounce } from 'ahooks';
+import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { isMobile } from 'react-device-detect';
 import { useGetListMyCourse } from '../Course/ListCourse/service';
@@ -17,9 +18,11 @@ import Loading from '../UI/Loading';
 import SelectCustom from '../UI/SelectCustom';
 import Text from '../UI/Text';
 import NoData from './NoData';
-import { getAccessToken } from '@/store/auth';
 import Link from 'next/link';
-import ImageCustom from "@/components/UI/ImageCustom";
+import ImageCustom from '@/components/UI/ImageCustom';
+import { API_PATH } from '@/api/constant';
+import { PREFIX_API } from '@/api/request';
+import { toast } from '@/components/UI/Toast/toast';
 const ListCourse = () => {
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -36,11 +39,14 @@ const ListCourse = () => {
 
   const debounceValue = useDebounce(search, { wait: 500 });
   const [idHovered, setIdHovered] = useState<string>('');
+  const [updatingCourseId, setUpdatingCourseId] = useState<string | null>(null);
+  const [courses, setCourses] = useState<any[]>([]);
   const { dataCourses, reload, loading, loadingMore } = useGetListMyCourse({
     order: sort,
     search: debounceVal,
   });
   const { profile } = useProfile();
+  const accessToken = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
@@ -64,11 +70,127 @@ const ListCourse = () => {
     refModalConfirmDelete.current.onOpen(id);
   };
 
+  const handleTogglePublish = async (course: any, canToggle: boolean) => {
+    if (!canToggle || updatingCourseId) return;
+    if (!accessToken) {
+      toast.error('Please login before updating course.');
+      return;
+    }
+
+    try {
+      setUpdatingCourseId(course.id);
+      const response = await fetch(`${PREFIX_API}${API_PATH.EDIT_COURSE(course.id)}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ isPublish: !course.isPublish }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err?.message || 'Failed to update course');
+      }
+
+      toast.success(
+        !course.isPublish ? 'Course published successfully.' : 'Course set to draft successfully.'
+      );
+      setCourses((prev) =>
+        prev.map((c) => (c.id === course.id ? { ...c, isPublish: !course.isPublish } : c))
+      );
+    } catch (error: any) {
+      toast.error(error?.message || 'Failed to update course');
+    } finally {
+      setUpdatingCourseId(null);
+    }
+  };
+
   useEffect(() => {
     if (profile?.id) {
       reload();
     }
-  }, [sort, debounceVal, profile?.id]);
+  }, [sort, debounceVal, profile?.id, reload]);
+
+  useEffect(() => {
+    setCourses(dataCourses || []);
+  }, [dataCourses]);
+  const computedCourses = useMemo(() => {
+    return courses.map((item: any) => {
+      const isEnoughIntendedLearners =
+        item?.objectives?.length > 0 &&
+        item?.intenedLeaners?.length > 0 &&
+        item?.requirements?.length > 0
+          ? 1
+          : 0;
+
+      const isEnoughCourseLangdingePage =
+        item?.title && item?.categoryId && item?.level && item?.lang ? 1 : 0;
+
+      const isEnoughSetPrice = item?.originPrice && item?.price ? 1 : 0;
+
+      const allLessonsHaveContent =
+        Array.isArray(item?.sections) &&
+        item?.sections?.length > 0 &&
+        item?.sections?.every((section: any) => {
+          if (section?.lessons?.length === 0) {
+            return section?.quizzes?.length > 0;
+          }
+
+          return section?.lessons?.every(
+            (lesson: any) =>
+              (lesson?.id &&
+                (!!lesson?.content || !!lesson?.info?.thumbnailUrl)) ||
+              !lesson?.id
+          );
+        });
+
+      const allQuizzesHaveQuestions =
+        Array.isArray(item?.sections) &&
+        item?.sections?.length > 0 &&
+        item?.sections?.every((section: any) => {
+          if (section?.quizzes?.length === 0) {
+            return section?.lessons?.length > 0;
+          }
+
+          return section?.quizzes?.every(
+            (quizz: any) =>
+              (quizz?.id &&
+                Array.isArray(quizz?.questions) &&
+                quizz?.questions?.length > 0) ||
+              !quizz.id
+          );
+        });
+
+      const isEnoughCurruclum =
+        allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
+
+      const totalProgress =
+        isEnoughCurruclum +
+        isEnoughSetPrice +
+        isEnoughIntendedLearners +
+        isEnoughCourseLangdingePage;
+
+      const statusLabel = item?.isPublish
+        ? t('listCourse.public')
+        : t('listCourse.draft');
+      const progressPercent = Math.round((totalProgress / 4) * 100);
+      const canAction = Boolean(
+        isEnoughCurruclum &&
+          isEnoughSetPrice &&
+          isEnoughIntendedLearners &&
+          isEnoughCourseLangdingePage
+      );
+
+      return {
+        item,
+        totalProgress,
+        progressPercent,
+        statusLabel,
+        canAction,
+      };
+    });
+  }, [courses, t]);
 
   return (
     <div className="flex flex-col gap-[50px]">
@@ -121,184 +243,158 @@ const ListCourse = () => {
 
       {!loading && (
         <>
-          {dataCourses?.length > 0 &&
-            dataCourses?.map((item: any) => {
-              const isEnoughIntendedLearners =
-                item?.objectives?.length > 0 &&
-                item?.intenedLeaners?.length > 0 &&
-                item?.requirements?.length > 0
-                  ? 1
-                  : 0;
-
-              const isEnoughCourseLangdingePage =
-                item?.title && item?.categoryId && item?.level && item?.lang
-                  ? 1
-                  : 0;
-
-              const isEnoughSetPrice = item?.originPrice && item?.price ? 1 : 0;
-
-              const allLessonsHaveContent =
-                Array.isArray(item?.sections) &&
-                item?.sections?.length > 0 &&
-                item?.sections?.every((section: any) => {
-                  if (section?.lessons?.length === 0) {
-                    return section?.quizzes?.length > 0;
-                  }
-
-                  return section?.lessons?.every(
-                    (lesson: any) =>
-                      (lesson?.id &&
-                        (!!lesson?.content || !!lesson?.info?.thumbnailUrl)) ||
-                      !lesson?.id
-                  );
-                });
-
-              const allQuizzesHaveQuestions =
-                Array.isArray(item?.sections) &&
-                item?.sections?.length > 0 &&
-                item?.sections?.every((section: any) => {
-                  if (section?.quizzes?.length === 0) {
-                    return section?.lessons?.length > 0;
-                  }
-
-                  return section?.quizzes?.every(
-                    (quizz: any) =>
-                      (quizz?.id &&
-                        Array.isArray(quizz?.questions) &&
-                        quizz?.questions?.length > 0) ||
-                      !quizz.id
-                  );
-                });
-
-              const isEnoughCurruclum =
-                allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
-
-              const totalProgress =
-                isEnoughCurruclum +
-                isEnoughSetPrice +
-                isEnoughIntendedLearners +
-                isEnoughCourseLangdingePage;
-
-              return (
-                <div key={item?.id} className="flex flex-col gap-4">
-                  <div
-                    onMouseEnter={() => handleMouseEnter(item?.id)}
-                    onMouseLeave={handleMouseLeave}
-                    className="rounded cursor-pointer transition-all flex flex-col md:flex-row w-full min-h-[202px] border-1 border-[#F0F0F01A] bg-gray-70"
-                  >
-                    <div className="h-full bg-white">
-                      <ImageCustom
-                        alt=""
-                        src={item.image || '/img-course.png'}
-                        width={300}
-                        height={200}
-                        className="h-[200px] w-[300px]  mx-auto md:mx-0 object-contain bg-black"
-                      />
-                    </div>
-
-                    <div className="flex-1 p-4 flex flex-col gap-4 md:gap-0 relative justify-between w-full">
-                      {idHovered === item?.id && (
-                        <div className="absolute inset-0 bg-black-40 bg-blur-custom z-50 h-full">
-                          <div className="flex flex-row items-center gap-4 justify-center h-full">
-                            <Link
-                              className="flex gap-2 justify-center items-center z-[1000]"
-                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
-                              rel="noopener noreferrer"
-                            >
-                              <IconEdit />
-                              <Text className="text-[20px] font-bold text-letter">
-                                {t('listCourse.editCourse')}
-                              </Text>
-                            </Link>
-                            <div
-                              className="flex gap-2 justify-center items-center z-[1000]"
-                              onClick={() => deleteCourse(item.id)}
-                            >
-                              <IconDelete />
-                              <Text className="text-[20px] font-bold text-letter">
-                                {t('listCourse.deleteCourse')}
-                              </Text>
-                            </div>
-                            <Link
-                              className="flex gap-2 justify-center items-center z-[1000]"
-                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
-                              rel="noopener noreferrer"
-                            >
-                              <IconStatistic />
-                              <Text className="text-[20px] font-bold text-letter">
-                                {t('listCourse.viewStatistics')}
-                              </Text>
-                            </Link>
-                          </div>
-                        </div>
-                      )}
-                      <Text className="text-[16px] md:text-[20px] font-bold">
-                        {item?.title}
-                      </Text>
-                      <div className="flex md:justify-end md:items-end">
-                        <div className="flex items-center w-full md:w-8/12 gap-4">
-                          <Text className="text-[16px] md:text-[20px] font-bold w-[300px] md:w-[270px] whitespace-nowrap">
-                            {t('listCourse.finishYourCourses')}
-                          </Text>
-                          <Progress
-                            maxValue={4}
-                            classNames={{
-                              indicator: 'bg-main',
-                              track: 'max-h-[8px]',
-                            }}
-                            className="w-full"
-                            value={totalProgress}
+          {computedCourses?.length > 0 &&
+            computedCourses.map(
+              ({ item, totalProgress, progressPercent, statusLabel, canAction }) => (
+                <div
+                  key={item?.id}
+                  className="relative group cursor-pointer"
+                  onMouseEnter={() => handleMouseEnter(item?.id)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="bg-gray-70 rounded-xl border border-[#F0F0F01A] transition-all duration-300 hover:border-main overflow-hidden">
+                    <div className="flex items-center gap-6 p-4">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-48 h-36 md:w-64 md:h-40 rounded-lg overflow-hidden bg-black">
+                          <ImageCustom
+                            alt=""
+                            src={item?.image || '/img-course.png'}
+                            width={128}
+                            height={128}
+                            className="w-full h-full object-cover"
                           />
                         </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-[30px]">
-                          {!item?.isPublish && (
-                            <Text type={'font-16-700'} className="text-letter">
-                              {t('listCourse.draft')}
-                            </Text>
-                          )}
 
-                          {item?.isPublish && (
-                            <Text type={'font-16-700'} className="text-letter">
-                              {t('listCourse.public')}
-                            </Text>
+                        <div
+                          className={clsx(
+                            'absolute inset-0 bg-black/40 backdrop-blur-sm rounded-lg transition-opacity duration-300',
+                            {
+                              'opacity-100': idHovered === item?.id,
+                              'opacity-0': idHovered !== item?.id,
+                            }
                           )}
-                        </div>
-                        {isMobile && (
-                          <div className="flex items-center justify-end gap-3">
-                            <Link
-                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
-                              className="bg-black-9 rounded-full"
-                            >
-                              <IconEdit />
-                            </Link>
-                            <Button
-                              isIconOnly
-                              size="lg"
-                              onPress={() => deleteCourse(item.id)}
-                              className="bg-black-9 rounded-full"
-                            >
-                              <IconDelete />
-                            </Button>
-                            <Link
-                              href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-black-9 rounded-full"
-                            >
-                              <IconStatistic />
-                            </Link>
+                        >
+                          <div className="h-full flex items-center justify-center">
+                            <div className="grid grid-cols-2 gap-2 p-2">
+                              <Link
+                                className="p-2 text-white rounded-lg transition-all hover:scale-110 bg-gray-10 bg-opacity-20 hover:bg-opacity-30"
+                                href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
+                              >
+                                <IconEdit />
+                              </Link>
+                              <Link
+                                className="p-2 text-white rounded-lg transition-all hover:scale-110 bg-gray-10 bg-opacity-20 hover:bg-opacity-30"
+                                href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
+                                rel="noopener noreferrer"
+                              >
+                                <IconStatistic />
+                              </Link>
+                              <button
+                                onClick={() => handleTogglePublish(item, canAction)}
+                                disabled={!canAction || updatingCourseId === item?.id}
+                                className={clsx(
+                                  'p-2 text-white rounded-lg transition-all',
+                                  {
+                                    'bg-gray-10 bg-opacity-20 hover:bg-opacity-30 hover:scale-110':
+                                      canAction && updatingCourseId !== item?.id,
+                                    'bg-gray-500 bg-opacity-10 opacity-50 cursor-not-allowed':
+                                      !canAction || updatingCourseId === item?.id,
+                                  }
+                                )}
+                                title={!canAction ? t('listCourse.completeToEnable') : ''}
+                              >
+                                {item?.isPublish ? <Eye /> : <EyeOff />}
+                              </button>
+                              <button
+                                onClick={() => deleteCourse(item.id)}
+                                className="p-2 bg-red-500/80 hover:bg-red-600 text-white rounded-lg transition-all hover:scale-110"
+                              >
+                                <IconDelete />
+                              </button>
+                            </div>
                           </div>
-                        )}
+                        </div>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-letter font-semibold text-xl flex-1 mr-4 line-clamp-2">
+                            {item?.title}
+                          </h3>
+                          <span
+                            className={clsx(
+                              'px-3 py-1 rounded-full text-md font-semibold whitespace-nowrap',
+                              {
+                                'bg-main text-white': item?.isPublish,
+                                'bg-yellow-500 text-gray-900': !item?.isPublish,
+                              }
+                            )}
+                          >
+                            {statusLabel}
+                          </span>
+                        </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="text-gray-300 text-md">{t('listCourse.progress')}</span>
+                              <span
+                                className={clsx('text-md font-bold', {
+                                  'text-green-400': totalProgress === 4,
+                                  'text-main': totalProgress !== 4,
+                                })}
+                              >
+                                {progressPercent}%
+                              </span>
+                            </div>
+                            <Progress
+                              maxValue={4}
+                              classNames={{
+                                indicator: 'bg-main',
+                                track: 'max-h-[8px]',
+                              }}
+                              className="w-full"
+                              value={totalProgress}
+                            />
+                          </div>
+
+                          <div className="flex items-center justify-end gap-3">
+                              <span className="text-gray-300 text-lg">{t('listCourse.status')}</span>
+                            <div
+                              className={clsx('flex items-center gap-2 px-3 py-1.5 rounded-lg', {
+                                'bg-black-10': !item?.isPublish,
+                              })}
+                            >
+                              <div
+                                className={clsx('w-2 h-2 rounded-full', {
+                                  'bg-main': item?.isPublish,
+                                  'bg-gray-10': !item?.isPublish,
+                                })}
+                              ></div>
+                              <span
+                                className={clsx('text-md font-medium', {
+                                  'text-main': item?.isPublish,
+                                  'text-gray-20': !item?.isPublish,
+                                })}
+                              >
+                                {item?.isPublish ? t('listCourse.enabled') : t('listCourse.disabled')}
+                              </span>
+                              {!canAction && (
+                                <span className="text-xs text-yellow-500 ml-1">
+                                  {t('listCourse.completeToEnable')}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              )
+            )}
 
-          {dataCourses?.length === 0 && <NoData />}
+          {computedCourses?.length === 0 && <NoData />}
         </>
       )}
       {loading && <Loading />}
@@ -362,6 +458,23 @@ const IconStatistic = () => {
     </svg>
   );
 };
+const Eye = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+    <path
+      d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12c-2.76 0-5-2.24-5-5s2.24-5 5-5a5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+const EyeOff = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+    <path
+      d="M12 7a5 5 0 013.535 8.536l2.121 2.121A11.983 11.983 0 0023 12c-1.73-3.89-6-7-11-7a10.96 10.96 0 00-4.243.848l2.26 2.26A4.98 4.98 0 0112 7zm-8.485-4.071l2.242 2.242L6.22 7.634C3.723 8.883 1.97 10.744 1 12c1.73 3.89 6 7 11 7 1.522 0 2.985-.293 4.332-.836l2.153 2.153 1.414-1.414-16.97-16.97-1.414 1.414zm8.485 14.071a5 5 0 01-5-5 4.98 4.98 0 012.02-4.006l1.514 1.514A3 3 0 0011 12a3 3 0 003 3c.195 0 .384-.02.567-.058l1.863 1.863A7.02 7.02 0 0112 17z"
+      fill="currentColor"
+    />
+  </svg>
+);
 const IconSearch = () => {
   return (
     <svg

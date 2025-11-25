@@ -251,6 +251,11 @@
     }
   },
   "listCourse": {
+    "status": "Status:",
+    "disabled": "Disabled",
+    "enabled": "Enabled",
+    "progress": "Course Progress",
+    "completeToEnable": "Auto",
     "allFilter": "All Filter",
     "categories": "Categories",
     "price": "Price",
