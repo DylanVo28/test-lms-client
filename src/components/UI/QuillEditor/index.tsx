@@ -34,6 +34,7 @@ const QuillEditor = ({
               [{ header: '1' }, { header: '2' }],
               [{ list: 'ordered' }, { list: 'bullet' }],
               ['bold', 'italic', 'underline'],
+              ['link'],
               [{ color: [] }],
               [{ align: [] }],
               ['image'],

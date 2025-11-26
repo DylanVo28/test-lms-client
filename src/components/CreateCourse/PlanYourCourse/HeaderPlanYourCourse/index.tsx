@@ -27,12 +27,12 @@ const HeaderPlanYourCourse = ({
     <div className="w-full p-4 sticky top-0 bg-primary z-[1000]  flex justify-between items-center border-b border-b-black-10">
       <div className="flex items-center gap-5">
         <Button
-          onPress={() => navigate(ROUTE_PATH.LIST_COURSE)}
+          onPress={() => router.back()}
           variant="light"
           radius="sm"
           size={isMobile ? 'sm' : 'md'}
         >
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 bg-gray-70 rounded-lg py-1 px-2">
             {/* <Image
               src="/icons/ic-back.svg"
               alt="icon-back"

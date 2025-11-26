@@ -3,8 +3,9 @@ import { privateRequest, request } from '@/api/request';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
 import MainLayout from '@/layout/MainLayout';
-import { DefaultData } from '@/utils/const';
+import { DefaultData, ROUTE_PATH } from '@/utils/const';
 import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {
   Card,
   CardBody,
@@ -16,6 +17,7 @@ import {
   TableCell,
   User,
   LinkIcon,
+  Button,
 } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -26,6 +28,9 @@ import Link from 'next/link';
 import ReactStars from 'react-stars';
 import Image from 'next/image';
 import ImageCustom from "@/components/UI/ImageCustom";
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import Text from '@/components/UI/Text';
 
 declare module '@/api/constant' {
   interface ApiPath {
@@ -70,6 +75,9 @@ const CourseStatisticPage = ({
   code: string;
   courseId: string;
 }) => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
+  
   const { data: statsRes } = useQuery<{ data: CourseStats }>({
     queryKey: ['course-stats', courseId],
     queryFn: () => privateRequest(request.get, API_PATH.COURSE_STATS(courseId)),
@@ -97,6 +105,19 @@ const CourseStatisticPage = ({
 
   return (
     <div className="p-8 space-y-8">
+      <Button
+        onPress={() => router.back()}
+        variant="light"
+        radius="sm"
+        className="mb-4"
+      >
+        <div className="flex items-center gap-1 bg-gray-70 rounded-lg py-1 px-2">
+          <IconBack />
+          <Text type="font-16-500" className="text-letter">
+          {t('createCourse.planCourse.backToCourses')}
+          </Text>
+        </div>
+      </Button>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-gray-70">
           <CardBody>
@@ -289,8 +310,26 @@ export const getServerSideProps: GetServerSideProps = async ({
       code: params.code as string,
       courseId: params.id as string,
       courseMedadata,
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
 };
 
 export default CourseStatisticPage;
+
+const IconBack = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+    >
+      <path
+        d="M9.02344 10.0004L13.1484 14.1254L11.9701 15.3037L6.66677 10.0004L11.9701 4.69704L13.1484 5.87538L9.02344 10.0004Z"
+        fill="var(--theme-letter)"
+      />
+    </svg>
+  );
+};
