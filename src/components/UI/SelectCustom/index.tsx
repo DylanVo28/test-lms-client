@@ -20,6 +20,7 @@ interface SelectCustomProps {
   value?: any;
   error?: string;
   hasError?: boolean;
+  ariaLabel?: string;
 }
 const SelectCustom = (props: SelectCustomProps) => {
   const [openSelect, setOpenSelect] = useState(false);
@@ -35,6 +36,7 @@ const SelectCustom = (props: SelectCustomProps) => {
     value,
     rest,
     error,
+    ariaLabel,
   } = props;
   const renderSelectorIcon = (open: boolean) => {
     if (isLesson) {
@@ -62,6 +64,7 @@ const SelectCustom = (props: SelectCustomProps) => {
           setOpenSelect(!open);
         }}
         placeholder={placeholder}
+        aria-label={ariaLabel || placeholder || 'Select option'}
         classNames={{
           value: '!text-[14px] text-letter/70 font-medium capitalize',
           trigger: clsx(

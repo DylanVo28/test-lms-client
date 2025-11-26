@@ -34,36 +34,26 @@ const ListCourse = () => {
 
   const [sort, setSort] = useState('createdAt desc');
   const [search, setSearch] = useState('');
-  const [debounceVal, setDebounceVal] = useState('');
   const { navigate } = useNavigate();
 
   const debounceValue = useDebounce(search, { wait: 500 });
-  const [idHovered, setIdHovered] = useState<string>('');
   const [updatingCourseId, setUpdatingCourseId] = useState<string | null>(null);
   const [courses, setCourses] = useState<any[]>([]);
-  const { dataCourses, reload, loading, loadingMore } = useGetListMyCourse({
+  
+  // Memoize params to prevent unnecessary re-renders
+  const queryParams = useMemo(() => ({
     order: sort,
-    search: debounceVal,
-  });
+    search: debounceValue || '',
+  }), [sort, debounceValue]);
+  
+  const { dataCourses, reload, loading, loadingMore } = useGetListMyCourse(queryParams);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
-  useEffect(() => {
-    setDebounceVal(search);
-  }, [debounceValue]);
-
   const handleChange = (e: any) => {
     setSearch(e.target.value);
-  };
-
-  const handleMouseEnter = (id: string) => {
-    setIdHovered(id);
-  };
-
-  const handleMouseLeave = () => {
-    setIdHovered('');
   };
 
   const deleteCourse = (id: string) => {
@@ -107,14 +97,10 @@ const ListCourse = () => {
   };
 
   useEffect(() => {
-    if (profile?.id) {
-      reload();
-    }
-  }, [sort, debounceVal, profile?.id, reload]);
-
-  useEffect(() => {
     setCourses(dataCourses || []);
   }, [dataCourses]);
+
+
   const computedCourses = useMemo(() => {
     return courses.map((item: any) => {
       const isEnoughIntendedLearners =
@@ -249,8 +235,8 @@ const ListCourse = () => {
                 <div
                   key={item?.id}
                   className="relative group cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter(item?.id)}
-                  onMouseLeave={handleMouseLeave}
+                  // onMouseEnter={() => handleMouseEnter(item?.id)}
+                  // onMouseLeave={handleMouseLeave}
                 >
                   <div className="bg-gray-70 rounded-xl border border-[#F0F0F01A] transition-all duration-300 hover:border-main overflow-hidden">
                     <div className="flex items-center gap-6 p-4">
@@ -266,29 +252,22 @@ const ListCourse = () => {
                         </div>
 
                         <div
-                          className={clsx(
-                            'absolute inset-0 bg-black/40 backdrop-blur-sm rounded-lg transition-opacity duration-300',
-                            {
-                              'opacity-100': idHovered === item?.id,
-                              'opacity-0': idHovered !== item?.id,
-                            }
-                          )}
+                          className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-lg transition-opacity duration-300 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
                         >
                           <div className="h-full flex items-center justify-center">
                             <div className="grid grid-cols-2 gap-2 p-2">
-                              <Link
+                              <button
+                                onClick={() => navigate(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)}
                                 className="p-2 text-white rounded-lg transition-all hover:scale-110 bg-gray-10 bg-opacity-20 hover:bg-opacity-30"
-                                href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.CREATE_COURSE}/${item?.id}`}
                               >
                                 <IconEdit />
-                              </Link>
-                              <Link
+                              </button>
+                              <button
+                                onClick={() => navigate(`${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`)}
                                 className="p-2 text-white rounded-lg transition-all hover:scale-110 bg-gray-10 bg-opacity-20 hover:bg-opacity-30"
-                                href={`${window.location.origin}/${router.query.code}/${ROUTE_PATH.COURSE_STATISTIC}/${item?.id}`}
-                                rel="noopener noreferrer"
                               >
                                 <IconStatistic />
-                              </Link>
+                              </button>
                               <button
                                 onClick={() => handleTogglePublish(item, canAction)}
                                 disabled={!canAction || updatingCourseId === item?.id}

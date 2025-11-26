@@ -3,7 +3,7 @@ import { API_PATH } from '@/api/constant';
 import { IOptions } from '@/api/interface';
 import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
-import { useInfiniteScroll, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import { useMemo, useState, useCallback } from 'react';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -60,38 +60,47 @@ const getListMyCourse = async (params: any) => {
 };
 
 export const useGetListMyCourse = (initialParams: any) => {
-  const memoizedParams = useMemo(() => initialParams, [initialParams]);
+  const { profile } = useProfile();
+  const memoizedParams = useMemo(
+    () => initialParams,
+    [JSON.stringify(initialParams)]
+  );
 
-  const { data, loading, loadMore, loadingMore, noMore, reload } =
-    useInfiniteScroll(
-      async (lastData) => {
-        const currentPage = lastData?.page || 0; // Default to page 1 if no data yet
-        const nextPage = currentPage + 1;
+  const query = useInfiniteQuery({
+    queryKey: ['myCourses', memoizedParams, profile?.id],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await getListMyCourse({
+        ...memoizedParams,
+        page: pageParam,
+        userId: profile?.id,
+      });
+      return response;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = lastPage?.meta?.totalPage || 0;
+      const next = allPages.length + 1;
+      return allPages.length < totalPage ? next : undefined;
+    },
+    initialPageParam: 1,
+    enabled: Boolean(profile?.id),
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+  });
 
-        const response = await getListMyCourse({
-          ...memoizedParams,
-          page: nextPage,
-        });
-
-        return {
-          list: [...(response.data || [])],
-          page: nextPage,
-          total: response?.meta?.totalRecord,
-          totalPage: response?.meta?.totalPage,
-        };
-      },
-      {
-        isNoMore: (d) => {
-          return d ? d.page >= d.totalPage : false;
-        },
-        manual: true,
-      }
-    );
+  const dataCourses = useMemo(() => {
+    return (query.data?.pages || []).flatMap((page: any) => page?.data || []);
+  }, [query.data]);
+  const loading = query.isLoading && !query.data;
+  const loadingMore = query.isFetchingNextPage;
+  const noMore = !query.hasNextPage;
 
   return {
-    reload,
-    dataCourses: data?.list || [],
-    loadMore,
+    reload: () => query.refetch(),
+    dataCourses,
+    loadMore: () => query.fetchNextPage(),
     loading,
     loadingMore,
     noMore,
