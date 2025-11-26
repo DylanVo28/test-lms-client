@@ -642,7 +642,7 @@ const PlanYourCourse = () => {
             handleSaveForm={handleSubmit(onSubmit)}
             handlePublishForm={handleSubmit(onPublish)}
           />
-          <div className="w-11/12 mx-auto pt-10">
+          <div className="w-full mx-auto pt-10 px-4">
             <div className="grid grid-cols-10 gap-10 md:gap-12">
               <div className="col-span-10 md:col-span-2">
                 <div className="flex flex-col gap-4">

@@ -13,9 +13,9 @@ export const toast = {
     // t.success(message, data);
     t.custom(
       (id) => (
-        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap p-3 text-gray-500 bg-[#1f1f1f] rounded-lg shadow min-w-[380px] border-1 border-[#274916]">
+        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap p-3 text-gray-500 bg-[#1f1f1f] rounded-lg shadow min-w-[380px] border-1 border-main">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-            <CheckCircle size={24} color="#3E8800" />
+            <CheckCircle size={24} color="#00a6c2" />
           </div>
           <Text
             type="font-14-400"
@@ -32,7 +32,7 @@ export const toast = {
   error: (message: string, data?: ExternalToast) => {
     t.custom(
       (id) => (
-        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap p-3 text-gray-500 bg-[#1f1f1f] rounded-lg shadow min-w-[380px] border-1 border-[#274916]">
+        <div className="flex items-center gap-3 flex-wrap md:flex-nowrap p-3 text-gray-500 bg-[#1f1f1f] rounded-lg shadow min-w-[380px] border-1 border-main">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
             <XCircle size={24} color="#d31717" />
           </div>
