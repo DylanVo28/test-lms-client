@@ -46,9 +46,11 @@ const ListCourse = () => {
     search: debounceValue || '',
   }), [sort, debounceValue]);
   
-  const { dataCourses, reload, loading, loadingMore } = useGetListMyCourse(queryParams);
+  const { dataCourses, reload, loading } = useGetListMyCourse(queryParams);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
+
+  console.log({ dataCourses, loading })
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
@@ -227,7 +229,7 @@ const ListCourse = () => {
         </div>
       </div>
 
-      {!loading && (
+      {loading ? <Loading /> : (
         <>
           {computedCourses?.length > 0 &&
             computedCourses.map(
@@ -376,7 +378,6 @@ const ListCourse = () => {
           {computedCourses?.length === 0 && <NoData />}
         </>
       )}
-      {loading && <Loading />}
       <ModalConfirmDelete ref={refModalConfirmDelete} reload={reload} />
     </div>
   );
