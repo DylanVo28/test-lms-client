@@ -12,12 +12,13 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { notificationAtom } from '../notification/notification';
 import { useLogout } from '@/layout/MainLayout/MainHeader/service';
 import { initialTheme, themeAtom } from '../theme/theme';
+import { fetchThemeDetailCached } from '../theme/themeDetailCache';
 
 export const useProfileInitial = () => { 
   const { address } = useAccount();
   const [profile, setProfile] = useAtom(profileAtom);
-  const [loading, setLoading] = useState(false);
   const { disconnect } = useDisconnect();
+  const [loading, setLoading] = useState(false);
 
   const [, setNotifications] = useAtom(notificationAtom);
   const [_, setTheme] = useAtom(themeAtom);
@@ -45,7 +46,7 @@ export const useProfileInitial = () => {
   };
 
   useEffect(() => {
-    const accessToken = getAccessToken();
+    const accessToken = (getAccessToken() as string | null) || null;
     if (!accessToken && router.pathname !== '/') {
       // router.replace('/');
     }
@@ -74,10 +75,7 @@ export const useProfileInitial = () => {
       if (profile?.role === 'KOL' && accessToken) {
         try {
           // Fetch KOL's theme to get their actual refCode (code field in theme)
-          const myThemeRes = await privateRequest(
-            request.get,
-            API_PATH.THEME_DETAIL
-          );
+          const myThemeRes = await fetchThemeDetailCached(profile?.id, accessToken);
           
           const kolRefCode = myThemeRes?.data?.code;
           
@@ -100,10 +98,7 @@ export const useProfileInitial = () => {
         // BUT: If ADMIN also has their own refCode (is also KOL), fetch theme to get it
         if (accessToken) {
           try {
-            const myThemeRes = await privateRequest(
-              request.get,
-              API_PATH.THEME_DETAIL
-            );
+            const myThemeRes = await fetchThemeDetailCached(profile?.id, accessToken);
             
             const adminRefCode = myThemeRes?.data?.code;
             

@@ -7,10 +7,11 @@ import { useDebounce } from 'ahooks';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { isMobile } from 'react-device-detect';
 import { useGetListMyCourse } from '../Course/ListCourse/service';
+import { useQueryClient } from '@tanstack/react-query';
 import ModalConfirmDelete from '../Course/ModalConfirmDelete';
 import CustomButtonNewCourse from '../UI/CustomButtonNewCourse';
 import InputText from '../UI/InputText';
@@ -38,7 +39,7 @@ const ListCourse = () => {
 
   const debounceValue = useDebounce(search, { wait: 500 });
   const [updatingCourseId, setUpdatingCourseId] = useState<string | null>(null);
-  const [courses, setCourses] = useState<any[]>([]);
+  const queryClient = useQueryClient();
   
   // Memoize params to prevent unnecessary re-renders
   const queryParams = useMemo(() => ({
@@ -87,9 +88,20 @@ const ListCourse = () => {
       toast.success(
         !course.isPublish ? 'Course published successfully.' : 'Course set to draft successfully.'
       );
-      setCourses((prev) =>
-        prev.map((c) => (c.id === course.id ? { ...c, isPublish: !course.isPublish } : c))
-      );
+      
+      // Optimistically update React Query cache instead of local state
+      queryClient.setQueryData(['myCourses', queryParams, profile?.id], (oldData: any) => {
+        if (!oldData?.pages) return oldData;
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: any) => ({
+            ...page,
+            data: page.data?.map((c: any) =>
+              c.id === course.id ? { ...c, isPublish: !course.isPublish } : c
+            ),
+          })),
+        };
+      });
     } catch (error: any) {
       toast.error(error?.message || 'Failed to update course');
     } finally {
@@ -97,13 +109,10 @@ const ListCourse = () => {
     }
   };
 
-  useEffect(() => {
-    setCourses(dataCourses || []);
-  }, [dataCourses]);
-
-
+  // Use dataCourses directly instead of intermediate state to avoid unnecessary re-renders
   const computedCourses = useMemo(() => {
-    return courses.map((item: any) => {
+    if (!dataCourses || dataCourses.length === 0) return [];
+    return dataCourses.map((item: any) => {
       const isEnoughIntendedLearners =
         item?.objectives?.length > 0 &&
         item?.intenedLeaners?.length > 0 &&
@@ -177,7 +186,7 @@ const ListCourse = () => {
         canAction,
       };
     });
-  }, [courses, t]);
+  }, [dataCourses, t]);
 
   return (
     <div className="flex flex-col gap-[50px]">
