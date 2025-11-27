@@ -13,7 +13,7 @@ import { notificationAtom } from '../notification/notification';
 import { useLogout } from '@/layout/MainLayout/MainHeader/service';
 import { initialTheme, themeAtom } from '../theme/theme';
 
-export const useProfileInitial = () => {
+export const useProfileInitial = () => { 
   const { address } = useAccount();
   const [profile, setProfile] = useAtom(profileAtom);
   const [loading, setLoading] = useState(false);

@@ -4,6 +4,7 @@ import { API_PATH } from '@/api/constant';
 import { privateRequest, request } from '@/api/request';
 import { useRequest } from 'ahooks';
 import { useAtom } from 'jotai';
+import { useRef } from 'react';
 import { notificationAtom } from './notification';
 import { getAccessToken } from '../auth';
 
@@ -67,6 +68,9 @@ export const useGetNotification = (options?: any) => {
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationAtom);
+  const fetchingCountRef = useRef(false);
+  const lastFetchTimeRef = useRef<number>(0);
+  const COUNT_CACHE_TIME = 1000 * 30; // 30 seconds cache
 
   const requestReadNotification = useRequest(readNotification, {
     manual: true,
@@ -116,12 +120,29 @@ export const useNotifications = () => {
             totalCount: res?.data,
           };
         });
+        lastFetchTimeRef.current = Date.now();
+        fetchingCountRef.current = false;
       },
       onError: (err: any) => {
         console.log(err);
+        fetchingCountRef.current = false;
       },
     }
   );
+
+  // Wrapper function to prevent duplicate calls
+  const runCheckHasNotification = () => {
+    const now = Date.now();
+    const timeSinceLastFetch = now - lastFetchTimeRef.current;
+    
+    // Prevent duplicate calls: if already fetching or within cache time
+    if (fetchingCountRef.current || timeSinceLastFetch < COUNT_CACHE_TIME) {
+      return;
+    }
+
+    fetchingCountRef.current = true;
+    requestCheckHasNotification?.run();
+  };
 
   const requestGetNotification = useGetNotification({
     onSuccess: (res: any) => {
@@ -153,7 +174,10 @@ export const useNotifications = () => {
 
   return {
     notifications,
-    requestCheckHasNotification,
+    requestCheckHasNotification: {
+      ...requestCheckHasNotification,
+      run: runCheckHasNotification,
+    },
     requestGetNotification,
     setNotifications,
     requestReadNotification,

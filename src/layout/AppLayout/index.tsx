@@ -41,7 +41,7 @@ const AppLayout = ({ children }: any) => {
       prevProfileIdRef.current = profile?.id;
       prevTokenRef.current = token;
     }
-  }, [token, router.query.code, profile?.id, requestGetTheme, requestCheckHasNotification]);
+  }, [token, router.query.code, profile?.id]);
 
   return (
     <Fragment>

@@ -7,7 +7,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_106_2899)">
+      <g clipPath="url(#clip0_106_2899)">
         <rect
           x="7.11121"
           y="18.667"
@@ -21,7 +21,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
           fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
-      <g clip-path="url(#clip1_106_2899)">
+      <g clipPath="url(#clip1_106_2899)">
         <rect
           x="23.1112"
           y="18.667"
@@ -35,7 +35,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
           fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
-      <g clip-path="url(#clip2_106_2899)">
+      <g clipPath="url(#clip2_106_2899)">
         <rect
           x="15.1112"
           y="18.667"
@@ -49,7 +49,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
           fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
-      <g clip-path="url(#clip3_106_2899)">
+      <g clipPath="url(#clip3_106_2899)">
         <rect
           x="7.11121"
           y="8.66699"
@@ -63,7 +63,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
           fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
-      <g clip-path="url(#clip4_106_2899)">
+      <g clipPath="url(#clip4_106_2899)">
         <rect
           x="23.1112"
           y="8.66699"
@@ -77,7 +77,7 @@ const IconGrid = ({ active }: { active: boolean }) => {
           fill={active ? 'var(--main-color)' : '#8C8C8C'}
         />
       </g>
-      <g clip-path="url(#clip5_106_2899)">
+      <g clipPath="url(#clip5_106_2899)">
         <rect
           x="15.1112"
           y="8.66699"

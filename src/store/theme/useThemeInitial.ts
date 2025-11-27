@@ -30,8 +30,9 @@ export const useThemeInitial = () => {
   const token = useAccessToken();
   const fetchingRef = useRef(false);
   const lastFetchParamsRef = useRef<string>('');
-
-  console.log(theme, 'theme');
+  const fetchingThemeDetailRef = useRef(false);
+  const cachedThemeDetailRef = useRef<any>(null);
+  const lastThemeDetailFetchRef = useRef<string | null>(null);
 
   const run = () => {
     const init = async () => {
@@ -87,15 +88,64 @@ export const useThemeInitial = () => {
         const hasOwnRefCode = profile?.refererCode && 
                               profile.refererCode.toLowerCase() !== 'platform';
 
+        // Helper function to fetch theme detail with caching
+        const fetchThemeDetailWithCache = async () => {
+          const cacheKey = `${profile?.id}-${token}`;
+          
+          // Return cached result if available and same user/token
+          if (cachedThemeDetailRef.current && lastThemeDetailFetchRef.current === cacheKey) {
+            return cachedThemeDetailRef.current;
+          }
+          
+          // Prevent duplicate calls
+          if (fetchingThemeDetailRef.current) {
+            // Wait a bit and return cached if available
+            await new Promise(resolve => setTimeout(resolve, 100));
+            if (cachedThemeDetailRef.current && lastThemeDetailFetchRef.current === cacheKey) {
+              return cachedThemeDetailRef.current;
+            }
+            return null;
+          }
+          
+          try {
+            fetchingThemeDetailRef.current = true;
+            const myThemeRes = await privateRequest(
+              request.get,
+              API_PATH.THEME_DETAIL
+            );
+            cachedThemeDetailRef.current = myThemeRes;
+            lastThemeDetailFetchRef.current = cacheKey;
+            return myThemeRes;
+          } catch (error) {
+            console.error('Error fetching theme detail:', error);
+            return null;
+          } finally {
+            fetchingThemeDetailRef.current = false;
+          }
+        };
+
         // Case 1: ADMIN → use platform theme (default)
         // BUT: If ADMIN also has their own refCode (is also KOL), use their own theme
         if (profile?.role === 'ADMIN' && token && !shouldUsePlatformTheme) {
           if (hasOwnRefCode) {
             // User is both ADMIN and KOL - use their own custom theme
-            const myThemeRes = await privateRequest(
-              request.get,
-              API_PATH.THEME_DETAIL
-            );
+            const myThemeRes = await fetchThemeDetailWithCache();
+            
+            if (!myThemeRes) {
+              // Fallback to platform theme if fetch fails
+              const platformColors = JSON.parse(
+                adminRes?.data?.color || JSON.stringify(DefaultThemeColor)
+              );
+              setTheme({
+                ...adminRes?.data,
+                kolId: adminRes?.data?.userId,
+                adminId: adminRes?.data?.userId,
+                color: platformColors,
+              });
+              applyCustomColors(getCustomColorsFromTheme(platformColors));
+              document.body.setAttribute('data-theme', adminRes?.data?.color || '');
+              return;
+            }
 
             const myThemeColors = JSON.parse(
               myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)
@@ -139,10 +189,23 @@ export const useThemeInitial = () => {
         if (profile?.role === 'KOL' && token && !shouldUsePlatformTheme) {
           // For KOL, always fetch their own theme from THEME_DETAIL API
           // This ensures they get their custom theme, not admin's theme
-          const myThemeRes = await privateRequest(
-            request.get,
-            API_PATH.THEME_DETAIL
-          );
+          const myThemeRes = await fetchThemeDetailWithCache();
+          
+          if (!myThemeRes) {
+            // Fallback to platform theme if fetch fails
+            const platformColors = JSON.parse(
+              adminRes?.data?.color || JSON.stringify(DefaultThemeColor)
+            );
+            setTheme({
+              ...adminRes?.data,
+              kolId: adminRes?.data?.userId,
+              adminId: adminRes?.data?.userId,
+              color: platformColors,
+            });
+            applyCustomColors(getCustomColorsFromTheme(platformColors));
+            document.body.setAttribute('data-theme', adminRes?.data?.color || '');
+            return;
+          }
 
           const myThemeColors = JSON.parse(
             myThemeRes?.data?.color || JSON.stringify(DefaultThemeColor)

@@ -4,7 +4,7 @@ import IconShowFilter from '@/components/UI/Icons/IconShowFilter';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useTheme } from '@/store/theme/useTheme';
 import { Button } from '@nextui-org/react';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
@@ -45,7 +45,7 @@ const ListCourse = () => {
   const refDrawerFilter: any = useRef(null);
 
   const [params, setParams] = useState(initParams);
-  const { theme: dataThemeConfig } = useThemeInitial();
+  const { theme: dataThemeConfig } = useTheme();
 
   const search = searchParams.get('keySearch');
 

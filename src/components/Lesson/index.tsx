@@ -341,7 +341,6 @@ const Lesson = () => {
       fetchingListSessionRef.current = true;
       runGetListSession(router.query.id as string, profile?.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.id, profile?.id]);
 
   const handleScrollTop = () => {
