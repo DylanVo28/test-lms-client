@@ -44,13 +44,12 @@ const ListCourse = () => {
   const queryParams = useMemo(() => ({
     order: sort,
     search: debounceValue || '',
+    pageSize: 50, // Increase pageSize to reduce number of API calls
   }), [sort, debounceValue]);
   
   const { dataCourses, reload, loading } = useGetListMyCourse(queryParams);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
-
-  console.log({ dataCourses, loading })
 
   const refModalConfirmDelete: any = useRef<any>(null);
 
