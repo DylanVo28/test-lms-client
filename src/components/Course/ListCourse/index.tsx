@@ -8,7 +8,7 @@ import Text from '@/components/UI/Text';
 import useNavigate from '@/hooks/useNavigate';
 import { useGetCategories, useGetPrices } from '@/services/filter.service';
 import { useProfile } from '@/store/profile/useProfile';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useTheme } from '@/store/theme/useTheme';
 import { ROUTE_PATH } from '@/utils/const';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
@@ -30,7 +30,7 @@ const ListCourse = () => {
   const [price, setPrice] = useState();
   const [valueSearch, setValueSearch] = useState('');
   const router = useRouter();
-  const { theme: dataThemeConfig } = useThemeInitial();
+  const { theme: dataThemeConfig } = useTheme();
   const { navigate } = useNavigate();
   const { profile } = useProfile();
 

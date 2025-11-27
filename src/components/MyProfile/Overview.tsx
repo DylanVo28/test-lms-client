@@ -1,5 +1,5 @@
 import CopyIcon from '@/icons/CopyIcon';
-import { useThemeInitial } from '@/store/theme/useThemeInitial';
+import { useTheme } from '@/store/theme/useTheme';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Text from '../UI/Text';
@@ -36,7 +36,7 @@ const Overview = ({
 }) => {
   const [origin, setOrigin] = useState('');
   const [refCode, setRefCode] = useState('');
-  const { theme: dataThemeConfig } = useThemeInitial();
+  const { theme: dataThemeConfig } = useTheme();
 
   const { address } = useAccount();
   // const {

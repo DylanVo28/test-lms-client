@@ -163,7 +163,7 @@ const IconSelector = ({ openSelect }: { openSelect: boolean }) => {
       viewBox="0 0 10 10"
       fill="none"
     >
-      <g clip-path="url(#clip0_2001_1904)">
+      <g clipPath="url(#clip0_2001_1904)">
         <path d="M5 7.66675L1 3.66675H9L5 7.66675Z" fill="#8C8C8C" />
       </g>
       <defs>

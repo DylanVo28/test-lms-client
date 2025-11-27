@@ -1,9 +1,19 @@
 import { CustomColors, DefaultThemeColor } from '@/store/theme/theme';
 
+let lastAppliedColorsKey = '';
+
 export const applyCustomColors = (customColors?: CustomColors) => {
   if (typeof window === 'undefined') return;
 
   const colors = customColors || DefaultThemeColor;
+  const key = JSON.stringify(colors);
+
+  // Avoid re-applying the same colors to CSS variables
+  if (key === lastAppliedColorsKey) {
+    return;
+  }
+  lastAppliedColorsKey = key;
+
   const root = document.documentElement;
 
   // Apply custom colors to CSS variables
@@ -33,7 +43,6 @@ export const applyCustomColors = (customColors?: CustomColors) => {
   root.style.setProperty('--theme-letter-70', `${colors.text}70`);
   root.style.setProperty('--theme-letter-80', `${colors.text}80`);
 
-  console.log('Applied custom colors:', colors);
 };
 
 const FORCE_PLATFORM_THEME_KEY = 'force-platform-theme';
