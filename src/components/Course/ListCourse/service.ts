@@ -61,14 +61,19 @@ const getListMyCourse = async (params: any) => {
 
 export const useGetListMyCourse = (initialParams: any) => {
   const { profile } = useProfile();
-  const memoizedParams = useMemo(
-    () => initialParams,
-    [JSON.stringify(initialParams)]
-  );
+  
+  // Optimize memoization: only recreate when actual values change
+  const memoizedParams = useMemo(() => {
+    return {
+      order: initialParams?.order || 'createdAt desc',
+      search: initialParams?.search || '',
+      pageSize: initialParams?.pageSize || 50,
+    };
+  }, [initialParams?.order, initialParams?.search, initialParams?.pageSize]);
 
   const query = useInfiniteQuery({
     queryKey: ['myCourses', memoizedParams, profile?.id],
-    queryFn: async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam = 1, signal }) => {
       const response = await getListMyCourse({
         ...memoizedParams,
         page: pageParam,
@@ -83,16 +88,23 @@ export const useGetListMyCourse = (initialParams: any) => {
     },
     initialPageParam: 1,
     enabled: Boolean(profile?.id),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 30, // 30 minutes
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
+    retry: 1, // Only retry once to avoid unnecessary requests
+    retryDelay: 1000, // 1 second delay before retry
+    networkMode: 'online', // Only fetch when online
+    structuralSharing: true, // Enable structural sharing for better performance
   });
 
+  // Optimize dataCourses memoization: use stable reference
   const dataCourses = useMemo(() => {
-    return (query.data?.pages || []).flatMap((page: any) => page?.data || []);
-  }, [query.data]);
+    if (!query.data?.pages) return [];
+    return query.data.pages.flatMap((page: any) => page?.data || []);
+  }, [query.data?.pages]);
+
   const loading = query.isLoading && !query.data;
   const loadingMore = query.isFetchingNextPage;
   const noMore = !query.hasNextPage;
