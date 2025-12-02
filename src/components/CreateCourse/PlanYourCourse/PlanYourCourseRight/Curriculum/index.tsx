@@ -170,7 +170,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
             validationErrors?.incompleteItems?.sections?.includes(field?.id);
 
           return (
-            <div className="flex flex-col gap-1 overflow-auto">
+            <div className="flex flex-col gap-1 ">
               {index !== 0 && (
                 <Button
                   onPress={() => handleRemoveSection(index, field.idSection)}
@@ -186,7 +186,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
               {field?.title ? (
                 <div
                   className={clsx(
-                    'border-1 overflow-auto bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
+                    'border-1 bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
                     {
                       '!border-red-500': isSectionIncomplete,
                     }
@@ -216,11 +216,11 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
                           number: index + 1,
                         })}
                       </Text>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 w-full">
                         <FileText size={20} />
                         <Text
                           type="font-16-400"
-                          className="text-letter/70 max-w-[800px] truncate"
+                          className="text-letter/70 max-w-[80%] truncate"
                         >
                           {field.title}
                         </Text>
