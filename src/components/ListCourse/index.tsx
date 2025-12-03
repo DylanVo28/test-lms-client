@@ -159,10 +159,7 @@ const ListCourse = () => {
           }
 
           return section?.lessons?.every(
-            (lesson: any) =>
-              (lesson?.id &&
-                (!!lesson?.content || !!lesson?.info?.thumbnailUrl)) ||
-              !lesson?.id
+            (lesson: any) =>lesson?.id
           );
         });
 
@@ -185,8 +182,8 @@ const ListCourse = () => {
 
       const isEnoughCurruclum =
         allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
-
-      const totalProgress =item?.isPublish ? 4 :
+      console.log({title: item.title, isEnoughCurruclum, allLessonsHaveContent, allQuizzesHaveQuestions});
+      const totalProgress =
         isEnoughCurruclum +
         isEnoughSetPrice +
         isEnoughIntendedLearners +
