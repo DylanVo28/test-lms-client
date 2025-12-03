@@ -186,7 +186,7 @@ const ListCourse = () => {
       const isEnoughCurruclum =
         allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
 
-      const totalProgress =
+      const totalProgress =item?.isPublish ? 4 :
         isEnoughCurruclum +
         isEnoughSetPrice +
         isEnoughIntendedLearners +
