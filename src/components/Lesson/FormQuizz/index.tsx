@@ -124,7 +124,7 @@ const FormQuizz = ({
               </Text>
             </div>
             <div
-              className="text-letter customContentEditor"
+              className="text-letter customContentEditor ql-editor"
               dangerouslySetInnerHTML={{ __html: dataQuizz?.description }}
             />
 

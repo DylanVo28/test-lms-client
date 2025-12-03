@@ -13,7 +13,7 @@ const About = ({ data }: { data: any }) => {
 
       <div
         dangerouslySetInnerHTML={{ __html: data?.description }}
-        className="text-[14px] font-normal text-letter customContentEditor"
+        className="text-[14px] font-normal text-letter customContentEditor  ql-editor"
       />
       {/* <Button variant="light" radius="full" className="hover:bg-main-20 w-max">
         <div className="flex items-center gap-[2px]">

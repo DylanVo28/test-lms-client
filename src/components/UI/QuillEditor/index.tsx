@@ -2,7 +2,23 @@ import React, { useRef, useEffect, useState } from 'react';
 import Quill from 'quill';
 import Text from '../Text';
 import clsx from 'clsx';
+const VideoBlot: any = Quill.import('blots/embed');
+class Video extends VideoBlot {
+  static blotName = 'video';
+  static tagName = 'video';
 
+  static create(value: string) {
+    const node = super.create();
+    node.setAttribute('src', value);
+    node.setAttribute('controls', 'true');
+    node.setAttribute('style', 'max-width: 100%; height: auto;');
+    return node;
+  }
+
+  static value(node: HTMLVideoElement) {
+    return node.getAttribute('src');
+  }
+}
 const QuillEditor = ({
   label,
   inputDefault,
@@ -24,6 +40,38 @@ const QuillEditor = ({
   const editorRef: any = useRef(null);
   const [editor, setEditor] = useState<Quill | null>(null);
 
+  // Register custom video blot once
+  useEffect(() => {
+    if (!Quill.imports['formats/video']) {
+
+      Quill.register(Video as any, true);
+    }
+  }, []);
+
+  const handleImageUpload = (quill: Quill) => {
+    const input = document.createElement('input') as any;
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          const range = quill.getSelection();
+          if (range) {
+            quill.insertEmbed(range.index, 'image', reader.result as string);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      }
+    };
+  };
+
+
   useEffect(() => {
     if (editorRef.current) {
       const quill = new Quill(editorRef.current, {
@@ -37,7 +85,7 @@ const QuillEditor = ({
               ['link'],
               [{ color: [] }],
               [{ align: [] }],
-              ['image'],
+              ['image', 'video'],
             ],
             handlers: {
               image: () => handleImageUpload(quill),
@@ -49,26 +97,7 @@ const QuillEditor = ({
         },
         placeholder,
       });
-
-      // @ts-ignore
-      // Handle pasted content formatting - only use clipboard matchers
-      // quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-      //   const ops = delta.ops.map((op: any) => {
-      //     if (op.insert && typeof op.insert === 'string') {
-      //       return {
-      //         insert: op.insert,
-      //         attributes: {
-      //           ...(op.attributes || {}),
-      //           color: 'white',
-      //           background: 'transparent',
-      //         },
-      //       };
-      //     }
-      //     return op;
-      //   });
-      //   return { ops };
-      // });
-
+      
       // @ts-ignore
       quill.clipboard.addMatcher(Node.TEXT_NODE, (node, delta) => {
         return {
@@ -118,29 +147,6 @@ const QuillEditor = ({
       }
     }
   }, [editor, value]);
-
-  const handleImageUpload = (quill: Quill) => {
-    const input = document.createElement('input') as any;
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-
-    input.onchange = async () => {
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          const range = quill.getSelection();
-          if (range) {
-            quill.insertEmbed(range.index, 'image', reader.result as string);
-          }
-        };
-
-        reader.readAsDataURL(file);
-      }
-    };
-  };
 
   return (
     <div className="w-full flex flex-col gap-2">

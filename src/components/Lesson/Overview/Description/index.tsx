@@ -14,7 +14,7 @@ const Description = ({ description }: { description: string }) => {
 
       <div className="flex flex-col gap-3 col-span-2">
         <div
-          className="text-letter customContentEditor"
+          className="text-letter customContentEditor ql-editor"
           dangerouslySetInnerHTML={{ __html: description }}
         />
         {/* <Button

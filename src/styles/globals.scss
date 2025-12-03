@@ -1268,6 +1268,20 @@ input[type='number'] {
   font-weight: 600 !important;
   line-height: 1.4 !important;
 }
+.ql-snow .ql-tooltip{
+  background-color: #0a0f14;
+  color: white;
+  border: 1px solid #01a7c2;
+  box-shadow: 0 0 5px #01a7c2;
+}
+
+.ql-snow .ql-tooltip  input[type=text]{
+  outline: none !important;
+}
+
+.ql-snow .ql-tooltip .ql-snow a{
+  color: #01a7c2
+}
 .ql-snow .ql-picker-options{
   background-color: #12171e;
 }
@@ -1307,8 +1321,7 @@ input[type='number'] {
 /* Responsive classes for high-resolution displays - now handled by Tailwind classes */
 
 .customContentEditor {
-  h1,
-  {
+  h1 {
     background: transparent !important;
     font-size: 20px !important;
     font-weight: 500 !important;
