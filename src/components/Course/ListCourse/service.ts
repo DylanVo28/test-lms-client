@@ -68,8 +68,9 @@ export const useGetListMyCourse = (initialParams: any) => {
       order: initialParams?.order || 'createdAt desc',
       search: initialParams?.search || '',
       pageSize: initialParams?.pageSize || 50,
+      page: initialParams?.page || 1,
     };
-  }, [initialParams?.order, initialParams?.search, initialParams?.pageSize]);
+  }, [initialParams?.order, initialParams?.search, initialParams?.pageSize, initialParams?.page]);
 
   const query = useInfiniteQuery({
     queryKey: ['myCourses', memoizedParams, profile?.id],
