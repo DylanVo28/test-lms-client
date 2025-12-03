@@ -7,7 +7,7 @@ import { useDebounce } from 'ahooks';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { isMobile } from 'react-device-detect';
 import { useGetListMyCourse } from '../Course/ListCourse/service';
@@ -25,7 +25,6 @@ import { API_PATH } from '@/api/constant';
 import { PREFIX_API } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
 const ListCourse = () => {
-  const router = useRouter();
   const { t } = useTranslation('common');
 
   const SORT_BY = [
@@ -40,19 +39,45 @@ const ListCourse = () => {
   const debounceValue = useDebounce(search, { wait: 500 });
   const [updatingCourseId, setUpdatingCourseId] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   
   // Memoize params to prevent unnecessary re-renders
   const queryParams = useMemo(() => ({
     order: sort,
     search: debounceValue || '',
-    pageSize: 50, // Increase pageSize to reduce number of API calls
+    pageSize: 5,
+    page: 1, // initial page for infinite query
   }), [sort, debounceValue]);
   
-  const { dataCourses, reload, loading } = useGetListMyCourse(queryParams);
+  const { dataCourses, reload, loading, loadMore, loadingMore, noMore } = useGetListMyCourse(queryParams);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
+
+  useEffect(() => {
+    if (!loadMoreRef.current || noMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !loadingMore && !loading && !noMore) {
+          loadMore();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
+      }
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loadMoreRef, loadMore, loadingMore, loading, noMore]);
 
   const handleChange = (e: any) => {
     setSearch(e.target.value);
@@ -166,7 +191,6 @@ const ListCourse = () => {
         isEnoughSetPrice +
         isEnoughIntendedLearners +
         isEnoughCourseLangdingePage;
-
       const statusLabel = item?.isPublish
         ? t('listCourse.public')
         : t('listCourse.draft');
@@ -245,8 +269,6 @@ const ListCourse = () => {
                 <div
                   key={item?.id}
                   className="relative group cursor-pointer"
-                  // onMouseEnter={() => handleMouseEnter(item?.id)}
-                  // onMouseLeave={handleMouseLeave}
                 >
                   <div className="bg-gray-70 rounded-xl border border-[#F0F0F01A] transition-all duration-300 hover:border-main overflow-hidden">
                     <div className="flex items-center gap-6 p-4">
@@ -323,7 +345,7 @@ const ListCourse = () => {
                           </span>
                         </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-gray-300 text-md">{t('listCourse.progress')}</span>
@@ -348,7 +370,7 @@ const ListCourse = () => {
                           </div>
 
                           <div className="flex items-center justify-end gap-3">
-                              <span className="text-gray-300 text-lg">{t('listCourse.status')}</span>
+                            <span className="text-gray-300 text-lg">{t('listCourse.status')}</span>
                             <div
                               className={clsx('flex items-center gap-2 px-3 py-1.5 rounded-lg', {
                                 'bg-black-10': !item?.isPublish,
@@ -384,6 +406,16 @@ const ListCourse = () => {
             )}
 
           {computedCourses?.length === 0 && <NoData />}
+
+          {/* Infinite scroll sentinel */}
+          {computedCourses?.length > 0 && !noMore && (
+            <div
+              ref={loadMoreRef}
+              className="flex justify-center items-center py-4 text-gray-300 text-sm"
+            >
+              <Loading />
+            </div>
+          )}
         </>
       )}
       <ModalConfirmDelete ref={refModalConfirmDelete} reload={reload} />
