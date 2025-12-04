@@ -146,6 +146,8 @@ const CurriculumItem = ({
       if (index !== -1) {
         dataCurriculum[index] = { ...dataCurriculum[index], ...res?.data };
       }
+      const newData = idsContentAdd?.filter((itemId: string) => itemId !== res?.data?.id);
+      setIdsContentAdd(newData);
     },
   });
   const { run: runEditQuizz, loading: loadingEditQuizz } = useEditQuizz({
@@ -254,15 +256,15 @@ const CurriculumItem = ({
     handleUpdateEditLessonId(null);
   };
 
-  const handleSaveArticle = (value: string, id: string) => {
-    const newData = idsContentAdd?.filter((itemId: string) => itemId !== id);
-    setIdsContentAdd(newData);
+  const handleSaveArticle = async (value: string, id: string) => {
+
     const body = {
       content: value,
       contentType: LessonContentType?.ARTICLE,
     };
-    runEditLecture(body, id);
+    runEditLecture(body, id)
     handleUpdateEditLessonId(null);
+
   };
   const handleSaveAddQuestion = (
     values: any,
