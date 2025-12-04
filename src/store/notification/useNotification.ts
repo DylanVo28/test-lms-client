@@ -7,6 +7,13 @@ import { useAtom } from 'jotai';
 import { useRef } from 'react';
 import { notificationAtom } from './notification';
 import { getAccessToken } from '../auth';
+import { useQueries, useQueryClient } from '@tanstack/react-query';
+
+export enum TAB_NOTIFICATION {
+  VIEW_ALL = 'VIEW_ALL',
+  INSTRUCTOR = 'INSTRUCTOR',
+  STUDENT = 'STUDENT',
+}
 
 export interface INotification {
   id: string;
@@ -44,6 +51,73 @@ export const getAllNotification = (filters?: any) => {
   return privateRequest(request.get, API_PATH.NOTIFICATION, { params });
 };
 
+export const useNotificationTabs = (isOpen: boolean, tab: TAB_NOTIFICATION) => {
+  const token = getAccessToken();
+
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.VIEW_ALL],
+        queryFn: async () => {
+          const res = await getAllNotification({ page: 1, pageSize: 50, userType: '' });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.INSTRUCTOR],
+        queryFn: async () => {
+          const res = await getAllNotification({
+            page: 1,
+            pageSize: 50,
+            userType: TAB_NOTIFICATION.INSTRUCTOR,
+          });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+      {
+        queryKey: ['notifications', TAB_NOTIFICATION.STUDENT],
+        queryFn: async () => {
+          const res = await getAllNotification({
+            page: 1,
+            pageSize: 50,
+            userType: TAB_NOTIFICATION.STUDENT,
+          });
+          return res?.data || [];
+        },
+        enabled: Boolean(token && isOpen),
+        staleTime: 5 * 60 * 1000,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    ],
+  });
+
+  const listByTab = () => {
+    if (tab === TAB_NOTIFICATION.VIEW_ALL) return (queries[0]?.data as any[]) || [];
+    if (tab === TAB_NOTIFICATION.INSTRUCTOR) return (queries[1]?.data as any[]) || [];
+    return (queries[2]?.data as any[]) || [];
+  };
+
+  const isLoadingTabs = queries.some((q) => q.isLoading || q.isFetching);
+
+  return {
+    queries,
+    listByTab,
+    isLoadingTabs,
+  };
+};
+
 const readNotification = (id: string) => {
   return privateRequest(request.post, API_PATH.READ_NOTIFICATION(id), {});
 };
@@ -68,28 +142,38 @@ export const useGetNotification = (options?: any) => {
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationAtom);
+  const queryClient = useQueryClient();
   const fetchingCountRef = useRef(false);
   const lastFetchTimeRef = useRef<number>(0);
   const COUNT_CACHE_TIME = 1000 * 30; // 30 seconds cache
-
   const requestReadNotification = useRequest(readNotification, {
     manual: true,
     onSuccess: (res) => {
-      const newData = notifications?.content?.map((item?: any) => {
-        if (item?.id === res?.data?.id) {
-          return {
-            ...item,
-            read: true,
-          };
-        } else return item;
-      });
+      const readId = res?.data?.id;
 
-      // toast.success('Successfully');
+      if (readId) {
+        const updateList = (oldData: any[] | undefined) => {
+          if (!oldData) return oldData;
+          return oldData.map((item) =>
+            item?.id === readId
+              ? {
+                  ...item,
+                  read: true,
+                  is_read: true,
+                }
+              : item
+          );
+        };
+
+        // Update all notification tab caches
+        queryClient.setQueryData(['notifications', TAB_NOTIFICATION.VIEW_ALL], updateList);
+        queryClient.setQueryData(['notifications', TAB_NOTIFICATION.INSTRUCTOR], updateList);
+        queryClient.setQueryData(['notifications', TAB_NOTIFICATION.STUDENT], updateList);
+      }
 
       setNotifications({
         ...notifications,
         totalCount: notifications?.totalCount - 1,
-        content: newData,
       });
     },
   });
@@ -161,16 +245,6 @@ export const useNotifications = () => {
     },
   });
 
-  // const onLoadmoreNotification = async (d: any) => {
-  //   try {
-  //     const r: any = await requestGetNotificationModal.runAsync(d?.nextId || 1, 10);
-
-  //     return {
-  //       list: r?.data,
-  //       nextId: r?.page >= r?.total_page ? undefined : r?.page + 1,
-  //     };
-  //   } catch {}
-  // };
 
   return {
     notifications,
