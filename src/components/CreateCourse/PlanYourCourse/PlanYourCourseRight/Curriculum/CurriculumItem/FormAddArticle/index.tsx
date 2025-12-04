@@ -15,7 +15,7 @@ const FormAddArticle = ({
   const [isError, setIsError] = useState(false);
   return (
     <div className="flex justify-center py-3 px-4 flex-col border-1 border-t-0 border-white-15 items-center gap-4">
-      <QuillEditor
+        <QuillEditor
         value={valueDocument}
         autoFocus
         error={isError && !valueDocument ? 'Field document is required' : ''}

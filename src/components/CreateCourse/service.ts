@@ -4,6 +4,7 @@ import { privateRequest, request } from '@/api/request';
 import { useProfile } from '@/store/profile/useProfile';
 import { useRequest } from 'ahooks';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState, useRef } from 'react';
 
 const serviceGetCategories = async (params: any) => {
   return await privateRequest(request.get, API_PATH.CATEGORIES, {
@@ -130,6 +131,7 @@ export const useDeleteCourse = (options: any) => {
 };
 
 const getListSession = async (id: string, userId: string): Promise<any> => {
+  console.log("getListSession", id, userId)
   const params = {
     courseId: id,
     ownerId: userId,
@@ -138,8 +140,63 @@ const getListSession = async (id: string, userId: string): Promise<any> => {
   return privateRequest(request.get, `${API_PATH.SECTIONS}`, { params });
 };
 
+// TanStack Query version for caching and automatic refetching
 export const useGetListSession = (options?: IOptions) => {
-  return useRequest(getListSession, { manual: true, ...options });
+  const [courseId, setCourseId] = useState<string | undefined>(undefined);
+  const [ownerId, setOwnerId] = useState<string | undefined>(undefined);
+  
+  // Use refs to store callbacks to avoid infinite loops
+  const onSuccessRef = useRef(options?.onSuccess);
+  const onErrorRef = useRef(options?.onError);
+  const lastDataUpdatedAtRef = useRef<number>(0);
+
+  // Update refs when options change
+  useEffect(() => {
+    onSuccessRef.current = options?.onSuccess;
+    onErrorRef.current = options?.onError;
+  }, [options?.onSuccess, options?.onError]);
+  const query = useQuery<any>({
+    queryKey: ['sections', courseId, ownerId],
+    queryFn: () => getListSession(courseId!, ownerId!),
+    enabled: Boolean(courseId && ownerId),
+  });
+
+  // Handle onSuccess callback if provided - only call when data is actually updated
+  useEffect(() => {
+    if (
+      query.isSuccess &&
+      query.data &&
+      !query.isFetching &&
+      onSuccessRef.current &&
+      query.dataUpdatedAt > lastDataUpdatedAtRef.current
+    ) {
+      lastDataUpdatedAtRef.current = query.dataUpdatedAt;
+      onSuccessRef.current(query.data);
+    }
+  }, [query.isSuccess, query.data, query.isFetching, query.dataUpdatedAt]);
+
+  // Handle onError callback if provided
+  useEffect(() => {
+    if (query.error && onErrorRef.current && !query.isFetching) {
+      onErrorRef.current(query.error);
+    }
+  }, [query.error, query.isFetching]);
+
+  // For backward compatibility, provide run method
+  const run = (id: string, userId: string) => {
+    // Reset dataUpdatedAt tracking when params change
+    lastDataUpdatedAtRef.current = 0;
+    setCourseId(id);
+    setOwnerId(userId);
+    // Query will automatically refetch when courseId/ownerId change
+  };
+
+  return {
+    data: query.data,
+    loading: query.isLoading,
+    refetch: query.refetch,
+    run,
+  };
 };
 
 interface IBodyLesson {

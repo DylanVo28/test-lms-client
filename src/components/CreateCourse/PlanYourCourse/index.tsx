@@ -18,13 +18,13 @@ import { set } from 'video.js/dist/types/tech/middleware';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useAccount } from 'wagmi';
 import { useTranslation } from 'next-i18next';
+import { useQuery } from '@tanstack/react-query';
 const PlanYourCourse = () => {
   const { t } = useTranslation('common');
   const [activePlan, setActivePlan] = useState(1);
   const router = useRouter();
   const { profile } = useProfile();
   const [isSubmit, setIsSubmit] = useState(false);
-  const [loadingFetchDetail, setLoadingFetchDetail] = useState(false);
   const [validationErrors, setValidationErrors] = useState<any>({});
 
   const [isNextStepSubmit, setIsNextStepSubmit] = useState(false);
@@ -64,11 +64,44 @@ const PlanYourCourse = () => {
     },
   ];
 
-  const [dataSections, setDataSections] = useState([]);
-
   const refModalSubmitError: any = useRef(null);
   const { address } = useAccount();
   const accessToken = useAccessToken();
+  //sections 26b3494a-b044-412b-90f3-e1e40de2e414 710bfa49-17d4-424b-9772-99c31dcd4c18
+  const {
+    data: sectionsData,
+    isLoading: loadingFetchDetail,
+      isFetched: isFetchedSections,
+    refetch: refetchSections,
+  } = useQuery({
+    queryKey: ['sections', router.query.id, profile?.id],
+    queryFn: async () => {
+      if (!router.query.id || !profile?.id) return null;
+
+      console.log('Fetching sections for courseId:', router.query.id, 'and userId:', profile?.id);
+      const params = new URLSearchParams({
+        courseId: router.query.id as string,
+        userId: profile?.id,
+        order: 'createdAt asc',
+      }).toString();
+
+      const res = await fetch(`${PREFIX_API}${API_PATH.SECTIONS}?${params}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await res.json();
+      return data;
+    },
+    enabled: Boolean(router.query.id && profile?.id && accessToken),
+    // staleTime: 1000 * 60 * 2, // 2 minutes
+    // gcTime: 1000 * 60 * 10, // 10 minutes
+    // refetchOnWindowFocus: false,
+  });
+
+  const dataSections = sectionsData?.data || [];
 
   const {
     run: getDetailCourse,
@@ -89,8 +122,9 @@ const PlanYourCourse = () => {
         courseDetail?.title && courseDetail?.categoryId;
       courseDetail?.level && courseDetail?.lang;
 
-      const detailSectionRes = await fetchDetailSection();
-      const detailSection = detailSectionRes?.data;
+      // Refetch sections to get latest data
+      const { data: sectionsResponse } = sectionsData
+      const detailSection = sectionsResponse?.data || [];
 
       const allLessonsHaveContent =
         Array.isArray(detailSection) &&
@@ -205,11 +239,10 @@ const PlanYourCourse = () => {
   const fieldValue = watch();
 
   useEffect(() => {
-    if (router.query.id) {
+    if (router.query.id && isFetchedSections ) {
       getDetailCourse(router.query.id as string, profile?.id);
-      fetchDetailSection();
     }
-  }, [router.query.id, profile?.id]);
+  }, [router.query.id, profile?.id, isFetchedSections]);
 
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
@@ -231,30 +264,6 @@ const PlanYourCourse = () => {
       toast.error(error.message);
     },
   });
-  const fetchDetailSection = async () => {
-    setLoadingFetchDetail(true);
-    try {
-      const params = new URLSearchParams({
-        courseId: router.query.id as string,
-        userId: profile?.id,
-        order: 'createdAt asc',
-      }).toString();
-
-      const res = await fetch(`${PREFIX_API}${API_PATH.SECTIONS}?${params}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const data = await res.json();
-      setLoadingFetchDetail(false);
-
-      setDataSections(data?.data);
-
-      return data;
-    } catch (error) {}
-  };
 
   const getIncompleteItems = (sections: any[]) => {
     const incompleteItems = {
@@ -307,7 +316,7 @@ const PlanYourCourse = () => {
   };
 
   const onPublish = async (values: any) => {
-    const resData = await fetchDetailSection();
+    const { data: resData } = await refetchSections();
 
     const allLessonsHaveContent =
       Array.isArray(resData?.data) &&
@@ -442,6 +451,7 @@ const PlanYourCourse = () => {
     requestEditPublishCourse.run(filteredBody, router.query.id as string);
   };
   const onSubmit = async (values: any) => {
+
     // Validate only the current active plan
     const validationErrorsToSet: any = {};
 
@@ -457,8 +467,14 @@ const PlanYourCourse = () => {
       }
     } else if (activePlan === 2) {
       // Validate Curriculum
-      const resData = await fetchDetailSection();
-
+      let resData
+      if(values.disableRefetch){
+        resData=sectionsData
+      }
+      else{
+        const { data } = await refetchSections()
+        resData=data
+      }
       const allLessonsHaveContent =
         Array.isArray(resData?.data) &&
         resData?.data.length > 0 &&
@@ -628,6 +644,7 @@ const PlanYourCourse = () => {
       onSubmit({
         ...value,
         plan,
+        disableRefetch: true
       })
     )();
   };
