@@ -9,10 +9,6 @@ const nextConfig: NextConfig = {
   i18n,
   trailingSlash: false,
 
-  publicRuntimeConfig: {
-    NODE_ENV: process.env.NODE_ENV,
-    APP_API_URL: process.env.NEXT_PUBLIC_APP_API_URL,
-  },
   httpAgentOptions: {
     keepAlive: false,
   },
@@ -32,6 +28,9 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   transpilePackages: ['@noble/ed25519', 'bs58'],
+
+  // Empty turbopack config to silence the error when using webpack
+  turbopack: {},
 
   webpack: (config, { isServer }) => {
     config.resolve.fallback = {
