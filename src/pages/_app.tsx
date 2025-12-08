@@ -61,7 +61,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         ? args[0] 
         : args[0] instanceof Request 
           ? args[0].url 
-          : args[0]?.url || '';
+          : args[0] instanceof URL
+          ? args[0].toString()
+          : (args[0] as any)?.url || '';
       
       // Check if this is a Coinbase metrics request - return fake response immediately
       if (
