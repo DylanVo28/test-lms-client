@@ -17,6 +17,7 @@ const ChildSection = ({
   items,
   handleClickChildLesson,
   onChangeCheckBox,
+  progressOverrides = {},
 }: {
   items: any;
   handleClickChildLesson: (
@@ -25,6 +26,7 @@ const ChildSection = ({
     status: UserCourseProgressStatus
   ) => void;
   onChangeCheckBox: (values: any) => void;
+  progressOverrides?: Record<string, UserCourseProgressStatus | undefined>;
 }) => {
   const router = useRouter();
 
@@ -68,7 +70,7 @@ const ChildSection = ({
                   radius="sm"
                   onChange={() => onChangeCheckBox(item)}
                   isSelected={
-                    item?.progress?.status ===
+                    (progressOverrides[item?.id] ?? item?.progress?.status) ===
                     UserCourseProgressStatus?.COMPLETED
                   }
                   classNames={{

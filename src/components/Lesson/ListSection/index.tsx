@@ -59,6 +59,7 @@ interface ListSectionProps {
     status: UserCourseProgressStatus
   ) => void;
   onChangeCheckBox: (values: any) => void;
+  progressOverrides?: Record<string, UserCourseProgressStatus | undefined>;
 }
 
 // Helper function
@@ -80,6 +81,7 @@ const ListSection = ({
   handleClickChildLesson,
   onChangeCheckBox,
   loading,
+  progressOverrides = {},
 }: ListSectionProps) => {
   const processedSections = useMemo(() => {
     if (!sections || sections.length === 0) return [];
@@ -92,12 +94,24 @@ const ListSection = ({
         ...lesson,
         type: TYPE_COURSE.LECTURE,
         sttLesson: index + 1,
+        progress: {
+          status:
+            (progressOverrides[lesson.id] as UserCourseProgressStatus) ??
+            lesson.progress?.status ??
+            UserCourseProgressStatus.PROGRESS,
+        },
       }));
 
       const processedQuizzes: ProcessedItem[] = quizzes.map((quiz, index) => ({
         ...quiz,
         type: TYPE_COURSE.QUIZ,
         sttQuizz: index + 1,
+        progress: {
+          status:
+            (progressOverrides[quiz.id] as UserCourseProgressStatus) ??
+            quiz.progress?.status ??
+            UserCourseProgressStatus.PROGRESS,
+        },
       }));
 
       const childSections = [...processedLessons, ...processedQuizzes];
@@ -116,7 +130,7 @@ const ListSection = ({
         totalDuration,
       };
     });
-  }, [sections]);
+  }, [sections, progressOverrides]);
 
   return (
     <div 
@@ -153,6 +167,7 @@ const ListSection = ({
                 onChangeCheckBox={onChangeCheckBox}
                 handleClickChildLesson={handleClickChildLesson}
                 items={section.childSections}
+                progressOverrides={progressOverrides}
               />
             )}
           </AccordionCustom>
