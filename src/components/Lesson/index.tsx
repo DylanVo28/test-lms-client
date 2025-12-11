@@ -35,7 +35,10 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { useShouldVideoReviewModal } from '@/hooks/useShouldVideoReviewModal';
 
-export const valueProgressAtom = atom<any>({});
+export const valueProgressAtom = atom<{ value: number; total: number }>({
+  value: 0,
+  total: 0,
+});
 export const reviewedAtom = atom<boolean>(false);
 export const lastModalShowTimeAtom = atom<Record<string, number>>({});
 
@@ -65,6 +68,17 @@ const Lesson = () => {
   const [loadingNoData, setLoadingNoData] = useState(false);
   const [isHideSidebar, setIsHideSidebar] = useState(false);
   const fetchingListSessionRef = useRef(false);
+  const [progressOverrides, setProgressOverrides] = useState<
+    Record<string, UserCourseProgressStatus | undefined>
+  >({});
+
+  const setProgressOverride = useCallback(
+    (id: string, status: UserCourseProgressStatus) => {
+      if (!id) return;
+      setProgressOverrides((prev) => ({ ...prev, [id]: status }));
+    },
+    []
+  );
 
   const {
     run: runGetListSession,
@@ -73,6 +87,27 @@ const Lesson = () => {
   } = useGetListSession({
     onSuccess: (res) => {
       fetchingListSessionRef.current = false;
+      // merge server progress, keep local optimistic COMPLETED
+      setProgressOverrides((prev) => {
+        const next = { ...prev };
+        res?.data?.forEach((section: any) => {
+          section?.lessons?.forEach((lesson: any) => {
+            if (lesson?.progress?.status === UserCourseProgressStatus.COMPLETED) {
+              next[lesson.id] = UserCourseProgressStatus.COMPLETED;
+            } else if (next[lesson.id] === undefined) {
+              next[lesson.id] = lesson?.progress?.status;
+            }
+          });
+          section?.quizzes?.forEach((quiz: any) => {
+            if (quiz?.progress?.status === UserCourseProgressStatus.COMPLETED) {
+              next[quiz.id] = UserCourseProgressStatus.COMPLETED;
+            } else if (next[quiz.id] === undefined) {
+              next[quiz.id] = quiz?.progress?.status;
+            }
+          });
+        });
+        return next;
+      });
       const firstSection = res?.data?.[0];
 
       const newLessons = firstSection?.lessons?.map((lesson: any) => {
@@ -271,6 +306,7 @@ const Lesson = () => {
 
   const onChangeCheckBox = (values: any) => {
     if (values?.progress?.status !== UserCourseProgressStatus?.COMPLETED) {
+      setProgressOverride(values?.id, UserCourseProgressStatus.COMPLETED);
       if (values?.type === TYPE_COURSE.QUIZ) {
         const body = {
           status: UserCourseProgressStatus.COMPLETED,
@@ -283,6 +319,7 @@ const Lesson = () => {
         requestProgressStatusLesson.run(body, values?.id);
       }
     } else {
+      setProgressOverride(values?.id, UserCourseProgressStatus.PROGRESS);
       if (values?.type === TYPE_COURSE.QUIZ) {
         const body = {
           status: UserCourseProgressStatus.PROGRESS,
@@ -312,6 +349,43 @@ const Lesson = () => {
   useEffect(() => {
     fetchingListSessionRef.current = false;
   }, [router.query.id, profile?.id]);
+
+  // Recompute progress locally when overrides or sessions change (optimistic)
+  useEffect(() => {
+    if (!dataListSession?.data) return;
+    const totalLessons = dataListSession.data.reduce(
+      (acc: number, section: any) => acc + section.lessons.length,
+      0
+    );
+    const totalQuizzes = dataListSession.data.reduce(
+      (acc: number, section: any) => acc + section.quizzes.length,
+      0
+    );
+    const completedLessons = dataListSession.data.reduce(
+      (acc: number, section: any) =>
+        acc +
+        section.lessons.filter(
+          (lesson: any) =>
+            (progressOverrides[lesson.id] ?? lesson.progress?.status) ===
+            UserCourseProgressStatus.COMPLETED
+        ).length,
+      0
+    );
+    const completedQuizzes = dataListSession.data.reduce(
+      (acc: number, section: any) =>
+        acc +
+        section.quizzes.filter(
+          (quiz: any) =>
+            (progressOverrides[quiz.id] ?? quiz.progress?.status) ===
+            UserCourseProgressStatus.COMPLETED
+        ).length,
+      0
+    );
+    setValueYourProgress({
+      total: totalLessons + totalQuizzes,
+      value: completedLessons + completedQuizzes,
+    });
+  }, [dataListSession?.data, progressOverrides]);
 
   const requestProgressStatusLesson = useProgressStatusLesson({
     onSuccess: (res: any) => {
@@ -380,6 +454,7 @@ const Lesson = () => {
     const body = {
       status: UserCourseProgressStatus.COMPLETED,
     };
+    setProgressOverride(id, UserCourseProgressStatus.COMPLETED);
     requestProgressStatusQuizz.run(body, id);
 
     const newSession = dataListSession?.data;
@@ -457,12 +532,14 @@ const Lesson = () => {
     const body = {
       status: UserCourseProgressStatus.COMPLETED,
     };
+  setProgressOverride(id, UserCourseProgressStatus.COMPLETED);
     requestProgressStatusQuizz.run(body, id);
   };
   const handleProgressStatusQuizz = (id: string) => {
     const body = {
       status: UserCourseProgressStatus.COMPLETED,
     };
+  setProgressOverride(id, UserCourseProgressStatus.COMPLETED);
     requestProgressStatusQuizz.run(body, id);
   };
 
@@ -482,11 +559,13 @@ const Lesson = () => {
       const body = {
         status: UserCourseProgressStatus.COMPLETED,
       };
+    setProgressOverride(idCurrent, UserCourseProgressStatus.COMPLETED);
       requestProgressStatusLesson.run(body, idCurrent);
     } else {
       const body = {
         status: UserCourseProgressStatus.COMPLETED,
       };
+    setProgressOverride(idCurrent, UserCourseProgressStatus.COMPLETED);
       requestProgressStatusQuizz.run(body, idCurrent);
     }
 
@@ -495,6 +574,7 @@ const Lesson = () => {
         const body = {
           status: UserCourseProgressStatus.COMPLETED,
         };
+      setProgressOverride(idNext, UserCourseProgressStatus.COMPLETED);
         requestProgressStatusLesson.run(body, idNext);
       }
       runGetLessons(idNext);
@@ -525,11 +605,13 @@ const Lesson = () => {
       const body = {
         status: UserCourseProgressStatus.COMPLETED,
       };
+    setProgressOverride(id, UserCourseProgressStatus.COMPLETED);
       requestProgressStatusLesson.run(body, id);
     } else {
       const body = {
         status: UserCourseProgressStatus.COMPLETED,
       };
+    setProgressOverride(id, UserCourseProgressStatus.COMPLETED);
       requestProgressStatusQuizz.run(body, id);
     }
     setEndCourse(true);
@@ -680,6 +762,7 @@ const Lesson = () => {
               loading={loadingListSession}
               handleClickChildLesson={handleClickChildLesson}
               sections={dataListSession?.data}
+              progressOverrides={progressOverrides}
             />
           </div>
         </div>

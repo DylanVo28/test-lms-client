@@ -82,8 +82,9 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [profile?.id, dataDetail?.data?.enroll, dataDetail?.data?.authorId]);
 
-  const progessPercent =
-    (valueYourProgress?.value / valueYourProgress?.total) * 100;
+  const safeTotal = Math.max(valueYourProgress?.total || 1, 1);
+  const safeValue = Math.min(valueYourProgress?.value || 0, safeTotal);
+  const progessPercent = (safeValue / safeTotal) * 100;
 
   return (
     <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
@@ -145,8 +146,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                         svg: 'w-[32px] h-[32px]',
                         indicator: 'text-green',
                       }}
-                      maxValue={valueYourProgress?.total}
-                      value={valueYourProgress?.value}
+                      maxValue={safeTotal}
+                      value={safeValue}
                       size="sm"
                     />
                   </div>
@@ -178,8 +179,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
                   <div className="px-1 py-2 flex flex-col gap-3">
                     <div className="text-lg font-bold text-letter">
                       {t('lesson.header.completedOf', {
-                        completed: valueYourProgress?.value,
-                        total: valueYourProgress?.total,
+                        completed: safeValue,
+                        total: valueYourProgress?.total ?? 0,
                       })}
                     </div>
                     <div className="text-sm ">
