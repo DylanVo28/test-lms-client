@@ -271,7 +271,7 @@ const DetailCourse = () => {
             {/* Course Sections */}
             <div className="flex flex-col gap-4 lg:gap-5">
               <YouLearn data={dataDetail?.data} />
-              <Requirements data={dataDetail?.data} />
+              {/* <Requirements data={dataDetail?.data} /> */}
               <About data={dataDetail?.data} />
               <Mentors mentor={dataDetail?.data?.author} />
               <MoreCourse
