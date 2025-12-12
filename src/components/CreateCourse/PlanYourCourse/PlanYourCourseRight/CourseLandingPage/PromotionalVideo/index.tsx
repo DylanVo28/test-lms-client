@@ -111,14 +111,17 @@ const PromotionalVideo = ({
         style={{ display: 'none' }}
       />
       <div className="flex flex-col md:flex-row items-start gap-8">
-        <div className="relative md:w-[240px] w-full h-[180px] bg-default flex items-center justify-center">
+        <div className="relative md:w-[240px] w-full h-[180px] bg-default flex items-center justify-center overflow-hidden">
           <ImageCustom
+            key={value || inputKey}
             src={
               isHasVideo
                 ? fileData?.blobThumbnailUrl
-                : videoThumbnail || '/img-default.png'
+                : value && videoThumbnail
+                ? videoThumbnail
+                : '/img-default.png'
             }
-            className="w-full md:w-[240px] h-[200px] object-contain"
+            className="w-full h-full max-w-full max-h-full object-contain"
             alt=""
             width={240}
             height={180}
@@ -129,12 +132,20 @@ const PromotionalVideo = ({
             </div>
           )}
 
-          {isHasVideo && (
+          {(isHasVideo || value) && (
             <div
               className="absolute top-0 right-0 cursor-pointer p-2"
               onClick={() => {
-                setFileData({});
-                setInputKey(Date.now());
+                if (isHasVideo) {
+                  // Reset file being selected
+                  setFileData({});
+                  setInputKey(Date.now());
+                } else if (value) {
+                  // Reset uploaded video
+                  onChange(null);
+                  setFileData({});
+                  setInputKey(Date.now());
+                }
               }}
             >
               <CloseIcon />
@@ -172,16 +183,32 @@ const PromotionalVideo = ({
             )}
 
             {!isHasVideo && (
-              <Button
-                onPress={handleClickUploadFile}
-                className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
-              >
-                <Text type="font-16-700" className="text-main">
-                  {value
-                    ? t('createCourse.curriculum.landingPage.change')
-                    : t('createCourse.curriculum.landingPage.uploadFile')}
-                </Text>
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  onPress={handleClickUploadFile}
+                  className="bg-transparent border-1 border-main min-w-[133px] min-h-[48px] rounded"
+                >
+                  <Text type="font-16-700" className="text-main">
+                    {value
+                      ? t('createCourse.curriculum.landingPage.change')
+                      : t('createCourse.curriculum.landingPage.uploadFile')}
+                  </Text>
+                </Button>
+                {value && (
+                  <Button
+                    onPress={() => {
+                      onChange(null);
+                      setFileData({});
+                      setInputKey(Date.now());
+                    }}
+                    className="bg-transparent border-1 border-red-500 min-w-[133px] min-h-[48px] rounded"
+                  >
+                    <Text type="font-16-700" className="text-red-500">
+                      Reset
+                    </Text>
+                  </Button>
+                )}
+              </div>
             )}
 
             {isHasVideo && (
