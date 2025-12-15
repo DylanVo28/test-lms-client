@@ -87,9 +87,13 @@ const CardCourse = ({
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
           height={200}
+          style={{
+            aspectRatio: '1253 / 823'
+          }}
+          //
           alt=""
           layout="contain"
-          className="w-full h-[160px] sm:h-[180px] md:h-[200px] 2k:h-[400px] 4k:h-[600px] rounded rounded-b-none bg-card object-cover"
+          className="w-full rounded rounded-b-none bg-card object-cover"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}

@@ -46,7 +46,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   const refModalConfirmDeleteSection: any = useRef(null);
   const { handleUpdateEditLessonId } = useCurriculumContext();
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'sections',
   });
@@ -54,7 +54,6 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   const [valueLesson, setValueLesson] = useState<any>({});
 
   const router = useRouter();
-
   const {
     run: runGetListSession,
     data: dataListSession,
@@ -82,6 +81,8 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
 
   const { run: runCreateSesson, loading: loadingAddSection } = useCreateSesson({
     onSuccess(res) {
+      update(res.data.ordinalNumber -1 , res.data)
+      reset()
       setAddSection(false);
       runGetListSession(router.query.id as string, profile?.id);
     },
@@ -96,7 +97,6 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   const { run: runDeleteSesson } = useDeleteSesson({
     onSuccess(res) {},
   });
-
   const handleSaveAddSection = (values: any, index: number) => {
     const body = {
       title: values?.title,

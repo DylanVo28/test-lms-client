@@ -34,6 +34,7 @@ const FormAddSection = ({
               required: 'Title is required',
             }}
             render={({ field, fieldState }) => {
+              console.log("fieldfield",field)
               return (
                 <InputText
                   maxLength={100}
