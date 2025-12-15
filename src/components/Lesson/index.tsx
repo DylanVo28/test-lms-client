@@ -418,16 +418,14 @@ const Lesson = () => {
   }, [router.query.id, profile?.id]);
 
   const handleScrollTop = () => {
-    const element: any = document.querySelector('#topLesson');
-
-    if (element) {
+    const element : any = document.querySelector('#topLesson');
+    const elementArticleContent : any = document.querySelector('#article-content');
+    const p= elementArticleContent.querySelector("#article-content-inner")
+    if (p) {
+      p.style.scrollMarginTop = '120px';
+      p.scrollIntoView({ behavior: 'smooth' })
       element.style.scrollMarginTop = '120px';
-
       element.scrollIntoView({ behavior: 'smooth' });
-
-      setTimeout(() => {
-        element.style.scrollMarginTop = '0';
-      }, 1000);
     }
   };
 

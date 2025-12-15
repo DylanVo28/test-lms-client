@@ -32,6 +32,7 @@ interface TextProps {
   className?: string;
   onClick?: () => void;
   element?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+  id?: string;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -42,6 +43,7 @@ const Text: React.FC<TextProps> = ({
   onClick = () => {},
   children,
   element = 'p',
+    id
 }) => {
   const classes = classNames(
     type,
@@ -55,6 +57,7 @@ const Text: React.FC<TextProps> = ({
     {
       className: classes,
       onClick,
+id
     },
     React.createElement(React.Fragment, undefined, children)
   );

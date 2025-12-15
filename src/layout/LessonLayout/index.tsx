@@ -87,7 +87,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const progessPercent = (safeValue / safeTotal) * 100;
 
   return (
-    <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
+    <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative scroll-custom">
       {isMobile ? (
         <MainHeader />
       ) : (
