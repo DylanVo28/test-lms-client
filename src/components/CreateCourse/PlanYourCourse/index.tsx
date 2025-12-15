@@ -587,6 +587,9 @@ const PlanYourCourse = () => {
     if (values.plan) {
       setActivePlan(values.plan);
     }
+    if(!filteredBody.video){
+      filteredBody.video = ""
+    }
 
     await requestEditCourse.run(filteredBody, router.query.id as string);
   };

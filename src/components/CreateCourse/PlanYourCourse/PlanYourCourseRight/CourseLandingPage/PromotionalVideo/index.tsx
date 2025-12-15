@@ -33,7 +33,6 @@ const PromotionalVideo = ({
       setFileData(data);
     },
   });
-
   const { upload, progress, uploading } = useS3MultipartUpload();
 
   const isHasVideo = !!fileData?.duration;
@@ -136,16 +135,18 @@ const PromotionalVideo = ({
             <div
               className="absolute top-0 right-0 cursor-pointer p-2"
               onClick={() => {
+
                 if (isHasVideo) {
                   // Reset file being selected
                   setFileData({});
                   setInputKey(Date.now());
                 } else if (value) {
                   // Reset uploaded video
-                  onChange(null);
+                  // onChange(null);
                   setFileData({});
                   setInputKey(Date.now());
                 }
+                onChange("")
               }}
             >
               <CloseIcon />

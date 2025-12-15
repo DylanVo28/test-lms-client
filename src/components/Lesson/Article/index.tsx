@@ -121,10 +121,11 @@ const Article = ({
           )}
         </>
       )}
-      <div className="flex flex-col gap-8 mx-auto ql-editor">
+      <div className="flex flex-col gap-8 mx-auto ql-editor scroll-custom" id={"article-content"}>
         <Text 
           type="font-28-700" 
           className="text-2xl 2k:text-5xl 4k:text-7xl"
+          id={"article-content-inner"}
         >
           {content?.title}
         </Text>

@@ -87,10 +87,8 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const progessPercent = (safeValue / safeTotal) * 100;
 
   return (
-    <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative">
-      {isMobile ? (
-        <MainHeader />
-      ) : (
+    <div className="w-screen bg-primary h-screen overflow-auto overflow-x-hidden flex flex-col relative scroll-custom">
+      <MainHeader />
         <div className="flex md:flex-row flex-col  md:py-6 py-3 md:px-4 border-b-1 border-b-black-9 justify-between items-between">
           <div className="flex items-center md:gap-5 gap-3">
             <div className="flex items-center gap-1">
@@ -211,7 +209,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
           </Button> */}
           </div>
         </div>
-      )}
+
 
       <div className="w-full">{children}</div>
 

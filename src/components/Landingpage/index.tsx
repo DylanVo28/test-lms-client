@@ -27,6 +27,9 @@ const LandingPage = () => {
           src={'/logo.png'}
           width={150}
           height={56}
+          style={{
+            aspectRatio: '1476 / 213'
+          }}
         />
       </div>
 

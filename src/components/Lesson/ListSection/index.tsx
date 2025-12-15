@@ -134,7 +134,7 @@ const ListSection = ({
 
   return (
     <div 
-      className="flex flex-col bg-black-70 overflow-y-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative"
+      className="flex flex-col bg-black-70 overflow-y-auto overflow-x-hidden gap-4 h-full border-l-1 border-l-[#D9D9D91A] relative scroll-custom"
       style={{ maxHeight: `calc(100vh - ${HEADER_HEIGHT}px)` }}
     >
       <LoadingContainer loading={loading} />
