@@ -79,10 +79,13 @@ const MainHeader = () => {
         <ImageCustom
           onClick={() => navigate(ROUTE_PATH.HOME)}
           alt="logo"
-          className="cursor-pointer max-h-[50px] w-auto"
+          className="cursor-pointer max-h-[50px]"
           src={theme?.logo || '/logo.png'}
           width={150}
-          height={56}
+          style={{
+            aspectRatio: '1476 / 213'
+          }}
+          height={213}
         />
 
         <ImageCustom

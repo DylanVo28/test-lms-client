@@ -424,7 +424,7 @@ const Lesson = () => {
     if (p) {
       p.style.scrollMarginTop = '120px';
       p.scrollIntoView({ behavior: 'smooth' })
-      element.style.scrollMarginTop = '120px';
+      element.style.scrollMarginTop = '150px';
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };

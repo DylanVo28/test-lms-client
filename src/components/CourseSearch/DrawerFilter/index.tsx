@@ -46,6 +46,9 @@ const DrawerFilter = (props: any, ref: any) => {
                   height={46}
                   className="cursor-pointer"
                   src={'/logo.png'}
+                  style={{
+                    aspectRatio: '1476 / 213'
+                  }}
                 />
                 <ImageCustom
                   onClick={onVisible}
