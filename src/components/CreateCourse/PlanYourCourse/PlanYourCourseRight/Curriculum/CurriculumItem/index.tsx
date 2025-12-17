@@ -21,7 +21,7 @@ import {
 import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
 import Trash from '@/components/UI/Icons/Trash';
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import {memo, useEffect, useRef, useState} from 'react';
 import { IconClose } from '..';
 import FormSelectItem from './FomSelectItem';
 import FormAddLecture from './FormAddLecture';
@@ -150,6 +150,7 @@ const CurriculumItem = ({
       setIdsContentAdd(newData);
     },
   });
+  console.log({typeAddContent, idsContentAdd, editLessonId})
   const { run: runEditQuizz, loading: loadingEditQuizz } = useEditQuizz({
     onSuccess(res) {
       setValueEditCotentLesson({});
@@ -297,9 +298,8 @@ const CurriculumItem = ({
     const body = {
       title: value,
       ordinalNumber: dataCurriculum?.length ? dataCurriculum?.length : 1,
-      sectionId: item?.idSection,
+      sectionId: item?.idSection || item?.id,
     };
-
     runCreateLecture(body);
   };
   const handleAddFormQuizz = (values: {
@@ -320,7 +320,6 @@ const CurriculumItem = ({
 
   const handleClickAddContent = (item: any) => {
     const type = item?.type as TYPE_COURSE;
-
     handleUpdateEditLessonId(item?.id);
 
     if (type === TYPE_COURSE.LECTURE) {
@@ -329,7 +328,7 @@ const CurriculumItem = ({
           ? prev.filter((id: string) => id !== item.id)
           : [...prev, item.id]
       );
-      setTypeAddContent(type);
+      setTypeAddContent(type)
     } else {
       setAddQuizzQuestion(type);
 
@@ -650,6 +649,7 @@ const CurriculumItem = ({
                 </>
               )}
             </div>
+
             {(item?.content || item?.info?.duration) &&
               !idsContentAdd?.includes(item.id) && (
                 <Content
@@ -748,6 +748,7 @@ const CurriculumItem = ({
               handleCancel={handleCancelQuizz}
             />
           )}
+
         </div>
       ) : (
         <Button
@@ -772,7 +773,7 @@ const CurriculumItem = ({
       />
     </div>
   );
-};
+}
 export default CurriculumItem;
 
 const IconCheck = () => {

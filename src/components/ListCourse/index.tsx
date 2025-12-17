@@ -159,7 +159,7 @@ const ListCourse = () => {
           }
 
           return section?.lessons?.every(
-            (lesson: any) =>lesson?.id
+            (lesson: any) =>lesson?.id && lesson.content
           );
         });
 
@@ -173,16 +173,12 @@ const ListCourse = () => {
 
           return section?.quizzes?.every(
             (quizz: any) =>
-              (quizz?.id &&
-                Array.isArray(quizz?.questions) &&
-                quizz?.questions?.length > 0) ||
-              !quizz.id
-          );
+              (quizz?.id && quizz.sectionId)
+          )
         });
 
       const isEnoughCurruclum =
         allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
-      console.log({title: item.title, isEnoughCurruclum, allLessonsHaveContent, allQuizzesHaveQuestions});
       const totalProgress =
         isEnoughCurruclum +
         isEnoughSetPrice +

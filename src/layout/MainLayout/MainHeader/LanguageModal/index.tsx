@@ -31,7 +31,6 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     const savedLanguage = localStorage.getItem('selectedLanguage');
     if (savedLanguage) {
       setSelectedLanguage(savedLanguage);
-      console.log('Loaded saved language:', savedLanguage);
     } else if (dataThemeConfig?.langs?.length > 0) {
       setSelectedLanguage(dataThemeConfig.langs[0]);
     } else {
@@ -41,7 +40,6 @@ export default function LanguageModal({ onClosePopover }: IProps) {
 
   const onChangeRadioGroup = (e: any) => {
     const value = e.target.value;
-    console.log('Language selected:', value);
 
     setSelectedLanguage(value);
     localStorage.setItem('selectedLanguage', value);
@@ -71,7 +69,6 @@ export default function LanguageModal({ onClosePopover }: IProps) {
     return [languages[0]];
   }, [dataThemeConfig]);
 
-  console.log('showLangs:::', showLangs);
 
   return (
     <>

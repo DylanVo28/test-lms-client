@@ -109,7 +109,6 @@ export const useUSDCOperations = () => {
 
         return receipt;
       } catch (error) {
-        console.log('ERROR:::', error);
         toast.error((JSON.stringify(error).slice(0, 500) + '...') as string);
       } finally {
         setLoading(false);
