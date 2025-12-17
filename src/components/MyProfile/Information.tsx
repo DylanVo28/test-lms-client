@@ -117,7 +117,6 @@ export default function Information({ reload }: { reload: VoidFunction }) {
       reload();
       toast.success('Update Successful!');
     } catch (error) {
-      console.log(error);
       toast.error('Update failed!');
     } finally {
       setLoading(false);

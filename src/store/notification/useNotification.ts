@@ -208,7 +208,6 @@ export const useNotifications = () => {
         fetchingCountRef.current = false;
       },
       onError: (err: any) => {
-        console.log(err);
         fetchingCountRef.current = false;
       },
     }

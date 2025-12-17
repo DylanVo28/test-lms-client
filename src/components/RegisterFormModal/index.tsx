@@ -40,7 +40,6 @@ const RegisterFormModal = () => {
       requestGetProfile();
     },
     onError(err) {
-      console.log('errrrrrr', err);
       toast.error(err?.message);
     },
   });
@@ -188,7 +187,6 @@ const RegisterFormModal = () => {
         orderlySecretKey: privKey,
       };
 
-      console.log('orderlyMetadata', signature, orderlyMetadata);
 
       await registerUser({
         referralCode,

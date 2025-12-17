@@ -24,7 +24,6 @@ if (typeof window === 'undefined') {
     const messaging = firebase.messaging();
 
     messaging.onBackgroundMessage((payload) => {
-      console.log(payload, 'payload');
 
       // const { title, body } = payload.notification;
 
@@ -37,7 +36,6 @@ if (typeof window === 'undefined') {
 
     self.addEventListener('push', function (event) {
       const message = event.data.json();
-      console.log(message, 'message');
 
       const notificationTitle = message.notification?.title || '';
       const notificationOptions = {
@@ -55,7 +53,6 @@ if (typeof window === 'undefined') {
     });
 
     self.addEventListener('notificationclick', function (event) {
-      console.log(event, 'event');
       event.notification.close();
 
       let clickResponsePromise = Promise.resolve();
@@ -64,6 +61,5 @@ if (typeof window === 'undefined') {
       event.waitUntil(Promise.all([clickResponsePromise]));
     });
   } catch (error) {
-    console.log({ error });
   }
 }

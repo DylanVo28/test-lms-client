@@ -66,7 +66,6 @@ const Mentors = ({ mentor }: any) => {
       const response = await userRequest.getUserDetail(mentor.id, params);
       setMentorProfile(response.data);
     } catch (error) {
-      console.log(error);
     }
   };
 
