@@ -157,9 +157,8 @@ const ListCourse = () => {
           if (section?.lessons?.length === 0) {
             return section?.quizzes?.length > 0;
           }
-
           return section?.lessons?.every(
-            (lesson: any) =>lesson?.id && lesson.content
+            (lesson: any) =>lesson?.id && (lesson.content || lesson.info.urlVideo)
           );
         });
 
@@ -179,6 +178,7 @@ const ListCourse = () => {
 
       const isEnoughCurruclum =
         allLessonsHaveContent && allQuizzesHaveQuestions ? 1 : 0;
+
       const totalProgress =
         isEnoughCurruclum +
         isEnoughSetPrice +

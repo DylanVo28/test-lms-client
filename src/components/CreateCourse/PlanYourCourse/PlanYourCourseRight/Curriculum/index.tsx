@@ -58,6 +58,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
     run: runGetListSession,
     data: dataListSession,
     loading: loadingListSession,
+    refetch
   } = useGetListSession({
     onSuccess: (res) => {
       const newData = res?.data?.map((item: any) => {
@@ -86,7 +87,6 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
       runGetListSession(router.query.id as string, profile?.id);
       res.data.idSection = res.data.id;
       update(res.data.ordinalNumber - 1 , res.data)
-
     },
   });
   const { run: runEditSesson, loading: loadingEditSection } = useEditSesson({
@@ -122,14 +122,14 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
   };
 
   const handleSubmitDelete = (index: number, id: string) => {
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
     remove(index);
     if (id) {
       runDeleteSesson(id);
     }
     setAddSection(false);
   };
-
+  console.log({fields})
   const handleEditLesson = (item: any, index: number) => {
     const newData = {
       ...item,
@@ -237,94 +237,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
           remove(index);
         }}
     />
-    //  {field?.title ? (
-    //     <div
-    //         className={clsx(
-    //             'border-1 bg-gray-80 border-black-10 rounded py-4 px-3 flex flex-col gap-6',
-    //             {
-    //               '!border-red-500': isSectionIncomplete,
-    //             }
-    //         )}
-    //     >
-    //       {valueLesson?.id === field?.id ? (
-    //           <FormAddSection
-    //               handleSaveAddSection={(values: any) => {
-    //                 if (valueLesson?.id) {
-    //                   handleSaveEditSection(values);
-    //                 } else {
-    //                   handleSaveAddSection(values, index);
-    //                 }
-    //               }}
-    //               loading={loadingEditSection}
-    //               control={control}
-    //               valueLesson={valueLesson}
-    //               handleSubmit={handleSubmit}
-    //               handleCancelFormAddSection={() => {
-    //                 setValueLesson({});
-    //               }}
-    //           />
-    //       ) : (
-    //           <div className="flex items-center gap-2">
-    //             <Text type="font-16-700" className="whitespace-nowrap">
-    //               {t('createCourse.curriculum.part', {
-    //                 number: index + 1,
-    //               })}
-    //             </Text>
-    //             <div className="flex items-center gap-1 w-full">
-    //               <FileText size={20} />
-    //               <Text
-    //                   type="font-16-400"
-    //                   className="text-letter/70 max-w-[80%] truncate"
-    //               >
-    //                 {field.title}
-    //               </Text>
-    //               <Button
-    //                   isIconOnly
-    //                   onPress={() => {
-    //                     handleEditLesson(field, index);
-    //                   }}
-    //                   size="sm"
-    //                   radius="full"
-    //                   variant="light"
-    //               >
-    //                 <PencilSimpleLine size={16} />
-    //               </Button>
-    //               {index !== 0 && (
-    //                   <Button
-    //                       isIconOnly
-    //                       onPress={() => {
-    //                         handleRemoveSection(index, field?.idSection);
-    //                       }}
-    //                       size="sm"
-    //                       radius="full"
-    //                       variant="light"
-    //                   >
-    //                     <Trash size={16} />
-    //                   </Button>
-    //               )}
-    //             </div>
-    //           </div>
-    //       )}
-    //
-    //       <CurriculumItem
-    //           item={field}
-    //           validationErrors={validationErrors}
-    //       />
-    //     </div>
-    // ) : (
-    //     <FormAddSection
-    //         handleSaveAddSection={(values: any) =>
-    //             handleSaveAddSection(values, index)
-    //         }
-    //         loading={loadingAddSection}
-    //         control={control}
-    //         handleSubmit={handleSubmit}
-    //         handleCancelFormAddSection={() => {
-    //           setAddSection(false);
-    //           remove(index);
-    //         }}
-    //     />
-    // )}
+   
   }
 
   return (
@@ -379,9 +292,12 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
         })}
         {!addSection && (
           <Button
-            onPress={() => {
+            onPress={ async () => {
+              await refetch()
               setAddSection(true);
-              append({ title: '', introduction: '' });
+              setTimeout(()=>{
+                append({ title: '', introduction: '' });
+              },1000)
             }}
             className="bg-transparent rounded w-max min-h-9 py-2 px-3 border-1 border-main"
           >

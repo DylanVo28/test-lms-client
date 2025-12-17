@@ -150,7 +150,6 @@ const CurriculumItem = ({
       setIdsContentAdd(newData);
     },
   });
-  console.log({typeAddContent, idsContentAdd, editLessonId})
   const { run: runEditQuizz, loading: loadingEditQuizz } = useEditQuizz({
     onSuccess(res) {
       setValueEditCotentLesson({});
@@ -254,7 +253,7 @@ const CurriculumItem = ({
     };
 
     runEditLecture(body, id);
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
   };
 
   const handleSaveArticle = async (value: string, id: string) => {
@@ -264,7 +263,7 @@ const CurriculumItem = ({
       contentType: LessonContentType?.ARTICLE,
     };
     runEditLecture(body, id)
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
 
   };
   const handleSaveAddQuestion = (
@@ -276,7 +275,7 @@ const CurriculumItem = ({
     const newData = idsAddQuestion?.filter((itemId: string) => itemId !== id);
     setIdsAddQuestion(newData);
     setIdAddQuestionQuizz(id);
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
 
     const body = {
       question: values?.question,
@@ -320,7 +319,7 @@ const CurriculumItem = ({
 
   const handleClickAddContent = (item: any) => {
     const type = item?.type as TYPE_COURSE;
-    handleUpdateEditLessonId(item?.id);
+    // handleUpdateEditLessonId(item?.id);
 
     if (type === TYPE_COURSE.LECTURE) {
       setIdsContentAdd((prev: string[]) =>
@@ -408,7 +407,7 @@ const CurriculumItem = ({
       runDeleteLecture(id);
 
       if (editLessonId === id) {
-        handleUpdateEditLessonId(null);
+        // handleUpdateEditLessonId(null);
       }
 
       const newData = dataCurriculum?.filter((item: any) => item?.id !== id);
@@ -432,6 +431,9 @@ const CurriculumItem = ({
     }
   };
 
+  console.log({
+    typeAddQuizzQuestion,
+  })
   return (
     <div
       className={classNames(
@@ -598,7 +600,7 @@ const CurriculumItem = ({
                       );
 
                       if (editLessonId === item.id) {
-                        handleUpdateEditLessonId(null);
+                        // handleUpdateEditLessonId(null);
                       }
 
                       setIdsContentAdd(newData);

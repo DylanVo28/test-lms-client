@@ -68,7 +68,7 @@ const FormAddVideo = ({
         urlVideo,
       });
 
-      handleUpdateEditLessonId(null);
+      // handleUpdateEditLessonId(null);
       handleUpdateShowBoundingBox(false);
     } else {
       setIsError(true);
