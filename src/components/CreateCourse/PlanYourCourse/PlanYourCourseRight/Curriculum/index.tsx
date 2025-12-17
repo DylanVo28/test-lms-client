@@ -138,7 +138,11 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
     setValueForm('title', item?.title);
     setValueLesson(newData);
   };
-  const ButtonGroup = ({field, isSectionIncomplete, index}) => {
+  const ButtonGroup = ({field, isSectionIncomplete, index}:{
+    field: any;
+    isSectionIncomplete: boolean;
+    index: number;
+  }) => {
     if(field.title && valueLesson?.id === field?.id ){
       return <div
           className={clsx(
