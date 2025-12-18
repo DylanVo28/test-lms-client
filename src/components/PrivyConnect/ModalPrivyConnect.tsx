@@ -223,7 +223,10 @@ export const ModalPrivyConnect=()=>{
         setIsModalOpen(false)
     }
 
-    return <div className="fixed inset-0 oui-bg-black/80 flex items-center justify-end z-50">
+    return <div className="fixed inset-0 oui-bg-black/80 flex items-center justify-end z-50"
+                onClick={() => setIsModalOpen(false)}
+
+    >
         <div
             role="dialog"
             aria-describedby="radix-:r2:"
@@ -232,8 +235,9 @@ export const ModalPrivyConnect=()=>{
             className="oui-fixed oui-z-50 oui-gap-4  oui-px-4 oui-shadow-lg oui-transition oui-ease-in-out data-[state=closed]:oui-duration-260 data-[state=open]:oui-duration-300 data-[state=open]:oui-animate-in data-[state=closed]:oui-animate-out oui-inset-y-0 oui-right-0 oui-h-auto oui-w-3/4 my-4 py-4 oui-border mr-4 data-[state=closed]:oui-slide-out-to-right data-[state=open]:oui-slide-in-from-right sm:oui-max-w-sm !oui-p-4  !oui-bg-[#131519] !oui-border !oui-border-solid oui-border-line-12 oui-border-solid !oui-bottom-[30px] oui-right-3 oui-top-[48px] !oui-h-auto oui-w-[300px] oui-overflow-hidden rounded-[16px] oui-bg-[#131519]"
             tabIndex={-1}
             style={{ pointerEvents: 'auto' }}
+            onClick={e=>e.stopPropagation()}
         >
-            <div className="oui-h-full oui-py-0 oui-border-none oui-relative">
+            <div className="oui-h-full oui-py-0 oui-border-none oui-relative" >
                 <div 
                     className="oui-absolute oui-inset-x-[50px] -oui-top-[calc(100vh/2)] oui-z-0 oui-h-screen"
                     style={{
