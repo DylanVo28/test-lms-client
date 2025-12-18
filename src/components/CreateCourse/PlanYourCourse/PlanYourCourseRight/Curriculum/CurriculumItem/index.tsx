@@ -431,9 +431,6 @@ const CurriculumItem = ({
     }
   };
 
-  console.log({
-    typeAddQuizzQuestion,
-  })
   return (
     <div
       className={classNames(

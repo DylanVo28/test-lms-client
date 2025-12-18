@@ -89,6 +89,7 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
       update(res.data.ordinalNumber - 1 , res.data)
     },
   });
+
   const { run: runEditSesson, loading: loadingEditSection } = useEditSesson({
     onSuccess(res) {
       setValueLesson({});
@@ -129,7 +130,6 @@ const Curriculum = ({ setValue, validationErrors }: any) => {
     }
     setAddSection(false);
   };
-  console.log({fields})
   const handleEditLesson = (item: any, index: number) => {
     const newData = {
       ...item,

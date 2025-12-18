@@ -27,7 +27,6 @@ import { useAtom } from 'jotai';
 import { useProfile } from '@/store/profile/useProfile';
 import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
 import IconNotification from '@/components/UI/Icons/IconNotification';
 import Link from 'next/link';
 import ProfileModal from '@/components/UI/ProfileModal';
@@ -36,7 +35,8 @@ import IconUser from '@/components/UI/Icons/IconUser';
 import IconGlobal from '@/components/UI/Icons/IconGlobal';
 import { useTranslation } from 'next-i18next';
 import { useRouter as useNextRouter } from 'next/router';
-import ImageCustom from "@/components/UI/ImageCustom";
+import ImageCustom from '@/components/UI/ImageCustom';
+import { usePrivy } from '@privy-io/react-auth';
 
 const DrawerMenu = (props: any, ref: any) => {
   const [visible, setVisible] = useState(false);
@@ -45,7 +45,7 @@ const DrawerMenu = (props: any, ref: any) => {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const { profile } = useProfile();
   const accessToken = useAccessToken();
-  const { openConnectModal }: any = useConnectModal();
+  const { login } = usePrivy();
   const [isOpen, setOpen] = useState(false);
 
   const router = useRouter();
@@ -106,7 +106,7 @@ const DrawerMenu = (props: any, ref: any) => {
 
   const handleClickRedirectPage = (key: number) => {
     if (!accessToken) {
-      openConnectModal();
+      login();
       return;
     }
 
@@ -245,7 +245,7 @@ const DrawerMenu = (props: any, ref: any) => {
                         {!profile.id ? (
                           <Button
                             onPress={() => {
-                              openConnectModal();
+                              login();
                             }}
                             className="bg-main w-full min-h-[40px] rounded"
                           >

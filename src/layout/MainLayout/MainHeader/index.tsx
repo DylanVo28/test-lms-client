@@ -112,32 +112,6 @@ const MainHeader = () => {
             />
             <div className="border-1 border-gray-20 h-8" />
 
-            {/* <Popover
-              isOpen={isOpen}
-              onClose={() => setOpen(false)}
-              onOpenChange={onOpen}
-              classNames={{
-                content:
-                  'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown !z-[100]',
-                base: '!z-[100]',
-              }}
-              color="default"
-              placement="bottom-end"
-            >
-              <PopoverTrigger>
-                
-              </PopoverTrigger>
-              <PopoverContent className="rounded-lg">
-                <Notification isOpen={isOpen} />
-              </PopoverContent>
-            </Popover> */}
-            {/* <Button
-              isIconOnly
-              className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
-            >
-              <Image src={'/icons/ic-user.svg'} height={20} width={20} alt="" />
-            </Button> */}
-
             <div
               className="bg-gray-10 flex cursor-pointer justify-center items-center relative border-1 border-gray-10 rounded-[4px] w-10 h-10 z-[100]"
               onClick={() => setOpen(true)}
