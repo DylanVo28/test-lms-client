@@ -6,7 +6,6 @@ import type { NextPage } from 'next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
-import dynamic from 'next/dynamic';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 import WhatWagmiProvider from "@/components/PrivyConnect/WhatWagmiProvider";
 
