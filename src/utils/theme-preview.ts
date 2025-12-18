@@ -27,8 +27,14 @@ export const clearThemePreview = () => {
 };
 
 export const isPreviewMode = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('preview') === 'true';
+  if (typeof window === 'undefined') return false;
+
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('preview') === 'true';
+  } catch {
+    return false;
+  }
 };
 
 export const setPreviewMode = (enable: boolean) => {

@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unknown-property */
-import '@rainbow-me/rainbowkit/styles.css';
 import 'cropperjs/dist/cropper.css';
 import 'quill/dist/quill.snow.css';
 import 'react-rater/lib/react-rater.css';
@@ -18,6 +17,7 @@ import { appWithTranslation } from 'next-i18next';
 import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import "@orderly.network/ui/dist/styles.css";
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -169,8 +169,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         options={{ showSpinner: false }}
         shallowRouting
       />
+
       <QueryClientProvider client={queryClient}>
+
         <main>{getLayout(<Component {...pageProps} />)}</main>
+
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </>
