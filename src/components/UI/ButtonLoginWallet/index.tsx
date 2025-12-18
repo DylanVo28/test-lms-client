@@ -36,7 +36,7 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
     <div>
       {!profile.id ? (
         <Button
-          onPress={login}
+          onPress={()=>login()}
           className="bg-main w-full min-h-[40px] rounded"
         >
           <Text className="text-letter" type="font-16-600">

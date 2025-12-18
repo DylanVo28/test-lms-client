@@ -56,7 +56,7 @@ const CustomButtonEnroll = ({
     >
       {!connected ? (
         <Button
-          onPress={login}
+          onPress={()=>login()}
           className="bg-main w-full min-h-[40px] rounded"
           disabled={isInsufficientBalance}
         >

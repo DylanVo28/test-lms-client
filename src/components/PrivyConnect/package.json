@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@privy-io/cross-app-connect": "^0.2.3",
+    "@privy-io/react-auth": "^2.22.0",
+    "@privy-io/wagmi": "^2.0.2",
+    "@orderly.network/ui": "^2.8.7",
+    "viem": "^2.22.9",
+    "wagmi": "^2.14.16",
+    "lodash": "^4.17.21"
+  }
+}
