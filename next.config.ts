@@ -92,6 +92,18 @@ const nextConfig: NextConfig = {
       }
     }
 
+    // Handle Solana dependencies that Privy imports but may not be needed
+    const webpack = require('webpack');
+    config.plugins = config.plugins || [];
+    
+    // Replace @solana-program/system with a stub to avoid build errors
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(
+        /^@solana-program\/system$/,
+        require.resolve('./webpack-solana-stub.js')
+      )
+    );
+
     return config;
   },
 };
