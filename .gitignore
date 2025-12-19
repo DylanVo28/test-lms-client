@@ -10,8 +10,11 @@
 !.yarn/releases
 !.yarn/versions
 
+/packages/*
 # testing
 /coverage
+
+/.idea
 
 # next.js
 /.next/

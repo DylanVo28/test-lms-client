@@ -7,7 +7,8 @@ import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
-import WhatWagmiProvider from "@/components/PrivyConnect/WhatWagmiProvider";
+import {WhatWagmiProvider} from 'adapter-connect';
+import {ENV} from "@/utils/env";
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -73,15 +74,15 @@ function AppProvider({ children }: any) {
         shallowRouting
       />
       <main>
-          <WhatWagmiProvider>
-          <AppLayout>
-
-                <Toaster position="top-center" richColors />
-                <WagmiAutoReconnect />
-                {children}
-
-          </AppLayout>
-          </WhatWagmiProvider>
+          <QueryClientProvider client={queryClient}>
+              <WhatWagmiProvider privyKey={ENV.NEXT_PUBLIC_PRIVY_KEY || ''}>
+                  <AppLayout>
+                        <Toaster position="top-center" richColors />
+                        <WagmiAutoReconnect />
+                        {children}
+                  </AppLayout>
+              </WhatWagmiProvider>
+          </QueryClientProvider>
       </main>
     </>
   );
