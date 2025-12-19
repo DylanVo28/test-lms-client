@@ -78,7 +78,6 @@ const PlanYourCourse = () => {
     queryFn: async () => {
       if (!router.query.id || !profile?.id) return null;
 
-      console.log('Fetching sections for courseId:', router.query.id, 'and userId:', profile?.id);
       const params = new URLSearchParams({
         courseId: router.query.id as string,
         userId: profile?.id,
@@ -529,7 +528,6 @@ const PlanYourCourse = () => {
       }
     }
 
-    console.log('validationErrorsToSet', validationErrorsToSet);
 
     // Set validation errors if any exist
     if (Object.keys(validationErrorsToSet).length > 0) {
@@ -586,6 +584,9 @@ const PlanYourCourse = () => {
 
     if (values.plan) {
       setActivePlan(values.plan);
+    }
+    if(!filteredBody.video){
+      filteredBody.video = ""
     }
 
     await requestEditCourse.run(filteredBody, router.query.id as string);

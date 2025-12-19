@@ -21,7 +21,7 @@ import {
 import PencilSimpleLine from '@/components/UI/Icons/PencilSimpleLine';
 import Trash from '@/components/UI/Icons/Trash';
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import {memo, useEffect, useRef, useState} from 'react';
 import { IconClose } from '..';
 import FormSelectItem from './FomSelectItem';
 import FormAddLecture from './FormAddLecture';
@@ -253,7 +253,7 @@ const CurriculumItem = ({
     };
 
     runEditLecture(body, id);
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
   };
 
   const handleSaveArticle = async (value: string, id: string) => {
@@ -263,7 +263,7 @@ const CurriculumItem = ({
       contentType: LessonContentType?.ARTICLE,
     };
     runEditLecture(body, id)
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
 
   };
   const handleSaveAddQuestion = (
@@ -275,7 +275,7 @@ const CurriculumItem = ({
     const newData = idsAddQuestion?.filter((itemId: string) => itemId !== id);
     setIdsAddQuestion(newData);
     setIdAddQuestionQuizz(id);
-    handleUpdateEditLessonId(null);
+    // handleUpdateEditLessonId(null);
 
     const body = {
       question: values?.question,
@@ -297,9 +297,8 @@ const CurriculumItem = ({
     const body = {
       title: value,
       ordinalNumber: dataCurriculum?.length ? dataCurriculum?.length : 1,
-      sectionId: item?.idSection,
+      sectionId: item?.idSection || item?.id,
     };
-
     runCreateLecture(body);
   };
   const handleAddFormQuizz = (values: {
@@ -320,8 +319,7 @@ const CurriculumItem = ({
 
   const handleClickAddContent = (item: any) => {
     const type = item?.type as TYPE_COURSE;
-
-    handleUpdateEditLessonId(item?.id);
+    // handleUpdateEditLessonId(item?.id);
 
     if (type === TYPE_COURSE.LECTURE) {
       setIdsContentAdd((prev: string[]) =>
@@ -329,7 +327,7 @@ const CurriculumItem = ({
           ? prev.filter((id: string) => id !== item.id)
           : [...prev, item.id]
       );
-      setTypeAddContent(type);
+      setTypeAddContent(type)
     } else {
       setAddQuizzQuestion(type);
 
@@ -409,7 +407,7 @@ const CurriculumItem = ({
       runDeleteLecture(id);
 
       if (editLessonId === id) {
-        handleUpdateEditLessonId(null);
+        // handleUpdateEditLessonId(null);
       }
 
       const newData = dataCurriculum?.filter((item: any) => item?.id !== id);
@@ -599,7 +597,7 @@ const CurriculumItem = ({
                       );
 
                       if (editLessonId === item.id) {
-                        handleUpdateEditLessonId(null);
+                        // handleUpdateEditLessonId(null);
                       }
 
                       setIdsContentAdd(newData);
@@ -650,6 +648,7 @@ const CurriculumItem = ({
                 </>
               )}
             </div>
+
             {(item?.content || item?.info?.duration) &&
               !idsContentAdd?.includes(item.id) && (
                 <Content
@@ -748,6 +747,7 @@ const CurriculumItem = ({
               handleCancel={handleCancelQuizz}
             />
           )}
+
         </div>
       ) : (
         <Button
@@ -772,7 +772,7 @@ const CurriculumItem = ({
       />
     </div>
   );
-};
+}
 export default CurriculumItem;
 
 const IconCheck = () => {

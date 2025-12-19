@@ -6,15 +6,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@nextui-org/react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useState } from 'react';
-import { useDisconnect } from 'wagmi';
+import {useAccount, useDisconnect} from 'wagmi';
 import IconUser from '../Icons/IconUser';
 import Text from '../Text';
+import { usePrivy } from '@privy-io/react-auth';
+import {formatAddress} from "@/utils/common";
 
 const ButtonLoginWallet = ({ setVisible }: any) => {
   const { disconnect } = useDisconnect();
   const { profile } = useProfile();
+  const { login } = usePrivy();
+  const { address } = useAccount();
 
   const [isOpen, setOpen] = useState(false);
 
@@ -30,53 +33,53 @@ const ButtonLoginWallet = ({ setVisible }: any) => {
   };
 
   return (
-    <ConnectButton.Custom>
-      {({ openConnectModal, mounted }) => {
-        return (
-          <div>
-            {!profile.id ? (
-              <Button
-                onPress={() => {
-                  openConnectModal();
-                }}
-                className="bg-main w-full min-h-[40px] rounded"
-              >
-                <Text className="text-letter" type="font-16-600">
-                  Connect Wallet
-                </Text>
-              </Button>
-            ) : (
-              <Popover
-                isOpen={isOpen}
-                onClose={onClose}
-                classNames={{
-                  content:
+    <div>
+      {!profile.id ? (
+        <Button
+          onPress={()=>login()}
+          className="bg-main w-full min-h-[40px] rounded"
+        >
+          <Text className="text-letter" type="font-16-600">
+            Connect Wallet
+          </Text>
+        </Button>
+      ) : (
+        <div className={'flex gap-3'}>
+
+          <Button
+              onPress={()=>window.openModalPrivyWallet()}
+              isIconOnly
+              className="bg-gray-10 font-16-500 border-1 border-gray-10 rounded-[4px] gap-2 px-2 w-auto h-10"
+          >
+            {formatAddress(address || "")}
+          </Button>
+
+          <Popover
+              isOpen={isOpen}
+              onClose={onClose}
+              classNames={{
+                content:
                     'rounded border-1 p-0 !bg-gray border-[#F0F0F01A] shadow-dropdown',
-                }}
-                color="default"
-                placement="bottom-end"
-                onOpenChange={onOpen}
+              }}
+              color="default"
+              placement="bottom-end"
+              onOpenChange={onOpen}
+          >
+            <PopoverTrigger>
+              <Button
+                  isIconOnly
+                  className="bg-gray-10 font-16-500 border-1 border-gray-10 rounded-[4px] gap-2 px-2 w-10 h-10"
               >
-                <PopoverTrigger>
-                  <Button
-                    isIconOnly
-                    className="bg-gray-10 border-1 border-gray-10 rounded-[4px] w-10 h-10"
-                  >
-                    <IconUser />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="rounded-lg">
-                  <ContentProfile
-                    onClosePopover={onClose}
-                    disconnect={disconnect}
-                  />
-                </PopoverContent>
-              </Popover>
-            )}
-          </div>
-        );
-      }}
-    </ConnectButton.Custom>
+                <IconUser />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="rounded-lg">
+              <ContentProfile onClosePopover={onClose} disconnect={disconnect} />
+            </PopoverContent>
+          </Popover>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -1,15 +1,12 @@
 import useAccessToken from '@/store/auth/hook/useAccessToken';
-import { useAuth } from '@/store/auth/useAuth';
 import { useNotifications } from '@/store/notification/useNotification';
 import { useProfile } from '@/store/profile/useProfile';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { useTheme } from '@/store/theme/useTheme';
 import { useThemeInitial } from '@/store/theme/useThemeInitial';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useRef } from 'react';
-import { useAccount } from 'wagmi';
 
 const AppLayout = ({ children }: any) => {
   const { theme } = useTheme();

@@ -55,7 +55,6 @@ const Overview = ({
       const res = await referralRequest.getProfile();
       setRefCode(res.data.code);
     } catch (error) {
-      console.log(error);
     }
   };
 

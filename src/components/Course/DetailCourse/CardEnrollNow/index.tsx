@@ -256,9 +256,12 @@ const CardEnrollNow = ({
             width={302}
             height={200}
             alt=""
-            className="w-full h-[200px] rounded rounded-b-none opacity-80 object-cover"
+            className="w-full rounded rounded-b-none opacity-80 object-cover"
             onError={(e: any) => {
               e.target.srcset = '/images/img-default.png';
+            }}
+            style={{
+              aspectRatio: '1253 / 823'
             }}
           />
         )}

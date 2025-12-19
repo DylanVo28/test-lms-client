@@ -41,6 +41,9 @@ const Login = () => {
           height={46}
           className="cursor-pointer"
           src={'/logo.png'}
+          style={{
+              aspectRatio: '1476 / 213'
+          }}
         />
         <Text type="font-28-700" className="text-letter">
           Sign in to What Exchange Study

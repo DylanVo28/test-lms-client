@@ -131,7 +131,6 @@ export const useDeleteCourse = (options: any) => {
 };
 
 const getListSession = async (id: string, userId: string): Promise<any> => {
-  console.log("getListSession", id, userId)
   const params = {
     courseId: id,
     ownerId: userId,

@@ -855,7 +855,7 @@ body {
   font-size: 14px;
   line-height: normal;
   text-rendering: optimizeSpeed;
-  font-family: 'Roboto Flex', serif;
+  font-family: 'Roboto Flex', serif !important;
   color: var(--theme-letter);
   // background-color: var(--theme-primary);
   -webkit-text-size-adjust: 100%;
@@ -1447,4 +1447,3 @@ body {
 textarea {
   color: var(--theme-letter) !important;
 }
-

@@ -19,21 +19,24 @@ const ListCoursePage = () => {
 };
 
 ListCoursePage.getLayout = function getLayout(page: ReactElement) {
-  const { t } = useTranslation('common');
-  return (
-    <>
-      <SEO
-        title={t('listCourse.pageTitle')}
-        description={t('listCourse.pageDescription')}
-        imageUrl={DefaultData.DefaultCourseImage}
-      ></SEO>
-      <AppProvider>
-        <MainLayout>
-          <>{page}</>
-        </MainLayout>
-      </AppProvider>
-    </>
-  );
+  const LayoutWrapper = () => {
+    const { t } = useTranslation('common');
+    return (
+      <>
+        <SEO
+          title={t('listCourse.pageTitle')}
+          description={t('listCourse.pageDescription')}
+          imageUrl={DefaultData.DefaultCourseImage}
+        ></SEO>
+        <AppProvider>
+          <MainLayout>
+            <>{page}</>
+          </MainLayout>
+        </AppProvider>
+      </>
+    );
+  };
+  return <LayoutWrapper />;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({

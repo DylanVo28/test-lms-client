@@ -1,13 +1,9 @@
-import { getAccessToken } from '@/store/auth';
 import { Button } from '@nextui-org/react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import { useDisconnect } from 'wagmi';
+import { usePrivy } from '@privy-io/react-auth';
 import RegisterFormModal from '../RegisterFormModal';
 import Text from '../UI/Text';
 import { useTranslation } from 'next-i18next';
-import ImageCustom from "@/components/UI/ImageCustom";
+import ImageCustom from '@/components/UI/ImageCustom';
 
 const LandingPage = () => {
   const { t } = useTranslation('common');
@@ -27,6 +23,9 @@ const LandingPage = () => {
           src={'/logo.png'}
           width={150}
           height={56}
+          style={{
+            aspectRatio: '1476 / 213'
+          }}
         />
       </div>
 
@@ -40,24 +39,14 @@ const LandingPage = () => {
             {t('landing.subheadline')}
           </h5>
         </div>
-        <ConnectButton.Custom>
-          {({ openConnectModal, mounted }) => {
-            return (
-              <>
-                <Button
-                  onPress={() => {
-                    openConnectModal();
-                  }}
-                  className="bg-main w-fit min-h-[40px] rounded"
-                >
-                  <Text className="text-letter" type="font-16-600">
-                    {t('landing.connectWallet')}
-                  </Text>
-                </Button>
-              </>
-            );
-          }}
-        </ConnectButton.Custom>
+        <Button
+          onPress={() => window.openModalPrivyConnect()}
+          className="bg-main w-fit min-h-[40px] rounded"
+        >
+          <Text className="text-letter" type="font-16-600">
+            {t('landing.connectWallet')}
+          </Text>
+        </Button>
       </div>
 
       <RegisterFormModal />

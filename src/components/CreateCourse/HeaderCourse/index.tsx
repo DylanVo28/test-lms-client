@@ -23,6 +23,9 @@ const HeaderCourse = ({ currentStep = 1 }: { currentStep: number }) => {
           width={125}
           height={46}
           src={'/logo.png'}
+          style={{
+              aspectRatio: '1476 / 213'
+          }}
         />
         <Text type="font-16-500" className="text-letter">
           {t('createCourse.stepProgress', {

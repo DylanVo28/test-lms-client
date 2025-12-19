@@ -23,7 +23,8 @@ import {
   DrawerHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { usePrivy } from '@privy-io/react-auth';
+import { useAccount } from 'wagmi';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import CustomColors from './CustomColors';
@@ -36,6 +37,8 @@ import { useCreateTheme, useUpdateTheme } from './service';
 
 const ThemeConfiguration = ({}: {}) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { authenticated, ready } = usePrivy();
+  const { address, isConnected } = useAccount();
 
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
@@ -308,56 +311,56 @@ const ThemeConfiguration = ({}: {}) => {
 
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
-                  <ConnectButton.Custom>
-                    {({ account, chain, openConnectModal, mounted }) => {
-                      const ready = mounted;
-                      const connected = ready && account && chain;
+                  {(() => {
+                    const connected = ready && authenticated && isConnected && address;
 
-                      const onPress = () => {
-                        if (!connected) {
-                          openConnectModal();
-                          setIsNonUserSave(true);
-                        } else {
-                          onSave({});
-                          if (isPreview) {
-                            handleExitPreview();
-                          }
+                    const onPress = () => {
+                      if (!connected) {
+                        // Mở modal Privy để kết nối ví
+                        if (typeof window !== 'undefined' && window.openModalPrivyConnect) {
+                          window.openModalPrivyConnect();
                         }
-                      };
+                        setIsNonUserSave(true);
+                      } else {
+                        onSave({});
+                        if (isPreview) {
+                          handleExitPreview();
+                        }
+                      }
+                    };
 
-                      return (
-                        <div className="flex gap-2">
-                          {isPreview && (
-                            <Button
-                              className="min-h-[40px] rounded mt-2 border-1 border-main"
-                              onClick={handleExitPreview}
-                            >
-                              <Text className="text-letter" type="font-16-600">
-                                Exit Preview
-                              </Text>
-                            </Button>
-                          )}
+                    return (
+                      <div className="flex gap-2">
+                        {isPreview && (
                           <Button
                             className="min-h-[40px] rounded mt-2 border-1 border-main"
-                            onClick={handlePreview}
+                            onClick={handleExitPreview}
                           >
                             <Text className="text-letter" type="font-16-600">
-                              {isPreview ? 'Update Preview' : 'Preview'}
+                              Exit Preview
                             </Text>
                           </Button>
-                          <Button
-                            isLoading={createThemeLoading || updateThemeLoading}
-                            onPress={onPress}
-                            className="min-h-[40px] rounded mt-2 bg-main"
-                          >
-                            <Text className="text-letter" type="font-16-600">
-                              Save
-                            </Text>
-                          </Button>
-                        </div>
-                      );
-                    }}
-                  </ConnectButton.Custom>
+                        )}
+                        <Button
+                          className="min-h-[40px] rounded mt-2 border-1 border-main"
+                          onClick={handlePreview}
+                        >
+                          <Text className="text-letter" type="font-16-600">
+                            {isPreview ? 'Update Preview' : 'Preview'}
+                          </Text>
+                        </Button>
+                        <Button
+                          isLoading={createThemeLoading || updateThemeLoading}
+                          onPress={onPress}
+                          className="min-h-[40px] rounded mt-2 bg-main"
+                        >
+                          <Text className="text-letter" type="font-16-600">
+                            Save
+                          </Text>
+                        </Button>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             </>

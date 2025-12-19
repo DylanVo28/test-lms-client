@@ -6,7 +6,7 @@ import Loading from '@/components/UI/Loading';
 import SelectCustom from '@/components/UI/SelectCustom';
 import Text from '@/components/UI/Text';
 import useNavigate from '@/hooks/useNavigate';
-import { useGetCategories, useGetPrices } from '@/services/filter.service';
+import {useGetCategories, useGetLevels, useGetPrices} from '@/services/filter.service';
 import { useProfile } from '@/store/profile/useProfile';
 import { useTheme } from '@/store/theme/useTheme';
 import { ROUTE_PATH } from '@/utils/const';
@@ -26,10 +26,10 @@ const ListCourse = () => {
     { key: 'createdAt asc', label: t('listCourse.oldest') },
   ];
   const [sort, setSort] = useState('createdAt asc');
-  const [category, setCategory] = useState();
-  const [price, setPrice] = useState();
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
   const [valueSearch, setValueSearch] = useState('');
-  const router = useRouter();
+  const [level, setLevel] = useState('');
   const { theme: dataThemeConfig } = useTheme();
   const { navigate } = useNavigate();
   const { profile } = useProfile();
@@ -41,29 +41,40 @@ const ListCourse = () => {
       categories: category,
       prices: price,
       authors: dataThemeConfig?.kolId,
+      levels: level,
       userId: profile?.id,
     });
 
   const { data: categories } = useGetCategories();
   const { data: prices } = useGetPrices();
+  const {data: levels} = useGetLevels();
 
   const mapCategories = () => {
-    return (categories?.data || [])?.map((item: any) => {
+    return [{ key: '', label: 'All Categories' }, ...(categories?.data || [])?.map((item: any) => {
       return {
         key: item.id,
         label: item.name,
       };
-    });
+    })]
   };
 
   const mapPrices = () => {
-    return (prices?.data || [])?.map((item: any) => {
+    return [{ key: '', label: 'All Prices' }, ...(prices?.data || [])?.map((item: any) => {
       return {
         key: item.key,
         label: item.label,
       };
-    });
+    })]
   };
+
+  const mapLevels = ()=>{
+    return [{ key: '', label: 'All Levels' }, ... (levels?.data || []).map((item:any)=>{
+        return {
+            key: item.key,
+            label: item.label,
+        };
+    })].filter(item => item.key !== 'ALL');
+  }
 
   const handleChangeSearch = (e: any) => {
     setValueSearch(e.target.value);
@@ -81,7 +92,7 @@ const ListCourse = () => {
   useEffect(() => {
     if (!profile?.id) return;
     reload();
-  }, [sort, category, price, dataThemeConfig?.kolId]);
+  }, [sort, category, price, level, dataThemeConfig?.kolId]);
 
   return (
     <div className="flex flex-col gap-[26px] px-4 md:pt-0 pt-10 md:px-10">
@@ -96,8 +107,9 @@ const ListCourse = () => {
             </Text>
           </div> */}
           <SelectCustom
+
             placeholder={t('listCourse.categories')}
-            className="min-w-[120px]"
+            className="min-w-[150px]"
             options={mapCategories()}
             value={category}
             onChange={(value: any) => {
@@ -106,11 +118,20 @@ const ListCourse = () => {
           />
           <SelectCustom
             placeholder={t('listCourse.price')}
-            className="min-w-[80px]"
+            className="min-w-[150px]"
             options={mapPrices()}
             value={price}
             onChange={(value: any) => {
               setPrice(value.target.value);
+            }}
+          />
+          <SelectCustom
+            placeholder={t('listCourse.level') || 'Level'}
+            className="min-w-[150px]"
+            options={mapLevels()}
+            value={level}
+            onChange={(value: any) => {
+              setLevel(value.target.value);
             }}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Quill from 'quill';
 import Text from '../Text';
 import clsx from 'clsx';
@@ -222,8 +222,19 @@ const QuillEditor = ({
   onChange?: (value: string) => void;
   autoFocus?: boolean;
 }) => {
-  const editorRef: any = useRef(null);
+  const editorRef: any = useRef<HTMLDivElement | null>(null);
+  const quillInstanceRef = useRef<Quill | null>(null);
   const [editor, setEditor] = useState<Quill | null>(null);
+
+  const cleanupDom = useCallback(() => {
+    if (!editorRef.current) return;
+    const parent = editorRef.current.parentElement;
+    // Remove toolbars that Quill attaches next to the editor
+    if (parent) {
+      parent.querySelectorAll('.ql-toolbar').forEach((tb: Element) => tb.remove());
+    }
+    editorRef.current.innerHTML = '';
+  }, []);
 
   // Register custom video and image blots once
   useEffect(() => {
@@ -260,7 +271,10 @@ const QuillEditor = ({
 
 
   useEffect(() => {
-    if (editorRef.current) {
+    if (editorRef.current && !quillInstanceRef.current) {
+      // ensure clean container before init
+      cleanupDom();
+
       const quill = new Quill(editorRef.current, {
         theme: 'snow',
         modules: {
@@ -303,6 +317,7 @@ const QuillEditor = ({
         };
       });
 
+      quillInstanceRef.current = quill;
       setEditor(quill);
       
       // Initialize image resize handler
@@ -320,11 +335,13 @@ const QuillEditor = ({
     }
 
     return () => {
-      if (editorRef.current) {
-        editorRef.current = null;
-      }
+      cleanupDom();
+      quillInstanceRef.current = null;
+      setEditor(null);
+      editorRef.current = null;
     };
-  }, [placeholder]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (editor && value !== undefined) {

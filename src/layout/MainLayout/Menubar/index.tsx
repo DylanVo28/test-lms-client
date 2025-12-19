@@ -4,12 +4,12 @@ import useNavigate from '@/hooks/useNavigate';
 import useAccessToken from '@/store/auth/hook/useAccessToken';
 import { useProfile } from '@/store/profile/useProfile';
 import { ROUTE_PATH } from '@/utils/const';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
 import clsx from 'clsx';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
+import { usePrivy } from '@privy-io/react-auth';
 
 const Menubar = () => {
   const { t } = useTranslation('common');
@@ -18,8 +18,7 @@ const Menubar = () => {
   const { navigate } = useNavigate();
   const { address } = useAccount();
   const accessToken = useAccessToken();
-
-  const { openConnectModal }: any = useConnectModal();
+  const { login } = usePrivy();
 
   const MENUS = useMemo(
     () =>
@@ -57,7 +56,7 @@ const Menubar = () => {
   );
   const handleClickRedirectPage = (key: number) => {
     if (!accessToken) {
-      openConnectModal();
+      login();
       return;
     }
     const menuItem = MENUS.find((item) => item.key === key);

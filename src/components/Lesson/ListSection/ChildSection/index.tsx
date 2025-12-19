@@ -17,6 +17,7 @@ const ChildSection = ({
   items,
   handleClickChildLesson,
   onChangeCheckBox,
+  progressOverrides = {},
 }: {
   items: any;
   handleClickChildLesson: (
@@ -25,6 +26,7 @@ const ChildSection = ({
     status: UserCourseProgressStatus
   ) => void;
   onChangeCheckBox: (values: any) => void;
+  progressOverrides?: Record<string, UserCourseProgressStatus | undefined>;
 }) => {
   const router = useRouter();
 
@@ -47,7 +49,7 @@ const ChildSection = ({
               key={item?.id}
               onClick={() => {
                 if (item?.type === TYPE_COURSE.QUIZ) {
-                  localStorage.setItem('titleQuizz', `Quizz ${item?.sttQuizz}`);
+                  localStorage.setItem('titleQuizz', `Quiz ${item?.sttQuizz}`);
                 }
                 setActiveItemSection(item?.id);
                 handleClickChildLesson(
@@ -68,7 +70,7 @@ const ChildSection = ({
                   radius="sm"
                   onChange={() => onChangeCheckBox(item)}
                   isSelected={
-                    item?.progress?.status ===
+                    (progressOverrides[item?.id] ?? item?.progress?.status) ===
                     UserCourseProgressStatus?.COMPLETED
                   }
                   classNames={{
@@ -77,7 +79,7 @@ const ChildSection = ({
                 />
                 {item?.type === TYPE_COURSE.QUIZ ? (
                   <Text type="font-16-600" className="text-letter mt-[-4px]">
-                    {`Quizz ${item?.sttQuizz}. ${item?.title}`}
+                    {`Quiz ${item?.sttQuizz}. ${item?.title}`}
                   </Text>
                 ) : (
                   <>
@@ -142,7 +144,7 @@ const ChildSection = ({
                   <>
                     <Question size={20} className="text-black-5" />
                     <Text type="font-14-400" className="text-black-5">
-                      Quizz
+                      Quiz
                     </Text>
                   </>
                 </div>
