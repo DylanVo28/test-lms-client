@@ -7,8 +7,14 @@ import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import Head from 'next/head';
 import { Toaster } from 'sonner';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
-import {WhatWagmiProvider} from 'adapter-connect';
+import dynamic from 'next/dynamic';
 import {ENV} from "@/utils/env";
+
+// Dynamic import WhatWagmiProvider to avoid server-side ESM issues
+const WhatWagmiProvider = dynamic(
+  () => import('adapter-connect').then((mod) => ({ default: mod.WhatWagmiProvider })),
+  { ssr: false }
+);
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
