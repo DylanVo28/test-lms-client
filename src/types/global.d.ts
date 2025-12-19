@@ -4,6 +4,8 @@ declare global {
   interface Window {
     ethereum?: any;
     __VIEM_CACHE__?: any;
+    openModalPrivyConnect : ()=>void;
+    openModalPrivyWallet: () => void;
   }
 }
 
