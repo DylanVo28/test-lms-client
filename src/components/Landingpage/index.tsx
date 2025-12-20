@@ -1,12 +1,19 @@
 import { Button } from '@nextui-org/react';
-import { usePrivy } from '@privy-io/react-auth';
+import { usePrivy, useWallets } from '@privy-io/react-auth';
 import RegisterFormModal from '../RegisterFormModal';
 import Text from '../UI/Text';
 import { useTranslation } from 'next-i18next';
 import ImageCustom from '@/components/UI/ImageCustom';
+import { useAccount } from 'wagmi';
+import {useEffect, useMemo, useState} from 'react';
 
 const LandingPage = () => {
+
   const { t } = useTranslation('common');
+
+  const handleConnectWallet = async () => {
+    window.openModalPrivyConnect();
+  };
   return (
     <div
       className="relative min-h-screen w-full h-[100vh]"
@@ -40,7 +47,7 @@ const LandingPage = () => {
           </h5>
         </div>
         <Button
-          onPress={() => window.openModalPrivyConnect()}
+          onPress={handleConnectWallet}
           className="bg-main w-fit min-h-[40px] rounded"
         >
           <Text className="text-letter" type="font-16-600">
