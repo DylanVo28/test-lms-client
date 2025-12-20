@@ -16,7 +16,7 @@ import { setAuthCookies } from '@/store/auth';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 import { useTranslation } from 'next-i18next';
@@ -51,6 +51,7 @@ const RegisterFormModal = () => {
   const { signMessageAsync } = useSignMessage();
 
   useEffect(() => {
+    // debugger
     // Handle initial connection
     if (!address) return;
 
@@ -62,12 +63,16 @@ const RegisterFormModal = () => {
         const loginSignature = localStorage.getItem('loginSignature');
         if (!loginSignature) {
           // get nonce
-          const signMessage = await signMessageAsync({
-            message: `i'm the owner of wallet ${address}`,
-          });
-          localStorage.setItem('loginSignature', signMessage);
-        }
+          try {
+            const signMessage = await signMessageAsync({
+              message: `i'm the owner of wallet ${address}`,
+            });
+            localStorage.setItem('loginSignature', signMessage);
+          }catch (e) {
+            disconnect()
+          }
 
+        }
         const loginRes = await runLoginWeb3({
           address: address as string,
           signMessage: loginSignature,
