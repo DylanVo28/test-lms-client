@@ -1,9 +1,8 @@
 import { coursePaymentVaultAbi } from '@/abis/coursePaymentVault';
 import { usdcAbi } from '@/abis/usdc';
-import { Contract } from '@ethersproject/contracts';
 import { useQuery } from '@tanstack/react-query';
 import { useEthersSigner } from './useEthersSigner';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import { base } from '@/config/viem';
 import { mintNFTAbi } from '@/abis/mintNFT';
 import { useAccount } from 'wagmi';

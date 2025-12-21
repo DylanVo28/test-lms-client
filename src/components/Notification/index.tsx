@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import Text from '../UI/Text';
 import ListNotification from './ListNotification';
-import { get } from 'lodash';
 
 const Notification = ({ isOpen }: { isOpen: boolean }) => {
   const [tab, setTab] = useState(TAB_NOTIFICATION.VIEW_ALL);
@@ -53,7 +52,7 @@ const Notification = ({ isOpen }: { isOpen: boolean }) => {
   ];
 
   const handleReadNotification = async (item: any) => {
-    const isRead = get(item, 'read', false);
+    const isRead = item?.read ?? false;
     if (isRead) {
       return;
     }
