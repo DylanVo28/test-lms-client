@@ -76,28 +76,6 @@ const nextConfig: NextConfig = {
       };
     }
 
-    // External viem and wagmi on server to prevent file handle issues and ESM errors
-    if (isServer) {
-      config.externals = config.externals || [];
-      if (typeof config.externals === 'function') {
-        const originalExternals = config.externals;
-        config.externals = (context: any, request: any, callback: any) => {
-          // External adapter-connect and its dependencies on server
-          if (request === 'adapter-connect' || request?.includes('adapter-connect')) {
-            return callback(null, `commonjs ${request}`);
-          }
-          if (request?.startsWith('viem') || request?.startsWith('wagmi')) {
-            return callback(null, `commonjs ${request}`);
-          }
-          if (request?.startsWith('@privy-io/react-auth')) {
-            return callback(null, `commonjs ${request}`);
-          }
-          return originalExternals(context, request, callback);
-        };
-      } else if (Array.isArray(config.externals)) {
-        config.externals.push('viem', 'wagmi', 'adapter-connect', '@privy-io/react-auth');
-      }
-    }
 
     // Handle Solana dependencies that Privy imports but may not be needed
     const webpack = require('webpack');
