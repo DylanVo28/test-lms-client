@@ -9,11 +9,9 @@ import { Toaster } from 'sonner';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 import dynamic from 'next/dynamic';
 import {ENV} from "@/utils/env";
-
-// Dynamic import WhatWagmiProvider to avoid server-side ESM issues
 const WhatWagmiProvider = dynamic(
-  () => import('adapter-connect').then((mod) => ({ default: mod.WhatWagmiProvider })),
-  { ssr: false }
+    () => import('adapter-connect').then((mod) => ({ default: mod.WhatWagmiProvider })),
+    { ssr: false }
 );
 
 export type NextPageWithLayout = NextPage & {

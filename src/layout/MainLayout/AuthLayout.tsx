@@ -1,4 +1,3 @@
-import LandingPage from '@/components/Landingpage';
 import RegisterFormModal from '@/components/RegisterFormModal';
 import { getAccessToken } from '@/store/auth';
 import { useProfile } from '@/store/profile/useProfile';
@@ -7,6 +6,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import ImageCustom from "@/components/UI/ImageCustom";
+import {LandingPage} from "@/components/LandingPage";
 
 type ROLE = 'ADMIN' | 'KOL' | 'USER';
 const AuthLayout = ({

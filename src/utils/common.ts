@@ -1,5 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber';
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 
 export const mapRatingData = (rating: any) => {
   if (!rating) return {};

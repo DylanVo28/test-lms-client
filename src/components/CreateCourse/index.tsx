@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
-import LandingPage from '../Landingpage';
 import { toast } from '../UI/Toast/toast';
 import ContenStep1, { TYPE_CREATE_COURSE } from './ContenStep1';
 import ContenStep2 from './ContenStep2';
@@ -14,6 +13,7 @@ import ContenStepDuplicateCourse from './ContenStepDuplicateCourse';
 import Footer from './Footer';
 import HeaderCourse from './HeaderCourse';
 import { useCreateCourse, useDuplicateCourse } from './service';
+import {LandingPage} from "@/components/LandingPage";
 
 const CreateCourse = () => {
   const [step, setStep] = useState(1);
