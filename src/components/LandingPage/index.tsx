@@ -331,14 +331,13 @@ export const LandingPage = () => {
 
                 <div className="flex justify-start md:w-1/2" >
                     <div
-                        className="w-full  rounded-[30px] md:rounded-[63px] p-4 md:p-12 shadow-2xl backdrop-blur-sm"
+                        className="w-full max-w-[600px] rounded-[30px] md:rounded-[63px] p-[1px] shadow-2xl backdrop-blur-sm"
                         style={{
-                            background: 'linear-gradient(324.98deg, #000000 2.66%, #00a3c300 96.34%)',
-                            border: '1px solid #00a3c3',
-                            borderImageSlice: 1,
-                            maxWidth: '600px'
+                            background: 'linear-gradient(324.98deg, rgb(0 0 0 / 0%) 2.66%, rgb(0 163 195 / 50%) 96.34%)',
+                            border: '1px solid #0000004D'
                         }}
                     >
+                        <div className="h-full w-full rounded-[28px] md:rounded-[60px] bg-black/80 p-4 md:p-12">
                         <h2 className="mb-4 text-center text-lg font-semibold" style={{fontSize: '18px'}}>Connect
                             wallet</h2>
                         <div className="mb-4 space-y-3">
@@ -539,6 +538,7 @@ export const LandingPage = () => {
                             </a>
                             .
                         </p>
+                        </div>
                     </div>
                 </div>
             </div>
