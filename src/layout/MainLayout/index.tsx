@@ -1,4 +1,3 @@
-import LandingPage from '@/components/Landingpage';
 import useStorageOrCookieChange from '@/hooks/useStorageOrCookieChange';
 import { getAccessToken } from '@/store/auth';
 import { ROUTE_PATH } from '@/utils/const';
@@ -8,6 +7,7 @@ import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
 import MainHeader from './MainHeader';
 import { useThemePreview } from '@/hooks/useThemePreview';
+import {LandingPage} from "@/components/LandingPage";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

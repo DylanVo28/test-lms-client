@@ -5,7 +5,8 @@ import { useTranslation } from 'next-i18next';
 
 import Course from '@/components/Course';
 import MainLayout from '@/layout/MainLayout';
-import LandingPage from '@/components/Landingpage';
+import {LandingPage} from "@/components/LandingPage";
+
 import { NextSeo } from 'next-seo';
 import AppProvider from '@/components/Provider/AppProvider';
 import SEO from '@/components/SEO';
