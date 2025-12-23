@@ -24,11 +24,7 @@ export const useTokenInfo = () => {
       }
     },
     enabled: !!usdcContract && !!address,
-    staleTime: 1000 * 30, // 30 seconds
-    gcTime: 1000 * 60 * 5, // 5 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   const { data: tokenInfo } = useQuery({
@@ -47,11 +43,7 @@ export const useTokenInfo = () => {
       }
     },
     enabled: !!usdcContract,
-    staleTime: 1000 * 60 * 10, // 10 minutes - token info rarely changes
-    gcTime: 1000 * 60 * 30, // 30 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   const formattedBalance = useMemo(() => {

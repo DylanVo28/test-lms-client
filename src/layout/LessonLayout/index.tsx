@@ -46,11 +46,7 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
     queryKey: ['profile', token],
     queryFn: async () => requestGetProfile(),
     enabled: Boolean(token && !profile?.id),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 15,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({

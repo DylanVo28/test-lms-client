@@ -20,6 +20,7 @@ import {Fragment, useEffect, useState} from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 import { useTranslation } from 'next-i18next';
+import Link from "next/link";
 
 const RegisterFormModal = () => {
   const [referralCode, setReferralCode] = useState('');
@@ -129,7 +130,7 @@ const RegisterFormModal = () => {
 
       if (!signature) {
         setIsRegistering(false);
-        window.location.reload();
+        handleClose();
         return;
       }
 
@@ -237,6 +238,10 @@ const RegisterFormModal = () => {
                 referralCode ||
                 t('register.referral'),
             })}
+          </div>
+
+          <div className="text-sm text-red-500">
+            Note: You should enable Enable Trading on <Link className={'underline font-bold'} href={"https://trade.what.exchange"}>What Exchange</Link> first, then proceed with registration.
           </div>
 
           {!showRegisterForm?.themeCode && (

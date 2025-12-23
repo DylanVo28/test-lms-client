@@ -20,19 +20,9 @@ const MainBanner = () => {
     : theme?.banner || '/images/bg-banner.png';
 
   return (
-    <div className="relative w-full min-h-[400px]  md:min-h-[410px]">
+    <div className="relative w-full !bg-cover overflow-hidden !bg-center" style={{background: `url(${bgImageSrc})` , maxHeight: '400px'}}>
       {/* Background Image */}
-      <div className="absolute inset-0 z-0 w-full h-full">
-        <ImageCustom
-          src={bgImageSrc}
-          alt={t('banner.altBackground')}
-          fill
-          priority
-          sizes="100vw"
-          className="rounded"
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
+
 
       {/* Content */}
       <div className="relative z-1 items-center py-[20px] px-4 md:py-[40px] md:px-8 min-h-[400px] md:min-h-[410px]">
