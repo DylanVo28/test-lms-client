@@ -287,28 +287,34 @@ export const LandingPage = () => {
                 }}
             />
             <div className={'flex w-screen h-screen items-center justify-center'}>
-            <div className="relative flex flex-col justify-center  md:flex-row md:items-end gap-12 px-4" style={{height: 'fit-content'}}>
+            <div className="relative w-screen flex flex-col justify-center  md:flex-row md:items-end gap-12 px-4" style={{height: 'fit-content'}}>
                 <div className=" mb-8 w-1/2 text-right hidden md:flex gap-2 justify-end">
 
-                    <div className={'relative pr-12'}>
-                         <span className={'absolute'} style={{
-                             fontSize: '100px', fontFamily: "Helvetica",
-                             left: '-8%',
-                             top: '-50%'
-                         }}>
+                    <div className={'relative pr-20'}>
+
+                        <div className={'flex gap-2 relative'}>
+                              <span className={'absolute'} style={{
+                                  fontSize: '100px', fontFamily: "Helvetica",
+                                  left: '-8%',
+                                  top: '-55%'
+                              }}>
                             “
                         </span>
-                        <p className="font-bold" style={{fontSize: '26px', lineHeight: '150%'}}>
+                            <p className="font-bold" style={{fontSize: '26px', lineHeight: '150%'}}>
 
-                            Live as if you were to die tomorrow.
-                            <br/>
-                            Learn as if you were to live forever.
+                                Live as if you were to die tomorrow.
+                                <br/>
+                                Learn as if you were to live forever.
 
-                        </p>
+                            </p>
+                            <span className={'absolute'} style={{fontSize: '100px',  fontFamily: "Helvetica",  right: '-8%',
+                                transform: 'scaleX(-1)',
+                                bottom: '-110%'}}>“</span>
+
+                        </div>
                         <span style={{fontSize: '17px'}}>
                         Mahatma Gandhi
                     </span>
-                        <span className={'absolute right-0'} style={{fontSize: '100px', bottom:"-76%",  fontFamily: "Helvetica"}}>"</span>
                     </div>
 
                 </div>
@@ -325,7 +331,7 @@ export const LandingPage = () => {
                         <div className="relative h-full w-full rounded-[28px] md:rounded-[60px]  p-4 md:p-12">
                         <h2 className="mb-4 text-center text-lg font-semibold" style={{fontSize: '18px'}}>Connect
                             wallet</h2>
-                        <div className="mb-4 space-y-3">
+                        <div className="mb-4 space-y-3 p-1">
                             <p className="text-sm text-white/70" style={{
                                 fontSize: '15px'
                             }}>Log in</p>
@@ -333,7 +339,7 @@ export const LandingPage = () => {
                                 <button
                                     onClick={item.onClick}
                                     key={item.label}
-                                    className="relative overflow-hidden w-full bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden w-full bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
@@ -365,14 +371,14 @@ export const LandingPage = () => {
 
                         <div className="border-t" style={{borderColor: '#00A3C3'}}/>
 
-                        <div className="mt-4 overflow-auto h-[180px] no-scrollbar" >
-                            <p className="text-sm text-white/70">EVM</p>
+                        <div className="mt-4 overflow-y-auto h-[200px] no-scrollbar p-1" >
+                            <p className="text-sm text-white/70 mb-4">EVM</p>
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                 {connectors.filter(c=>c.id !== "io.metamask").map((connector) => (
                                     <button
                                         key={connector.id}
                                         onClick={() => handleConnectWallet(connector)}
-                                        className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                        className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                          items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6  text-sm font-semibold transition hover:scale-[1.01]"
                                         style={{
                                             borderRadius: '20px'
@@ -409,7 +415,7 @@ export const LandingPage = () => {
                                             console.error('Failed to connect MetaMask:', error);
                                         }
                                     }}
-                                    className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
@@ -441,7 +447,7 @@ export const LandingPage = () => {
                                             console.error('Failed to connect WalletConnect:', error);
                                         }
                                     }}
-                                    className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
@@ -466,7 +472,7 @@ export const LandingPage = () => {
                                 {/* Binance Wallet button */}
                                 <button
                                     onClick={() => handleConnectSpecificWallet('binance')}
-                                    className="relative overflow-hidden bg-black flex justify-center flex-1
+                                    className="box2 relative overflow-hidden bg-black flex justify-center flex-1
                                     cursor-pointer items-center gap-2 rounded-xl  px-3 py-3 md:py-6  text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
