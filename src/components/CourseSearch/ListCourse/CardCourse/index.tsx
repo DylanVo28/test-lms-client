@@ -56,8 +56,9 @@ const CardCourse = ({
   return (
     <Link
       href={`/${code}${ROUTE_PATH.DETAIL_COURSE(item.slug)}`}
-      className="flex flex-col h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80 bg-card"
+      className="group h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80 "
     >
+
       {!noLike && (
         <div className="absolute right-2 top-2 z-10">
           <Button
@@ -82,26 +83,28 @@ const CardCourse = ({
         </div>
       )}
 
-      <div className="bg-card w-full rounded rounded-b-none">
+      <div className=" w-full rounded rounded-b-none overflow-hidden relative z-10" style={{
+        borderRadius: '25px'
+      }}>
         <ImageCustom
           src={item?.image ? item?.image : '/images/img-default.png'}
           width={302}
           height={200}
           style={{
-            aspectRatio: '1253 / 823'
+            aspectRatio: '1258 / 820'
           }}
           //
           alt=""
           layout="contain"
-          className="w-full rounded rounded-b-none bg-card object-cover"
+          className="w-full rounded rounded-b-none object-cover"
           onError={(e: any) => {
             e.target.srcset = '/images/img-default.png';
           }}
         />
       </div>
 
-      <div className="py-3 sm:py-4 px-3 w-full rounded rounded-t-none bg-card h-full flex flex-col gap-2 sm:gap-[10px]">
-        <div className="flex flex-col gap-2 sm:gap-[10px] flex-1 border-b border-b-white-5 pb-2 sm:pb-3">
+      <div className="py-3 sm:py-4 px-3 w-full rounded rounded-t-none gap-2 sm:gap-[10px] relative z-10">
+        <div className="flex flex-col gap-2 sm:gap-[10px] border-b border-b-white-5 pb-2 sm:pb-3">
           {/* Course Meta Info */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
             <div className="flex items-center gap-1">
@@ -189,6 +192,11 @@ const CardCourse = ({
             )}
           </div>
         </div>
+      </div>
+      <div style={{
+        borderRadius: '25px',
+        marginInline: "auto"
+      }} className={'absolute left-0 right-0 m-auto top-0 bottom-0 w-full h-full bg-opacity-80 duration-200 group-hover:scale-105 scale-100 group-hover:bg-[#cbcbcb26]'}>
       </div>
     </Link>
   );
