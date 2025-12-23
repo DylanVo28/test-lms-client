@@ -78,8 +78,7 @@ export const useAccountInfo = () => {
       !!profile?.orderlyAccountId &&
       !!profile?.orderlySecretKey &&
       !!profile?.orderlyKey,
-    refetchInterval: 30000,
-    staleTime: 30000,
+
   });
 
   return {

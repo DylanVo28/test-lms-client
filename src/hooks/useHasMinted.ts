@@ -24,11 +24,7 @@ export const useHasMinted = ({
       }
     },
     enabled: !!contract && !!address && !!courseId,
-    staleTime: 1000 * 60 * 2, // 2 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   return { data, isLoading, refetch };

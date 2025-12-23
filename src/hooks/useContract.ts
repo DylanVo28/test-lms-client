@@ -52,11 +52,7 @@ export const useContract = (
       }
     },
     enabled: !!address && !!ABI && !!simpleRpcProvider,
-    staleTime: 1000 * 60 * 5, // 5 minutes - prevent unnecessary refetches
-    gcTime: 1000 * 60 * 10, // 10 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   return data || null;

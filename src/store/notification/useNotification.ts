@@ -63,10 +63,7 @@ export const useNotificationTabs = (isOpen: boolean, tab: TAB_NOTIFICATION) => {
           return res?.data || [];
         },
         enabled: Boolean(token && isOpen),
-        staleTime: 5 * 60 * 1000,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
+
       },
       {
         queryKey: ['notifications', TAB_NOTIFICATION.INSTRUCTOR],
@@ -79,10 +76,7 @@ export const useNotificationTabs = (isOpen: boolean, tab: TAB_NOTIFICATION) => {
           return res?.data || [];
         },
         enabled: Boolean(token && isOpen),
-        staleTime: 5 * 60 * 1000,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
+
       },
       {
         queryKey: ['notifications', TAB_NOTIFICATION.STUDENT],
@@ -95,10 +89,6 @@ export const useNotificationTabs = (isOpen: boolean, tab: TAB_NOTIFICATION) => {
           return res?.data || [];
         },
         enabled: Boolean(token && isOpen),
-        staleTime: 5 * 60 * 1000,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
       },
     ],
   });

@@ -61,7 +61,7 @@ const CustomButtonEnroll = ({
           disabled={isInsufficientBalance}
         >
           <Text className="text-letter" type="font-16-600">
-            {t('auth.connectWallet')}
+            Connect Wallet
           </Text>
         </Button>
       ) : (
