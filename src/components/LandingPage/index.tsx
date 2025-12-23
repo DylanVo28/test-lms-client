@@ -72,22 +72,6 @@ const SvgIcon: React.FC<React.SVGProps<SVGElement>> = (props) => (
         </defs>
     </svg>
 );
-const loginOptions = [
-    {label: 'Email', icon: '/icons/ic-mail.svg', bg: 'bg-[#0c2f46]/70'},
-    {
-        label: 'Google',
-        icon: '/icons/ic-google.svg',
-        bg: 'bg-gradient-to-r from-[#071859]/80 via-[#193f99]/80 to-[#1058c1]/80'
-    },
-    {label: 'X/Twitter', icon: '/icons/ic-x.svg', bg: 'bg-[#0c2f46]/70'},
-];
-
-const evmOptions = [
-    {label: 'METAMASK', icon: '🦊', bg: 'bg-[#111827]/80'},
-    {label: 'WalletConnect', icon: '🌐', bg: 'bg-[#0c2f46]/80'},
-    {label: 'brave', icon: '🧭', bg: 'bg-[#111827]/80'},
-    {label: 'BINANCE', icon: '🟡', bg: 'bg-[#0c2f46]/80'},
-];
 
 export const LandingPage = () => {
     const {login, connectors, connect, connectWallet, disconnect} = useWalletConnect()
@@ -302,45 +286,52 @@ export const LandingPage = () => {
 
                 }}
             />
+            <div className={'flex w-screen h-screen items-center justify-center'}>
+            <div className="relative w-screen flex flex-col justify-center  md:flex-row md:items-end gap-12 px-4" style={{height: 'fit-content'}}>
+                <div className=" mb-8 w-1/2 text-right hidden md:flex gap-2 justify-end">
 
-            <div className="relative flex h-screen flex-col justify-center  md:flex-row md:items-center gap-12 px-4">
-                <div className="mb-10  w-1/2 text-right hidden md:flex gap-2 justify-end">
+                    <div className={'relative pr-20'}>
 
-                    <div className={'relative pr-12'}>
-                         <span className={'absolute'} style={{
-                             fontSize: '100px', fontFamily: "Helvetica",
-                             left: '-8%',
-                             top: '-50%'
-                         }}>
+                        <div className={'flex gap-2 relative'}>
+                              <span className={'absolute'} style={{
+                                  fontSize: '100px', fontFamily: "Helvetica",
+                                  left: '-8%',
+                                  top: '-55%'
+                              }}>
                             “
                         </span>
-                        <p className="font-bold" style={{fontSize: '26px', lineHeight: '150%'}}>
+                            <p className="font-bold" style={{fontSize: '26px', lineHeight: '150%'}}>
 
-                            Live as if you were to die tomorrow.
-                            <br/>
-                            Learn as if you were to live forever.
+                                Live as if you were to die tomorrow.
+                                <br/>
+                                Learn as if you were to live forever.
 
-                        </p>
+                            </p>
+                            <span className={'absolute'} style={{fontSize: '100px',  fontFamily: "Helvetica",  right: '-8%',
+                                transform: 'scaleX(-1)',
+                                bottom: '-110%'}}>“</span>
+
+                        </div>
                         <span style={{fontSize: '17px'}}>
                         Mahatma Gandhi
                     </span>
-                        <span className={'absolute right-0'} style={{fontSize: '100px', bottom:"-76%",  fontFamily: "Helvetica"}}>"</span>
                     </div>
 
                 </div>
 
                 <div className="flex justify-start md:w-1/2" >
                     <div
-                        className="w-full max-w-[600px] rounded-[30px] md:rounded-[63px] p-[1px] shadow-2xl backdrop-blur-sm"
+                        className="box w-full max-w-[600px] rounded-[30px] md:rounded-[63px] p-[1px] shadow-2xl backdrop-blur-sm"
                         style={{
-                            background: 'linear-gradient(324.98deg, rgb(0 0 0 / 0%) 2.66%, rgb(0 163 195 / 50%) 96.34%)',
-                            border: '1px solid #0000004D'
+                            // border: 'solid',
+                            // borderImage: 'linear-gradient(324.98deg, #000000 2.66%, #00A3C3 96.34%) 1 / 1px',
+
                         }}
                     >
-                        <div className="h-full w-full rounded-[28px] md:rounded-[60px] bg-black/80 p-4 md:p-12">
+                        <div className="relative h-full w-full rounded-[28px] md:rounded-[60px]  p-4 md:p-12">
                         <h2 className="mb-4 text-center text-lg font-semibold" style={{fontSize: '18px'}}>Connect
                             wallet</h2>
-                        <div className="mb-4 space-y-3">
+                        <div className="mb-4 space-y-3 p-1">
                             <p className="text-sm text-white/70" style={{
                                 fontSize: '15px'
                             }}>Log in</p>
@@ -348,7 +339,7 @@ export const LandingPage = () => {
                                 <button
                                     onClick={item.onClick}
                                     key={item.label}
-                                    className="relative overflow-hidden w-full bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden w-full bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
@@ -380,20 +371,20 @@ export const LandingPage = () => {
 
                         <div className="border-t" style={{borderColor: '#00A3C3'}}/>
 
-                        <div className="mt-4 space-y-3 overflow-auto md:overflow-hidden h-[225px] md:h-auto" >
-                            <p className="text-sm text-white/70">EVM</p>
+                        <div className="mt-4 overflow-y-auto h-[200px] no-scrollbar p-1" >
+                            <p className="text-sm text-white/70 mb-4">EVM</p>
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                {connectors.map((connector) => (
+                                {connectors.filter(c=>c.id !== "io.metamask").map((connector) => (
                                     <button
                                         key={connector.id}
                                         onClick={() => handleConnectWallet(connector)}
-                                        className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                        className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                          items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6  text-sm font-semibold transition hover:scale-[1.01]"
                                         style={{
                                             borderRadius: '20px'
                                         }}
                                     >
-                                        <div className="flex h-[30px] w-[30px] items-center justify-center z-10">
+                                        <div className="flex h-[20px] w-[20px] md:h-[30px] md:w-[30px] items-center justify-center z-10">
                                             <ImageCustom
                                                 src={
                                                     (connector.icon as string) ||
@@ -424,13 +415,13 @@ export const LandingPage = () => {
                                             console.error('Failed to connect MetaMask:', error);
                                         }
                                     }}
-                                    className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl  px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
                                     }}
                                 >
-                                    <div className="flex h-[30px] w-[30px] items-center justify-center z-10">
+                                    <div className="flex h-[20px] w-[20px] md:h-[30px] md:w-[30px] items-center justify-center z-10">
                                         <ImageCustom
                                             src="https://hype.what.exchange/icons/metamask-icon.png"
                                             alt="MetaMask"
@@ -456,13 +447,13 @@ export const LandingPage = () => {
                                             console.error('Failed to connect WalletConnect:', error);
                                         }
                                     }}
-                                    className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
+                                    className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
                                     items-center  justify-center gap-2 rounded-xl px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
                                     }}
                                 >
-                                    <div className="flex h-[30px] w-[30px] items-center justify-center z-10">
+                                    <div className="flex h-[20px] w-[20px] md:h-[30px] md:w-[30px] items-center justify-center z-10">
                                         <ImageCustom
                                             src="https://hype.what.exchange/icons/walletconnect-icon.png"
                                             alt="WalletConnect"
@@ -477,40 +468,17 @@ export const LandingPage = () => {
                                     </div>
                                 </button>
 
-                                {/* Brave Wallet button */}
-                                <button
-                                    onClick={() => handleConnectSpecificWallet('brave')}
-                                    className="relative overflow-hidden bg-black flex flex-1 cursor-pointer
-                                    items-center  justify-center gap-2 rounded-xl px-3 py-3 md:py-6 text-sm font-semibold transition hover:scale-[1.01]"
-                                    style={{
-                                        borderRadius: '20px'
-                                    }}
-                                >
-                                    <div className="flex h-[30px] w-[30px] items-center justify-center z-10">
-                                        <ImageCustom
-                                            src="https://hype.what.exchange/icons/brave-icon.png"
-                                            alt="Brave Wallet"
-                                            width={18}
-                                            height={18}
-                                            className={'h-[20px] w-[20px] md:h-[30px] md:w-[30px]'}
-                                        />
-                                    </div>
-                                    <div className="text-xs md:text-[20px] text-white z-10">Brave</div>
-                                    <div className={'absolute w-full h-full left-0 top-0 '} style={{}}>
-                                        <SvgIcon/>
-                                    </div>
-                                </button>
 
                                 {/* Binance Wallet button */}
                                 <button
                                     onClick={() => handleConnectSpecificWallet('binance')}
-                                    className="relative overflow-hidden bg-black flex justify-center flex-1
+                                    className="box2 relative overflow-hidden bg-black flex justify-center flex-1
                                     cursor-pointer items-center gap-2 rounded-xl  px-3 py-3 md:py-6  text-sm font-semibold transition hover:scale-[1.01]"
                                     style={{
                                         borderRadius: '20px'
                                     }}
                                 >
-                                    <div className="flex h-[30px] w-[30px] items-center justify-center z-10">
+                                    <div className="flex h-[20px] w-[20px] md:h-[30px] md:w-[30px] items-center justify-center z-10">
                                         <ImageCustom
                                             src="https://hype.what.exchange/icons/binance-icon.png"
                                             alt="Binance Wallet"
@@ -532,7 +500,7 @@ export const LandingPage = () => {
                             fontSize: '12px'
                         }}>
                             By connecting your wallet, you acknowledge and agree to the{' '}
-                            <a className="underline decoration-white/50 underline-offset-2" href="#"
+                            <a className="underline decoration-white/50 underline-offset-2" href="https://www.privy.io/user-terms-of-service" target={"_blank"}
                                style={{color: '#00A8CE'}}>
                                 terms of use
                             </a>
@@ -541,6 +509,7 @@ export const LandingPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <RegisterFormModal/>
         </div>

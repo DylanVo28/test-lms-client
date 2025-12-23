@@ -1448,3 +1448,51 @@ body {
 textarea {
   color: var(--theme-letter) !important;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.box {
+  position: relative;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 63px;
+  padding: 1px;
+  background: linear-gradient(324.98deg, #000000 2.66%, #00A3C3 96.34%);
+  mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+@media (max-width: 640px) {
+  .box::before {
+    border-radius: 30px;
+  }
+}
+.box2{
+  position: relative;
+}
+.box2::before {
+  content: "";
+  position: absolute;
+  border-radius: 20px;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(347.98deg, rgb(0 0 0) 2.66%, rgb(155 155 155) 96.34%);
+  mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
