@@ -4,6 +4,7 @@
     "myLearning": "My learning",
     "wishList": "Wish list",
     "teach": "Teach",
+    "trade": "Trade",
     "notifications": "Notifications",
     "profile": "Profile",
     "logout": "Logout",
@@ -365,6 +366,7 @@
       "shareWithFriends": "Share this course with your friends",
       "referralLink": "Referral Link",
       "shareTo": "Share to",
+      "trade": "Trade",
       "completedCourse": "You have completed the course",
       "viewCertificate": "View your certificate"
     },

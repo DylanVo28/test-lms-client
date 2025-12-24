@@ -97,7 +97,7 @@ const ListCourse = () => {
   return (
     <div className="flex flex-col gap-[26px] md:pt-0 pt-10 px-0">
       <div className="flex justify-between flex-wrap gap-5 items-center">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto">
           {/* <div className="py-2 px-[10px] cursor-pointer flex items-center gap-1 bg-main-10 border-1 border-main rounded">
             <div>
               <IconFilter />
@@ -107,9 +107,8 @@ const ListCourse = () => {
             </Text>
           </div> */}
           <SelectCustom
-
             placeholder={t('listCourse.categories')}
-            className="min-w-[150px]"
+            className="flex-1 md:flex-none md:min-w-[150px]"
             options={mapCategories()}
             value={category}
             onChange={(value: any) => {
@@ -118,7 +117,7 @@ const ListCourse = () => {
           />
           <SelectCustom
             placeholder={t('listCourse.price')}
-            className="min-w-[150px]"
+            className="flex-1 md:flex-none md:min-w-[150px]"
             options={mapPrices()}
             value={price}
             onChange={(value: any) => {
@@ -127,7 +126,7 @@ const ListCourse = () => {
           />
           <SelectCustom
             placeholder={t('listCourse.level') || 'Level'}
-            className="min-w-[150px]"
+            className="flex-1 md:flex-none md:min-w-[150px]"
             options={mapLevels()}
             value={level}
             onChange={(value: any) => {
