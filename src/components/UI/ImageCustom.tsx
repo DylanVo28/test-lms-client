@@ -6,9 +6,10 @@ interface ImageCustomProps extends Omit<ImageProps, 'quality'> {
 }
 
 const ImageCustom = forwardRef<HTMLImageElement, ImageCustomProps>(
-  ({ quality = 100, ...props }, ref) => {
+  ({ quality = 100, src, ...props }, ref) => {
       // return <img ref={ref} quality={quality} {...props}/>
-    return <Image ref={ref} quality={quality} {...props} unoptimized={true} />;
+    const trimmedSrc = typeof src === 'string' ? src.trim() : src;
+    return <Image ref={ref} quality={quality} {...props} src={trimmedSrc} unoptimized={true} />;
   }
 );
 

@@ -287,7 +287,19 @@ export const LandingPage = () => {
                 }}
             />
             <div className={'flex w-screen h-screen items-center justify-center'}>
+                
             <div className="relative w-screen flex flex-col justify-center  md:flex-row md:items-end gap-12 px-4" style={{height: 'fit-content'}}>
+                {/* Logo for mobile */}
+                <div className="flex justify-center mb-4 md:hidden">
+                    <ImageCustom 
+                        src="/logo.png" 
+                        alt="Logo" 
+                        width={200} 
+                        height={60}
+                        className="object-contain"
+                    />
+                </div>
+                
                 <div className=" mb-8 w-1/2 text-right hidden md:flex gap-2 justify-end">
 
                     <div className={'relative pr-20'}>

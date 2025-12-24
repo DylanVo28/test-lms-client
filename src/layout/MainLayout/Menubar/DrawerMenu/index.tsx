@@ -88,6 +88,12 @@ const DrawerMenu = (props: any, ref: any) => {
               label: t('header.teach'),
               href: ROUTE_PATH.LIST_COURSE,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ]
         : [
             {
@@ -100,17 +106,30 @@ const DrawerMenu = (props: any, ref: any) => {
               label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}`,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ],
-    [profile?.role]
+    [profile?.role, t]
   );
 
   const handleClickRedirectPage = (key: number) => {
+    const menuItem = MENUS.find((item) => item.key === key);
+
+    // Handle external links (like Exchange)
+    if (menuItem?.isExternal && menuItem?.href) {
+      window.open(menuItem.href, '_blank', 'noopener,noreferrer');
+      onVisible();
+      return;
+    }
+
     if (!accessToken) {
       login();
       return;
     }
-
-    const menuItem = MENUS.find((item) => item.key === key);
 
     if (key === 2 && menuItem?.href) {
       navigate(menuItem?.href, { type: TabMyLearning.WISHLIST });
@@ -154,8 +173,8 @@ const DrawerMenu = (props: any, ref: any) => {
               <div className="py-4 px-4 flex items-center border-b-1 border-white-10 justify-between">
                 <ImageCustom
                   alt="logo"
-                  width={125}
-                  height={46}
+                  width={160}
+                  height={60}
                   className="cursor-pointer"
                   src={urlLogo || '/logo.png'}
                 />

@@ -68,7 +68,7 @@ const SelectCustom = (props: SelectCustomProps) => {
         classNames={{
           value: '!text-[14px] text-letter/70 font-medium capitalize',
           trigger: clsx(
-            '!bg-card rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30',
+            '!bg-card rounded-md min-h-[36px] border-1 border-white-10 group-data-[focus=true]:!border-main bg-[#21252b]-30 !justify-between',
             {
               '!bg-card border-white min-h-[40px] hover:!border-main transition-all bg-[#21252b]-30':
                 isLesson,
