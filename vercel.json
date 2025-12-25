@@ -10,5 +10,6 @@
     "src/pages/**/*.tsx": {
       "maxDuration": 60
     }
-  }
+  },
+  "installCommand": "npm install --legacy-peer-deps"
 }
