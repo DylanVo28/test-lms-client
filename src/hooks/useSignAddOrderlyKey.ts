@@ -1,8 +1,9 @@
 import { utils } from '@noble/ed25519';
 import { getPublicKey } from '@noble/ed25519';
 import { randomBytes } from 'crypto';
-import { useEthersSigner } from './useEthersSigner';
-import { useAccount as useWagmiAccount } from 'wagmi';
+import { useAccount as useWagmiAccount, useConfig } from 'wagmi';
+// @ts-ignore - @wagmi/core may need to be installed separately
+import { signTypedData } from '@wagmi/core';
 import bs58 from 'bs58';
 
 const generatePrivateKey = async () => {
@@ -21,18 +22,26 @@ const generatePrivateKey = async () => {
 };
 
 const useSignAddOrderlyKey = () => {
-  const signer = useEthersSigner();
   const { chainId } = useWagmiAccount();
+  const config = useConfig();
+
   const handleSign = async () => {
-    const OFF_CHAIN_DOMAIN = {
+    if (!chainId) {
+      throw new Error('Chain ID not available. Please ensure you are connected to a network.');
+    }
+
+    if (!config) {
+      throw new Error('Wagmi config not available.');
+    }
+
+    const domain = {
       name: 'Orderly',
       version: '1',
       chainId: chainId,
-      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as `0x${string}`,
     };
 
     // Generate private key using SHA-256
-
     // Use SHA-256 to generate private key or fallback to random
     const privKey = await generatePrivateKey();
 
@@ -44,36 +53,51 @@ const useSignAddOrderlyKey = () => {
     const orderlyKey = `ed25519:${bs58.encode(await getPublicKey(privKey))}`;
 
     const timestamp = Date.now();
+    const expiration = timestamp + 365 * 24 * 60 * 60 * 1000; // 1 year in milliseconds
 
-    const message = {
+    const types = {
+      AddOrderlyKey: [
+        { name: 'brokerId', type: 'string' },
+        { name: 'chainId', type: 'uint256' },
+        { name: 'orderlyKey', type: 'string' },
+        { name: 'scope', type: 'string' },
+        { name: 'timestamp', type: 'uint64' },
+        { name: 'expiration', type: 'uint64' },
+      ],
+    } as const;
+
+    // Create message with BigInt for signing
+    const messageForSigning = {
       brokerId: 'what_exchange',
-      chainId: chainId,
+      chainId: BigInt(chainId),
       orderlyKey: orderlyKey,
       scope: 'read',
-      timestamp: timestamp, //1 day ago
-      expiration: timestamp + 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
+      timestamp: BigInt(timestamp),
+      expiration: BigInt(expiration),
     };
 
-    const signature = await signer?._signTypedData(
-      OFF_CHAIN_DOMAIN,
-      {
-        AddOrderlyKey: [
-          { name: 'brokerId', type: 'string' },
-          { name: 'chainId', type: 'uint256' },
-          { name: 'orderlyKey', type: 'string' },
-          { name: 'scope', type: 'string' },
-          { name: 'timestamp', type: 'uint64' },
-          { name: 'expiration', type: 'uint64' },
-        ],
-      },
-      {
-        ...message,
-      }
-    );
+    // Use signTypedData action from @wagmi/core
+    // Note: If you get an error, install @wagmi/core: pnpm add @wagmi/core
+    const signature = await signTypedData(config, {
+      domain,
+      types,
+      primaryType: 'AddOrderlyKey',
+      message: messageForSigning,
+    });
+
+    // Convert BigInt to string for JSON serialization
+    const messageForResponse = {
+      brokerId: messageForSigning.brokerId,
+      chainId: messageForSigning.chainId.toString(),
+      orderlyKey: messageForSigning.orderlyKey,
+      scope: messageForSigning.scope,
+      timestamp: messageForSigning.timestamp.toString(),
+      expiration: messageForSigning.expiration.toString(),
+    };
 
     return {
       signature,
-      message,
+      message: messageForResponse,
       orderlyKey,
       privKey: privKeyString,
     };

@@ -21,6 +21,8 @@ import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 import { useTranslation } from 'next-i18next';
 import Link from "next/link";
+import {API_PATH} from "@/api/constant";
+import {ENV} from "@/utils/env";
 
 const RegisterFormModal = () => {
   const [referralCode, setReferralCode] = useState('');
@@ -134,17 +136,30 @@ const RegisterFormModal = () => {
         return;
       }
 
-      const prepareRegisterMetadataRes = await servicePrepareRegisterMetadata({
-        signature,
-        message,
-        address,
-        themeCode: router.query.code as any,
-        referralCode: referralCode,
-      });
+      const prepareRegisterMetadataRes = await fetch(`${ENV.APP_API_URL}${API_PATH.PREPARE_REGISTER_METADATA}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          signature,
+          address,
+          referralCode: referralCode,
+          themeCode: router.query.code as any,
+          message,
+        })
+      })
 
-      const parentCode = prepareRegisterMetadataRes?.data?.parentCode;
+      if (!prepareRegisterMetadataRes.ok) {
+        const errorText = await prepareRegisterMetadataRes.text()
+        throw new Error(`HTTP ${prepareRegisterMetadataRes.status}: ${errorText}`)
+      }
+
+      const data = await prepareRegisterMetadataRes.json()
+
+      const parentCode = data.parentCode;
       const orderlyAccountId =
-        prepareRegisterMetadataRes?.data?.orderlyAccountId;
+          data.orderlyAccountId;
 
       const {
         message: addOrderlyKeyMessage,
