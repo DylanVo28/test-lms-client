@@ -14,10 +14,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
-import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import "@orderly.network/ui/dist/styles.css";
+import PageProgressBar from '@/components/UI/PageProgressBar';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -157,12 +157,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
       </Head>
 
-      <ProgressBar
-        height="2px"
-        color="var(--main-color)"
-        options={{ showSpinner: false }}
-        shallowRouting
-      />
+      <PageProgressBar />
 
       <QueryClientProvider client={queryClient}>
 
