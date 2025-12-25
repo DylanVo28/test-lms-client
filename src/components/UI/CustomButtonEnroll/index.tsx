@@ -42,8 +42,9 @@ const CustomButtonEnroll = ({
   const { t } = useTranslation('common');
   const authorRole = course?.author?.role;
   const { ready, authenticated, login } = usePrivy();
-  // Check both Privy authentication and access token
-  const connected = (ready && authenticated) || !!token;
+  // Check access token first (faster), then Privy authentication as fallback
+  // If token exists, user is connected regardless of Privy state
+  const connected = !!token || (ready && authenticated);
 
   return (
     <div

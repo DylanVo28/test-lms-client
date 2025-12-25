@@ -5,21 +5,42 @@ import { getCookie } from 'cookies-next';
 
 const useAccessToken = () => {
   const { address } = useAccount();
-  const [accessToken, setAccessToken] = useState('');
+  // Initialize with cookie value immediately
+  const [accessToken, setAccessToken] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return (getCookie('accessToken') as string) || '';
+    }
+    return '';
+  });
 
   useEffect(() => {
-    if (accessToken || !address) return;
-
+    // Check cookie immediately on mount and when address changes
     const fetchAccessToken = () => {
-      const accessToken = getCookie('accessToken');
-      setAccessToken(accessToken as string);
+      const token = getCookie('accessToken');
+      if (token && token !== accessToken) {
+        setAccessToken(token as string);
+      }
     };
 
-    const timeoutId = setInterval(() => {
-      fetchAccessToken();
-    }, 1000);
+    // Fetch immediately
+    fetchAccessToken();
 
-    return () => clearTimeout(timeoutId);
+    // Also listen for storage changes (in case token is set elsewhere)
+    const handleStorageChange = () => {
+      fetchAccessToken();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Check periodically but with shorter interval for updates
+    const intervalId = setInterval(() => {
+      fetchAccessToken();
+    }, 500);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, [address, accessToken]);
 
   return accessToken;
