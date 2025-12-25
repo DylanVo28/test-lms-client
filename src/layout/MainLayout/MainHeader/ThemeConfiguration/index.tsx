@@ -27,6 +27,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useAccount } from 'wagmi';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 import CustomColors from './CustomColors';
 import EditBanner from './EditBanner';
 import EditLogo from './EditLogo';
@@ -39,6 +40,7 @@ const ThemeConfiguration = ({}: {}) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const { authenticated, ready } = usePrivy();
   const { address, isConnected } = useAccount();
+  const accessToken = useAccessToken();
 
   const [langs, setLangs] = useState<string[]>(['en']);
   const [logo, setLogo] = useState<string>('');
@@ -312,7 +314,8 @@ const ThemeConfiguration = ({}: {}) => {
                 <Languages dataLangs={langs} onChangeLangs={onChangeLangs} />
                 <div className="flex justify-end">
                   {(() => {
-                    const connected = ready && authenticated && isConnected && address;
+                    // Check access token first (faster), then Privy and wallet connection
+                    const connected = !!accessToken || (ready && authenticated && isConnected && address);
 
                     const onPress = () => {
                       if (!connected) {
