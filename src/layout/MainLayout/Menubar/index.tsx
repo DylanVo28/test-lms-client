@@ -39,6 +39,12 @@ const Menubar = () => {
               label: t('header.teach'),
               href: ROUTE_PATH.LIST_COURSE,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ]
         : [
             {
@@ -51,15 +57,29 @@ const Menubar = () => {
               label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ],
     [profile?.role, t]
   );
   const handleClickRedirectPage = (key: number) => {
+    const menuItem = MENUS.find((item) => item.key === key);
+
+    // Handle external links (like Trade)
+    if (menuItem?.isExternal && menuItem?.href) {
+      window.open(menuItem.href, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     if (!accessToken) {
       login();
       return;
     }
-    const menuItem = MENUS.find((item) => item.key === key);
+
     if (key === 2 && menuItem?.href) {
       const url = menuItem?.href;
       const resultUrl = url.split('?')[0];

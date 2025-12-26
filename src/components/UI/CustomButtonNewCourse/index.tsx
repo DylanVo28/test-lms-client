@@ -2,6 +2,7 @@ import { Button } from '@nextui-org/react';
 import Text from '../Text';
 import { useTranslation } from 'react-i18next';
 import { usePrivy } from '@privy-io/react-auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 
 const CustomButtonNewCourse = ({
   handleClickButton,
@@ -10,7 +11,10 @@ const CustomButtonNewCourse = ({
 }) => {
   const { t } = useTranslation('common');
   const { ready, authenticated, login } = usePrivy();
-  const connected = ready && authenticated;
+  const accessToken = useAccessToken();
+  // Check access token first (faster), then Privy authentication as fallback
+  // If token exists, user is connected regardless of Privy state
+  const connected = !!accessToken || (ready && authenticated);
 
   return (
     <div>

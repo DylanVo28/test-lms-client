@@ -1,9 +1,17 @@
 import { Button } from '@nextui-org/react';
 import Text from '../Text';
 import { usePrivy } from '@privy-io/react-auth';
+import useAccessToken from '@/store/auth/hook/useAccessToken';
 
 const CustomButtonComment = ({}: {}) => {
   const { login } = usePrivy();
+  const accessToken = useAccessToken();
+  // If user is already logged in, don't show login button
+  const isLoggedIn = !!accessToken;
+
+  if (isLoggedIn) {
+    return null;
+  }
 
   return (
     <div

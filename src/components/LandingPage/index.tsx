@@ -1,11 +1,11 @@
 import ImageCustom from '@/components/UI/ImageCustom';
-import {useMemo} from "react";
+import {useMemo, useState, useEffect} from "react";
 import {useWalletConnect} from "adapter-connect"
 import {base} from "viem/chains";
 import type {EIP1193Provider} from 'viem';
 import {createConnector, useAccount} from 'wagmi';
 import RegisterFormModal from "@/components/RegisterFormModal";
-import {toast} from "@/components/UI/Toast/toast";
+import { useRouter } from 'next/router';
 
 const SvgIcon: React.FC<React.SVGProps<SVGElement>> = (props) => (
     <svg
@@ -77,6 +77,10 @@ const SvgIcon: React.FC<React.SVGProps<SVGElement>> = (props) => (
 export const LandingPage = () => {
     const {login, connectors, connect, connectWallet, disconnect} = useWalletConnect()
     const {address} = useAccount()
+    const [isConnecting, setIsConnecting] = useState(false)
+    const [isRedirecting, setIsRedirecting] = useState(false)
+    const [progress, setProgress] = useState(0)
+    const router = useRouter()
 
     const handleEmailLogin = () => {
         login({
@@ -131,6 +135,7 @@ export const LandingPage = () => {
 
     const handleConnectWallet = async (connector: any) => {
         try {
+            setIsConnecting(true);
             // Check if this is a Privy-managed wallet (MetaMask or WalletConnect)
             const privyWalletName = connectorToPrivyWallet[connector.id];
 
@@ -141,14 +146,56 @@ export const LandingPage = () => {
                 // For other wallets (injected), use wagmi connect
                 await connect({connector, chainId: base.id});
             }
+            // Progress bar will start when address is detected in useEffect
         } catch (error) {
             console.error('Failed to connect wallet:', error);
+            setIsConnecting(false);
+            setIsRedirecting(false);
+            setProgress(0);
         }
     }
+
+    // Detect when wallet is connected and start redirecting
+    useEffect(() => {
+        if (address && isConnecting) {
+            // Wallet connected, now start redirecting
+            setIsConnecting(false);
+            setIsRedirecting(true);
+            setProgress(0);
+            
+            // Simulate progress during redirect
+            const progressInterval = setInterval(() => {
+                setProgress((prev) => {
+                    if (prev >= 90) {
+                        clearInterval(progressInterval);
+                        return 90;
+                    }
+                    return prev + 10;
+                });
+            }, 200);
+
+            // Redirect to platform
+            const redirectTimer = setTimeout(() => {
+                setProgress(100);
+                const currentUrl = window.location.href;
+                const platformUrl = currentUrl.replace(/\/$/, '') + '/platform';
+                // Small delay to show 100% before redirect
+                setTimeout(() => {
+                    window.location.href = platformUrl;
+                }, 300);
+            }, 2000);
+
+            return () => {
+                clearInterval(progressInterval);
+                clearTimeout(redirectTimer);
+            };
+        }
+    }, [address, isConnecting]);
 
     // 连接特定钱包
     const handleConnectSpecificWallet = async (walletName: 'phantom' | 'brave' | 'binance') => {
         try {
+            setIsConnecting(true);
             let provider: any = null;
             if (walletName === 'brave') {
                 provider = (window as any).braveEthereum as EIP1193Provider;
@@ -159,6 +206,7 @@ export const LandingPage = () => {
                 provider = (window as any).binancew3w?.ethereum as EIP1193Provider;
                 if (!provider) {
                     throw new Error('Binance Wallet is not installed. Please install it first.');
+                    return;
                 }
             }
 
@@ -264,9 +312,18 @@ export const LandingPage = () => {
 
             // 使用 wagmi connect 连接钱包
             await connect({connector: customConnector, chainId: base.id});
+            // Progress bar will start when address is detected in useEffect
 
-        } catch (error:any) {
-            toast.error(error?.message || '');
+        } catch (error) {
+            console.error(`Failed to connect ${walletName}:`, error);
+            setIsConnecting(false);
+            setIsRedirecting(false);
+            setProgress(0);
+            if ((error as any)?.code === 4001) {
+                console.error('User rejected the connection request.');
+            } else {
+                console.error(`Failed to connect ${walletName}. Please try again.`);
+            }
         }
     }
 
@@ -274,6 +331,15 @@ export const LandingPage = () => {
         <div className="relative min-h-screen w-screen overflow-hidden text-white" style={{
             fontFamily: '"Orbitron", sans-serif'
         }}>
+            {/* Top Progress Bar - like YouTube/GitHub */}
+            {isRedirecting && (
+                <div className="fixed top-0 left-0 right-0 z-50 h-1">
+                    <div 
+                        className="h-full bg-[#00A8CE] transition-all duration-300 ease-out"
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+            )}
             <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
@@ -415,11 +481,16 @@ export const LandingPage = () => {
                                 <button
                                     onClick={async () => {
                                         try {
+                                            setIsConnecting(true);
                                             if (connectWallet) {
                                                 await (connectWallet as any)({walletList: ['metamask']});
                                             }
+                                            // Progress bar will start when address is detected in useEffect
                                         } catch (error) {
                                             console.error('Failed to connect MetaMask:', error);
+                                            setIsConnecting(false);
+                                            setIsRedirecting(false);
+                                            setProgress(0);
                                         }
                                     }}
                                     className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
@@ -447,11 +518,16 @@ export const LandingPage = () => {
                                 <button
                                     onClick={async () => {
                                         try {
+                                            setIsConnecting(true);
                                             if (connectWallet) {
                                                 await (connectWallet as any)({walletList: ['wallet_connect']});
                                             }
+                                            // Progress bar will start when address is detected in useEffect
                                         } catch (error) {
                                             console.error('Failed to connect WalletConnect:', error);
+                                            setIsConnecting(false);
+                                            setIsRedirecting(false);
+                                            setProgress(0);
                                         }
                                     }}
                                     className="box2 relative overflow-hidden bg-black flex flex-1 cursor-pointer
