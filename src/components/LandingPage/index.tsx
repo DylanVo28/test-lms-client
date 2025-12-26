@@ -5,6 +5,7 @@ import {base} from "viem/chains";
 import type {EIP1193Provider} from 'viem';
 import {createConnector, useAccount} from 'wagmi';
 import RegisterFormModal from "@/components/RegisterFormModal";
+import {toast} from "@/components/UI/Toast/toast";
 
 const SvgIcon: React.FC<React.SVGProps<SVGElement>> = (props) => (
     <svg
@@ -158,7 +159,6 @@ export const LandingPage = () => {
                 provider = (window as any).binancew3w?.ethereum as EIP1193Provider;
                 if (!provider) {
                     throw new Error('Binance Wallet is not installed. Please install it first.');
-                    return;
                 }
             }
 
@@ -265,13 +265,8 @@ export const LandingPage = () => {
             // 使用 wagmi connect 连接钱包
             await connect({connector: customConnector, chainId: base.id});
 
-        } catch (error) {
-            console.error(`Failed to connect ${walletName}:`, error);
-            if ((error as any)?.code === 4001) {
-                console.error('User rejected the connection request.');
-            } else {
-                console.error(`Failed to connect ${walletName}. Please try again.`);
-            }
+        } catch (error:any) {
+            toast.error(error?.message || '');
         }
     }
 

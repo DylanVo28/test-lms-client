@@ -218,7 +218,10 @@ const CardEnrollNow = ({
       }
     } catch (error: any) {
       if (error?.message?.includes('User rejected transaction')) {
-        toast.error('user rejected transaction');
+        toast.error('User rejected transaction');
+      } else {
+        const errorMessage = error?.message || error?.reason || String(error) || 'Failed to enroll in the course. Please try again.';
+        toast.error(errorMessage);
       }
     }
   };
