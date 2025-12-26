@@ -46,8 +46,9 @@ export const useUSDCOperations = () => {
           gasLimit: calculateGasMargin(estimatedGas),
         });
         await tx.wait();
-      } catch (error) {
-        toast.error(error as string);
+      } catch (error: any) {
+        const errorMessage = error?.message || error?.reason || String(error) || 'Transaction failed. Please try again.';
+        toast.error(errorMessage);
         return;
       } finally {
         setLoading(false);
@@ -100,6 +101,7 @@ export const useUSDCOperations = () => {
           {
             gasLimit: calculateGasMargin(estimatedGas),
           }
+
         );
 
         //create tx
@@ -108,8 +110,9 @@ export const useUSDCOperations = () => {
         const receipt = await tx.wait();
 
         return receipt;
-      } catch (error) {
-        toast.error((JSON.stringify(error).slice(0, 500) + '...') as string);
+      } catch (error: any) {
+        const errorMessage = error?.message || error?.reason || String(error) || 'Failed to enroll in the course. Please try again.';
+        toast.error(errorMessage);
       } finally {
         setLoading(false);
       }
