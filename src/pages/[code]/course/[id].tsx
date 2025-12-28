@@ -56,22 +56,22 @@ export const getServerSideProps: GetServerSideProps = async ({
     return { notFound: true };
   }
 
-  const courseRes = await privateRequest(
-    request.get,
-    API_PATH.COURSE_METADATA(params.id as string),
-    {
-      params: {
-        courseId: params.id,
-      },
-    }
-  );
-
-  const courseMedadata = courseRes?.data;
+  // const courseRes = await privateRequest(
+  //   request.get,
+  //   API_PATH.COURSE_METADATA(params.id as string),
+  //   {
+  //     params: {
+  //       courseId: params.id,
+  //     },
+  //   }
+  // );
+  //
+  // const courseMedadata = courseRes?.data;
 
   return {
     props: {
       code: params.code as string,
-      courseMedadata,
+      // courseMedadata,
       ...(await serverSideTranslations(locale || 'en', ['common'])),
     },
   };
