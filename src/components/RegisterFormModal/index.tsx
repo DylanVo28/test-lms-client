@@ -40,7 +40,7 @@ const RegisterFormModal = () => {
       setAuthCookies({
         token: res?.data?.accessToken,
       });
-      requestGetProfile();
+      // requestGetProfile();
     },
     onError(err) {
       toast.error(err?.message);
@@ -157,9 +157,9 @@ const RegisterFormModal = () => {
 
       const data = await prepareRegisterMetadataRes.json()
 
-      const parentCode = data.parentCode;
+      const parentCode = data.data.parentCode;
       const orderlyAccountId =
-          data.orderlyAccountId;
+          data.data.orderlyAccountId;
 
       const {
         message: addOrderlyKeyMessage,
