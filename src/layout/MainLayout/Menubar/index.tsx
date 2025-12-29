@@ -96,7 +96,7 @@ const Menubar = () => {
         });
         return response;
       },
-      getNextPageParam: (lastPage, allPages) => {
+      getNextPageParam: (lastPage:any, allPages:any) => {
         const totalPage = lastPage?.meta?.totalPage || 0;
         const next = allPages.length + 1;
         return allPages.length < totalPage ? next : undefined;
