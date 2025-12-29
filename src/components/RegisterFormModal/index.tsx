@@ -144,7 +144,7 @@ const RegisterFormModal = () => {
         body: JSON.stringify({
           signature,
           address,
-          referralCode: referralCode,
+          referralCode: referralCode.length !== 0 ? referralCode : 'WHATLEARN',
           themeCode: router.query.code as any,
           message,
         })
@@ -210,7 +210,7 @@ const RegisterFormModal = () => {
 
 
       await registerUser({
-        referralCode,
+        referralCode:  referralCode.length !== 0 ? referralCode : 'WHATLEARN',
         signature,
         address,
         themeCode: router.query.code as any,
@@ -253,10 +253,6 @@ const RegisterFormModal = () => {
                 referralCode ||
                 t('register.referral'),
             })}
-          </div>
-
-          <div className="text-sm text-red-500">
-            Note: You should enable Enable Trading on <Link className={'underline font-bold'} href={"https://trade.what.exchange"}>What Exchange</Link> first, then proceed with registration.
           </div>
 
           {!showRegisterForm?.themeCode && (
