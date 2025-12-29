@@ -43,6 +43,7 @@ const Text: React.FC<TextProps> = ({
   onClick = () => {},
   children,
   element = 'p',
+                                     onMouseEnter,
     id
 }) => {
   const classes = classNames(
@@ -57,7 +58,8 @@ const Text: React.FC<TextProps> = ({
     {
       className: classes,
       onClick,
-id
+id,
+      onMouseEnter
     },
     React.createElement(React.Fragment, undefined, children)
   );

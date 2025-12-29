@@ -47,7 +47,7 @@ const MainHeader = () => {
 
   useEffect(() => {
     if (token) {
-      requestGetProfile();
+      // requestGetProfile();
     }
   }, [token]);
 

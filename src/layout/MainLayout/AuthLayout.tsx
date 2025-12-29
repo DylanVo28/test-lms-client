@@ -25,7 +25,7 @@ const AuthLayout = ({
 
   useEffect(() => {
     if (accessToken) {
-      requestGetProfile();
+      // requestGetProfile();
     }
   }, [accessToken]);
 
