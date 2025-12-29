@@ -19,7 +19,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'next-i18next';
 import ImageCustom from "@/components/UI/ImageCustom";
+import { useQueryClient } from '@tanstack/react-query';
+import { useProfile } from '@/store/profile/useProfile';
+import { privateRequest, request } from '@/api/request';
+import { API_PATH } from '@/api/constant';
 dayjs.extend(relativeTime);
+
+// Function to fetch course detail (same as in service.ts)
+const getDetailCourse = async (id: string, userId?: string): Promise<any> => {
+  return privateRequest(request.get, `${API_PATH.CREATE_COURSE}/${id}`, {
+    params: { userId },
+  });
+};
 
 const CardCourse = ({
   item,
@@ -36,6 +47,8 @@ const CardCourse = ({
 }) => {
   const accessToken = useAccessToken();
   const { t } = useTranslation('common');
+  const queryClient = useQueryClient();
+  const { profile } = useProfile();
 
   const {
     query: { code },
@@ -53,10 +66,22 @@ const CardCourse = ({
     return formatWalletAddress(item?.author?.walletAddress);
   };
 
+  // Prefetch course detail on hover
+  const handleMouseEnter = () => {
+    if (item?.slug) {
+      queryClient.prefetchQuery({
+        queryKey: ['courseDetail', item.slug, profile?.id],
+        queryFn: () => getDetailCourse(item.slug, profile?.id),
+        staleTime: 5 * 60 * 1000, // 5 minutes
+      });
+    }
+  };
+
   return (
     <Link
       href={`/${code}${ROUTE_PATH.DETAIL_COURSE(item.slug)}`}
       className="group h-full rounded transition-all cursor-pointer relative duration-300 hover:opacity-80 "
+      onMouseEnter={handleMouseEnter}
     >
 
       {!noLike && (
