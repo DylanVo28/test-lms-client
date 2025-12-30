@@ -232,6 +232,10 @@ const RegisterFormModal = () => {
   };
 
   useEffect(() => {
+    if(showRegisterForm && showRegisterForm.themeCode){
+        setReferralCode(showRegisterForm.themeCode);
+        return
+    }
     setReferralCode('');
   }, [showRegisterForm]);
 
