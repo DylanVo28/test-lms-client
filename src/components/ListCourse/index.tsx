@@ -22,7 +22,7 @@ import NoData from './NoData';
 import Link from 'next/link';
 import ImageCustom from '@/components/UI/ImageCustom';
 import { API_PATH } from '@/api/constant';
-import { PREFIX_API } from '@/api/request';
+import { PREFIX_API, privateRequest, request } from '@/api/request';
 import { toast } from '@/components/UI/Toast/toast';
 const ListCourse = () => {
   const { t } = useTranslation('common');
@@ -54,6 +54,42 @@ const ListCourse = () => {
   const accessToken = useAccessToken();
 
   const refModalConfirmDelete: any = useRef<any>(null);
+
+  // Function to fetch course detail (same as in service.ts)
+  const fetchCourseDetail = async (id: string, userId?: string): Promise<any> => {
+    return privateRequest(request.get, `${API_PATH.CREATE_COURSE}/${id}`, {
+      params: { userId },
+    });
+  };
+
+  // Function to fetch sections (same as in service.ts)
+  const fetchListSession = async (id: string, userId: string): Promise<any> => {
+    const params = {
+      courseId: id,
+      ownerId: userId,
+      order: 'createdAt asc',
+    };
+    return privateRequest(request.get, `${API_PATH.SECTIONS}`, { params });
+  };
+
+  // Prefetch course detail and sections on hover for edit button
+  const handleMouseEnterEditCourse = (courseId: string) => {
+    if (!courseId || !profile?.id || !accessToken) return;
+
+    // Prefetch course detail
+    queryClient.prefetchQuery({
+      queryKey: ['courseDetail', courseId, profile.id],
+      queryFn: () => fetchCourseDetail(courseId, profile.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+
+    // Prefetch sections
+    queryClient.prefetchQuery({
+      queryKey: ['sections', courseId, profile.id],
+      queryFn: () => fetchListSession(courseId, profile.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+  };
 
   useEffect(() => {
     if (!loadMoreRef.current || noMore) return;
@@ -283,6 +319,7 @@ const ListCourse = () => {
                             <div className="grid grid-cols-2 gap-2 p-2">
                               <button
                                 onClick={() => navigate(`${ROUTE_PATH.CREATE_COURSE}/${item?.id}`)}
+                                onMouseEnter={() => handleMouseEnterEditCourse(item?.id)}
                                 className="p-2 text-white rounded-lg transition-all hover:scale-110 bg-gray-10 bg-opacity-20 hover:bg-opacity-30"
                               >
                                 <IconEdit />
