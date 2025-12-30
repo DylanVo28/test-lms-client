@@ -33,14 +33,13 @@ const ListCourse = () => {
   const { theme: dataThemeConfig } = useTheme();
   const { navigate } = useNavigate();
   const { profile } = useProfile();
-
   const { dataCourses, loadMore, noMore, reload, loading, loadingMore } =
     useGetListCourse({
       pageSize: 12,
       order: sort,
       categories: category,
       prices: price,
-      authors: dataThemeConfig?.kolId,
+      authors: profile?.refererUserId,
       levels: level,
       userId: profile?.id,
     });

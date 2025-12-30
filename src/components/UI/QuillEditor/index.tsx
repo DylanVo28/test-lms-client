@@ -27,16 +27,59 @@ class ResizableImage extends ImageBlot {
   static blotName = 'image';
   static tagName = 'img';
 
-  static create(value: string) {
-    const node = super.create(value);
-    node.setAttribute('src', value);
-    node.setAttribute('style', 'max-width: 100%; height: auto; cursor: pointer;');
+  static create(value: string | { src: string; width?: number; height?: number }) {
+    const node = super.create(typeof value === 'string' ? value : value.src);
+    const src = typeof value === 'string' ? value : value.src;
+    const width = typeof value === 'object' ? value.width : undefined;
+    const height = typeof value === 'object' ? value.height : undefined;
+    
+    node.setAttribute('src', src);
     node.setAttribute('draggable', 'false');
+    
+    if (width && height) {
+      // If width and height are provided, use them
+      node.setAttribute('data-width', width.toString());
+      node.setAttribute('data-height', height.toString());
+      node.setAttribute('style', `width: ${width}px; height: ${height}px; max-width: none; min-width: 50px; cursor: pointer;`);
+    } else {
+      // Default style
+      node.setAttribute('style', 'max-width: 100%; height: auto; cursor: pointer;');
+    }
+    
     return node;
   }
 
   static value(node: HTMLImageElement) {
-    return node.getAttribute('src');
+    const src = node.getAttribute('src') || '';
+    const width = node.getAttribute('data-width');
+    const height = node.getAttribute('data-height');
+    const styleWidth = node.style.width;
+    const styleHeight = node.style.height;
+    
+    // If we have explicit width/height from data attributes or inline styles
+    if (width && height) {
+      return {
+        src,
+        width: parseInt(width, 10),
+        height: parseInt(height, 10),
+      };
+    }
+    
+    // Try to extract from inline styles if data attributes don't exist
+    if (styleWidth && styleHeight && styleWidth !== 'auto' && styleHeight !== 'auto') {
+      const widthMatch = styleWidth.match(/(\d+(?:\.\d+)?)px/);
+      const heightMatch = styleHeight.match(/(\d+(?:\.\d+)?)px/);
+      if (widthMatch && heightMatch) {
+        return {
+          src,
+          width: parseFloat(widthMatch[1]),
+          height: parseFloat(heightMatch[1]),
+        };
+      }
+    }
+    
+    // Default: just return src
+    return src;
   }
 }
 
@@ -107,6 +150,10 @@ class ImageResize {
         this.img.style.maxWidth = 'none';
         this.img.style.minWidth = '50px';
         
+        // Save dimensions to data attributes for persistence
+        this.img.setAttribute('data-width', finalWidth.toString());
+        this.img.setAttribute('data-height', finalHeight.toString());
+        
         // Update resize handle position
         if (this.resizeHandle) {
           this.updateResizeHandlePosition();
@@ -116,10 +163,31 @@ class ImageResize {
 
     // Handle mouse up to stop resizing
     document.addEventListener('mouseup', () => {
-      if (this.isResizing) {
+      if (this.isResizing && this.img) {
         this.isResizing = false;
         if (this.resizeHandle) {
           this.resizeHandle.style.cursor = 'nwse-resize';
+        }
+        
+        // Trigger Quill update to persist the changes
+        const width = parseFloat(this.img.getAttribute('data-width') || '0');
+        const height = parseFloat(this.img.getAttribute('data-height') || '0');
+        const src = this.img.getAttribute('src') || '';
+        
+        if (width > 0 && height > 0 && src) {
+          // Find the blot for this image and update it
+          const scroll = this.quill.scroll;
+          const blot = scroll.find(this.img);
+          
+          if (blot) {
+            const offset = blot.offset(scroll);
+            const length = blot.length();
+            
+            // Update the image with new dimensions using Quill's API
+            // First delete the old image, then insert the new one with dimensions
+            this.quill.deleteText(offset, length, 'user');
+            this.quill.insertEmbed(offset, 'image', { src, width, height }, 'user');
+          }
         }
       }
     });
@@ -349,6 +417,22 @@ const QuillEditor = ({
       if (currentContent !== value) {
         const selection = editor.getSelection();
         editor.root.innerHTML = value;
+        
+        // After setting HTML, ensure images with data-width/data-height have correct styles
+        const images = editor.root.querySelectorAll('img[data-width][data-height]');
+        images.forEach((img) => {
+          const imgElement = img as HTMLImageElement;
+          const width = imgElement.getAttribute('data-width');
+          const height = imgElement.getAttribute('data-height');
+          if (width && height) {
+            imgElement.style.width = `${width}px`;
+            imgElement.style.height = `${height}px`;
+            imgElement.style.maxWidth = 'none';
+            imgElement.style.minWidth = '50px';
+            imgElement.style.cursor = 'pointer';
+          }
+        });
+        
         if (selection) {
           editor.setSelection(selection.index, selection.length);
         }

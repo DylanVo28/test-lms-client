@@ -16,6 +16,7 @@ export interface InitProfile {
   orderlyAccountId: string;
   orderlyKey: string;
   orderlySecretKey: string;
+  refererUserId?: string;
 }
 
 export const initialProfile: InitProfile = {
@@ -34,6 +35,7 @@ export const initialProfile: InitProfile = {
   orderlyAccountId: '',
   orderlyKey: '',
   orderlySecretKey: '',
+  refererUserId: ''
 };
 
 export const profileAtom = atom({
