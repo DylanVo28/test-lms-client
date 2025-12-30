@@ -39,7 +39,7 @@ const ListCourse = () => {
       order: sort,
       categories: category,
       prices: price,
-      authors: profile?.refererUserId,
+      authors: profile?.refererUserId || dataThemeConfig?.kolId,
       levels: level,
       userId: profile?.id,
     });
