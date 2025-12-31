@@ -76,17 +76,20 @@ const MainHeader = () => {
   return (
     <div className="w-full sticky z-[49] top-0 backdrop-blur-sm border-0 md:border-b-1 border-black-10 p-4 md:py-5 md:px-10">
       <div className=" max-w-[2048px] mx-auto flex justify-between items-center">
-        <ImageCustom
-          onClick={() => navigate(ROUTE_PATH.HOME)}
-          alt="logo"
-          className="cursor-pointer max-h-[50px]"
-          src={theme?.logo || '/logo.png'}
-          width={150}
-          style={{
-            aspectRatio: '1476 / 213'
-          }}
-          height={213}
-        />
+        <div className={'flex items-center gap-8'}>
+          <ImageCustom
+              onClick={() => navigate(ROUTE_PATH.HOME)}
+              alt="logo"
+              className="cursor-pointer max-h-[50px]"
+              src={theme?.logo || '/logo.png'}
+              width={224}
+              style={{
+                aspectRatio: '1476 / 213'
+              }}
+              height={213}
+          />
+          <Menubar />
+        </div>
 
         <ImageCustom
           onClick={() => refDrawerMenu.current.onOpen()}
@@ -98,7 +101,7 @@ const MainHeader = () => {
         />
 
         <div className="md:flex hidden items-center gap-8">
-          <Menubar />
+
 
           <div className="flex items-center gap-4 text-letter">
             <InputText
@@ -106,7 +109,9 @@ const MainHeader = () => {
               onKeyUp={handleKeyUp}
               value={valueSearch}
               startContent={<IconSearch />}
-              className="xl:min-w-[470px] lg:min-w-[320px]"
+              style={{
+                minWidth: '250px'
+              }}
               radius="sm"
               placeholder={t('header.search')}
             />

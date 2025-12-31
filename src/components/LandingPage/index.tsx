@@ -402,10 +402,10 @@ export const LandingPage = () => {
                         }}
                     >
                         <div className="relative h-full w-full rounded-[28px] md:rounded-[60px]  p-4 md:p-12">
-                        <h2 className="mb-4 text-center text-lg font-semibold" style={{fontSize: '18px'}}>Connect
+                        <h2 className="mb-4 text-center text-lg font-bold" style={{fontSize: '18px'}}>Connect
                             wallet</h2>
                         <div className="mb-4 space-y-3 p-1">
-                            <p className="text-sm text-white/70" style={{
+                            <p className="text-sm text-white/70 font-bold" style={{
                                 fontSize: '15px'
                             }}>Log in</p>
                             {loginOptions.map((item) => (
@@ -445,7 +445,7 @@ export const LandingPage = () => {
                         <div className="border-t" style={{borderColor: '#00A3C3'}}/>
 
                         <div className="mt-4 overflow-y-auto h-[200px] no-scrollbar p-1" >
-                            <p className="text-sm text-white/70 mb-4">EVM</p>
+                            <p className="text-sm text-white/70 mb-4 font-bold">EVM</p>
                             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                 {connectors.filter(c=>c.id !== "io.metamask").map((connector) => (
                                     <button

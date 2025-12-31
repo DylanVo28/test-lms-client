@@ -34,6 +34,12 @@ const Menubar = () => {
       profile?.role === 'KOL' || profile?.role === 'ADMIN'
         ? [
             {
+              key: 0,
+              label: 'Courses',
+              href: ROUTE_PATH.HOME,
+              pathName: "/[code]"
+            },
+            {
               key: 1,
               label: t('header.myLearning'),
               href: ROUTE_PATH.MY_LEARNING,
@@ -56,6 +62,13 @@ const Menubar = () => {
             },
           ]
         : [
+            {
+              key: 0,
+              label: 'Courses',
+              href: ROUTE_PATH.HOME,
+              pathName: "/[code]"
+
+            },
             {
               key: 1,
               label: t('header.myLearning'),
@@ -145,6 +158,9 @@ const Menubar = () => {
             onMouseEnter={handleMouseEnter}
             className={clsx(
               'cursor-pointer transition-all hover:text-main text-letter/50 ',
+                {
+                'text-main font-bold': router.pathname === "/[code]" && item.pathName
+                },
               {
                 'text-main font-bold': router.query.type
                   ? router.query.type === TabMyLearning.WISHLIST &&
