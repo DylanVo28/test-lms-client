@@ -321,11 +321,6 @@ const RegisterFormModal = () => {
     }
 
     try {
-      const token = getAccessToken();
-      if (!token) {
-        setIsKol(false);
-        return;
-      }
 
       const res = await fetch(
         `${ENV.APP_API_URL}/api/auth/is-kol?referralCode=${encodeURIComponent(code)}`,
@@ -333,7 +328,6 @@ const RegisterFormModal = () => {
           method: 'GET',
           headers: {
             'Accept': '*/*',
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
@@ -491,6 +485,12 @@ const RegisterFormModal = () => {
     }
     setReferralCode('');
   }, [showRegisterForm]);
+  // !isKol && (referralCode || !isExistOrderlyAccount.current)
+  console.log({
+    isKol,
+    referralCode,
+    isExistOrderlyAccount: isExistOrderlyAccount.current
+  })
   return (
     <Fragment>
       <CustomModal
@@ -521,7 +521,7 @@ const RegisterFormModal = () => {
             />
           )}
           {
-            isKol  && referralCode !== storeRef.current.refCodeKol && <div>
+            isKol  && referralCode !== storeRef.current.refCodeKol && isExistOrderlyAccount.current && <div>
             Note: Your account is currently referred by {storeRef.current.refCodeKol}. If the referral code you entered is {referralCode}, then clicking "Sign In" will change your account’s referral to the KOL {referralCode}. Please double-check before proceeding.
               </div>
           }
@@ -543,7 +543,7 @@ const RegisterFormModal = () => {
 
             <div
               className={`min-w-[200px] h-[40px] flex justify-center items-center gap-2 w-fit mx-auto text-lg font-semibold ${
-                isRegistering || !isKol
+                (isRegistering || !isKol)
                   ? 'bg-[#02a6c2]/50 cursor-not-allowed'
                   : 'bg-[#02a6c2] cursor-pointer'
               }`}
