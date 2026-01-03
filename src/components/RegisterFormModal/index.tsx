@@ -12,7 +12,7 @@ import {
   useLoginWeb3,
   verifyReferralCode,
 } from '@/layout/MainLayout/MainHeader/service';
-import { setAuthCookies } from '@/store/auth';
+import { setAuthCookies, getAccessToken } from '@/store/auth';
 import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
 import { useRouter } from 'next/router';
@@ -50,8 +50,11 @@ const RegisterFormModal = () => {
       scope: '',
       timestamp: '',
       expiration: '',
-    }
+    },
+    refCodeKol: ''
   })
+
+  const [isKol, setIsKol] = useState(false);
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
       // toast.success('Login successfully');
@@ -311,6 +314,51 @@ const RegisterFormModal = () => {
     }
   };
 
+  const checkIsKolApi = async (code: string): Promise<void> => {
+    if (!code) {
+      setIsKol(false);
+      return;
+    }
+
+    try {
+      const token = getAccessToken();
+      if (!token) {
+        setIsKol(false);
+        return;
+      }
+
+      const res = await fetch(
+        `${ENV.APP_API_URL}/api/auth/is-kol?referralCode=${encodeURIComponent(code)}`,
+        {
+          method: 'GET',
+          headers: {
+            'Accept': '*/*',
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (!res.ok) {
+        setIsKol(false);
+        return;
+      }
+
+      const data = await res.json();
+      
+      if (data?.status === true && data?.data?.isKol === true) {
+        setIsKol(true);
+      } else {
+        setIsKol(false);
+      }
+    } catch (error) {
+      console.error('Error checking KOL:', error);
+      setIsKol(false);
+    }
+  };
+
+  const checkIsKol = useDebounceCallback(checkIsKolApi, 1000);
+
   const init=useDebounceCallback(async ()=>{
     try {
       const getAccountRes = await fetch(
@@ -349,11 +397,30 @@ const RegisterFormModal = () => {
         privKey:privKey,
         orderlyKey:orderlyKey,
         message: messageOrderly,
-        signature: signatureOrderly
+        signature: signatureOrderly,
+        refCodeKol: refCode
       }
 
     }catch (error) {}
   },3000)
+
+  useEffect(() => {
+    if (referralCode.length > 0) {
+      setIsRegistering(true);
+      checkIsKol(referralCode);
+      // Use setTimeout to reset loading state after debounce delay + API call time
+      const timeoutId = setTimeout(async () => {
+        await checkIsKolApi(referralCode);
+        setIsRegistering(false);
+      }, 1000);
+      
+      return () => clearTimeout(timeoutId);
+    } else {
+      setIsKol(false);
+      setIsRegistering(false);
+      setReferralCode('WHATLEARN')
+    }
+  }, [referralCode]);
 
   useEffect(() => {
     if(address && isExistOrderlyAccount.current){
@@ -424,7 +491,6 @@ const RegisterFormModal = () => {
     }
     setReferralCode('');
   }, [showRegisterForm]);
-
   return (
     <Fragment>
       <CustomModal
@@ -454,6 +520,16 @@ const RegisterFormModal = () => {
               onChange={(e: any) => setReferralCode(e.target.value)}
             />
           )}
+          {
+            isKol  && referralCode !== storeRef.current.refCodeKol && <div>
+            Note: Your account is currently referred by {storeRef.current.refCodeKol}. If the referral code you entered is {referralCode}, then clicking "Sign In" will change your account’s referral to the KOL {referralCode}. Please double-check before proceeding.
+              </div>
+          }
+          {
+            !isKol && referralCode && <div>
+            Note: Your KOL referral has not been activated on What Academy yet. Please log in using a different referral code or use the default referral WHATLEARN.
+              </div>
+          }
           <div className="flex gap-x-2">
             <div
               className="min-w-[200px] h-[40px] flex justify-center items-center bg-[#1d2329] w-fit mx-auto cursor-pointer text-lg font-semibold"
@@ -467,11 +543,12 @@ const RegisterFormModal = () => {
 
             <div
               className={`min-w-[200px] h-[40px] flex justify-center items-center gap-2 w-fit mx-auto text-lg font-semibold ${
-                isRegistering
+                isRegistering || !isKol
                   ? 'bg-[#02a6c2]/50 cursor-not-allowed'
                   : 'bg-[#02a6c2] cursor-pointer'
               }`}
-              onClick={isRegistering ? undefined : handleRegister}
+
+              onClick={!isRegistering && isKol ? handleRegister : undefined}
             >
               {isRegistering && (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
