@@ -13,14 +13,12 @@ import {
   verifyReferralCode,
 } from '@/layout/MainLayout/MainHeader/service';
 import { setAuthCookies, getAccessToken } from '@/store/auth';
-import { useProfileInitial } from '@/store/profile/useProfileInitial';
 import { ModalBody } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import {Fragment, useEffect, useState} from 'react';
 import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
 import InputText from '../UI/InputText';
 import { useTranslation } from 'next-i18next';
-import Link from "next/link";
 import {API_PATH} from "@/api/constant";
 import {ENV} from "@/utils/env";
 import { useRef } from 'react';
@@ -54,7 +52,7 @@ const RegisterFormModal = () => {
     refCodeKol: ''
   })
 
-  const [isKol, setIsKol] = useState(false);
+  const [isKol, setIsKol] = useState(true);
   const { run: runLoginWeb3 } = useLoginWeb3({
     onSuccess(res) {
       // toast.success('Login successfully');
@@ -183,6 +181,8 @@ const RegisterFormModal = () => {
       });
 
       handleClose();
+      router.replace(`/${refCode}`)
+
     }
     catch(error: any) {
       toast.error(error?.message);
@@ -307,6 +307,8 @@ const RegisterFormModal = () => {
       });
 
       handleClose();
+      router.replace(`/${referralCode.length !== 0 ? referralCode : 'WHATLEARN'}`)
+
     } catch (error: any) {
       toast.error(error?.message);
     } finally {
@@ -315,6 +317,11 @@ const RegisterFormModal = () => {
   };
 
   const checkIsKolApi = async (code: string): Promise<void> => {
+    if(code==='WHATLEARN'){
+      setIsKol(true)
+      return
+    }
+
     if (!code) {
       setIsKol(false);
       return;
@@ -410,7 +417,7 @@ const RegisterFormModal = () => {
       
       return () => clearTimeout(timeoutId);
     } else {
-      setIsKol(false);
+      setIsKol(true);
       setIsRegistering(false);
       setReferralCode('WHATLEARN')
     }
