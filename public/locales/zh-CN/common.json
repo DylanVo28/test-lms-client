@@ -4,6 +4,7 @@
     "myLearning": "我的学习",
     "wishList": "愿望清单",
     "teach": "教学",
+    "trade": "交易所",
     "notifications": "通知",
     "profile": "个人资料",
     "logout": "退出登录",
@@ -129,9 +130,9 @@
     "connectWallet": "连接钱包"
   },
   "banner": {
-    "defaultTitle": "Web 开发课程",
-    "defaultDescription": "通过我们的在线 Web 开发课程，您可以探索这一热门领域的不同方向。",
-    "topicsTitle": "与 Web 开发相关的主题",
+    "defaultTitle": "Trade-to-Learn 加密货币课程",
+    "defaultDescription": "学习您开始区块链之旅所需的一切知识。实践所学内容，并通过交易解锁高级内容——完全免费",
+    "topicsTitle": "加密货币相关主题",
     "altBackground": "横幅背景图",
     "altMobileBanner": "移动端横幅图",
     "defaultTopics": [

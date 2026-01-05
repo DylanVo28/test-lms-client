@@ -41,7 +41,8 @@ const EditBanner = ({ onChange, value }: any) => {
     img.onload = () => {
       const reader = new FileReader();
       reader.onload = () => {
-        setImageSrc(reader.result as string);
+        const result = reader.result as string;
+        setImageSrc(result ? result.trim() : '');
       };
       reader.readAsDataURL(file);
     };

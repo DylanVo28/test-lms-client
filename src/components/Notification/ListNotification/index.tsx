@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ImageCustom from "@/components/UI/ImageCustom";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 const ListNotification = ({
   listNotification = [],
@@ -22,6 +24,7 @@ const ListNotification = ({
     }, 1500);
     return () => clearTimeout(timeout);
   }, []);
+  const router = useRouter();
 
   return (
     <div
@@ -32,7 +35,7 @@ const ListNotification = ({
       {listNotification?.length > 0 &&
         listNotification?.map((item: any, index: number) => {
           return (
-            <div
+            <Link
               key={index}
               onClick={() => handleReadNotification(item)}
               className={clsx(
@@ -41,21 +44,18 @@ const ListNotification = ({
                   ['bg-black-4']: !item?.read,
                 }
               )}
+              href={`/${router.query.code}/course/${item?.data?.courseId}`}
             >
               <div className="flex items-center gap-4">
                 <div>
-                  {item?.data?.avatar ? (
-                    <ImageCustom
-                      src={item?.data?.avatar}
+                  <ImageCustom
+                      src={'/icons/ic-success.png'}
                       className="w-10 h-10"
                       width={40}
                       height={40}
                       alt="avtar"
                       layout="contain"
-                    />
-                  ) : (
-                    <Avatar src="" className="w-10 h-10" />
-                  )}
+                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <Text
@@ -78,7 +78,7 @@ const ListNotification = ({
                   />
                 )}
               </div>
-            </div>
+            </Link>
           );
         })}
 

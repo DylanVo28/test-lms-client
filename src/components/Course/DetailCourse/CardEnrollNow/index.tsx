@@ -21,6 +21,7 @@ import FormatNumberDecimal from '@/components/Commons/FormatNumberDecimal';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'next-i18next';
 import ImageCustom from "@/components/UI/ImageCustom";
+import { useQueryClient } from '@tanstack/react-query';
 
 const CardEnrollNow = ({
   course,
@@ -115,6 +116,42 @@ const CardEnrollNow = ({
   const accessToken = useAccessToken();
   const { profile } = useProfile();
   const { navigate } = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Functions to fetch lesson data (same as in service.ts)
+  const fetchCourseDetail = async (id: string, userId?: string): Promise<any> => {
+    return privateRequest(request.get, `${API_PATH.CREATE_COURSE}/${id}`, {
+      params: { userId },
+    });
+  };
+
+  const fetchListSession = async (id: string, userId: string): Promise<any> => {
+    const params = {
+      courseId: id,
+      ownerId: userId,
+      order: 'createdAt asc',
+    };
+    return privateRequest(request.get, `${API_PATH.SECTIONS}`, { params });
+  };
+
+  // Prefetch lesson data on hover
+  const handleMouseEnterLesson = () => {
+    if (!course?.id || !profile?.id || !accessToken) return;
+
+    // Prefetch course detail
+    queryClient.prefetchQuery({
+      queryKey: ['courseDetail', course.id, profile.id],
+      queryFn: () => fetchCourseDetail(course.id, profile.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+
+    // Prefetch sections/lessons
+    queryClient.prefetchQuery({
+      queryKey: ['sections', course.id, profile.id],
+      queryFn: () => fetchListSession(course.id, profile.id),
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+  };
 
   const { approveUSDC, buyCourse, loading: loadingBuy } = useUSDCOperations();
 
@@ -218,7 +255,10 @@ const CardEnrollNow = ({
       }
     } catch (error: any) {
       if (error?.message?.includes('User rejected transaction')) {
-        toast.error('user rejected transaction');
+        toast.error('User rejected transaction');
+      } else {
+        const errorMessage = error?.message || error?.reason || String(error) || 'Failed to enroll in the course. Please try again.';
+        toast.error(errorMessage);
       }
     }
   };
@@ -357,31 +397,33 @@ const CardEnrollNow = ({
               )}
             </div>
             {profile?.id !== course?.author?.id && (
-              <CustomButtonEnroll
-                course={course}
-                handleClickButton={async () => {
-                  if (!course?.id) return;
+              <div onMouseEnter={handleMouseEnterLesson}>
+                <CustomButtonEnroll
+                  course={course}
+                  handleClickButton={async () => {
+                    if (!course?.id) return;
 
-                  if (course.isOwner || course.authorId === profile?.id) {
-                    navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
-                    return;
-                  }
+                    if (course.isOwner || course.authorId === profile?.id) {
+                      navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
+                      return;
+                    }
 
-                  if (course?.enroll === 'verified') {
-                    navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
-                    return;
-                  } else {
-                    handleEnroll();
-                  }
-                }}
-                handleEnrollCourseFree={async () => {
-                  if (!course?.id) return;
+                    if (course?.enroll === 'verified') {
+                      navigate(ROUTE_PATH.DETAIL_LESSON(course?.id));
+                      return;
+                    } else {
+                      handleEnroll();
+                    }
+                  }}
+                  handleEnrollCourseFree={async () => {
+                    if (!course?.id) return;
 
-                  await handleEnrollCourseFree();
-                }}
-                loading={loadingBuy || loadingEnrollCourseFree || loading}
-                token={accessToken}
-              />
+                    await handleEnrollCourseFree();
+                  }}
+                  loading={loadingBuy || loadingEnrollCourseFree || loading}
+                  token={accessToken}
+                />
+              </div>
             )}
             <div className="flex flex-col gap-2">
               <Text className="text-letter" type="font-18-600">

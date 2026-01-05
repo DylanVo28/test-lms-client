@@ -10,6 +10,14 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useAccount } from 'wagmi';
 import { usePrivy } from '@privy-io/react-auth';
+import { useQueryClient } from '@tanstack/react-query';
+import { privateRequest, request } from '@/api/request';
+import { API_PATH } from '@/api/constant';
+
+// Function to fetch list of my courses (same as in service.ts)
+const getListMyCourse = async (params: any) => {
+  return await privateRequest(request.get, API_PATH.MY_COURSE, { params });
+};
 
 const Menubar = () => {
   const { t } = useTranslation('common');
@@ -19,11 +27,18 @@ const Menubar = () => {
   const { address } = useAccount();
   const accessToken = useAccessToken();
   const { login } = usePrivy();
+  const queryClient = useQueryClient();
 
   const MENUS = useMemo(
     () =>
       profile?.role === 'KOL' || profile?.role === 'ADMIN'
         ? [
+            {
+              key: 0,
+              label: 'Courses',
+              href: ROUTE_PATH.HOME,
+              pathName: "/[code]"
+            },
             {
               key: 1,
               label: t('header.myLearning'),
@@ -39,8 +54,21 @@ const Menubar = () => {
               label: t('header.teach'),
               href: ROUTE_PATH.LIST_COURSE,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ]
         : [
+            {
+              key: 0,
+              label: 'Courses',
+              href: ROUTE_PATH.HOME,
+              pathName: "/[code]"
+
+            },
             {
               key: 1,
               label: t('header.myLearning'),
@@ -51,15 +79,60 @@ const Menubar = () => {
               label: t('header.wishList'),
               href: `${ROUTE_PATH.MY_LEARNING}?type=${TabMyLearning.WISHLIST}`,
             },
+            {
+              key: 4,
+              label: t('header.trade'),
+              href: 'https://trade.what.exchange/',
+              isExternal: true,
+            },
           ],
     [profile?.role, t]
   );
+  // Prefetch list course data on hover
+  const handleMouseEnterListCourse = () => {
+    if (!profile?.id || !accessToken) return;
+
+    const defaultParams = {
+      order: 'createdAt desc',
+      search: '',
+      pageSize: 5,
+      page: 1,
+    };
+
+    queryClient.prefetchInfiniteQuery({
+      queryKey: ['myCourses', defaultParams, profile?.id],
+      queryFn: async ({ pageParam = 1 }) => {
+        const response = await getListMyCourse({
+          ...defaultParams,
+          page: pageParam,
+          userId: profile?.id,
+        });
+        return response;
+      },
+      getNextPageParam: (lastPage:any, allPages:any) => {
+        const totalPage = lastPage?.meta?.totalPage || 0;
+        const next = allPages.length + 1;
+        return allPages.length < totalPage ? next : undefined;
+      },
+      initialPageParam: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+  };
+
   const handleClickRedirectPage = (key: number) => {
+    const menuItem = MENUS.find((item) => item.key === key);
+
+    // Handle external links (like Trade)
+    if (menuItem?.isExternal && menuItem?.href) {
+      window.open(menuItem.href, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     if (!accessToken) {
       login();
       return;
     }
-    const menuItem = MENUS.find((item) => item.key === key);
+
     if (key === 2 && menuItem?.href) {
       const url = menuItem?.href;
       const resultUrl = url.split('?')[0];
@@ -73,12 +146,21 @@ const Menubar = () => {
   return (
     <div className="flex items-center gap-8">
       {MENUS?.map((item) => {
+        // Add prefetch on hover for "Teach" menu (LIST_COURSE)
+        const handleMouseEnter = item?.key === 3 && item?.href === ROUTE_PATH.LIST_COURSE
+          ? handleMouseEnterListCourse
+          : undefined;
+
         return (
           <Text
             key={item?.key}
             onClick={() => handleClickRedirectPage(item?.key)}
+            onMouseEnter={handleMouseEnter}
             className={clsx(
               'cursor-pointer transition-all hover:text-main text-letter/50 ',
+                {
+                'text-main font-bold': router.pathname === "/[code]" && item.pathName
+                },
               {
                 'text-main font-bold': router.query.type
                   ? router.query.type === TabMyLearning.WISHLIST &&

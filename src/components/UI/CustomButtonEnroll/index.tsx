@@ -42,7 +42,9 @@ const CustomButtonEnroll = ({
   const { t } = useTranslation('common');
   const authorRole = course?.author?.role;
   const { ready, authenticated, login } = usePrivy();
-  const connected = ready && authenticated;
+  // Check access token first (faster), then Privy authentication as fallback
+  // If token exists, user is connected regardless of Privy state
+  const connected = !!token || (ready && authenticated);
 
   return (
     <div
@@ -61,7 +63,7 @@ const CustomButtonEnroll = ({
           disabled={isInsufficientBalance}
         >
           <Text className="text-letter" type="font-16-600">
-            {t('auth.connectWallet')}
+            Connect Wallet
           </Text>
         </Button>
       ) : (

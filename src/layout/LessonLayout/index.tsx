@@ -40,18 +40,13 @@ const LessonLayout = ({ children }: { children: ReactNode }) => {
   const token = useAccessToken();
 
   const { requestGetProfile } = useProfileInitial();
-
-  // React Query: fetch profile once when token exists and profile not loaded
-  useQuery({
-    queryKey: ['profile', token],
-    queryFn: async () => requestGetProfile(),
-    enabled: Boolean(token && !profile?.id),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 15,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  //
+  // // React Query: fetch profile once when token exists and profile not loaded
+  // useQuery({
+  //   queryKey: ['profile', token],
+  //   queryFn: async () => requestGetProfile(),
+  //   enabled: Boolean(token && !profile?.id),
+  // });
 
   const { run: getDetailCourse, data: dataDetail } = useGetDetailCourse({
     onSuccess: () => {},

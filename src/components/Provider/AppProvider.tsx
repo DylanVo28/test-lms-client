@@ -9,11 +9,9 @@ import { Toaster } from 'sonner';
 import WagmiAutoReconnect from '@/components/Provider/WagmiAutoReconnect';
 import dynamic from 'next/dynamic';
 import {ENV} from "@/utils/env";
-
-// Dynamic import WhatWagmiProvider to avoid server-side ESM issues
 const WhatWagmiProvider = dynamic(
-  () => import('adapter-connect').then((mod) => ({ default: mod.WhatWagmiProvider })),
-  { ssr: false }
+    () => import('adapter-connect').then((mod) => ({ default: mod.WhatWagmiProvider })),
+    { ssr: false }
 );
 
 export type NextPageWithLayout = NextPage & {
@@ -39,15 +37,9 @@ if (typeof window !== 'undefined') {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60, // 1 minute
-      gcTime: 1000 * 60 * 5, // 5 minutes
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchOnMount: false,
-      retry: 1, // Only retry once on failure
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
-      networkMode: 'online', // Only fetch when online
-      structuralSharing: true, // Enable structural sharing for better performance
     },
   },
 });

@@ -42,10 +42,6 @@ export const useGetListUserCourse = (initialParams: any) => {
       return allPages.length < totalPage ? next : undefined;
     },
     initialPageParam: 1,
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
   });
 
   const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
@@ -82,10 +78,6 @@ export const useGetListWishList = (initialParams: any) => {
       return allPages.length < totalPage ? next : undefined;
     },
     initialPageParam: 1,
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
   });
 
   const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);
@@ -146,10 +138,7 @@ export const useGetListFollowers = (initialParams: any) => {
       return allPages.length < totalPage ? next : undefined;
     },
     initialPageParam: 1,
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+
   });
 
   const list = (query.data?.pages || []).flatMap((p: any) => p?.data || []);

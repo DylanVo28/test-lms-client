@@ -42,10 +42,7 @@ const RewardHistory = () => {
       }));
       return dataWithStatus as Reward[];
     },
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+
   });
 
   const rewards: Reward[] = data || [];

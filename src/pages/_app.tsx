@@ -14,10 +14,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
-import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import "@orderly.network/ui/dist/styles.css";
+import PageProgressBar from '@/components/UI/PageProgressBar';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -29,119 +29,113 @@ type AppPropsWithLayout = AppProps & {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60, // 1 minute
-      gcTime: 1000 * 60 * 5, // 5 minutes
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchOnMount: false,
-      retry: 1, // Only retry once on failure to avoid unnecessary requests
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000), // Exponential backoff
-      networkMode: 'online', // Only fetch when online
-      structuralSharing: true, // Enable structural sharing for better performance
     },
   },
 });
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    // Wrap fetch to catch errors from Coinbase metrics and other external APIs
-    // Only wrap if not already wrapped (check for a custom property)
-    if ((window.fetch as any).__wrapped) return;
-    
-    const originalFetch = window.fetch.bind(window);
-    (window.fetch as any).__wrapped = true;
-    
-    window.fetch = async (...args) => {
-      // Extract URL from arguments
-      const url = typeof args[0] === 'string' 
-        ? args[0] 
-        : args[0] instanceof Request 
-          ? args[0].url 
-          : args[0] instanceof URL
-          ? args[0].toString()
-          : (args[0] as any)?.url || '';
-
-      
-      // Check if this is a Coinbase metrics request - return fake response immediately
-      if (
-        url.includes('cca-lite.coinbase.com') ||
-        url.includes('coinbase.com/metrics')
-      ) {
-        // Return a fake successful response to prevent errors
-        return Promise.resolve(new Response(null, {
-          status: 200,
-          statusText: 'OK',
-          headers: new Headers(),
-        }));
-      }
-      
-      // For other requests, try to call original fetch with error handling
-      try {
-        return await originalFetch(...args);
-      } catch (error: any) {
-        // If error is from chrome extension or failed fetch, return fake response
-        if (
-          error?.message?.includes('chrome-extension://') ||
-          error?.stack?.includes('chrome-extension://') ||
-          error?.message?.includes('Failed to fetch')
-        ) {
-          return new Response(null, {
-            status: 0,
-            statusText: 'Ignored',
-          });
-        }
-        
-        // Re-throw other errors normally
-        throw error;
-      }
-    };
-
-    const onError = (ev: ErrorEvent) => {
-      const src = (ev?.filename || '') as string;
-      const message = ev?.message || '';
-      
-      if (
-        src.startsWith('chrome-extension://') ||
-        message.includes('cca-lite.coinbase.com') ||
-        message.includes('coinbase.com/metrics') ||
-        message.includes('Failed to fetch')
-      ) {
-        ev.stopImmediatePropagation();
-        ev.preventDefault();
-        return false;
-      }
-    };
-    
-    const onRejection = (ev: PromiseRejectionEvent) => {
-      const reason: any = ev?.reason;
-      const stack: string = reason?.stack || '';
-      const msg: string = reason?.message || '';
-      const url: string = reason?.url || '';
-      
-      if (
-        stack.includes('chrome-extension://') ||
-        msg.includes('chrome-extension://') ||
-        msg.includes('cca-lite.coinbase.com') ||
-        msg.includes('coinbase.com/metrics') ||
-        msg.includes('Failed to fetch') ||
-        url.includes('cca-lite.coinbase.com') ||
-        url.includes('coinbase.com/metrics')
-      ) {
-        ev.stopImmediatePropagation();
-        ev.preventDefault();
-        return false;
-      }
-    };
-    
-    window.addEventListener('error', onError, { capture: true });
-    window.addEventListener('unhandledrejection', onRejection, {
-      capture: true,
-    });
-  }, []);
+  //
+  // useEffect(() => {
+  //   if (typeof window === 'undefined') return;
+  //
+  //   // Wrap fetch to catch errors from Coinbase metrics and other external APIs
+  //   // Only wrap if not already wrapped (check for a custom property)
+  //   if ((window.fetch as any).__wrapped) return;
+  //
+  //   const originalFetch = window.fetch.bind(window);
+  //   (window.fetch as any).__wrapped = true;
+  //
+  //   window.fetch = async (...args) => {
+  //     // Extract URL from arguments
+  //     const url = typeof args[0] === 'string'
+  //       ? args[0]
+  //       : args[0] instanceof Request
+  //         ? args[0].url
+  //         : args[0] instanceof URL
+  //         ? args[0].toString()
+  //         : (args[0] as any)?.url || '';
+  //
+  //
+  //     // Check if this is a Coinbase metrics request - return fake response immediately
+  //     if (
+  //       url.includes('cca-lite.coinbase.com') ||
+  //       url.includes('coinbase.com/metrics')
+  //     ) {
+  //       // Return a fake successful response to prevent errors
+  //       return Promise.resolve(new Response(null, {
+  //         status: 200,
+  //         statusText: 'OK',
+  //         headers: new Headers(),
+  //       }));
+  //     }
+  //
+  //     // For other requests, try to call original fetch with error handling
+  //     try {
+  //       return await originalFetch(...args);
+  //     } catch (error: any) {
+  //       // If error is from chrome extension or failed fetch, return fake response
+  //       if (
+  //         error?.message?.includes('chrome-extension://') ||
+  //         error?.stack?.includes('chrome-extension://') ||
+  //         error?.message?.includes('Failed to fetch')
+  //       ) {
+  //         return new Response(null, {
+  //           status: 0,
+  //           statusText: 'Ignored',
+  //         });
+  //       }
+  //
+  //       // Re-throw other errors normally
+  //       throw error;
+  //     }
+  //   };
+  //
+  //   const onError = (ev: ErrorEvent) => {
+  //     const src = (ev?.filename || '') as string;
+  //     const message = ev?.message || '';
+  //
+  //     if (
+  //       src.startsWith('chrome-extension://') ||
+  //       message.includes('cca-lite.coinbase.com') ||
+  //       message.includes('coinbase.com/metrics') ||
+  //       message.includes('Failed to fetch')
+  //     ) {
+  //       ev.stopImmediatePropagation();
+  //       ev.preventDefault();
+  //       return false;
+  //     }
+  //   };
+  //
+  //   const onRejection = (ev: PromiseRejectionEvent) => {
+  //     const reason: any = ev?.reason;
+  //     const stack: string = reason?.stack || '';
+  //     const msg: string = reason?.message || '';
+  //     const url: string = reason?.url || '';
+  //
+  //     if (
+  //       stack.includes('chrome-extension://') ||
+  //       msg.includes('chrome-extension://') ||
+  //       msg.includes('cca-lite.coinbase.com') ||
+  //       msg.includes('coinbase.com/metrics') ||
+  //       msg.includes('Failed to fetch') ||
+  //       url.includes('cca-lite.coinbase.com') ||
+  //       url.includes('coinbase.com/metrics')
+  //     ) {
+  //       ev.stopImmediatePropagation();
+  //       ev.preventDefault();
+  //       return false;
+  //     }
+  //   };
+  //
+  //   window.addEventListener('error', onError, { capture: true });
+  //   window.addEventListener('unhandledrejection', onRejection, {
+  //     capture: true,
+  //   });
+  // }, []);
 
   return (
     <>
@@ -163,12 +157,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
       </Head>
 
-      <ProgressBar
-        height="2px"
-        color="var(--main-color)"
-        options={{ showSpinner: false }}
-        shallowRouting
-      />
+      <PageProgressBar />
 
       <QueryClientProvider client={queryClient}>
 

@@ -4,6 +4,7 @@
     "myLearning": "My learning",
     "wishList": "Wish list",
     "teach": "Teach",
+    "trade": "Trade",
     "notifications": "Notifications",
     "profile": "Profile",
     "logout": "Logout",
@@ -129,9 +130,9 @@
     "connectWallet": "Connect Wallet"
   },
   "banner": {
-    "defaultTitle": "Web Development Courses",
-    "defaultDescription": "With one of our online web development courses, you can explore different areas of this in-demand field.",
-    "topicsTitle": "Topics related to Web Development",
+    "defaultTitle": "Trade-to-Learn Cryptocurrency Courses",
+    "defaultDescription": "Learn everything you need to know to start your blockchain journey. Practice what you've learned and trade to unlock advanced content—for free",
+    "topicsTitle": "Crypto-Related Topics",
     "altBackground": "Banner background",
     "altMobileBanner": "Mobile banner image",
     "defaultTopics": [
@@ -365,6 +366,7 @@
       "shareWithFriends": "Share this course with your friends",
       "referralLink": "Referral Link",
       "shareTo": "Share to",
+      "trade": "Trade",
       "completedCourse": "You have completed the course",
       "viewCertificate": "View your certificate"
     },

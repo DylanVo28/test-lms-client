@@ -13,36 +13,66 @@ import { notificationAtom } from '../notification/notification';
 import { useLogout } from '@/layout/MainLayout/MainHeader/service';
 import { initialTheme, themeAtom } from '../theme/theme';
 import { fetchThemeDetailCached } from '../theme/themeDetailCache';
+import { useQuery } from '@tanstack/react-query';
+
+// Query function to fetch user profile
+const fetchUserProfile = async () => {
+  const res = await privateRequest(
+    fetch,
+    `${PREFIX_API}${API_PATH.GET_USER}`
+  ).then((res) => res.json());
+  return res?.data;
+};
 
 export const useProfileInitial = () => { 
   const { address } = useAccount();
   const [profile, setProfile] = useAtom(profileAtom);
   const { disconnect } = useDisconnect();
-  const [loading, setLoading] = useState(false);
 
   const [, setNotifications] = useAtom(notificationAtom);
   const [_, setTheme] = useAtom(themeAtom);
 
   const router = useRouter();
+  const accessToken = getAccessToken();
 
   const { run: runLogout } = useLogout({
     onSuccess(res) {},
   });
 
-  const getMe = async () => {
-    try {
-      setLoading(true);
-      const res = await privateRequest(
-        fetch,
-        `${PREFIX_API}${API_PATH.GET_USER}`
-      ).then((res) => res.json());
+  // Use useQuery to fetch user profile
+  const {
+    data: profileData,
+    isLoading: loading,
+    refetch: refetchProfile,
+    error: profileError,
+  } = useQuery({
+    queryKey: ['userProfile', accessToken],
+    queryFn: fetchUserProfile,
+    enabled: Boolean(accessToken), // Only fetch when accessToken exists
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1,
+  });
+
+  // Update profile atom when data changes
+  useEffect(() => {
+    if (profileData) {
       setProfile({
-        ...res?.data,
+        ...profileData,
       });
-    } catch (error) {
-    } finally {
-      setLoading(false);
     }
+  }, [profileData, setProfile]);
+
+  // Handle errors
+  useEffect(() => {
+    if (profileError) {
+      // Handle error silently or log if needed
+      console.error('Failed to fetch user profile:', profileError);
+    }
+  }, [profileError]);
+
+  // Keep requestGetProfile for backward compatibility (manual trigger)
+  const requestGetProfile = () => {
+    refetchProfile();
   };
 
   useEffect(() => {
@@ -167,7 +197,7 @@ export const useProfileInitial = () => {
   return {
     profile,
     setProfile,
-    requestGetProfile: getMe,
+    requestGetProfile,
     loading,
   };
 };

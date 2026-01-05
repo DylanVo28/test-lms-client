@@ -27,10 +27,6 @@ const SoldCourses = () => {
       const response = await privateRequest(request.get, API_PATH.YOUR_NETWORK);
       return response?.data ?? [];
     },
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
   });
 
   const transactions: Transaction[] = data || [];

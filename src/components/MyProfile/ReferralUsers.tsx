@@ -25,10 +25,7 @@ const ReferralUsers = () => {
       const response = await privateRequest(request.get, API_PATH.GET_REFERRAL_USERS);
       return response?.data ?? [];
     },
-    staleTime: 5 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+
   });
 
   const users: ReferralUser[] = data || [];

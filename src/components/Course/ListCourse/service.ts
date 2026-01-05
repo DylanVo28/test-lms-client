@@ -31,9 +31,6 @@ export const useGetListCourse = (initialParams: any) => {
       return allPages.length < totalPage ? next : undefined;
     },
     initialPageParam: 1,
-    staleTime: 1000 * 60 * 2, // 2 minutes
-    gcTime: 1000 * 60 * 10,
-    refetchOnWindowFocus: false,
     enabled,
   });
 
@@ -89,15 +86,6 @@ export const useGetListMyCourse = (initialParams: any) => {
     },
     initialPageParam: 1,
     enabled: Boolean(profile?.id),
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    gcTime: 1000 * 60 * 30, // 30 minutes
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-    retry: 1, // Only retry once to avoid unnecessary requests
-    retryDelay: 1000, // 1 second delay before retry
-    networkMode: 'online', // Only fetch when online
-    structuralSharing: true, // Enable structural sharing for better performance
   });
 
   // Optimize dataCourses memoization: use stable reference
@@ -240,11 +228,6 @@ export const useGetListReview = (options?: IOptions) => {
       return serviceGetListReview(currentId, currentFilter);
     },
     enabled: !!currentId,
-    staleTime: 1000 * 60 * 2, // 2 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
     ...options,
   });
 

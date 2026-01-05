@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ROUTE_PATH, TYPE_COURSE } from '@/utils/const';
 import { useRouter } from 'next/router';
-import { useEditCourse, useGetDetailCourse } from '../service';
+import { useEditCourse, useGetDetailCourseQuery } from '../service';
 import { toast } from '@/components/UI/Toast/toast';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import { useProfile } from '@/store/profile/useProfile';
@@ -65,6 +65,7 @@ const PlanYourCourse = () => {
   ];
 
   const refModalSubmitError: any = useRef(null);
+  const hasResetFormRef = useRef<string | null>(null);
   const { address } = useAccount();
   const accessToken = useAccessToken();
   //sections 26b3494a-b044-412b-90f3-e1e40de2e414 710bfa49-17d4-424b-9772-99c31dcd4c18
@@ -95,126 +96,23 @@ const PlanYourCourse = () => {
       return data;
     },
     enabled: Boolean(router.query.id && profile?.id && accessToken),
-    // staleTime: 1000 * 60 * 2, // 2 minutes
-    // gcTime: 1000 * 60 * 10, // 10 minutes
-    // refetchOnWindowFocus: false,
+
   });
 
   const dataSections = sectionsData?.data || [];
 
+  // Use useQuery to fetch course detail
   const {
-    run: getDetailCourse,
-    loading,
     data: dataDetailRes,
-  } = useGetDetailCourse({
-    onSuccess: async (courseDetailRes) => {
-      const courseDetail = courseDetailRes?.data ?? {};
-
-      const isEnoughtSetPrice =
-        courseDetail?.price && courseDetail?.originPrice;
-      const isEnoughIntendedLearners =
-        courseDetail?.objectives?.length > 0 &&
-        courseDetail?.intenedLeaners?.length > 0 &&
-        courseDetail?.requirements?.length > 0;
-
-      const isEnoughCourseLangdingePage =
-        courseDetail?.title && courseDetail?.categoryId;
-      courseDetail?.level && courseDetail?.lang;
-
-      // Refetch sections to get latest data
-      const { data: sectionsResponse } = sectionsData
-      const detailSection = sectionsResponse?.data || [];
-
-      const allLessonsHaveContent =
-        Array.isArray(detailSection) &&
-        detailSection?.length > 0 &&
-        detailSection?.every((section: any) => {
-          if (section.lessons.length === 0) {
-            return section.quizzes.length > 0;
-          }
-
-          return section.lessons.every(
-            (lesson: any) =>
-              (lesson.id &&
-                (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
-              !lesson.id
-          );
-        });
-
-      const allQuizzesHaveQuestions =
-        Array.isArray(detailSection) &&
-        detailSection?.length > 0 &&
-        detailSection?.every((section: any) => {
-          if (section.quizzes.length === 0) {
-            return section.lessons.length > 0;
-          }
-
-          return section.quizzes.every(
-            (quizz: any) =>
-              (quizz.id &&
-                Array.isArray(quizz.questions) &&
-                quizz.questions.length > 0) ||
-              !quizz.id
-          );
-        });
-
-      const isEnoughCurruclum =
-        allLessonsHaveContent && allQuizzesHaveQuestions;
-
-      if (
-        isEnoughIntendedLearners &&
-        isEnoughCurruclum &&
-        isEnoughtSetPrice &&
-        isEnoughCourseLangdingePage &&
-        isSubmit &&
-        !isNextStepSubmit
-      ) {
-        navigate(ROUTE_PATH.LIST_COURSE);
-      }
-
-      reset({
-        objectives:
-          courseDetail?.objectives?.length > 0
-            ? courseDetail?.objectives?.map((item: any) => {
-                return {
-                  name: item,
-                };
-              })
-            : dataObjectivesDefault,
-        requirements:
-          courseDetail?.requirements?.length > 0
-            ? courseDetail?.requirements?.map((item: any) => {
-                return {
-                  name: item,
-                };
-              })
-            : dataRequirementsDefault,
-        intenedLeaners:
-          courseDetail?.intenedLeaners?.length > 0
-            ? courseDetail?.intenedLeaners?.map((item: any) => {
-                return {
-                  name: item,
-                };
-              })
-            : dataIntenedLeanersDefault,
-        lang: courseDetail?.lang,
-        level: courseDetail?.level,
-        subtitle: courseDetail?.subtitle,
-        title: courseDetail?.title,
-        description: courseDetail?.description,
-        topics: courseDetail?.topics?.[0],
-        image: courseDetail?.image,
-        video: courseDetail?.video,
-        subCategoryId: courseDetail?.subCategoryId,
-        price: courseDetail?.price,
-        originPrice: courseDetail?.originPrice,
-        unlockIfUserTradesAtLeast: courseDetail?.unlockIfUserTradesAtLeast ?? 0,
-        promotionPeriod: courseDetail?.promotionPeriod,
-        categoryId: courseDetail?.categoryId,
-        certificationLogo: courseDetail?.certificationLogo,
-      });
-    },
-  });
+    isLoading: loading,
+    refetch: refetchCourseDetail,
+  } = useGetDetailCourseQuery(
+    router.query.id as string,
+    profile?.id,
+    {
+      enabled: Boolean(router.query.id && profile?.id),
+    }
+  );
 
   const {
     control,
@@ -235,17 +133,142 @@ const PlanYourCourse = () => {
     },
   });
 
+  // Reset the ref when course ID changes
+  useEffect(() => {
+    hasResetFormRef.current = null;
+  }, [router.query.id]);
+
+  // Handle course detail data changes (moved from onSuccess)
+  useEffect(() => {
+    if (!dataDetailRes?.data) return;
+
+    const courseDetail = dataDetailRes?.data ?? {};
+    const courseId = router.query.id as string;
+
+    // Only reset if we haven't reset for this course ID yet
+    if (hasResetFormRef.current === courseId) {
+      return;
+    }
+
+    const isEnoughtSetPrice =
+      courseDetail?.price && courseDetail?.originPrice;
+    const isEnoughIntendedLearners =
+      courseDetail?.objectives?.length > 0 &&
+      courseDetail?.intenedLeaners?.length > 0 &&
+      courseDetail?.requirements?.length > 0;
+
+    const isEnoughCourseLangdingePage =
+      courseDetail?.title && courseDetail?.categoryId;
+    courseDetail?.level && courseDetail?.lang;
+
+    // Get sections data
+    const detailSection = dataSections || [];
+
+    const allLessonsHaveContent =
+      Array.isArray(detailSection) &&
+      detailSection?.length > 0 &&
+      detailSection?.every((section: any) => {
+        if (section.lessons.length === 0) {
+          return section.quizzes.length > 0;
+        }
+
+        return section.lessons.every(
+          (lesson: any) =>
+            (lesson.id &&
+              (!!lesson.content || !!lesson.info?.thumbnailUrl)) ||
+            !lesson.id
+        );
+      });
+
+    const allQuizzesHaveQuestions =
+      Array.isArray(detailSection) &&
+      detailSection?.length > 0 &&
+      detailSection?.every((section: any) => {
+        if (section.quizzes.length === 0) {
+          return section.lessons.length > 0;
+        }
+
+        return section.quizzes.every(
+          (quizz: any) =>
+            (quizz.id &&
+              Array.isArray(quizz.questions) &&
+              quizz.questions.length > 0) ||
+            !quizz.id
+        );
+      });
+
+    const isEnoughCurruclum =
+      allLessonsHaveContent && allQuizzesHaveQuestions;
+
+    if (
+      isEnoughIntendedLearners &&
+      isEnoughCurruclum &&
+      isEnoughtSetPrice &&
+      isEnoughCourseLangdingePage &&
+      isSubmit &&
+      !isNextStepSubmit
+    ) {
+      navigate(ROUTE_PATH.LIST_COURSE);
+      return;
+    }
+
+    // Mark that we've reset for this course ID
+    hasResetFormRef.current = courseId;
+
+    reset({
+      objectives:
+        courseDetail?.objectives?.length > 0
+          ? courseDetail?.objectives?.map((item: any) => {
+              return {
+                name: item,
+              };
+            })
+          : dataObjectivesDefault,
+      requirements:
+        courseDetail?.requirements?.length > 0
+          ? courseDetail?.requirements?.map((item: any) => {
+              return {
+                name: item,
+              };
+            })
+          : dataRequirementsDefault,
+      intenedLeaners:
+        courseDetail?.intenedLeaners?.length > 0
+          ? courseDetail?.intenedLeaners?.map((item: any) => {
+              return {
+                name: item,
+              };
+            })
+          : dataIntenedLeanersDefault,
+      lang: courseDetail?.lang,
+      level: courseDetail?.level,
+      subtitle: courseDetail?.subtitle,
+      title: courseDetail?.title,
+      description: courseDetail?.description,
+      topics: courseDetail?.topics?.[0],
+      image: courseDetail?.image,
+      video: courseDetail?.video,
+      subCategoryId: courseDetail?.subCategoryId,
+      price: courseDetail?.price,
+      originPrice: courseDetail?.originPrice,
+      unlockIfUserTradesAtLeast: courseDetail?.unlockIfUserTradesAtLeast ?? 0,
+      promotionPeriod: courseDetail?.promotionPeriod,
+      categoryId: courseDetail?.categoryId,
+      certificationLogo: courseDetail?.certificationLogo,
+    });
+  }, [dataDetailRes?.data, dataSections, isSubmit, isNextStepSubmit, router.query.id, navigate, reset, dataObjectivesDefault, dataRequirementsDefault, dataIntenedLeanersDefault]);
+
   const fieldValue = watch();
 
-  useEffect(() => {
-    if (router.query.id && isFetchedSections ) {
-      getDetailCourse(router.query.id as string, profile?.id);
-    }
-  }, [router.query.id, profile?.id, isFetchedSections]);
+  // useEffect(() => {
+  //   if (router.query.id && isFetchedSections ) {
+  //     getDetailCourse(router.query.id as string, profile?.id);
+  //   }
+  // }, [router.query.id, profile?.id, isFetchedSections]);
 
   const requestEditCourse = useEditCourse({
     onSuccess: async (res: any) => {
-      getDetailCourse(router.query.id as string);
+      refetchCourseDetail();
     },
     onError: (error: any) => {
       toast.error(error.message);

@@ -1,9 +1,8 @@
 import { coursePaymentVaultAbi } from '@/abis/coursePaymentVault';
 import { usdcAbi } from '@/abis/usdc';
-import { Contract } from '@ethersproject/contracts';
 import { useQuery } from '@tanstack/react-query';
 import { useEthersSigner } from './useEthersSigner';
-import { ethers } from 'ethers';
+import { ethers, Contract } from 'ethers';
 import { base } from '@/config/viem';
 import { mintNFTAbi } from '@/abis/mintNFT';
 import { useAccount } from 'wagmi';
@@ -53,11 +52,7 @@ export const useContract = (
       }
     },
     enabled: !!address && !!ABI && !!simpleRpcProvider,
-    staleTime: 1000 * 60 * 5, // 5 minutes - prevent unnecessary refetches
-    gcTime: 1000 * 60 * 10, // 10 minutes
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
+
   });
 
   return data || null;
